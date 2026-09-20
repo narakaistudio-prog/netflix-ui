@@ -15,17 +15,15 @@ import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
 
 const IS_WEB = Platform.OS === 'web';
-// Sandboxed preview iframes deny storage/origin, which makes YouTube's iframe
-// player die with "Error 153". There we stream the trailer MP4 in a plain
-// <video> element instead — that works everywhere.
-const STORAGE_OK = (() => {
-    if (!IS_WEB || typeof window === 'undefined') return true;
+// YouTube's iframe player dies with "Error 153" inside hosted preview frames,
+// so trailers now ALWAYS stream as plain MP4 video. IN_FRAME is only used to
+// pick the last-resort fallback when every stream server is down.
+const IN_FRAME = (() => {
+    if (!IS_WEB || typeof window === 'undefined') return false;
     try {
-        window.localStorage.setItem('__nf_probe', '1');
-        window.localStorage.removeItem('__nf_probe');
-        return true;
+        return window.top !== window.self;
     } catch {
-        return false;
+        return true; // cross-origin frame access => nested
     }
 })();
 
@@ -142,23 +140,6 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
             <View style={[styles.videoContainer, IS_WEB && { height: undefined as any, aspectRatio: 16 / 9 }]}>
                 {trailerActive ? (
                     trailerStage === 'play' ? (
-                    STORAGE_OK ? (
-                    <View style={styles.video}>
-                        {createElement('iframe', {
-                            src: `https://www.youtube-nocookie.com/embed/${movieData.youtubeId}?autoplay=1&rel=0&modestbranding=1`,
-                            style: {
-                                width: '100%',
-                                height: '100%',
-                                border: 'none',
-                                display: 'block',
-                                backgroundColor: '#000',
-                            },
-                            allow: 'autoplay; fullscreen; encrypted-media; picture-in-picture',
-                            allowFullScreen: true,
-                            title: `${movieData.title} | Official Trailer`,
-                        })}
-                    </View>
-                    ) : (
                     <TrailerVideo
                         yt={String(movieData.youtubeId)}
                         title={String(movieData.title ?? '')}
@@ -168,7 +149,6 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                             videoRef.current?.replayAsync?.();
                         }}
                     />
-                    )
                     ) : (
                     <View style={styles.video}>
                         <TrailerThumb yt={String(movieData.youtubeId)} />
@@ -550,6 +530,28 @@ function TrailerVideo({ yt, title, onBail }: {
     }
 
     if (failed) {
+        // On a normal (non-iframe) site fall back to the YouTube embed — it
+        // configures fine there. Inside sandboxed preview frames it can't
+        // (Error 153), so show retry/preview options instead.
+        if (!IN_FRAME) {
+            return (
+                <View style={styles.video}>
+                    {createElement('iframe', {
+                        src: `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&modestbranding=1`,
+                        style: {
+                            width: '100%',
+                            height: '100%',
+                            border: 'none',
+                            display: 'block',
+                            backgroundColor: '#000',
+                        },
+                        allow: 'autoplay; fullscreen; encrypted-media; picture-in-picture',
+                        allowFullScreen: true,
+                        title: `${title} | Official Trailer`,
+                    })}
+                </View>
+            );
+        }
         return (
             <View style={[styles.video, trailerStyles.noteCard]}>
                 <Ionicons name="alert-circle-outline" size={30} color="#e5e5e5" />
