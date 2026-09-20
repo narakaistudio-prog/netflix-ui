@@ -86,6 +86,33 @@ function AnimatedStack() {
                         }}
                     />
                     <Stack.Screen
+                        name="series/[id]"
+                        options={{
+                            headerShown: false,
+                            contentStyle: {
+                                backgroundColor: '#000',
+                            },
+                        }}
+                    />
+                    <Stack.Screen
+                        name="watch/[id]"
+                        options={{
+                            headerShown: false,
+                            contentStyle: {
+                                backgroundColor: '#000',
+                            },
+                        }}
+                    />
+                    <Stack.Screen
+                        name="admin"
+                        options={{
+                            headerShown: false,
+                            contentStyle: {
+                                backgroundColor: '#000',
+                            },
+                        }}
+                    />
+                    <Stack.Screen
                         name="switch-profile"
                         options={{
                             presentation: 'transparentModal',

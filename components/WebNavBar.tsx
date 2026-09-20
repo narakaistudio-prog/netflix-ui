@@ -25,6 +25,8 @@ export function WebNavBar() {
     const { selectedProfile } = useUser();
 
     if (Platform.OS !== 'web' || !selectedProfile) return null;
+    // The episode player is a fullscreen iframe — keep the bar out of the way.
+    if (pathname.startsWith('/watch')) return null;
 
     return (
         <View style={styles.wrapper} pointerEvents="box-none">
@@ -60,6 +62,16 @@ export function WebNavBar() {
                 </View>
 
                 <View style={styles.right}>
+                    <Pressable
+                        style={({ hovered }: any) => [
+                            styles.addBtn,
+                            hovered && styles.addBtnHover,
+                        ]}
+                        onPress={() => router.push('/admin')}
+                    >
+                        <Ionicons name="add" size={14} color="#fff" />
+                        <Text style={styles.addBtnText}>Add Series</Text>
+                    </Pressable>
                     <Pressable
                         onPress={() => router.push('/search')}
                         style={({ hovered }: any) => [{ opacity: hovered ? 0.75 : 1 }]}
@@ -129,6 +141,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 20,
+    },
+    addBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        backgroundColor: 'rgba(229,9,20,0.9)',
+        borderRadius: 999,
+        paddingHorizontal: 12,
+        paddingVertical: 7,
+    },
+    addBtnHover: {
+        backgroundColor: '#E50914',
+    },
+    addBtnText: {
+        color: '#fff',
+        fontSize: 12.5,
+        fontWeight: '700',
     },
     avatar: {
         width: 32,

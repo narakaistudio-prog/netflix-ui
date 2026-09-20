@@ -18,6 +18,8 @@ import { MovieList } from '@/components/MovieList/MovieList';
 import { useDeviceMotion } from '@/hooks/useDeviceMotion';
 import { MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
+import { useMySeries } from '@/hooks/useMySeries';
+import { SeriesList } from '@/components/SeriesList/SeriesList';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
 import { usePathname, useRouter } from 'expo-router';
 import { useUser } from '@/contexts/UserContext';
@@ -32,6 +34,7 @@ const IS_WEB = Platform.OS === 'web';
 
 export default function HomeScreen() {
   const { rows: movies } = useCatalog();
+  const { series: mySeries } = useMySeries();
   const insets = useSafeAreaInsets();
   const { tiltX, tiltY } = useDeviceMotion();
   const { isVisionOS } = useVisionOS();
@@ -178,6 +181,13 @@ export default function HomeScreen() {
               })
             }
           />
+
+          {mySeries.length > 0 ? (
+            <SeriesList
+              title="My Series"
+              items={mySeries}
+            />
+          ) : null}
 
           {movies.map(row => (
             <MovieList key={row.rowTitle} {...row} />
