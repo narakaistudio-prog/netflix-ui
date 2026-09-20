@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
+    Platform,
     Pressable,
     ScrollView,
     StyleSheet,
@@ -84,7 +85,10 @@ export default function SeriesScreen() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[
                     styles.content,
-                    { paddingTop: WEB_TOP_PAD, paddingBottom: 90 },
+                    {
+                        paddingTop: Platform.OS === 'web' ? WEB_TOP_PAD : 24,
+                        paddingBottom: 90,
+                    },
                 ]}
             >
                 <View style={styles.heroWrap}>

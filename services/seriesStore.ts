@@ -81,9 +81,10 @@ export function subscribeMySeries(listener: () => void): () => void {
     };
 }
 
-// Cross-tab sync (web): another tab adding/removing a series updates us.
-if (typeof (globalThis as any).addEventListener === 'function') {
-    (globalThis as any).addEventListener('storage', (e: any) => {
+// Cross-tab sync (web only): another tab adding/removing a series updates us.
+const g = globalThis as any;
+if (g?.document && typeof g.addEventListener === 'function') {
+    g.addEventListener('storage', (e: any) => {
         if (e && e.key === STORAGE_KEY) {
             cache = null;
             emit();
