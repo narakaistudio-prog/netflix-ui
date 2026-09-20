@@ -4,6 +4,7 @@ const { width, height } = Dimensions.get('window');
 
 
 export const styles = StyleSheet.create({
+    profileWrapper: {},
     spinnerContainer: {
         position: 'absolute',
         left: width / 2 - 50,

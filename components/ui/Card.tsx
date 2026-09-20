@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Platform } from 'react-native';
 
 export const Card = styled.View`
-  ${Platform.select({
+  ${(Platform.select as any)({
     visionOS: {
       backgroundColor: 'rgba(255, 255, 255, 0.1)',
       borderRadius: 20,

@@ -16,6 +16,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
+import { impactAsync } from '@/utils/haptics';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
@@ -45,11 +46,7 @@ export default function SwitchProfileScreen() {
     const numericId = typeof id === 'string' ? parseInt(id, 10) : Array.isArray(id) ? parseInt(id[0], 10) : 0;
 
     const handleHapticFeedback = useCallback(() => {
-        try {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-        } catch (error) {
-            console.log('Haptics not available:', error);
-        }
+        impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }, []);
 
     const goBack = useCallback(() => {

@@ -2,7 +2,7 @@ import * as React from "react"
 import Svg, { Circle, Rect, Path } from 'react-native-svg';
 
 
-export function Home(props) {
+export function Home(props: any) {
     return (
         <Svg
             xmlns="http://www.w3.org/2000/svg"
@@ -18,10 +18,6 @@ export function Home(props) {
                 stroke={props.isActive ? 'transparent' : props.color}
                 strokeWidth={props.isActive ? 0 : 4}
                 strokeMiterlimit={10}
-                fontFamily="none"
-                fontWeight="none"
-                fontSize="none"
-                textAnchor="none"
             />
         </Svg>
     )

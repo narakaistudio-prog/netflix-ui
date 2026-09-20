@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { Platform } from 'react-native';
 import { SharedValue, useSharedValue, withSpring } from 'react-native-reanimated';
 
 interface RootScaleContextType {
@@ -13,6 +14,9 @@ export function RootScaleProvider({ children }: { children: React.ReactNode }) {
 
     const setScale = (value: number) => {
         'worklet';
+        // The whole-app zoom-out effect is a mobile presentation; on the
+        // website the modal opens without scaling the page behind it.
+        if (Platform.OS === 'web') return;
         try {
             scale.value = withSpring(value, {
                 damping: 15,

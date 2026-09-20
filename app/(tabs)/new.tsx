@@ -18,15 +18,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TAB_SCREENS } from '@/app/(tabs)/_layout';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
 import { usePathname } from 'expo-router';
-import COMING_SOON_DATA from '@/data/new.json';
+import { useCatalog } from '@/hooks/useCatalog';
 import { useRef } from 'react';
 import { useScrollToTop } from '@react-navigation/native';
 import { Image as ExpoImage } from 'expo-image';
+import { SafeImage } from '@/components/SafeImage';
+import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
+import { Platform } from 'react-native';
 
 interface ComingSoonItem {
     id: string;
     imageUrl: string;
-    logo: string;
+    logo?: string;
+    title?: string;
     logoWidth: number;
     logoHeight: number;
     subText: string;
@@ -58,6 +62,95 @@ const TAB_OPTIONS = [
     }
 ];
 
+function ComingSoonCard({ item }: { item: ComingSoonItem }) {
+    const [muted, setMuted] = React.useState(true);
+
+    return (
+        <View style={newStyles.comingSoonItem}>
+            <View style={newStyles.contentContainer}>
+                <View style={newStyles.previewCard}>
+                    <View style={newStyles.ratedContainer}>
+                        <Text style={newStyles.rated}>{item.rated}</Text>
+                    </View>
+
+                    <Pressable
+                        style={newStyles.soundButton}
+                        onPress={() => setMuted(m => !m)}
+                    >
+                        <Ionicons
+                            name={muted ? 'volume-mute' : 'volume-high'}
+                            size={18}
+                            color="white"
+                        />
+                    </Pressable>
+
+                    <SafeImage
+                        source={{ uri: item.imageUrl }}
+                        style={newStyles.previewImage}
+                        cachePolicy="memory-disk"
+                        transition={200}
+                    />
+                </View>
+
+                <View style={newStyles.featuredContainer}>
+                    <View style={{ gap: 6 }}>
+                        {item.logo ? (
+                            <SafeImage
+                                source={{ uri: item.logo }}
+                                style={{ width: item.logoWidth, height: item.logoHeight, marginRight: 4, marginLeft: 12 }}
+                                cachePolicy="memory-disk"
+                                transition={200}
+                                contentFit="contain"
+                                hideOnError
+                            />
+                        ) : (
+                            <Text style={{
+                                color: '#fff',
+                                fontSize: 26,
+                                fontWeight: '800',
+                                marginLeft: 12,
+                                textTransform: 'uppercase',
+                                letterSpacing: 1,
+                            }}>
+                                {item.title}
+                            </Text>
+                        )}
+                    </View>
+                </View>
+
+                <View style={newStyles.titleContainer}>
+                    <Text style={newStyles.eventDate}>{item.subText}</Text>
+
+                    {item.type && (
+                        <View
+                            style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 6, marginBottom: 2 }}>
+                            <Text style={{
+                                color: '#E50914',
+                                fontWeight: '900',
+                                fontSize: 22,
+                                lineHeight: 26,
+                                top: -4,
+                                position: 'absolute',
+                                left: 0,
+                            }}>N</Text>
+                            <Text style={newStyles.netflixTag}>{item.type}</Text>
+                        </View>
+                    )}
+
+                    <Text style={newStyles.description}>{item.description}</Text>
+                </View>
+
+                <View style={newStyles.actionButtons}>
+                    <Pressable style={({ pressed }) => [newStyles.actionButton, pressed && { opacity: 0.8 }]}>
+                        <Ionicons name="notifications-outline" size={20} color="#000" />
+                        <Text style={newStyles.actionButtonText}>Remind Me</Text>
+                    </Pressable>
+                </View>
+            </View>
+        </View>
+    );
+}
+
 export default function NewScreen() {
     const pathname = usePathname();
     const isActive = pathname === '/new';
@@ -75,6 +168,7 @@ export default function NewScreen() {
 
     const router = useRouter();
     const insets = useSafeAreaInsets();
+    const { events: comingSoonEvents } = useCatalog();
     const scrollY = useSharedValue(0);
     const [activeTab, setActiveTab] = React.useState('coming-soon');
 
@@ -86,83 +180,6 @@ export default function NewScreen() {
 
     const scrollViewRef = useRef(null);
     useScrollToTop(scrollViewRef);
-
-    const renderComingSoonItem = (item: ComingSoonItem) => (
-        <View key={item.id} style={newStyles.comingSoonItem}>
-
-
-            <View style={newStyles.contentContainer}>
-                <View style={newStyles.previewCard}>
-                    <View style={newStyles.ratedContainer}>
-                        <Text style={newStyles.rated}>{item.rated}</Text>
-                    </View>
-
-                    <Pressable
-                        style={newStyles.soundButton}
-                    >
-                        <Ionicons
-                            name={"volume-mute"}
-                            size={18}
-                            color="white"
-                        />
-                    </Pressable>
-
-                    <ExpoImage
-                        source={{ uri: item.imageUrl }}
-                        style={newStyles.previewImage}
-                        cachePolicy="memory-disk"
-                        transition={200}
-                    />
-
-                </View>
-
-
-                <View style={newStyles.featuredContainer}>
-
-                    <View style={{ gap: 6, }}>
-                        <ExpoImage
-                            source={{ uri: item.logo }}
-                            style={{ width: item.logoWidth, height: item.logoHeight, marginRight: 4, marginLeft: 12 }}
-                            cachePolicy="memory-disk"
-                            transition={200}
-                        />
-
-                    </View>
-
-                </View>
-
-                <View style={newStyles.titleContainer}>
-                    <Text style={newStyles.eventDate}>{item.subText}</Text>
-
-
-                    {item.type && (<>
-                        <View
-                            style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 6, marginBottom: 2 }}>
-                            <ExpoImage
-                                source={{ uri: 'https://loodibee.com/wp-content/uploads/Netflix-N-Symbol-logo.png' }}
-                                style={{ width: 20, height: 20, top: -4, position: 'absolute', left: 0 }}
-                                cachePolicy="memory-disk"
-                                transition={200}
-                            />
-                            {item.type && <Text style={newStyles.netflixTag}>{item.type}</Text>}
-                        </View>
-                        {/* <Text style={newStyles.title}>{item.title}</Text> */}
-
-                    </>)}
-
-                    <Text style={newStyles.description}>{item.description}</Text>
-                </View>
-
-                <View style={newStyles.actionButtons}>
-                    <Pressable style={newStyles.actionButton}>
-                        <Ionicons name="notifications-outline" size={20} color="#000" />
-                        <Text style={newStyles.actionButtonText}>Remind Me</Text>
-                    </Pressable>
-
-                </View>
-            </View>
-        </View>
-    );
 
     const renderTab = (tab: typeof TAB_OPTIONS[0]) => (
         <Pressable
@@ -189,7 +206,7 @@ export default function NewScreen() {
             <View style={newStyles.container}>
                 <StatusBar style="light" />
                 <SafeAreaView>
-                    <View style={[newStyles.header]}>
+                    <View style={[newStyles.header, Platform.OS === 'web' && { paddingTop: WEB_NAV_HEIGHT + 16, maxWidth: 1000, width: '100%', alignSelf: 'center' }]}>
                         <View style={newStyles.headerContent}>
                             <Text style={newStyles.headerTitle}>New & Hot</Text>
                             <View style={newStyles.headerRight}>
@@ -220,6 +237,7 @@ export default function NewScreen() {
                     <ScrollView
                         ref={scrollViewRef}
                         showsVerticalScrollIndicator={false}
+                        contentContainerStyle={Platform.OS === 'web' ? { maxWidth: 1000, width: '100%', alignSelf: 'center', paddingBottom: 80 } : undefined}
                     >
                         {/* 
 
@@ -235,7 +253,9 @@ export default function NewScreen() {
 
 
                         <View style={newStyles.comingSoonList}>
-                            {COMING_SOON_DATA.events.map(renderComingSoonItem)}
+                            {comingSoonEvents.map(item => (
+                                <ComingSoonCard key={item.id} item={item} />
+                            ))}
                         </View>
                     </ScrollView>
                 </SafeAreaView>

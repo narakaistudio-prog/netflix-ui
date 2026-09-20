@@ -116,3 +116,25 @@ project-root/
 ## License
 
 MIT License
+
+## Live Netflix India catalog (always up to date, zero API keys)
+
+The bundled catalog is refreshed automatically by the
+`refresh-catalog.yml` GitHub Action:
+
+- **Daily** it scrapes FlixPatrol's *TOP 10 on Netflix in India* (movies +
+  TV shows, updated every day), pulls each title's poster/description and
+  commits the result to `data/movies.json`. **No API key, no sign-up.**
+- Poster images are downloaded into `assets/posters/` and shipped inside the
+  app bundle (poster hosts block hotlinking, so bundling keeps every card
+  crisp forever). The catalog references them via `local:<id>` URLs.
+- You can also trigger it any time from the repository's
+  **Actions → Refresh Netflix India catalog → Run workflow**.
+- Once this branch is merged into `main`, the daily schedule activates
+  automatically.
+
+### Optional extras
+- **TMDB (free key)**: if you ever create a key, put it in `.env` as
+  `EXPO_PUBLIC_TMDB_API_KEY` (runtime freshness, Hindi metadata) or as the
+  `TMDB_API_KEY` repository secret (the script then prefers TMDB).
+  Everything works without it.

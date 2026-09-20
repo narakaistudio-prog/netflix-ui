@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Dimensions } from 'react-native';
+import { Platform, View, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,37 +16,32 @@ import { AnimatedHeader } from '@/components/Header/AnimatedHeader';
 import { FeaturedContent } from '@/components/FeaturedContent/FeaturedContent';
 import { MovieList } from '@/components/MovieList/MovieList';
 import { useDeviceMotion } from '@/hooks/useDeviceMotion';
-import movieData from '../../data/movies.json';
-import { MoviesData } from '@/types/movie';
+import { MovieRow } from '@/types/movie';
+import { useCatalog } from '@/hooks/useCatalog';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
-import { usePathname } from 'expo-router';
+import { usePathname, useRouter } from 'expo-router';
+import { useUser } from '@/contexts/UserContext';
 import { TAB_SCREENS } from '@/app/(tabs)/_layout';
-import { GameList } from '@/components/GameList/GameList';
 import { useScrollToTop } from '@react-navigation/native';
 import { useVisionOS } from '@/hooks/useVisionOS';
 import { VisionContainer, HoverableView } from '@/components/ui/VisionContainer';
 
-// const FEATURED_MOVIE = {
-//   id: 'dont-move',
-//   title: "Don't Move",
-//   thumbnail: 'https://i.redd.it/q53e4iwud0971.jpg',
-//   categories: ['Violent', 'Gritty', 'Thriller', 'Drug Lord']
-// };
-const FEATURED_MOVIE = {
-  id: 'dont-move',
-  title: "Don't Move",
-  thumbnail: 'https://occ-0-8407-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABWsjI5VID3ChnY1bGlkeXfdS0qY19EszZmC9vOQjb72s7hyKAfD-5Yy1OAceR9CfLqyxRMWPu15X6_zAf5ELM4gLbXcJL_2B2e8E.jpg?r=bb0',
-  categories: ['Soapy', 'Suspensful', 'Sci-Fi Mystery'],
-  logo: 'https://occ-0-8407-2219.1.nflxso.net/dnm/api/v6/tx1O544a9T7n8Z_G12qaboulQQE/AAAABeTZx41tm9x0TT2G_c3gmJOoK_1n9hhvRhzE76D5f3vwwNaWOEBJDLRl5mU1R3BVXhYYU_okqrGzn_qM-3nUJNqUK8QAETNIh4RZy2M7V7726S4tlW3gvd6KtIF_utcjO714L4rQ7ib3sM2ZhnDLF111_nkdewygq9av5vHduwqf1MgPoP5NIQ.png?r=867'
-};
-
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
+const IS_WEB = Platform.OS === 'web';
+
 export default function HomeScreen() {
-  const { movies } = movieData as MoviesData;
+  const { rows: movies } = useCatalog();
   const insets = useSafeAreaInsets();
   const { tiltX, tiltY } = useDeviceMotion();
   const { isVisionOS } = useVisionOS();
+  const router = useRouter();
+  const { selectedProfile } = useUser();
+
+  const allMovies = movies.flatMap(row => row.movies);
+  // Hero = today's #1 title in India (first Top 10 row), always current
+  const featuredMovie: any =
+    movies.find(r => r.type === 'top_10')?.movies[0] ?? allMovies[0] ?? { id: '1', imageUrl: '' };
 
   const SCROLL_THRESHOLD = 4;
   const SLIDE_ACTIVATION_POINT = 90; // Point at which sliding can start
@@ -131,11 +126,13 @@ export default function HomeScreen() {
     <TabScreenWrapper isActive={isActive} slideDirection={slideDirection}>
       <VisionContainer style={styles.container}>
         <StatusBar style="light" />
-        <AnimatedHeader
-          headerAnimatedProps={headerAnimatedProps}
-          title="For Saúl"
-          scrollDirection={scrollDirection}
-        />
+        {!IS_WEB && (
+          <AnimatedHeader
+            headerAnimatedProps={headerAnimatedProps}
+            title={`For ${selectedProfile?.name ?? 'You'}`}
+            scrollDirection={scrollDirection}
+          />
+        )}
 
         <Animated.ScrollView
           ref={scrollViewRef}
@@ -145,26 +142,45 @@ export default function HomeScreen() {
           ]}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
-          contentContainerStyle={styles.scrollViewContent}
+          contentContainerStyle={[styles.scrollViewContent, IS_WEB && { paddingBottom: 80 }]}
           showsVerticalScrollIndicator={false}
           bounces={false}
         >
-          <LinearGradient
-            colors={['#202036', '#11111d', '#07070c']}
-            locations={[0, 0.4, 0.8]}
-            style={[styles.gradient, { height: SCREEN_HEIGHT * 0.8 }]}
-          />
+          {!IS_WEB && (
+            <LinearGradient
+              colors={['#202036', '#11111d', '#07070c']}
+              locations={[0, 0.4, 0.8]}
+              style={[styles.gradient, { height: SCREEN_HEIGHT * 0.8 }]}
+            />
+          )}
 
           <FeaturedContent
-            movie={FEATURED_MOVIE}
+            movie={{
+              id: featuredMovie.id,
+              title: featuredMovie.title ?? '',
+              thumbnail: featuredMovie.imageUrl ?? '',
+              categories: [],
+              typeLabel: featuredMovie.type === 'SERIES' ? 'SERIES' : 'FILM',
+              year: featuredMovie.year,
+              durationLabel: featuredMovie.type === 'SERIES' ? '1 Season' : '2h 10m',
+              ranking: featuredMovie.ranking_text,
+            }}
             imageStyle={imageStyle}
             categoriesStyle={categoriesStyle}
             buttonsStyle={buttonsStyle}
-            topMargin={insets.top + 90}
+            topMargin={IS_WEB ? 0 : insets.top + 90}
+            variant={IS_WEB ? 'billboard' : 'mobile'}
+            description={featuredMovie.description}
+            onPlay={() =>
+              router.push({
+                pathname: '/movie/[id]',
+                params: { id: featuredMovie.id },
+              })
+            }
           />
 
           {movies.map(row => (
-            row.rowTitle === 'Mobile Games' ? <GameList key={row.rowTitle} {...row} /> : <MovieList key={row.rowTitle} {...row} />
+            <MovieList key={row.rowTitle} {...row} />
           ))}
         </Animated.ScrollView>
       </VisionContainer>

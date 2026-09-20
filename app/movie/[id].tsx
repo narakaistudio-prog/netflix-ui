@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { StyleSheet, Dimensions, useColorScheme } from 'react-native';
+import { Platform, Pressable, StyleSheet, Dimensions, useColorScheme } from 'react-native';
 import { useEffect, useCallback, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
@@ -14,10 +14,12 @@ import Animated, {
     runOnJS,
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import { movies } from '@/data/movies.json';
+import { useCatalog } from '@/hooks/useCatalog';
 import * as Haptics from 'expo-haptics';
+import { impactAsync } from '@/utils/haptics';
 import { BlurView } from 'expo-blur';
 
+const IS_WEB = Platform.OS === 'web';
 const SCALE_FACTOR = 0.83;
 const DRAG_THRESHOLD = Math.min(Dimensions.get('window').height * 0.20, 150);
 const HORIZONTAL_DRAG_THRESHOLD = Math.min(Dimensions.get('window').width * 0.51, 80);
@@ -41,16 +43,17 @@ export default function MovieScreen() {
     const colorScheme = useColorScheme();
     const blurIntensity = useSharedValue(20);
 
-    const numericId = typeof id === 'string' ? parseInt(id, 10) : Array.isArray(id) ? parseInt(id[0], 10) : 0;
-    const movie = movies.flatMap(row => row.movies).find(m => m.id === numericId.toString()) || movies[0].movies[0];
+    const { rows } = useCatalog();
+    const rawId = typeof id === 'string' ? id : Array.isArray(id) ? id[0] : '';
+    const allMovies = rows.flatMap(row => row.movies);
+    const movie =
+        allMovies.find(m => m.id === rawId) ??
+        allMovies.find(m => m.id === String(parseInt(rawId, 10))) ??
+        allMovies[0] ?? { id: rawId, imageUrl: '', title: '' };
 
     // alert(JSON.stringify(movie))
     const handleHapticFeedback = useCallback(() => {
-        try {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-        } catch (error) {
-            console.log('Haptics not available:', error);
-        }
+        impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }, []);
 
     const goBack = useCallback(() => {
@@ -197,24 +200,29 @@ export default function MovieScreen() {
     const composedGestures = Gesture.Simultaneous(panGesture, scrollGesture);
 
     const ScrollComponent = useCallback((props: any) => {
+        const scrollView = (
+            <Animated.ScrollView
+                {...props}
+                onScroll={(event) => {
+                    'worklet';
+                    scrollOffset.value = event.nativeEvent.contentOffset.y;
+                    if (!isDragging.value && translateY.value !== 0) {
+                        translateY.value = 0;
+                    }
+                    props.onScroll?.(event);
+                }}
+                scrollEventThrottle={16}
+                bounces={false}
+            />
+        );
+
+        // Drag-to-dismiss is a touch interaction; on the website the modal
+        // closes via the close button, backdrop click or the Escape key.
+        if (IS_WEB) return scrollView;
+
         return (
             <GestureDetector gesture={composedGestures}>
-                <Animated.ScrollView
-                    {...props}
-                    onScroll={(event) => {
-                        'worklet';
-                        scrollOffset.value = event.nativeEvent.contentOffset.y;
-                        if (!isDragging.value && translateY.value !== 0) {
-                            translateY.value = 0;
-                        }
-                        props.onScroll?.(event);
-                    }}
-                    scrollEventThrottle={16}
-                    // bounces={scrollOffset.value >= 0 && !isDragging.value}
-                    bounces={false}
-
-
-                />
+                {scrollView}
             </GestureDetector>
         );
     }, [composedGestures]);
@@ -227,9 +235,14 @@ export default function MovieScreen() {
         opacity: withSpring(1),
     }));
 
-    const blurStyle = useAnimatedStyle(() => ({
-        intensity: blurIntensity.value,
-    }));
+    useEffect(() => {
+        if (!IS_WEB) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') goBack();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [goBack]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -250,25 +263,45 @@ export default function MovieScreen() {
         };
     }, []);
 
+    const movieProps = {
+        id: movie.id,
+        title: movie.title || '',
+        imageUrl: movie.imageUrl || '',
+        video_url: movie.videoUrl || 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        year: movie.year || '2024',
+        duration: movie.duration || '2h 30m',
+        rating: movie.rating || 'PG-13',
+        description: movie.description || 'No description available',
+        cast: movie.cast || ['Cast not available'],
+        director: movie.director || 'Unknown Director',
+        ranking_text: movie.ranking_text || '#1 in Movies Today',
+        youtubeId: movie.youtubeId,
+    };
+
+    if (IS_WEB) {
+        return (
+            <ThemedView style={styles.container}>
+                <StatusBar animated={true} style="light" />
+                <Pressable style={webStyles.backdrop} onPress={goBack} />
+                <Animated.View style={[webStyles.modal, animatedStyle]}>
+                    <ExpandedPlayer
+                        onClose={goBack}
+                        scrollComponent={ScrollComponent}
+                        movie={movieProps}
+                    />
+                </Animated.View>
+            </ThemedView>
+        );
+    }
+
     return (
         <ThemedView style={styles.container}>
             <StatusBar animated={true} style={statusBarStyle.value} />
             <Animated.View style={[styles.modalContent, animatedStyle]}>
                 <ExpandedPlayer
+                    onClose={goBack}
                     scrollComponent={ScrollComponent}
-                    movie={{
-                        id: numericId,
-                        title: movie.title || '',
-                        imageUrl: movie.imageUrl || '',
-                        video_url: movie.videoUrl || 'https://example.com/default-video.mp4',
-                        year: movie.year || '2024',
-                        duration: movie.duration || '2h 30m',
-                        rating: movie.rating || 'PG-13',
-                        description: movie.description || 'No description available',
-                        cast: movie.cast || ['Cast not available'],
-                        director: movie.director || 'Unknown Director',
-                        ranking_text: movie.ranking_text || '#1 in Movies Today'
-                    }}
+                    movie={movieProps}
                 />
             </Animated.View>
         </ThemedView>
@@ -283,5 +316,23 @@ const styles = StyleSheet.create({
     modalContent: {
         flex: 1,
         backgroundColor: 'transparent',
+    },
+});
+
+const webStyles = StyleSheet.create({
+    backdrop: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    },
+    modal: {
+        position: 'absolute',
+        top: '4%',
+        alignSelf: 'center',
+        width: '94%',
+        maxWidth: 980,
+        height: '92%',
+        borderRadius: 12,
+        overflow: 'hidden',
+        backgroundColor: '#181818',
     },
 });

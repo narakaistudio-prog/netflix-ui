@@ -1,43 +1,360 @@
 {
     "movies": [
         {
-            "rowTitle": "Mobile Games",
+            "rowTitle": "Top 10 Movies in India Today",
+            "type": "top_10",
             "movies": [
                 {
-                    "id": "1",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQXlHfX_1WN1bSiZv4jXieBsZbXRLNIUU9BPzv0Cohep2F2pmqrMzmWwRp7anXyBLRGhrBKMOuoAZoj9v8Si3-mJ6o2-5bc6o2YZtsJSIgpOiM4gcLAETYcGsppaorpaRaXWzgZBX5ftLz-15gi1mBNcD.jpg?r=77f",
-                    "title": "Dead Cells: Netflix Edition",
-                    "type": "Action"
+                    "id": "fp-irumudi",
+                    "imageUrl": "local:fp-irumudi",
+                    "title": "Irumudi",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow) at her request.",
+                    "ranking_text": "#1 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
                 },
                 {
-                    "id": "8",
-                    "imageUrl": "https://cdn2.steamgriddb.com/grid/288da12c771014e02856de1075993bfe.png",
-                    "title": "GTA Vice City",
-                    "type": "Action"
+                    "id": "fp-vishwanath-sons",
+                    "imageUrl": "local:fp-vishwanath-sons",
+                    "title": "Vishwanath & Sons",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Sanjay Vishwanath is an acclaimed professional handgunner in his 40s with a major stake in fame and wealth. When he comes across a woman named Maddy in her 20s, their dynamic poses many issues.",
+                    "ranking_text": "#2 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
                 },
                 {
-                    "id": "5",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQQcDhhT3e1DUow6g0_4qwopgNp7SlXCdu0lUEUsVkOIWO31cqxdLNL_opwXg-xVAEelLSrjpOAAHM7fDTyz-5h-jhQELzJG2faAEOEtTt-4NKcgkLre5Ep4dqwJE3-ZHPioqxe1w3MVDR8J8APA7m4wQ.jpg?r=01d",
-                    "title": "Dumb Ways to Survive",
-                    "type": "Adventure"
+                    "id": "fp-modha-rathri",
+                    "imageUrl": "local:fp-modha-rathri",
+                    "title": "Modha Rathri",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos.",
+                    "ranking_text": "#3 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                 },
                 {
-                    "id": "2",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQcIeF6n2wF0YVb_qZZQnxFsky2xLQEGMq1zxnK5EbjY-3tJVS8YOOdYUzRvrEgBH1NV_Nw761AOTWdfs3vPFpBpjNnpwA148Tj-l4q3e_cCXRoRxMTM17W9t2VsY7QS7M3nTyUB9vbeRZnurR5q4oREQ.jpg?r=af2",
-                    "title": "Bowling Ballers",
-                    "type": "Arcade"
+                    "id": "fp-lust-stories-3",
+                    "imageUrl": "local:fp-lust-stories-3",
+                    "title": "Lust Stories 3",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire.",
+                    "ranking_text": "#4 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
                 },
                 {
-                    "id": "3",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQSfHSN4chf1cmF68hhmMu3hA76r-h-O1OB1-cjSZh7BJsHPpTiGnPe6N8ywi9jVdR5mpXFbD9_aA49IfZCZ9YYowfGtTs_jHDC7YnRlrscX67sFLyokqn8PHPd-QGDx_VoQVbj15XUQsuDSDpuULeDSj.jpg?r=1e8",
-                    "title": "Braid",
-                    "type": "Puzzle"
+                    "id": "fp-gdn",
+                    "imageUrl": "local:fp-gdn",
+                    "title": "G.D.N",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Based on the life of G.D. Naidu, the 'Edison of India', dramatising his groundbreaking innovations and conflicts with authorities.",
+                    "ranking_text": "#5 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
                 },
                 {
-                    "id": "4",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/2DuQlx0fM4wd1nzqm5BFBi6ILa8/AAAAQXnyh2jfpZQvwntLidUqGhMCdvfOmu70gDuCxW2m8zb0Pe2IgbGCPT__U9hZbGyHMTBTc1RxLouspr_bwbq79lmzcrtRxZNLrV2Hmt5PEbzUEvP-rPl3RHcS0rai2eImnN_yhRgu5mLhG5-cMhrPQakm.jpg?r=b5c",
-                    "title": "Country Friends",
-                    "type": "Simulation"
+                    "id": "fp-dhamaal-4",
+                    "imageUrl": "local:fp-dhamaal-4",
+                    "title": "Dhamaal 4",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "The Dhamaal boys are back for another treasure hunt, facing hilarious challenges in their quest for the Treasure of Life.",
+                    "ranking_text": "#6 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-gandhari",
+                    "imageUrl": "local:fp-gandhari",
+                    "title": "Gandhari",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "After her little daughter is abducted at a crowded railway station, a grieving mother must rise from her trauma and confront a shadowy child-trafficking nexus.",
+                    "ranking_text": "#7 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-alpha",
+                    "imageUrl": "local:fp-alpha",
+                    "title": "Alpha",
+                    "type": "FILM",
+                    "year": "2018",
+                    "description": "After a hunting expedition goes awry, a young caveman struggles against the elements to find his way home.",
+                    "ranking_text": "#8 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-best-of-the-best-2026",
+                    "imageUrl": "local:fp-best-of-the-best-2026",
+                    "title": "Best of the Best",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Two childhood best friends join their college's competitive Bollywood dance team only to discover the road to nationals is raucous and cutthroat.",
+                    "ranking_text": "#9 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-korean-kanakaraju",
+                    "imageUrl": "local:fp-korean-kanakaraju",
+                    "title": "Korean Kanakaraju",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Follows a Rayalaseema youth whose life upends when a vessel from Korea brings a spirit that possesses him.",
+                    "ranking_text": "#10 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                }
+            ]
+        },
+        {
+            "rowTitle": "Top 10 Series in India Today",
+            "type": "top_10",
+            "movies": [
+                {
+                    "id": "fp-zakir-khan-papa-yaar",
+                    "imageUrl": "local:fp-zakir-khan-papa-yaar",
+                    "title": "Zakir Khan: Papa Yaar",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "Zakir Khan reflects on his childhood and the special bond he shares with his father, turning personal memories into heartfelt comedy.",
+                    "ranking_text": "#1 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-chumbak",
+                    "imageUrl": "local:fp-chumbak",
+                    "title": "Chumbak",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "Five quirky families navigate life as neighbors in Chumbak Colony, where chaotic conflicts and hilarious antics turn each day into a new chapter.",
+                    "ranking_text": "#2 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-indias-got-latent",
+                    "imageUrl": "local:fp-indias-got-latent",
+                    "title": "India's Got Latent",
+                    "type": "SERIES",
+                    "year": "2024",
+                    "description": "Samay Raina and the guest judges hilariously critique the untapped, undeniably entertaining latent talents of aspiring performers.",
+                    "ranking_text": "#3 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-crew-girl",
+                    "imageUrl": "local:fp-crew-girl",
+                    "title": "Crew Girl",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "16-year-old rower Teagan becomes coxswain of a troubled boys' crew at an elite prep school, navigating team drama, romance and rival crews.",
+                    "ranking_text": "#4 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-operation-safed-sagar",
+                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/f/w350/f56phagbufpmhmrippwwnprgsao.jpg",
+                    "title": "Operation Safed Sagar: The Untold Story of the Kargil War",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "As the Kargil War erupts between India and Pakistan, the Golden Arrows squadron of the Air Force takes flight on a dangerous mission behind enemy lines.",
+                    "ranking_text": "#5 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-monster-lizzie-borden",
+                    "imageUrl": "local:fp-monster-lizzie-borden",
+                    "title": "Monster: The Lizzie Borden Story",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "The story of Lizzie Borden, the infamous Massachusetts woman who was accused of the 1892 axe murder of her parents.",
+                    "ranking_text": "#6 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-musafir-cafe",
+                    "imageUrl": "local:fp-musafir-cafe",
+                    "title": "Musafir Cafe",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "Chander feels an undeniable connection with Sudha. Years later, he builds a new life in the hills with Preeti, but memories of the past linger.",
+                    "ranking_text": "#7 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-the-gentlemen-2024",
+                    "imageUrl": "local:fp-the-gentlemen-2024",
+                    "title": "The Gentlemen",
+                    "type": "SERIES",
+                    "year": "2024",
+                    "description": "When aristocratic Eddie inherits the family estate, he discovers that it's home to an enormous weed empire — and its proprietors aren't going anywhere.",
+                    "ranking_text": "#8 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-fauda",
+                    "imageUrl": "local:fp-fauda",
+                    "title": "Fauda",
+                    "type": "SERIES",
+                    "year": "2015",
+                    "description": "A top Israeli agent comes out of retirement to hunt for a Palestinian militant he thought he'd killed, setting a chaotic chain of events into motion.",
+                    "ranking_text": "#9 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-the-early-spring",
+                    "imageUrl": "local:fp-the-early-spring",
+                    "title": "The Early Spring",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "New to Beijing, Shang Zhitao crosses paths with Luan Nian, a true creative genius. Drawn to each other, they navigate an intense relationship in the urban jungle.",
+                    "ranking_text": "#10 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                }
+            ]
+        },
+        {
+            "rowTitle": "Popular on Netflix",
+            "type": "normal",
+            "movies": [
+                {
+                    "id": "fp-lust-stories-3",
+                    "imageUrl": "local:fp-lust-stories-3",
+                    "title": "Lust Stories 3",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire.",
+                    "ranking_text": "#4 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-gdn",
+                    "imageUrl": "local:fp-gdn",
+                    "title": "G.D.N",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Based on the life of G.D. Naidu, the 'Edison of India', dramatising his groundbreaking innovations and conflicts with authorities.",
+                    "ranking_text": "#5 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-dhamaal-4",
+                    "imageUrl": "local:fp-dhamaal-4",
+                    "title": "Dhamaal 4",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "The Dhamaal boys are back for another treasure hunt, facing hilarious challenges in their quest for the Treasure of Life.",
+                    "ranking_text": "#6 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-gandhari",
+                    "imageUrl": "local:fp-gandhari",
+                    "title": "Gandhari",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "After her little daughter is abducted at a crowded railway station, a grieving mother must rise from her trauma and confront a shadowy child-trafficking nexus.",
+                    "ranking_text": "#7 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-alpha",
+                    "imageUrl": "local:fp-alpha",
+                    "title": "Alpha",
+                    "type": "FILM",
+                    "year": "2018",
+                    "description": "After a hunting expedition goes awry, a young caveman struggles against the elements to find his way home.",
+                    "ranking_text": "#8 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-best-of-the-best-2026",
+                    "imageUrl": "local:fp-best-of-the-best-2026",
+                    "title": "Best of the Best",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Two childhood best friends join their college's competitive Bollywood dance team only to discover the road to nationals is raucous and cutthroat.",
+                    "ranking_text": "#9 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-korean-kanakaraju",
+                    "imageUrl": "local:fp-korean-kanakaraju",
+                    "title": "Korean Kanakaraju",
+                    "type": "FILM",
+                    "year": "2026",
+                    "description": "Follows a Rayalaseema youth whose life upends when a vessel from Korea brings a spirit that possesses him.",
+                    "ranking_text": "#10 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-crew-girl",
+                    "imageUrl": "local:fp-crew-girl",
+                    "title": "Crew Girl",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "16-year-old rower Teagan becomes coxswain of a troubled boys' crew at an elite prep school, navigating team drama, romance and rival crews.",
+                    "ranking_text": "#4 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-operation-safed-sagar",
+                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/f/w350/f56phagbufpmhmrippwwnprgsao.jpg",
+                    "title": "Operation Safed Sagar: The Untold Story of the Kargil War",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "As the Kargil War erupts between India and Pakistan, the Golden Arrows squadron of the Air Force takes flight on a dangerous mission behind enemy lines.",
+                    "ranking_text": "#5 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-monster-lizzie-borden",
+                    "imageUrl": "local:fp-monster-lizzie-borden",
+                    "title": "Monster: The Lizzie Borden Story",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "The story of Lizzie Borden, the infamous Massachusetts woman who was accused of the 1892 axe murder of her parents.",
+                    "ranking_text": "#6 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-musafir-cafe",
+                    "imageUrl": "local:fp-musafir-cafe",
+                    "title": "Musafir Cafe",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "Chander feels an undeniable connection with Sudha. Years later, he builds a new life in the hills with Preeti, but memories of the past linger.",
+                    "ranking_text": "#7 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "fp-the-gentlemen-2024",
+                    "imageUrl": "local:fp-the-gentlemen-2024",
+                    "title": "The Gentlemen",
+                    "type": "SERIES",
+                    "year": "2024",
+                    "description": "When aristocratic Eddie inherits the family estate, he discovers that it's home to an enormous weed empire — and its proprietors aren't going anywhere.",
+                    "ranking_text": "#8 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-fauda",
+                    "imageUrl": "local:fp-fauda",
+                    "title": "Fauda",
+                    "type": "SERIES",
+                    "year": "2015",
+                    "description": "A top Israeli agent comes out of retirement to hunt for a Palestinian militant he thought he'd killed, setting a chaotic chain of events into motion.",
+                    "ranking_text": "#9 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                },
+                {
+                    "id": "fp-the-early-spring",
+                    "imageUrl": "local:fp-the-early-spring",
+                    "title": "The Early Spring",
+                    "type": "SERIES",
+                    "year": "2026",
+                    "description": "New to Beijing, Shang Zhitao crosses paths with Luan Nian, a true creative genius. Drawn to each other, they navigate an intense relationship in the urban jungle.",
+                    "ranking_text": "#10 in India Today",
+                    "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
                 }
             ]
         },
@@ -224,32 +541,6 @@
                 {
                     "id": "8019726122",
                     "imageUrl": "https://occ-0-7-6.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABTQNS1iBZYCkgcpBGyIKp2t3_M1ZIDW8eJ4Ilw7VJxENo8J5HPrzxJMjpyq_6BgUSvUTHwk6Q_CcBITIl0meM2MxxKnM4SLrKOc.jpg?r=5cd"
-                }
-            ]
-        },
-        {
-            "rowTitle": "Top 10 Movies in the U.S. Today",
-            "type": "top_10",
-            "movies": [
-                {
-                    "id": "10-1",
-                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/g/w350/gzmfmmpjhomofksahsdac62dyg2.webp"
-                },
-                {
-                    "id": "10-4",
-                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/c/w350/cqsthxrvutfnannjtiehexiackv.webp",
-                },
-                {
-                    "id": "10-2",
-                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/t/w350/tprh0rm00esnefni1zxqqttipzj.webp"
-                },
-                {
-                    "id": "10-3",
-                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/h/w350/hruo0cxc5xinxvnmia2r5fjzqvd.webp"
-                },
-                {
-                    "id": "10-5",
-                    "imageUrl": "https://flixpatrol.com/runtime/cache/files/posters/5/w350/5prgsfk28eapmhr247mhzp95upa.webp"
                 }
             ]
         },

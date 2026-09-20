@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, Text, Image, FlatList } from 'react-native';
+import { Platform, View, StyleSheet, TouchableOpacity, ScrollView, Text, Image, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '@/contexts/UserContext';
 import { usePathname, useRouter } from 'expo-router';
@@ -14,6 +14,8 @@ import Animated, {
     useSharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeImage } from '@/components/SafeImage';
+import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
 const exampleLikedShowsAndMovies = [
     { id: 2, imageUrl: 'https://occ-0-2348-2568.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABU2Tv7ElpWoaZskSjugnCfgUyxx0k8zFkrSLnw8OByra6I4Pu0hvpNMKPqHKk0_VIq_pP47WE4eiU6bLjH30mOAHixRdrQeMX5296hvGq7hFvPhm-1kaKYp2MLO5H3oxUV1q8UEmz3NwsmrYXnnzvNJ2aXgp7drGClF671VG2U62G9s3qaes9qXaz6ChmJpD31wnaRJjsoqvybX0wzGk0Ij_wU1zH2yqI5b7fNA3D4-AsawmmgN6jCiScTDHpH-252lKjP9LJsbjwVGMht06gnyOeADlJQ.jpg' },
@@ -70,11 +72,12 @@ export default function ProfileScreen() {
                 horizontal
                 data={exampleLikedShowsAndMovies}
                 keyExtractor={item => item.id.toString()}
-                renderItem={useCallback(({ item }) => (
+                renderItem={useCallback(({ item }: { item: { id: number; imageUrl: string } }) => (
                     <View style={styles.likedItemContainer}>
-                        <Image
+                        <SafeImage
                             source={{ uri: item.imageUrl }}
                             style={styles.likedShowImage}
+                            transition={200}
                         />
                     </View>
                 ), [])}
@@ -91,10 +94,11 @@ export default function ProfileScreen() {
             horizontal
             data={exampleMyList}
             keyExtractor={item => item.id.toString()}
-            renderItem={useCallback(({ item }) => (
-                <Image
+            renderItem={useCallback(({ item }: { item: { id: number; imageUrl: string } }) => (
+                <SafeImage
                     style={styles.myListImage}
                     source={{ uri: item.imageUrl }}
+                    transition={200}
                 />
             ), [])}
             showsHorizontalScrollIndicator={false}
@@ -108,7 +112,7 @@ export default function ProfileScreen() {
     return (
         <TabScreenWrapper isActive={isActive} slideDirection={slideDirection}>
             <View style={styles.container}>
-                <AnimatedBlurView
+                {Platform.OS !== 'web' && (<AnimatedBlurView
                     tint="dark"
                     style={[styles.headerBlur]}
                     animatedProps={headerAnimatedProps}
@@ -124,7 +128,7 @@ export default function ProfileScreen() {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </AnimatedBlurView>
+                </AnimatedBlurView>)}
                 <Animated.ScrollView
                     ref={scrollViewRef}
                     style={styles.scrollView}
@@ -132,15 +136,17 @@ export default function ProfileScreen() {
                     scrollEventThrottle={16}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
-                        paddingTop: insets.top + 50,
+                        paddingTop: Platform.OS === 'web' ? WEB_NAV_HEIGHT + 24 : insets.top + 50,
                         paddingBottom: 100,
+                        ...(Platform.OS === 'web' ? { maxWidth: 760, width: '100%', alignSelf: 'center' as const } : null),
                     }}
                 >
 
                     <TouchableOpacity style={styles.profileSection} onPress={() => router.push('/switch-profile')}>
-                        <Image
+                        <SafeImage
                             source={{ uri: selectedProfile?.avatar }}
                             style={styles.profileImage}
+                            transition={200}
                         />
                         <View style={styles.profileNameContainer}>
                             <Text style={styles.profileName}>{selectedProfile?.name}</Text>
@@ -162,9 +168,11 @@ export default function ProfileScreen() {
 
                     <View style={styles.notificationPreview}>
                         <View style={styles.notificationDot} />
-                        <Image
+                        <SafeImage
                             source={{ uri: 'https://dnm.nflximg.net/api/v6/dGKhUGb9YF21yyDjKrWwmGN1H8o/AAAABdl3F7BjF71fC6gaLl7xCpGIak8CxmdDgY3FK8dEQhlfx5n5O-z9hhOTtzYyr1nr4Ajn5sAyHjAGGBIiFO0tCnDG5AevRDi10_WuPvvEFYTUQfZAEpUBPwrFbAKyalsQREodRB1mKPylnjU.jpg?r=c90' }}
                             style={styles.notificationImage}
+                            transition={200}
+                            fallbackLabel="The Perfect Couple"
                         />
                         <View style={styles.notificationText}>
                             <Text style={styles.notificationTitle}>New Arrival</Text>

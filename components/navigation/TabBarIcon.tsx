@@ -9,7 +9,7 @@ export function TabBarIcon(props: {
     <Ionicons
       size={24}
       style={{ marginBottom: -3 }}
-      {...props}
+      {...(props as any)}
     />
   );
 }

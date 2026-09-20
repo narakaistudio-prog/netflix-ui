@@ -8,7 +8,7 @@ import Animated, {
     useAnimatedStyle,
     interpolate
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
+import { impactAsync, ImpactFeedbackStyle } from '@/utils/haptics';
 import { useRouter } from 'expo-router';
 import { Image as ExpoImage } from 'expo-image';
 
@@ -29,7 +29,7 @@ export function AnimatedHeader({ headerAnimatedProps, title, scrollDirection }: 
     const router = useRouter();
 
     const onCategoryPress = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        impactAsync(ImpactFeedbackStyle.Light);
         setShowCategories(true);
     };
 

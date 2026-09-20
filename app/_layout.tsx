@@ -2,7 +2,7 @@ import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect, useState} from 'react';
-import {StyleSheet, useColorScheme, View} from 'react-native';
+import {Platform, StyleSheet, useColorScheme, View} from 'react-native';
 import {RootScaleProvider} from '@/contexts/RootScaleContext';
 import {useRootScale} from '@/contexts/RootScaleContext';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
@@ -13,9 +13,9 @@ import {BlurView} from 'expo-blur';
 import {WhoIsWatching} from '@/components/WhoIsWatching';
 import {UserProvider} from '@/contexts/UserContext';
 import {useUser} from '@/contexts/UserContext';
-import {Image} from 'expo-image';
 import useCachedResources from '@/hooks/useCachedResources';
 import { useVisionOS } from '@/hooks/useVisionOS';
+import { WebNavBar } from '@/components/WebNavBar';
 
 function AnimatedStack() {
     const {scale} = useRootScale();
@@ -50,7 +50,9 @@ function AnimatedStack() {
         ]}>
 
 
-            {(isModalActive && canBlur) && (
+            {/* On web the backdrop-filter frost would blur the whole page
+                (including the dialog); the website uses a solid backdrop. */}
+            {(isModalActive && canBlur) && Platform.OS !== 'web' && (
                 <BlurView
                     intensity={50}
                     style={[
@@ -151,14 +153,6 @@ export default function RootLayout() {
         SplashScreen.hideAsync();
     }, []);
 
-    useEffect(() => {
-        Image.prefetch([
-            // Add your common image URLs here
-            'path-to-netflix-icon.png',
-            'path-to-netflix-outline.png',
-        ]);
-    }, []);
-
     if (!isLoaded) {
         return null; // Early return after all hooks are called
     }
@@ -171,6 +165,7 @@ export default function RootLayout() {
                     <RootScaleProvider>
                         <OverlayProvider>
                             <AnimatedStack/>
+                            <WebNavBar/>
                         </OverlayProvider>
                     </RootScaleProvider>
                 </ThemeProvider>

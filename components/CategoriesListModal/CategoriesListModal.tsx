@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { View, Text, Pressable, ScrollView, Modal, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
+import { impactAsync } from '@/utils/haptics';
 
 interface CategoriesListModalProps {
     visible: boolean;
@@ -38,15 +40,25 @@ const categories = [
     'Audio Description in English'
 ];
 
+// Web's backdrop-filter frost looks hazy; use a solid sheet surface there.
+const SheetBackground: any = Platform.OS === 'web'
+    ? (props: any) => (
+        <View
+            {...props}
+            style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(24, 24, 24, 0.98)' }]}
+        />
+    )
+    : (props: any) => <BlurView {...props} intensity={96} tint="dark" style={StyleSheet.absoluteFill} />;
+
 export function CategoriesListModal({ visible, onClose }: CategoriesListModalProps) {
     const insets = useSafeAreaInsets();
 
     const handleCategoryPress = async (category: string) => {
-        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        await impactAsync(Haptics.ImpactFeedbackStyle.Light);
     };
 
     const handleClose = async () => {
-        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        await impactAsync(Haptics.ImpactFeedbackStyle.Medium);
         onClose();
     };
 
@@ -59,7 +71,7 @@ export function CategoriesListModal({ visible, onClose }: CategoriesListModalPro
             onRequestClose={handleClose}
         >
             <View style={styles.overlay}>
-                <BlurView intensity={96} tint="dark" style={StyleSheet.absoluteFill}>
+                <SheetBackground>
                     <ScrollView
                         style={[styles.content, { paddingTop: insets.top }]}
                         contentContainerStyle={[
@@ -87,7 +99,7 @@ export function CategoriesListModal({ visible, onClose }: CategoriesListModalPro
                             <Ionicons name="close" size={26} color="#000" />
                         </Pressable>
                     </View>
-                </BlurView>
+                </SheetBackground>
             </View>
         </Modal>
     );

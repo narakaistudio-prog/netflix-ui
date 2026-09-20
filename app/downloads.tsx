@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { Platform, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
 import { usePathname, useRouter } from 'expo-router';
 import { TAB_SCREENS } from '@/app/(tabs)/_layout';
 import { Ionicons } from '@expo/vector-icons';
+import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
 export default function DownloadsScreen() {
     const pathname = usePathname();
@@ -21,7 +22,7 @@ export default function DownloadsScreen() {
 
     return (
         <TabScreenWrapper isActive={isActive} slideDirection={slideDirection} >
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={[styles.container, Platform.OS === 'web' && { paddingTop: WEB_NAV_HEIGHT }]}>
                 <View style={styles.header}>
                     <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
                         <Ionicons name="arrow-back" size={24} color="white" />
@@ -32,7 +33,7 @@ export default function DownloadsScreen() {
                 </View>
 
                 <ScrollView
-                    contentContainerStyle={styles.content}
+                    contentContainerStyle={[styles.content, Platform.OS === 'web' && { maxWidth: 640, alignSelf: 'center', width: '100%' }]}
                     showsVerticalScrollIndicator={false}
                 >
                     <View style={styles.iconContainer}>

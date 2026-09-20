@@ -11,7 +11,7 @@ type CategoryCardProps = {
 
 export function CategoryCard({ title, backgroundColor, imageUrl, size = 'small' }: CategoryCardProps) {
     return (
-        <Link href={`/category/${title.toLowerCase()}`} asChild>
+        <Link href={`/category/${title.toLowerCase()}` as any} asChild>
             <Pressable>
                 <View
                     style={{
