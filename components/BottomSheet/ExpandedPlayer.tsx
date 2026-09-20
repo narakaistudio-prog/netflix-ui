@@ -128,6 +128,18 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
 
     const startTrailer = () => setTrailerStage('play');
 
+    // Full movies legally stream only on Netflix itself, so "Play" deep-links
+    // to the title on netflix.com (search fallback works for every catalog id).
+    const openOnNetflix = () => {
+        const q = encodeURIComponent(String(movieData.title ?? '').trim());
+        const url = `https://www.netflix.com/search?q=${q}`;
+        if (IS_WEB) {
+            window.open(url, '_blank', 'noopener');
+        } else {
+            Linking.openURL(url);
+        }
+    };
+
     // On the website a frosted-glass backdrop-filter made the whole dialog
     // look hazy; Netflix's desktop dialog is a solid dark surface instead.
     const RootContainer: any = IS_WEB ? View : BlurView;
@@ -262,9 +274,9 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <Pressable style={styles.playButton}>
+                        <Pressable style={styles.playButton} onPress={openOnNetflix}>
                             <Ionicons name="play" size={24} color="black" />
-                            <ThemedText style={styles.playButtonText}>Play</ThemedText>
+                            <ThemedText style={styles.playButtonText}>Play on Netflix</ThemedText>
                         </Pressable>
 
                         <Pressable
