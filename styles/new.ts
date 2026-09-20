@@ -212,7 +212,6 @@ export const newStyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff',
         flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
         padding: 8,

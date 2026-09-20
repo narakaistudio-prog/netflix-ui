@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 const Button = styled.Pressable`
-  ${Platform.select({
+  ${(Platform.select as any)({
     visionOS: {
       // visionOS specific styles
       depth: 10,

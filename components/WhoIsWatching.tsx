@@ -117,7 +117,10 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
     };
 
     const handleProfileLayout = (profile: Profile, event: LayoutChangeEvent) => {
-        event.target.measure((x, y, width, height, pageX, pageY) => {
+        const target = event.target as any;
+        // `measure` is not implemented for every host component on web
+        if (typeof target?.measure !== 'function') return;
+        target.measure((x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
             const imageSize = width * 0.8;
             setProfileLayouts(prev => ({
                 ...prev,

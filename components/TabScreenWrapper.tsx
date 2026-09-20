@@ -7,7 +7,7 @@ import Animated, {
     withSpring,
     runOnJS
 } from 'react-native-reanimated';
-import { usePathname, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 
 interface Props {
     children: React.ReactNode;
@@ -18,34 +18,25 @@ interface Props {
 export function TabScreenWrapper({ children, isActive, slideDirection }: Props) {
     const navigation = useNavigation();
     const [hasInitialized, setHasInitialized] = useState(false);
-
-    // Only animate if it's a tab navigation
-    var shouldAnimate = false;
-    const state = navigation.getState();
-    const currentRoute = state.routes[state.index].name;
-    const previousRoute = state.index > 0 ? state.routes[state.index - 1].name : null;
-    // console.log('Current route:', currentRoute);
-    // console.log('Previous route:', previousRoute);
-    const possibleRoutes = ['new', 'index', '(profile)/profile', null];
-    if (possibleRoutes.includes(currentRoute) && possibleRoutes.includes(previousRoute)) {
-        shouldAnimate = true;
-    }
-
-
-    // return <>{children}</>
-
-
-    //This is no longer needed because of the expo-router 4, so return just children for upcoming react navigation 
-
-    if (!shouldAnimate) {
-        return <>{children}</>;
-    }
-
-    const translateX = useSharedValue(isActive ? 0 : (slideDirection === 'left' ? -25 : 25));
-    const opacity = useSharedValue(isActive ? 1 : 0);
     const [isAnimating, setIsAnimating] = useState(false);
 
+    // Only animate if it's a tab navigation
+    const state = navigation.getState();
+    const currentRoute = state.routes[state.index]?.name;
+    const previousRoute = state.index > 0 ? state.routes[state.index - 1]?.name : null;
+    const possibleRoutes = ['new', 'index', '(profile)/profile', null];
+    const shouldAnimate =
+        possibleRoutes.includes(currentRoute) && possibleRoutes.includes(previousRoute);
+
+    // NOTE: all hooks must run unconditionally (before any early return),
+    // otherwise React throws "rendered fewer hooks than expected" when the
+    // navigation state changes.
+    const translateX = useSharedValue(isActive ? 0 : (slideDirection === 'left' ? -25 : 25));
+    const opacity = useSharedValue(isActive ? 1 : 0);
+
     useEffect(() => {
+        if (!shouldAnimate) return;
+
         // Trigger initial animation
         if (!hasInitialized && isActive) {
             translateX.value = slideDirection === 'left' ? -25 : 25;
@@ -73,7 +64,7 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
                 runOnJS(setIsAnimating)(false);
             });
         }
-    }, [isActive, slideDirection]);
+    }, [isActive, slideDirection, shouldAnimate]);
 
     const animatedStyle = useAnimatedStyle(() => ({
         position: 'absolute',
@@ -82,6 +73,10 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
         transform: [{ translateX: translateX.value }],
         opacity: opacity.value,
     }));
+
+    if (!shouldAnimate) {
+        return <>{children}</>;
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: '#000' }}>
@@ -95,4 +90,4 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
             </Animated.View>
         </View>
     );
-} 
+}

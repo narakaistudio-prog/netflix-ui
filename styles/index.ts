@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         backgroundColor: Platform.select({
             visionOS: 'transparent',
             default: '#000',
-        }),
+        } as any),
     },
     gradient: {
         position: 'absolute',
@@ -95,13 +95,15 @@ export const styles = StyleSheet.create({
         overflow: 'hidden',
         borderWidth: 0.5,
         borderColor: 'rgba(255, 255, 255, 0.2)',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        ...(Platform.select({
+            web: { boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)' },
+            default: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+            },
+        }) as any),
         elevation: 5,
     },
     featuredImageContainer: {
@@ -119,6 +121,19 @@ export const styles = StyleSheet.create({
         // left: 0,
         zIndex: 2,
         alignSelf: 'center',
+    },
+    featuredFallbackTitle: {
+        position: 'absolute',
+        bottom: 100,
+        alignSelf: 'center',
+        zIndex: 2,
+        color: '#fff',
+        fontSize: 32,
+        fontWeight: '800',
+        textAlign: 'center',
+        paddingHorizontal: 24,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
     },
     featuredImage: {
         width: '100%',

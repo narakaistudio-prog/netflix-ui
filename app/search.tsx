@@ -1,33 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+    Platform,
     View,
     TextInput,
     StyleSheet,
     TouchableOpacity,
     ScrollView,
-    Image,
     Text,
-    Dimensions,
     ActivityIndicator,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import moviesData from '../data/movies.json';
+import { Movie } from '@/types/movie';
+import { useCatalog } from '@/hooks/useCatalog';
 import { useDebounce } from 'use-debounce';
+import { SafeImage } from '@/components/SafeImage';
+import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
-const { width } = Dimensions.get('window');
-const GAME_CARD_WIDTH = width / 3 - 16;
+const IS_WEB = Platform.OS === 'web';
 
 export default function Search() {
-    // Get mobile games and TV shows/movies
-    const mobileGames = moviesData.movies[0].movies;
-    const tvAndMovies = moviesData.movies[5].movies;
+    // Everything comes from the live catalog
+    const { rows } = useCatalog();
+    const tvAndMovies = rows.flatMap(r => r.movies);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [filteredGames, setFilteredGames] = useState(mobileGames);
-    const [filteredShows, setFilteredShows] = useState(tvAndMovies);
+    const [filteredShows, setFilteredShows] = useState<Movie[]>(tvAndMovies);
     const [debouncedSearchTerm] = useDebounce(searchQuery, 500);
     const inputRef = useRef<TextInput>(null);
     const router = useRouter();
@@ -38,23 +38,25 @@ export default function Search() {
         }
     }, [searchQuery]);
 
+    // Keep results in sync when the live catalog arrives
+    useEffect(() => {
+        if (!searchQuery.trim()) {
+            setFilteredShows(tvAndMovies);
+        }
+    }, [rows]);
+
     useEffect(() => {
         if (!debouncedSearchTerm.trim()) {
-            setFilteredGames(mobileGames);
             setFilteredShows(tvAndMovies);
             setIsLoading(false);
             return;
         }
 
         const searchText = debouncedSearchTerm.toLowerCase();
-        const matchedGames = mobileGames.filter(game =>
-            game.title.toLowerCase().includes(searchText)
-        );
         const matchedShows = tvAndMovies.filter(show =>
-            show.title.toLowerCase().includes(searchText)
+            (show.title ?? '').toLowerCase().includes(searchText)
         );
 
-        setFilteredGames(matchedGames);
         setFilteredShows(matchedShows);
         setIsLoading(false);
     }, [debouncedSearchTerm]);
@@ -73,7 +75,7 @@ export default function Search() {
             <StatusBar style="light" />
             <Stack.Screen options={{ headerShown: false }} />
 
-            <View style={styles.header}>
+            <View style={[styles.header, IS_WEB && webStyles.header]}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={24} color="white" />
                 </TouchableOpacity>
@@ -82,7 +84,7 @@ export default function Search() {
                     <TextInput
                         ref={inputRef}
                         style={styles.searchInput}
-                        placeholder="Search games, shows, movies..."
+                        placeholder="Search shows, movies..."
                         placeholderTextColor="#6b6b6b"
                         value={searchQuery}
                         onChangeText={setSearchQuery}
@@ -100,43 +102,10 @@ export default function Search() {
                 <View style={styles.loaderContainer}>
                     <ActivityIndicator size="large" color="#fff" />
                 </View>
-            ) : searchQuery.trim() !== '' && filteredGames.length === 0 && filteredShows.length === 0 ? (
+            ) : searchQuery.trim() !== '' && filteredShows.length === 0 ? (
                 <NoResultsView />
             ) : (
-                <ScrollView style={styles.content}>
-                    {/* Mobile Games Section - only show if there are games */}
-                    {filteredGames.length > 0 && (
-                        <View style={styles.section}>
-                            <Text style={styles.sectionTitle}>
-                                {searchQuery.trim() ? 'Top Results - Games' : 'Recommended Mobile Games'}
-                            </Text>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={styles.gamesRow}
-                            >
-                                {filteredGames.map((game, index) => (
-                                    <TouchableOpacity
-                                        key={index}
-                                        style={styles.gameCard}
-                                        onPress={() => router.push(`/movie/${game.id}`)}
-                                    >
-                                        <Image
-                                            source={{ uri: game.imageUrl }}
-                                            style={styles.gameImage}
-                                        />
-                                        <Text style={styles.gameTitle} numberOfLines={2}>
-                                            {game.title}
-                                        </Text>
-                                        <Text style={styles.gameType}>
-                                            {game.type}
-                                        </Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
-                        </View>
-                    )}
-
+                <ScrollView style={[styles.content, IS_WEB && webStyles.content]}>
                     {/* TV Shows & Movies Section - only show if there are shows */}
                     {filteredShows.length > 0 && (
                         <View style={styles.section}>
@@ -150,9 +119,11 @@ export default function Search() {
                                         style={styles.showItem}
                                         onPress={() => router.push(`/movie/${item.id}`)}
                                     >
-                                        <Image
+                                        <SafeImage
                                             source={{ uri: item.imageUrl }}
                                             style={styles.showImage}
+                                            transition={200}
+                                            fallbackLabel={item.title}
                                         />
                                         <View style={styles.showInfo}>
                                             <Text style={styles.showTitle}>{item.title}</Text>
@@ -222,26 +193,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         gap: 12,
     },
-    gameCard: {
-        width: GAME_CARD_WIDTH,
-    },
-    gameImage: {
-        width: GAME_CARD_WIDTH,
-        height: GAME_CARD_WIDTH,
-        borderRadius: 8,
-        backgroundColor: '#333',
-    },
-    gameTitle: {
-        color: 'white',
-        fontSize: 14,
-        marginTop: 8,
-        fontWeight: 'bold',
-    },
-    gameType: {
-        color: '#666',
-        fontSize: 12,
-        marginTop: 4,
-    },
     showsList: {
         paddingHorizontal: 16,
     },
@@ -290,5 +241,20 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         letterSpacing: 0.5,
+    },
+});
+
+const webStyles = StyleSheet.create({
+    header: {
+        paddingTop: WEB_NAV_HEIGHT + 12,
+        marginTop: 0,
+        maxWidth: 1000,
+        width: '100%',
+        alignSelf: 'center',
+    },
+    content: {
+        maxWidth: 1000,
+        width: '100%',
+        alignSelf: 'center',
     },
 });

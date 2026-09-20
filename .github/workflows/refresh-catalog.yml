@@ -1,0 +1,43 @@
+name: Refresh Netflix India catalog
+
+on:
+  schedule:
+    # Daily ~02:30 IST
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # No API keys required: scrapes FlixPatrol's daily Netflix India TOP 10.
+      # (If a TMDB_API_KEY secret ever exists, the script prefers it.)
+      - name: Refresh catalog (key-less)
+        run: node scripts/refresh-catalog.mjs
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+
+      - name: Commit updated catalog
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/movies.json assets/posters
+          if git diff --cached --quiet; then
+            echo "No catalog changes."
+          else
+            git commit -m "chore(catalog): daily Netflix India refresh"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
