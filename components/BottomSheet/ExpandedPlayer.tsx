@@ -364,14 +364,37 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull, on
                                     }}
                                 >
                                     <View style={{
-                                        width: 36,
-                                        height: 36,
-                                        borderRadius: 18,
-                                        backgroundColor: '#E50914',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                                        width: 120,
+                                        height: 68,
+                                        borderRadius: 6,
+                                        overflow: 'hidden',
+                                        backgroundColor: '#151515',
+                                        position: 'relative',
                                     }}>
-                                        <Ionicons name="play" size={18} color="#fff" style={{ marginLeft: 2 }} />
+                                        <SafeImage
+                                            source={{
+                                                uri: episode.still_path
+                                                    ? (episode.still_path.startsWith('http')
+                                                        ? episode.still_path
+                                                        : `https://image.tmdb.org/t/p/w300${episode.still_path}`)
+                                                    : movieData.imageUrl,
+                                            }}
+                                            style={StyleSheet.absoluteFill}
+                                            contentFit="cover"
+                                            fallbackLabel={`${movieData.title} Episode ${episode.episode}`}
+                                        />
+                                        <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.32)', alignItems: 'center', justifyContent: 'center' }]}>
+                                            <View style={{
+                                                width: 32,
+                                                height: 32,
+                                                borderRadius: 16,
+                                                backgroundColor: 'rgba(229,9,20,0.95)',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}>
+                                                <Ionicons name="play" size={16} color="#fff" style={{ marginLeft: 2 }} />
+                                            </View>
+                                        </View>
                                     </View>
                                     <View style={{ flex: 1 }}>
                                         <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>
