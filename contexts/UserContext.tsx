@@ -23,8 +23,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
             const found = profilesData.profiles.find(p => p.id === saved);
             if (found) return found;
         }
-        // On web, immediately select the primary profile so homepage and nav render without blocker
-        return Platform.OS === 'web' ? profilesData.profiles[0] : null;
+        // Always default to the primary profile so selectedProfile is never null
+        return profilesData.profiles[0];
     });
 
     const selectProfile = useCallback((profileId: string) => {

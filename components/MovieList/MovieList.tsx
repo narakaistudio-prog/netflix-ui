@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Pressable, FlatList, StyleSheet, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, FlatList, ScrollView, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { styles } from '@/styles';
 import { Movie, MovieRow } from '@/types/movie';
@@ -245,30 +245,52 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
                 <Text style={styles.sectionTitle}>{rowTitle}</Text>
             )}
             <View style={IS_WEB ? rowStyles.rowWrapper : undefined}>
-                <FlatList
-                    ref={listRef}
-                    horizontal
-                    data={movies}
-                    renderItem={renderItem}
-                    keyExtractor={(item, index) => `${item.id}-${index}`}
-                    showsHorizontalScrollIndicator={false}
-                    onScroll={(e) => {
-                        offsetX.current = e.nativeEvent.contentOffset.x;
-                        setPage(Math.min(pages - 1, Math.round(offsetX.current / pageStep)));
-                    }}
-                    scrollEventThrottle={16}
-                    onContentSizeChange={(w) => setContentWidth(w)}
-                    contentContainerStyle={[
-                        styles.contentList,
-                        isTop10 && styles.top10List,
-                        IS_WEB && {
-                            paddingHorizontal: ROW_PADDING,
-                            columnGap: isTop10 ? 28 : 12,
-                            paddingTop: 10,
-                            paddingBottom: 22,
-                        },
-                    ]}
-                />
+                {IS_WEB ? (
+                    <ScrollView
+                        ref={listRef as any}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        onScroll={(e: any) => {
+                            offsetX.current = e.nativeEvent.contentOffset.x;
+                            setPage(Math.min(pages - 1, Math.round(offsetX.current / pageStep)));
+                        }}
+                        scrollEventThrottle={16}
+                        onContentSizeChange={(w) => setContentWidth(w)}
+                        contentContainerStyle={[
+                            styles.contentList,
+                            isTop10 && styles.top10List,
+                            {
+                                paddingHorizontal: ROW_PADDING,
+                                columnGap: isTop10 ? 28 : 12,
+                                paddingTop: 10,
+                                paddingBottom: 22,
+                            },
+                        ]}
+                    >
+                        {movies.map((item, index) => renderItem({ item, index }))}
+                    </ScrollView>
+                ) : (
+                    <FlatList
+                        ref={listRef}
+                        horizontal
+                        data={movies}
+                        renderItem={renderItem}
+                        keyExtractor={(item, index) => `${item.id}-${index}`}
+                        showsHorizontalScrollIndicator={false}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
+                        onScroll={(e) => {
+                            offsetX.current = e.nativeEvent.contentOffset.x;
+                            setPage(Math.min(pages - 1, Math.round(offsetX.current / pageStep)));
+                        }}
+                        scrollEventThrottle={16}
+                        onContentSizeChange={(w) => setContentWidth(w)}
+                        contentContainerStyle={[
+                            styles.contentList,
+                            isTop10 && styles.top10List,
+                        ]}
+                    />
+                )}
                 {IS_WEB && (
                     <>
                         <Pressable
