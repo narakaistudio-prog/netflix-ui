@@ -122,12 +122,15 @@ MIT License
 The bundled catalog is refreshed automatically by the
 `refresh-catalog.yml` GitHub Action:
 
-- **Daily** it scrapes FlixPatrol's *TOP 10 on Netflix in India* (movies +
-  TV shows, updated every day), pulls each title's poster/description and
-  commits the result to `data/movies.json`. **No API key, no sign-up.**
-- Poster images are downloaded into `assets/posters/` and shipped inside the
-  app bundle (poster hosts block hotlinking, so bundling keeps every card
-  crisp forever). The catalog references them via `local:<id>` URLs.
+- **Daily** it first crawls the public IsItInMyCountry title sitemap and keeps
+  titles whose page lists India availability. It pulls the title poster,
+  description, year, type, rating, runtime, seasons and episode total, then
+  commits the result to `data/movies.json`. **No discovery API key or sign-up.**
+- If the broad public source is unavailable, it safely falls back to
+  FlixPatrol's daily *TOP 10 on Netflix in India* rather than erasing the
+  previous catalog.
+- Poster images downloaded from the refresh source are shipped inside the app
+  bundle; broader catalogue entries retain their public Netflix artwork URL.
 - You can also trigger it any time from the repository's
   **Actions → Refresh Netflix India catalog → Run workflow**.
 - Once this branch is merged into `main`, the daily schedule activates
@@ -144,7 +147,8 @@ The bundled catalog is refreshed automatically by the
   is never bundled into the client app.
 
 ### Coverage note
-FlixPatrol's public page supplies Netflix India's daily Top 10, not an official
-complete Netflix India catalogue. OMDb enriches those discovered titles but
-cannot determine Netflix country availability or enumerate every Netflix title;
-the app therefore makes no completeness guarantee.
+The public availability index is broader than a Top 10 chart, but it is not an
+official Netflix API and can lag licensing changes or omit a title. India
+availability is filtered from the source's country rows; OMDb enriches those
+records but does not determine availability. The refresh keeps a safe fallback
+instead of claiming an unverifiable official 100% catalogue.

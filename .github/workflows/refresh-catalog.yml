@@ -23,8 +23,9 @@ jobs:
         with:
           node-version: 20
 
-      # Public FlixPatrol discovery works without keys. OMDb optionally enriches
-      # every discovered title with metadata and season/episode totals.
+      # Public full-catalog discovery works without keys. If it is unavailable,
+      # the script falls back to FlixPatrol Top 10; OMDb enriches discovered
+      # titles with metadata and season/episode totals server-side.
       - name: Refresh catalog
         run: node scripts/refresh-catalog.mjs
         env:

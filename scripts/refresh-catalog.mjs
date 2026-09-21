@@ -3,10 +3,11 @@
  * Daily Netflix India catalog refresh.
  *
  * Public discovery needs no key:
- *  1. Scrapes FlixPatrol's "TOP 10 on Netflix in India" (updated daily)
- *  2. Fetches each title's page for its poster (og:image) and description
- *  3. Optionally enriches discovered titles with OMDb metadata
- *  4. Rewrites data/movies.json so the bundled catalog never goes stale
+ *  1. Crawls a public Netflix availability sitemap and filters India rows
+ *  2. Falls back to FlixPatrol's daily India TOP 10 if the broad source fails
+ *  3. Reads each discovered title's poster, plot, rating and availability data
+ *  4. Optionally enriches titles with OMDb metadata and episode details
+ *  5. Rewrites data/movies.json so the bundled catalog never goes stale
  *
  * OMDb is an optional server-side enricher; the public discovery fallback
  * always remains available.
@@ -20,6 +21,9 @@ import { dirname, join } from 'node:path';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' };
 const REQUEST_TIMEOUT_MS = 20_000;
+const FULL_SOURCE = 'https://isitinmycountry.com';
+const FULL_PAGE_CONCURRENCY = 24;
+const FULL_ROW_SIZE = 48;
 
 const SAMPLE_VIDEOS = [
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
@@ -217,22 +221,43 @@ async function getHtml(url) {
 }
 
 const meta = (html, prop) => {
-    const m = html.match(new RegExp(`<meta[^>]+property="${prop}"[^>]+content="([^"]*)"`))
-        ?? html.match(new RegExp(`<meta[^>]+name="${prop}"[^>]+content="([^"]*)"`));
-    return m ? m[1] : undefined;
+    const escaped = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const propertyMatch = html.match(new RegExp(`<meta[^>]+property=["']${escaped}["'][^>]+content=["']([^"']*)["']`, 'i'));
+    const nameMatch = html.match(new RegExp(`<meta[^>]+name=["']${escaped}["'][^>]+content=["']([^"']*)["']`, 'i'));
+    return propertyMatch?.[1] ?? nameMatch?.[1];
 };
 
+const decodeHtml = (value) => String(value || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&#x27;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const htmlToText = (html) => decodeHtml(
+    html
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' '),
+);
+
 const OMDB_API_KEY = process.env.OMDB_API_KEY || '';
+const OMDB_MAX_REQUESTS = Number.parseInt(process.env.OMDB_MAX_REQUESTS || '900', 10);
+let omdbRequests = 0;
 const omdbCache = new Map();
 
 /**
- * OMDb is used only to enrich titles already discovered from the public
- * Netflix/FlixPatrol source. It is never required for the key-less fallback.
+ * OMDb is used only to enrich titles already discovered from a public
+ * Netflix availability source. It is never required for the key-less fallback.
  */
 async function getOmdb(params) {
     if (!OMDB_API_KEY) return null;
     const cacheKey = JSON.stringify(params);
     if (omdbCache.has(cacheKey)) return omdbCache.get(cacheKey);
+    if (omdbRequests >= OMDB_MAX_REQUESTS) return null;
+    omdbRequests += 1;
 
     const url = new URL('https://www.omdbapi.com/');
     url.searchParams.set('apikey', OMDB_API_KEY);
@@ -336,6 +361,157 @@ async function getOmdbMetadata(item, kind) {
         console.log(`OMDb enrichment skipped for ${item.title} (${error.message})`);
         return {};
     }
+}
+
+async function mapConcurrent(items, concurrency, mapper, onProgress) {
+    const results = new Array(items.length);
+    let cursor = 0;
+    let completed = 0;
+    const worker = async () => {
+        while (true) {
+            const index = cursor++;
+            if (index >= items.length) return;
+            results[index] = await mapper(items[index], index);
+            completed += 1;
+            if (onProgress && (completed % 100 === 0 || completed === items.length)) {
+                onProgress(completed, items.length);
+            }
+        }
+    };
+    await Promise.all(
+        Array.from({ length: Math.min(concurrency, items.length) }, () => worker()),
+    );
+    return results;
+}
+
+function parseFullCatalogTitle(slug, html) {
+    const text = htmlToText(html);
+    const availabilityStart = text.search(/Availability by Country/i);
+    const header = text.slice(0, availabilityStart > 0 ? availabilityStart : 900);
+    const indiaStart = text.search(/\bIndia\s+Seasons\b/i);
+    if (indiaStart < 0) return null;
+    const india = text.slice(indiaStart, indiaStart + 600);
+    const details = header.match(/(\d{4})\s*·\s*(Series|Movie)\s*·\s*([0-9]+(?:\s*(?:min|m|h|hr|hrs|hour|hours))?(?:\s+[0-9]+(?:\s*(?:min|m|h|hr|hrs|hour|hours))?)?)/i);
+    if (!details) return null;
+
+    const type = details[2].toLowerCase() === 'series' ? 'tv' : 'movie';
+    const seasonRange = india.match(/S\s*1\s*[–—-]\s*S?\s*(\d+)/i);
+    const headerSeasonCount = header.match(/\b(\d+)\s+Seasons?\b/i)?.[1];
+    const seasonCount = seasonRange
+        ? Number.parseInt(seasonRange[1], 10)
+        : Number.parseInt(headerSeasonCount || '1', 10);
+    const episodeMatch = india.match(/([\d,]+)\s+ep\./i);
+    const episodeCount = episodeMatch
+        ? Number.parseInt(episodeMatch[1].replace(/,/g, ''), 10)
+        : undefined;
+    const titleFromHeading = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1];
+    const title = decodeHtml(titleFromHeading || meta(html, 'og:title') || slug.replace(/-/g, ' '))
+        .replace(/\s*[|—]\s*Netflix.*$/i, '')
+        .trim();
+    const runtime = details[3].trim();
+    const netflixId = html.match(/netflix\.com\/title\/(\d+)/i)?.[1];
+    const item = {
+        id: `iinm-${slug}`,
+        title,
+        type: type === 'tv' ? 'SERIES' : 'FILM',
+        mediaType: type,
+        imageUrl: meta(html, 'og:image') || '',
+        description: meta(html, 'og:description'),
+        year: details[1],
+        rating: header.match(new RegExp(`(\\d+(?:\\.\\d+)?)\\s+${details[1]}\\s*·`))?.[1],
+        duration: type === 'tv'
+            ? `${Math.max(seasonCount || 1, 1)} Season${seasonCount === 1 ? '' : 's'}`
+            : runtime,
+        ...(type === 'tv' && runtime ? { runtime } : {}),
+        ...(episodeCount ? { episodeCount } : {}),
+        ...(type === 'tv' && seasonCount === 1 && episodeCount ? { seasonEpisodeCounts: [episodeCount] } : {}),
+        ...(netflixId ? { netflix_id: netflixId } : {}),
+        videoUrl: SAMPLE_VIDEOS[slug.length % SAMPLE_VIDEOS.length],
+    };
+    return item;
+}
+
+function fullCatalogRows(label, items) {
+    return Array.from({ length: Math.ceil(items.length / FULL_ROW_SIZE) }, (_, index) => {
+        const start = index * FULL_ROW_SIZE;
+        const end = Math.min(start + FULL_ROW_SIZE, items.length);
+        return {
+            rowTitle: `${label} ${start + 1}–${end}`,
+            type: 'normal',
+            movies: items.slice(start, end),
+        };
+    });
+}
+
+/**
+ * Broad public discovery path. IsItInMyCountry publishes a sitemap of title
+ * pages and each page includes an India availability row. It is not an
+ * official Netflix API, but it is materially broader than a Top 10 chart.
+ */
+async function scrapeFullPublicCatalog() {
+    const sitemap = await getHtml(`${FULL_SOURCE}/sitemap.xml`);
+    const slugs = [...sitemap.matchAll(/<loc>\s*https?:\/\/isitinmycountry\.com\/title\/([^<\s/]+)\/?\s*<\/loc>/gi)]
+        .map(match => match[1])
+        .filter((slug, index, all) => slug && all.indexOf(slug) === index);
+    if (slugs.length < 500) throw new Error(`full sitemap too small (${slugs.length} titles)`);
+
+    let pageFailures = 0;
+    const pages = await mapConcurrent(
+        slugs,
+        FULL_PAGE_CONCURRENCY,
+        async slug => {
+            try {
+                return { ok: true, item: parseFullCatalogTitle(slug, await getHtml(`${FULL_SOURCE}/title/${slug}`)) };
+            } catch {
+                pageFailures += 1;
+                return { ok: false, item: null };
+            }
+        },
+        (completed, total) => console.log(`Full catalog pages: ${completed}/${total}`),
+    );
+    const fetched = pages.length - pageFailures;
+    const items = pages.map(page => page.item).filter(Boolean);
+    const movies = items.filter(item => item.mediaType === 'movie');
+    const shows = items.filter(item => item.mediaType === 'tv');
+    if (fetched < slugs.length * 0.60 || movies.length < 100 || shows.length < 30) {
+        throw new Error(`full catalog incomplete (${items.length} India titles, ${fetched}/${slugs.length} pages)`);
+    }
+
+    // The public page has title-level metadata. Spend the server-side OMDb
+    // budget mainly on series so season/episode details can be filled in.
+    let seriesEnriched = 0;
+    const enriched = await mapConcurrent(
+        items,
+        6,
+        async item => {
+            const shouldEnrich = Boolean(OMDB_API_KEY)
+                && (item.mediaType === 'tv' || !item.rating || !item.description)
+                && (item.mediaType !== 'tv' || seriesEnriched++ < 300);
+            if (!shouldEnrich) return item;
+            const omdb = await getOmdbMetadata(item, item.mediaType);
+            return {
+                ...item,
+                ...omdb,
+                // Netflix artwork/plot is the discovery source of truth.
+                imageUrl: item.imageUrl || omdb.imageUrl || '',
+                description: item.description || omdb.description,
+                rating: item.rating || omdb.rating,
+            };
+        },
+        (completed, total) => console.log(`OMDb enrichment: ${completed}/${total}`),
+    );
+    const fullMovies = enriched.filter(item => item.mediaType === 'movie');
+    const fullShows = enriched.filter(item => item.mediaType === 'tv');
+    return {
+        source: 'isitinmycountry',
+        movieItems: fullMovies,
+        showItems: fullShows,
+        rows: [
+            ...fullCatalogRows('Netflix India Movies', fullMovies),
+            ...fullCatalogRows('Netflix India Series', fullShows),
+        ],
+        extra: [],
+    };
 }
 
 /** Scrape today's Netflix India top 10 (movies + TV shows). */
@@ -447,31 +623,44 @@ const existing = JSON.parse(readFileSync(join(ROOT, 'data/movies.json'), 'utf8')
 const TRAILERS = JSON.parse(readFileSync(join(ROOT, 'data/trailers.json'), 'utf8'));
 
 let data;
-try {
-    data = await scrapeFlixPatrol();
-    console.log('Scraped FlixPatrol Netflix India TOP 10 (no API key needed).');
-} catch (error) {
-    // A temporary block, DNS failure, or changed HTML must never erase the
-    // last known-good catalog. Exiting successfully also keeps the daily
-    // GitHub Action green while the next run retries discovery.
-    console.log(`Public discovery unavailable (${error.message}) — keeping existing catalog.`);
-    process.exit(0);
+const useFullSource = process.env.CATALOG_DISCOVERY !== 'top10';
+if (useFullSource) {
+    try {
+        data = await scrapeFullPublicCatalog();
+        console.log(`Discovered ${data.movieItems.length} movies and ${data.showItems.length} India titles from the public full catalog.`);
+    } catch (error) {
+        console.log(`Full public catalog unavailable (${error.message}) — trying the daily Top 10.`);
+    }
+}
+if (!data) {
+    try {
+        data = await scrapeFlixPatrol();
+        console.log('Scraped FlixPatrol Netflix India TOP 10 (no API key needed).');
+    } catch (error) {
+        // A temporary block, DNS failure, or changed HTML must never erase the
+        // last known-good catalog. Exiting successfully also keeps the daily
+        // GitHub Action green while the next run retries discovery.
+        console.log(`Public discovery unavailable (${error.message}) — keeping existing catalog.`);
+        process.exit(0);
+    }
 }
 
 const {
     movieItems: discoveredMovies = [],
     showItems: discoveredShows = [],
     extra = [],
+    rows: discoveredRows,
 } = data;
+const isFullCatalog = Array.isArray(discoveredRows);
 const previousMovies = existing.movies.find(r => r.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [];
 const previousShows = existing.movies.find(r => r.rowTitle === 'Top 10 Series in India Today')?.movies ?? [];
-const movieItems = discoveredMovies.length ? discoveredMovies : previousMovies;
-const showItems = discoveredShows.length ? discoveredShows : previousShows;
+const movieItems = isFullCatalog || discoveredMovies.length ? discoveredMovies : previousMovies;
+const showItems = isFullCatalog || discoveredShows.length ? discoveredShows : previousShows;
 if (!movieItems.length && !showItems.length) {
     console.log('Nothing fetched and no previous catalog exists — keeping files unchanged.');
     process.exit(0);
 }
-if (!discoveredMovies.length || !discoveredShows.length) {
+if (!isFullCatalog && (!discoveredMovies.length || !discoveredShows.length)) {
     console.log('Discovery returned only one chart; carrying forward the missing chart from the previous catalog.');
 }
 
@@ -480,13 +669,18 @@ const REBUILT = new Set([
     'Top 10 Series in India Today',
     'Popular on Netflix',
 ]);
+const isRebuiltRow = row => REBUILT.has(row.rowTitle)
+    || /^Netflix India (Movies|Series) \d+[–-]\d+$/.test(row.rowTitle);
 const evergreen = existing.movies.filter(
-    r => r.type !== 'games' && r.type !== 'top_10' && !REBUILT.has(r.rowTitle),
+    r => r.type !== 'games' && r.type !== 'top_10' && !isRebuiltRow(r),
 );
-
-const rows = [
+const sourceRows = discoveredRows ?? [
     { rowTitle: 'Top 10 Movies in India Today', type: 'top_10', movies: movieItems },
     { rowTitle: 'Top 10 Series in India Today', type: 'top_10', movies: showItems },
+];
+
+const rows = [
+    ...sourceRows,
     ...extra,
     ...evergreen,
 ].filter(r => r && r.movies?.length);
