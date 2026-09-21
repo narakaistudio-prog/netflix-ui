@@ -81,7 +81,6 @@ function GridCard({ item, index, isTop10, onPress }: {
                 <SafeImage
                     source={{ uri: item.imageUrl }}
                     style={page.poster}
-                    transition={200}
                     fallbackLabel={item.title}
                 />
                 {isTop10 ? (

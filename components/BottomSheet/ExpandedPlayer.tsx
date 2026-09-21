@@ -13,6 +13,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import { newStyles } from '@/styles/new';
 import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
+import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
 // YouTube's iframe player dies with "Error 153" inside hosted preview frames,
@@ -40,12 +41,24 @@ interface MovieData {
     director?: string;
     ranking_text?: string;
     youtubeId?: string;
+    type?: string;
+    // Embed fields (optional — if present, the Play button launches the iframe embed)
+    mediaType?: 'movie' | 'tv';
+    tmdb_id?: string | number;
+    imdb_id?: string;
+    embed_provider?: 'nxsha' | 'nhd' | 'custom';
+    embed_url?: string;
+    initialSeason?: number;
+    initialEpisode?: number;
+    totalEpisodesInSeason?: number;
 }
 
 interface ExpandedPlayerProps {
     scrollComponent: (props: any) => React.ReactElement;
-    movie: MovieData;
+    movie: MovieData & Partial<Movie>;
     onClose?: () => void;
+    /** Called when Play is tapped; parent mounts the EmbedPlayer overlay. */
+    onPlayFull?: (movie: MovieData) => void;
 }
 
 interface PlaybackStatus {
@@ -62,7 +75,7 @@ interface VideoRef {
 
 
 
-export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlayerProps) {
+export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: ExpandedPlayerProps) {
     const ScrollComponentToUse = scrollComponent || ScrollView;
     const insets = useSafeAreaInsets();
     const videoRef = useRef<Video | null>(null);
@@ -128,9 +141,16 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
 
     const startTrailer = () => setTrailerStage('play');
 
-    // Full movies legally stream only on Netflix itself, so "Play" deep-links
-    // to the title on netflix.com (search fallback works for every catalog id).
-    const openOnNetflix = () => {
+    // If the catalog entry carries an embed id, launch our iframe player;
+    // otherwise fall back to opening netflix.com search in a new tab.
+    const hasEmbed = Boolean(
+        onPlayFull && (movieData.embed_url || movieData.tmdb_id || movieData.imdb_id),
+    );
+    const handlePlay = () => {
+        if (hasEmbed && onPlayFull) {
+            onPlayFull(movieData);
+            return;
+        }
         const q = encodeURIComponent(String(movieData.title ?? '').trim());
         const url = `https://www.netflix.com/search?q=${q}`;
         if (IS_WEB) {
@@ -180,17 +200,40 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                     </View>
                     )
                 ) : (
-                <Video
-                    ref={videoRef}
-                    style={styles.video}
-                    source={{ uri: movieData.video_url ?? '' }}
-                    useNativeControls={false}
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    isMuted={isMuted}
-                    shouldPlay
-                    onPlaybackStatusUpdate={onPlaybackStatusUpdate}
-                />
+                    <View style={[styles.video, { backgroundColor: '#14141c', justifyContent: 'center', alignItems: 'center' }]}>
+                        {movieData.imageUrl ? (
+                            <SafeImage
+                                source={{ uri: movieData.imageUrl }}
+                                style={StyleSheet.absoluteFill}
+                                contentFit="cover"
+                            />
+                        ) : null}
+                        <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.55)' }]} />
+                        <Pressable
+                            style={{ alignItems: 'center', gap: 10, zIndex: 10 }}
+                            onPress={handlePlay}
+                        >
+                            <View style={{
+                                width: 68,
+                                height: 68,
+                                borderRadius: 34,
+                                backgroundColor: '#E50914',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderWidth: 2,
+                                borderColor: '#fff',
+                            }}>
+                                <Ionicons name="play" size={36} color="#fff" style={{ marginLeft: 4 }} />
+                            </View>
+                            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '800', textAlign: 'center', textShadowColor: 'rgba(0,0,0,0.8)', textShadowRadius: 6 }}>
+                                {hasEmbed
+                                    ? (movieData.mediaType === 'tv' || movieData.type === 'SERIES'
+                                        ? `Play ${movieData.title} (S1:E1)`
+                                        : `Play ${movieData.title}`)
+                                    : 'Play on Netflix'}
+                            </Text>
+                        </Pressable>
+                    </View>
                 )}
                 <View style={styles.videoOverlay}>
                     <Pressable
@@ -200,41 +243,6 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                         <Ionicons name="close-outline" size={26} color="white" />
                     </Pressable>
                 </View>
-                {!trailerActive && (<>
-                <View style={styles.muteOverlay}>
-                    <Pressable
-                        style={styles.soundButton}
-                        onPress={() => setIsMuted(!isMuted)}
-                    >
-                        <Ionicons
-                            name={isMuted ? "volume-mute" : "volume-medium"}
-                            size={18}
-                            color="white"
-                        />
-                    </Pressable>
-                </View>
-                <View style={styles.sliderContainer}>
-                    <Slider
-                        style={styles.slider}
-                        progress={progress}
-                        minimumValue={min}
-                        maximumValue={max}
-                        onValueChange={(value) => {
-                            videoRef.current?.setPositionAsync?.(value);
-                        }}
-                        theme={{
-                            minimumTrackTintColor: '#db0000',
-                            // maximumTrackTintColor: 'rgba(255, 255, 255, 0.795)',
-                            bubbleBackgroundColor: '#db0000',
-                        }}
-                        thumbWidth={5}
-                        sliderHeight={5}
-                        containerStyle={styles.sliderInner}
-                        disableTrackFollow={false}
-                        disableTapEvent={false}
-                    />
-                </View>
-                </>)}
             </View>
 
             <ScrollComponentToUse
@@ -252,7 +260,9 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                             position: 'absolute',
                             left: 0,
                         }}>N</Text>
-                        <Text style={newStyles.netflixTag}>FILM</Text>
+                        <Text style={newStyles.netflixTag}>
+                            {movieData.mediaType === 'tv' || movieData.type === 'SERIES' ? 'SERIES' : 'FILM'}
+                        </Text>
                     </View>
                     <ThemedText style={styles.title}>{movieData.title}</ThemedText>
 
@@ -274,9 +284,13 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <Pressable style={styles.playButton} onPress={openOnNetflix}>
+                        <Pressable style={styles.playButton} onPress={handlePlay}>
                             <Ionicons name="play" size={24} color="black" />
-                            <ThemedText style={styles.playButtonText}>Play on Netflix</ThemedText>
+                            <ThemedText style={styles.playButtonText}>
+                                {hasEmbed
+                                    ? (movieData.mediaType === 'tv' || movieData.type === 'SERIES' ? 'Play S1:E1' : 'Play')
+                                    : 'Play on Netflix'}
+                            </ThemedText>
                         </Pressable>
 
                         <Pressable
@@ -311,6 +325,48 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                     <ThemedText style={styles.description}>
                         {movieData.description}
                     </ThemedText>
+
+                    {(movieData.mediaType === 'tv' || movieData.type === 'SERIES') && (
+                        <View style={{ marginTop: 18, marginBottom: 12 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                                <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800' }}>Episodes</Text>
+                                <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{movieData.duration ?? 'Season 1'}</Text>
+                            </View>
+                            <Pressable
+                                style={({ hovered }: any) => [{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    backgroundColor: hovered ? '#2a2a2a' : '#222',
+                                    borderRadius: 8,
+                                    padding: 12,
+                                    gap: 12,
+                                    borderWidth: 1,
+                                    borderColor: '#333',
+                                }]}
+                                onPress={handlePlay}
+                            >
+                                <View style={{
+                                    width: 36,
+                                    height: 36,
+                                    borderRadius: 18,
+                                    backgroundColor: '#E50914',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                    <Ionicons name="play" size={18} color="#fff" style={{ marginLeft: 2 }} />
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>
+                                        Episode 1 • Pilot
+                                    </Text>
+                                    <Text style={{ color: '#888', fontSize: 12, marginTop: 2 }}>
+                                        Hindi Dub & Subtitles Available
+                                    </Text>
+                                </View>
+                                <Ionicons name="chevron-forward" size={18} color="#888" />
+                            </Pressable>
+                        </View>
+                    )}
 
                     <View style={styles.castInfo}>
                         <ThemedText style={styles.castLabel}>Cast: </ThemedText>
