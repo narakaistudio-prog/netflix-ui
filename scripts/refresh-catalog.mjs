@@ -39,6 +39,17 @@ const SERIES_EPISODE_COUNTS = {
     'The Scandal': 8,
 };
 
+const SERIES_SEASON_EPISODES = {
+    'Chumbak': [16],
+    "India's Got Latent": [12, 8],
+    'Crew Girl': [8],
+    'Monster: The Lizzie Borden Story': [8],
+    'Operation Safed Sagar: The Untold Story of the Kargil War': [6],
+    'Musafir Cafe': [8],
+    'The Gentlemen': [8, 8],
+    'The Scandal': [8],
+};
+
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 const POSTERS_DIR = join(ROOT, 'assets', 'posters');
@@ -134,6 +145,9 @@ async function scrapeFlixPatrol() {
                 ...(kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
                     ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
                     : {}),
+                ...(kind === 'tv' && SERIES_SEASON_EPISODES[item.title]
+                    ? { seasonEpisodeCounts: SERIES_SEASON_EPISODES[item.title] }
+                    : {}),
                 description: meta(page, 'og:description'),
                 ranking_text: `#${item.rank} in India Today`,
                 youtubeId: TRAILERS[item.slug] || undefined,
@@ -147,6 +161,9 @@ async function scrapeFlixPatrol() {
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
                 ...(kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
                     ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
+                    : {}),
+                ...(kind === 'tv' && SERIES_SEASON_EPISODES[item.title]
+                    ? { seasonEpisodeCounts: SERIES_SEASON_EPISODES[item.title] }
                     : {}),
                 ranking_text: `#${item.rank} in India Today`,
                 videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],

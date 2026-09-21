@@ -52,7 +52,9 @@ interface MovieData {
     initialEpisode?: number;
     totalEpisodesInSeason?: number;
     episodeCount?: number;
+    seasonEpisodeCounts?: number[];
     seasons?: Array<{
+        season_number?: number;
         episode_count?: number;
         episodes?: Episode[];
     }>;
@@ -65,7 +67,11 @@ interface ExpandedPlayerProps {
     /** Called when Play is tapped; parent mounts the EmbedPlayer overlay. */
     onPlayFull?: (movie: MovieData) => void;
     /** Called when a specific episode row is tapped. */
-    onPlayEpisode?: (episode: number) => void;
+    onPlayEpisode?: (season: number, episode: number) => void;
+    /** Currently selected season in the parent player. */
+    currentSeason?: number;
+    /** Changes the selected season without starting playback. */
+    onSelectSeason?: (season: number) => void;
 }
 
 interface PlaybackStatus {
@@ -82,7 +88,15 @@ interface VideoRef {
 
 
 
-export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull, onPlayEpisode }: ExpandedPlayerProps) {
+export function ExpandedPlayer({
+    scrollComponent,
+    movie,
+    onClose,
+    onPlayFull,
+    onPlayEpisode,
+    currentSeason = 1,
+    onSelectSeason,
+}: ExpandedPlayerProps) {
     const ScrollComponentToUse = scrollComponent || ScrollView;
     const insets = useSafeAreaInsets();
     const videoRef = useRef<Video | null>(null);
@@ -125,20 +139,39 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull, on
     const episodeCount = isSeries
         ? movieData.episodeCount
             ?? movieData.totalEpisodesInSeason
+            ?? movieData.seasonEpisodeCounts?.reduce((total, count) => total + count, 0)
             ?? movieData.seasons?.reduce((total, season) => (
                 total + (season.episode_count ?? season.episodes?.length ?? 0)
             ), 0)
         : undefined;
-    const episodeLabel = episodeCount && episodeCount > 0
-        ? `${episodeCount} Episodes`
-        : (movieData.duration ?? 'Season 1');
+    const inferredSeasonCount = Number(movieData.duration?.match(/(\d+)\s+Seasons?/i)?.[1] ?? 0);
+    const seasonCount = isSeries
+        ? Math.max(
+            1,
+            inferredSeasonCount,
+            movieData.seasonEpisodeCounts?.length ?? 0,
+            movieData.seasons?.length ?? 0,
+        )
+        : 0;
+    const seasonOptions = Array.from({ length: seasonCount }, (_, index) => index + 1);
+    const selectedSeasonData = movieData.seasons?.find(s => s.season_number === currentSeason)
+        ?? movieData.seasons?.[currentSeason - 1];
+    const currentSeasonEpisodeCount = isSeries
+        ? selectedSeasonData?.episodes?.length
+            ?? selectedSeasonData?.episode_count
+            ?? movieData.seasonEpisodeCounts?.[currentSeason - 1]
+            ?? (seasonCount === 1 ? episodeCount : undefined)
+        : undefined;
+    const episodeLabel = currentSeasonEpisodeCount && currentSeasonEpisodeCount > 0
+        ? `${currentSeasonEpisodeCount} Episodes`
+        : (episodeCount && episodeCount > 0 ? `${episodeCount} Episodes` : 'Episodes');
     const episodeItems: Episode[] = isSeries
-        ? (movieData.seasons?.[0]?.episodes?.length
-            ? movieData.seasons[0].episodes
+        ? (selectedSeasonData?.episodes?.length
+            ? selectedSeasonData.episodes
             : Array.from(
-                { length: Math.max(episodeCount ?? 1, 1) },
+                { length: Math.max(currentSeasonEpisodeCount ?? 1, 1) },
                 (_, index) => ({
-                    season: 1,
+                    season: currentSeason,
                     episode: index + 1,
                     name: `Episode ${index + 1}`,
                 }),
@@ -340,6 +373,38 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull, on
 
                     {isSeries && (
                         <View style={{ marginTop: 18, marginBottom: 12 }}>
+                            {seasonOptions.length > 1 && (
+                                <View style={{ marginBottom: 14 }}>
+                                    <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800', marginBottom: 9 }}>Seasons</Text>
+                                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+                                        {seasonOptions.map((seasonNumber) => {
+                                            const selected = seasonNumber === currentSeason;
+                                            return (
+                                                <Pressable
+                                                    key={seasonNumber}
+                                                    onPress={() => onSelectSeason?.(seasonNumber)}
+                                                    style={{
+                                                        flexDirection: 'row',
+                                                        alignItems: 'center',
+                                                        gap: 5,
+                                                        borderRadius: 6,
+                                                        paddingVertical: 8,
+                                                        paddingHorizontal: 12,
+                                                        backgroundColor: selected ? '#fff' : '#2a2a2a',
+                                                        borderWidth: 1,
+                                                        borderColor: selected ? '#fff' : '#555',
+                                                    }}
+                                                >
+                                                    <Text style={{ color: selected ? '#000' : '#ddd', fontSize: 13, fontWeight: '800' }}>
+                                                        Season {seasonNumber}
+                                                    </Text>
+                                                    {selected ? <Ionicons name="checkmark" size={15} color="#000" /> : null}
+                                                </Pressable>
+                                            );
+                                        })}
+                                    </View>
+                                </View>
+                            )}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                                 <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800' }}>Episodes</Text>
                                 <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{episodeLabel}</Text>
@@ -359,7 +424,7 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull, on
                                         marginBottom: 8,
                                     }]}
                                     onPress={() => {
-                                        if (onPlayEpisode) onPlayEpisode(episode.episode);
+                                        if (onPlayEpisode) onPlayEpisode(currentSeason, episode.episode);
                                         else handlePlay();
                                     }}
                                 >

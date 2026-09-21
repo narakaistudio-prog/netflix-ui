@@ -35,6 +35,8 @@ export interface Movie {
     duration?: string;
     /** Total number of available episodes for TV/series entries. */
     episodeCount?: number;
+    /** Episode totals by season, in season order. */
+    seasonEpisodeCounts?: number[];
     rating?: string;
     description?: string;
     cast?: string[];

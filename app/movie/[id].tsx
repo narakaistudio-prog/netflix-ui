@@ -319,6 +319,15 @@ export default function MovieScreen() {
         }
     }, [currentProvider, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
 
+    const getEpisodeCountForSeason = useCallback((targetSeason: number) => {
+        return movie.seasonEpisodeCounts?.[targetSeason - 1]
+            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episodes?.length
+            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episode_count
+            ?? movie.seasons?.[targetSeason - 1]?.episodes?.length
+            ?? movie.seasons?.[targetSeason - 1]?.episode_count
+            ?? movie.episodeCount;
+    }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
+
     const handlePlayFull = useCallback(() => {
         const canEmbed = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id);
         if (!canEmbed) {
@@ -327,43 +336,45 @@ export default function MovieScreen() {
             if (IS_WEB) window.open(url, '_blank', 'noopener');
             return;
         }
+        const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
         setProviderIndex(0);
-        setSeason(1);
+        setSeason(initialSeason);
         setEpisode(1);
-        setTotalEps(mediaType === 'tv' ? movie.episodeCount : undefined);
-        if (mediaType === 'tv' && Array.isArray(movie.seasons) && movie.seasons.length) {
-            const s = movie.seasons[0];
-            setSeason(s.season_number);
-            setEpisode(1);
-            setTotalEps(s.episodes?.length ?? s.episode_count);
-        }
+        setTotalEps(mediaType === 'tv' ? getEpisodeCountForSeason(initialSeason) : undefined);
         setPlayerOpen(true);
         try {
             markWatched({
-                id: `${movie.id}${mediaType === 'tv' ? `-s${1}-e${1}` : ''}`,
+                id: `${movie.id}${mediaType === 'tv' ? `-s${initialSeason}-e${1}` : ''}`,
                 titleId: String(movie.id),
                 title: movie.title,
                 type: mediaType,
                 tmdbId: parsedTmdb,
                 imdbId: movie.imdb_id,
                 provider: currentProvider,
-                season: mediaType === 'tv' ? 1 : undefined,
+                season: mediaType === 'tv' ? initialSeason : undefined,
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, cycle]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, cycle, getEpisodeCountForSeason]);
 
-    const handlePlayEpisode = useCallback((selectedEpisode: number) => {
+    const handleSelectSeason = useCallback((selectedSeason: number) => {
+        if (mediaType !== 'tv') return;
+        setSeason(selectedSeason);
+        setEpisode(1);
+        setTotalEps(getEpisodeCountForSeason(selectedSeason));
+    }, [mediaType, getEpisodeCountForSeason]);
+
+    const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
         if (mediaType !== 'tv') {
             handlePlayFull();
             return;
         }
         setProviderIndex(0);
-        setSeason(1);
+        setSeason(selectedSeason);
         setEpisode(selectedEpisode);
-        setTotalEps(movie.episodeCount);
+        setTotalEps(getEpisodeCountForSeason(selectedSeason));
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, movie.episodeCount]);
+    }, [mediaType, handlePlayFull, getEpisodeCountForSeason]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
@@ -389,6 +400,7 @@ export default function MovieScreen() {
         year: movie.year || '2024',
         duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
         episodeCount: movie.episodeCount,
+        seasonEpisodeCounts: movie.seasonEpisodeCounts,
         seasons: movie.seasons,
         type: movie.type,
         rating: movie.rating || 'PG-13',
@@ -419,6 +431,8 @@ export default function MovieScreen() {
                             movie={movieProps}
                             onPlayFull={handlePlayFull}
                             onPlayEpisode={handlePlayEpisode}
+                            currentSeason={season}
+                            onSelectSeason={handleSelectSeason}
                         />
                         {playerOpen && src ? (
                             <View style={webStyles.playerLayer} pointerEvents="box-none">
@@ -451,6 +465,8 @@ export default function MovieScreen() {
                     movie={movieProps}
                     onPlayFull={handlePlayFull}
                     onPlayEpisode={handlePlayEpisode}
+                    currentSeason={season}
+                    onSelectSeason={handleSelectSeason}
                 />
                 {playerOpen && src ? (
                     <View style={styles.nativePlayerLayer} pointerEvents="box-none">
