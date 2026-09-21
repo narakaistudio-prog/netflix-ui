@@ -274,12 +274,6 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 18 }}>
-                        <SafeImage
-                            source={{ uri: 'https://www.netflix.com/tudum/top10/images/top10.png' }}
-                            style={{ width: 24, height: 24, left: 0, borderRadius: 4 }}
-                            cachePolicy="memory-disk"
-                            hideOnError
-                        />
                         <Text style={newStyles.trendingTag}>{movieData.ranking_text}</Text>
                     </View>
 
@@ -290,23 +284,6 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                                 {hasEmbed
                                     ? (movieData.mediaType === 'tv' || movieData.type === 'SERIES' ? 'Play S1:E1' : 'Play')
                                     : 'Play on Netflix'}
-                            </ThemedText>
-                        </Pressable>
-
-                        <Pressable
-                            style={({ hovered }: any) => [
-                                styles.downloadButton,
-                                hovered && { backgroundColor: 'rgba(255,255,255,0.14)' },
-                            ]}
-                            onPress={onTrailerPress}
-                        >
-                            <Ionicons
-                                name={trailerActive ? 'close-circle' : 'logo-youtube'}
-                                size={20}
-                                color={trailerActive ? '#fff' : '#FF0000'}
-                            />
-                            <ThemedText style={styles.downloadButtonText}>
-                                {trailerActive ? 'Close Trailer' : 'Play Trailer'}
                             </ThemedText>
                         </Pressable>
 
