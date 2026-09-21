@@ -458,15 +458,15 @@
           "id": "card-03-05-247769",
           "imageUrl": "local:real-247769",
           "title": "The Great Indian Kapil Show",
-          "episodeCount": 26,
-          "seasonEpisodeCounts": [13, 13],
+          "episodeCount": 55,
+          "seasonEpisodeCounts": [13, 13, 14, 15],
           "type": "SERIES",
           "mediaType": "tv",
           "tmdb_id": "247769",
           "embed_provider": "nxsha",
           "year": "2024",
           "rating": "7.9",
-          "duration": "2 Seasons"
+          "duration": "4 Seasons"
         },
         {
           "id": "card-03-06-87108",
@@ -656,15 +656,15 @@
           "id": "card-05-00-66732",
           "imageUrl": "local:real-66732",
           "title": "Stranger Things",
-          "episodeCount": 34,
-          "seasonEpisodeCounts": [8, 9, 8, 9],
+          "episodeCount": 42,
+          "seasonEpisodeCounts": [8, 9, 8, 9, 8],
           "type": "SERIES",
           "mediaType": "tv",
           "tmdb_id": "66732",
           "embed_provider": "nxsha",
           "year": "2016",
           "rating": "8.7",
-          "duration": "4 Seasons"
+          "duration": "5 Seasons"
         },
         {
           "id": "card-05-01-1396",
@@ -684,15 +684,15 @@
           "id": "card-05-02-93405",
           "imageUrl": "local:real-93405",
           "title": "Squid Game",
-          "episodeCount": 16,
-          "seasonEpisodeCounts": [9, 7],
+          "episodeCount": 22,
+          "seasonEpisodeCounts": [9, 7, 6],
           "type": "SERIES",
           "mediaType": "tv",
           "tmdb_id": "93405",
           "embed_provider": "nxsha",
           "year": "2021",
           "rating": "8.0",
-          "duration": "2 Seasons"
+          "duration": "3 Seasons"
         },
         {
           "id": "card-05-03-71446",
@@ -726,15 +726,15 @@
           "id": "card-05-05-107326",
           "imageUrl": "local:real-107326",
           "title": "Wednesday",
-          "episodeCount": 8,
-          "seasonEpisodeCounts": [8],
+          "episodeCount": 16,
+          "seasonEpisodeCounts": [8, 8],
           "type": "SERIES",
           "mediaType": "tv",
           "tmdb_id": "107326",
           "embed_provider": "nxsha",
           "year": "2022",
           "rating": "8.1",
-          "duration": "1 Season"
+          "duration": "2 Seasons"
         },
         {
           "id": "card-05-06-1399",
@@ -754,15 +754,15 @@
           "id": "card-05-07-1395",
           "imageUrl": "local:real-1395",
           "title": "The Witcher",
-          "episodeCount": 24,
-          "seasonEpisodeCounts": [8, 8, 8],
+          "episodeCount": 32,
+          "seasonEpisodeCounts": [8, 8, 8, 8],
           "type": "SERIES",
           "mediaType": "tv",
           "tmdb_id": "1395",
           "embed_provider": "nxsha",
           "year": "2019",
           "rating": "8.0",
-          "duration": "3 Seasons"
+          "duration": "4 Seasons"
         },
         {
           "id": "card-05-08-63351",
@@ -782,15 +782,15 @@
           "id": "card-05-09-63247",
           "imageUrl": "local:real-63247",
           "title": "Fauda",
-          "episodeCount": 48,
-          "seasonEpisodeCounts": [12, 12, 12, 12],
+          "episodeCount": 59,
+          "seasonEpisodeCounts": [12, 12, 12, 12, 11],
           "type": "SERIES",
           "mediaType": "tv",
           "tmdb_id": "63247",
           "embed_provider": "nxsha",
           "year": "2015",
           "rating": "8.3",
-          "duration": "4 Seasons"
+          "duration": "5 Seasons"
         }
       ]
     }
