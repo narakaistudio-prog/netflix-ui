@@ -118,7 +118,8 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
     // Catalog items carry `videoUrl`; the player historically used `video_url`
     if ((movie as any).videoUrl) movieData.video_url = (movie as any).videoUrl;
 
-    const isSeries = movieData.mediaType === 'tv' || movieData.type === 'SERIES';
+    const isSeries = movieData.mediaType === 'tv'
+        || (movieData.mediaType !== 'movie' && movieData.type === 'SERIES');
     const episodeCount = isSeries
         ? movieData.episodeCount
             ?? movieData.totalEpisodesInSeason

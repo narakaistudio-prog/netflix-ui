@@ -278,7 +278,8 @@ export default function MovieScreen() {
         if (m) return m[1];
         return undefined;
     })();
-    const isSeries = movie.type === 'SERIES' || movie.mediaType === 'tv';
+    const isSeries = movie.mediaType === 'tv'
+        || (movie.mediaType !== 'movie' && movie.type === 'SERIES');
     const mediaType: 'movie' | 'tv' =
         movie.mediaType ??
         (isSeries || (typeof movie.id === 'string' && (movie.id.includes('tv-') || movie.id.startsWith('tv-')))
