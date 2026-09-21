@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '@/contexts/UserContext';
 import { SafeImage } from '@/components/SafeImage';
+import { ProfileBadge } from '@/components/ProfileBadge';
 
 export const WEB_NAV_HEIGHT = 68;
 
@@ -214,10 +215,12 @@ export function WebNavBar() {
                             }}
                             style={styles.profileBtn}
                         >
-                            <SafeImage
-                                source={{ uri: selectedProfile.avatar }}
+                            <ProfileBadge
+                                name={selectedProfile.name}
+                                id={selectedProfile.id}
+                                size={32}
+                                borderRadius={4}
                                 style={styles.avatar}
-                                cachePolicy="memory-disk"
                             />
                             <Ionicons
                                 name={showProfileMenu ? 'caret-up' : 'caret-down'}
@@ -230,8 +233,11 @@ export function WebNavBar() {
                         {showProfileMenu && (
                             <View style={[styles.dropdownMenu, styles.profileDropdown]}>
                                 <View style={styles.profileHeaderRow}>
-                                    <SafeImage
-                                        source={{ uri: selectedProfile.avatar }}
+                                    <ProfileBadge
+                                        name={selectedProfile.name}
+                                        id={selectedProfile.id}
+                                        size={28}
+                                        borderRadius={4}
                                         style={styles.avatarSmall}
                                     />
                                     <Text style={styles.profileName}>{selectedProfile.name}</Text>

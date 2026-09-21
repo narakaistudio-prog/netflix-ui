@@ -5,6 +5,7 @@ import { Platform, StyleSheet, Image, View, Pressable } from 'react-native';
 import { impactAsync, ImpactFeedbackStyle } from '@/utils/haptics';
 import { useUser } from '@/contexts/UserContext';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
+import { ProfileBadge } from '@/components/ProfileBadge';
 import { Home } from '@/icons/Home';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -16,24 +17,22 @@ function TabIcon({ ionIcon, color }: { ionIcon: 'person' | 'home-sharp' | 'play-
   return <TabBarIcon name={ionIcon} color={color} />;
 }
 
-// Netflix profile image component
+// Netflix profile badge component (DP-less)
 function ProfileImage({ focused }: { focused: boolean }) {
   const { selectedProfile } = useUser();
 
   return (
     <React.Fragment>
-      <ExpoImage
-        source={{ uri: selectedProfile?.avatar }}
+      <ProfileBadge
+        name={selectedProfile?.name ?? '?'}
+        id={selectedProfile?.id}
+        size={24}
+        borderRadius={4}
         style={{
-          width: 24,
-          height: 24,
-          borderRadius: 4,
           opacity: focused ? 1 : 0.5,
           borderWidth: 2,
           borderColor: focused ? 'white' : 'transparent',
         }}
-        cachePolicy="memory-disk"
-        transition={200}
       />
       <View
         style={{

@@ -14,7 +14,7 @@ import Animated, {
     withSpring,
 } from 'react-native-reanimated';
 import { ThemedText } from './ThemedText';
-import { Ionicons } from '@expo/vector-icons';
+import { ProfileBadge } from './ProfileBadge';
 import { useUser } from '@/contexts/UserContext';
 import { Audio } from 'expo-av';
 import Svg, { Circle } from 'react-native-svg';
@@ -276,22 +276,14 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
                                 onLayout={(event) => handleProfileLayout(profile, event)}
                             >
                                 <Animated.View style={styles.profileContainer}>
-                                    <Animated.Image
-                                        source={{ uri: profile.avatar }}
-                                        style={styles.avatar}
-                                    />
+                                    <View style={styles.avatar}>
+                                        <ProfileBadge name={profile.name} id={profile.id} borderRadius={6} />
+                                    </View>
                                     <ThemedText style={styles.profileName}>{profile.name}</ThemedText>
                                 </Animated.View>
                             </TouchableOpacity>
                         </Animated.View>
                     ))}
-
-                    <TouchableOpacity style={styles.profileButton}>
-                        <View style={styles.addProfileContainer}>
-                            <Ionicons name="add" size={44} color="#fff" />
-                        </View>
-                        <ThemedText style={styles.addProfileText}>Add Profile</ThemedText>
-                    </TouchableOpacity>
                 </Animated.View>
             </View>
 
@@ -300,9 +292,8 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
                 if (!layout) return null;
 
                 return (
-                    <Animated.Image
+                    <Animated.View
                         key={`floating-${profile.id}`}
-                        source={{ uri: profile.avatar }}
                         style={[
                             styles.floatingAvatar,
                             {
@@ -311,7 +302,9 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
                             },
                             profileAnimatedStyles[index]
                         ]}
-                    />
+                    >
+                        <ProfileBadge name={profile.name} id={profile.id} borderRadius={8} />
+                    </Animated.View>
                 );
             })}
 
