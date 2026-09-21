@@ -15,7 +15,6 @@ const NAV_LINKS = [
     { label: 'Movies', href: '/browse/movies' as const, type: 'filter', filter: 'movie' },
     { label: 'New & Popular', href: '/new' as const, type: 'route' },
     { label: 'My List', href: '/profile' as const, type: 'route' },
-    { label: 'Browse by Languages', href: '/search' as const, type: 'route' },
 ];
 
 const NOTIFICATIONS = [
@@ -94,8 +93,7 @@ export function WebNavBar() {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
                         const isNew = link.label === 'New & Popular' && pathname.startsWith('/new');
                         const isMyList = link.label === 'My List' && pathname.startsWith('/profile');
-                        const isSearch = link.label === 'Browse by Languages' && pathname.startsWith('/search');
-                        const active = isHome || isNew || isMyList || isSearch;
+                        const active = isHome || isNew || isMyList;
 
                         return (
                             <Pressable
