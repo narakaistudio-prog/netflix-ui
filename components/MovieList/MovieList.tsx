@@ -10,7 +10,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
-const ROW_GAP = 10;
 
 const NumberBackground = ({ number }: { number: number }) => {
     const num = (number).toString().padStart(2, '0');
@@ -50,92 +49,122 @@ const MovieItem = ({ item, router, index, isTop10 }: {
                 styles.thumbnail,
                 isTop10 && styles.top10Thumbnail
             ]}
-            transition={200}
             fallbackLabel={item.title}
         />
     </Pressable>
 );
 
 /**
- * 2026 Netflix web tile: rounded landscape card with blurred artwork behind a
- * crisp poster, metadata tag along the bottom and quick actions on hover.
+ * Authentic Netflix India Top 10 Card:
+ * Stylized large rank number on the left with 2:3 vertical poster on the right.
  */
-const WebTile = ({ item, index, isTop10, cardWidth, onPress }: {
+const WebTop10Card = ({ item, index, onPress }: {
     item: Movie;
     index: number;
-    isTop10: boolean;
-    cardWidth: number;
     onPress: () => void;
 }) => {
     const [hovered, setHovered] = useState(false);
-
-    if (isTop10) {
-        return (
-            <Pressable
-                onPress={onPress}
-                onHoverIn={() => setHovered(true)}
-                onHoverOut={() => setHovered(false)}
-                style={[top10.wrap, { width: cardWidth }, hovered && top10.wrapHover]}
-            >
-                <View style={top10.row}>
-                    <Text style={top10.number}>{index + 1}</Text>
-                    <View style={top10.posterBox}>
-                        <SafeImage
-                            source={{ uri: item.imageUrl }}
-                            style={top10.poster}
-                            transition={200}
-                            fallbackLabel={item.title}
-                        />
-                        <View style={top10.badge}>
-                            <Text style={top10.badgeText}>TOP 10</Text>
-                        </View>
-                    </View>
-                </View>
-                {item.ranking_text ? (
-                    <Text style={tile.tag} numberOfLines={1}>{item.ranking_text}</Text>
-                ) : null}
-            </Pressable>
-        );
-    }
+    const num = index + 1;
 
     return (
         <Pressable
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
-            style={[tile.card, { width: cardWidth }, hovered && tile.cardHover]}
+            style={[top10.wrap, hovered && top10.wrapHover]}
         >
-            <SafeImage
-                source={{ uri: item.imageUrl }}
-                style={[StyleSheet.absoluteFill, { opacity: 0.85, transform: [{ scale: 1.15 }] }]}
-                contentFit="cover"
-                cachePolicy="memory-disk"
-            />
-            <View style={tile.dim} />
-            <SafeImage
-                source={{ uri: item.imageUrl }}
-                style={tile.poster}
-                contentFit="cover"
-                transition={200}
-                fallbackLabel={item.title}
-            />
-            <View style={tile.bottom}>
-                <Text style={tile.tag} numberOfLines={1}>
-                    {item.ranking_text ?? (item.year ? String(item.year) : 'Recently Added')}
-                </Text>
-                {hovered ? (
-                    <View style={tile.actions}>
-                        <View style={tile.actionSolid}>
-                            <Ionicons name="play" size={13} color="#000" />
+            <View style={top10.row}>
+                {/* Netflix Stylized Rank Number */}
+                <View style={top10.numberBox}>
+                    <Text style={top10.number}>{num}</Text>
+                </View>
+
+                {/* Vertical Poster Card */}
+                <View style={[top10.posterBox, hovered && top10.posterBoxHover]}>
+                    <SafeImage
+                        source={{ uri: item.imageUrl }}
+                        style={top10.poster}
+                        fallbackLabel={item.title}
+                    />
+                    <View style={top10.badge}>
+                        <Text style={top10.badgeText}>TOP 10</Text>
+                    </View>
+
+                    {hovered && (
+                        <View style={top10.quickOverlay}>
+                            <View style={card.playCircle}>
+                                <Ionicons name="play" size={16} color="#000" />
+                            </View>
+                            <Text style={top10.hoverTitle} numberOfLines={1}>
+                                {item.title}
+                            </Text>
                         </View>
-                        <View style={tile.actionGhost}>
-                            <Ionicons name="add" size={13} color="#fff" />
+                    )}
+                </View>
+            </View>
+        </Pressable>
+    );
+};
+
+/**
+ * Authentic Netflix India Vertical Poster Card:
+ * Full 2:3 aspect ratio poster with hover zoom and quick action bar.
+ */
+const WebPosterCard = ({ item, onPress }: {
+    item: Movie;
+    onPress: () => void;
+}) => {
+    const [hovered, setHovered] = useState(false);
+
+    return (
+        <Pressable
+            onPress={onPress}
+            onHoverIn={() => setHovered(true)}
+            onHoverOut={() => setHovered(false)}
+            style={[card.wrap, hovered && card.wrapHover]}
+        >
+            <View style={[card.posterBox, hovered && card.posterBoxHover]}>
+                <SafeImage
+                    source={{ uri: item.imageUrl }}
+                    style={card.poster}
+                    fallbackLabel={item.title}
+                />
+
+                {/* Subtle top N badge */}
+                <View style={card.nBadge}>
+                    <Text style={card.nBadgeText}>N</Text>
+                </View>
+
+                {/* Hover overlay with action buttons and title */}
+                {hovered && (
+                    <View style={card.hoverOverlay}>
+                        <View style={card.actionsRow}>
+                            <View style={card.playCircle}>
+                                <Ionicons name="play" size={16} color="#000" />
+                            </View>
+                            <View style={card.iconCircle}>
+                                <Ionicons name="add" size={16} color="#fff" />
+                            </View>
+                            <View style={card.iconCircle}>
+                                <Ionicons name="thumbs-up-outline" size={14} color="#fff" />
+                            </View>
                         </View>
-                        <View style={tile.actionGhost}>
-                            <Ionicons name="thumbs-up-outline" size={13} color="#fff" />
+
+                        <Text style={card.title} numberOfLines={1}>
+                            {item.title}
+                        </Text>
+
+                        <View style={card.metaRow}>
+                            <Text style={card.matchText}>98% Match</Text>
+                            <View style={card.ratingBox}>
+                                <Text style={card.ratingText}>U/A 16+</Text>
+                            </View>
+                            <Text style={card.durationText}>
+                                {item.duration || (item.type === 'SERIES' ? '1 Season' : '2h 10m')}
+                            </Text>
                         </View>
                     </View>
-                ) : null}
+                )}
             </View>
         </Pressable>
     );
@@ -150,12 +179,7 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
     const offsetX = useRef(0);
     const [contentWidth, setContentWidth] = useState(0);
 
-    const perView = isTop10 ? 5 : 4;
-    const cardWidth = isTop10
-        ? (windowWidth - ROW_PADDING * 2 - (perView - 1) * ROW_GAP) / perView
-        : (windowWidth - ROW_PADDING * 2 - (perView - 1) * ROW_GAP) / perView;
-
-    const pageStep = windowWidth * 0.8;
+    const pageStep = windowWidth * 0.75;
     const pages = Math.max(1, Math.ceil(contentWidth / pageStep));
     const [page, setPage] = useState(0);
 
@@ -171,13 +195,20 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
 
     const renderItem = ({ item, index }: { item: Movie; index: number }) => {
         if (IS_WEB) {
+            if (isTop10) {
+                return (
+                    <WebTop10Card
+                        key={`${item.id}-${index}`}
+                        item={item}
+                        index={index}
+                        onPress={() => openMovie(item)}
+                    />
+                );
+            }
             return (
-                <WebTile
+                <WebPosterCard
                     key={`${item.id}-${index}`}
                     item={item}
-                    index={index}
-                    isTop10={isTop10}
-                    cardWidth={cardWidth}
                     onPress={() => openMovie(item)}
                 />
             );
@@ -207,7 +238,7 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
                         })}
                     >
                         <Text style={rowStyles.exploreText}>Explore All</Text>
-                        <Ionicons name="chevron-forward" size={12} color="#b3b3b3" />
+                        <Ionicons name="chevron-forward" size={13} color="#54b9c5" />
                     </Pressable>
                 </View>
             ) : (
@@ -232,9 +263,9 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
                         isTop10 && styles.top10List,
                         IS_WEB && {
                             paddingHorizontal: ROW_PADDING,
-                            columnGap: isTop10 ? 34 : 14,
-                            paddingTop: 6,
-                            paddingBottom: 10,
+                            columnGap: isTop10 ? 28 : 12,
+                            paddingTop: 10,
+                            paddingBottom: 22,
                         },
                     ]}
                 />
@@ -244,21 +275,21 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
                             style={({ hovered }: any) => [
                                 rowStyles.arrow,
                                 rowStyles.arrowLeft,
-                                hovered && { backgroundColor: 'rgba(20,20,20,0.85)' },
+                                hovered && rowStyles.arrowHover,
                             ]}
                             onPress={() => scrollByPage(-1)}
                         >
-                            <Ionicons name="chevron-back" size={30} color="#fff" />
+                            <Ionicons name="chevron-back" size={32} color="#fff" />
                         </Pressable>
                         <Pressable
                             style={({ hovered }: any) => [
                                 rowStyles.arrow,
                                 rowStyles.arrowRight,
-                                hovered && { backgroundColor: 'rgba(20,20,20,0.85)' },
+                                hovered && rowStyles.arrowHover,
                             ]}
                             onPress={() => scrollByPage(1)}
                         >
-                            <Ionicons name="chevron-forward" size={30} color="#fff" />
+                            <Ionicons name="chevron-forward" size={32} color="#fff" />
                         </Pressable>
                     </>
                 )}
@@ -274,107 +305,167 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
     );
 }
 
-const tile = StyleSheet.create({
-    card: {
-        aspectRatio: 16 / 9,
-        borderRadius: 10,
+const card = StyleSheet.create({
+    wrap: {
+        width: 175,
+        cursor: 'pointer' as any,
+    },
+    wrapHover: {
+        transform: [{ scale: 1.08 }],
+        zIndex: 40,
+        transition: 'transform 0.25s ease',
+    } as any,
+    posterBox: {
+        width: 175,
+        height: 255,
+        borderRadius: 4,
         overflow: 'hidden',
         backgroundColor: '#181818',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    cardHover: {
-        transform: [{ scale: 1.05 }],
-        zIndex: 30,
-        ...Platform.select({
-            web: { boxShadow: '0 16px 40px rgba(0,0,0,0.7)' } as any,
-            default: {} as any,
-        }),
-    },
-    dim: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0,0,0,0.45)',
-    },
+        position: 'relative',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+    } as any,
+    posterBoxHover: {
+        boxShadow: '0 12px 30px rgba(0,0,0,0.85)',
+        borderWidth: 1,
+        borderColor: '#E50914',
+    } as any,
     poster: {
-        height: '88%',
-        aspectRatio: 2 / 3,
-        borderRadius: 6,
-        backgroundColor: '#222',
+        width: '100%',
+        height: '100%',
     },
-    bottom: {
+    nBadge: {
         position: 'absolute',
-        left: 8,
-        right: 8,
-        bottom: 6,
+        top: 6,
+        left: 6,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        borderRadius: 2,
+        paddingHorizontal: 4,
+        paddingVertical: 1,
+    },
+    nBadgeText: {
+        color: '#E50914',
+        fontSize: 13,
+        fontWeight: '900',
+    },
+    hoverOverlay: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(20,20,20,0.95)',
+        padding: 10,
+        gap: 6,
+    },
+    actionsRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        gap: 8,
     },
-    tag: {
-        color: '#e0e0e0',
-        fontSize: 10.5,
-        fontWeight: '700',
-        backgroundColor: 'rgba(0,0,0,0.55)',
-        borderRadius: 4,
-        paddingHorizontal: 6,
-        paddingVertical: 2,
-        overflow: 'hidden',
-        flexShrink: 1,
-    },
-    actions: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 5,
-    },
-    actionSolid: {
-        width: 22,
-        height: 22,
-        borderRadius: 11,
+    playCircle: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    actionGhost: {
-        width: 22,
-        height: 22,
-        borderRadius: 11,
+    iconCircle: {
+        width: 28,
+        height: 28,
+        borderRadius: 14,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.6)',
-        backgroundColor: 'rgba(42,42,42,0.7)',
+        borderColor: 'rgba(255,255,255,0.5)',
+        backgroundColor: 'rgba(40,40,40,0.7)',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    title: {
+        color: '#fff',
+        fontSize: 12.5,
+        fontWeight: '800',
+    },
+    metaRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+    },
+    matchText: {
+        color: '#46d369',
+        fontSize: 11,
+        fontWeight: '700',
+    },
+    ratingBox: {
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.4)',
+        borderRadius: 2,
+        paddingHorizontal: 3,
+        paddingVertical: 0.5,
+    },
+    ratingText: {
+        color: '#ddd',
+        fontSize: 9.5,
+        fontWeight: '600',
+    },
+    durationText: {
+        color: '#aaa',
+        fontSize: 10.5,
     },
 });
 
 const top10 = StyleSheet.create({
     wrap: {
+        flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
+        cursor: 'pointer' as any,
     },
     wrapHover: {
-        transform: [{ scale: 1.04 }],
-        zIndex: 30,
-    },
+        transform: [{ scale: 1.06 }],
+        zIndex: 40,
+        transition: 'transform 0.25s ease',
+    } as any,
     row: {
         flexDirection: 'row',
         alignItems: 'center',
     },
+    numberBox: {
+        width: 75,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: -16,
+        zIndex: 2,
+    },
     number: {
-        fontFamily: 'arialic',
-        fontSize: 140,
-        lineHeight: 140,
+        fontSize: 160,
+        lineHeight: 160,
         fontWeight: '900',
-        color: '#242424',
-        marginLeft: -4,
-        marginRight: -20,
+        color: '#0f0f0f',
+        textShadowColor: '#595959',
+        textShadowOffset: { width: 3, height: 3 },
+        textShadowRadius: 1,
+        ...Platform.select({
+            web: {
+                WebkitTextStroke: '4px #595959',
+                fontFamily: 'Impact, "Arial Black", sans-serif',
+                userSelect: 'none',
+            } as any,
+            default: {},
+        }),
     },
     posterBox: {
-        width: 150,
-        aspectRatio: 2 / 3,
-        borderRadius: 8,
+        width: 175,
+        height: 255,
+        borderRadius: 4,
         overflow: 'hidden',
         backgroundColor: '#181818',
-    },
+        position: 'relative',
+        zIndex: 3,
+        boxShadow: '0 4px 14px rgba(0,0,0,0.6)',
+    } as any,
+    posterBoxHover: {
+        boxShadow: '0 12px 30px rgba(0,0,0,0.9)',
+        borderWidth: 1,
+        borderColor: '#E50914',
+    } as any,
     poster: {
         width: '100%',
         height: '100%',
@@ -384,37 +475,56 @@ const top10 = StyleSheet.create({
         top: 6,
         left: 6,
         backgroundColor: '#E50914',
-        borderRadius: 3,
+        borderRadius: 2,
         paddingHorizontal: 5,
         paddingVertical: 2,
     },
     badgeText: {
         color: '#fff',
-        fontSize: 8.5,
-        fontWeight: '800',
+        fontSize: 9,
+        fontWeight: '900',
         letterSpacing: 0.5,
+    },
+    quickOverlay: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(20,20,20,0.95)',
+        padding: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    hoverTitle: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '700',
+        flex: 1,
     },
 });
 
 const rowStyles = StyleSheet.create({
     rowContainer: {
         flex: 'none' as any,
-        marginBottom: 46,
+        marginBottom: 36,
     },
     headerRow: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        alignItems: 'baseline',
+        gap: 12,
         paddingHorizontal: 48,
-        marginBottom: 10,
+        marginBottom: 8,
     },
     sectionTitle: {
         fontSize: 22,
         fontWeight: '800',
+        color: '#e5e5e5',
         paddingHorizontal: 0,
         marginLeft: 0,
         marginTop: 0,
         marginBottom: 0,
+        letterSpacing: -0.3,
     },
     explore: {
         flexDirection: 'row',
@@ -423,13 +533,14 @@ const rowStyles = StyleSheet.create({
         paddingVertical: 4,
         paddingHorizontal: 6,
         borderRadius: 4,
+        opacity: 0.85,
     },
     exploreHover: {
-        backgroundColor: 'rgba(255,255,255,0.08)',
+        opacity: 1,
     },
     exploreText: {
-        color: '#b3b3b3',
-        fontSize: 12.5,
+        color: '#54b9c5',
+        fontSize: 12,
         fontWeight: '700',
     },
     rowWrapper: {
@@ -437,37 +548,38 @@ const rowStyles = StyleSheet.create({
     },
     arrow: {
         position: 'absolute',
-        top: 0,
-        bottom: 0,
+        top: 10,
+        bottom: 22,
         width: 44,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.45)',
-        zIndex: 20,
-        borderRadius: 6,
+        backgroundColor: 'rgba(20,20,20,0.6)',
+        zIndex: 50,
+        borderRadius: 4,
+        cursor: 'pointer' as any,
+        transition: 'background-color 0.2s ease',
+    } as any,
+    arrowHover: {
+        backgroundColor: 'rgba(20,20,20,0.92)',
     },
     arrowLeft: {
         left: 0,
-        borderTopRightRadius: 6,
-        borderBottomRightRadius: 6,
     },
     arrowRight: {
         right: 0,
-        borderTopLeftRadius: 6,
-        borderBottomLeftRadius: 6,
     },
     pager: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 4,
-        marginTop: 10,
+        marginTop: 6,
     },
     pagerBox: {
-        width: 16,
+        width: 14,
         height: 3,
-        borderRadius: 2,
-        backgroundColor: '#3a3a3a',
+        borderRadius: 1.5,
+        backgroundColor: '#333333',
     },
     pagerBoxActive: {
         backgroundColor: '#e5e5e5',

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, StyleProp, ViewStyle, ImageStyle } from 'react-native';
-import { Image, ImageSource } from 'expo-image';
+import { View, Text, StyleSheet, StyleProp, ViewStyle, ImageStyle, Platform, Image as RNImage, ImageSourcePropType } from 'react-native';
+import { Image as ExpoImage, ImageSource } from 'expo-image';
 
 interface SafeImageProps {
-    source: ImageSource;
+    source: ImageSource | ImageSourcePropType | any;
     style?: StyleProp<ViewStyle> | StyleProp<ImageStyle>;
     contentFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
     transition?: number;
@@ -19,10 +19,12 @@ interface SafeImageProps {
 /**
  * Image with a graceful Netflix-style fallback.
  *
- * The catalog data references many third-party image hosts; whenever one of
- * them 404s or is blocked, a broken-image box would ruin the UI. SafeImage
- * swaps in a dark card with the Netflix "N" so the layout always looks
- * intentional.
+ * Ensures that broken, empty, or unreachable image URLs never produce
+ * an empty transparent box — always swaps in a dark card with the
+ * Netflix red "N" badge and the title text.
+ *
+ * On Web, uses React Native Web's Image component to prevent expo-image's
+ * CSS cross-dissolve opacity:0 bug with locally bundled assets.
  */
 export function SafeImage({
     source,
@@ -36,7 +38,16 @@ export function SafeImage({
 }: SafeImageProps) {
     const [failed, setFailed] = useState(false);
 
-    if (failed) {
+    // Check if source is empty or invalid
+    const uri =
+        typeof source === 'object' && source !== null && 'uri' in source
+            ? (source as any).uri
+            : undefined;
+    const isInvalid =
+        !source ||
+        (typeof source === 'object' && typeof uri === 'string' && uri.trim() === '');
+
+    if (failed || isInvalid) {
         if (hideOnError) {
             return <View style={style as StyleProp<ViewStyle>} />;
         }
@@ -52,8 +63,21 @@ export function SafeImage({
         );
     }
 
+    if (Platform.OS === 'web') {
+        const resizeMode = contentFit === 'contain' ? 'contain' : 'cover';
+        return (
+            <RNImage
+                source={source as any}
+                style={[style as StyleProp<ImageStyle>, { opacity: 1 }]}
+                resizeMode={resizeMode}
+                blurRadius={blurRadius}
+                onError={() => setFailed(true)}
+            />
+        );
+    }
+
     return (
-        <Image
+        <ExpoImage
             source={source}
             style={style as StyleProp<ImageStyle>}
             contentFit={contentFit}
@@ -67,25 +91,25 @@ export function SafeImage({
 
 const styles = StyleSheet.create({
     fallback: {
-        backgroundColor: '#161616',
+        backgroundColor: '#1a1a24',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: '#242424',
+        borderColor: '#2d2d3a',
     },
     fallbackN: {
         color: '#E50914',
-        fontSize: 30,
+        fontSize: 32,
         fontWeight: '900',
-        lineHeight: 34,
+        lineHeight: 36,
     },
     fallbackLabel: {
-        color: '#8c8c8c',
-        fontSize: 10,
-        fontWeight: '600',
-        marginTop: 4,
-        marginHorizontal: 6,
+        color: '#ffffffcc',
+        fontSize: 11,
+        fontWeight: '700',
+        marginTop: 6,
+        marginHorizontal: 8,
         textAlign: 'center',
     },
 });

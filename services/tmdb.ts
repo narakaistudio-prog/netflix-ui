@@ -61,6 +61,8 @@ function toMovie(raw: any, kind: 'movie' | 'tv', index = 0): Movie {
         imageUrl: img(raw.poster_path) || img(raw.backdrop_path, 'w500'),
         title,
         type: kind === 'tv' ? 'SERIES' : 'FILM',
+        mediaType: kind,
+        tmdb_id: String(raw.id),
         description: raw.overview || undefined,
         year: date.slice(0, 4) || undefined,
         rating: raw.vote_average ? raw.vote_average.toFixed(1) : undefined,

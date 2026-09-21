@@ -142,7 +142,7 @@ export default function HomeScreen() {
           ]}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
-          contentContainerStyle={[styles.scrollViewContent, IS_WEB && { paddingBottom: 80 }]}
+          contentContainerStyle={[styles.scrollViewContent, IS_WEB && { paddingBottom: 80, paddingTop: 0 }]}
           showsVerticalScrollIndicator={false}
           bounces={false}
         >
