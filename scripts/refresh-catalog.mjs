@@ -22,7 +22,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' };
 const REQUEST_TIMEOUT_MS = 20_000;
 const FULL_SOURCE = 'https://isitinmycountry.com';
-const FULL_PAGE_CONCURRENCY = 24;
+const FULL_PROXY_SOURCE = 'https://r.jina.ai/http://isitinmycountry.com';
+const FULL_PAGE_CONCURRENCY = 12;
 const FULL_ROW_SIZE = 48;
 
 const SAMPLE_VIDEOS = [
@@ -220,6 +221,23 @@ async function getHtml(url) {
     return res.text();
 }
 
+/** IsItInMyCountry can reject GitHub-hosted IPs; Jina is a public reader fallback. */
+async function getFullSourcePage(url) {
+    try {
+        return await getHtml(url);
+    } catch (directError) {
+        const path = url.replace(/^https?:\/\/isitinmycountry\.com/, '');
+        const proxyUrl = `${FULL_PROXY_SOURCE}${path}`;
+        try {
+            const response = await fetchWithTimeout(proxyUrl, { headers: UA });
+            if (!response.ok) throw new Error(`proxy HTTP ${response.status}`);
+            return response.text();
+        } catch (proxyError) {
+            throw new Error(`direct ${directError.message}; proxy ${proxyError.message}`);
+        }
+    }
+}
+
 const meta = (html, prop) => {
     const escaped = prop.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const propertyMatch = html.match(new RegExp(`<meta[^>]+property=["']${escaped}["'][^>]+content=["']([^"']*)["']`, 'i'));
@@ -391,7 +409,7 @@ function parseFullCatalogTitle(slug, html) {
     const indiaStart = text.search(/\bIndia\s+Seasons\b/i);
     if (indiaStart < 0) return null;
     const india = text.slice(indiaStart, indiaStart + 600);
-    const details = header.match(/(\d{4})\s*·\s*(Series|Movie)\s*·\s*([0-9]+(?:\s*(?:min|m|h|hr|hrs|hour|hours))?(?:\s+[0-9]+(?:\s*(?:min|m|h|hr|hrs|hour|hours))?)?)/i);
+    const details = header.match(/(\d{4})\s*(?:·\s*)?(Series|Movie)\s*(?:·\s*)?([0-9]+(?:\s*(?:min|m|h|hr|hrs|hour|hours)(?:\s+[0-9]+\s*(?:min|m|h|hr|hrs|hour|hours))?)?)/i);
     if (!details) return null;
 
     const type = details[2].toLowerCase() === 'series' ? 'tv' : 'movie';
@@ -404,21 +422,32 @@ function parseFullCatalogTitle(slug, html) {
     const episodeCount = episodeMatch
         ? Number.parseInt(episodeMatch[1].replace(/,/g, ''), 10)
         : undefined;
-    const titleFromHeading = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1];
+    const titleFromHeading = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]
+        || html.match(/^Title:\s*(.*?)\s+—/im)?.[1];
     const title = decodeHtml(titleFromHeading || meta(html, 'og:title') || slug.replace(/-/g, ' '))
         .replace(/\s*[|—]\s*Netflix.*$/i, '')
         .trim();
     const runtime = details[3].trim();
     const netflixId = html.match(/netflix\.com\/title\/(\d+)/i)?.[1];
+    const markdownPoster = html.match(/!\[[^\]]*poster[^\]]*\]\(([^)]+)\)/i)?.[1]
+        || html.match(/!\[Image 1[^\]]*\]\(([^)]+)\)/i)?.[1];
+    const metadataLineIndex = html.split(/\r?\n/).findIndex(line => (
+        line.includes(details[1]) && new RegExp(`\\b${details[2]}\\b`, 'i').test(line)
+    ));
+    const markdownDescription = metadataLineIndex >= 0
+        ? html.split(/\r?\n/).slice(metadataLineIndex + 1)
+            .map(line => line.trim())
+            .find(line => line && !line.startsWith('#') && !line.startsWith('!['))
+        : undefined;
     const item = {
         id: `iinm-${slug}`,
         title,
         type: type === 'tv' ? 'SERIES' : 'FILM',
         mediaType: type,
-        imageUrl: meta(html, 'og:image') || '',
-        description: meta(html, 'og:description'),
+        imageUrl: meta(html, 'og:image') || markdownPoster || '',
+        description: meta(html, 'og:description') || markdownDescription,
         year: details[1],
-        rating: header.match(new RegExp(`(\\d+(?:\\.\\d+)?)\\s+${details[1]}\\s*·`))?.[1],
+        rating: header.match(new RegExp(`(\\d+(?:\\.\\d+)?)(?:\\s*·)?\\s+${details[1]}(?:\\s*·)?`))?.[1],
         duration: type === 'tv'
             ? `${Math.max(seasonCount || 1, 1)} Season${seasonCount === 1 ? '' : 's'}`
             : runtime,
@@ -449,9 +478,12 @@ function fullCatalogRows(label, items) {
  * official Netflix API, but it is materially broader than a Top 10 chart.
  */
 async function scrapeFullPublicCatalog() {
-    const sitemap = await getHtml(`${FULL_SOURCE}/sitemap.xml`);
-    const slugs = [...sitemap.matchAll(/<loc>\s*https?:\/\/isitinmycountry\.com\/title\/([^<\s/]+)\/?\s*<\/loc>/gi)]
-        .map(match => match[1])
+    const sitemap = await getFullSourcePage(`${FULL_SOURCE}/sitemap.xml`);
+    const xmlSlugs = [...sitemap.matchAll(/<loc>\s*https?:\/\/isitinmycountry\.com\/title\/([^<\s/]+)\/?\s*<\/loc>/gi)]
+        .map(match => match[1]);
+    const markdownSlugs = [...sitemap.matchAll(/\]\(https?:\/\/isitinmycountry\.com\/title\/([^)]*)\)/gi)]
+        .map(match => match[1].replace(/\/$/, ''));
+    const slugs = [...xmlSlugs, ...markdownSlugs]
         .filter((slug, index, all) => slug && all.indexOf(slug) === index);
     if (slugs.length < 500) throw new Error(`full sitemap too small (${slugs.length} titles)`);
 
@@ -461,7 +493,7 @@ async function scrapeFullPublicCatalog() {
         FULL_PAGE_CONCURRENCY,
         async slug => {
             try {
-                return { ok: true, item: parseFullCatalogTitle(slug, await getHtml(`${FULL_SOURCE}/title/${slug}`)) };
+                return { ok: true, item: parseFullCatalogTitle(slug, await getFullSourcePage(`${FULL_SOURCE}/title/${slug}`)) };
             } catch {
                 pageFailures += 1;
                 return { ok: false, item: null };
