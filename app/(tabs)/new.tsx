@@ -88,7 +88,6 @@ function ComingSoonCard({ item }: { item: ComingSoonItem }) {
                         source={{ uri: item.imageUrl }}
                         style={newStyles.previewImage}
                         cachePolicy="memory-disk"
-                        transition={200}
                     />
                 </View>
 
@@ -99,7 +98,6 @@ function ComingSoonCard({ item }: { item: ComingSoonItem }) {
                                 source={{ uri: item.logo }}
                                 style={{ width: item.logoWidth, height: item.logoHeight, marginRight: 4, marginLeft: 12 }}
                                 cachePolicy="memory-disk"
-                                transition={200}
                                 contentFit="contain"
                                 hideOnError
                             />
