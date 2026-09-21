@@ -222,20 +222,41 @@ async function getHtml(url) {
 }
 
 /** IsItInMyCountry can reject GitHub-hosted IPs; Jina is a public reader fallback. */
+function isUsableFullSourceResponse(url, body) {
+    const content = String(body || '');
+    if (url.endsWith('/sitemap.xml')) return /\/title\//i.test(content);
+    // Cloudflare sometimes returns a successful challenge page instead of an
+    // HTTP error. Treat that as unavailable so the Jina reader is attempted.
+    return /availability by country/i.test(content)
+        && !/please enable cookies|worker exceeded resource limits|error 1102/i.test(content);
+}
+
 async function getFullSourcePage(url) {
+    let directError;
     try {
-        return await getHtml(url);
-    } catch (directError) {
-        const path = url.replace(/^https?:\/\/isitinmycountry\.com/, '');
-        const proxyUrl = `${FULL_PROXY_SOURCE}${path}`;
+        const directBody = await getHtml(url);
+        if (isUsableFullSourceResponse(url, directBody)) return directBody;
+        directError = new Error('direct response was a challenge or empty page');
+    } catch (error) {
+        directError = error;
+    }
+
+    const path = url.replace(/^https?:\/\/isitinmycountry\.com/, '');
+    const proxyUrl = `${FULL_PROXY_SOURCE}${path}`;
+    let proxyError;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
         try {
             const response = await fetchWithTimeout(proxyUrl, { headers: UA });
             if (!response.ok) throw new Error(`proxy HTTP ${response.status}`);
-            return response.text();
-        } catch (proxyError) {
-            throw new Error(`direct ${directError.message}; proxy ${proxyError.message}`);
+            const proxyBody = await response.text();
+            if (isUsableFullSourceResponse(url, proxyBody)) return proxyBody;
+            throw new Error('proxy returned a challenge or empty page');
+        } catch (error) {
+            proxyError = error;
+            if (attempt < 2) await sleep(350 * (attempt + 1));
         }
     }
+    throw new Error(`direct ${directError.message}; proxy ${proxyError?.message || 'failed'}`);
 }
 
 const meta = (html, prop) => {
@@ -505,6 +526,7 @@ async function scrapeFullPublicCatalog() {
     const items = pages.map(page => page.item).filter(Boolean);
     const movies = items.filter(item => item.mediaType === 'movie');
     const shows = items.filter(item => item.mediaType === 'tv');
+    console.log(`Full catalog source: ${slugs.length} sitemap titles, ${fetched} pages fetched, ${items.length} India titles parsed.`);
     if (fetched < slugs.length * 0.60 || movies.length < 100 || shows.length < 30) {
         throw new Error(`full catalog incomplete (${items.length} India titles, ${fetched}/${slugs.length} pages)`);
     }
