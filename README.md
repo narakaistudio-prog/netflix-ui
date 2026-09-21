@@ -117,7 +117,7 @@ project-root/
 
 MIT License
 
-## Live Netflix India catalog (always up to date, zero API keys)
+## Live Netflix India catalog (public discovery, optional OMDb enrichment)
 
 The bundled catalog is refreshed automatically by the
 `refresh-catalog.yml` GitHub Action:
@@ -134,7 +134,12 @@ The bundled catalog is refreshed automatically by the
   automatically.
 
 ### Optional extras
-- **TMDB (free key)**: if you ever create a key, put it in `.env` as
-  `EXPO_PUBLIC_TMDB_API_KEY` (runtime freshness, Hindi metadata) or as the
-  `TMDB_API_KEY` repository secret (the script then prefers TMDB).
-  Everything works without it.
+- **OMDb (metadata enrichment)**: put the key in the GitHub Actions repository
+  secret `OMDB_API_KEY` (or local `.env` for a refresh run). The workflow uses
+  it to enrich discovered Netflix India titles with IMDb id, plot, cast,
+  rating, runtime, seasons and episode totals. The key is never bundled into
+  the client app.
+- **TMDB (optional richer availability source)**: if you ever create a key,
+  put it in `.env` as `EXPO_PUBLIC_TMDB_API_KEY` or as the `TMDB_API_KEY`
+  repository secret. Everything still works without TMDB; public FlixPatrol
+  discovery remains the fallback.

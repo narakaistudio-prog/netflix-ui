@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 /**
- * Key-less daily Netflix India catalog refresh.
+ * Daily Netflix India catalog refresh.
  *
- * No API keys, no sign-ups:
+ * Public discovery needs no key:
  *  1. Scrapes FlixPatrol's "TOP 10 on Netflix in India" (updated daily)
  *  2. Fetches each title's page for its poster (og:image) and description
- *  3. Rewrites data/movies.json so the bundled catalog never goes stale
+ *  3. Optionally enriches discovered titles with OMDb metadata
+ *  4. Rewrites data/movies.json so the bundled catalog never goes stale
  *
- * If a TMDB_API_KEY happens to be available the richer TMDB catalog is used
- * instead, but it is completely optional.
+ * TMDB and OMDb are optional enrichers; the public discovery fallback always
+ * remains available.
  *
  * Usage: node scripts/refresh-catalog.mjs
  */
@@ -116,6 +117,98 @@ const meta = (html, prop) => {
     return m ? m[1] : undefined;
 };
 
+const OMDB_API_KEY = process.env.OMDB_API_KEY || '';
+const omdbCache = new Map();
+
+/**
+ * OMDb is used only to enrich titles already discovered from the public
+ * Netflix/FlixPatrol source. It is never required for the key-less fallback.
+ */
+async function getOmdb(params) {
+    if (!OMDB_API_KEY) return null;
+    const cacheKey = JSON.stringify(params);
+    if (omdbCache.has(cacheKey)) return omdbCache.get(cacheKey);
+
+    const url = new URL('https://www.omdbapi.com/');
+    url.searchParams.set('apikey', OMDB_API_KEY);
+    for (const [key, value] of Object.entries(params)) {
+        if (value !== undefined && value !== null && value !== '') {
+            url.searchParams.set(key, String(value));
+        }
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`OMDb HTTP ${response.status}`);
+    const payload = await response.json();
+    const result = payload.Response === 'False' ? null : payload;
+    omdbCache.set(cacheKey, result);
+    return result;
+}
+
+const firstYear = (value) => {
+    const match = String(value || '').match(/\d{4}/);
+    return match ? match[0] : undefined;
+};
+
+const parseNumber = (value) => {
+    const parsed = Number.parseInt(String(value || ''), 10);
+    return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+async function getOmdbMetadata(item, kind) {
+    if (!OMDB_API_KEY) return {};
+
+    try {
+        const detail = await getOmdb({
+            t: item.title,
+            type: kind === 'tv' ? 'series' : 'movie',
+            plot: 'full',
+        });
+        if (!detail) return {};
+
+        const metadata = {
+            ...(detail.imdbID ? { imdb_id: detail.imdbID } : {}),
+            ...(detail.Poster && detail.Poster !== 'N/A' ? { imageUrl: detail.Poster } : {}),
+            ...(firstYear(detail.Year) ? { year: firstYear(detail.Year) } : {}),
+            ...(detail.Plot && detail.Plot !== 'N/A' ? { description: detail.Plot } : {}),
+            ...(detail.Actors && detail.Actors !== 'N/A'
+                ? { cast: detail.Actors.split(',').map(value => value.trim()).filter(Boolean) }
+                : {}),
+            ...(detail.Director && detail.Director !== 'N/A' ? { director: detail.Director } : {}),
+            ...(detail.Rated && detail.Rated !== 'N/A' ? { rating: detail.Rated } : {}),
+        };
+
+        if (kind === 'tv') {
+            const totalSeasons = parseNumber(detail.totalSeasons);
+            if (totalSeasons) {
+                metadata.duration = `${totalSeasons} Season${totalSeasons === 1 ? '' : 's'}`;
+            }
+
+            if (detail.imdbID && totalSeasons) {
+                const seasonResults = await Promise.all(
+                    Array.from({ length: totalSeasons }, (_, index) => (
+                        getOmdb({ i: detail.imdbID, Season: index + 1 })
+                    )),
+                );
+                const seasonEpisodeCounts = seasonResults.map(season => (
+                    Array.isArray(season?.Episodes) ? season.Episodes.length : 0
+                ));
+                if (seasonEpisodeCounts.some(Boolean)) {
+                    metadata.seasonEpisodeCounts = seasonEpisodeCounts;
+                    metadata.episodeCount = seasonEpisodeCounts.reduce((sum, count) => sum + count, 0);
+                }
+            }
+        } else if (detail.Runtime && detail.Runtime !== 'N/A') {
+            metadata.duration = detail.Runtime;
+        }
+
+        return metadata;
+    } catch (error) {
+        console.log(`OMDb enrichment skipped for ${item.title} (${error.message})`);
+        return {};
+    }
+}
+
 /** Scrape today's Netflix India top 10 (movies + TV shows). */
 async function scrapeFlixPatrol() {
     const html = await getHtml('https://flixpatrol.com/top10/netflix/india/');
@@ -136,21 +229,26 @@ async function scrapeFlixPatrol() {
     if (!movies.length && !shows.length) throw new Error('no tables parsed');
 
     const enrich = async (item, kind) => {
+        const omdb = await getOmdbMetadata(item, kind);
+        const knownSeasonData = kind === 'tv' && SERIES_SEASON_EPISODES[item.title]
+            ? { seasonEpisodeCounts: SERIES_SEASON_EPISODES[item.title] }
+            : {};
+        const knownEpisodeData = kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
+            ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
+            : {};
+
         try {
             const page = await getHtml(`https://flixpatrol.com/title/${item.slug}/`);
             await sleep(300);
             return {
                 id: `fp-${item.slug}`,
-                imageUrl: meta(page, 'og:image') ?? '',
                 title: item.title,
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
-                ...(kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
-                    ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
-                    : {}),
-                ...(kind === 'tv' && SERIES_SEASON_EPISODES[item.title]
-                    ? { seasonEpisodeCounts: SERIES_SEASON_EPISODES[item.title] }
-                    : {}),
-                description: meta(page, 'og:description'),
+                ...knownEpisodeData,
+                ...knownSeasonData,
+                ...omdb,
+                imageUrl: meta(page, 'og:image') ?? omdb.imageUrl ?? '',
+                description: meta(page, 'og:description') ?? omdb.description,
                 ranking_text: `#${item.rank} in India Today`,
                 youtubeId: TRAILERS[item.slug] || undefined,
                 videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],
@@ -158,15 +256,12 @@ async function scrapeFlixPatrol() {
         } catch {
             return {
                 id: `fp-${item.slug}`,
-                imageUrl: '',
                 title: item.title,
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
-                ...(kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
-                    ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
-                    : {}),
-                ...(kind === 'tv' && SERIES_SEASON_EPISODES[item.title]
-                    ? { seasonEpisodeCounts: SERIES_SEASON_EPISODES[item.title] }
-                    : {}),
+                ...knownEpisodeData,
+                ...knownSeasonData,
+                ...omdb,
+                imageUrl: omdb.imageUrl ?? '',
                 ranking_text: `#${item.rank} in India Today`,
                 videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],
             };
