@@ -22,8 +22,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' };
 const REQUEST_TIMEOUT_MS = 20_000;
 const FULL_SOURCE = 'https://isitinmycountry.com';
-const FULL_PROXY_SOURCE = 'https://r.jina.ai/http://isitinmycountry.com';
-const FULL_PAGE_CONCURRENCY = 12;
+// HTTPS-origin reads are more reliable than Jina's HTTP-origin route when the
+// public site is behind Cloudflare; keep the HTTP form as a compatibility retry.
+const FULL_PROXY_SOURCES = [
+    'https://r.jina.ai/https://isitinmycountry.com',
+    'https://r.jina.ai/http://isitinmycountry.com',
+];
+const FULL_PAGE_CONCURRENCY = 8;
 const FULL_ROW_SIZE = 48;
 
 const SAMPLE_VIDEOS = [
@@ -242,18 +247,20 @@ async function getFullSourcePage(url) {
     }
 
     const path = url.replace(/^https?:\/\/isitinmycountry\.com/, '');
-    const proxyUrl = `${FULL_PROXY_SOURCE}${path}`;
     let proxyError;
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-        try {
-            const response = await fetchWithTimeout(proxyUrl, { headers: UA });
-            if (!response.ok) throw new Error(`proxy HTTP ${response.status}`);
-            const proxyBody = await response.text();
-            if (isUsableFullSourceResponse(url, proxyBody)) return proxyBody;
-            throw new Error('proxy returned a challenge or empty page');
-        } catch (error) {
-            proxyError = error;
-            if (attempt < 2) await sleep(350 * (attempt + 1));
+    for (const proxySource of FULL_PROXY_SOURCES) {
+        const proxyUrl = `${proxySource}${path}`;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+            try {
+                const response = await fetchWithTimeout(proxyUrl, { headers: UA });
+                if (!response.ok) throw new Error(`proxy HTTP ${response.status}`);
+                const proxyBody = await response.text();
+                if (isUsableFullSourceResponse(url, proxyBody)) return proxyBody;
+                throw new Error('proxy returned a challenge or empty page');
+            } catch (error) {
+                proxyError = error;
+                if (attempt < 2) await sleep(350 * (attempt + 1));
+            }
         }
     }
     throw new Error(`direct ${directError.message}; proxy ${proxyError?.message || 'failed'}`);
