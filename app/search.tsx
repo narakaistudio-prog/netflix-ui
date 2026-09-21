@@ -9,7 +9,7 @@ import {
     Text,
     ActivityIndicator,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { Movie } from '@/types/movie';
@@ -21,11 +21,12 @@ import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 const IS_WEB = Platform.OS === 'web';
 
 export default function Search() {
+    const params = useLocalSearchParams<{ q?: string }>();
     // Everything comes from the live catalog
     const { rows } = useCatalog();
     const tvAndMovies = rows.flatMap(r => r.movies);
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState(params.q ?? '');
     const [isLoading, setIsLoading] = useState(false);
     const [filteredShows, setFilteredShows] = useState<Movie[]>(tvAndMovies);
     const [debouncedSearchTerm] = useDebounce(searchQuery, 500);
@@ -33,10 +34,10 @@ export default function Search() {
     const router = useRouter();
 
     useEffect(() => {
-        if (debouncedSearchTerm !== searchQuery) {
-            setIsLoading(true);
+        if (params.q !== undefined && params.q !== searchQuery) {
+            setSearchQuery(params.q);
         }
-    }, [searchQuery]);
+    }, [params.q]);
 
     // Keep results in sync when the live catalog arrives
     useEffect(() => {

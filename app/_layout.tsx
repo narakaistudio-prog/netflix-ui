@@ -40,6 +40,10 @@ function AnimatedStack() {
 
 
     if (!selectedProfile) {
+        if (Platform.OS === 'web') {
+            selectProfile('1');
+            return null;
+        }
         return <WhoIsWatching onProfileSelect={selectProfile}/>;
     }
 
