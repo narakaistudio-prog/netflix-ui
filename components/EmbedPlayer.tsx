@@ -70,6 +70,7 @@ export function EmbedPlayer({
         if (!host) return;
         host.innerHTML = '';
         const iframe = document.createElement('iframe');
+        iframe.setAttribute('data-arena-embed', '1');
         iframe.src = src;
         iframe.title = title ?? 'Video player';
         iframe.setAttribute(
