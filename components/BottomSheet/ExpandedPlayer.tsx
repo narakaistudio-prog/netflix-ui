@@ -561,6 +561,8 @@ function TrailerVideo({ yt, title, onBail }: {
     const [url, setUrl] = useState<string | null>(null);
     const [failed, setFailed] = useState(false);
     const [attempt, setAttempt] = useState(0);
+    const videoElRef = useRef<HTMLVideoElement | null>(null);
+    const ytFrameRef = useRef<HTMLIFrameElement | null>(null);
 
     useEffect(() => {
         let alive = true;
@@ -576,11 +578,34 @@ function TrailerVideo({ yt, title, onBail }: {
         };
     }, [yt, attempt]);
 
+    // HARD STOP on unmount: pause + unload the <video> element and blank the
+    // YouTube fallback iframe, so closing the trailer/movie never leaves
+    // sound playing in the background.
+    useEffect(() => {
+        return () => {
+            const v = videoElRef.current;
+            if (v) {
+                try {
+                    v.pause();
+                    v.removeAttribute('src');
+                    v.load();
+                } catch {}
+                videoElRef.current = null;
+            }
+            const f = ytFrameRef.current;
+            if (f) {
+                try { f.src = 'about:blank'; } catch {}
+                ytFrameRef.current = null;
+            }
+        };
+    }, []);
+
     if (url) {
         return (
             <View style={styles.video}>
                 {createElement('video', {
                     key: url,
+                    ref: (el: HTMLVideoElement | null) => { videoElRef.current = el; },
                     src: url,
                     autoPlay: true,
                     controls: true,
@@ -605,6 +630,7 @@ function TrailerVideo({ yt, title, onBail }: {
             return (
                 <View style={styles.video}>
                     {createElement('iframe', {
+                        ref: (el: HTMLIFrameElement | null) => { ytFrameRef.current = el; },
                         src: `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&modestbranding=1`,
                         style: {
                             width: '100%',

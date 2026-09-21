@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     ActivityIndicator,
     Linking,
@@ -93,10 +93,33 @@ export function EmbedPlayer({
         host.appendChild(iframe);
         iframeRef.current = iframe;
         return () => {
-            try { host.removeChild(iframe); } catch {}
-            iframeRef.current = null;
+            killIframe();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [src, title]);
+
+    /**
+     * Kill the playing iframe HARD: navigating it to about:blank tears down
+     * the embed's document (and any playing media/audio) immediately, then we
+     * remove the node. Without the about:blank step some providers keep audio
+     * alive in the background after the player is "closed".
+     */
+    const killIframe = useCallback(() => {
+        const iframe = iframeRef.current;
+        if (!iframe) return;
+        try { iframe.onload = null; } catch {}
+        try { iframe.src = 'about:blank'; } catch {}
+        try { iframe.remove(); } catch {}
+        iframeRef.current = null;
+    }, []);
+
+    // Safety net: no matter how this component leaves the tree, media stops.
+    useEffect(() => () => killIframe(), [killIframe]);
+
+    const handleClose = useCallback(() => {
+        killIframe();
+        onClose?.();
+    }, [killIframe, onClose]);
 
     const openInNewTab = () => {
         if (IS_WEB) {
@@ -119,7 +142,7 @@ export function EmbedPlayer({
                     <Text style={styles.nativeButtonText}>Open Player</Text>
                 </Pressable>
                 {onClose ? (
-                    <Pressable onPress={onClose} style={styles.nativeGhostButton}>
+                    <Pressable onPress={handleClose} style={styles.nativeGhostButton}>
                         <Text style={styles.nativeGhostText}>Close</Text>
                     </Pressable>
                 ) : null}
@@ -163,7 +186,7 @@ export function EmbedPlayer({
             ) : null}
 
             <View style={styles.topBar} pointerEvents="box-none">
-                <Pressable style={styles.iconButton} onPress={onClose} accessibilityLabel="Close player">
+                <Pressable style={styles.iconButton} onPress={handleClose} accessibilityLabel="Close player">
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
                 <View style={{ flex: 1 }} />

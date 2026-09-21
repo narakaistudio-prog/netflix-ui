@@ -84,6 +84,12 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
             const { sound } = await Audio.Sound.createAsync(
                 require('../assets/audio/profile-selected.mp3')
             );
+            // Unload as soon as the clip finishes so no audio object lingers.
+            sound.setOnPlaybackStatusUpdate((status: any) => {
+                if (status?.didJustFinish) {
+                    sound.unloadAsync().catch(() => {});
+                }
+            });
             await sound.playAsync();
 
             const layout = profileLayouts[profile.id];
