@@ -8,6 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build:web": "expo export --platform web",
+    "preview:web": "node scripts/preview-static.mjs",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },

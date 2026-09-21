@@ -138,3 +138,42 @@ The bundled catalog is refreshed automatically by the
   `EXPO_PUBLIC_TMDB_API_KEY` (runtime freshness, Hindi metadata) or as the
   `TMDB_API_KEY` repository secret (the script then prefers TMDB).
   Everything works without it.
+
+## Deploy to Vercel (web)
+
+This is an **Expo / React Native** project, not a Next.js app — Vercel cannot
+auto-detect how to build it, which is why a plain import shows
+**"404: PAGE DOESN'T EXIST"**. The repo ships a `vercel.json` that tells Vercel
+exactly what to do:
+
+| Setting | Value |
+| --- | --- |
+| Framework Preset | **Other** |
+| Build Command | `npm run build:web` (runs `expo export --platform web`) |
+| Output Directory | `dist` |
+| Install Command | `npm install` |
+| Root Directory | repo root (leave empty) |
+
+> **Already imported the project before?** Settings saved in the Vercel
+> dashboard **override** `vercel.json`. Open
+> *Project → Settings → General → Build & Output Settings*, set the values
+> above (or clear the overrides), then **Redeploy**.
+
+Steps:
+
+1. Push this repo to GitHub (the `vercel.json` must be on the branch you deploy).
+2. [vercel.com](https://vercel.com) → **Add New → Project** → import the repo.
+3. Keep the settings from the table above (they come from `vercel.json`).
+4. Deploy. Done — every push (including the daily catalog refresh commit from
+   the GitHub Action) triggers an automatic redeploy.
+
+Optional: to get the live TMDB catalog instead of the bundled one, add an
+environment variable `EXPO_PUBLIC_TMDB_API_KEY` in
+*Project → Settings → Environment Variables* (it is inlined at build time).
+
+Test the exact static output locally before deploying:
+
+```bash
+npm run build:web    # exports the static site to dist/
+npm run preview:web  # serves dist/ like Vercel does (SPA fallback included)
+```
