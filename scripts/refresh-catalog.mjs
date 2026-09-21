@@ -8,17 +8,18 @@
  *  3. Optionally enriches discovered titles with OMDb metadata
  *  4. Rewrites data/movies.json so the bundled catalog never goes stale
  *
- * TMDB and OMDb are optional enrichers; the public discovery fallback always
- * remains available.
+ * OMDb is an optional server-side enricher; the public discovery fallback
+ * always remains available.
  *
  * Usage: node scripts/refresh-catalog.mjs
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' };
+const REQUEST_TIMEOUT_MS = 20_000;
 
 const SAMPLE_VIDEOS = [
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
@@ -62,9 +63,12 @@ const POSTERS_DIR = join(ROOT, 'assets', 'posters');
  * so poster art is downloaded into the repo and referenced as `local:<id>`.
  * The app bundles these files — posters can never break again.
  */
-async function savePoster(item) {
+async function savePoster(item, fallbackImageUrl = '') {
     const src = item.imageUrl || '';
-    if (!/^https?:\/\//.test(src) || !/^(fp|movie|tv)-/.test(item.id)) return;
+    if (!/^https?:\/\//.test(src) || !/^(fp|movie|tv)-/.test(item.id)) {
+        if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
+        return;
+    }
     const ext = (src.match(/\.(jpe?g|png|webp)/i)?.[1] || 'jpg').replace('jpeg', 'jpg');
     const attempts = [
         { ...UA, referer: `${new URL(src).origin}/` },
@@ -78,7 +82,15 @@ async function savePoster(item) {
             const buf = Buffer.from(await res.arrayBuffer());
             if (buf.length < 2000) throw new Error('suspiciously small');
             mkdirSync(POSTERS_DIR, { recursive: true });
-            writeFileSync(join(POSTERS_DIR, `${item.id}.${ext}`), buf);
+            const posterFilename = `${item.id}.${ext}`;
+            writeFileSync(join(POSTERS_DIR, posterFilename), buf);
+            // Remove an older extension for this same title so the generated
+            // poster index never contains duplicate keys with random ordering.
+            for (const filename of readdirSync(POSTERS_DIR)) {
+                if (filename.startsWith(`${item.id}.`) && filename !== posterFilename) {
+                    unlinkSync(join(POSTERS_DIR, filename));
+                }
+            }
             item.imageUrl = `local:${item.id}`;
             return;
         } catch (e) {
@@ -88,25 +100,118 @@ async function savePoster(item) {
     const kept = existsSync(POSTERS_DIR)
         && readdirSync(POSTERS_DIR).some(f => f.startsWith(`${item.id}.`));
     if (kept) item.imageUrl = `local:${item.id}`;
+    else if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
     else console.log(`poster download failed for ${item.id} — keeping remote URL`);
 }
 
 /** Rewrite assets/posters/index.ts so the bundle always ships every poster. */
 function writePosterIndex() {
     if (!existsSync(POSTERS_DIR)) return;
-    const entries = readdirSync(POSTERS_DIR)
-        .filter(f => /\.(jpe?g|png|webp)$/i.test(f))
-        .sort()
-        .map(f => `    '${f.replace(/\.[^.]+$/, '')}': require('./${f}'),`)
+
+    const files = [];
+    const walk = (directory, relativeDirectory = '') => {
+        for (const entry of readdirSync(directory, { withFileTypes: true })) {
+            const absolute = join(directory, entry.name);
+            const relative = join(relativeDirectory, entry.name).replaceAll('\\', '/');
+            const isPoster = ['.jpg', '.jpeg', '.png', '.webp']
+                .some(extension => entry.name.toLowerCase().endsWith(extension));
+            if (entry.isDirectory()) walk(absolute, relative);
+            else if (isPoster) files.push({ absolute, relative });
+        }
+    };
+    walk(POSTERS_DIR);
+    files.sort((a, b) => a.relative.localeCompare(b.relative));
+
+    const aliases = new Map();
+    for (const file of files) {
+        const basename = file.relative
+            .slice(file.relative.lastIndexOf('/') + 1)
+            .replace(/\.[^.]+$/, '');
+        // The catalog uses local:<filename-without-extension>. If two folders
+        // ever contain the same basename, the first deterministic entry wins.
+        if (!aliases.has(basename)) aliases.set(basename, file);
+    }
+
+    const uriEntries = [...aliases.entries()]
+        .flatMap(([key, file]) => [
+            `    ${JSON.stringify(key)}: ${JSON.stringify(`/assets/posters/${file.relative}`)},`,
+            `    ${JSON.stringify(`local:${key}`)}: ${JSON.stringify(`/assets/posters/${file.relative}`)},`,
+        ])
         .join('\n');
-    writeFileSync(
-        join(POSTERS_DIR, 'index.ts'),
-        `/**\n * Poster art bundled with the app, keyed by catalog id.\n *\n * Catalog JSON references these via \`local:<id>\` imageUrl values so posters\n * always load from the app bundle — third-party poster hosts block hotlinking\n * and would render broken cards. \`scripts/refresh-catalog.mjs\` rewrites this\n * map whenever it downloads fresh poster art.\n */\nexport const LOCAL_POSTERS: Record<string, any> = {\n${entries}\n};\n`,
-    );
+    const nativeEntries = [...aliases.entries()]
+        .flatMap(([key, file]) => [
+            `    ${JSON.stringify(key)}: require(${JSON.stringify(`./${file.relative}`)}),`,
+            `    ${JSON.stringify(`local:${key}`)}: require(${JSON.stringify(`./${file.relative}`)}),`,
+        ])
+        .join('\n');
+
+    const output = [
+        '/**',
+        ' * Poster art bundled with the app, keyed by catalog id.',
+        ' *',
+        ' * Catalog JSON references these via local:<id> imageUrl values so posters',
+        ' * always load from the app bundle — third-party poster hosts block hotlinking',
+        ' * and would render broken cards. The refresh script rewrites this map',
+        ' * whenever it downloads fresh poster art.',
+        ' */',
+        "import { Platform, ImageSourcePropType } from 'react-native';",
+        '',
+        'export const LOCAL_POSTER_URIS: Record<string, string> = {',
+        uriEntries,
+        '};',
+        '',
+        'export const LOCAL_POSTERS: Record<string, ImageSourcePropType> = {',
+        nativeEntries,
+        '};',
+        '',
+        'export function getLocalPoster(key?: string | number): any {',
+        '    if (!key) return undefined;',
+        '    const strKey = String(key).trim();',
+        "    const cleanKey = strKey.replace(/^local:/, '');",
+        '',
+        "    if (Platform.OS === 'web') {",
+        '        const uri =',
+        '            LOCAL_POSTER_URIS[strKey] ||',
+        '            LOCAL_POSTER_URIS[cleanKey] ||',
+        "            LOCAL_POSTER_URIS['real-' + cleanKey] ||",
+        "            LOCAL_POSTER_URIS['movie-' + cleanKey] ||",
+        "            LOCAL_POSTER_URIS['tv-' + cleanKey] ||",
+        "            LOCAL_POSTER_URIS['billboard-' + cleanKey];",
+        '        if (uri) return { uri };',
+        '    }',
+        '',
+        '    return (',
+        '        LOCAL_POSTERS[strKey] ||',
+        '        LOCAL_POSTERS[cleanKey] ||',
+        "        LOCAL_POSTERS['real-' + cleanKey] ||",
+        "        LOCAL_POSTERS['movie-' + cleanKey] ||",
+        "        LOCAL_POSTERS['tv-' + cleanKey] ||",
+        "        LOCAL_POSTERS['billboard-' + cleanKey]",
+        '    );',
+        '}',
+    ].join('\n');
+
+    writeFileSync(join(POSTERS_DIR, 'index.ts'), `${output}\n`);
+}
+
+if (process.argv.includes('--rebuild-poster-index')) {
+    writePosterIndex();
+    console.log('Poster index rebuilt.');
+    process.exit(0);
+}
+
+async function fetchWithTimeout(url, options = {}) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+        return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+        clearTimeout(timer);
+    }
 }
 
 async function getHtml(url) {
-    const res = await fetch(url, { headers: UA, redirect: 'follow' });
+    const res = await fetchWithTimeout(url, { headers: UA, redirect: 'follow' });
     if (!res.ok) throw new Error(`${res.status} for ${url}`);
     return res.text();
 }
@@ -137,7 +242,7 @@ async function getOmdb(params) {
         }
     }
 
-    const response = await fetch(url);
+    const response = await fetchWithTimeout(url);
     if (!response.ok) throw new Error(`OMDb HTTP ${response.status}`);
     const payload = await response.json();
     const result = payload.Response === 'False' ? null : payload;
@@ -175,13 +280,21 @@ async function getOmdbMetadata(item, kind) {
                 ? { cast: detail.Actors.split(',').map(value => value.trim()).filter(Boolean) }
                 : {}),
             ...(detail.Director && detail.Director !== 'N/A' ? { director: detail.Director } : {}),
-            ...(detail.Rated && detail.Rated !== 'N/A' ? { rating: detail.Rated } : {}),
+            ...(detail.imdbRating && detail.imdbRating !== 'N/A'
+                ? { rating: detail.imdbRating }
+                : detail.Rated && detail.Rated !== 'N/A'
+                    ? { rating: detail.Rated }
+                    : {}),
+            ...(detail.Rated && detail.Rated !== 'N/A' ? { rated: detail.Rated } : {}),
         };
 
         if (kind === 'tv') {
             const totalSeasons = parseNumber(detail.totalSeasons);
             if (totalSeasons) {
                 metadata.duration = `${totalSeasons} Season${totalSeasons === 1 ? '' : 's'}`;
+            }
+            if (detail.Runtime && detail.Runtime !== 'N/A') {
+                metadata.runtime = detail.Runtime;
             }
 
             if (detail.imdbID && totalSeasons) {
@@ -190,10 +303,26 @@ async function getOmdbMetadata(item, kind) {
                         getOmdb({ i: detail.imdbID, Season: index + 1 })
                     )),
                 );
-                const seasonEpisodeCounts = seasonResults.map(season => (
-                    Array.isArray(season?.Episodes) ? season.Episodes.length : 0
-                ));
+                const seasons = seasonResults.map((season, seasonIndex) => {
+                    const episodes = Array.isArray(season?.Episodes)
+                        ? season.Episodes.map((episode, episodeIndex) => ({
+                            season: seasonIndex + 1,
+                            episode: parseNumber(episode.Episode) ?? episodeIndex + 1,
+                            name: episode.Title && episode.Title !== 'N/A'
+                                ? episode.Title
+                                : `Episode ${episodeIndex + 1}`,
+                        }))
+                        : [];
+                    return {
+                        season_number: seasonIndex + 1,
+                        name: `Season ${seasonIndex + 1}`,
+                        episode_count: episodes.length,
+                        ...(episodes.length ? { episodes } : {}),
+                    };
+                });
+                const seasonEpisodeCounts = seasons.map(season => season.episode_count);
                 if (seasonEpisodeCounts.some(Boolean)) {
+                    metadata.seasons = seasons.filter(season => season.episode_count > 0);
                     metadata.seasonEpisodeCounts = seasonEpisodeCounts;
                     metadata.episodeCount = seasonEpisodeCounts.reduce((sum, count) => sum + count, 0);
                 }
@@ -212,20 +341,43 @@ async function getOmdbMetadata(item, kind) {
 /** Scrape today's Netflix India top 10 (movies + TV shows). */
 async function scrapeFlixPatrol() {
     const html = await getHtml('https://flixpatrol.com/top10/netflix/india/');
+    const lowerHtml = html.toLowerCase();
+    const decodeHtml = (value) => value
+        .replace(/<[^>]+>/g, '')
+        .replace(/&amp;/gi, '&')
+        .replace(/&quot;/gi, '"')
+        .replace(/&#39;|&#x27;/gi, "'")
+        .replace(/&lt;/gi, '<')
+        .replace(/&gt;/gi, '>')
+        .replace(/\s+/g, ' ')
+        .trim();
 
-    const parseSection = (header) => {
-        const start = html.indexOf(header);
-        if (start === -1) return [];
-        const tableStart = html.indexOf('<table', start);
-        const tableEnd = html.indexOf('</table>', tableStart);
-        if (tableStart === -1 || tableEnd === -1) return [];
-        const table = html.slice(tableStart, tableEnd);
-        const rows = [...table.matchAll(/<a href="\/title\/([^/]+)\/"[^>]*>([^<]+)<\/a>/g)];
-        return rows.slice(0, 10).map((m, i) => ({ slug: m[1], title: m[2].trim(), rank: i + 1 }));
+    const parseSection = (headers) => {
+        const starts = headers
+            .map(header => lowerHtml.indexOf(header.toLowerCase()))
+            .filter(index => index >= 0)
+            .sort((a, b) => a - b);
+        const start = starts[0];
+        if (start === undefined) return [];
+
+        const remaining = html.slice(start);
+        const tableOffset = remaining.search(/<table\b/i);
+        if (tableOffset < 0) return [];
+        const tableStart = start + tableOffset;
+        const tableEndOffset = html.slice(tableStart).search(/<\/table>/i);
+        if (tableEndOffset < 0) return [];
+        const table = html.slice(tableStart, tableStart + tableEndOffset);
+        const rows = [...table.matchAll(/<a\b[^>]*href=["']\/title\/([^/"']+)\/?["'][^>]*>([\s\S]*?)<\/a>/gi)];
+        const seen = new Set();
+        return rows
+            .map(match => ({ slug: match[1], title: decodeHtml(match[2]) }))
+            .filter(item => item.title && !seen.has(item.slug) && seen.add(item.slug))
+            .slice(0, 10)
+            .map((item, index) => ({ ...item, rank: index + 1 }));
     };
 
-    const movies = parseSection('TOP 10 Movies');
-    const shows = parseSection('TOP 10 TV Shows');
+    const movies = parseSection(['TOP 10 Movies', 'TOP 10 Films']);
+    const shows = parseSection(['TOP 10 TV Shows', 'TOP 10 Series']);
     if (!movies.length && !shows.length) throw new Error('no tables parsed');
 
     const enrich = async (item, kind) => {
@@ -244,9 +396,12 @@ async function scrapeFlixPatrol() {
                 id: `fp-${item.slug}`,
                 title: item.title,
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
+                mediaType: kind,
+                ...omdb,
+                // Curated mappings are the source of truth for audited series;
+                // OMDb still fills every unknown title automatically.
                 ...knownEpisodeData,
                 ...knownSeasonData,
-                ...omdb,
                 imageUrl: meta(page, 'og:image') ?? omdb.imageUrl ?? '',
                 description: meta(page, 'og:description') ?? omdb.description,
                 ranking_text: `#${item.rank} in India Today`,
@@ -258,9 +413,11 @@ async function scrapeFlixPatrol() {
                 id: `fp-${item.slug}`,
                 title: item.title,
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
+                mediaType: kind,
+                ...omdb,
+                // Keep audited mappings ahead of external guesses.
                 ...knownEpisodeData,
                 ...knownSeasonData,
-                ...omdb,
                 imageUrl: omdb.imageUrl ?? '',
                 ranking_text: `#${item.rank} in India Today`,
                 videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],
@@ -286,73 +443,36 @@ async function scrapeFlixPatrol() {
     };
 }
 
-/** Optional richer path when somebody provides a free TMDB key. */
-async function fetchTmdb() {
-    const KEY = process.env.TMDB_API_KEY || process.env.EXPO_PUBLIC_TMDB_API_KEY;
-    if (!KEY) return null;
-    const base = 'https://api.themoviedb.org/3';
-    const get = async (path, params = {}) => {
-        const url = new URL(`${base}${path}`);
-        url.searchParams.set('api_key', KEY);
-        url.searchParams.set('language', 'hi-IN');
-        for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`TMDB ${res.status}`);
-        return res.json();
-    };
-    const img = (p, s = 'w342') => (p ? `https://image.tmdb.org/t/p/${s}${p}` : '');
-    const toMovie = (raw, kind, i = -1) => ({
-        id: `${kind}-${raw.id}`,
-        imageUrl: img(raw.poster_path) || img(raw.backdrop_path, 'w500'),
-        title: raw.title ?? raw.name ?? '',
-        type: kind === 'tv' ? 'SERIES' : 'FILM',
-        description: raw.overview || undefined,
-        year: (raw.release_date ?? raw.first_air_date ?? '').slice(0, 4) || undefined,
-        videoUrl: SAMPLE_VIDEOS[raw.id % SAMPLE_VIDEOS.length],
-        ...(i >= 0 ? { ranking_text: `#${i + 1} in India Today` } : {}),
-    });
-    const discover = (kind) => get(`/discover/${kind}`, {
-        with_watch_providers: '8', watch_region: 'IN', region: 'IN',
-        sort_by: 'popularity.desc', 'vote_count.gte': '50',
-    });
-    const [m, tv] = await Promise.all([discover('movie'), discover('tv')]);
-    if (!(m.results ?? []).length) return null;
-    return {
-        movieItems: (m.results ?? []).slice(0, 10).map((x, i) => toMovie(x, 'movie', i)),
-        showItems: (tv.results ?? []).slice(0, 10).map((x, i) => toMovie(x, 'tv', i)),
-        extra: [
-            {
-                rowTitle: 'Popular on Netflix',
-                type: 'normal',
-                movies: [
-                    ...(m.results ?? []).slice(10, 16).map(x => toMovie(x, 'movie')),
-                    ...(tv.results ?? []).slice(10, 16).map(x => toMovie(x, 'tv')),
-                ],
-            },
-        ],
-    };
-}
-
 const existing = JSON.parse(readFileSync(join(ROOT, 'data/movies.json'), 'utf8'));
 const TRAILERS = JSON.parse(readFileSync(join(ROOT, 'data/trailers.json'), 'utf8'));
 
 let data;
 try {
-    data = await fetchTmdb();
-    if (data) console.log('Using TMDB catalog (key found).');
-} catch (e) {
-    console.log(`TMDB path failed (${e.message}) — falling back to scraping.`);
-}
-
-if (!data) {
     data = await scrapeFlixPatrol();
     console.log('Scraped FlixPatrol Netflix India TOP 10 (no API key needed).');
+} catch (error) {
+    // A temporary block, DNS failure, or changed HTML must never erase the
+    // last known-good catalog. Exiting successfully also keeps the daily
+    // GitHub Action green while the next run retries discovery.
+    console.log(`Public discovery unavailable (${error.message}) — keeping existing catalog.`);
+    process.exit(0);
 }
 
-const { movieItems, showItems, extra = [] } = data;
+const {
+    movieItems: discoveredMovies = [],
+    showItems: discoveredShows = [],
+    extra = [],
+} = data;
+const previousMovies = existing.movies.find(r => r.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [];
+const previousShows = existing.movies.find(r => r.rowTitle === 'Top 10 Series in India Today')?.movies ?? [];
+const movieItems = discoveredMovies.length ? discoveredMovies : previousMovies;
+const showItems = discoveredShows.length ? discoveredShows : previousShows;
 if (!movieItems.length && !showItems.length) {
-    console.log('Nothing fetched — keeping existing catalog.');
+    console.log('Nothing fetched and no previous catalog exists — keeping files unchanged.');
     process.exit(0);
+}
+if (!discoveredMovies.length || !discoveredShows.length) {
+    console.log('Discovery returned only one chart; carrying forward the missing chart from the previous catalog.');
 }
 
 const REBUILT = new Set([
@@ -371,8 +491,26 @@ const rows = [
     ...evergreen,
 ].filter(r => r && r.movies?.length);
 
+// If today's source omits artwork or blocks a download, reuse a bundled poster
+// from the last successful catalog for the same title before falling back to a
+// remote URL. This keeps cards and episode thumbnails non-blank.
+const normalizeTitle = (value) => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+const previousArtwork = new Map();
+for (const item of existing.movies.flatMap(r => r.movies ?? [])) {
+    if (!item.title || !item.imageUrl) continue;
+    const key = normalizeTitle(item.title);
+    const oldImage = previousArtwork.get(key);
+    // Prefer a bundled asset over an older remote URL when duplicates exist.
+    if (!oldImage || String(item.imageUrl).startsWith('local:')) {
+        previousArtwork.set(key, item.imageUrl);
+    }
+}
+const allItems = rows.flatMap(r => r.movies);
+
 // Bundle poster art locally (hotlink-proof), then persist the catalog.
-await Promise.all(rows.flatMap(r => r.movies).map(savePoster));
+await Promise.all(allItems.map(item => (
+    savePoster(item, previousArtwork.get(normalizeTitle(item.title)))
+)));
 writePosterIndex();
 
 writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: rows }, null, 4));

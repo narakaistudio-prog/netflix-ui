@@ -1,29 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Movie, MovieRow } from '@/types/movie';
-import { fetchLiveCatalog, ComingSoonEvent } from '@/services/tmdb';
-import { LOCAL_POSTERS } from '@/assets/posters';
+import type { ComingSoonEvent } from '@/services/tmdb';
 import trailerMap from '@/data/trailers.json';
 import staticMovies from '@/data/movies.json';
 import staticNew from '@/data/new.json';
 
 const TRAILERS = trailerMap as Record<string, string>;
 
-const CACHE_KEY = 'netflix-in-catalog-v8';
-const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
-
-interface CatalogCache {
-    ts: number;
-    rows: MovieRow[];
-    events: ComingSoonEvent[];
-}
-
 const staticRows = (staticMovies as unknown as { movies: MovieRow[] }).movies;
 const staticEvents = (staticNew as unknown as { events: ComingSoonEvent[] }).events;
 
 /**
- * `local:<id>` imageUrl values point at poster art bundled in
- * `assets/posters`; resolve them to real asset URIs here so every
- * consumer can keep using plain `{ uri }` sources.
+ * `local:<id>` imageUrl values point at `assets/posters`; preserve the marker
+ * so SafeImage can resolve the bundled asset on web and native alike.
  */
 function resolveLocal(rows: MovieRow[]): MovieRow[] {
     return rows.map(row => ({
@@ -31,12 +20,11 @@ function resolveLocal(rows: MovieRow[]): MovieRow[] {
         movies: row.movies.map(m => {
             const next: Movie = { ...m };
             const url = (next as any).imageUrl;
-            // Keep the local: identifier intact so SafeImage can directly resolve bundled assets
             if (!url || typeof url !== 'string' || !url.startsWith('http')) {
                 next.imageUrl = url || `local:${next.id}`;
             }
 
-            // Attach the official YouTube trailer for known titles
+            // Attach the official YouTube trailer for known FlixPatrol titles.
             if (!next.youtubeId && typeof next.id === 'string' && next.id.startsWith('fp-')) {
                 next.youtubeId = TRAILERS[next.id.slice('fp-'.length)];
             }
@@ -45,59 +33,16 @@ function resolveLocal(rows: MovieRow[]): MovieRow[] {
     }));
 }
 
-function readCache(): CatalogCache | null {
-    try {
-        // Clear all older stale cache versions
-        if (typeof globalThis !== 'undefined' && (globalThis as any).localStorage) {
-            for (const old of ['netflix-in-catalog-v1', 'netflix-in-catalog-v2', 'netflix-in-catalog-v3', 'netflix-in-catalog-v4', 'netflix-in-catalog-v5', 'netflix-in-catalog-v6', 'netflix-in-catalog-v7']) {
-                (globalThis as any).localStorage.removeItem(old);
-            }
-        }
-        const raw = (globalThis as any).localStorage?.getItem(CACHE_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw) as CatalogCache;
-        if (!parsed?.rows?.length || Date.now() - parsed.ts > CACHE_TTL_MS) return null;
-        return parsed;
-    } catch {
-        return null;
-    }
-}
-
-function writeCache(cache: CatalogCache) {
-    try {
-        (globalThis as any).localStorage?.setItem(CACHE_KEY, JSON.stringify(cache));
-    } catch {
-        // storage unavailable — ignore
-    }
-}
-
 /**
- * Catalog that always stays fresh:
- *  - renders instantly from the bundled (or cached) data
- *  - then upgrades to the live Netflix-India catalog from TMDB in the
- *    background and caches it for 6 hours
+ * The app renders the catalog bundled by the daily GitHub refresh. Discovery
+ * is intentionally not performed in the Expo client: OMDb is server-side
+ * only, and it cannot enumerate Netflix India availability. This keeps the
+ * client keyless and prevents an old live-cache from masking a refreshed
+ * bundle.
  */
 export function useCatalog() {
-    const [rows, setRows] = useState<MovieRow[]>(() => resolveLocal(readCache()?.rows ?? staticRows));
-    const [events, setEvents] = useState<ComingSoonEvent[]>(() => readCache()?.events ?? staticEvents);
-    const [isLive, setIsLive] = useState(false);
+    const [rows] = useState<MovieRow[]>(() => resolveLocal(staticRows));
+    const [events] = useState<ComingSoonEvent[]>(() => staticEvents);
 
-    useEffect(() => {
-        let alive = true;
-
-        (async () => {
-            const live = await fetchLiveCatalog();
-            if (!alive || !live) return;
-            setRows(resolveLocal(live.rows));
-            setEvents(live.events);
-            setIsLive(true);
-            writeCache({ ts: Date.now(), rows: live.rows, events: live.events });
-        })();
-
-        return () => {
-            alive = false;
-        };
-    }, []);
-
-    return { rows, events, isLive };
+    return { rows, events, isLive: false };
 }

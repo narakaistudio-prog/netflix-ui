@@ -33,6 +33,8 @@ export interface Movie {
     videoUrl?: string;
     year?: string;
     duration?: string;
+    /** Episode runtime for series when the catalog source provides it. */
+    runtime?: string;
     /** Total number of available episodes for TV/series entries. */
     episodeCount?: number;
     /** Episode totals by season, in season order. */

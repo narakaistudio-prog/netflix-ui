@@ -399,6 +399,7 @@ export default function MovieScreen() {
         video_url: movie.videoUrl || 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         year: movie.year || '2024',
         duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
+        runtime: movie.runtime,
         episodeCount: movie.episodeCount,
         seasonEpisodeCounts: movie.seasonEpisodeCounts,
         seasons: movie.seasons,

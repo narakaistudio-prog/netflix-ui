@@ -132,14 +132,19 @@ The bundled catalog is refreshed automatically by the
   **Actions → Refresh Netflix India catalog → Run workflow**.
 - Once this branch is merged into `main`, the daily schedule activates
   automatically.
+- If FlixPatrol is temporarily unavailable or changes its HTML, the job exits
+  successfully without replacing the last known-good catalog. A partial chart
+  also carries forward whichever chart is missing.
 
 ### Optional extras
 - **OMDb (metadata enrichment)**: put the key in the GitHub Actions repository
   secret `OMDB_API_KEY` (or local `.env` for a refresh run). The workflow uses
-  it to enrich discovered Netflix India titles with IMDb id, plot, cast,
-  rating, runtime, seasons and episode totals. The key is never bundled into
-  the client app.
-- **TMDB (optional richer availability source)**: if you ever create a key,
-  put it in `.env` as `EXPO_PUBLIC_TMDB_API_KEY` or as the `TMDB_API_KEY`
-  repository secret. Everything still works without TMDB; public FlixPatrol
-  discovery remains the fallback.
+  it to enrich discovered titles with IMDb id, plot, cast, IMDb rating,
+  certification, runtime, seasons, episode counts and episode names. The key
+  is never bundled into the client app.
+
+### Coverage note
+FlixPatrol's public page supplies Netflix India's daily Top 10, not an official
+complete Netflix India catalogue. OMDb enriches those discovered titles but
+cannot determine Netflix country availability or enumerate every Netflix title;
+the app therefore makes no completeness guarantee.

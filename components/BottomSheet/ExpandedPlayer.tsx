@@ -35,6 +35,7 @@ interface MovieData {
     video_url?: string;
     year?: string;
     duration?: string;
+    runtime?: string;
     rating?: string;
     description?: string;
     cast?: string[];
@@ -157,25 +158,24 @@ export function ExpandedPlayer({
     const selectedSeasonData = movieData.seasons?.find(s => s.season_number === currentSeason)
         ?? movieData.seasons?.[currentSeason - 1];
     const currentSeasonEpisodeCount = isSeries
-        ? selectedSeasonData?.episodes?.length
+        ? movieData.seasonEpisodeCounts?.[currentSeason - 1]
+            ?? selectedSeasonData?.episodes?.length
             ?? selectedSeasonData?.episode_count
-            ?? movieData.seasonEpisodeCounts?.[currentSeason - 1]
             ?? (seasonCount === 1 ? episodeCount : undefined)
         : undefined;
     const episodeLabel = currentSeasonEpisodeCount && currentSeasonEpisodeCount > 0
         ? `${currentSeasonEpisodeCount} Episodes`
         : (episodeCount && episodeCount > 0 ? `${episodeCount} Episodes` : 'Episodes');
     const episodeItems: Episode[] = isSeries
-        ? (selectedSeasonData?.episodes?.length
-            ? selectedSeasonData.episodes
-            : Array.from(
-                { length: Math.max(currentSeasonEpisodeCount ?? 1, 1) },
-                (_, index) => ({
-                    season: currentSeason,
-                    episode: index + 1,
-                    name: `Episode ${index + 1}`,
-                }),
-            ))
+        ? (() => {
+            const sourceEpisodes = selectedSeasonData?.episodes ?? [];
+            const count = Math.max(currentSeasonEpisodeCount ?? sourceEpisodes.length ?? 1, 1);
+            return Array.from({ length: count }, (_, index) => sourceEpisodes[index] ?? ({
+                season: currentSeason,
+                episode: index + 1,
+                name: `Episode ${index + 1}`,
+            }));
+        })()
         : [];
 
     const onPlaybackStatusUpdate = (status: any) => {
@@ -334,6 +334,9 @@ export function ExpandedPlayer({
                     <View style={styles.metaInfo}>
                         <ThemedText style={styles.year}>{movieData.year}</ThemedText>
                         <ThemedText style={styles.duration}>{movieData.duration}</ThemedText>
+                        {movieData.runtime ? (
+                            <ThemedText style={styles.duration}>{movieData.runtime}</ThemedText>
+                        ) : null}
                         {episodeCount ? (
                             <ThemedText style={styles.duration}>{episodeCount} Episodes</ThemedText>
                         ) : null}
