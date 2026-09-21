@@ -376,7 +376,11 @@ export function ExpandedPlayer({
                             {seasonOptions.length > 1 && (
                                 <View style={{ marginBottom: 14 }}>
                                     <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800', marginBottom: 9 }}>Seasons</Text>
-                                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+                                    <ScrollView
+                                        horizontal
+                                        showsHorizontalScrollIndicator={false}
+                                        contentContainerStyle={{ flexDirection: 'row', gap: 8, paddingRight: 8 }}
+                                    >
                                         {seasonOptions.map((seasonNumber) => {
                                             const selected = seasonNumber === currentSeason;
                                             return (
@@ -402,7 +406,7 @@ export function ExpandedPlayer({
                                                 </Pressable>
                                             );
                                         })}
-                                    </View>
+                                    </ScrollView>
                                 </View>
                             )}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>

@@ -37,6 +37,7 @@ const SERIES_EPISODE_COUNTS = {
     'Musafir Cafe': 8,
     'The Gentlemen': 16,
     'The Scandal': 8,
+    'WWE SmackDown': 1419,
 };
 
 const SERIES_SEASON_EPISODES = {
@@ -48,6 +49,7 @@ const SERIES_SEASON_EPISODES = {
     'Musafir Cafe': [8],
     'The Gentlemen': [8, 8],
     'The Scandal': [8],
+    'WWE SmackDown': [19, 52, 52, 52, 52, 53, 52, 52, 52, 52, 52, 53, 52, 52, 52, 52, 53, 52, 52, 52, 52, 52, 53, 52, 52, 52, 52, 44],
 };
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
