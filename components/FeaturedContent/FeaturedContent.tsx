@@ -92,7 +92,7 @@ export function FeaturedContent({
                 />
 
                 {/* Right side poster display */}
-                <View style={web.posterRight} pointerEvents="none">
+                <View style={[web.posterRight, { pointerEvents: 'none' } as any]}>
                     <SafeImage
                         source={{ uri: movie.thumbnail }}
                         style={web.rightPosterImage}
@@ -313,10 +313,17 @@ const web = StyleSheet.create({
         fontSize: 64,
         fontWeight: '900',
         letterSpacing: -1.5,
-        textShadowColor: 'rgba(0, 0, 0, 0.8)',
-        textShadowOffset: { width: 2, height: 2 },
-        textShadowRadius: 8,
         lineHeight: 70,
+        ...Platform.select({
+            web: {
+                textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)',
+            } as any,
+            default: {
+                textShadowColor: 'rgba(0, 0, 0, 0.8)',
+                textShadowOffset: { width: 2, height: 2 },
+                textShadowRadius: 8,
+            },
+        }),
     },
     rankRow: {
         flexDirection: 'row',
@@ -392,9 +399,16 @@ const web = StyleSheet.create({
         color: '#e5e5e5',
         fontSize: 16,
         lineHeight: 24,
-        textShadowColor: 'rgba(0,0,0,0.7)',
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowRadius: 4,
+        ...Platform.select({
+            web: {
+                textShadow: '1px 1px 4px rgba(0,0,0,0.7)',
+            } as any,
+            default: {
+                textShadowColor: 'rgba(0,0,0,0.7)',
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 4,
+            },
+        }),
     },
     buttonRow: {
         flexDirection: 'row',

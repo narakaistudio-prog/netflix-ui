@@ -74,8 +74,7 @@ export function WebNavBar() {
                 <LinearGradient
                     colors={['rgba(0,0,0,0.85)', 'rgba(0,0,0,0.4)', 'transparent']}
                     locations={[0, 0.6, 1]}
-                    style={StyleSheet.absoluteFill}
-                    pointerEvents="none"
+                    style={[StyleSheet.absoluteFill, { pointerEvents: 'none' } as any]}
                 />
             )}
 

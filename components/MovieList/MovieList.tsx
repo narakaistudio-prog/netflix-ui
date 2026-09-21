@@ -461,16 +461,18 @@ const top10 = StyleSheet.create({
         lineHeight: 160,
         fontWeight: '900',
         color: '#0f0f0f',
-        textShadowColor: '#595959',
-        textShadowOffset: { width: 3, height: 3 },
-        textShadowRadius: 1,
         ...Platform.select({
             web: {
                 WebkitTextStroke: '4px #595959',
                 fontFamily: 'Impact, "Arial Black", sans-serif',
                 userSelect: 'none',
+                textShadow: '3px 3px 1px #595959',
             } as any,
-            default: {},
+            default: {
+                textShadowColor: '#595959',
+                textShadowOffset: { width: 3, height: 3 },
+                textShadowRadius: 1,
+            },
         }),
     },
     posterBox: {
