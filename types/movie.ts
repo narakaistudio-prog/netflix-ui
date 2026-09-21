@@ -33,6 +33,8 @@ export interface Movie {
     videoUrl?: string;
     year?: string;
     duration?: string;
+    /** Total number of available episodes for TV/series entries. */
+    episodeCount?: number;
     rating?: string;
     description?: string;
     cast?: string[];

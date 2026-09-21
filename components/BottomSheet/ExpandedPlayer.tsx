@@ -51,6 +51,11 @@ interface MovieData {
     initialSeason?: number;
     initialEpisode?: number;
     totalEpisodesInSeason?: number;
+    episodeCount?: number;
+    seasons?: Array<{
+        episode_count?: number;
+        episodes?: unknown[];
+    }>;
 }
 
 interface ExpandedPlayerProps {
@@ -112,6 +117,18 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
 
     // Catalog items carry `videoUrl`; the player historically used `video_url`
     if ((movie as any).videoUrl) movieData.video_url = (movie as any).videoUrl;
+
+    const isSeries = movieData.mediaType === 'tv' || movieData.type === 'SERIES';
+    const episodeCount = isSeries
+        ? movieData.episodeCount
+            ?? movieData.totalEpisodesInSeason
+            ?? movieData.seasons?.reduce((total, season) => (
+                total + (season.episode_count ?? season.episodes?.length ?? 0)
+            ), 0)
+        : undefined;
+    const episodeLabel = episodeCount && episodeCount > 0
+        ? `${episodeCount} Episodes`
+        : (movieData.duration ?? 'Season 1');
 
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.isLoaded) {
@@ -227,7 +244,7 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                             </View>
                             <Text style={{ color: '#fff', fontSize: 16, fontWeight: '800', textAlign: 'center', textShadowColor: 'rgba(0,0,0,0.8)', textShadowRadius: 6 }}>
                                 {hasEmbed
-                                    ? (movieData.mediaType === 'tv' || movieData.type === 'SERIES'
+                                    ? (isSeries
                                         ? `Play ${movieData.title} (S1:E1)`
                                         : `Play ${movieData.title}`)
                                     : 'Play on Netflix'}
@@ -261,7 +278,7 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                             left: 0,
                         }}>N</Text>
                         <Text style={newStyles.netflixTag}>
-                            {movieData.mediaType === 'tv' || movieData.type === 'SERIES' ? 'SERIES' : 'FILM'}
+                            {isSeries ? 'SERIES' : 'FILM'}
                         </Text>
                     </View>
                     <ThemedText style={styles.title}>{movieData.title}</ThemedText>
@@ -269,6 +286,9 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                     <View style={styles.metaInfo}>
                         <ThemedText style={styles.year}>{movieData.year}</ThemedText>
                         <ThemedText style={styles.duration}>{movieData.duration}</ThemedText>
+                        {episodeCount ? (
+                            <ThemedText style={styles.duration}>{episodeCount} Episodes</ThemedText>
+                        ) : null}
                         <ThemedText style={styles.rating}>{movieData.rating}</ThemedText>
                         <ThemedText style={styles.quality}>HD</ThemedText>
                     </View>
@@ -282,7 +302,7 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                             <Ionicons name="play" size={24} color="black" />
                             <ThemedText style={styles.playButtonText}>
                                 {hasEmbed
-                                    ? (movieData.mediaType === 'tv' || movieData.type === 'SERIES' ? 'Play S1:E1' : 'Play')
+                                    ? (isSeries ? 'Play S1:E1' : 'Play')
                                     : 'Play on Netflix'}
                             </ThemedText>
                         </Pressable>
@@ -303,11 +323,11 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                         {movieData.description}
                     </ThemedText>
 
-                    {(movieData.mediaType === 'tv' || movieData.type === 'SERIES') && (
+                    {isSeries && (
                         <View style={{ marginTop: 18, marginBottom: 12 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                                 <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800' }}>Episodes</Text>
-                                <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{movieData.duration ?? 'Season 1'}</Text>
+                                <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{episodeLabel}</Text>
                             </View>
                             <Pressable
                                 style={({ hovered }: any) => [{

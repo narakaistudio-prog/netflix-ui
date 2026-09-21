@@ -278,9 +278,10 @@ export default function MovieScreen() {
         if (m) return m[1];
         return undefined;
     })();
+    const isSeries = movie.type === 'SERIES' || movie.mediaType === 'tv';
     const mediaType: 'movie' | 'tv' =
         movie.mediaType ??
-        (movie.type === 'SERIES' || (typeof movie.id === 'string' && (movie.id.includes('tv-') || movie.id.startsWith('tv-')))
+        (isSeries || (typeof movie.id === 'string' && (movie.id.includes('tv-') || movie.id.startsWith('tv-')))
             ? 'tv'
             : 'movie');
 
@@ -328,7 +329,7 @@ export default function MovieScreen() {
         setProviderIndex(0);
         setSeason(1);
         setEpisode(1);
-        setTotalEps(undefined);
+        setTotalEps(mediaType === 'tv' ? movie.episodeCount : undefined);
         if (mediaType === 'tv' && Array.isArray(movie.seasons) && movie.seasons.length) {
             const s = movie.seasons[0];
             setSeason(s.season_number);
@@ -373,7 +374,10 @@ export default function MovieScreen() {
         imageUrl: movie.imageUrl || '',
         video_url: movie.videoUrl || 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         year: movie.year || '2024',
-        duration: movie.duration || '2h 30m',
+        duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
+        episodeCount: movie.episodeCount,
+        seasons: movie.seasons,
+        type: movie.type,
         rating: movie.rating || 'PG-13',
         description: movie.description || 'No description available',
         cast: movie.cast || ['Cast not available'],

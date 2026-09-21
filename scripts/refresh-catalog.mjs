@@ -25,6 +25,20 @@ const SAMPLE_VIDEOS = [
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
 ];
 
+// Netflix's daily chart scraper does not expose episode metadata, so retain
+// known counts for recurring chart titles instead of falling back to a movie
+// runtime in the series detail sheet.
+const SERIES_EPISODE_COUNTS = {
+    'Chumbak': 16,
+    "India's Got Latent": 20,
+    'Crew Girl': 8,
+    'Monster: The Lizzie Borden Story': 8,
+    'Operation Safed Sagar: The Untold Story of the Kargil War': 6,
+    'Musafir Cafe': 8,
+    'The Gentlemen': 16,
+    'The Scandal': 8,
+};
+
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 const POSTERS_DIR = join(ROOT, 'assets', 'posters');
@@ -117,6 +131,9 @@ async function scrapeFlixPatrol() {
                 imageUrl: meta(page, 'og:image') ?? '',
                 title: item.title,
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
+                ...(kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
+                    ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
+                    : {}),
                 description: meta(page, 'og:description'),
                 ranking_text: `#${item.rank} in India Today`,
                 youtubeId: TRAILERS[item.slug] || undefined,
@@ -128,6 +145,9 @@ async function scrapeFlixPatrol() {
                 imageUrl: '',
                 title: item.title,
                 type: kind === 'tv' ? 'SERIES' : 'FILM',
+                ...(kind === 'tv' && SERIES_EPISODE_COUNTS[item.title]
+                    ? { episodeCount: SERIES_EPISODE_COUNTS[item.title] }
+                    : {}),
                 ranking_text: `#${item.rank} in India Today`,
                 videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],
             };
