@@ -353,6 +353,18 @@ export default function MovieScreen() {
         } catch {}
     }, [movie, parsedTmdb, mediaType, currentProvider, cycle]);
 
+    const handlePlayEpisode = useCallback((selectedEpisode: number) => {
+        if (mediaType !== 'tv') {
+            handlePlayFull();
+            return;
+        }
+        setProviderIndex(0);
+        setSeason(1);
+        setEpisode(selectedEpisode);
+        setTotalEps(movie.episodeCount);
+        setPlayerOpen(true);
+    }, [mediaType, handlePlayFull, movie.episodeCount]);
+
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
         setProviderIndex(i => (i + 1) % cycle.length);
@@ -406,6 +418,7 @@ export default function MovieScreen() {
                             scrollComponent={ScrollComponent}
                             movie={movieProps}
                             onPlayFull={handlePlayFull}
+                            onPlayEpisode={handlePlayEpisode}
                         />
                         {playerOpen && src ? (
                             <View style={webStyles.playerLayer} pointerEvents="box-none">
@@ -437,6 +450,7 @@ export default function MovieScreen() {
                     scrollComponent={ScrollComponent}
                     movie={movieProps}
                     onPlayFull={handlePlayFull}
+                    onPlayEpisode={handlePlayEpisode}
                 />
                 {playerOpen && src ? (
                     <View style={styles.nativePlayerLayer} pointerEvents="box-none">

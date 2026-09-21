@@ -13,7 +13,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import { newStyles } from '@/styles/new';
 import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
-import type { Movie } from '@/types/movie';
+import type { Episode, Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
 // YouTube's iframe player dies with "Error 153" inside hosted preview frames,
@@ -54,7 +54,7 @@ interface MovieData {
     episodeCount?: number;
     seasons?: Array<{
         episode_count?: number;
-        episodes?: unknown[];
+        episodes?: Episode[];
     }>;
 }
 
@@ -64,6 +64,8 @@ interface ExpandedPlayerProps {
     onClose?: () => void;
     /** Called when Play is tapped; parent mounts the EmbedPlayer overlay. */
     onPlayFull?: (movie: MovieData) => void;
+    /** Called when a specific episode row is tapped. */
+    onPlayEpisode?: (episode: number) => void;
 }
 
 interface PlaybackStatus {
@@ -80,7 +82,7 @@ interface VideoRef {
 
 
 
-export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: ExpandedPlayerProps) {
+export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull, onPlayEpisode }: ExpandedPlayerProps) {
     const ScrollComponentToUse = scrollComponent || ScrollView;
     const insets = useSafeAreaInsets();
     const videoRef = useRef<Video | null>(null);
@@ -130,6 +132,18 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
     const episodeLabel = episodeCount && episodeCount > 0
         ? `${episodeCount} Episodes`
         : (movieData.duration ?? 'Season 1');
+    const episodeItems: Episode[] = isSeries
+        ? (movieData.seasons?.[0]?.episodes?.length
+            ? movieData.seasons[0].episodes
+            : Array.from(
+                { length: Math.max(episodeCount ?? 1, 1) },
+                (_, index) => ({
+                    season: 1,
+                    episode: index + 1,
+                    name: `Episode ${index + 1}`,
+                }),
+            ))
+        : [];
 
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.isLoaded) {
@@ -330,39 +344,46 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose, onPlayFull }: 
                                 <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800' }}>Episodes</Text>
                                 <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{episodeLabel}</Text>
                             </View>
-                            <Pressable
-                                style={({ hovered }: any) => [{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    backgroundColor: hovered ? '#2a2a2a' : '#222',
-                                    borderRadius: 8,
-                                    padding: 12,
-                                    gap: 12,
-                                    borderWidth: 1,
-                                    borderColor: '#333',
-                                }]}
-                                onPress={handlePlay}
-                            >
-                                <View style={{
-                                    width: 36,
-                                    height: 36,
-                                    borderRadius: 18,
-                                    backgroundColor: '#E50914',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}>
-                                    <Ionicons name="play" size={18} color="#fff" style={{ marginLeft: 2 }} />
-                                </View>
-                                <View style={{ flex: 1 }}>
-                                    <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>
-                                        Episode 1 • Pilot
-                                    </Text>
-                                    <Text style={{ color: '#888', fontSize: 12, marginTop: 2 }}>
-                                        Hindi Dub & Subtitles Available
-                                    </Text>
-                                </View>
-                                <Ionicons name="chevron-forward" size={18} color="#888" />
-                            </Pressable>
+                            {episodeItems.map((episode) => (
+                                <Pressable
+                                    key={`${episode.season}-${episode.episode}`}
+                                    style={({ hovered }: any) => [{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        backgroundColor: hovered ? '#2a2a2a' : '#222',
+                                        borderRadius: 8,
+                                        padding: 12,
+                                        gap: 12,
+                                        borderWidth: 1,
+                                        borderColor: '#333',
+                                        marginBottom: 8,
+                                    }]}
+                                    onPress={() => {
+                                        if (onPlayEpisode) onPlayEpisode(episode.episode);
+                                        else handlePlay();
+                                    }}
+                                >
+                                    <View style={{
+                                        width: 36,
+                                        height: 36,
+                                        borderRadius: 18,
+                                        backgroundColor: '#E50914',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Ionicons name="play" size={18} color="#fff" style={{ marginLeft: 2 }} />
+                                    </View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>
+                                            Episode {episode.episode}{episode.name && episode.name !== `Episode ${episode.episode}` ? ` • ${episode.name}` : ''}
+                                        </Text>
+                                        <Text style={{ color: '#888', fontSize: 12, marginTop: 2 }}>
+                                            Hindi Dub & Subtitles Available
+                                        </Text>
+                                    </View>
+                                    <Ionicons name="chevron-forward" size={18} color="#888" />
+                                </Pressable>
+                            ))}
                         </View>
                     )}
 
