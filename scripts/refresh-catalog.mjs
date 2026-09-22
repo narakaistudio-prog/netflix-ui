@@ -667,7 +667,7 @@ function parseNetflixOfficialEpisodeMetadata(markdown) {
     // Some Netflix reader responses preserve each real episode still as an
     // image line, then put the number/title on the next line. Keep that shape
     // too so official episode stills are not discarded.
-    const richBulletPattern = /(?:^|\n)\s*\-\s+(?:!\[[^\]]*\]\(([^)]+)\))?\s*((?:\d+h\s*)?\d+m)\s*(?:\n+)+\\?([0-9]+)\.\s+([^\n]+)(?:\n+)+([\s\S]*?)(?=\n\s*\-\s+|\s*$)/gi;
+    const richBulletPattern = /(?:^|\n)\s*\-\s+(?:!\[[^\]]*\]\(([^)]+)\))?\s*((?:\d+h\s*)?\d+m)[ \t]*(?:\n[ \t]*)+([0-9]+)\\?\.[ \t]+([^\n]+)(?:\n[ \t]*)+([\s\S]*?)(?=\n\s*\-\s+|\s*$)/gi;
     const parseBullets = (section, seasonNumber) => {
         const inline = [...section.matchAll(inlineBulletPattern)].map(match => ({
             season: seasonNumber,
@@ -702,13 +702,15 @@ function parseNetflixOfficialEpisodeMetadata(markdown) {
         return parsed;
     };
 
-    const seasonMarkers = [...episodeSection.matchAll(/Season\s+(\d+)/gi)];
-    const episodes = seasonMarkers.length
-        ? seasonMarkers.flatMap((marker, index) => parseBullets(
-            episodeSection.slice(marker.index, seasonMarkers[index + 1]?.index),
-            Number.parseInt(marker[1], 10),
-        ))
-        : parseBullets(episodeSection, 1);
+    const firstBulletIndex = episodeSection.search(/(?:^|\n)\s*\-\s+/);
+    const seasonMarkers = [...episodeSection.matchAll(/Season\s+(\d+)/gi)]
+        .filter(marker => firstBulletIndex < 0 || marker.index < firstBulletIndex);
+    // The reader exposes a season selector before the currently selected
+    // season's real episode list. Those selector labels are not delimiters;
+    // attach the parsed list to the first selected season instead of dropping
+    // every episode between `Season 1Season 2...` labels.
+    const selectedSeason = Number.parseInt(seasonMarkers[0]?.[1] || '1', 10);
+    const episodes = parseBullets(episodeSection, selectedSeason);
     if (!episodes.length) return {};
 
     const grouped = new Map();
@@ -1620,14 +1622,38 @@ async function refreshCurrentCatalog() {
         },
         (completed, total) => console.log(`Current catalog enrichment: ${completed}/${total}`),
     );
-    const movieItems = prepared.filter(item => item.mediaType === 'movie');
-    const showItems = prepared.filter(item => item.mediaType === 'tv');
     let curatedCatalog = { items: [], movieItems: [], showItems: [], rows: [] };
     try {
         curatedCatalog = await scrapeNetflixCuratedCatalog([...existingItems, ...prepared]);
     } catch (error) {
         console.log(`Netflix curated catalogue unavailable (${error.message}) — keeping existing editorial shelves.`);
     }
+    const curatedByTitle = new Map(
+        curatedCatalog.items.map(item => [
+            `${item.mediaType}:${normalizeLookupTitle(item.title)}`,
+            item,
+        ]),
+    );
+    // The same title can appear in a current JustWatch shelf and in a curated
+    // Netflix shelf. Copy official episode metadata back to the current object
+    // too, because detail navigation resolves the first matching id in row
+    // order. This prevents a current card from losing its real episode list.
+    const hydratedPrepared = prepared.map(item => {
+        const curated = curatedByTitle.get(`${item.mediaType}:${normalizeLookupTitle(item.title)}`);
+        if (!curated) return item;
+        return {
+            ...item,
+            ...curated,
+            id: item.id,
+            catalogSource: item.catalogSource,
+            catalogCollection: curated.catalogCollection,
+            imageUrl: item.imageUrl || curated.imageUrl || '',
+            description: item.description || curated.description,
+            rating: item.rating || curated.rating,
+        };
+    });
+    const movieItems = hydratedPrepared.filter(item => item.mediaType === 'movie');
+    const showItems = hydratedPrepared.filter(item => item.mediaType === 'tv');
     const rebuilt = new Set([
         'JustWatch Current Movies in India',
         'JustWatch Current TV Shows in India',
@@ -1638,7 +1664,7 @@ async function refreshCurrentCatalog() {
         showItems: existing.movies.find(row => row.rowTitle === 'Top 10 TV Shows in India Today')?.movies ?? [],
     };
     try {
-        top10 = await scrapeJustWatchTop10([...existingItems, ...prepared]);
+        top10 = await scrapeJustWatchTop10([...existingItems, ...hydratedPrepared]);
     } catch (error) {
         console.log(`Current Top 10 refresh unavailable (${error.message}) — keeping previous chart rows.`);
     }
@@ -1666,7 +1692,7 @@ async function refreshCurrentCatalog() {
     ]);
 
     await Promise.all([
-        ...prepared,
+        ...hydratedPrepared,
         ...curatedCatalog.items,
         ...top10.movieItems,
         ...top10.showItems,
