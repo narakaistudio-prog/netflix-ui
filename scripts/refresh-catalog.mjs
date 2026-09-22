@@ -334,16 +334,38 @@ const parseNumber = (value) => {
     return Number.isFinite(parsed) ? parsed : undefined;
 };
 
+const normalizeLookupTitle = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+
 async function getOmdbMetadata(item, kind) {
     if (!OMDB_API_KEY) return {};
 
     try {
-        const detail = await getOmdb({
+        let detail = await getOmdb({
             t: item.title,
             type: kind === 'tv' ? 'series' : 'movie',
             plot: 'full',
         });
-        if (!detail) return {};
+        // Exact OMDb title lookup misses punctuation/region variants. Search
+        // only for an exact normalized title (and prefer the catalog year) so
+        // provider IDs are improved without silently attaching a wrong movie.
+        if (!detail?.imdbID) {
+            const search = await getOmdb({
+                s: item.title,
+                type: kind === 'tv' ? 'series' : 'movie',
+            });
+            const expectedTitle = normalizeLookupTitle(item.title);
+            const expectedYear = firstYear(item.year);
+            const candidate = search?.Search?.find(result => (
+                normalizeLookupTitle(result.Title) === expectedTitle
+                && (!expectedYear || firstYear(result.Year) === expectedYear)
+            )) ?? search?.Search?.find(result => (
+                normalizeLookupTitle(result.Title) === expectedTitle
+            ));
+            if (candidate?.imdbID) {
+                detail = await getOmdb({ i: candidate.imdbID, plot: 'full' });
+            }
+        }
+        if (!detail?.imdbID) return {};
 
         const metadata = {
             ...(detail.imdbID ? { imdb_id: detail.imdbID } : {}),
