@@ -778,12 +778,17 @@ async function getTvMazeEpisodeMetadata(title) {
                 .map(episode => ({
                     season: episode.season,
                     episode: episode.number,
-                    name: episode.name || `Episode ${episode.number}`,
+                    name: episode.name || '',
                     ...(episode.image?.original || episode.image?.medium
                         ? { still_path: episode.image.original || episode.image.medium }
                         : {}),
                 }))
+                .filter(episode => episode.name && !/^(?:episode\s+\d+|tba|to be announced)$/i.test(episode.name.trim()))
             : [];
+        if (!episodes.length) {
+            tvMazeCache.set(key, {});
+            return {};
+        }
         const grouped = new Map();
         for (const episode of episodes) {
             if (!grouped.has(episode.season)) grouped.set(episode.season, []);
@@ -810,6 +815,81 @@ async function getTvMazeEpisodeMetadata(title) {
     } catch (error) {
         console.log(`TVMaze episode enrichment skipped for ${title} (${error.message})`);
         tvMazeCache.set(key, {});
+        return {};
+    }
+}
+
+const jikanCache = new Map();
+async function getJikanEpisodeMetadata(title) {
+    const key = normalizeLookupTitle(title);
+    if (!key) return {};
+    if (jikanCache.has(key)) return jikanCache.get(key);
+    try {
+        const searchUrl = new URL('https://api.jikan.moe/v4/anime');
+        searchUrl.searchParams.set('q', title);
+        searchUrl.searchParams.set('limit', '5');
+        const searchResponse = await fetchWithTimeout(searchUrl, { headers: UA });
+        if (!searchResponse.ok) throw new Error(`Jikan search HTTP ${searchResponse.status}`);
+        const search = await searchResponse.json();
+        const match = search.data?.find(anime => [
+            anime.title,
+            anime.title_english,
+            ...(anime.title_synonyms || []),
+        ].some(candidate => normalizeLookupTitle(candidate) === key));
+        if (!match?.mal_id) {
+            jikanCache.set(key, {});
+            return {};
+        }
+
+        const episodes = [];
+        const firstEpisodeUrl = `https://api.jikan.moe/v4/anime/${match.mal_id}/episodes?page=1`;
+        const firstResponse = await fetchWithTimeout(firstEpisodeUrl, { headers: UA });
+        if (!firstResponse.ok) throw new Error(`Jikan episodes HTTP ${firstResponse.status}`);
+        const firstPage = await firstResponse.json();
+        const pages = Math.min(firstPage.pagination?.last_visible_page || 1, 5);
+        const pagesData = [firstPage];
+        for (let page = 2; page <= pages; page += 1) {
+            await sleep(250);
+            const pageResponse = await fetchWithTimeout(
+                `https://api.jikan.moe/v4/anime/${match.mal_id}/episodes?page=${page}`,
+                { headers: UA },
+            );
+            if (!pageResponse.ok) break;
+            pagesData.push(await pageResponse.json());
+        }
+        for (const page of pagesData) {
+            for (const episode of page.data || []) {
+                if (!episode?.mal_id || !episode.title) continue;
+                episodes.push({
+                    season: 1,
+                    episode: episode.mal_id,
+                    name: episode.title,
+                    ...(episode.images?.jpg?.image_url ? { still_path: episode.images.jpg.image_url } : {}),
+                });
+            }
+        }
+        const uniqueEpisodes = episodes.filter((episode, index, all) => (
+            all.findIndex(candidate => candidate.episode === episode.episode) === index
+        ));
+        if (!uniqueEpisodes.length) {
+            jikanCache.set(key, {});
+            return {};
+        }
+        const metadata = {
+            seasons: [{
+                season_number: 1,
+                name: 'Season 1',
+                episode_count: uniqueEpisodes.length,
+                episodes: uniqueEpisodes,
+            }],
+            seasonEpisodeCounts: [uniqueEpisodes.length],
+            episodeCount: uniqueEpisodes.length,
+        };
+        jikanCache.set(key, metadata);
+        return metadata;
+    } catch (error) {
+        console.log(`Jikan episode enrichment skipped for ${title} (${error.message})`);
+        jikanCache.set(key, {});
         return {};
     }
 }
@@ -1366,11 +1446,19 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const official = netflixId && (!known?.imageUrl || needsOfficialEpisodes)
                 ? await getNetflixOfficialMetadata(netflixId, mediaType)
                 : {};
-            const episodeFallback = mediaType === 'tv'
+            const tvMazeFallback = mediaType === 'tv'
                 && !Array.isArray(known?.seasons)
                 && !Array.isArray(official.seasons)
                 ? await getTvMazeEpisodeMetadata(title)
                 : {};
+            const episodeFallback = Array.isArray(tvMazeFallback.seasons)
+                ? tvMazeFallback
+                : mediaType === 'tv'
+                    && catalogCollection === 'Netflix Anime & Animation'
+                    && !Array.isArray(known?.seasons)
+                    && !Array.isArray(official.seasons)
+                    ? await getJikanEpisodeMetadata(title)
+                    : {};
             if (known) {
                 return {
                     ...known,
