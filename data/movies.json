@@ -1,6 +1,992 @@
 {
     "movies": [
         {
+            "rowTitle": "Top 10 Movies in India Today",
+            "type": "top_10",
+            "movies": [
+                {
+                    "id": "jw-vishwanath-and-sons",
+                    "title": "Vishwanath & Sons",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "imageUrl": "local:jw-vishwanath-and-sons",
+                    "ranking_text": "#1 in India Today",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-irumudi",
+                    "imageUrl": "local:fp-irumudi",
+                    "title": "Irumudi",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1441228",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "An alcoholic with a violent past — living peacefully with his daughter beside a waterfall — decides to take Ayyappa Deeksha, a 41-day spiritual vow of intense austerity, at her request. Starring Ravi Teja.",
+                    "ranking_text": "#2 in India Today"
+                },
+                {
+                    "id": "jw-365-days",
+                    "title": "365 dni",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "imageUrl": "local:jw-365-days",
+                    "ranking_text": "#3 in India Today",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                },
+                {
+                    "id": "jw-modha-rathiri",
+                    "title": "Modha Rathri",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "imageUrl": "local:jw-modha-rathiri",
+                    "ranking_text": "#7 in India Today",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                },
+                {
+                    "id": "fp-lust-stories-3",
+                    "imageUrl": "local:fp-lust-stories-3",
+                    "title": "Lust Stories 3",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1451944",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships and repressed desire, offering fresh perspectives on intimacy and human connection.",
+                    "ranking_text": "#8 in India Today"
+                },
+                {
+                    "id": "fp-dhamaal-4",
+                    "imageUrl": "local:fp-dhamaal-4",
+                    "title": "Dhamaal 4",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1303331",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "The Dhamaal boys are back for another treasure hunt, facing hilarious challenges in their quest for the Treasure of Life.",
+                    "ranking_text": "#9 in India Today"
+                },
+                {
+                    "id": "jw-g-d-n-2026",
+                    "title": "G.D.N",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "imageUrl": "local:jw-g-d-n-2026",
+                    "ranking_text": "#10 in India Today",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                }
+            ]
+        },
+        {
+            "rowTitle": "Top 10 TV Shows in India Today",
+            "type": "top_10",
+            "movies": [
+                {
+                    "id": "fp-indias-got-latent",
+                    "imageUrl": "local:fp-indias-got-latent",
+                    "title": "India's Got Latent",
+                    "episodeCount": 2,
+                    "seasonEpisodeCounts": [
+                        2
+                    ],
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "262838",
+                    "embed_provider": "nxsha",
+                    "year": "2024",
+                    "description": "An Indian Hindi comedy talent show hosted by Samay Raina. Inspired by the Got Talent franchise and Kill Tony — featuring singing, dancing, magic and comedy acts.",
+                    "imdb_id": "tt33094114",
+                    "cast": [
+                        "Samay Raina",
+                        "Tanmay Bhat",
+                        "Raghu Ram"
+                    ],
+                    "rating": "8.9",
+                    "duration": "1 Season",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 2,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Episode #1.1"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Episode #1.8"
+                                }
+                            ]
+                        }
+                    ],
+                    "ranking_text": "#4 in India Today"
+                },
+                {
+                    "id": "fp-chumbak",
+                    "imageUrl": "local:fp-chumbak",
+                    "title": "Chumbak",
+                    "episodeCount": 16,
+                    "seasonEpisodeCounts": [
+                        16
+                    ],
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "313172",
+                    "embed_provider": "nxsha",
+                    "year": "2023",
+                    "description": "Five quirky families navigate life as neighbours in Chumbak Colony, where chaotic conflicts and hilarious antics turn each day into a new chapter.",
+                    "imdb_id": "tt29871157",
+                    "cast": [
+                        "Prajakta Dusane",
+                        "Navina Bole",
+                        "Nikhil Sansanwal"
+                    ],
+                    "ranking_text": "#5 in India Today"
+                },
+                {
+                    "id": "jw-the-mentalist",
+                    "title": "The Mentalist",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-the-mentalist",
+                    "ranking_text": "#6 in India Today",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "imdb_id": "tt1196946",
+                    "year": "2008",
+                    "description": "Patrick Jane is a crime consultant with the California Bureau of Investigation. He has a particular gift for astute observation and reading people, honed through years of being a faux psychic. His gift makes him brilliant at solving murders, which is why the CBI have him around. However, his motive for taking on the role is purely one of revenge: find and kill the man who killed his wife and daughter - Red John.",
+                    "cast": [
+                        "Simon Baker",
+                        "Robin Tunney",
+                        "Tim Kang"
+                    ],
+                    "rating": "8.2",
+                    "rated": "TV-14",
+                    "duration": "7 Seasons",
+                    "runtime": "43 min",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 23,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Pilot"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Red Hair and Silver Tape"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Red Tide"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Ladies in Red"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Redwood"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Red-Handed"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Seeing Red"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "The Thin Red Line"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Flame Red"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Red Brick and Ivy"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "Red John's Friends"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 12,
+                                    "name": "Red Rum"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Paint It Red"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 14,
+                                    "name": "Crimson Casanova"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 15,
+                                    "name": "Scarlett Fever"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 16,
+                                    "name": "Bloodshot"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 17,
+                                    "name": "Carnelian, Inc."
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 18,
+                                    "name": "Russet Potatoes"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 19,
+                                    "name": "A Dozen Red Roses"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 20,
+                                    "name": "Red Sauce"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 21,
+                                    "name": "Miss Red"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 22,
+                                    "name": "Blood Brothers"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 23,
+                                    "name": "Red John's Footsteps"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 2,
+                            "name": "Season 2",
+                            "episode_count": 23,
+                            "episodes": [
+                                {
+                                    "season": 2,
+                                    "episode": 1,
+                                    "name": "Redemption"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 2,
+                                    "name": "The Scarlet Letter"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 3,
+                                    "name": "Red Badge"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 4,
+                                    "name": "Red Menace"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 5,
+                                    "name": "Red Scare"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 6,
+                                    "name": "Black Gold and Red Blood"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 7,
+                                    "name": "Red Bulls"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 8,
+                                    "name": "His Red Right Hand"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 9,
+                                    "name": "A Price Above Rubies"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 10,
+                                    "name": "Throwing Fire"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 11,
+                                    "name": "Rose-Colored Glasses"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 12,
+                                    "name": "Bleeding Heart"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 13,
+                                    "name": "Redline"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 14,
+                                    "name": "Blood in, Blood Out"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 15,
+                                    "name": "Red Herring"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 16,
+                                    "name": "Code Red"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 17,
+                                    "name": "The Red Box"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 18,
+                                    "name": "Aingavite Baa"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 19,
+                                    "name": "Blood Money"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 20,
+                                    "name": "Red All Over"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 21,
+                                    "name": "18-5-4"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 22,
+                                    "name": "Red Letter"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 23,
+                                    "name": "Red Sky in the Morning"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 3,
+                            "name": "Season 3",
+                            "episode_count": 24,
+                            "episodes": [
+                                {
+                                    "season": 3,
+                                    "episode": 1,
+                                    "name": "Red Sky at Night"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 2,
+                                    "name": "Cackle-Bladder Blood"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 3,
+                                    "name": "The Blood on His Hands"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 4,
+                                    "name": "Red Carpet Treatment"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 5,
+                                    "name": "The Red Ponies"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 6,
+                                    "name": "Pink Chanel Suit"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 7,
+                                    "name": "Red Hot"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 8,
+                                    "name": "Ball of Fire"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 9,
+                                    "name": "Red Moon"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 10,
+                                    "name": "Jolly Red Elf"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 11,
+                                    "name": "Bloodsport"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 12,
+                                    "name": "Bloodhounds"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 13,
+                                    "name": "Red Alert"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 14,
+                                    "name": "Blood for Blood"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 15,
+                                    "name": "Red Gold"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 16,
+                                    "name": "Red Queen"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 17,
+                                    "name": "Bloodstream"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 18,
+                                    "name": "The Red Mile"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 19,
+                                    "name": "Every Rose Has Its Thorn"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 20,
+                                    "name": "Redacted"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 21,
+                                    "name": "Like a Redheaded Stepchild"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 22,
+                                    "name": "Rhapsody in Red"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 23,
+                                    "name": "Strawberries and Cream: Part 1"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 24,
+                                    "name": "Strawberries and Cream: Part 2"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 4,
+                            "name": "Season 4",
+                            "episode_count": 24,
+                            "episodes": [
+                                {
+                                    "season": 4,
+                                    "episode": 1,
+                                    "name": "Scarlet Ribbons"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 2,
+                                    "name": "Little Red Book"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 3,
+                                    "name": "Pretty Red Balloon"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 4,
+                                    "name": "Ring Around the Rosie"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 5,
+                                    "name": "Blood and Sand"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 6,
+                                    "name": "Where in the World Is Carmine O'Brien?"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 7,
+                                    "name": "Blinking Red Light"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 8,
+                                    "name": "Pink Tops"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 9,
+                                    "name": "The Redshirt"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 10,
+                                    "name": "Fugue in Red"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 11,
+                                    "name": "Always Bet on Red"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 12,
+                                    "name": "My Bloody Valentine"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 13,
+                                    "name": "Red Is the New Black"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 14,
+                                    "name": "At First Blush"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 15,
+                                    "name": "War of the Roses"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 16,
+                                    "name": "His Thoughts Were Red Thoughts"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 17,
+                                    "name": "Cheap Burgundy"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 18,
+                                    "name": "Ruddy Cheeks"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 19,
+                                    "name": "Pink Champagne on Ice"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 20,
+                                    "name": "Something Rotten in Redmund"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 21,
+                                    "name": "Ruby Slippers"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 22,
+                                    "name": "So Long, and Thanks for All the Red Snapper"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 23,
+                                    "name": "Red Rover, Red Rover"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 24,
+                                    "name": "The Crimson Hat"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 5,
+                            "name": "Season 5",
+                            "episode_count": 22,
+                            "episodes": [
+                                {
+                                    "season": 5,
+                                    "episode": 1,
+                                    "name": "The Crimson Ticket"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 2,
+                                    "name": "Devil's Cherry"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 3,
+                                    "name": "Not One Red Cent"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 4,
+                                    "name": "Blood Feud"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 5,
+                                    "name": "Red Dawn"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 6,
+                                    "name": "Cherry Picked"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 7,
+                                    "name": "If It Bleeds, It Leads"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 8,
+                                    "name": "Red Sails in the Sunset"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 9,
+                                    "name": "Black Cherry"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 10,
+                                    "name": "Panama Red"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 11,
+                                    "name": "Days of Wine and Roses"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 12,
+                                    "name": "Little Red Corvette"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 13,
+                                    "name": "The Red Barn"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 14,
+                                    "name": "Red in Tooth and Claw"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 15,
+                                    "name": "Red Lacquer Nail Polish"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 16,
+                                    "name": "There Will Be Blood"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 17,
+                                    "name": "Red, White and Blue"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 18,
+                                    "name": "Behind the Red Curtain"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 19,
+                                    "name": "Red Letter Day"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 20,
+                                    "name": "Red Velvet Cupcakes"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 21,
+                                    "name": "Red and Itchy"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 22,
+                                    "name": "Red John's Rules"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 6,
+                            "name": "Season 6",
+                            "episode_count": 22,
+                            "episodes": [
+                                {
+                                    "season": 6,
+                                    "episode": 1,
+                                    "name": "The Desert Rose"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 2,
+                                    "name": "Black-Winged Redbird"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 3,
+                                    "name": "Wedding in Red"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 4,
+                                    "name": "Red Listed"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 5,
+                                    "name": "The Red Tattoo"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 6,
+                                    "name": "Fire and Brimstone"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 7,
+                                    "name": "The Great Red Dragon"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 8,
+                                    "name": "Red John"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 9,
+                                    "name": "My Blue Heaven"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 10,
+                                    "name": "Green Thumb"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 11,
+                                    "name": "White Lines"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 12,
+                                    "name": "The Golden Hammer"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 13,
+                                    "name": "Black Helicopters"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 14,
+                                    "name": "Grey Water"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 15,
+                                    "name": "White as the Driven Snow"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 16,
+                                    "name": "Violets"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 17,
+                                    "name": "Silver Wings of Time"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 18,
+                                    "name": "Forest Green"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 19,
+                                    "name": "Brown Eyed Girls"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 20,
+                                    "name": "Il Tavolo Bianco"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 21,
+                                    "name": "Black Hearts"
+                                },
+                                {
+                                    "season": 6,
+                                    "episode": 22,
+                                    "name": "Blue Bird"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 7,
+                            "name": "Season 7",
+                            "episode_count": 13,
+                            "episodes": [
+                                {
+                                    "season": 7,
+                                    "episode": 1,
+                                    "name": "Nothing But Blue Skies"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 2,
+                                    "name": "The Greybar Hotel"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 3,
+                                    "name": "Orange Blossom Ice Cream"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 4,
+                                    "name": "Black Market"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 5,
+                                    "name": "The Silver Briefcase"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 6,
+                                    "name": "Green Light"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 7,
+                                    "name": "Little Yellow House"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 8,
+                                    "name": "The Whites of His Eyes"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 9,
+                                    "name": "Copper Bullet"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 10,
+                                    "name": "Nothing Gold Can Stay"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 11,
+                                    "name": "Byzantium"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 12,
+                                    "name": "Brown Shag Carpet"
+                                },
+                                {
+                                    "season": 7,
+                                    "episode": 13,
+                                    "name": "White Orchids"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        23,
+                        23,
+                        24,
+                        24,
+                        22,
+                        22,
+                        13
+                    ],
+                    "episodeCount": 151
+                }
+            ]
+        },
+        {
             "rowTitle": "Netflix India Movies 1–48",
             "type": "normal",
             "movies": [

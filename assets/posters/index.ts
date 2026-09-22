@@ -405,6 +405,16 @@ export const LOCAL_POSTER_URIS: Record<string, string> = {
     "local:fp-vishwanath-sons": "/assets/posters/fp-vishwanath-sons.jpg",
     "fp-zakir-khan-papa-yaar": "/assets/posters/fp-zakir-khan-papa-yaar.jpg",
     "local:fp-zakir-khan-papa-yaar": "/assets/posters/fp-zakir-khan-papa-yaar.jpg",
+    "jw-365-days": "/assets/posters/jw-365-days.jpg",
+    "local:jw-365-days": "/assets/posters/jw-365-days.jpg",
+    "jw-g-d-n-2026": "/assets/posters/jw-g-d-n-2026.jpg",
+    "local:jw-g-d-n-2026": "/assets/posters/jw-g-d-n-2026.jpg",
+    "jw-modha-rathiri": "/assets/posters/jw-modha-rathiri.jpg",
+    "local:jw-modha-rathiri": "/assets/posters/jw-modha-rathiri.jpg",
+    "jw-the-mentalist": "/assets/posters/jw-the-mentalist.jpg",
+    "local:jw-the-mentalist": "/assets/posters/jw-the-mentalist.jpg",
+    "jw-vishwanath-and-sons": "/assets/posters/jw-vishwanath-and-sons.jpg",
+    "local:jw-vishwanath-and-sons": "/assets/posters/jw-vishwanath-and-sons.jpg",
 };
 
 export const LOCAL_POSTERS: Record<string, ImageSourcePropType> = {
@@ -804,6 +814,16 @@ export const LOCAL_POSTERS: Record<string, ImageSourcePropType> = {
     "local:fp-vishwanath-sons": require("./fp-vishwanath-sons.jpg"),
     "fp-zakir-khan-papa-yaar": require("./fp-zakir-khan-papa-yaar.jpg"),
     "local:fp-zakir-khan-papa-yaar": require("./fp-zakir-khan-papa-yaar.jpg"),
+    "jw-365-days": require("./jw-365-days.jpg"),
+    "local:jw-365-days": require("./jw-365-days.jpg"),
+    "jw-g-d-n-2026": require("./jw-g-d-n-2026.jpg"),
+    "local:jw-g-d-n-2026": require("./jw-g-d-n-2026.jpg"),
+    "jw-modha-rathiri": require("./jw-modha-rathiri.jpg"),
+    "local:jw-modha-rathiri": require("./jw-modha-rathiri.jpg"),
+    "jw-the-mentalist": require("./jw-the-mentalist.jpg"),
+    "local:jw-the-mentalist": require("./jw-the-mentalist.jpg"),
+    "jw-vishwanath-and-sons": require("./jw-vishwanath-and-sons.jpg"),
+    "local:jw-vishwanath-and-sons": require("./jw-vishwanath-and-sons.jpg"),
 };
 
 export function getLocalPoster(key?: string | number): any {
