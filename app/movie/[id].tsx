@@ -472,6 +472,7 @@ export default function MovieScreen() {
                                         onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
                                         onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
                                         isTv={mediaType === 'tv'}
+                                        fallbackUrl={officialNetflixUrl}
                                     />
                                 </View>
                             </View>
@@ -506,6 +507,7 @@ export default function MovieScreen() {
                                 onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
                                 onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
                                 isTv={mediaType === 'tv'}
+                                fallbackUrl={officialNetflixUrl}
                             />
                         </View>
                     </View>

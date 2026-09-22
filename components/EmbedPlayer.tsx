@@ -28,6 +28,8 @@ export interface EmbedPlayerProps {
     onNextEpisode?: () => void;
     onPrevEpisode?: () => void;
     isTv?: boolean;
+    /** Official title page to offer if the third-party player cannot load. */
+    fallbackUrl?: string;
     timeoutMs?: number;
 }
 
@@ -42,6 +44,7 @@ export function EmbedPlayer({
     onNextEpisode,
     onPrevEpisode,
     isTv,
+    fallbackUrl,
     timeoutMs = 12000,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
@@ -124,12 +127,17 @@ export function EmbedPlayer({
         onClose?.();
     }, [killIframe, onClose]);
 
-    const openInNewTab = () => {
+    const openExternal = (url: string) => {
         if (IS_WEB) {
-            try { window.open(src, '_blank', 'noopener'); } catch {}
+            try { window.open(url, '_blank', 'noopener'); } catch {}
         } else {
-            Linking.openURL(src).catch(() => {});
+            Linking.openURL(url).catch(() => {});
         }
+    };
+
+    const openInNewTab = () => openExternal(src);
+    const openOfficialTitle = () => {
+        if (fallbackUrl) openExternal(fallbackUrl);
     };
 
     if (!IS_WEB) {
@@ -140,10 +148,20 @@ export function EmbedPlayer({
                 <Text style={styles.nativeHint}>
                     Embedded player is available in the web preview. Tap below to open in your browser.
                 </Text>
-                <Pressable style={styles.nativeButton} onPress={openInNewTab}>
+                <Pressable
+                    style={styles.nativeButton}
+                    onPress={fallbackUrl ? openOfficialTitle : openInNewTab}
+                >
                     <Ionicons name="open-outline" size={18} color="#000" />
-                    <Text style={styles.nativeButtonText}>Open Player</Text>
+                    <Text style={styles.nativeButtonText}>
+                        {fallbackUrl ? 'Watch on Netflix' : 'Open Player'}
+                    </Text>
                 </Pressable>
+                {fallbackUrl ? (
+                    <Pressable onPress={openInNewTab} style={styles.nativeGhostButton}>
+                        <Text style={styles.nativeGhostText}>Open embed player</Text>
+                    </Pressable>
+                ) : null}
                 {onClose ? (
                     <Pressable onPress={handleClose} style={styles.nativeGhostButton}>
                         <Text style={styles.nativeGhostText}>Close</Text>
@@ -203,10 +221,23 @@ export function EmbedPlayer({
                             ? 'Preview URL browser se load nahi ho saka. Naya tab me khol ke dekho.'
                             : 'Ad-block ya popup blocker ne embed roka hoga. Naya tab me khol ke dekho, ya dusra player try karo.'}
                     </Text>
-                    <Pressable style={styles.openButton} onPress={openInNewTab}>
-                        <Ionicons name="open-outline" size={16} color="#000" />
-                        <Text style={styles.openButtonText}>Open in new tab</Text>
-                    </Pressable>
+                    {fallbackUrl ? (
+                        <Pressable style={styles.openButton} onPress={openOfficialTitle}>
+                            <Ionicons name="open-outline" size={16} color="#000" />
+                            <Text style={styles.openButtonText}>Watch on Netflix</Text>
+                        </Pressable>
+                    ) : (
+                        <Pressable style={styles.openButton} onPress={openInNewTab}>
+                            <Ionicons name="open-outline" size={16} color="#000" />
+                            <Text style={styles.openButtonText}>Open in new tab</Text>
+                        </Pressable>
+                    )}
+                    {fallbackUrl ? (
+                        <Pressable style={styles.ghostButton} onPress={openInNewTab}>
+                            <Ionicons name="open-outline" size={16} color="#fff" />
+                            <Text style={styles.ghostButtonText}>Open embed in new tab</Text>
+                        </Pressable>
+                    ) : null}
                     {onSwitchProvider ? (
                         <Pressable style={styles.ghostButton} onPress={onSwitchProvider}>
                             <Ionicons name="swap-horizontal" size={16} color="#fff" />
