@@ -26,13 +26,16 @@
                     "ranking_text": "#2 in India Today"
                 },
                 {
-                    "id": "jw-365-days",
-                    "title": "365 dni",
+                    "id": "fp-alpha",
+                    "imageUrl": "local:fp-alpha",
+                    "title": "Alpha",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-365-days",
-                    "ranking_text": "#3 in India Today",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                    "tmdb_id": "1122030",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "When Sita, a highly trained assassin raised in isolation as a super-soldier by a rogue commander, discovers the dark truth about her family, she teams up with her long-lost sister to take down her creator.",
+                    "ranking_text": "#3 in India Today"
                 },
                 {
                     "id": "jw-modha-rathiri",

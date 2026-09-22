@@ -33,6 +33,14 @@ const FULL_PROXY_SOURCES = [
 ];
 const FULL_PAGE_CONCURRENCY = 8;
 const FULL_ROW_SIZE = 48;
+const BLOCKED_TOP10_TITLES = new Set(['365 dni']);
+const TOP10_REPLACEMENTS = [
+    {
+        title: 'Alpha',
+        mediaType: 'movie',
+        url: 'https://www.justwatch.com/in/movie/alpha-2025-0',
+    },
+];
 
 const SAMPLE_VIDEOS = [
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
@@ -569,6 +577,23 @@ async function scrapeJustWatchTop10(existingItems) {
             mediaType: match[4].includes('/tv-show/') ? 'tv' : 'movie',
         });
     }
+    const filteredEntries = entries.filter(entry => !BLOCKED_TOP10_TITLES.has(entry.title));
+    const occupiedRanks = new Set(filteredEntries.map(entry => entry.rank));
+    for (const replacement of TOP10_REPLACEMENTS) {
+        if (filteredEntries.length >= 10) break;
+        const rank = Array.from({ length: 10 }, (_, index) => index + 1)
+            .find(candidate => !occupiedRanks.has(candidate));
+        if (!rank) break;
+        filteredEntries.push({
+            ...replacement,
+            rank,
+            poster: '',
+        });
+        occupiedRanks.add(rank);
+    }
+    filteredEntries.sort((a, b) => a.rank - b.rank);
+    entries.length = 0;
+    entries.push(...filteredEntries);
     if (entries.length < 8) throw new Error(`JustWatch Top 10 too small (${entries.length})`);
 
     const existingByTitle = new Map(
