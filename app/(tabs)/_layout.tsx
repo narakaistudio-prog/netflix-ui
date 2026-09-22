@@ -9,7 +9,6 @@ import { ProfileBadge } from '@/components/ProfileBadge';
 import { Home } from '@/icons/Home';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import { Image as ExpoImage } from 'expo-image';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 
 // Helper component for cross-platform icons
@@ -58,15 +57,17 @@ export const TAB_SCREENS = [
     ),
   },
   {
-    name: 'new',
-    title: 'New & Hot',
-    icon: ({ color, focused }: { color: string; focused: boolean }) => (
-      <ExpoImage
-        source={focused ? require('../../assets/images/replace-these/new-netflix.png') : require('../../assets/images/replace-these/new-netflix-outline.png')}
-        style={{ width: 24, height: 24 }}
-        cachePolicy="memory-disk"
-        contentFit="contain"
-      />
+    name: 'movies',
+    title: 'Movies',
+    icon: ({ color }: { color: string; focused: boolean }) => (
+      <Ionicons name="film-outline" size={24} color={color} />
+    ),
+  },
+  {
+    name: 'tv',
+    title: 'TV Shows',
+    icon: ({ color }: { color: string; focused: boolean }) => (
+      <Ionicons name="tv-outline" size={24} color={color} />
     ),
   },
   {

@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { Movie, MovieRow } from '@/types/movie';
-import type { ComingSoonEvent } from '@/services/tmdb';
 import trailerMap from '@/data/trailers.json';
 import staticMovies from '@/data/movies.json';
-import staticNew from '@/data/new.json';
 
 const TRAILERS = trailerMap as Record<string, string>;
 
 const staticRows = (staticMovies as unknown as { movies: MovieRow[] }).movies;
-const staticEvents = (staticNew as unknown as { events: ComingSoonEvent[] }).events;
 
 /**
  * `local:<id>` imageUrl values point at `assets/posters`; preserve the marker
@@ -42,7 +39,6 @@ function resolveLocal(rows: MovieRow[]): MovieRow[] {
  */
 export function useCatalog() {
     const [rows] = useState<MovieRow[]>(() => resolveLocal(staticRows));
-    const [events] = useState<ComingSoonEvent[]>(() => staticEvents);
 
-    return { rows, events, isLive: false };
+    return { rows, isLive: false };
 }

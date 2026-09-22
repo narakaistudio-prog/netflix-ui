@@ -24,7 +24,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 ### Content Screens
 
 - 🏠 Animated home screen with featured content
-- 🔥 "New & Hot" section with Netflix-style layout
+- 🎬 Separate Netflix-style Movies and TV Shows shelves
 - 🎮 Mobile games showcase
 - 🔍 Dynamic search with instant results
 - ⬇️ Downloads management
@@ -76,7 +76,8 @@ project-root/
 │   ├── (tabs)/
 │   │   ├── (profile)/        # Profile section
 │   │   ├── index.tsx         # Home screen
-│   │   └── new.tsx          # New & Hot screen
+│   │   ├── movies.tsx        # Movies shelves
+│   │   └── tv.tsx            # TV Shows shelves
 │   ├── movie/
 │   ├── _layout.tsx          # Root layout
 │   └── search.tsx           # Search functionality

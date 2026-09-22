@@ -11,9 +11,8 @@ export const WEB_NAV_HEIGHT = 68;
 
 const NAV_LINKS = [
     { label: 'Home', href: '/' as const, type: 'route' },
-    { label: 'TV Shows', href: '/browse/tv' as const, type: 'filter', filter: 'tv' },
-    { label: 'Movies', href: '/browse/movies' as const, type: 'filter', filter: 'movie' },
-    { label: 'New & Popular', href: '/new' as const, type: 'route' },
+    { label: 'TV Shows', href: '/browse/tv' as const, type: 'catalog', catalog: 'tv' as const },
+    { label: 'Movies', href: '/browse/movies' as const, type: 'catalog', catalog: 'movies' as const },
     { label: 'My List', href: '/profile' as const, type: 'route' },
 ];
 
@@ -91,9 +90,9 @@ export function WebNavBar() {
                 <View style={styles.links}>
                     {NAV_LINKS.map((link) => {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
-                        const isNew = link.label === 'New & Popular' && pathname.startsWith('/new');
+                        const isCatalog = link.type === 'catalog' && pathname === `/browse/${link.catalog}`;
                         const isMyList = link.label === 'My List' && pathname.startsWith('/profile');
-                        const active = isHome || isNew || isMyList;
+                        const active = isHome || isCatalog || isMyList;
 
                         return (
                             <Pressable
@@ -101,15 +100,10 @@ export function WebNavBar() {
                                 onPress={() => {
                                     if (link.type === 'route') {
                                         router.push(link.href);
-                                    } else if (link.label === 'TV Shows') {
+                                    } else if (link.type === 'catalog') {
                                         router.push({
                                             pathname: '/browse/[rowTitle]',
-                                            params: { rowTitle: 'Top 10 TV Shows in India Today' },
-                                        });
-                                    } else if (link.label === 'Movies') {
-                                        router.push({
-                                            pathname: '/browse/[rowTitle]',
-                                            params: { rowTitle: 'Top 10 Movies in India Today' },
+                                            params: { rowTitle: link.catalog! },
                                         });
                                     }
                                 }}

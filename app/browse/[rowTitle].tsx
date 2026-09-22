@@ -6,15 +6,31 @@ import { useCatalog } from '@/hooks/useCatalog';
 import { SafeImage } from '@/components/SafeImage';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 import { Movie } from '@/types/movie';
+import { CatalogBrowseScreen, CatalogKind } from '@/components/CatalogBrowseScreen';
 
 const IS_WEB = Platform.OS === 'web';
 
-/** "Explore All" destination: the full grid of a row's titles. */
+/** "Explore All" destination plus the full Movies/TV Shows shelf pages. */
 export default function BrowseRow() {
     const params = useLocalSearchParams<{ rowTitle?: string }>();
     const rowTitle = decodeURIComponent((params.rowTitle as string) ?? '');
+    const catalogKind: CatalogKind | null = rowTitle === 'movies'
+        ? 'movie'
+        : rowTitle === 'tv'
+            ? 'tv'
+            : null;
     const { rows } = useCatalog();
     const router = useRouter();
+
+    if (catalogKind) {
+        return (
+            <>
+                <Stack.Screen options={{ headerShown: false }} />
+                <CatalogBrowseScreen kind={catalogKind} />
+            </>
+        );
+    }
+
     const row = rows.find(r => r.rowTitle === rowTitle) ?? rows[0];
     const movies: Movie[] = row?.movies ?? [];
 
