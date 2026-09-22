@@ -1936,12 +1936,14 @@ async function refreshCurrentCatalog() {
         ...remainingRows,
     ]);
 
-    await Promise.all([
+    const posterItems = [...new Map([
         ...hydratedPrepared,
         ...curatedCatalog.items,
         ...top10.movieItems,
         ...top10.showItems,
-    ].map(item => savePoster(item)));
+        ...nextRows.flatMap(row => row.movies ?? []),
+    ].map(item => [item.id, item])).values()];
+    await Promise.all(posterItems.map(item => savePoster(item)));
     writePosterIndex();
     writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
     console.log(`Current catalog refreshed: ${movieItems.length} movies and ${showItems.length} TV titles.`);
