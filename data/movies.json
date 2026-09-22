@@ -24133,7 +24133,242 @@
                     "netflixId": "70204970",
                     "netflixUrl": "https://www.netflix.com/title/70204970",
                     "catalogCollection": "Netflix Anime & Animation",
-                    "description": "When a Japanese high schooler comes into possession of a mystical notebook, he finds he has the power to kill anybody whose name he enters in it."
+                    "description": "When a Japanese high schooler comes into possession of a mystical notebook, he finds he has the power to kill anybody whose name he enters in it.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 37,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Rebirth",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338363.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Confrontation",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338373.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Dealings",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338602.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Pursuit",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338608.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Tactics",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338616.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Unraveling",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338643.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Overcast",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338649.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Glare",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338659.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Encounter",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338689.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Doubt",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339058.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "Assault",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339063.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 12,
+                                    "name": "Love",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339271.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Confession",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339301.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 14,
+                                    "name": "Friend",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339308.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 15,
+                                    "name": "Wager",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339317.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 16,
+                                    "name": "Decision",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339549.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 17,
+                                    "name": "Execution",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339555.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 18,
+                                    "name": "Ally",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339613.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 19,
+                                    "name": "Matsuda",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339627.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 20,
+                                    "name": "Makeshift",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339887.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 21,
+                                    "name": "Performance",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/536/1341932.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 22,
+                                    "name": "Guidance",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/536/1341934.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 23,
+                                    "name": "Frenzy",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342652.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 24,
+                                    "name": "Revival",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342661.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 25,
+                                    "name": "Silence",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342664.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 26,
+                                    "name": "Renewal",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342667.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 27,
+                                    "name": "Abduction",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342681.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 28,
+                                    "name": "Impatience",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342916.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 29,
+                                    "name": "Father",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342920.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 30,
+                                    "name": "Justice",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342938.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 31,
+                                    "name": "Transfer",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342939.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 32,
+                                    "name": "Selection",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342957.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 33,
+                                    "name": "Scorn",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342979.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 34,
+                                    "name": "Vigilance",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342995.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 35,
+                                    "name": "Malice",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1343132.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 36,
+                                    "name": "1.28",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1343139.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 37,
+                                    "name": "New World",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1343153.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        37
+                    ],
+                    "episodeCount": 37
                 },
                 {
                     "id": "jw-catalog-tv-our-sticky-love",
@@ -26754,7 +26989,316 @@
                     "netflixId": "81249833",
                     "netflixUrl": "https://www.netflix.com/title/81249833",
                     "catalogCollection": "Netflix Anime & Animation",
-                    "description": "After his father is killed, young Thorfinn joins the murderer's mercenary band and waits for his chance to enact revenge."
+                    "description": "After his father is killed, young Thorfinn joins the murderer's mercenary band and waits for his chance to enact revenge.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 24,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Somewhere Not Here",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/565/1414080.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Sword",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415125.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Troll",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415134.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "A True Warrior",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415146.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "The Troll's Son",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415268.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "The Journey Begins",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415275.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Normanni",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415284.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Beyond the Edge of the Sea",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415289.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "The Battle of London Bridge",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415394.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Ragnarok",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/217/542981.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "A Gamble",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415452.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 12,
+                                    "name": "The Land on the Far Bank",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415475.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Child of a Hero",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415484.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 14,
+                                    "name": "The Light of Dawn",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/217/542985.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 15,
+                                    "name": "After Yule",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415579.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 16,
+                                    "name": "History of Beasts",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415585.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 17,
+                                    "name": "Servant",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415596.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 18,
+                                    "name": "Out of the Cradle",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415601.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 19,
+                                    "name": "United Front",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415607.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 20,
+                                    "name": "Crown",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415973.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 21,
+                                    "name": "Reunion",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415978.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 22,
+                                    "name": "Lone Wolf",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415986.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 23,
+                                    "name": "Miscalculation",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415989.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 24,
+                                    "name": "End of the Prologue",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416026.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 2,
+                            "name": "Season 2",
+                            "episode_count": 24,
+                            "episodes": [
+                                {
+                                    "season": 2,
+                                    "episode": 1,
+                                    "name": "Slave",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416138.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 2,
+                                    "name": "Ketil's Farm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416149.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 3,
+                                    "name": "Snake",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416698.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 4,
+                                    "name": "Awakening",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416711.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 5,
+                                    "name": "Path of Blood",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416756.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 6,
+                                    "name": "We Need a Horse",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1417134.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 7,
+                                    "name": "Iron Fist Ketil",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1418559.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 8,
+                                    "name": "An Empty Man",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1418561.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 9,
+                                    "name": "Oath",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1419119.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 10,
+                                    "name": "Cursed Head",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1419530.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 11,
+                                    "name": "King and Sword",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/568/1422155.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 12,
+                                    "name": "For Lost Love",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422809.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 13,
+                                    "name": "Dark Clouds",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422826.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 14,
+                                    "name": "Freedom",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422832.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 15,
+                                    "name": "Storm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422845.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 16,
+                                    "name": "Cause",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422848.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 17,
+                                    "name": "The Road Home",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422855.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 18,
+                                    "name": "The First Method",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423238.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 19,
+                                    "name": "The Battle of Ketil's Farm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423249.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 20,
+                                    "name": "Pain",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423251.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 21,
+                                    "name": "Courage",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423283.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 22,
+                                    "name": "The King of Rebellion",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423286.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 23,
+                                    "name": "Two Paths",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423304.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 24,
+                                    "name": "Home",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/465/1164436.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        24,
+                        24
+                    ],
+                    "episodeCount": 48
                 },
                 {
                     "id": "jw-catalog-tv-mindhunter",
@@ -43253,7 +43797,242 @@
                     "netflixId": "70204970",
                     "netflixUrl": "https://www.netflix.com/title/70204970",
                     "catalogCollection": "Netflix Anime & Animation",
-                    "description": "When a Japanese high schooler comes into possession of a mystical notebook, he finds he has the power to kill anybody whose name he enters in it."
+                    "description": "When a Japanese high schooler comes into possession of a mystical notebook, he finds he has the power to kill anybody whose name he enters in it.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 37,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Rebirth",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338363.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Confrontation",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338373.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Dealings",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338602.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Pursuit",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338608.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Tactics",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338616.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Unraveling",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338643.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Overcast",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338649.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Glare",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338659.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Encounter",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1338689.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Doubt",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339058.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "Assault",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339063.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 12,
+                                    "name": "Love",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339271.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Confession",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339301.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 14,
+                                    "name": "Friend",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339308.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 15,
+                                    "name": "Wager",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339317.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 16,
+                                    "name": "Decision",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339549.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 17,
+                                    "name": "Execution",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339555.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 18,
+                                    "name": "Ally",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339613.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 19,
+                                    "name": "Matsuda",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339627.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 20,
+                                    "name": "Makeshift",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/535/1339887.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 21,
+                                    "name": "Performance",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/536/1341932.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 22,
+                                    "name": "Guidance",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/536/1341934.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 23,
+                                    "name": "Frenzy",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342652.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 24,
+                                    "name": "Revival",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342661.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 25,
+                                    "name": "Silence",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342664.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 26,
+                                    "name": "Renewal",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342667.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 27,
+                                    "name": "Abduction",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342681.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 28,
+                                    "name": "Impatience",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342916.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 29,
+                                    "name": "Father",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342920.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 30,
+                                    "name": "Justice",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342938.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 31,
+                                    "name": "Transfer",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342939.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 32,
+                                    "name": "Selection",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342957.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 33,
+                                    "name": "Scorn",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342979.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 34,
+                                    "name": "Vigilance",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1342995.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 35,
+                                    "name": "Malice",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1343132.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 36,
+                                    "name": "1.28",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1343139.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 37,
+                                    "name": "New World",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/537/1343153.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        37
+                    ],
+                    "episodeCount": 37
                 },
                 {
                     "id": "jw-catalog-tv-my-hero-academia",
@@ -45930,7 +46709,316 @@
                     "netflixId": "81249833",
                     "netflixUrl": "https://www.netflix.com/title/81249833",
                     "catalogCollection": "Netflix Anime & Animation",
-                    "description": "After his father is killed, young Thorfinn joins the murderer's mercenary band and waits for his chance to enact revenge."
+                    "description": "After his father is killed, young Thorfinn joins the murderer's mercenary band and waits for his chance to enact revenge.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 24,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Somewhere Not Here",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/565/1414080.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Sword",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415125.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Troll",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415134.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "A True Warrior",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415146.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "The Troll's Son",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415268.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "The Journey Begins",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415275.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Normanni",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415284.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Beyond the Edge of the Sea",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415289.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "The Battle of London Bridge",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415394.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Ragnarok",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/217/542981.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "A Gamble",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415452.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 12,
+                                    "name": "The Land on the Far Bank",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415475.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Child of a Hero",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415484.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 14,
+                                    "name": "The Light of Dawn",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/217/542985.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 15,
+                                    "name": "After Yule",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415579.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 16,
+                                    "name": "History of Beasts",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415585.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 17,
+                                    "name": "Servant",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415596.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 18,
+                                    "name": "Out of the Cradle",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415601.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 19,
+                                    "name": "United Front",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415607.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 20,
+                                    "name": "Crown",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415973.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 21,
+                                    "name": "Reunion",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415978.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 22,
+                                    "name": "Lone Wolf",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415986.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 23,
+                                    "name": "Miscalculation",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1415989.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 24,
+                                    "name": "End of the Prologue",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416026.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 2,
+                            "name": "Season 2",
+                            "episode_count": 24,
+                            "episodes": [
+                                {
+                                    "season": 2,
+                                    "episode": 1,
+                                    "name": "Slave",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416138.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 2,
+                                    "name": "Ketil's Farm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416149.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 3,
+                                    "name": "Snake",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416698.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 4,
+                                    "name": "Awakening",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416711.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 5,
+                                    "name": "Path of Blood",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1416756.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 6,
+                                    "name": "We Need a Horse",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/566/1417134.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 7,
+                                    "name": "Iron Fist Ketil",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1418559.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 8,
+                                    "name": "An Empty Man",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1418561.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 9,
+                                    "name": "Oath",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1419119.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 10,
+                                    "name": "Cursed Head",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/567/1419530.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 11,
+                                    "name": "King and Sword",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/568/1422155.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 12,
+                                    "name": "For Lost Love",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422809.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 13,
+                                    "name": "Dark Clouds",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422826.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 14,
+                                    "name": "Freedom",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422832.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 15,
+                                    "name": "Storm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422845.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 16,
+                                    "name": "Cause",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422848.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 17,
+                                    "name": "The Road Home",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1422855.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 18,
+                                    "name": "The First Method",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423238.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 19,
+                                    "name": "The Battle of Ketil's Farm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423249.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 20,
+                                    "name": "Pain",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423251.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 21,
+                                    "name": "Courage",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423283.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 22,
+                                    "name": "The King of Rebellion",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423286.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 23,
+                                    "name": "Two Paths",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/569/1423304.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 24,
+                                    "name": "Home",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/465/1164436.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        24,
+                        24
+                    ],
+                    "episodeCount": 48
                 },
                 {
                     "id": "jw-catalog-tv-haikyu",
@@ -47371,10 +48459,90 @@
                     "title": "Violet Evergarden",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-violet-evergarden",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 11,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "'I Love You' and Auto Memoir Dolls",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/141/354991.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Never Coming Back",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/142/357007.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "May You Be an Exemplary Auto Memoir Doll",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/143/359502.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "You Won't be a Tool, but a Person Worthy of that Name",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/144/361392.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "You Write Letters That Bring People Together?",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/145/364399.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Somewhere Under the Starry Sky",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/146/365553.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Nameless",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/146/367056.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Violet Evergarden",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/148/370675.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Loved Ones Will Always Watch Over You",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/149/372822.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "'I Don't Want Anybody Else to Die'",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/150/375482.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Auto Memoir Doll and \"I Love You\"",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/151/379614.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        11
+                    ],
+                    "episodeCount": 11,
+                    "description": "In the aftermath of the continent-spanning, four-years-long war that gripped the industrial fantasy land of Leiden, Violet Evergarden, a 14-year old former child-soldier, is trying to find her place in civilian life as an Auto Memory Doll, a professional ghost-writer of letters for the poor and the rich alike."
                 },
                 {
                     "id": "jw-original-pluto",
