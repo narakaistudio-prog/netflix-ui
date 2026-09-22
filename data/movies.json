@@ -15214,7 +15214,10 @@
                         23,
                         12
                     ],
-                    "episodeCount": 59
+                    "episodeCount": 59,
+                    "netflixId": "81278456",
+                    "netflixUrl": "https://www.netflix.com/title/81278456",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-agent-kim-reactivated",
@@ -19135,7 +19138,10 @@
                     "seasonEpisodeCounts": [
                         100
                     ],
-                    "episodeCount": 100
+                    "episodeCount": 100,
+                    "netflixId": "70205012",
+                    "netflixUrl": "https://www.netflix.com/title/70205012",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-spartacus",
@@ -21674,7 +21680,10 @@
                         52,
                         16
                     ],
-                    "episodeCount": 170
+                    "episodeCount": 170,
+                    "netflixId": "80238012",
+                    "netflixUrl": "https://www.netflix.com/title/80238012",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-four-hands",
@@ -24120,7 +24129,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-death-note",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "70204970",
+                    "netflixUrl": "https://www.netflix.com/title/70204970",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-our-sticky-love",
@@ -24147,7 +24159,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-uncanny-counter",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Korean Originals"
                 },
                 {
                     "id": "jw-catalog-tv-weak-hero",
@@ -24560,7 +24573,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-one-piece-2023",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "80107103",
+                    "netflixUrl": "https://www.netflix.com/title/80107103",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-bloodhounds",
@@ -24569,7 +24585,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-bloodhounds",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Korean Originals"
                 },
                 {
                     "id": "jw-catalog-tv-squid-game",
@@ -24978,7 +24995,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-haikyu",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "80090673",
+                    "netflixUrl": "https://www.netflix.com/title/80090673",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-suits",
@@ -26025,7 +26045,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-my-hero-academia",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "80135674",
+                    "netflixUrl": "https://www.netflix.com/title/80135674",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-community",
@@ -26079,7 +26102,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-haunting-of-hill-house",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Originals & Series"
                 },
                 {
                     "id": "jw-catalog-tv-romantic-doctor-teacher-kim",
@@ -26383,7 +26407,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-daemons-of-the-shadow-realm",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "82719204",
+                    "netflixUrl": "https://www.netflix.com/title/82719204",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-i-will-find-you",
@@ -26401,7 +26428,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-vinland-saga",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "81249833",
+                    "netflixUrl": "https://www.netflix.com/title/81249833",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-the-last-kingdom",
@@ -26428,7 +26458,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-king-eternal-monarch",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Korean Originals"
                 },
                 {
                     "id": "jw-catalog-tv-bridgerton",
@@ -26976,7 +27007,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-mob-psycho-100",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "80179798",
+                    "netflixUrl": "https://www.netflix.com/title/80179798",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-glory",
@@ -26994,7 +27028,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-chainsmoker-cat",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "82760630",
+                    "netflixUrl": "https://www.netflix.com/title/82760630",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-the-doll",
@@ -27048,7 +27085,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-midnight-mass",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Originals & Series"
                 },
                 {
                     "id": "jw-catalog-tv-tires",
@@ -27084,7 +27122,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-beef",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Originals & Series"
                 },
                 {
                     "id": "jw-catalog-tv-the-first-frost",
@@ -27165,7 +27204,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-frieren-beyond-journeys-end",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "81726714",
+                    "netflixUrl": "https://www.netflix.com/title/81726714",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-heroes",
@@ -28034,7 +28076,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-fragrant-flower-blooms-with-dignity",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-doctor-slump",
@@ -28382,7 +28425,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-dr-stone",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "81046193",
+                    "netflixUrl": "https://www.netflix.com/title/81046193",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-cobra-kai",
@@ -28418,7 +28464,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-ozark",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Originals & Series"
                 },
                 {
                     "id": "jw-catalog-tv-mr-queen",
@@ -28427,7 +28474,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-mr-queen",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Korean Originals"
                 },
                 {
                     "id": "jw-catalog-tv-hells-paradise",
@@ -28463,7 +28511,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-night-agent",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Originals & Series"
                 },
                 {
                     "id": "jw-catalog-tv-blue-eye-samurai",
@@ -28472,7 +28521,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-blue-eye-samurai",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "81442088",
+                    "netflixUrl": "https://www.netflix.com/title/81442088",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-superstore",
@@ -28499,7 +28551,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-overlord",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "80132110",
+                    "netflixUrl": "https://www.netflix.com/title/80132110",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-one-day",
@@ -28508,7 +28563,8 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-one-day",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "catalogCollection": "Netflix Originals & Series"
                 },
                 {
                     "id": "jw-catalog-tv-welcome-to-waikiki",
@@ -28755,7 +28811,10 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-baki",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "netflixId": "80204451",
+                    "netflixUrl": "https://www.netflix.com/title/80204451",
+                    "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
                     "id": "jw-catalog-tv-fairy-tail",
@@ -28822,7 +28881,7 @@
                     "title": "Arcane",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-catalog-tv-arcane",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Originals & Series"
@@ -28832,20 +28891,26 @@
                     "title": "The Sandman",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-sandman",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Originals & Series"
+                    "catalogCollection": "Netflix Originals & Series",
+                    "netflixId": "81150303",
+                    "netflixUrl": "https://www.netflix.com/title/81150303",
+                    "description": "After years of imprisonment, Morpheus — the King of Dreams — embarks on a journey across worlds to find what was stolen from him and restore his power."
                 },
                 {
                     "id": "jw-original-the-umbrella-academy",
                     "title": "The Umbrella Academy",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-umbrella-academy",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Originals & Series"
+                    "catalogCollection": "Netflix Originals & Series",
+                    "netflixId": "80186863",
+                    "netflixUrl": "https://www.netflix.com/title/80186863",
+                    "description": "Reunited by their father's death, estranged siblings with extraordinary powers uncover shocking family secrets — and a looming threat to humanity."
                 },
                 {
                     "id": "jw-original-the-lincoln-lawyer",
@@ -29408,12 +29473,13 @@
                     "title": "Blood of Zeus",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-blood-of-zeus",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81001988",
                     "netflixUrl": "https://www.netflix.com/title/81001988",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Originals & Series"
+                    "catalogCollection": "Netflix Originals & Series",
+                    "description": "A commoner living in ancient Greece discovers his true heritage as a son of Zeus, along with his purpose: to save the world from a demonic army."
                 },
                 {
                     "id": "jw-original-the-last-airbender",
@@ -29596,7 +29662,7 @@
                     "title": "True Beauty",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-catalog-tv-true-beauty",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Korean Originals"
@@ -29642,12 +29708,13 @@
                     "title": "One-Punch Man",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-one-punch-man",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "80117291",
                     "netflixUrl": "https://www.netflix.com/title/80117291",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "The most powerful superhero in the world can kill anyone with one blow. But nothing can challenge him, so he struggles with ennui and depression."
                 },
                 {
                     "id": "jw-catalog-tv-jujutsu-kaisen",
@@ -30551,12 +30618,13 @@
                     "title": "Hajime no Ippo: The Fighting!",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-hajime-no-ippo-the-fighting",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80995578",
                     "netflixUrl": "https://www.netflix.com/title/80995578",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Rescued from bullies by professional boxer Mamoru Takamura, young Ippo Makunouchi takes up boxing to pursue what it means to be strong."
                 },
                 {
                     "id": "jw-catalog-tv-death-note",
@@ -30587,12 +30655,13 @@
                     "title": "Demon Slayer: Kimetsu no Yaiba",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-demon-slayer-kimetsu-no-yaiba",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81091393",
                     "netflixUrl": "https://www.netflix.com/title/81091393",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "After a demon attack leaves his family slain and his sister cursed, Tanjiro embarks upon a perilous journey to find a cure and avenge those he's lost."
                 },
                 {
                     "id": "jw-catalog-tv-black-clover",
@@ -31510,24 +31579,26 @@
                     "title": "That Time I Got Reincarnated as a Slime",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-that-time-i-got-reincarnated-as-a-slime",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81028712",
                     "netflixUrl": "https://www.netflix.com/title/81028712",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Mikami's boring life ends abruptly when he's reincarnated in another world as a slime monster. He then forms a party of monsters, changing everything."
                 },
                 {
                     "id": "jw-original-the-disastrous-life-of-saiki-k",
                     "title": "The Disastrous Life of Saiki K.",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-disastrous-life-of-saiki-k",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80117781",
                     "netflixUrl": "https://www.netflix.com/title/80117781",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "High school sophomore Kusuo Saiki swore as a child that he would keep his psychic talents hidden, but his abilities still make his life difficult."
                 },
                 {
                     "id": "jw-catalog-tv-vinland-saga",
@@ -31558,48 +31629,52 @@
                     "title": "InuYasha",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-inuyasha",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "70204995",
                     "netflixUrl": "https://www.netflix.com/title/70204995",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Suddenly finding herself in feudal Japan, schoolgirl Kagome teams up with half-demon Inuyasha to retrieve the scattered shards of a sacred jewel."
                 },
                 {
                     "id": "jw-original-puella-magi-madoka-magica",
                     "title": "Puella Magi Madoka Magica",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-puella-magi-madoka-magica",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "70302572",
                     "netflixUrl": "https://www.netflix.com/title/70302572",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Friends Madoka and Sayaka sign a contract to fight witches as magical girls, but their new powers carry grave consequences for them and those they love."
                 },
                 {
                     "id": "jw-original-gurren-lagann",
                     "title": "Gurren Lagann",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-gurren-lagann",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "70213196",
                     "netflixUrl": "https://www.netflix.com/title/70213196",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "When a young laborer escapes to the world aboveground, he discovers a violent land in which humans battle robots controlled by a power-hungry noble."
                 },
                 {
                     "id": "jw-original-mobile-suit-gundam-seed",
                     "title": "Mobile Suit Gundam Seed",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-mobile-suit-gundam-seed",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80146549",
                     "netflixUrl": "https://www.netflix.com/title/80146549",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Young Gundam pilot Kira Yamato is drawn into the war between the people of Earth and its orbital colonies when the neutral Orb Union is attacked."
                 },
                 {
                     "id": "jw-original-violet-evergarden",
@@ -31668,36 +31743,39 @@
                     "title": "Rising Impact",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-rising-impact",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81563026",
                     "netflixUrl": "https://www.netflix.com/title/81563026",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "When a third-grader's natural gift for golf is accidentally discovered by a pro player, the boy embarks on a journey to be the world's best golfer."
                 },
                 {
                     "id": "jw-original-blue-lock",
                     "title": "Blue Lock",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-blue-lock",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81640753",
                     "netflixUrl": "https://www.netflix.com/title/81640753",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "High school soccer players from across Japan gather for a controversial project designed to create the best — and most egoistic — striker in the world."
                 },
                 {
                     "id": "jw-original-hunter-x-hunter-2011",
                     "title": "Hunter X Hunter (2011)",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-hunter-x-hunter-2011",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "70300472",
                     "netflixUrl": "https://www.netflix.com/title/70300472",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "To fulfill his dreams of becoming a legendary Hunter like his dad, a young boy must pass a rigorous examination and find his missing father."
                 },
                 {
                     "id": "jw-catalog-tv-daemons-of-the-shadow-realm",
@@ -31716,36 +31794,39 @@
                     "title": "Record of Ragnarok",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-record-of-ragnarok",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81281579",
                     "netflixUrl": "https://www.netflix.com/title/81281579",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Before eradicating humankind from the world, the gods give them one last chance to prove themselves worthy of survival. Let the Ragnarok battles begin!"
                 },
                 {
                     "id": "jw-original-baki-dou-the-invincible-samurai",
                     "title": "BAKI-DOU: The Invincible Samurai",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-baki-dou-the-invincible-samurai",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81922765",
                     "netflixUrl": "https://www.netflix.com/title/81922765",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Baki and the strongest Underground Arena fighters face a threat of historical proportions: the resurrected Musashi Miyamoto, Japan's greatest samurai."
                 },
                 {
                     "id": "jw-original-the-seven-deadly-sins",
                     "title": "The Seven Deadly Sins",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-seven-deadly-sins",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "80050063",
                     "netflixUrl": "https://www.netflix.com/title/80050063",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "When a kingdom is taken over by tyrants, the deposed princess begins a quest to find a disbanded group of evil knights to help take back her realm."
                 },
                 {
                     "id": "jw-catalog-tv-chainsmoker-cat",
@@ -31764,60 +31845,65 @@
                     "title": "JoJo's Bizarre Adventure",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-jojo-s-bizarre-adventure",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80179831",
                     "netflixUrl": "https://www.netflix.com/title/80179831",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Multiple generations of the Joestar family -- all with the same nickname -- confront supernatural villains through a series of time periods."
                 },
                 {
                     "id": "jw-original-assassination-classroom",
                     "title": "Assassination Classroom",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-assassination-classroom",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "80045948",
                     "netflixUrl": "https://www.netflix.com/title/80045948",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "A destructive alien who is threatening Earth becomes a schoolteacher whose students are tasked with killing him, even though they adore his fun ways."
                 },
                 {
                     "id": "jw-original-shangri-la-frontier",
                     "title": "Shangri-La Frontier",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-shangri-la-frontier",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81727242",
                     "netflixUrl": "https://www.netflix.com/title/81727242",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Bored by playing so many crummy video games, a gamer discovers a wildly popular virtual reality game that launches him into the adventure of a lifetime."
                 },
                 {
                     "id": "jw-original-tougen-anki",
                     "title": "Tougen Anki",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-tougen-anki",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81969861",
                     "netflixUrl": "https://www.netflix.com/title/81969861",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "After a Momotaro assassin suddenly kills his adoptive father, Shiki vows to avenge him. But first, he must learn to control his newly awakened Oni blood."
                 },
                 {
                     "id": "jw-original-cyberpunk-edgerunners",
                     "title": "Cyberpunk: Edgerunners",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-cyberpunk-edgerunners",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81054853",
                     "netflixUrl": "https://www.netflix.com/title/81054853",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "In a corrupt dystopia riddled with cybernetic implants, a talented but reckless street kid strives to become a mercenary outlaw known as an edgerunner."
                 },
                 {
                     "id": "jw-catalog-tv-mob-psycho-100",
@@ -31860,36 +31946,39 @@
                     "title": "SAKAMOTO DAYS",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-sakamoto-days",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81663325",
                     "netflixUrl": "https://www.netflix.com/title/81663325",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Once the greatest hitman of all, Taro Sakamoto retired in the name of love. But when his past catches up, he must fight to protect his beloved family."
                 },
                 {
                     "id": "jw-original-kengan-ashura",
                     "title": "Kengan Ashura",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-kengan-ashura",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80992228",
                     "netflixUrl": "https://www.netflix.com/title/80992228",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Ohma Tokita enters a hidden world where corporate disputes are settled in brutal gladiator bouts. Forget the money, he just wants to fight — and win."
                 },
                 {
                     "id": "jw-original-beastars",
                     "title": "BEASTARS",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-beastars",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81054847",
                     "netflixUrl": "https://www.netflix.com/title/81054847",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "In a world where beasts of all kinds coexist, a gentle wolf awakens to his own predatory urges as his school deals with a murder within its midst."
                 },
                 {
                     "id": "jw-catalog-tv-dr-stone",
@@ -31908,84 +31997,91 @@
                     "title": "The Apothecary Diaries",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-apothecary-diaries",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81712068",
                     "netflixUrl": "https://www.netflix.com/title/81712068",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Obsessed with poison and medicine, a servant in the Emperor’s palace draws on her roots as a healer in the red light district to solve mysterious cases."
                 },
                 {
                     "id": "jw-original-magic-and-muscles",
                     "title": "Magic and Muscles",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-magic-and-muscles",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81685164",
                     "netflixUrl": "https://www.netflix.com/title/81685164",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "With no magic but plenty of physical might, Mash makes it his goal to outdo his magic-wielding classmates to attain the title of Divine Visionary."
                 },
                 {
                     "id": "jw-original-baki-hanma",
                     "title": "Baki Hanma",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-baki-hanma",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81236338",
                     "netflixUrl": "https://www.netflix.com/title/81236338",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Baki must up his fighting game if he'll ever surpass his father, so he enters Arizona State Prison to battle the notorious inmate Mr. Unchained."
                 },
                 {
                     "id": "jw-original-kuroko-s-basketball",
                     "title": "Kuroko's Basketball",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-kuroko-s-basketball",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80063153",
                     "netflixUrl": "https://www.netflix.com/title/80063153",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Five middle school basketball stars went to separate high schools, and now Tetsuya Kuroko and Seirin High are making their play for glory."
                 },
                 {
                     "id": "jw-original-delicious-in-dungeon",
                     "title": "Delicious in Dungeon",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-delicious-in-dungeon",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81564899",
                     "netflixUrl": "https://www.netflix.com/title/81564899",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Dungeons, dragons … and delicious monster stew!? Adventurers foray into a cursed buried kingdom to save their friend, cooking up a storm along the way."
                 },
                 {
                     "id": "jw-original-fullmetal-alchemist-brotherhood",
                     "title": "Fullmetal Alchemist: Brotherhood",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-fullmetal-alchemist-brotherhood",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "70204981",
                     "netflixUrl": "https://www.netflix.com/title/70204981",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "After suffering physical damage, brothers Edward and Alphonse must battle nefarious forces to reclaim their bodies in this supernatural anime."
                 },
                 {
                     "id": "jw-original-my-dress-up-darling",
                     "title": "My Dress-Up Darling",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-my-dress-up-darling",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81569754",
                     "netflixUrl": "https://www.netflix.com/title/81569754",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "A serious high schooler who dreams of becoming a traditional doll craftsman is introduced to the world of cosplay by his popular and flashy classmate."
                 },
                 {
                     "id": "jw-catalog-tv-frieren-beyond-journeys-end",
@@ -32004,108 +32100,117 @@
                     "title": "Wind Breaker",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-wind-breaker",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81771389",
                     "netflixUrl": "https://www.netflix.com/title/81771389",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Furin High School's delinquents get bad grades, but they excel at protecting their town. Then a victory-obsessed newcomer threatens the balance of power."
                 },
                 {
                     "id": "jw-original-dan-da-dan",
                     "title": "DAN DA DAN",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-dan-da-dan",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81736884",
                     "netflixUrl": "https://www.netflix.com/title/81736884",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "In a bet to prove whether ghosts or aliens exist, two high schoolers face terrifying paranormal threats, gain superpowers — and maybe even fall in love."
                 },
                 {
                     "id": "jw-original-kakegurui",
                     "title": "Kakegurui",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-kakegurui",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "80175351",
                     "netflixUrl": "https://www.netflix.com/title/80175351",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "High roller Yumeko Jabami plans to clean house at Hyakkaou Private Academy, a school where students are evaluated solely on their gambling skills."
                 },
                 {
                     "id": "jw-original-the-rising-of-the-shield-hero",
                     "title": "The Rising of the Shield Hero",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-rising-of-the-shield-hero",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81058649",
                     "netflixUrl": "https://www.netflix.com/title/81058649",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "A gamer is magically summoned into a parallel universe, where he is chosen as one of four heroes destined to save the world from its prophesied doom."
                 },
                 {
                     "id": "jw-original-neon-genesis-evangelion",
                     "title": "Neon Genesis Evangelion",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-neon-genesis-evangelion",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81033445",
                     "netflixUrl": "https://www.netflix.com/title/81033445",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Fifteen years after the Second Impact, Shinji Ikari joins his father's group NERV as one of several teenage mecha pilots fighting the monstrous Angels."
                 },
                 {
                     "id": "jw-original-castlevania-nocturne",
                     "title": "Castlevania: Nocturne",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-castlevania-nocturne",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "81436901",
                     "netflixUrl": "https://www.netflix.com/title/81436901",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "As revolution sweeps France, Richter Belmont fights to uphold his family's legacy and prevent the rise of a ruthless, power-hungry vampire ruler."
                 },
                 {
                     "id": "jw-original-rurouni-kenshin",
                     "title": "Rurouni Kenshin",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-rurouni-kenshin",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "netflixId": "81705252",
                     "netflixUrl": "https://www.netflix.com/title/81705252",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Wandering swordsman Kenshin Himura arrives in Tokyo in 1878. Though he makes friends despite himself, he can't escape his fearsome past."
                 },
                 {
                     "id": "jw-original-my-happy-marriage",
                     "title": "My Happy Marriage",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-my-happy-marriage",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "81564905",
                     "netflixUrl": "https://www.netflix.com/title/81564905",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Miyo's abusive family deems her worthless — but together with her powerful husband-to-be, her true self and hidden powers slowly begin to shine."
                 },
                 {
                     "id": "jw-original-detective-conan",
                     "title": "Detective Conan",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-detective-conan",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "netflixId": "80090370",
                     "netflixUrl": "https://www.netflix.com/title/80090370",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "Turned into a young boy by a sinister potion, teen sleuth Conan helps solve baffling crimes while tracking down the nefarious agents who poisoned him."
                 },
                 {
                     "id": "jw-catalog-tv-blue-eye-samurai",
@@ -32115,8 +32220,8 @@
                     "imageUrl": "local:jw-catalog-tv-blue-eye-samurai",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "netflix-original",
-                    "netflixId": "81442088",
-                    "netflixUrl": "https://www.netflix.com/title/81442088",
+                    "netflixId": "81144203",
+                    "netflixUrl": "https://www.netflix.com/title/81144203",
                     "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
@@ -32124,22 +32229,26 @@
                     "title": "Castlevania",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-castlevania",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "netflixId": "80095241",
                     "netflixUrl": "https://www.netflix.com/title/80095241",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "A vampire hunter fights to save a besieged city from an army of otherworldly beasts controlled by Dracula himself. Inspired by the classic video games."
                 },
                 {
                     "id": "jw-original-kpop-demon-hunters",
                     "title": "KPop Demon Hunters",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-kpop-demon-hunters",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation"
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "netflixId": "81498621",
+                    "netflixUrl": "https://www.netflix.com/title/81498621",
+                    "description": "When K-pop superstars Rumi, Mira and Zoey aren't selling out stadiums, they're using their secret powers to protect their fans from supernatural threats."
                 },
                 {
                     "id": "jw-original-the-sea-beast",
@@ -32204,10 +32313,13 @@
                     "title": "Glass Onion: A Knives Out Mystery",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-glass-onion-a-knives-out-mystery",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Original Movies"
+                    "catalogCollection": "Netflix Original Movies",
+                    "netflixId": "81458416",
+                    "netflixUrl": "https://www.netflix.com/title/81458416",
+                    "description": "World-famous detective Benoit Blanc heads to Greece to peel back the layers of a mystery surrounding a tech billionaire and his eclectic crew of friends."
                 },
                 {
                     "id": "card-04-03-512195",
@@ -32280,30 +32392,39 @@
                     "title": "Rebel Moon - Part One: A Child of Fire",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-rebel-moon-part-one-a-child-of-fire",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Original Movies"
+                    "catalogCollection": "Netflix Original Movies",
+                    "netflixId": "81464239",
+                    "netflixUrl": "https://www.netflix.com/title/81464239",
+                    "description": "When the ruthless forces of the Motherworld threaten a quiet farming village on a distant moon, a mysterious outsider becomes its best hope for survival."
                 },
                 {
                     "id": "jw-original-damsel",
                     "title": "Damsel",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-damsel",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Original Movies"
+                    "catalogCollection": "Netflix Original Movies",
+                    "netflixId": "80991090",
+                    "netflixUrl": "https://www.netflix.com/title/80991090",
+                    "description": "A young woman's marriage to a charming prince turns into a fierce fight for survival when she's offered up as a sacrifice to a fire-breathing dragon."
                 },
                 {
                     "id": "jw-original-the-killer",
                     "title": "The Killer",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "",
+                    "imageUrl": "local:jw-original-the-killer",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Original Movies"
+                    "catalogCollection": "Netflix Original Movies",
+                    "netflixId": "80234448",
+                    "netflixUrl": "https://www.netflix.com/title/80234448",
+                    "description": "After a fateful near miss, an assassin battles his employers — and himself — on an international hunt for retribution he insists isn't personal."
                 },
                 {
                     "id": "jw-original-maestro",
