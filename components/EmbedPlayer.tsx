@@ -32,6 +32,7 @@ export interface EmbedPlayerProps {
 }
 
 const IS_WEB = Platform.OS === 'web';
+const isDirectVideoSource = (url: string) => /\.(?:mp4|webm|ogg)(?:[?#]|$)/i.test(url);
 
 export function EmbedPlayer({
     src,
@@ -45,6 +46,7 @@ export function EmbedPlayer({
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
+    const directVideo = isDirectVideoSource(src);
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const iframeRef = useRef<HTMLIFrameElement | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -65,7 +67,7 @@ export function EmbedPlayer({
     // Mount the iframe imperatively into the host DOM node so we avoid
     // React Native Web's wrapping/transform issues with createElement('iframe').
     useEffect(() => {
-        if (!IS_WEB) return;
+        if (!IS_WEB || directVideo) return;
         const host = hostRef.current as unknown as HTMLElement | null;
         if (!host) return;
         host.innerHTML = '';
@@ -97,7 +99,7 @@ export function EmbedPlayer({
             killIframe();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [src, title]);
+    }, [src, title, directVideo]);
 
     /**
      * Kill the playing iframe HARD: navigating it to about:blank tears down
@@ -153,11 +155,37 @@ export function EmbedPlayer({
 
     return (
         <View style={styles.container}>
-            <View
-                ref={(r: any) => { hostRef.current = r; }}
-                style={styles.frameWrap}
-                collapsable={false}
-            />
+            {directVideo ? (
+                React.createElement('video', {
+                    src,
+                    autoPlay: true,
+                    controls: true,
+                    playsInline: true,
+                    onCanPlay: () => {
+                        if (timerRef.current) clearTimeout(timerRef.current);
+                        setLoading(false);
+                        setTimedOut(false);
+                    },
+                    onError: () => {
+                        setLoading(false);
+                        setTimedOut(true);
+                    },
+                    style: {
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#000',
+                        objectFit: 'contain',
+                    },
+                })
+            ) : (
+                <View
+                    ref={(r: any) => { hostRef.current = r; }}
+                    style={styles.frameWrap}
+                    collapsable={false}
+                />
+            )}
 
             {loading && !timedOut ? (
                 <View style={styles.loadingOverlay} pointerEvents="none">
@@ -169,9 +197,11 @@ export function EmbedPlayer({
             {timedOut ? (
                 <View style={styles.timeoutOverlay}>
                     <Ionicons name="alert-circle-outline" size={36} color="#fff" />
-                    <Text style={styles.timeoutTitle}>Player abhi load nahi hua</Text>
+                    <Text style={styles.timeoutTitle}>{directVideo ? 'Preview video load nahi hua' : 'Player abhi load nahi hua'}</Text>
                     <Text style={styles.timeoutText}>
-                        Ad-block ya popup blocker ne embed roka hoga. Naya tab me khol ke dekho, ya dusra player try karo.
+                        {directVideo
+                            ? 'Preview URL browser se load nahi ho saka. Naya tab me khol ke dekho.'
+                            : 'Ad-block ya popup blocker ne embed roka hoga. Naya tab me khol ke dekho, ya dusra player try karo.'}
                     </Text>
                     <Pressable style={styles.openButton} onPress={openInNewTab}>
                         <Ionicons name="open-outline" size={16} color="#000" />

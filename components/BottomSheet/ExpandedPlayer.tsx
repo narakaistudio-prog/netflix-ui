@@ -206,13 +206,14 @@ export function ExpandedPlayer({
 
     const startTrailer = () => setTrailerStage('play');
 
-    // If the catalog entry carries an embed id, launch our iframe player;
-    // otherwise fall back to opening netflix.com search in a new tab.
-    const hasEmbed = Boolean(
-        onPlayFull && (movieData.embed_url || movieData.tmdb_id || movieData.imdb_id),
-    );
+    // Use a provider embed when ids are available; otherwise play the safe
+    // HTTPS preview clip supplied by the catalog instead of leaving the button
+    // pointing at a dead external player.
+    const hasProviderEmbed = Boolean(movieData.embed_url || movieData.tmdb_id || movieData.imdb_id);
+    const hasDirectPreview = Boolean(movieData.video_url) && !hasProviderEmbed;
+    const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || movieData.video_url));
     const handlePlay = () => {
-        if (hasEmbed && onPlayFull) {
+        if (hasPlayableSource && onPlayFull) {
             onPlayFull(movieData);
             return;
         }
@@ -291,11 +292,13 @@ export function ExpandedPlayer({
                                 <Ionicons name="play" size={36} color="#fff" style={{ marginLeft: 4 }} />
                             </View>
                             <Text style={{ color: '#fff', fontSize: 16, fontWeight: '800', textAlign: 'center', textShadowColor: 'rgba(0,0,0,0.8)', textShadowRadius: 6 }}>
-                                {hasEmbed
-                                    ? (isSeries
-                                        ? `Play ${movieData.title} (S1:E1)`
-                                        : `Play ${movieData.title}`)
-                                    : 'Play on Netflix'}
+                                {hasDirectPreview
+                                    ? 'Play preview'
+                                    : (hasProviderEmbed
+                                        ? (isSeries
+                                            ? `Play ${movieData.title} (S1:E1)`
+                                            : `Play ${movieData.title}`)
+                                        : 'Play on Netflix')}
                             </Text>
                         </Pressable>
                     </View>
@@ -352,9 +355,11 @@ export function ExpandedPlayer({
                         <Pressable style={styles.playButton} onPress={handlePlay}>
                             <Ionicons name="play" size={24} color="black" />
                             <ThemedText style={styles.playButtonText}>
-                                {hasEmbed
-                                    ? (isSeries ? 'Play S1:E1' : 'Play')
-                                    : 'Play on Netflix'}
+                                {hasDirectPreview
+                                    ? 'Play preview'
+                                    : (hasProviderEmbed
+                                        ? (isSeries ? 'Play S1:E1' : 'Play')
+                                        : 'Play on Netflix')}
                             </ThemedText>
                         </Pressable>
 

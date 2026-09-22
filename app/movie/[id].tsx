@@ -34,6 +34,7 @@ const DRAG_THRESHOLD = Math.min(Dimensions.get('window').height * 0.20, 150);
 const HORIZONTAL_DRAG_THRESHOLD = Math.min(Dimensions.get('window').width * 0.51, 80);
 const DIRECTION_LOCK_ANGLE = 45;
 const ENABLE_HORIZONTAL_DRAG_CLOSE = true;
+const FALLBACK_PREVIEW_URL = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4';
 
 export default function MovieScreen() {
     const { id } = useLocalSearchParams();
@@ -298,8 +299,14 @@ export default function MovieScreen() {
     }, [movie.embed_provider, movie.embed_url, settings.defaultProvider]);
 
     const currentProvider: ProviderId = cycle[providerIndex] ?? 'nxsha';
+    // Public catalog entries do not always have a playable provider id. Keep a
+    // safe HTTPS preview clip so the Netflix-style play button still works in
+    // the web preview instead of silently opening a dead player URL.
+    const fallbackVideoUrl = (movie.videoUrl || FALLBACK_PREVIEW_URL).replace(/^http:/i, 'https:');
+    const directFallback = !parsedTmdb && !movie.imdb_id && !movie.embed_url;
 
     const buildSrc = useCallback(() => {
+        if (directFallback) return fallbackVideoUrl;
         try {
             return buildEmbedUrl(
                 currentProvider,
@@ -315,9 +322,9 @@ export default function MovieScreen() {
                 templateOverridesFor(settings, currentProvider),
             );
         } catch {
-            return '';
+            return fallbackVideoUrl;
         }
-    }, [currentProvider, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
+    }, [currentProvider, directFallback, fallbackVideoUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
 
     const getEpisodeCountForSeason = useCallback((targetSeason: number) => {
         return movie.seasonEpisodeCounts?.[targetSeason - 1]
@@ -329,8 +336,8 @@ export default function MovieScreen() {
     }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
 
     const handlePlayFull = useCallback(() => {
-        const canEmbed = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id);
-        if (!canEmbed) {
+        const canPlay = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id || fallbackVideoUrl);
+        if (!canPlay) {
             const q = encodeURIComponent(String(movie.title ?? '').trim());
             const url = `https://www.netflix.com/search?q=${q}`;
             if (IS_WEB) window.open(url, '_blank', 'noopener');
@@ -355,7 +362,7 @@ export default function MovieScreen() {
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, cycle, getEpisodeCountForSeason]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, cycle, fallbackVideoUrl, getEpisodeCountForSeason]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -396,7 +403,7 @@ export default function MovieScreen() {
         id: movie.id,
         title: movie.title || '',
         imageUrl: movie.imageUrl || '',
-        video_url: movie.videoUrl || 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        video_url: fallbackVideoUrl,
         year: movie.year || '2024',
         duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
         runtime: movie.runtime,
@@ -442,7 +449,7 @@ export default function MovieScreen() {
                                         src={src}
                                         title={movie.title}
                                         onClose={handleCloseInline}
-                                        onSwitchProvider={cycle.length > 1 ? handleSwitchProvider : undefined}
+                                        onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
                                         onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
                                         onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
                                         isTv={mediaType === 'tv'}
@@ -476,7 +483,7 @@ export default function MovieScreen() {
                                 src={src}
                                 title={movie.title}
                                 onClose={handleCloseInline}
-                                onSwitchProvider={cycle.length > 1 ? handleSwitchProvider : undefined}
+                                onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
                                 onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
                                 onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
                                 isTv={mediaType === 'tv'}
