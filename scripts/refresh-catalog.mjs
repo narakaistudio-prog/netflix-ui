@@ -1110,7 +1110,6 @@ async function refreshCurrentCatalog() {
     const rebuilt = new Set([
         'JustWatch Current Movies in India',
         'JustWatch Current TV Shows in India',
-        MATURE_ROW_TITLE,
     ]);
     let top10 = {
         movieItems: existing.movies.find(row => row.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [],
@@ -1199,7 +1198,6 @@ async function refreshTop10Rows() {
     const rebuilt = new Set([
         'Top 10 Movies in India Today',
         'Top 10 TV Shows in India Today',
-        MATURE_ROW_TITLE,
     ]);
     const remainingRows = rows.filter(row => !rebuilt.has(row.rowTitle));
     const nextRows = moveMatureToBottom([
