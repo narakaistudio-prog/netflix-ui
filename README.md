@@ -24,7 +24,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 ### Content Screens
 
 - 🏠 Animated home screen with featured content
-- 🔥 "New & Hot" section with Netflix-style layout
+- 🎬 Separate Netflix-style Movies and TV Shows shelves
 - 🎮 Mobile games showcase
 - 🔍 Dynamic search with instant results
 - ⬇️ Downloads management
@@ -76,7 +76,8 @@ project-root/
 │   ├── (tabs)/
 │   │   ├── (profile)/        # Profile section
 │   │   ├── index.tsx         # Home screen
-│   │   └── new.tsx          # New & Hot screen
+│   │   ├── movies.tsx        # Movies shelves
+│   │   └── tv.tsx            # TV Shows shelves
 │   ├── movie/
 │   ├── _layout.tsx          # Root layout
 │   └── search.tsx           # Search functionality
@@ -117,24 +118,58 @@ project-root/
 
 MIT License
 
-## Live Netflix India catalog (always up to date, zero API keys)
+## Live Netflix India catalog (public discovery, optional OMDb enrichment)
 
 The bundled catalog is refreshed automatically by the
 `refresh-catalog.yml` GitHub Action:
 
-- **Daily** it scrapes FlixPatrol's *TOP 10 on Netflix in India* (movies +
-  TV shows, updated every day), pulls each title's poster/description and
-  commits the result to `data/movies.json`. **No API key, no sign-up.**
-- Poster images are downloaded into `assets/posters/` and shipped inside the
-  app bundle (poster hosts block hotlinking, so bundling keeps every card
-  crisp forever). The catalog references them via `local:<id>` URLs.
+- **Daily** it first crawls the public IsItInMyCountry title sitemap and keeps
+  titles whose page lists India availability. It pulls the title poster,
+  description, year, type, rating, runtime, seasons and episode total, then
+  commits the result to `data/movies.json`. **No discovery API key or sign-up.**
+- The Home screen keeps a separate current **Top 10 Movies** and **Top 10 TV
+  Shows** presentation pair above the broad catalog. Those small daily rows
+  are supplemented from JustWatch's India Netflix provider page; the broad
+  availability source remains IsItInMyCountry.
+- A full refresh also merges JustWatch's current paginated Netflix India
+  popularity catalog (new releases, Korean series, anime and current movies)
+  into dedicated current rows, while retaining the older IsItInMyCountry
+  availability catalog. A JustWatch failure never replaces the broad source.
+- Each refresh adds a curated official-Netflix supplement from Netflix's India
+  `/in/title/<id>` pages plus Netflix genre/editorial shelves: **Netflix
+  Originals & Series**, **Netflix Korean Originals**, **Netflix Anime &
+  Animation**, **Netflix Original Movies**, and **Netflix Documentaries**.
+  These are real title records with bundled posters, Netflix IDs and episode
+  lists where available—not empty editorial labels. This keeps older
+  Netflix-owned titles together with current availability instead of treating
+  a popularity page as the full Netflix catalogue. OMDb remains the
+  server-side fallback for posters, IMDb IDs, plots and episode metadata.
+- Manual workflow modes include `refresh-current` (current shelves plus the
+  official Netflix supplement), `enrich-existing` (fill provider IDs without a
+  full crawl), and `refresh-top10` (refresh only the Hero/Top 10 rows).
+- If the broad public source is unavailable, it safely falls back to
+  FlixPatrol's daily *TOP 10 on Netflix in India* rather than erasing the
+  previous catalog.
+- Poster images downloaded from the refresh source are shipped inside the app
+  bundle; broader catalogue entries retain their public Netflix artwork URL.
 - You can also trigger it any time from the repository's
   **Actions → Refresh Netflix India catalog → Run workflow**.
 - Once this branch is merged into `main`, the daily schedule activates
   automatically.
+- If FlixPatrol is temporarily unavailable or changes its HTML, the job exits
+  successfully without replacing the last known-good catalog. A partial chart
+  also carries forward whichever chart is missing.
 
 ### Optional extras
-- **TMDB (free key)**: if you ever create a key, put it in `.env` as
-  `EXPO_PUBLIC_TMDB_API_KEY` (runtime freshness, Hindi metadata) or as the
-  `TMDB_API_KEY` repository secret (the script then prefers TMDB).
-  Everything works without it.
+- **OMDb (metadata enrichment)**: put the key in the GitHub Actions repository
+  secret `OMDB_API_KEY` (or local `.env` for a refresh run). The workflow uses
+  it to enrich discovered titles with IMDb id, plot, cast, IMDb rating,
+  certification, runtime, seasons, episode counts and episode names. The key
+  is never bundled into the client app.
+
+### Coverage note
+The public availability index is broader than a Top 10 chart, but it is not an
+official Netflix API and can lag licensing changes or omit a title. India
+availability is filtered from the source's country rows; OMDb enriches those
+records but does not determine availability. The refresh keeps a safe fallback
+instead of claiming an unverifiable official 100% catalogue.

@@ -1,8 +1,10 @@
 import * as Font from 'expo-font';
 import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 
 export default function useCachedResources() {
-    const [isLoadingComplete, setLoadingComplete] = useState(false);
+    // On web, start as true so SSR pre-renders the full UI and HTML immediately
+    const [isLoadingComplete, setLoadingComplete] = useState(Platform.OS === 'web');
 
     useEffect(() => {
         async function loadResourcesAndDataAsync() {

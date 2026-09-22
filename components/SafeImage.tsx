@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, StyleProp, ViewStyle, ImageStyle } from 'react-native';
-import { Image, ImageSource } from 'expo-image';
+import {
+    View,
+    Text,
+    StyleSheet,
+    StyleProp,
+    ViewStyle,
+    ImageStyle,
+    Platform,
+    ImageSourcePropType,
+} from 'react-native';
+import { Image as ExpoImage, ImageSource } from 'expo-image';
+import { getLocalPoster, LOCAL_POSTER_URIS } from '@/assets/posters';
 
 interface SafeImageProps {
-    source: ImageSource;
+    source: ImageSource | ImageSourcePropType | any;
     style?: StyleProp<ViewStyle> | StyleProp<ImageStyle>;
     contentFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
     transition?: number;
     cachePolicy?: 'memory' | 'disk' | 'memory-disk' | 'none';
-    /** Blurs the image (used for ambient/backdrop art on web). */
     blurRadius?: number;
-    /** Text shown inside the Netflix-style fallback card (e.g. the title). */
     fallbackLabel?: string;
-    /** Render nothing at all when the image fails instead of the fallback card. */
     hideOnError?: boolean;
 }
 
 /**
- * Image with a graceful Netflix-style fallback.
+ * Image with graceful fallback and instant native web rendering.
  *
- * The catalog data references many third-party image hosts; whenever one of
- * them 404s or is blocked, a broken-image box would ruin the UI. SafeImage
- * swaps in a dark card with the Netflix "N" so the layout always looks
- * intentional.
+ * On Web, renders an authentic <img> tag directly using web-accessible
+ * asset URLs. This guarantees 100% reliable rendering without relying
+ * on React Native Web's background-image loader or asset registry.
  */
 export function SafeImage({
     source,
@@ -36,10 +42,76 @@ export function SafeImage({
 }: SafeImageProps) {
     const [failed, setFailed] = useState(false);
 
-    if (failed) {
-        if (hideOnError) {
-            return <View style={style as StyleProp<ViewStyle>} />;
+    if (Platform.OS === 'web') {
+        const rawUri =
+            typeof source === 'object' && source !== null && 'uri' in source
+                ? (source as any).uri
+                : typeof source === 'string'
+                ? source
+                : undefined;
+
+        let imgSrc: string | undefined;
+
+        if (typeof rawUri === 'string' && rawUri.trim()) {
+            if (rawUri.startsWith('http') || rawUri.startsWith('/') || rawUri.startsWith('data:')) {
+                imgSrc = rawUri;
+            } else {
+                const local = getLocalPoster(rawUri) || (fallbackLabel ? getLocalPoster(fallbackLabel) : undefined);
+                imgSrc = local?.uri ?? (LOCAL_POSTER_URIS[rawUri] || LOCAL_POSTER_URIS[rawUri.replace(/^local:/, '')]);
+            }
+        } else if (source && typeof source === 'object' && typeof source.uri === 'string') {
+            imgSrc = source.uri;
         }
+
+        if (!imgSrc || failed) {
+            if (hideOnError) {
+                return <View style={style as StyleProp<ViewStyle>} />;
+            }
+            return (
+                <View style={[style as StyleProp<ViewStyle>, styles.fallback]}>
+                    <Text style={styles.fallbackN}>N</Text>
+                    {fallbackLabel ? (
+                        <Text numberOfLines={2} style={styles.fallbackLabel}>
+                            {fallbackLabel}
+                        </Text>
+                    ) : null}
+                </View>
+            );
+        }
+
+        const objectFit = contentFit === 'contain' ? 'contain' : 'cover';
+        return (
+            <img
+                src={imgSrc}
+                alt={fallbackLabel || 'poster'}
+                loading="eager"
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit,
+                    display: 'block',
+                    borderRadius: 'inherit',
+                } as any}
+                onError={() => setFailed(true)}
+            />
+        );
+    }
+
+    let finalSource = source;
+    const raw =
+        typeof source === 'object' && source !== null && 'uri' in source
+            ? (source as any).uri
+            : typeof source === 'string'
+            ? source
+            : undefined;
+
+    if (typeof raw === 'string' && (raw.startsWith('local:') || !raw.startsWith('http'))) {
+        const local = getLocalPoster(raw) ?? (fallbackLabel ? getLocalPoster(fallbackLabel) : undefined);
+        if (local) finalSource = local;
+    }
+
+    if (failed || !finalSource) {
+        if (hideOnError) return <View style={style as StyleProp<ViewStyle>} />;
         return (
             <View style={[style as StyleProp<ViewStyle>, styles.fallback]}>
                 <Text style={styles.fallbackN}>N</Text>
@@ -53,8 +125,8 @@ export function SafeImage({
     }
 
     return (
-        <Image
-            source={source}
+        <ExpoImage
+            source={finalSource}
             style={style as StyleProp<ImageStyle>}
             contentFit={contentFit}
             transition={transition}
@@ -67,25 +139,25 @@ export function SafeImage({
 
 const styles = StyleSheet.create({
     fallback: {
-        backgroundColor: '#161616',
+        backgroundColor: '#1a1a24',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: '#242424',
+        borderColor: '#2d2d3a',
     },
     fallbackN: {
         color: '#E50914',
-        fontSize: 30,
+        fontSize: 32,
         fontWeight: '900',
-        lineHeight: 34,
+        lineHeight: 36,
     },
     fallbackLabel: {
-        color: '#8c8c8c',
-        fontSize: 10,
-        fontWeight: '600',
-        marginTop: 4,
-        marginHorizontal: 6,
+        color: '#ffffffcc',
+        fontSize: 11,
+        fontWeight: '700',
+        marginTop: 6,
+        marginHorizontal: 8,
         textAlign: 'center',
     },
 });

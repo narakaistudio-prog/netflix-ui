@@ -1,9 +1,10 @@
 import React from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { StyleSheet, Dimensions, TouchableOpacity, Image, View, Pressable } from 'react-native';
+import { StyleSheet, Dimensions, TouchableOpacity, View, Pressable } from 'react-native';
 import { useEffect, useCallback, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedText } from '@/components/ThemedText';
+import { ProfileBadge } from '@/components/ProfileBadge';
 import { useRootScale } from '@/contexts/RootScaleContext';
 import { useUser } from '@/contexts/UserContext';
 import Animated, {
@@ -277,23 +278,14 @@ export default function SwitchProfileScreen() {
                                             style={styles.profileButton}
                                         >
                                             <View style={styles.profileContainer}>
-                                                <Image
-                                                    source={{ uri: profile.avatar }}
-                                                    style={styles.avatar}
-                                                />
+                                                <View style={styles.avatar}>
+                                                    <ProfileBadge name={profile.name} id={profile.id} borderRadius={6} />
+                                                </View>
                                                 <ThemedText style={styles.profileName}>{profile.name}</ThemedText>
                                             </View>
                                         </TouchableOpacity>
                                     </Animated.View>
                                 ))}
-
-                                <TouchableOpacity style={styles.profileButton}>
-                                    <View style={styles.addProfileContainer}>
-                                        <Ionicons name="add" size={44} color="#fff" />
-                                    </View>
-                                    <ThemedText style={styles.addProfileText}>Add Profile</ThemedText>
-                                </TouchableOpacity>
-
                             </View>
 
                             <TouchableOpacity style={styles.doneButton}>

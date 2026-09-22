@@ -15,6 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SafeImage } from '@/components/SafeImage';
+import { ProfileBadge } from '@/components/ProfileBadge';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
 const exampleLikedShowsAndMovies = [
@@ -143,10 +144,12 @@ export default function ProfileScreen() {
                 >
 
                     <TouchableOpacity style={styles.profileSection} onPress={() => router.push('/switch-profile')}>
-                        <SafeImage
-                            source={{ uri: selectedProfile?.avatar }}
+                        <ProfileBadge
+                            name={selectedProfile?.name ?? '?'}
+                            id={selectedProfile?.id}
+                            size={60}
+                            borderRadius={4}
                             style={styles.profileImage}
-                            transition={200}
                         />
                         <View style={styles.profileNameContainer}>
                             <Text style={styles.profileName}>{selectedProfile?.name}</Text>
@@ -195,6 +198,21 @@ export default function ProfileScreen() {
                         </View>
                         <View style={styles.menuContent}>
                             <Text style={styles.menuText}>Downloads</Text>
+                            <Ionicons name="chevron-forward" size={20} color="#fff" />
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        onPress={() => router.push('/admin')}
+                    >
+                        <View style={styles.menuIconContainer}>
+                            <View style={[styles.downloadIconContainer, { backgroundColor: '#E50914' }]}>
+                                <Ionicons name="settings-outline" size={24} color="#fff" />
+                            </View>
+                        </View>
+                        <View style={styles.menuContent}>
+                            <Text style={styles.menuText}>Admin Panel</Text>
                             <Ionicons name="chevron-forward" size={20} color="#fff" />
                         </View>
                     </TouchableOpacity>

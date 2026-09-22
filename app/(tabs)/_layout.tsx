@@ -5,10 +5,10 @@ import { Platform, StyleSheet, Image, View, Pressable } from 'react-native';
 import { impactAsync, ImpactFeedbackStyle } from '@/utils/haptics';
 import { useUser } from '@/contexts/UserContext';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
+import { ProfileBadge } from '@/components/ProfileBadge';
 import { Home } from '@/icons/Home';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import { Image as ExpoImage } from 'expo-image';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 
 // Helper component for cross-platform icons
@@ -16,24 +16,22 @@ function TabIcon({ ionIcon, color }: { ionIcon: 'person' | 'home-sharp' | 'play-
   return <TabBarIcon name={ionIcon} color={color} />;
 }
 
-// Netflix profile image component
+// Netflix profile badge component (DP-less)
 function ProfileImage({ focused }: { focused: boolean }) {
   const { selectedProfile } = useUser();
 
   return (
     <React.Fragment>
-      <ExpoImage
-        source={{ uri: selectedProfile?.avatar }}
+      <ProfileBadge
+        name={selectedProfile?.name ?? '?'}
+        id={selectedProfile?.id}
+        size={24}
+        borderRadius={4}
         style={{
-          width: 24,
-          height: 24,
-          borderRadius: 4,
           opacity: focused ? 1 : 0.5,
           borderWidth: 2,
           borderColor: focused ? 'white' : 'transparent',
         }}
-        cachePolicy="memory-disk"
-        transition={200}
       />
       <View
         style={{
@@ -59,15 +57,17 @@ export const TAB_SCREENS = [
     ),
   },
   {
-    name: 'new',
-    title: 'New & Hot',
-    icon: ({ color, focused }: { color: string; focused: boolean }) => (
-      <ExpoImage
-        source={focused ? require('../../assets/images/replace-these/new-netflix.png') : require('../../assets/images/replace-these/new-netflix-outline.png')}
-        style={{ width: 24, height: 24 }}
-        cachePolicy="memory-disk"
-        contentFit="contain"
-      />
+    name: 'movies',
+    title: 'Movies',
+    icon: ({ color }: { color: string; focused: boolean }) => (
+      <Ionicons name="film-outline" size={24} color={color} />
+    ),
+  },
+  {
+    name: 'tv',
+    title: 'TV Shows',
+    icon: ({ color }: { color: string; focused: boolean }) => (
+      <Ionicons name="tv-outline" size={24} color={color} />
     ),
   },
   {
