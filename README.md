@@ -131,24 +131,20 @@ The bundled catalog is refreshed automatically by the
   Shows** presentation pair above the broad catalog. Those small daily rows
   are supplemented from JustWatch's India Netflix provider page; the broad
   availability source remains IsItInMyCountry.
-- A full/current refresh also merges JustWatch's current paginated Netflix
-  India popularity catalog (new releases, Korean series, anime and current
-  movies) into dedicated current rows, while retaining the older
-  IsItInMyCountry availability catalog. A JustWatch failure never replaces the
-  broad source.
-- The refresh additionally reads Netflix's official **Only on Netflix** and
-  **Anime** browse collections, then validates every new Netflix title through
-  its `/in/title/<id>` detail page before importing it. Validated results are
-  placed in dedicated `Netflix Originals & Exclusives` and `Netflix Anime &
-  Animation` shelves with official poster artwork; they are merged/deduplicated
-  into the underlying movie/series catalog rather than being empty editorial
-  labels.
-- Titles matching `365 Days`/`365 dni` variants are a hard exclusion from
-  generated data. Mature titles that are allowed by policy are kept only in
-  the bottom `Mature & Adult Content` shelf.
+- A full refresh also merges JustWatch's current paginated Netflix India
+  popularity catalog (new releases, Korean series, anime and current movies)
+  into dedicated current rows, while retaining the older IsItInMyCountry
+  availability catalog. A JustWatch failure never replaces the broad source.
+- Each refresh adds a curated official-Netflix supplement from Netflix's genre
+  and editorial shelves: **Netflix Originals & Series**, **Netflix Korean
+  Originals**, **Netflix Anime & Animation**, **Netflix Original Movies**, and
+  **Netflix Documentaries**. This keeps older Netflix-owned titles together
+  with current availability instead of treating a popularity page as the full
+  Netflix catalogue. Official Netflix title IDs are persisted for the anime
+  entries where Netflix publishes them; OMDb remains the server-side fallback
+  for posters, IMDb IDs, plots and episode metadata.
 - Manual workflow modes include `enrich-existing` (fill provider IDs without a
-  full crawl), `refresh-current` (current plus official Netflix shelves), and
-  `refresh-top10` (refresh only the Hero/Top 10 rows).
+  full crawl) and `refresh-top10` (refresh only the Hero/Top 10 rows).
 - If the broad public source is unavailable, it safely falls back to
   FlixPatrol's daily *TOP 10 on Netflix in India* rather than erasing the
   previous catalog.

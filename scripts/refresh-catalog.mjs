@@ -37,9 +37,8 @@ const FULL_PAGE_CONCURRENCY = 8;
 const FULL_ROW_SIZE = 48;
 const JUSTWATCH_CATALOG_PAGE_SIZE = 40;
 const JUSTWATCH_MAX_CATALOG_PAGES = 6;
-// This is a hard catalogue exclusion, not merely a mature-shelf move. The
-// product requirement is zero 365 Days/365 dni variants in generated data.
-const BLOCKED_CATALOG_TITLE_PATTERN = /365(?:days|dni)/;
+const BLOCKED_TOP10_TITLES = new Set(['365 dni']);
+const BLOCKED_CATALOG_TITLE_PATTERN = /\b365\s*(?:dni|days)\b/i;
 const MATURE_ROW_TITLE = 'Mature & Adult Content';
 const MATURE_TITLE_PATTERNS = [
     'sapio',
@@ -83,6 +82,288 @@ const TOP10_REPLACEMENTS = [
     },
 ];
 
+// Netflix's official genre pages contain many Originals that do not appear in
+// the popularity-sorted JustWatch page. Keep this small editorial seed
+// server-side, enrich it with OMDb when available, and place it in dedicated
+// shelves instead of pretending it is today's popularity chart.
+const NETFLIX_CURATED_ROW_TITLES = new Set([
+    'Netflix Originals & Series',
+    'Netflix Korean Originals',
+    'Netflix Anime & Animation',
+    'Netflix Original Movies',
+    'Netflix Documentaries',
+]);
+
+const NETFLIX_CURATED_SEEDS = [
+    // Netflix Originals and series
+    ['Arcane', 'tv', 'Netflix Originals & Series'],
+    ['The Sandman', 'tv', 'Netflix Originals & Series'],
+    ['The Umbrella Academy', 'tv', 'Netflix Originals & Series'],
+    ['The Lincoln Lawyer', 'tv', 'Netflix Originals & Series'],
+    ['The Night Agent', 'tv', 'Netflix Originals & Series'],
+    ['The Recruit', 'tv', 'Netflix Originals & Series'],
+    ['The Diplomat', 'tv', 'Netflix Originals & Series'],
+    ['Virgin River', 'tv', 'Netflix Originals & Series'],
+    ['Emily in Paris', 'tv', 'Netflix Originals & Series'],
+    ['Love Is Blind', 'tv', 'Netflix Originals & Series'],
+    ['The Circle', 'tv', 'Netflix Originals & Series'],
+    ["The Queen's Gambit", 'tv', 'Netflix Originals & Series'],
+    ['Ozark', 'tv', 'Netflix Originals & Series'],
+    ['Narcos', 'tv', 'Netflix Originals & Series'],
+    ['The Haunting of Hill House', 'tv', 'Netflix Originals & Series'],
+    ['The Haunting of Bly Manor', 'tv', 'Netflix Originals & Series'],
+    ['Midnight Mass', 'tv', 'Netflix Originals & Series'],
+    ['Russian Doll', 'tv', 'Netflix Originals & Series'],
+    ['Maid', 'tv', 'Netflix Originals & Series'],
+    ['Unbelievable', 'tv', 'Netflix Originals & Series'],
+    ['The Watcher', 'tv', 'Netflix Originals & Series'],
+    ['Beef', 'tv', 'Netflix Originals & Series'],
+    ['One Day', 'tv', 'Netflix Originals & Series'],
+    ['The OA', 'tv', 'Netflix Originals & Series'],
+    ['The End of the F***ing World', 'tv', 'Netflix Originals & Series'],
+    ['BoJack Horseman', 'tv', 'Netflix Originals & Series'],
+    ['Big Mouth', 'tv', 'Netflix Originals & Series'],
+    ['The Dragon Prince', 'tv', 'Netflix Originals & Series'],
+    ['Blood of Zeus', 'tv', 'Netflix Originals & Series'],
+    ['Aggretsuko', 'tv', 'Netflix Originals & Series'],
+    ['Hilda', 'tv', 'Netflix Originals & Series'],
+    ['Kipo and the Age of Wonderbeasts', 'tv', 'Netflix Originals & Series'],
+    ['Maya and the Three', 'tv', 'Netflix Originals & Series'],
+    ['Avatar: The Last Airbender', 'tv', 'Netflix Originals & Series'],
+
+    // Korean Netflix Originals, including established catalogue favourites
+    ['Kingdom', 'tv', 'Netflix Korean Originals'],
+    ['My Name', 'tv', 'Netflix Korean Originals'],
+    ['Hellbound', 'tv', 'Netflix Korean Originals'],
+    ['Sweet Home', 'tv', 'Netflix Korean Originals'],
+    ['D.P.', 'tv', 'Netflix Korean Originals'],
+    ['Extraordinary Attorney Woo', 'tv', 'Netflix Korean Originals'],
+    ['Crash Landing on You', 'tv', 'Netflix Korean Originals'],
+    ['Business Proposal', 'tv', 'Netflix Korean Originals'],
+    ['Hometown Cha-Cha-Cha', 'tv', 'Netflix Korean Originals'],
+    ['Alchemy of Souls', 'tv', 'Netflix Korean Originals'],
+    ['Twenty-Five Twenty-One', 'tv', 'Netflix Korean Originals'],
+    ['Itaewon Class', 'tv', 'Netflix Korean Originals'],
+    ['Start-Up', 'tv', 'Netflix Korean Originals'],
+    ['Hospital Playlist', 'tv', 'Netflix Korean Originals'],
+    ['Reply 1988', 'tv', 'Netflix Korean Originals'],
+    ['Mr. Queen', 'tv', 'Netflix Korean Originals'],
+    ['True Beauty', 'tv', 'Netflix Korean Originals'],
+    ['The King: Eternal Monarch', 'tv', 'Netflix Korean Originals'],
+    ['The Uncanny Counter', 'tv', 'Netflix Korean Originals'],
+    ['Bloodhounds', 'tv', 'Netflix Korean Originals'],
+
+    // Anime and animated Netflix titles from the official Anime shelf
+    ['One-Punch Man', 'tv', 'Netflix Anime & Animation'],
+    ['Jujutsu Kaisen', 'tv', 'Netflix Anime & Animation'],
+    ['One Piece', 'tv', 'Netflix Anime & Animation'],
+    ['Naruto', 'tv', 'Netflix Anime & Animation'],
+    ['Hajime no Ippo: The Fighting!', 'tv', 'Netflix Anime & Animation'],
+    ['DEATH NOTE', 'tv', 'Netflix Anime & Animation'],
+    ['My Hero Academia', 'tv', 'Netflix Anime & Animation'],
+    ['Demon Slayer: Kimetsu no Yaiba', 'tv', 'Netflix Anime & Animation'],
+    ['Black Clover', 'tv', 'Netflix Anime & Animation'],
+    ['That Time I Got Reincarnated as a Slime', 'tv', 'Netflix Anime & Animation'],
+    ['The Disastrous Life of Saiki K.', 'tv', 'Netflix Anime & Animation'],
+    ['VINLAND SAGA', 'tv', 'Netflix Anime & Animation'],
+    ['Haikyu!!', 'tv', 'Netflix Anime & Animation'],
+    ['InuYasha', 'tv', 'Netflix Anime & Animation'],
+    ['Puella Magi Madoka Magica', 'tv', 'Netflix Anime & Animation'],
+    ['Gurren Lagann', 'tv', 'Netflix Anime & Animation'],
+    ['Mobile Suit Gundam Seed', 'tv', 'Netflix Anime & Animation'],
+    ['Violet Evergarden', 'tv', 'Netflix Anime & Animation'],
+    ['PLUTO', 'tv', 'Netflix Anime & Animation'],
+    ['Terminator Zero', 'tv', 'Netflix Anime & Animation'],
+    ['Devil May Cry', 'tv', 'Netflix Anime & Animation'],
+    ['Devilman Crybaby', 'tv', 'Netflix Anime & Animation'],
+    ['The Fragrant Flower Blooms With Dignity', 'tv', 'Netflix Anime & Animation'],
+    ['Blue Box', 'tv', 'Netflix Anime & Animation'],
+    ['Rising Impact', 'tv', 'Netflix Anime & Animation'],
+    ['Blue Lock', 'tv', 'Netflix Anime & Animation'],
+    ['Hunter X Hunter (2011)', 'tv', 'Netflix Anime & Animation'],
+    ['Daemons of the Shadow Realm', 'tv', 'Netflix Anime & Animation'],
+    ['Record of Ragnarok', 'tv', 'Netflix Anime & Animation'],
+    ['BAKI-DOU: The Invincible Samurai', 'tv', 'Netflix Anime & Animation'],
+    ['The Seven Deadly Sins', 'tv', 'Netflix Anime & Animation'],
+    ['Chainsmoker Cat', 'tv', 'Netflix Anime & Animation'],
+    ["JoJo's Bizarre Adventure", 'tv', 'Netflix Anime & Animation'],
+    ['Assassination Classroom', 'tv', 'Netflix Anime & Animation'],
+    ['Shangri-La Frontier', 'tv', 'Netflix Anime & Animation'],
+    ['Tougen Anki', 'tv', 'Netflix Anime & Animation'],
+    ['Cyberpunk: Edgerunners', 'tv', 'Netflix Anime & Animation'],
+    ['Mob Psycho 100', 'tv', 'Netflix Anime & Animation'],
+    ['Overlord', 'tv', 'Netflix Anime & Animation'],
+    ['Baki', 'tv', 'Netflix Anime & Animation'],
+    ['SAKAMOTO DAYS', 'tv', 'Netflix Anime & Animation'],
+    ['Kengan Ashura', 'tv', 'Netflix Anime & Animation'],
+    ['BEASTARS', 'tv', 'Netflix Anime & Animation'],
+    ['Dr. Stone', 'tv', 'Netflix Anime & Animation'],
+    ['The Apothecary Diaries', 'tv', 'Netflix Anime & Animation'],
+    ['Magic and Muscles', 'tv', 'Netflix Anime & Animation'],
+    ['Baki Hanma', 'tv', 'Netflix Anime & Animation'],
+    ["Kuroko's Basketball", 'tv', 'Netflix Anime & Animation'],
+    ['Delicious in Dungeon', 'tv', 'Netflix Anime & Animation'],
+    ['Fullmetal Alchemist: Brotherhood', 'tv', 'Netflix Anime & Animation'],
+    ['My Dress-Up Darling', 'tv', 'Netflix Anime & Animation'],
+    ['Frieren: Beyond Journey\'s End', 'tv', 'Netflix Anime & Animation'],
+    ['Wind Breaker', 'tv', 'Netflix Anime & Animation'],
+    ['DAN DA DAN', 'tv', 'Netflix Anime & Animation'],
+    ['Kakegurui', 'tv', 'Netflix Anime & Animation'],
+    ['The Rising of the Shield Hero', 'tv', 'Netflix Anime & Animation'],
+    ['Neon Genesis Evangelion', 'tv', 'Netflix Anime & Animation'],
+    ['Castlevania: Nocturne', 'tv', 'Netflix Anime & Animation'],
+    ['Rurouni Kenshin', 'tv', 'Netflix Anime & Animation'],
+    ['My Happy Marriage', 'tv', 'Netflix Anime & Animation'],
+    ['Detective Conan', 'tv', 'Netflix Anime & Animation'],
+    ['Blue Eye Samurai', 'tv', 'Netflix Anime & Animation'],
+    ['Castlevania', 'tv', 'Netflix Anime & Animation'],
+    ['KPop Demon Hunters', 'movie', 'Netflix Anime & Animation'],
+    ['The Sea Beast', 'movie', 'Netflix Anime & Animation'],
+    ['Nimona', 'movie', 'Netflix Anime & Animation'],
+    ['Klaus', 'movie', 'Netflix Anime & Animation'],
+    ['The Mitchells vs. the Machines', 'movie', 'Netflix Anime & Animation'],
+
+    // Netflix Original films
+    ['Glass Onion: A Knives Out Mystery', 'movie', 'Netflix Original Movies'],
+    ['Red Notice', 'movie', 'Netflix Original Movies'],
+    ['Extraction', 'movie', 'Netflix Original Movies'],
+    ['Extraction 2', 'movie', 'Netflix Original Movies'],
+    ['The Gray Man', 'movie', 'Netflix Original Movies'],
+    ['Army of the Dead', 'movie', 'Netflix Original Movies'],
+    ['Rebel Moon - Part One: A Child of Fire', 'movie', 'Netflix Original Movies'],
+    ['Damsel', 'movie', 'Netflix Original Movies'],
+    ['The Killer', 'movie', 'Netflix Original Movies'],
+    ['Maestro', 'movie', 'Netflix Original Movies'],
+    ['Society of the Snow', 'movie', 'Netflix Original Movies'],
+    ['All Quiet on the Western Front', 'movie', 'Netflix Original Movies'],
+    ['Roma', 'movie', 'Netflix Original Movies'],
+    ['The Irishman', 'movie', 'Netflix Original Movies'],
+    ['Marriage Story', 'movie', 'Netflix Original Movies'],
+    ['The Old Guard', 'movie', 'Netflix Original Movies'],
+    ['Bird Box', 'movie', 'Netflix Original Movies'],
+    ["Don't Look Up", 'movie', 'Netflix Original Movies'],
+    ['The Platform', 'movie', 'Netflix Original Movies'],
+    ['The Mother', 'movie', 'Netflix Original Movies'],
+    ['Heart of Stone', 'movie', 'Netflix Original Movies'],
+    ['The Beautiful Game', 'movie', 'Netflix Original Movies'],
+    ['The Electric State', 'movie', 'Netflix Original Movies'],
+    ['The Adam Project', 'movie', 'Netflix Original Movies'],
+    ['Enola Holmes', 'movie', 'Netflix Original Movies'],
+    ['Murder Mystery', 'movie', 'Netflix Original Movies'],
+    ['To All the Boys I\'ve Loved Before', 'movie', 'Netflix Original Movies'],
+    ['Okja', 'movie', 'Netflix Original Movies'],
+    ["Guillermo del Toro's Pinocchio", 'movie', 'Netflix Original Movies'],
+    ['The Power of the Dog', 'movie', 'Netflix Original Movies'],
+    ['Beasts of No Nation', 'movie', 'Netflix Original Movies'],
+    ['The Two Popes', 'movie', 'Netflix Original Movies'],
+
+    // Netflix documentary originals
+    ['Our Planet', 'tv', 'Netflix Documentaries'],
+    ['Night on Earth', 'tv', 'Netflix Documentaries'],
+    ['Formula 1: Drive to Survive', 'tv', 'Netflix Documentaries'],
+    ['Beckham', 'tv', 'Netflix Documentaries'],
+    ["Chef's Table", 'tv', 'Netflix Documentaries'],
+    ['Making a Murderer', 'tv', 'Netflix Documentaries'],
+    ['The Last Dance', 'tv', 'Netflix Documentaries'],
+    ['Our Great National Parks', 'tv', 'Netflix Documentaries'],
+    ['The Social Dilemma', 'movie', 'Netflix Documentaries'],
+    ['My Octopus Teacher', 'movie', 'Netflix Documentaries'],
+    ['David Attenborough: A Life on Our Planet', 'movie', 'Netflix Documentaries'],
+];
+
+// Stable IDs copied from Netflix's official Anime genre page. They are kept
+// alongside the editorial title seed so a title remains traceable even when
+// OMDb has no exact spelling/region match.
+const NETFLIX_OFFICIAL_IDS = {
+    'One-Punch Man': '80117291',
+    'Jujutsu Kaisen': '81278456',
+    'One Piece': '80107103',
+    Naruto: '70205012',
+    'Hajime no Ippo: The Fighting!': '80995578',
+    'DEATH NOTE': '70204970',
+    'My Hero Academia': '80135674',
+    'Demon Slayer: Kimetsu no Yaiba': '81091393',
+    'Blue Lock': '81640753',
+    'Hunter X Hunter (2011)': '70300472',
+    'Black Clover': '80238012',
+    'Daemons of the Shadow Realm': '82719204',
+    'Record of Ragnarok': '81281579',
+    'BAKI-DOU: The Invincible Samurai': '81922765',
+    'The Seven Deadly Sins': '80050063',
+    'That Time I Got Reincarnated as a Slime': '81028712',
+    'Chainsmoker Cat': '82760630',
+    "JoJo's Bizarre Adventure": '80179831',
+    'The Disastrous Life of Saiki K.': '80117781',
+    'Assassination Classroom': '80045948',
+    'Shangri-La Frontier': '81727242',
+    'VINLAND SAGA': '81249833',
+    'Tougen Anki': '81969861',
+    'Haikyu!!': '80090673',
+    'Cyberpunk: Edgerunners': '81054853',
+    'Mob Psycho 100': '80179798',
+    Overlord: '80132110',
+    BAKI: '80204451',
+    'SAKAMOTO DAYS': '81663325',
+    'KENGAN ASHURA': '80992228',
+    BEASTARS: '81054847',
+    'Dr. Stone': '81046193',
+    'The Apothecary Diaries': '81712068',
+    'Magic and Muscles': '81685164',
+    'Baki Hanma': '81236338',
+    "Kuroko's Basketball": '80063153',
+    'Delicious in Dungeon': '81564899',
+    'Fullmetal Alchemist: Brotherhood': '70204981',
+    'My Dress-Up Darling': '81569754',
+    'Castlevania': '80095241',
+    "Frieren: Beyond Journey's End": '81726714',
+    'Wind Breaker': '81771389',
+    'DAN DA DAN': '81736884',
+    Kakegurui: '80175351',
+    'The Rising of the Shield Hero': '81058649',
+    'Blood of Zeus': '81001988',
+    'Neon Genesis Evangelion': '81033445',
+    'Castlevania: Nocturne': '81436901',
+    'Rurouni Kenshin': '81705252',
+    'My Happy Marriage': '81564905',
+    'Detective Conan': '80090370',
+    'Rising Impact': '81563026',
+    InuYasha: '70204995',
+    'Puella Magi Madoka Magica': '70302572',
+    'Gurren Lagann': '70213196',
+    'Mobile Suit Gundam Seed': '80146549',
+    'Blue Eye Samurai': '81144203',
+    Arcane: '81435684',
+    PLUTO: '81712066',
+    'KPop Demon Hunters': '81498621',
+    'The Sandman': '81150303',
+    'The Umbrella Academy': '80186863',
+    Aggretsuko: '80198505',
+    Hilda: '80115346',
+    'Kipo and the Age of Wonderbeasts': '80221553',
+    'Maya and the Three': '80244283',
+    'Glass Onion: A Knives Out Mystery': '81458416',
+    Damsel: '80991090',
+    'The Killer': '80234448',
+    'Rebel Moon - Part One: A Child of Fire': '81464239',
+    'The Lincoln Lawyer': '81303831',
+    'The Recruit': '81396545',
+    'The Diplomat': '81288983',
+    'Virgin River': '80240027',
+    'Emily in Paris': '81037371',
+    'Avatar: The Last Airbender': '80237957',
+    'Terminator Zero': '81217220',
+    'Devil May Cry': '81506915',
+    'Devilman Crybaby': '80174974',
+    Nimona: '81444554',
+    Klaus: '80183187',
+    Maestro: '81171868',
+    'Society of the Snow': '81268316',
+    'The Irishman': '80175798',
+    'Marriage Story': '80223779',
+    'Bird Box': '80196789',
+    "Don't Look Up": '81252357',
+};
+
 const SAMPLE_VIDEOS = [
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
@@ -125,10 +406,38 @@ const POSTERS_DIR = join(ROOT, 'assets', 'posters');
  * so poster art is downloaded into the repo and referenced as `local:<id>`.
  * The app bundles these files — posters can never break again.
  */
+function findBundledPosterId(item) {
+    const mediaPrefix = item.mediaType === 'tv' || item.type === 'SERIES' ? 'tv' : 'movie';
+    const slug = slugify(item.title);
+    if (!slug || !existsSync(POSTERS_DIR)) return '';
+    const candidates = new Set([
+        item.id,
+        `jw-catalog-${mediaPrefix}-${slug}`,
+        `jw-${slug}`,
+        `fp-${slug}`,
+        `${mediaPrefix}-${slug}`,
+    ].filter(Boolean));
+    const walk = directory => {
+        for (const entry of readdirSync(directory, { withFileTypes: true })) {
+            const absolute = join(directory, entry.name);
+            if (entry.isDirectory()) {
+                const nested = walk(absolute);
+                if (nested) return nested;
+            }
+            const basename = entry.name.replace(/\.[^.]+$/, '');
+            if (candidates.has(basename)) return basename;
+        }
+        return '';
+    };
+    return walk(POSTERS_DIR);
+}
+
 async function savePoster(item, fallbackImageUrl = '') {
     const src = item.imageUrl || '';
-    if (!/^https?:\/\//.test(src) || !/^(fp|jw|nfx|movie|tv)-/.test(item.id)) {
-        if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
+    if (!/^https?:\/\//.test(src) || !/^(fp|jw|movie|tv)-/.test(item.id)) {
+        const bundledPosterId = findBundledPosterId(item);
+        if (bundledPosterId) item.imageUrl = `local:${bundledPosterId}`;
+        else if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
         return;
     }
     const ext = (src.match(/\.(jpe?g|png|webp)/i)?.[1] || 'jpg').replace('jpeg', 'jpg');
@@ -357,6 +666,245 @@ const meta = (html, prop) => {
     return propertyMatch?.[1] ?? nameMatch?.[1];
 };
 
+function parseNetflixOfficialEpisodeMetadata(markdown) {
+    const source = String(markdown || '');
+    const episodeStart = source.search(/^##\s+Episodes\b/im);
+    if (episodeStart < 0) return {};
+    // Netflix's reader sometimes places the `## Trailers` heading before the
+    // episode bullets, so do not use that heading as the end delimiter.
+    const episodeSection = source.slice(episodeStart)
+        .split(/\n##\s+(?:More Details|Watch offline|Audio|Subtitles|Cast|You Might Also Like)\b/i)[0];
+    const inlineBulletPattern = /(?:^|\n|\s)\-\s+((?:\d+h\s*)?\d+m)\s+(\d+)\.\s+([\s\S]*?)(?=\s+\-\s+(?:\d+h\s*)?\d+m\s+\d+\.\s+|\s*$)/gi;
+    // Some Netflix reader responses preserve each real episode still as an
+    // image line, then put the number/title on the next line. Keep that shape
+    // too so official episode stills are not discarded.
+    const richBulletPattern = /(?:^|\n)\s*\-\s+(?:!\[[^\]]*\]\(([^)]+)\))?\s*((?:\d+h\s*)?\d+m)[ \t]*(?:\n[ \t]*)+([0-9]+)\\?\.[ \t]+([^\n]+)(?:\n[ \t]*)+([\s\S]*?)(?=\n\s*\-\s+|\s*$)/gi;
+    const parseBullets = (section, seasonNumber) => {
+        const inline = [...section.matchAll(inlineBulletPattern)].map(match => ({
+            season: seasonNumber,
+            episode: Number.parseInt(match[2], 10),
+            raw: match[3],
+        }));
+        const rich = [...section.matchAll(richBulletPattern)].map(match => ({
+            season: seasonNumber,
+            episode: Number.parseInt(match[3], 10),
+            name: match[4].trim(),
+            still_path: match[1],
+            raw: match[5],
+        }));
+        const parsed = [...rich, ...inline]
+            .filter((episode, index, all) => all.findIndex(candidate => (
+                candidate.season === episode.season && candidate.episode === episode.episode
+            )) === index)
+            .map(episode => {
+                const raw = String(episode.raw || '')
+                    .replace(/\s+(?:##|####)\s+.*$/s, '')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                const sentenceBoundary = raw.search(/(?<=[.!?])\s+(?=[A-Z0-9])/);
+                return {
+                    season: episode.season,
+                    episode: episode.episode,
+                    name: episode.name || (sentenceBoundary > 0 ? raw.slice(0, sentenceBoundary) : raw)
+                        .trim().slice(0, 180) || `Episode ${episode.episode}`,
+                    ...(episode.still_path ? { still_path: episode.still_path } : {}),
+                };
+            });
+        return parsed;
+    };
+
+    const firstBulletIndex = episodeSection.search(/(?:^|\n)\s*\-\s+/);
+    const seasonMarkers = [...episodeSection.matchAll(/Season\s+(\d+)/gi)]
+        .filter(marker => firstBulletIndex < 0 || marker.index < firstBulletIndex);
+    // The reader exposes a season selector before the currently selected
+    // season's real episode list. Those selector labels are not delimiters;
+    // attach the parsed list to the first selected season instead of dropping
+    // every episode between `Season 1Season 2...` labels.
+    const selectedSeason = Number.parseInt(seasonMarkers[0]?.[1] || '1', 10);
+    const episodes = parseBullets(episodeSection, selectedSeason);
+    if (!episodes.length) return {};
+
+    const grouped = new Map();
+    for (const episode of episodes) {
+        if (!grouped.has(episode.season)) grouped.set(episode.season, []);
+        grouped.get(episode.season).push(episode);
+    }
+    const seasons = [...grouped.entries()].map(([seasonNumber, seasonEpisodes]) => ({
+        season_number: seasonNumber,
+        name: `Season ${seasonNumber}`,
+        episode_count: seasonEpisodes.length,
+        episodes: seasonEpisodes,
+    }));
+    const seasonEpisodeCounts = seasons.map(season => season.episode_count);
+    return {
+        seasons,
+        seasonEpisodeCounts,
+        episodeCount: seasonEpisodeCounts.reduce((total, count) => total + count, 0),
+        duration: `${seasons.length} Season${seasons.length === 1 ? '' : 's'}`,
+    };
+}
+
+async function getNetflixOfficialMetadata(netflixId, kind = 'movie') {
+    if (!netflixId) return {};
+    let metadata = {};
+    try {
+        const html = await getHtml(`https://www.netflix.com/title/${netflixId}`);
+        metadata = {
+            imageUrl: meta(html, 'og:image') || meta(html, 'twitter:image') || '',
+            description: decodeHtml(meta(html, 'og:description') || ''),
+        };
+    } catch (error) {
+        console.log(`Netflix official metadata unavailable for ${netflixId} (${error.message})`);
+    }
+    if (kind === 'tv') {
+        try {
+            const markdown = await getJinaReaderPage(`https://www.netflix.com/title/${netflixId}`);
+            metadata = { ...metadata, ...parseNetflixOfficialEpisodeMetadata(markdown) };
+        } catch (error) {
+            console.log(`Netflix official episode list unavailable for ${netflixId} (${error.message})`);
+        }
+    }
+    return metadata;
+}
+
+const tvMazeCache = new Map();
+async function getTvMazeEpisodeMetadata(title) {
+    const key = normalizeLookupTitle(title);
+    if (!key) return {};
+    if (tvMazeCache.has(key)) return tvMazeCache.get(key);
+    try {
+        const url = new URL('https://api.tvmaze.com/singlesearch/shows');
+        url.searchParams.set('q', title);
+        url.searchParams.set('embed', 'episodes');
+        const response = await fetchWithTimeout(url, { headers: UA });
+        if (!response.ok) throw new Error(`TVMaze HTTP ${response.status}`);
+        const show = await response.json();
+        if (!show?.name || normalizeLookupTitle(show.name) !== key) {
+            tvMazeCache.set(key, {});
+            return {};
+        }
+        const episodes = Array.isArray(show._embedded?.episodes)
+            ? show._embedded.episodes
+                .filter(episode => episode?.season > 0 && episode?.number > 0)
+                .map(episode => ({
+                    season: episode.season,
+                    episode: episode.number,
+                    name: episode.name || '',
+                    ...(episode.image?.original || episode.image?.medium
+                        ? { still_path: episode.image.original || episode.image.medium }
+                        : {}),
+                }))
+                .filter(episode => episode.name && !/^(?:episode\s+\d+|tba|to be announced)$/i.test(episode.name.trim()))
+            : [];
+        if (!episodes.length) {
+            tvMazeCache.set(key, {});
+            return {};
+        }
+        const grouped = new Map();
+        for (const episode of episodes) {
+            if (!grouped.has(episode.season)) grouped.set(episode.season, []);
+            grouped.get(episode.season).push(episode);
+        }
+        const seasons = [...grouped.entries()].map(([seasonNumber, seasonEpisodes]) => ({
+            season_number: seasonNumber,
+            name: `Season ${seasonNumber}`,
+            episode_count: seasonEpisodes.length,
+            episodes: seasonEpisodes,
+        }));
+        const seasonEpisodeCounts = seasons.map(season => season.episode_count);
+        const metadata = seasons.length
+            ? {
+                seasons,
+                seasonEpisodeCounts,
+                episodeCount: seasonEpisodeCounts.reduce((total, count) => total + count, 0),
+                ...(show.image?.original ? { imageUrl: show.image.original } : {}),
+                ...(show.summary ? { description: decodeHtml(show.summary) } : {}),
+            }
+            : {};
+        tvMazeCache.set(key, metadata);
+        return metadata;
+    } catch (error) {
+        console.log(`TVMaze episode enrichment skipped for ${title} (${error.message})`);
+        tvMazeCache.set(key, {});
+        return {};
+    }
+}
+
+const jikanCache = new Map();
+async function getJikanEpisodeMetadata(title) {
+    const key = normalizeLookupTitle(title);
+    if (!key) return {};
+    if (jikanCache.has(key)) return jikanCache.get(key);
+    try {
+        const searchUrl = new URL('https://api.jikan.moe/v4/anime');
+        searchUrl.searchParams.set('q', title);
+        searchUrl.searchParams.set('limit', '5');
+        const searchResponse = await fetchWithTimeout(searchUrl, { headers: UA });
+        if (!searchResponse.ok) throw new Error(`Jikan search HTTP ${searchResponse.status}`);
+        const search = await searchResponse.json();
+        const match = search.data?.find(anime => [
+            anime.title,
+            anime.title_english,
+            ...(anime.title_synonyms || []),
+        ].some(candidate => normalizeLookupTitle(candidate) === key));
+        if (!match?.mal_id) {
+            jikanCache.set(key, {});
+            return {};
+        }
+
+        const episodes = [];
+        const firstEpisodeUrl = `https://api.jikan.moe/v4/anime/${match.mal_id}/episodes?page=1`;
+        const firstResponse = await fetchWithTimeout(firstEpisodeUrl, { headers: UA });
+        if (!firstResponse.ok) throw new Error(`Jikan episodes HTTP ${firstResponse.status}`);
+        const firstPage = await firstResponse.json();
+        const pages = Math.min(firstPage.pagination?.last_visible_page || 1, 5);
+        const pagesData = [firstPage];
+        for (let page = 2; page <= pages; page += 1) {
+            await sleep(250);
+            const pageResponse = await fetchWithTimeout(
+                `https://api.jikan.moe/v4/anime/${match.mal_id}/episodes?page=${page}`,
+                { headers: UA },
+            );
+            if (!pageResponse.ok) break;
+            pagesData.push(await pageResponse.json());
+        }
+        for (const page of pagesData) {
+            for (const episode of page.data || []) {
+                if (!episode?.mal_id || !episode.title) continue;
+                episodes.push({
+                    season: 1,
+                    episode: episode.mal_id,
+                    name: episode.title,
+                    ...(episode.images?.jpg?.image_url ? { still_path: episode.images.jpg.image_url } : {}),
+                });
+            }
+        }
+        const uniqueEpisodes = episodes.filter((episode, index, all) => (
+            all.findIndex(candidate => candidate.episode === episode.episode) === index
+        ));
+        if (!uniqueEpisodes.length) {
+            jikanCache.set(key, {});
+            return {};
+        }
+        const metadata = {
+            seasons: [{
+                season_number: 1,
+                name: 'Season 1',
+                episode_count: uniqueEpisodes.length,
+                episodes: uniqueEpisodes,
+            }],
+            seasonEpisodeCounts: [uniqueEpisodes.length],
+            episodeCount: uniqueEpisodes.length,
+        };
+        jikanCache.set(key, metadata);
+        return metadata;
+    } catch (error) {
+        console.log(`Jikan episode enrichment skipped for ${title} (${error.message})`);
+        jikanCache.set(key, {});
+        return {};
+    }
+}
+
 const decodeHtml = (value) => String(value || '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&amp;/gi, '&')
@@ -416,10 +964,16 @@ const parseNumber = (value) => {
 };
 
 const normalizeLookupTitle = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-
-function isBlockedCatalogItem(item) {
-    return BLOCKED_CATALOG_TITLE_PATTERN.test(normalizeLookupTitle(item.title));
-}
+const slugify = value => String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+const netflixOfficialIdByTitle = new Map(
+    Object.entries(NETFLIX_OFFICIAL_IDS)
+        .map(([title, id]) => [normalizeLookupTitle(title), id]),
+);
+const getNetflixOfficialId = title => netflixOfficialIdByTitle.get(normalizeLookupTitle(title));
+const isBlockedCatalogTitle = item => BLOCKED_CATALOG_TITLE_PATTERN.test(String(item?.title || ''));
 
 function isMatureCatalogItem(item) {
     const normalizedTitle = normalizeLookupTitle(item.title);
@@ -436,7 +990,7 @@ function moveMatureToBottom(rows) {
     const matureItems = [];
     const matureKeys = new Set();
     const addMature = item => {
-        if (isBlockedCatalogItem(item)) return;
+        if (isBlockedCatalogTitle(item)) return;
         const key = normalizeLookupTitle(item.title) || item.id;
         if (!key || matureKeys.has(key)) return;
         matureKeys.add(key);
@@ -445,13 +999,11 @@ function moveMatureToBottom(rows) {
     const cleanedRows = rows
         .map(row => {
             if (row.rowTitle === MATURE_ROW_TITLE) {
-                (row.movies ?? []).forEach(addMature);
+                (row.movies ?? []).filter(item => !isBlockedCatalogTitle(item)).forEach(addMature);
                 return null;
             }
             const movies = (row.movies ?? []).filter(item => {
-                if (isBlockedCatalogItem(item)) {
-                    return false;
-                }
+                if (isBlockedCatalogTitle(item)) return false;
                 if (isMatureCatalogItem(item)) {
                     addMature(item);
                     return false;
@@ -678,7 +1230,8 @@ async function scrapeJustWatchTop10(existingItems) {
         });
     }
     const filteredEntries = entries.filter(entry => (
-        !isBlockedCatalogItem({ title: entry.title })
+        !BLOCKED_TOP10_TITLES.has(entry.title)
+        && !isBlockedCatalogTitle(entry)
         && !isMatureCatalogItem({ title: entry.title })
     ));
     const occupiedRanks = new Set(filteredEntries.map(entry => entry.rank));
@@ -813,7 +1366,7 @@ async function scrapeJustWatchCatalog() {
         const parsed = pages
             .flatMap(page => parseJustWatchCatalogPage(page, kind))
             .filter(item => {
-                if (!item.url || seen.has(item.url) || isBlockedCatalogItem(item)) return false;
+                if (!item.url || seen.has(item.url) || BLOCKED_TOP10_TITLES.has(item.title) || isBlockedCatalogTitle(item)) return false;
                 seen.add(item.url);
                 return true;
             });
@@ -832,122 +1385,6 @@ async function scrapeJustWatchCatalog() {
     }
 
     return result;
-}
-
-/**
- * Netflix's own browse pages expose a much wider Originals/Anime catalogue
- * than the popularity pagination. Validate each official title against its
- * India detail page before adding it, and use the official artwork URL so the
- * normal poster bundler can cache it locally.
- */
-function parseNetflixOfficialLinks(markdown) {
-    const links = [];
-    const pattern = /\[([^\]]+)\]\(https?:\/\/www\.netflix\.com\/(?:in\/)?title\/(\d+)\)/gi;
-    for (const match of markdown.matchAll(pattern)) {
-        const title = match[1].trim();
-        const id = match[2];
-        if (!title || !id || /^Netflix Home$|^Sign In$|^Trailers$|^Episodes$/i.test(title)) continue;
-        links.push({ title, netflixId: id });
-    }
-    return links;
-}
-
-function parseNetflixOfficialDetail(markdown, title, netflixId, collection) {
-    if (/isn['’]t available to watch in your country|is not available to watch in your country/i.test(markdown)) {
-        return null;
-    }
-    const poster = markdown.match(/!\[Image\s+\d+\]\((https?:\/\/[^)]+)\)/i)?.[1] || '';
-    const heading = markdown.match(/^#\s+(.+)$/m)?.[1]?.trim();
-    const resolvedTitle = heading && !/^watch\b/i.test(heading) ? heading : title;
-    const isTv = /(?:\*|-|•)\s+\d+\s+Seasons?/i.test(markdown) || /## Episodes/i.test(markdown);
-    const year = markdown.match(/(?:\*|-|•)\s+(\d{4})\b/)?.[1];
-    if (!poster) return null;
-    return {
-        id: `nfx-${netflixId}`,
-        title: resolvedTitle,
-        type: isTv ? 'SERIES' : 'FILM',
-        mediaType: isTv ? 'tv' : 'movie',
-        imageUrl: poster,
-        ...(year ? { year } : {}),
-        netflix_id: netflixId,
-        catalogSource: 'netflix-official',
-        officialCollection: collection,
-        videoUrl: SAMPLE_VIDEOS[Number(netflixId) % SAMPLE_VIDEOS.length],
-    };
-}
-
-async function scrapeNetflixOfficialCatalog(existingItems = []) {
-    const collections = [
-        { code: '839338', name: 'original' },
-        { code: '7424', name: 'anime' },
-        { code: '6721', name: 'anime' },
-    ];
-    const knownByTitle = new Map(existingItems.map(item => [
-        normalizeLookupTitle(item.title),
-        item,
-    ]));
-    const records = new Map();
-
-    for (const collection of collections) {
-        const markdown = await getJinaReaderPage(`https://www.netflix.com/in/browse/genre/${collection.code}`);
-        for (const link of parseNetflixOfficialLinks(markdown)) {
-            const key = link.netflixId;
-            const previous = records.get(key);
-            records.set(key, {
-                ...link,
-                collections: new Set([...(previous?.collections || []), collection.name]),
-            });
-        }
-    }
-
-    const parsed = await mapConcurrent(
-        [...records.values()],
-        8,
-        async record => {
-            const known = knownByTitle.get(normalizeLookupTitle(record.title));
-            if (known) {
-                return {
-                    ...known,
-                    catalogSource: 'netflix-official',
-                    netflix_id: known.netflix_id || record.netflixId,
-                    officialCollections: [...record.collections],
-                };
-            }
-            try {
-                const detail = await getJinaReaderPage(`https://www.netflix.com/in/title/${record.netflixId}`);
-                const collection = record.collections.has('anime') ? 'anime' : 'original';
-                const parsedDetail = parseNetflixOfficialDetail(detail, record.title, record.netflixId, collection);
-                return parsedDetail
-                    ? { ...parsedDetail, officialCollections: [...record.collections] }
-                    : null;
-            } catch (error) {
-                console.log(`Netflix official title skipped: ${record.title} (${error.message})`);
-                return null;
-            }
-        },
-        (completed, total) => console.log(`Netflix official titles: ${completed}/${total}`),
-    );
-    const valid = parsed.filter(Boolean);
-    const enriched = await mapConcurrent(
-        valid,
-        6,
-        async item => {
-            if (item.imdb_id || item.tmdb_id || (item.mediaType === 'tv' && item.seasons)) return item;
-            const omdb = await getOmdbMetadata(item, item.mediaType);
-            return {
-                ...item,
-                ...omdb,
-                // Netflix's India artwork is preferred over OMDb artwork.
-                imageUrl: item.imageUrl || omdb.imageUrl || '',
-                description: item.description || omdb.description,
-            };
-        },
-        (completed, total) => console.log(`Netflix official enrichment: ${completed}/${total}`),
-    );
-    return {
-        originalItems: enriched.filter(item => item.officialCollection === 'original' || item.officialCollections?.includes('original')),
-        animeItems: enriched.filter(item => item.officialCollection === 'anime' || item.officialCollections?.includes('anime')),
-    };
 }
 
 function mergeCatalogItems(baseItems, currentItems) {
@@ -977,6 +1414,110 @@ function mergeCatalogItems(baseItems, currentItems) {
         };
     }
     return merged;
+}
+
+function netflixCuratedRows(items) {
+    const groups = new Map();
+    for (const item of items) {
+        const collection = item.catalogCollection;
+        if (!collection) continue;
+        if (!groups.has(collection)) groups.set(collection, []);
+        groups.get(collection).push(item);
+    }
+    return [...groups.entries()].map(([rowTitle, movies]) => ({
+        rowTitle,
+        type: 'normal',
+        movies,
+    }));
+}
+
+/**
+ * Curated Netflix-owned catalogue supplement. These titles are deliberately
+ * separate from the live JustWatch rows: they represent Netflix ownership or
+ * official Netflix editorial placement, not today's India popularity order.
+ */
+async function scrapeNetflixCuratedCatalog(existingItems) {
+    const existingByTitle = new Map(
+        existingItems
+            .filter(item => item?.title)
+            .map(item => [normalizeLookupTitle(item.title), item]),
+    );
+    const seen = new Set();
+    const seeds = NETFLIX_CURATED_SEEDS.filter(([title]) => {
+        const key = normalizeLookupTitle(title);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+
+    const items = await mapConcurrent(
+        seeds,
+        6,
+        async ([title, mediaType, catalogCollection], index) => {
+            const known = existingByTitle.get(normalizeLookupTitle(title));
+            const netflixId = getNetflixOfficialId(title);
+            const officialUrl = netflixId ? `https://www.netflix.com/title/${netflixId}` : undefined;
+            const needsOfficialEpisodes = mediaType === 'tv' && !Array.isArray(known?.seasons);
+            const official = netflixId && (!known?.imageUrl || needsOfficialEpisodes)
+                ? await getNetflixOfficialMetadata(netflixId, mediaType)
+                : {};
+            const tvMazeFallback = mediaType === 'tv'
+                && !Array.isArray(known?.seasons)
+                && !Array.isArray(official.seasons)
+                ? await getTvMazeEpisodeMetadata(title)
+                : {};
+            const episodeFallback = Array.isArray(tvMazeFallback.seasons)
+                ? tvMazeFallback
+                : mediaType === 'tv'
+                    && catalogCollection === 'Netflix Anime & Animation'
+                    && !Array.isArray(known?.seasons)
+                    && !Array.isArray(official.seasons)
+                    ? await getJikanEpisodeMetadata(title)
+                    : {};
+            if (known) {
+                return {
+                    ...known,
+                    ...official,
+                    ...episodeFallback,
+                    ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
+                    imageUrl: known.imageUrl || official.imageUrl || episodeFallback.imageUrl || '',
+                    description: known.description || official.description || episodeFallback.description,
+                    catalogSource: 'netflix-original',
+                    catalogCollection,
+                };
+            }
+            const base = {
+                id: `jw-original-${slugify(title) || `title-${index}`}`,
+                title,
+                type: mediaType === 'tv' ? 'SERIES' : 'FILM',
+                mediaType,
+                imageUrl: '',
+                videoUrl: SAMPLE_VIDEOS[index % SAMPLE_VIDEOS.length],
+                ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
+                catalogSource: 'netflix-original',
+                catalogCollection,
+            };
+            const omdb = await getOmdbMetadata(base, mediaType);
+            return {
+                ...base,
+                ...official,
+                ...episodeFallback,
+                ...omdb,
+                catalogSource: 'netflix-original',
+                catalogCollection,
+                imageUrl: official.imageUrl || omdb.imageUrl || episodeFallback.imageUrl || '',
+                description: official.description || omdb.description || episodeFallback.description,
+            };
+        },
+        (completed, total) => console.log(`Netflix curated enrichment: ${completed}/${total}`),
+    );
+    console.log(`Netflix curated catalogue: ${items.length} seeded titles.`);
+    return {
+        items,
+        movieItems: items.filter(item => item.mediaType === 'movie'),
+        showItems: items.filter(item => item.mediaType === 'tv'),
+        rows: netflixCuratedRows(items),
+    };
 }
 
 /**
@@ -1009,7 +1550,7 @@ async function scrapeFullPublicCatalog() {
         (completed, total) => console.log(`Full catalog pages: ${completed}/${total}`),
     );
     const fetched = pages.length - pageFailures;
-    const items = pages.map(page => page.item).filter(Boolean);
+    const items = pages.map(page => page.item).filter(item => item && !isBlockedCatalogTitle(item));
     const movies = items.filter(item => item.mediaType === 'movie');
     const shows = items.filter(item => item.mediaType === 'tv');
     console.log(`Full catalog source: ${slugs.length} sitemap titles, ${fetched} pages fetched, ${items.length} India titles parsed.`);
@@ -1051,29 +1592,24 @@ async function scrapeFullPublicCatalog() {
     } catch (error) {
         console.log(`Current JustWatch catalog supplement unavailable (${error.message}) — keeping broad catalog only.`);
     }
-    let officialCatalog = { originalItems: [], animeItems: [] };
+    let curatedCatalog = { items: [], movieItems: [], showItems: [], rows: [] };
     try {
-        officialCatalog = await scrapeNetflixOfficialCatalog([
+        curatedCatalog = await scrapeNetflixCuratedCatalog([
             ...enriched,
             ...currentCatalog.movieItems,
             ...currentCatalog.showItems,
             ...existing.movies.flatMap(row => row.movies ?? []),
         ]);
     } catch (error) {
-        console.log(`Netflix official catalog supplement unavailable (${error.message}) — keeping the last validated official shelves.`);
-        officialCatalog = {
-            originalItems: existing.movies.find(row => row.rowTitle === 'Netflix Originals & Exclusives')?.movies ?? [],
-            animeItems: existing.movies.find(row => row.rowTitle === 'Netflix Anime & Animation')?.movies ?? [],
-        };
+        console.log(`Netflix curated catalogue unavailable (${error.message}) — keeping live catalog only.`);
     }
-    const officialItems = [...officialCatalog.originalItems, ...officialCatalog.animeItems];
     const mergedMovies = mergeCatalogItems(
-        fullMovies,
-        [...currentCatalog.movieItems, ...officialItems].filter(item => item.mediaType === 'movie'),
+        mergeCatalogItems(fullMovies, currentCatalog.movieItems),
+        curatedCatalog.movieItems,
     );
     const mergedShows = mergeCatalogItems(
-        fullShows,
-        [...currentCatalog.showItems, ...officialItems].filter(item => item.mediaType === 'tv'),
+        mergeCatalogItems(fullShows, currentCatalog.showItems),
+        curatedCatalog.showItems,
     );
     let top10 = { movieItems: [], showItems: [] };
     try {
@@ -1092,7 +1628,7 @@ async function scrapeFullPublicCatalog() {
         };
     }
     return {
-        source: 'isitinmycountry+justwatch+netflix-official',
+        source: 'isitinmycountry+justwatch',
         movieItems: mergedMovies,
         showItems: mergedShows,
         rows: [
@@ -1108,12 +1644,7 @@ async function scrapeFullPublicCatalog() {
             ...(currentCatalog.showItems.length
                 ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: currentCatalog.showItems }]
                 : []),
-            ...(officialCatalog.originalItems.length
-                ? [{ rowTitle: 'Netflix Originals & Exclusives', type: 'normal', movies: officialCatalog.originalItems }]
-                : []),
-            ...(officialCatalog.animeItems.length
-                ? [{ rowTitle: 'Netflix Anime & Animation', type: 'normal', movies: officialCatalog.animeItems }]
-                : []),
+            ...curatedCatalog.rows,
             ...fullCatalogRows('Netflix India Movies', mergedMovies),
             ...fullCatalogRows('Netflix India Series', mergedShows),
         ],
@@ -1259,30 +1790,49 @@ async function refreshCurrentCatalog() {
         },
         (completed, total) => console.log(`Current catalog enrichment: ${completed}/${total}`),
     );
-    let officialCatalog = { originalItems: [], animeItems: [] };
+    let curatedCatalog = { items: [], movieItems: [], showItems: [], rows: [] };
     try {
-        officialCatalog = await scrapeNetflixOfficialCatalog([...existingItems, ...prepared]);
+        curatedCatalog = await scrapeNetflixCuratedCatalog([...existingItems, ...prepared]);
     } catch (error) {
-        console.log(`Netflix official catalog supplement unavailable (${error.message}) — keeping the last validated official shelves.`);
-        officialCatalog = {
-            originalItems: existing.movies.find(row => row.rowTitle === 'Netflix Originals & Exclusives')?.movies ?? [],
-            animeItems: existing.movies.find(row => row.rowTitle === 'Netflix Anime & Animation')?.movies ?? [],
-        };
+        console.log(`Netflix curated catalogue unavailable (${error.message}) — keeping existing editorial shelves.`);
     }
-    const movieItems = prepared.filter(item => item.mediaType === 'movie');
-    const showItems = prepared.filter(item => item.mediaType === 'tv');
+    const curatedByTitle = new Map(
+        curatedCatalog.items.map(item => [
+            `${item.mediaType}:${normalizeLookupTitle(item.title)}`,
+            item,
+        ]),
+    );
+    // The same title can appear in a current JustWatch shelf and in a curated
+    // Netflix shelf. Copy official episode metadata back to the current object
+    // too, because detail navigation resolves the first matching id in row
+    // order. This prevents a current card from losing its real episode list.
+    const hydratedPrepared = prepared.map(item => {
+        const curated = curatedByTitle.get(`${item.mediaType}:${normalizeLookupTitle(item.title)}`);
+        if (!curated) return item;
+        return {
+            ...item,
+            ...curated,
+            id: item.id,
+            catalogSource: item.catalogSource,
+            catalogCollection: curated.catalogCollection,
+            imageUrl: item.imageUrl || curated.imageUrl || '',
+            description: item.description || curated.description,
+            rating: item.rating || curated.rating,
+        };
+    });
+    const movieItems = hydratedPrepared.filter(item => item.mediaType === 'movie');
+    const showItems = hydratedPrepared.filter(item => item.mediaType === 'tv');
     const rebuilt = new Set([
         'JustWatch Current Movies in India',
         'JustWatch Current TV Shows in India',
-        'Netflix Originals & Exclusives',
-        'Netflix Anime & Animation',
+        ...NETFLIX_CURATED_ROW_TITLES,
     ]);
     let top10 = {
         movieItems: existing.movies.find(row => row.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [],
         showItems: existing.movies.find(row => row.rowTitle === 'Top 10 TV Shows in India Today')?.movies ?? [],
     };
     try {
-        top10 = await scrapeJustWatchTop10([...existingItems, ...prepared]);
+        top10 = await scrapeJustWatchTop10([...existingItems, ...hydratedPrepared]);
     } catch (error) {
         console.log(`Current Top 10 refresh unavailable (${error.message}) — keeping previous chart rows.`);
     }
@@ -1305,19 +1855,13 @@ async function refreshCurrentCatalog() {
         ...(showItems.length
             ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: showItems }]
             : []),
-        ...(officialCatalog.originalItems.length
-            ? [{ rowTitle: 'Netflix Originals & Exclusives', type: 'normal', movies: officialCatalog.originalItems }]
-            : []),
-        ...(officialCatalog.animeItems.length
-            ? [{ rowTitle: 'Netflix Anime & Animation', type: 'normal', movies: officialCatalog.animeItems }]
-            : []),
+        ...curatedCatalog.rows,
         ...remainingRows,
     ]);
 
     await Promise.all([
-        ...prepared,
-        ...officialCatalog.originalItems,
-        ...officialCatalog.animeItems,
+        ...hydratedPrepared,
+        ...curatedCatalog.items,
         ...top10.movieItems,
         ...top10.showItems,
     ].map(item => savePoster(item)));
@@ -1455,8 +1999,7 @@ const REBUILT = new Set([
     'Popular on Netflix',
     'JustWatch Current Movies in India',
     'JustWatch Current TV Shows in India',
-    'Netflix Originals & Exclusives',
-    'Netflix Anime & Animation',
+    ...(isFullCatalog ? NETFLIX_CURATED_ROW_TITLES : []),
 ]);
 const isRebuiltRow = row => REBUILT.has(row.rowTitle)
     || /^Netflix India (Movies|Series) \d+[–-]\d+$/.test(row.rowTitle);
