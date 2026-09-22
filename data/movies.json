@@ -9,14 +9,14 @@
                     "title": "Vishwanath & Sons",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-catalog-movie-vishwanath-and-sons",
+                    "imageUrl": "https://images.justwatch.com/poster/345836211/s332/vishwanath-and-sons.jpg",
                     "ranking_text": "#1 in India Today",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-irumudi-2026",
-                    "imageUrl": "local:jw-catalog-movie-irumudi-2026",
+                    "imageUrl": "https://images.justwatch.com/poster/348643683/s332/irumudi-2026.jpg",
                     "title": "Irumudi",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -30,7 +30,7 @@
                 },
                 {
                     "id": "jw-catalog-movie-alpha-2025-0",
-                    "imageUrl": "local:jw-catalog-movie-alpha-2025-0",
+                    "imageUrl": "https://images.justwatch.com/poster/346814027/s332/alpha-2025-0.jpg",
                     "title": "Alpha",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -47,7 +47,7 @@
                     "title": "Modha Rathri",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-catalog-movie-modha-rathiri",
+                    "imageUrl": "https://images.justwatch.com/poster/348663030/s332/modha-rathiri.jpg",
                     "ranking_text": "#7 in India Today",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "justwatch"
@@ -57,7 +57,7 @@
                     "title": "Cocktail 2",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-catalog-movie-cocktail-2-2026",
+                    "imageUrl": "https://images.justwatch.com/poster/346211500/s332/cocktail-2-2026.jpg",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "catalogSource": "justwatch",
                     "imdb_id": "tt35064672",
@@ -72,7 +72,7 @@
                 },
                 {
                     "id": "jw-catalog-movie-dhamaal-4",
-                    "imageUrl": "local:jw-catalog-movie-dhamaal-4",
+                    "imageUrl": "https://images.justwatch.com/poster/341457433/s332/dhamaal-4.jpg",
                     "title": "Dhamaal 4",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -89,7 +89,7 @@
                     "title": "G.D.N",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-catalog-movie-g-d-n-2026",
+                    "imageUrl": "https://images.justwatch.com/poster/348015033/s332/g-d-n-2026.jpg",
                     "ranking_text": "#10 in India Today",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
                     "catalogSource": "justwatch"
@@ -102,7 +102,7 @@
             "movies": [
                 {
                     "id": "jw-catalog-tv-indias-got-latent",
-                    "imageUrl": "local:jw-catalog-tv-indias-got-latent",
+                    "imageUrl": "https://images.justwatch.com/poster/346578546/s332/indias-got-latent.jpg",
                     "title": "India's Got Latent",
                     "episodeCount": 2,
                     "seasonEpisodeCounts": [
@@ -147,7 +147,7 @@
                 },
                 {
                     "id": "jw-catalog-tv-chumbak-2026",
-                    "imageUrl": "local:jw-catalog-tv-chumbak-2026",
+                    "imageUrl": "https://images.justwatch.com/poster/350352364/s332/chumbak-2026.jpg",
                     "title": "Chumbak",
                     "episodeCount": 16,
                     "seasonEpisodeCounts": [
@@ -174,7 +174,7 @@
                     "title": "The Mentalist",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "local:jw-catalog-tv-the-mentalist",
+                    "imageUrl": "https://images.justwatch.com/poster/176049752/s332/the-mentalist.jpg",
                     "ranking_text": "#6 in India Today",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "imdb_id": "tt1196946",
@@ -25958,7 +25958,7 @@
                     "title": "Haikyu!!",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "https://images.justwatch.com/poster/306807849/s332/haikyu.jpg",
+                    "imageUrl": "local:jw-catalog-tv-haikyu",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "justwatch",
                     "netflixId": "80090673",
@@ -29070,7 +29070,7 @@
                     "title": "Chainsmoker Cat",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "https://images.justwatch.com/poster/349989751/s332/chainsmoker-cat.jpg",
+                    "imageUrl": "local:jw-catalog-tv-chainsmoker-cat",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "justwatch",
                     "netflixId": "82760630",
@@ -45105,19 +45105,6 @@
                     "catalogCollection": "Netflix Anime & Animation"
                 },
                 {
-                    "id": "jw-original-hajime-no-ippo-the-fighting",
-                    "title": "Hajime no Ippo: The Fighting!",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-hajime-no-ippo-the-fighting",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "80995578",
-                    "netflixUrl": "https://www.netflix.com/in/title/80995578",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Rescued from bullies by professional boxer Mamoru Takamura, young Ippo Makunouchi takes up boxing to pursue what it means to be strong."
-                },
-                {
                     "id": "jw-catalog-tv-death-note",
                     "title": "Death Note",
                     "type": "SERIES",
@@ -46466,19 +46453,6 @@
                         11
                     ],
                     "episodeCount": 170
-                },
-                {
-                    "id": "jw-original-demon-slayer-kimetsu-no-yaiba",
-                    "title": "Demon Slayer: Kimetsu no Yaiba",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-catalog-tv-demon-slayer-kimetsu-no-yaiba",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "81091393",
-                    "netflixUrl": "https://www.netflix.com/in/title/81091393",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "After a demon attack leaves his family slain and his sister cursed, Tanjiro embarks upon a perilous journey to find a cure and avenge those he's lost."
                 },
                 {
                     "id": "jw-catalog-tv-black-clover",
@@ -48017,19 +47991,6 @@
                     "episodeCount": 96
                 },
                 {
-                    "id": "jw-original-the-disastrous-life-of-saiki-k",
-                    "title": "The Disastrous Life of Saiki K.",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-the-disastrous-life-of-saiki-k",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "80117781",
-                    "netflixUrl": "https://www.netflix.com/in/title/80117781",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "High school sophomore Kusuo Saiki swore as a child that he would keep his psychic talents hidden, but his abilities still make his life difficult."
-                },
-                {
                     "id": "jw-catalog-tv-vinland-saga",
                     "title": "Vinland Saga",
                     "type": "SERIES",
@@ -48350,19 +48311,6 @@
                         24
                     ],
                     "episodeCount": 48
-                },
-                {
-                    "id": "jw-catalog-tv-haikyu",
-                    "title": "Haikyu!!",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-catalog-tv-haikyu",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "netflix-original",
-                    "netflixId": "80090673",
-                    "netflixUrl": "https://www.netflix.com/in/title/80090673",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Inspired by a championship match he sees on TV, junior high schooler Hinata joins a volleyball club and begins training, despite his short height."
                 },
                 {
                     "id": "jw-original-inuyasha",
@@ -49482,32 +49430,6 @@
                         26
                     ],
                     "episodeCount": 193
-                },
-                {
-                    "id": "jw-original-puella-magi-madoka-magica",
-                    "title": "Puella Magi Madoka Magica",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-puella-magi-madoka-magica",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "netflixId": "70302572",
-                    "netflixUrl": "https://www.netflix.com/in/title/70302572",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Friends Madoka and Sayaka sign a contract to fight witches as magical girls, but their new powers carry grave consequences for them and those they love."
-                },
-                {
-                    "id": "jw-original-gurren-lagann",
-                    "title": "Gurren Lagann",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-gurren-lagann",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "netflixId": "70213196",
-                    "netflixUrl": "https://www.netflix.com/in/title/70213196",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "When a young laborer escapes to the world aboveground, he discovers a violent land in which humans battle robots controlled by a power-hungry noble."
                 },
                 {
                     "id": "jw-original-mobile-suit-gundam-seed",
@@ -50912,19 +50834,6 @@
                     "episodeCount": 38
                 },
                 {
-                    "id": "jw-original-hunter-x-hunter-2011",
-                    "title": "Hunter X Hunter (2011)",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-hunter-x-hunter-2011",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "70300472",
-                    "netflixUrl": "https://www.netflix.com/in/title/70300472",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "To fulfill his dreams of becoming a legendary Hunter like his dad, a young boy must pass a rigorous examination and find his missing father."
-                },
-                {
                     "id": "jw-catalog-tv-daemons-of-the-shadow-realm",
                     "title": "Daemons of the Shadow Realm",
                     "type": "SERIES",
@@ -52184,19 +52093,6 @@
                         24
                     ],
                     "episodeCount": 96
-                },
-                {
-                    "id": "jw-catalog-tv-chainsmoker-cat",
-                    "title": "Chainsmoker Cat",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-catalog-tv-chainsmoker-cat",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "catalogSource": "netflix-original",
-                    "netflixId": "82760630",
-                    "netflixUrl": "https://www.netflix.com/in/title/82760630",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Catgirl Yani struggles to pay her rent and keep a job while feeding her smoking habit. As her loved ones' concerns grow, she must rethink her future."
                 },
                 {
                     "id": "jw-original-jojo-s-bizarre-adventure",
@@ -53711,32 +53607,6 @@
                         25
                     ],
                     "episodeCount": 47
-                },
-                {
-                    "id": "jw-original-shangri-la-frontier",
-                    "title": "Shangri-La Frontier",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-shangri-la-frontier",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "netflixId": "81727242",
-                    "netflixUrl": "https://www.netflix.com/in/title/81727242",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Bored by playing so many crummy video games, a gamer discovers a wildly popular virtual reality game that launches him into the adventure of a lifetime."
-                },
-                {
-                    "id": "jw-original-tougen-anki",
-                    "title": "Tougen Anki",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-tougen-anki",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "81969861",
-                    "netflixUrl": "https://www.netflix.com/in/title/81969861",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "After a Momotaro assassin suddenly kills his adoptive father, Shiki vows to avenge him. But first, he must learn to control his newly awakened Oni blood."
                 },
                 {
                     "id": "jw-original-cyberpunk-edgerunners",
@@ -56519,19 +56389,6 @@
                     "episodeCount": 49
                 },
                 {
-                    "id": "jw-original-magic-and-muscles",
-                    "title": "Magic and Muscles",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-magic-and-muscles",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "netflixId": "81685164",
-                    "netflixUrl": "https://www.netflix.com/in/title/81685164",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "With no magic but plenty of physical might, Mash makes it his goal to outdo his magic-wielding classmates to attain the title of Divine Visionary."
-                },
-                {
                     "id": "jw-original-baki-hanma",
                     "title": "Baki Hanma",
                     "type": "SERIES",
@@ -56798,19 +56655,6 @@
                         27
                     ],
                     "episodeCount": 39
-                },
-                {
-                    "id": "jw-original-kuroko-s-basketball",
-                    "title": "Kuroko's Basketball",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-kuroko-s-basketball",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "80063153",
-                    "netflixUrl": "https://www.netflix.com/in/title/80063153",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Five middle school basketball stars went to separate high schools, and now Tetsuya Kuroko and Seirin High are making their play for glory."
                 },
                 {
                     "id": "jw-original-delicious-in-dungeon",
@@ -58014,19 +57858,6 @@
                     "episodeCount": 25
                 },
                 {
-                    "id": "jw-original-dan-da-dan",
-                    "title": "DAN DA DAN",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-dan-da-dan",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "netflixId": "81736884",
-                    "netflixUrl": "https://www.netflix.com/in/title/81736884",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "In a bet to prove whether ghosts or aliens exist, two high schoolers face terrifying paranormal threats, gain superpowers — and maybe even fall in love."
-                },
-                {
                     "id": "jw-original-kakegurui",
                     "title": "Kakegurui",
                     "type": "SERIES",
@@ -58939,19 +58770,6 @@
                     "episodeCount": 16
                 },
                 {
-                    "id": "jw-original-rurouni-kenshin",
-                    "title": "Rurouni Kenshin",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-original-rurouni-kenshin",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    "netflixId": "81705252",
-                    "netflixUrl": "https://www.netflix.com/in/title/81705252",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Wandering swordsman Kenshin Himura arrives in Tokyo in 1878. Though he makes friends despite himself, he can't escape his fearsome past."
-                },
-                {
                     "id": "jw-original-my-happy-marriage",
                     "title": "My Happy Marriage",
                     "type": "SERIES",
@@ -58963,19 +58781,6 @@
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Anime & Animation",
                     "description": "Miyo's abusive family deems her worthless — but together with her powerful husband-to-be, her true self and hidden powers slowly begin to shine."
-                },
-                {
-                    "id": "jw-original-detective-conan",
-                    "title": "Detective Conan",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-catalog-tv-detective-conan",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                    "netflixId": "80090370",
-                    "netflixUrl": "https://www.netflix.com/in/title/80090370",
-                    "catalogSource": "netflix-original",
-                    "catalogCollection": "Netflix Anime & Animation",
-                    "description": "Turned into a young boy by a sinister potion, teen sleuth Conan helps solve baffling crimes while tracking down the nefarious agents who poisoned him."
                 },
                 {
                     "id": "jw-catalog-tv-blue-eye-samurai",
