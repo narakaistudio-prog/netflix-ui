@@ -175,7 +175,9 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
     const isTop10 = type === 'top_10';
     const { isVisionOS } = useVisionOS();
     const { width: windowWidth } = useWindowDimensions();
-    const listRef = useRef<FlatList<Movie>>(null);
+    // Web uses a horizontal ScrollView while native uses FlatList; both refs
+    // expose different imperative scroll methods.
+    const listRef = useRef<any>(null);
     const offsetX = useRef(0);
     const [contentWidth, setContentWidth] = useState(0);
 
@@ -185,7 +187,13 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
 
     const scrollByPage = (dir: 1 | -1) => {
         const next = Math.max(0, offsetX.current + dir * pageStep);
-        listRef.current?.scrollToOffset({ offset: next, animated: true });
+        const list = listRef.current;
+        if (!list) return;
+        if (IS_WEB && typeof list.scrollTo === 'function') {
+            list.scrollTo({ x: next, y: 0, animated: true });
+        } else if (typeof list.scrollToOffset === 'function') {
+            list.scrollToOffset({ offset: next, animated: true });
+        }
     };
 
     const openMovie = (item: Movie) => router.push({
