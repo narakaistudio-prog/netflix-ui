@@ -201,10 +201,9 @@ export function ExpandedPlayer({
                 Linking.openURL(`https://www.youtube.com/watch?v=${yt}`);
             }
         } else {
-            // No YouTube trailer mapped — play the bundled preview clip unmuted
+            // No trailer stream is available; return to the title card rather
+            // than trying to play a generic sample clip.
             setTrailerStage('off');
-            setIsMuted(false);
-            videoRef.current?.replayAsync?.();
         }
     };
 
@@ -253,8 +252,6 @@ export function ExpandedPlayer({
                         title={String(movieData.title ?? '')}
                         onBail={() => {
                             setTrailerStage('off');
-                            setIsMuted(false);
-                            videoRef.current?.replayAsync?.();
                         }}
                     />
                     ) : (
@@ -780,8 +777,7 @@ function TrailerVideo({ yt, title, onBail }: {
                 <Ionicons name="alert-circle-outline" size={30} color="#e5e5e5" />
                 <Text style={trailerStyles.noteTitle}>Trailer stream abhi nahi mila</Text>
                 <Text style={trailerStyles.noteText}>
-                    Public streaming servers busy hain. Retry karo, ya filhaal
-                    preview clip dekho.
+                    Public streaming servers busy hain. Retry karo, ya title details par wapas jao.
                 </Text>
                 <View style={trailerStyles.noteBtns}>
                     <Pressable
@@ -792,7 +788,7 @@ function TrailerVideo({ yt, title, onBail }: {
                         <Text style={trailerStyles.noteBtnText}>Retry</Text>
                     </Pressable>
                     <Pressable style={trailerStyles.noteBtnGhost} onPress={onBail}>
-                        <Text style={trailerStyles.noteBtnGhostText}>Preview clip dekhein</Text>
+                        <Text style={trailerStyles.noteBtnGhostText}>Back to title</Text>
                     </Pressable>
                 </View>
             </View>
