@@ -146,7 +146,7 @@ function AnimatedStack() {
                     />
 
                     <Stack.Screen
-                        name="admin"
+                        name="admin/index"
                         options={{
                             headerShown: false,
                             contentStyle: {
