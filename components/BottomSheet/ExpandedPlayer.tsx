@@ -16,6 +16,7 @@ import { resolveTrailerMp4 } from '@/services/trailerStream';
 import type { Episode, Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
+const PLACEHOLDER_VIDEO_URL = /commondatastorage\.googleapis\.com\/gtv-videos-bucket\/sample\//i;
 // YouTube's iframe player dies with "Error 153" inside hosted preview frames,
 // so trailers now ALWAYS stream as plain MP4 video. IN_FRAME is only used to
 // pick the last-resort fallback when every stream server is down.
@@ -133,8 +134,12 @@ export function ExpandedPlayer({
         )
     };
 
-    // Catalog items carry `videoUrl`; the player historically used `video_url`
-    if ((movie as any).videoUrl) movieData.video_url = (movie as any).videoUrl;
+    // Catalog items carry `videoUrl`; the player historically used `video_url`.
+    // Never promote a generic sample clip to a title-specific playback source.
+    const catalogVideoUrl = (movie as any).videoUrl;
+    if (catalogVideoUrl && !PLACEHOLDER_VIDEO_URL.test(String(catalogVideoUrl))) {
+        movieData.video_url = catalogVideoUrl;
+    }
 
     const isSeries = movieData.mediaType === 'tv'
         || (movieData.mediaType !== 'movie' && movieData.type === 'SERIES');
@@ -211,7 +216,9 @@ export function ExpandedPlayer({
     // Only provider ids, a manual embed, or an explicitly supplied direct video
     // may open EmbedPlayer. Never disguise the generic sample clips as content.
     const hasProviderEmbed = Boolean(movieData.embed_url || movieData.tmdb_id || movieData.imdb_id);
-    const hasDirectPreview = Boolean(movieData.video_url) && !hasProviderEmbed;
+    const hasDirectPreview = Boolean(movieData.video_url)
+        && !PLACEHOLDER_VIDEO_URL.test(String(movieData.video_url))
+        && !hasProviderEmbed;
     const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || hasDirectPreview));
     const officialNetflixUrl = movieData.netflixUrl
         || (movieData.netflixId ? `https://www.netflix.com/in/title/${movieData.netflixId}` : undefined);

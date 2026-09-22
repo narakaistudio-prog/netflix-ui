@@ -368,12 +368,6 @@ const NETFLIX_OFFICIAL_IDS = {
     "Don't Look Up": '81252357',
 };
 
-const SAMPLE_VIDEOS = [
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-];
-
 // Netflix's daily chart scraper does not expose episode metadata, so retain
 // known counts for recurring chart titles instead of falling back to a movie
 // runtime in the series detail sheet.
@@ -1032,7 +1026,12 @@ const netflixOfficialIdByTitle = new Map(
     Object.entries(NETFLIX_OFFICIAL_IDS)
         .map(([title, id]) => [normalizeLookupTitle(title), id]),
 );
+const CURATED_PLAYBACK_IMDB_IDS = {
+    'Maya and the Three': 'tt8787772',
+    'KPop Demon Hunters': 'tt14205554',
+};
 const getNetflixOfficialId = title => netflixOfficialIdByTitle.get(normalizeLookupTitle(title));
+const getCuratedPlaybackImdbId = title => CURATED_PLAYBACK_IMDB_IDS[title];
 const isBlockedCatalogTitle = item => BLOCKED_CATALOG_TITLE_PATTERN.test(String(item?.title || ''));
 
 function isMatureCatalogItem(item) {
@@ -1269,7 +1268,6 @@ function parseFullCatalogTitle(slug, html) {
         ...(episodeCount ? { episodeCount } : {}),
         ...(type === 'tv' && seasonCount === 1 && episodeCount ? { seasonEpisodeCounts: [episodeCount] } : {}),
         ...(netflixId ? { netflix_id: netflixId } : {}),
-        videoUrl: SAMPLE_VIDEOS[slug.length % SAMPLE_VIDEOS.length],
     };
     return item;
 }
@@ -1363,7 +1361,6 @@ async function scrapeJustWatchTop10(existingItems) {
             mediaType: entry.mediaType,
             imageUrl: entry.poster,
             ranking_text: `#${entry.rank} in India Today`,
-            videoUrl: SAMPLE_VIDEOS[entry.rank % SAMPLE_VIDEOS.length],
         };
         const omdb = await getOmdbMetadata(base, entry.mediaType);
         return {
@@ -1454,7 +1451,6 @@ async function scrapeJustWatchCatalog() {
             type: kind === 'tv' ? 'SERIES' : 'FILM',
             mediaType: kind,
             imageUrl: item.poster,
-            videoUrl: SAMPLE_VIDEOS[index % SAMPLE_VIDEOS.length],
             catalogSource: 'justwatch',
         }));
         if (kind === 'movie') result.movieItems = items;
@@ -1533,6 +1529,10 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
         6,
         async ([title, mediaType, catalogCollection], index) => {
             const known = existingByTitle.get(normalizeLookupTitle(title));
+            const curatedPlaybackImdbId = getCuratedPlaybackImdbId(title);
+            const curatedProviderIds = curatedPlaybackImdbId && !known?.imdb_id && !known?.tmdb_id
+                ? { imdb_id: curatedPlaybackImdbId }
+                : {};
             const netflixId = getNetflixOfficialId(title);
             const officialUrl = netflixId ? `https://www.netflix.com/in/title/${netflixId}` : undefined;
             const needsOfficialEpisodes = mediaType === 'tv' && !Array.isArray(known?.seasons);
@@ -1565,6 +1565,7 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             if (known) {
                 return {
                     ...known,
+                    ...curatedProviderIds,
                     ...official,
                     ...episodeFallback,
                     ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
@@ -1580,7 +1581,7 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
                 type: mediaType === 'tv' ? 'SERIES' : 'FILM',
                 mediaType,
                 imageUrl: '',
-                videoUrl: SAMPLE_VIDEOS[index % SAMPLE_VIDEOS.length],
+                ...curatedProviderIds,
                 ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
                 catalogSource: 'netflix-original',
                 catalogCollection,
@@ -1808,7 +1809,6 @@ async function scrapeFlixPatrol() {
                 description: meta(page, 'og:description') ?? omdb.description,
                 ranking_text: `#${item.rank} in India Today`,
                 youtubeId: TRAILERS[item.slug] || undefined,
-                videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],
             };
         } catch {
             return {
@@ -1822,7 +1822,6 @@ async function scrapeFlixPatrol() {
                 ...knownSeasonData,
                 imageUrl: omdb.imageUrl ?? '',
                 ranking_text: `#${item.rank} in India Today`,
-                videoUrl: SAMPLE_VIDEOS[item.rank % SAMPLE_VIDEOS.length],
             };
         }
     };

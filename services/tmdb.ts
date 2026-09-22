@@ -17,12 +17,6 @@ const BASE = 'https://api.themoviedb.org/3';
 
 export const isTmdbConfigured = () => Boolean(API_KEY);
 
-const SAMPLE_VIDEOS = [
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-];
-
 const img = (path: string | undefined, size = 'w342') =>
     path ? `https://image.tmdb.org/t/p/${size}${path}` : '';
 
@@ -67,7 +61,6 @@ function toMovie(raw: any, kind: 'movie' | 'tv', index = 0): Movie {
         year: date.slice(0, 4) || undefined,
         rating: raw.vote_average ? raw.vote_average.toFixed(1) : undefined,
         duration: kind === 'tv' ? `${(raw.number_of_seasons ?? 1)} Season${(raw.number_of_seasons ?? 1) > 1 ? 's' : ''}` : undefined,
-        videoUrl: SAMPLE_VIDEOS[raw.id % SAMPLE_VIDEOS.length],
         ranking_text: index >= 0 ? `#${index + 1} in India Today` : undefined,
     };
 }
