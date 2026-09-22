@@ -20,6 +20,9 @@ import { dirname, join } from 'node:path';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' };
+// Jina's Cloudflare front door can reject a browser-shaped Chrome UA; use its
+// neutral reader UA for proxy requests instead of reusing the source headers.
+const JINA_HEADERS = { 'user-agent': 'Mozilla/5.0' };
 const REQUEST_TIMEOUT_MS = 20_000;
 const FULL_SOURCE = 'https://isitinmycountry.com';
 // HTTPS-origin reads are more reliable than Jina's HTTP-origin route when the
@@ -252,7 +255,7 @@ async function getFullSourcePage(url) {
         const proxyUrl = `${proxySource}${path}`;
         for (let attempt = 0; attempt < 3; attempt += 1) {
             try {
-                const response = await fetchWithTimeout(proxyUrl, { headers: UA });
+                const response = await fetchWithTimeout(proxyUrl, { headers: JINA_HEADERS });
                 if (!response.ok) throw new Error(`proxy HTTP ${response.status}`);
                 const proxyBody = await response.text();
                 if (isUsableFullSourceResponse(url, proxyBody)) return proxyBody;
