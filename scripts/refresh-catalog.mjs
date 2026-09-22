@@ -801,6 +801,9 @@ async function getNetflixOfficialMetadata(netflixId, kind = 'movie') {
     let metadata = {};
     try {
         const html = await getHtml(`https://www.netflix.com/in/title/${netflixId}`);
+        if (/isn['’]t available to watch in your country|is not available to watch in your country/i.test(html)) {
+            return { unavailable: true };
+        }
         metadata = {
             imageUrl: meta(html, 'og:image') || meta(html, 'twitter:image') || '',
             description: decodeHtml(meta(html, 'og:description') || ''),
@@ -1520,7 +1523,7 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
         return true;
     });
 
-    const items = await mapConcurrent(
+    const items = (await mapConcurrent(
         seeds,
         6,
         async ([title, mediaType, catalogCollection], index) => {
@@ -1531,6 +1534,10 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const official = netflixId && (!known?.imageUrl || needsOfficialEpisodes)
                 ? await getNetflixOfficialMetadata(netflixId, mediaType)
                 : {};
+            if (official.unavailable) {
+                console.log(`Netflix India title skipped: ${title} (${netflixId} is unavailable)`);
+                return null;
+            }
             const tvMazeFallback = mediaType === 'tv'
                 && !Array.isArray(known?.seasons)
                 && !Array.isArray(official.seasons)
@@ -1587,8 +1594,8 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             };
         },
         (completed, total) => console.log(`Netflix curated enrichment: ${completed}/${total}`),
-    );
-    console.log(`Netflix curated catalogue: ${items.length} seeded titles.`);
+    )).filter(Boolean);
+    console.log(`Netflix curated catalogue: ${items.length} validated titles.`);
     return {
         items,
         movieItems: items.filter(item => item.mediaType === 'movie'),
