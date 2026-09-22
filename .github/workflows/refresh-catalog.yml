@@ -1,6 +1,11 @@
 name: Refresh Netflix India catalog
 
 on:
+  # Run the refresh after catalog-source changes land on this session branch;
+  # the hosted runner can reach the public JustWatch reader reliably.
+  push:
+    branches:
+      - arena/01a0c471-netflix-ui
   schedule:
     # Daily ~02:30 IST
     - cron: '0 21 * * *'
