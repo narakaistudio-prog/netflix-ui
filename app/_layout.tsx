@@ -8,8 +8,22 @@ import {useRootScale} from '@/contexts/RootScaleContext';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {OverlayProvider} from '@/components/Overlay/OverlayProvider';
-import {useRouter} from 'expo-router';
+import {useRouter, usePathname} from 'expo-router';
 import {BlurView} from 'expo-blur';
+import {killStrayMedia} from '@/utils/killMedia';
+
+/**
+ * Web safety net: every time the route changes, force-kill any media that
+ * somehow survived a closed player (stray embed iframes, <video> elements),
+ * so background audio can never leak across screens.
+ */
+function WebMediaWatchdog() {
+    const pathname = usePathname();
+    useEffect(() => {
+        if (Platform.OS === 'web') killStrayMedia();
+    }, [pathname]);
+    return null;
+}
 import {WhoIsWatching} from '@/components/WhoIsWatching';
 import {UserProvider} from '@/contexts/UserContext';
 import {useUser} from '@/contexts/UserContext';
@@ -131,6 +145,15 @@ function AnimatedStack() {
 
                     />
 
+                    <Stack.Screen
+                        name="admin/index"
+                        options={{
+                            headerShown: false,
+                            contentStyle: {
+                                backgroundColor: '#000',
+                            },
+                        }}
+                    />
                     <Stack.Screen name="+not-found"/>
                 </Stack>
 
@@ -164,6 +187,7 @@ export default function RootLayout() {
                 <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
                     <RootScaleProvider>
                         <OverlayProvider>
+                            <WebMediaWatchdog/>
                             <AnimatedStack/>
                             <WebNavBar/>
                         </OverlayProvider>

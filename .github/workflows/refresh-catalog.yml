@@ -1,10 +1,26 @@
 name: Refresh Netflix India catalog
 
 on:
+  # Run the refresh after catalog-source changes land on this session branch;
+  # the hosted runner can reach the public JustWatch reader reliably.
+  push:
+    branches:
+      - arena/01a0c471-netflix-ui
   schedule:
     # Daily ~02:30 IST
     - cron: '0 21 * * *'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Catalog operation to run'
+        required: false
+        default: full
+        type: choice
+        options:
+          - full
+          - refresh-current
+          - enrich-existing
+          - refresh-top10
 
 permissions:
   contents: write
@@ -23,12 +39,23 @@ jobs:
         with:
           node-version: 20
 
-      # No API keys required: scrapes FlixPatrol's daily Netflix India TOP 10.
-      # (If a TMDB_API_KEY secret ever exists, the script prefers it.)
-      - name: Refresh catalog (key-less)
-        run: node scripts/refresh-catalog.mjs
+      # Public full-catalog discovery works without keys. If it is unavailable,
+      # the script falls back to FlixPatrol Top 10; OMDb enriches discovered
+      # titles with metadata and season/episode totals server-side.
+      - name: Refresh catalog
+        run: |
+          mode="${{ inputs.mode }}"
+          if [ -z "$mode" ]; then
+            if [ "${{ github.event_name }}" = "push" ]; then
+              mode="refresh-current"
+            else
+              mode="full"
+            fi
+          fi
+          echo "Catalog mode: $mode"
+          CATALOG_DISCOVERY="$mode" node scripts/refresh-catalog.mjs
         env:
-          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
 
       - name: Commit updated catalog
         run: |

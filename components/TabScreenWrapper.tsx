@@ -24,7 +24,7 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
     const state = navigation.getState();
     const currentRoute = state.routes[state.index]?.name;
     const previousRoute = state.index > 0 ? state.routes[state.index - 1]?.name : null;
-    const possibleRoutes = ['new', 'index', '(profile)/profile', null];
+    const possibleRoutes = ['movies', 'tv', 'index', '(profile)/profile', null];
     const shouldAnimate =
         possibleRoutes.includes(currentRoute) && possibleRoutes.includes(previousRoute);
 

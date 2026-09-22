@@ -13,6 +13,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import { newStyles } from '@/styles/new';
 import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
+import type { Episode, Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
 // YouTube's iframe player dies with "Error 153" inside hosted preview frames,
@@ -34,18 +35,44 @@ interface MovieData {
     video_url?: string;
     year?: string;
     duration?: string;
+    runtime?: string;
     rating?: string;
     description?: string;
     cast?: string[];
     director?: string;
     ranking_text?: string;
     youtubeId?: string;
+    type?: string;
+    // Embed fields (optional — if present, the Play button launches the iframe embed)
+    mediaType?: 'movie' | 'tv';
+    tmdb_id?: string | number;
+    imdb_id?: string;
+    embed_provider?: 'nxsha' | 'nhd' | 'custom';
+    embed_url?: string;
+    initialSeason?: number;
+    initialEpisode?: number;
+    totalEpisodesInSeason?: number;
+    episodeCount?: number;
+    seasonEpisodeCounts?: number[];
+    seasons?: Array<{
+        season_number?: number;
+        episode_count?: number;
+        episodes?: Episode[];
+    }>;
 }
 
 interface ExpandedPlayerProps {
     scrollComponent: (props: any) => React.ReactElement;
-    movie: MovieData;
+    movie: MovieData & Partial<Movie>;
     onClose?: () => void;
+    /** Called when Play is tapped; parent mounts the EmbedPlayer overlay. */
+    onPlayFull?: (movie: MovieData) => void;
+    /** Called when a specific episode row is tapped. */
+    onPlayEpisode?: (season: number, episode: number) => void;
+    /** Currently selected season in the parent player. */
+    currentSeason?: number;
+    /** Changes the selected season without starting playback. */
+    onSelectSeason?: (season: number) => void;
 }
 
 interface PlaybackStatus {
@@ -62,7 +89,15 @@ interface VideoRef {
 
 
 
-export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlayerProps) {
+export function ExpandedPlayer({
+    scrollComponent,
+    movie,
+    onClose,
+    onPlayFull,
+    onPlayEpisode,
+    currentSeason = 1,
+    onSelectSeason,
+}: ExpandedPlayerProps) {
     const ScrollComponentToUse = scrollComponent || ScrollView;
     const insets = useSafeAreaInsets();
     const videoRef = useRef<Video | null>(null);
@@ -100,6 +135,49 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
     // Catalog items carry `videoUrl`; the player historically used `video_url`
     if ((movie as any).videoUrl) movieData.video_url = (movie as any).videoUrl;
 
+    const isSeries = movieData.mediaType === 'tv'
+        || (movieData.mediaType !== 'movie' && movieData.type === 'SERIES');
+    const episodeCount = isSeries
+        ? movieData.episodeCount
+            ?? movieData.totalEpisodesInSeason
+            ?? movieData.seasonEpisodeCounts?.reduce((total, count) => total + count, 0)
+            ?? movieData.seasons?.reduce((total, season) => (
+                total + (season.episode_count ?? season.episodes?.length ?? 0)
+            ), 0)
+        : undefined;
+    const inferredSeasonCount = Number(movieData.duration?.match(/(\d+)\s+Seasons?/i)?.[1] ?? 0);
+    const seasonCount = isSeries
+        ? Math.max(
+            1,
+            inferredSeasonCount,
+            movieData.seasonEpisodeCounts?.length ?? 0,
+            movieData.seasons?.length ?? 0,
+        )
+        : 0;
+    const seasonOptions = Array.from({ length: seasonCount }, (_, index) => index + 1);
+    const selectedSeasonData = movieData.seasons?.find(s => s.season_number === currentSeason)
+        ?? movieData.seasons?.[currentSeason - 1];
+    const currentSeasonEpisodeCount = isSeries
+        ? movieData.seasonEpisodeCounts?.[currentSeason - 1]
+            ?? selectedSeasonData?.episodes?.length
+            ?? selectedSeasonData?.episode_count
+            ?? (seasonCount === 1 ? episodeCount : undefined)
+        : undefined;
+    const episodeLabel = currentSeasonEpisodeCount && currentSeasonEpisodeCount > 0
+        ? `${currentSeasonEpisodeCount} Episodes`
+        : (episodeCount && episodeCount > 0 ? `${episodeCount} Episodes` : 'Episodes');
+    const episodeItems: Episode[] = isSeries
+        ? (() => {
+            const sourceEpisodes = selectedSeasonData?.episodes ?? [];
+            const count = Math.max(currentSeasonEpisodeCount ?? sourceEpisodes.length ?? 1, 1);
+            return Array.from({ length: count }, (_, index) => sourceEpisodes[index] ?? ({
+                season: currentSeason,
+                episode: index + 1,
+                name: `Episode ${index + 1}`,
+            }));
+        })()
+        : [];
+
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.isLoaded) {
             progress.value = status.positionMillis;
@@ -128,9 +206,17 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
 
     const startTrailer = () => setTrailerStage('play');
 
-    // Full movies legally stream only on Netflix itself, so "Play" deep-links
-    // to the title on netflix.com (search fallback works for every catalog id).
-    const openOnNetflix = () => {
+    // Use a provider embed when ids are available; otherwise play the safe
+    // HTTPS preview clip supplied by the catalog instead of leaving the button
+    // pointing at a dead external player.
+    const hasProviderEmbed = Boolean(movieData.embed_url || movieData.tmdb_id || movieData.imdb_id);
+    const hasDirectPreview = Boolean(movieData.video_url) && !hasProviderEmbed;
+    const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || movieData.video_url));
+    const handlePlay = () => {
+        if (hasPlayableSource && onPlayFull) {
+            onPlayFull(movieData);
+            return;
+        }
         const q = encodeURIComponent(String(movieData.title ?? '').trim());
         const url = `https://www.netflix.com/search?q=${q}`;
         if (IS_WEB) {
@@ -180,17 +266,42 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                     </View>
                     )
                 ) : (
-                <Video
-                    ref={videoRef}
-                    style={styles.video}
-                    source={{ uri: movieData.video_url ?? '' }}
-                    useNativeControls={false}
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    isMuted={isMuted}
-                    shouldPlay
-                    onPlaybackStatusUpdate={onPlaybackStatusUpdate}
-                />
+                    <View style={[styles.video, { backgroundColor: '#14141c', justifyContent: 'center', alignItems: 'center' }]}>
+                        {movieData.imageUrl ? (
+                            <SafeImage
+                                source={{ uri: movieData.imageUrl }}
+                                style={StyleSheet.absoluteFill}
+                                contentFit="cover"
+                            />
+                        ) : null}
+                        <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.55)' }]} />
+                        <Pressable
+                            style={{ alignItems: 'center', gap: 10, zIndex: 10 }}
+                            onPress={handlePlay}
+                        >
+                            <View style={{
+                                width: 68,
+                                height: 68,
+                                borderRadius: 34,
+                                backgroundColor: '#E50914',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderWidth: 2,
+                                borderColor: '#fff',
+                            }}>
+                                <Ionicons name="play" size={36} color="#fff" style={{ marginLeft: 4 }} />
+                            </View>
+                            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '800', textAlign: 'center', textShadowColor: 'rgba(0,0,0,0.8)', textShadowRadius: 6 }}>
+                                {hasDirectPreview
+                                    ? 'Play preview'
+                                    : (hasProviderEmbed
+                                        ? (isSeries
+                                            ? `Play ${movieData.title} (S1:E1)`
+                                            : `Play ${movieData.title}`)
+                                        : 'Play on Netflix')}
+                            </Text>
+                        </Pressable>
+                    </View>
                 )}
                 <View style={styles.videoOverlay}>
                     <Pressable
@@ -200,41 +311,6 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                         <Ionicons name="close-outline" size={26} color="white" />
                     </Pressable>
                 </View>
-                {!trailerActive && (<>
-                <View style={styles.muteOverlay}>
-                    <Pressable
-                        style={styles.soundButton}
-                        onPress={() => setIsMuted(!isMuted)}
-                    >
-                        <Ionicons
-                            name={isMuted ? "volume-mute" : "volume-medium"}
-                            size={18}
-                            color="white"
-                        />
-                    </Pressable>
-                </View>
-                <View style={styles.sliderContainer}>
-                    <Slider
-                        style={styles.slider}
-                        progress={progress}
-                        minimumValue={min}
-                        maximumValue={max}
-                        onValueChange={(value) => {
-                            videoRef.current?.setPositionAsync?.(value);
-                        }}
-                        theme={{
-                            minimumTrackTintColor: '#db0000',
-                            // maximumTrackTintColor: 'rgba(255, 255, 255, 0.795)',
-                            bubbleBackgroundColor: '#db0000',
-                        }}
-                        thumbWidth={5}
-                        sliderHeight={5}
-                        containerStyle={styles.sliderInner}
-                        disableTrackFollow={false}
-                        disableTapEvent={false}
-                    />
-                </View>
-                </>)}
             </View>
 
             <ScrollComponentToUse
@@ -252,47 +328,38 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                             position: 'absolute',
                             left: 0,
                         }}>N</Text>
-                        <Text style={newStyles.netflixTag}>FILM</Text>
+                        <Text style={newStyles.netflixTag}>
+                            {isSeries ? 'SERIES' : 'FILM'}
+                        </Text>
                     </View>
                     <ThemedText style={styles.title}>{movieData.title}</ThemedText>
 
                     <View style={styles.metaInfo}>
                         <ThemedText style={styles.year}>{movieData.year}</ThemedText>
                         <ThemedText style={styles.duration}>{movieData.duration}</ThemedText>
+                        {movieData.runtime ? (
+                            <ThemedText style={styles.duration}>{movieData.runtime}</ThemedText>
+                        ) : null}
+                        {episodeCount ? (
+                            <ThemedText style={styles.duration}>{episodeCount} Episodes</ThemedText>
+                        ) : null}
                         <ThemedText style={styles.rating}>{movieData.rating}</ThemedText>
                         <ThemedText style={styles.quality}>HD</ThemedText>
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 18 }}>
-                        <SafeImage
-                            source={{ uri: 'https://www.netflix.com/tudum/top10/images/top10.png' }}
-                            style={{ width: 24, height: 24, left: 0, borderRadius: 4 }}
-                            cachePolicy="memory-disk"
-                            hideOnError
-                        />
                         <Text style={newStyles.trendingTag}>{movieData.ranking_text}</Text>
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <Pressable style={styles.playButton} onPress={openOnNetflix}>
+                        <Pressable style={styles.playButton} onPress={handlePlay}>
                             <Ionicons name="play" size={24} color="black" />
-                            <ThemedText style={styles.playButtonText}>Play on Netflix</ThemedText>
-                        </Pressable>
-
-                        <Pressable
-                            style={({ hovered }: any) => [
-                                styles.downloadButton,
-                                hovered && { backgroundColor: 'rgba(255,255,255,0.14)' },
-                            ]}
-                            onPress={onTrailerPress}
-                        >
-                            <Ionicons
-                                name={trailerActive ? 'close-circle' : 'logo-youtube'}
-                                size={20}
-                                color={trailerActive ? '#fff' : '#FF0000'}
-                            />
-                            <ThemedText style={styles.downloadButtonText}>
-                                {trailerActive ? 'Close Trailer' : 'Play Trailer'}
+                            <ThemedText style={styles.playButtonText}>
+                                {hasDirectPreview
+                                    ? 'Play preview'
+                                    : (hasProviderEmbed
+                                        ? (isSeries ? 'Play S1:E1' : 'Play')
+                                        : 'Play on Netflix')}
                             </ThemedText>
                         </Pressable>
 
@@ -311,6 +378,114 @@ export function ExpandedPlayer({ scrollComponent, movie, onClose }: ExpandedPlay
                     <ThemedText style={styles.description}>
                         {movieData.description}
                     </ThemedText>
+
+                    {isSeries && (
+                        <View style={{ marginTop: 18, marginBottom: 12 }}>
+                            {seasonOptions.length > 1 && (
+                                <View style={{ marginBottom: 14 }}>
+                                    <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800', marginBottom: 9 }}>Seasons</Text>
+                                    <ScrollView
+                                        horizontal
+                                        showsHorizontalScrollIndicator={false}
+                                        contentContainerStyle={{ flexDirection: 'row', gap: 8, paddingRight: 8 }}
+                                    >
+                                        {seasonOptions.map((seasonNumber) => {
+                                            const selected = seasonNumber === currentSeason;
+                                            return (
+                                                <Pressable
+                                                    key={seasonNumber}
+                                                    onPress={() => onSelectSeason?.(seasonNumber)}
+                                                    style={{
+                                                        flexDirection: 'row',
+                                                        alignItems: 'center',
+                                                        gap: 5,
+                                                        borderRadius: 6,
+                                                        paddingVertical: 8,
+                                                        paddingHorizontal: 12,
+                                                        backgroundColor: selected ? '#fff' : '#2a2a2a',
+                                                        borderWidth: 1,
+                                                        borderColor: selected ? '#fff' : '#555',
+                                                    }}
+                                                >
+                                                    <Text style={{ color: selected ? '#000' : '#ddd', fontSize: 13, fontWeight: '800' }}>
+                                                        Season {seasonNumber}
+                                                    </Text>
+                                                    {selected ? <Ionicons name="checkmark" size={15} color="#000" /> : null}
+                                                </Pressable>
+                                            );
+                                        })}
+                                    </ScrollView>
+                                </View>
+                            )}
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                                <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800' }}>Episodes</Text>
+                                <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{episodeLabel}</Text>
+                            </View>
+                            {episodeItems.map((episode) => (
+                                <Pressable
+                                    key={`${episode.season}-${episode.episode}`}
+                                    style={({ hovered }: any) => [{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        backgroundColor: hovered ? '#2a2a2a' : '#222',
+                                        borderRadius: 8,
+                                        padding: 12,
+                                        gap: 12,
+                                        borderWidth: 1,
+                                        borderColor: '#333',
+                                        marginBottom: 8,
+                                    }]}
+                                    onPress={() => {
+                                        if (onPlayEpisode) onPlayEpisode(currentSeason, episode.episode);
+                                        else handlePlay();
+                                    }}
+                                >
+                                    <View style={{
+                                        width: 120,
+                                        height: 68,
+                                        borderRadius: 6,
+                                        overflow: 'hidden',
+                                        backgroundColor: '#151515',
+                                        position: 'relative',
+                                    }}>
+                                        <SafeImage
+                                            source={{
+                                                uri: episode.still_path
+                                                    ? (episode.still_path.startsWith('http')
+                                                        ? episode.still_path
+                                                        : `https://image.tmdb.org/t/p/w300${episode.still_path}`)
+                                                    : movieData.imageUrl,
+                                            }}
+                                            style={StyleSheet.absoluteFill}
+                                            contentFit="cover"
+                                            fallbackLabel={`${movieData.title} Episode ${episode.episode}`}
+                                        />
+                                        <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.32)', alignItems: 'center', justifyContent: 'center' }]}>
+                                            <View style={{
+                                                width: 32,
+                                                height: 32,
+                                                borderRadius: 16,
+                                                backgroundColor: 'rgba(229,9,20,0.95)',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}>
+                                                <Ionicons name="play" size={16} color="#fff" style={{ marginLeft: 2 }} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>
+                                            Episode {episode.episode}{episode.name && episode.name !== `Episode ${episode.episode}` ? ` • ${episode.name}` : ''}
+                                        </Text>
+                                        <Text style={{ color: '#888', fontSize: 12, marginTop: 2 }}>
+                                            Hindi Dub & Subtitles Available
+                                        </Text>
+                                    </View>
+                                    <Ionicons name="chevron-forward" size={18} color="#888" />
+                                </Pressable>
+                            ))}
+                        </View>
+                    )}
 
                     <View style={styles.castInfo}>
                         <ThemedText style={styles.castLabel}>Cast: </ThemedText>
@@ -505,6 +680,8 @@ function TrailerVideo({ yt, title, onBail }: {
     const [url, setUrl] = useState<string | null>(null);
     const [failed, setFailed] = useState(false);
     const [attempt, setAttempt] = useState(0);
+    const videoElRef = useRef<HTMLVideoElement | null>(null);
+    const ytFrameRef = useRef<HTMLIFrameElement | null>(null);
 
     useEffect(() => {
         let alive = true;
@@ -520,11 +697,34 @@ function TrailerVideo({ yt, title, onBail }: {
         };
     }, [yt, attempt]);
 
+    // HARD STOP on unmount: pause + unload the <video> element and blank the
+    // YouTube fallback iframe, so closing the trailer/movie never leaves
+    // sound playing in the background.
+    useEffect(() => {
+        return () => {
+            const v = videoElRef.current;
+            if (v) {
+                try {
+                    v.pause();
+                    v.removeAttribute('src');
+                    v.load();
+                } catch {}
+                videoElRef.current = null;
+            }
+            const f = ytFrameRef.current;
+            if (f) {
+                try { f.src = 'about:blank'; } catch {}
+                ytFrameRef.current = null;
+            }
+        };
+    }, []);
+
     if (url) {
         return (
             <View style={styles.video}>
                 {createElement('video', {
                     key: url,
+                    ref: (el: HTMLVideoElement | null) => { videoElRef.current = el; },
                     src: url,
                     autoPlay: true,
                     controls: true,
@@ -549,6 +749,7 @@ function TrailerVideo({ yt, title, onBail }: {
             return (
                 <View style={styles.video}>
                     {createElement('iframe', {
+                        ref: (el: HTMLIFrameElement | null) => { ytFrameRef.current = el; },
                         src: `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&modestbranding=1`,
                         style: {
                             width: '100%',
