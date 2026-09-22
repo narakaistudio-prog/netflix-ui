@@ -325,8 +325,15 @@ const NETFLIX_OFFICIAL_IDS = {
     'Puella Magi Madoka Magica': '70302572',
     'Gurren Lagann': '70213196',
     'Mobile Suit Gundam Seed': '80146549',
-    'Blue Eye Samurai': '81442088',
+    'Blue Eye Samurai': '81144203',
     PLUTO: '81712066',
+    'KPop Demon Hunters': '81498621',
+    'The Sandman': '81150303',
+    'The Umbrella Academy': '80186863',
+    'Glass Onion: A Knives Out Mystery': '81458416',
+    Damsel: '80991090',
+    'The Killer': '80234448',
+    'Rebel Moon - Part One: A Child of Fire': '81464239',
 };
 
 const SAMPLE_VIDEOS = [
@@ -371,10 +378,38 @@ const POSTERS_DIR = join(ROOT, 'assets', 'posters');
  * so poster art is downloaded into the repo and referenced as `local:<id>`.
  * The app bundles these files — posters can never break again.
  */
+function findBundledPosterId(item) {
+    const mediaPrefix = item.mediaType === 'tv' || item.type === 'SERIES' ? 'tv' : 'movie';
+    const slug = slugify(item.title);
+    if (!slug || !existsSync(POSTERS_DIR)) return '';
+    const candidates = new Set([
+        item.id,
+        `jw-catalog-${mediaPrefix}-${slug}`,
+        `jw-${slug}`,
+        `fp-${slug}`,
+        `${mediaPrefix}-${slug}`,
+    ].filter(Boolean));
+    const walk = directory => {
+        for (const entry of readdirSync(directory, { withFileTypes: true })) {
+            const absolute = join(directory, entry.name);
+            if (entry.isDirectory()) {
+                const nested = walk(absolute);
+                if (nested) return nested;
+            }
+            const basename = entry.name.replace(/\.[^.]+$/, '');
+            if (candidates.has(basename)) return basename;
+        }
+        return '';
+    };
+    return walk(POSTERS_DIR);
+}
+
 async function savePoster(item, fallbackImageUrl = '') {
     const src = item.imageUrl || '';
     if (!/^https?:\/\//.test(src) || !/^(fp|jw|movie|tv)-/.test(item.id)) {
-        if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
+        const bundledPosterId = findBundledPosterId(item);
+        if (bundledPosterId) item.imageUrl = `local:${bundledPosterId}`;
+        else if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
         return;
     }
     const ext = (src.match(/\.(jpe?g|png|webp)/i)?.[1] || 'jpg').replace('jpeg', 'jpg');
@@ -602,6 +637,20 @@ const meta = (html, prop) => {
     const nameMatch = html.match(new RegExp(`<meta[^>]+name=["']${escaped}["'][^>]+content=["']([^"']*)["']`, 'i'));
     return propertyMatch?.[1] ?? nameMatch?.[1];
 };
+
+async function getNetflixOfficialMetadata(netflixId) {
+    if (!netflixId) return {};
+    try {
+        const html = await getHtml(`https://www.netflix.com/title/${netflixId}`);
+        return {
+            imageUrl: meta(html, 'og:image') || meta(html, 'twitter:image') || '',
+            description: decodeHtml(meta(html, 'og:description') || ''),
+        };
+    } catch (error) {
+        console.log(`Netflix official metadata unavailable for ${netflixId} (${error.message})`);
+        return {};
+    }
+}
 
 const decodeHtml = (value) => String(value || '')
     .replace(/<[^>]+>/g, ' ')
@@ -1151,10 +1200,15 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const known = existingByTitle.get(normalizeLookupTitle(title));
             const netflixId = getNetflixOfficialId(title);
             const officialUrl = netflixId ? `https://www.netflix.com/title/${netflixId}` : undefined;
+            const official = netflixId && !known?.imageUrl
+                ? await getNetflixOfficialMetadata(netflixId)
+                : {};
             if (known) {
                 return {
                     ...known,
                     ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
+                    imageUrl: known.imageUrl || official.imageUrl || '',
+                    description: known.description || official.description,
                     catalogSource: 'netflix-original',
                     catalogCollection,
                 };
@@ -1176,7 +1230,8 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
                 ...omdb,
                 catalogSource: 'netflix-original',
                 catalogCollection,
-                imageUrl: omdb.imageUrl || '',
+                imageUrl: official.imageUrl || omdb.imageUrl || '',
+                description: official.description || omdb.description,
             };
         },
         (completed, total) => console.log(`Netflix curated enrichment: ${completed}/${total}`),
