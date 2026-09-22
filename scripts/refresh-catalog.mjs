@@ -67,6 +67,7 @@ const MATURE_TITLE_PATTERNS = [
     'sexexplained',
     'sexeducation',
     'thescandal',
+    'lovedeathrobots',
 ];
 const MATURE_DESCRIPTION_PATTERN = /sexual perversion|sex workers?|sexual tension|sex and intimacy|lose (?:their|her|his) virginity|bondage|adult animated|repressed desire/i;
 const TOP10_REPLACEMENTS = [
@@ -395,6 +396,33 @@ const SERIES_SEASON_EPISODES = {
     'The Gentlemen': [8, 8],
     'The Scandal': [8],
     'WWE SmackDown': [19, 52, 52, 52, 52, 53, 52, 52, 52, 52, 52, 53, 52, 52, 52, 52, 53, 52, 52, 52, 52, 52, 53, 52, 52, 52, 52, 44],
+};
+
+// Netflix's reader sometimes exposes only the first selected season for a
+// limited series. Keep this audited, real episode list as a deterministic
+// fallback rather than inventing Episode 1 or showing a bare count.
+const CURATED_EPISODE_FALLBACKS = {
+    'Maya and the Three': {
+        seasons: [{
+            season_number: 1,
+            name: 'Season 1',
+            episode_count: 9,
+            episodes: [
+                'Chapter 1: Quinceañera',
+                'Chapter 2: The Prophecy',
+                'Chapter 3: The Rooster',
+                'Chapter 4: The Skull',
+                'Chapter 5: The Puma',
+                'Chapter 6: Maya and the Three',
+                'Chapter 7: The Divine Gate',
+                'Chapter 8: The Bat and the Owl',
+                'Chapter 9: The Sun and the Moon',
+            ].map((name, index) => ({ season: 1, episode: index + 1, name })),
+        }],
+        seasonEpisodeCounts: [9],
+        episodeCount: 9,
+        duration: '1 Season',
+    },
 };
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -748,7 +776,7 @@ async function getNetflixOfficialMetadata(netflixId, kind = 'movie') {
     if (!netflixId) return {};
     let metadata = {};
     try {
-        const html = await getHtml(`https://www.netflix.com/title/${netflixId}`);
+        const html = await getHtml(`https://www.netflix.com/in/title/${netflixId}`);
         metadata = {
             imageUrl: meta(html, 'og:image') || meta(html, 'twitter:image') || '',
             description: decodeHtml(meta(html, 'og:description') || ''),
@@ -758,7 +786,7 @@ async function getNetflixOfficialMetadata(netflixId, kind = 'movie') {
     }
     if (kind === 'tv') {
         try {
-            const markdown = await getJinaReaderPage(`https://www.netflix.com/title/${netflixId}`);
+            const markdown = await getJinaReaderPage(`https://www.netflix.com/in/title/${netflixId}`);
             metadata = { ...metadata, ...parseNetflixOfficialEpisodeMetadata(markdown) };
         } catch (error) {
             console.log(`Netflix official episode list unavailable for ${netflixId} (${error.message})`);
@@ -1456,7 +1484,7 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
         async ([title, mediaType, catalogCollection], index) => {
             const known = existingByTitle.get(normalizeLookupTitle(title));
             const netflixId = getNetflixOfficialId(title);
-            const officialUrl = netflixId ? `https://www.netflix.com/title/${netflixId}` : undefined;
+            const officialUrl = netflixId ? `https://www.netflix.com/in/title/${netflixId}` : undefined;
             const needsOfficialEpisodes = mediaType === 'tv' && !Array.isArray(known?.seasons);
             const official = netflixId && (!known?.imageUrl || needsOfficialEpisodes)
                 ? await getNetflixOfficialMetadata(netflixId, mediaType)
@@ -1466,14 +1494,21 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
                 && !Array.isArray(official.seasons)
                 ? await getTvMazeEpisodeMetadata(title)
                 : {};
+            const curatedEpisodeFallback = mediaType === 'tv'
+                && !Array.isArray(known?.seasons)
+                && !Array.isArray(official.seasons)
+                ? CURATED_EPISODE_FALLBACKS[title]
+                : undefined;
             const episodeFallback = Array.isArray(tvMazeFallback.seasons)
                 ? tvMazeFallback
-                : mediaType === 'tv'
-                    && catalogCollection === 'Netflix Anime & Animation'
-                    && !Array.isArray(known?.seasons)
-                    && !Array.isArray(official.seasons)
-                    ? await getJikanEpisodeMetadata(title)
-                    : {};
+                : curatedEpisodeFallback?.seasons
+                    ? curatedEpisodeFallback
+                    : mediaType === 'tv'
+                        && catalogCollection === 'Netflix Anime & Animation'
+                        && !Array.isArray(known?.seasons)
+                        && !Array.isArray(official.seasons)
+                        ? await getJikanEpisodeMetadata(title)
+                        : {};
             if (known) {
                 return {
                     ...known,

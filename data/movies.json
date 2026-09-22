@@ -30247,15 +30247,6 @@
                     "catalogSource": "justwatch"
                 },
                 {
-                    "id": "jw-catalog-tv-love-death-and-robots",
-                    "title": "Love, Death & Robots",
-                    "type": "SERIES",
-                    "mediaType": "tv",
-                    "imageUrl": "local:jw-catalog-tv-love-death-and-robots",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
-                },
-                {
                     "id": "jw-catalog-tv-true-beauty",
                     "title": "Yeoshingangrim",
                     "type": "SERIES",
@@ -41615,7 +41606,66 @@
                     "netflixUrl": "https://www.netflix.com/title/80244283",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Originals & Series",
-                    "description": "A spirited princess with the heart of a warrior embarks on a mission to fulfill an ancient prophecy and save humanity from the wrath of vengeful gods."
+                    "description": "A spirited princess with the heart of a warrior embarks on a mission to fulfill an ancient prophecy and save humanity from the wrath of vengeful gods.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 9,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Chapter 1: Quinceañera"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Chapter 2: The Prophecy"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Chapter 3: The Rooster"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Chapter 4: The Skull"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Chapter 5: The Puma"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Chapter 6: Maya and the Three"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Chapter 7: The Divine Gate"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Chapter 8: The Bat and the Owl"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Chapter 9: The Sun and the Moon"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        9
+                    ],
+                    "episodeCount": 9,
+                    "duration": "1 Season"
                 },
                 {
                     "id": "jw-catalog-tv-avatar-the-last-airbender",
@@ -81178,6 +81228,15 @@
                         2,
                         2
                     ]
+                },
+                {
+                    "id": "jw-catalog-tv-love-death-and-robots",
+                    "title": "Love, Death & Robots",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-catalog-tv-love-death-and-robots",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "catalogSource": "justwatch"
                 }
             ]
         }

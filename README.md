@@ -135,16 +135,18 @@ The bundled catalog is refreshed automatically by the
   popularity catalog (new releases, Korean series, anime and current movies)
   into dedicated current rows, while retaining the older IsItInMyCountry
   availability catalog. A JustWatch failure never replaces the broad source.
-- Each refresh adds a curated official-Netflix supplement from Netflix's genre
-  and editorial shelves: **Netflix Originals & Series**, **Netflix Korean
-  Originals**, **Netflix Anime & Animation**, **Netflix Original Movies**, and
-  **Netflix Documentaries**. This keeps older Netflix-owned titles together
-  with current availability instead of treating a popularity page as the full
-  Netflix catalogue. Official Netflix title IDs are persisted for the anime
-  entries where Netflix publishes them; OMDb remains the server-side fallback
-  for posters, IMDb IDs, plots and episode metadata.
-- Manual workflow modes include `enrich-existing` (fill provider IDs without a
-  full crawl) and `refresh-top10` (refresh only the Hero/Top 10 rows).
+- Each refresh adds a curated official-Netflix supplement from Netflix's India
+  `/in/title/<id>` pages plus Netflix genre/editorial shelves: **Netflix
+  Originals & Series**, **Netflix Korean Originals**, **Netflix Anime &
+  Animation**, **Netflix Original Movies**, and **Netflix Documentaries**.
+  These are real title records with bundled posters, Netflix IDs and episode
+  lists where available—not empty editorial labels. This keeps older
+  Netflix-owned titles together with current availability instead of treating
+  a popularity page as the full Netflix catalogue. OMDb remains the
+  server-side fallback for posters, IMDb IDs, plots and episode metadata.
+- Manual workflow modes include `refresh-current` (current shelves plus the
+  official Netflix supplement), `enrich-existing` (fill provider IDs without a
+  full crawl), and `refresh-top10` (refresh only the Hero/Top 10 rows).
 - If the broad public source is unavailable, it safely falls back to
   FlixPatrol's daily *TOP 10 on Netflix in India* rather than erasing the
   previous catalog.
