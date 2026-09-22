@@ -992,6 +992,59 @@ async function scrapeFlixPatrol() {
 const existing = JSON.parse(readFileSync(join(ROOT, 'data/movies.json'), 'utf8'));
 const TRAILERS = JSON.parse(readFileSync(join(ROOT, 'data/trailers.json'), 'utf8'));
 
+/** Refresh the current JustWatch shelves without repeating the slow broad crawl. */
+async function refreshCurrentCatalog() {
+    const current = await scrapeJustWatchCatalog();
+    const existingItems = existing.movies.flatMap(row => row.movies ?? []);
+    const knownByTitle = new Map(existingItems.map(item => [
+        `${item.mediaType || item.type}:${normalizeLookupTitle(item.title)}`,
+        item,
+    ]));
+    const currentItems = [...current.movieItems, ...current.showItems];
+    const prepared = await mapConcurrent(
+        currentItems,
+        6,
+        async item => {
+            const known = knownByTitle.get(`${item.mediaType}:${normalizeLookupTitle(item.title)}`);
+            const omdb = known?.imdb_id || known?.tmdb_id
+                ? {}
+                : await getOmdbMetadata(item, item.mediaType);
+            return {
+                ...known,
+                ...item,
+                ...omdb,
+                // Keep the fresh JustWatch artwork and the old record's
+                // playable IDs/episode metadata when the title is known.
+                imageUrl: item.imageUrl || known?.imageUrl || omdb.imageUrl || '',
+                description: known?.description || omdb.description,
+                rating: known?.rating || omdb.rating,
+            };
+        },
+        (completed, total) => console.log(`Current catalog enrichment: ${completed}/${total}`),
+    );
+    const movieItems = prepared.filter(item => item.mediaType === 'movie');
+    const showItems = prepared.filter(item => item.mediaType === 'tv');
+    const rebuilt = new Set([
+        'JustWatch Current Movies in India',
+        'JustWatch Current TV Shows in India',
+    ]);
+    const remainingRows = existing.movies.filter(row => !rebuilt.has(row.rowTitle));
+    const nextRows = [
+        ...(movieItems.length
+            ? [{ rowTitle: 'JustWatch Current Movies in India', type: 'normal', movies: movieItems }]
+            : []),
+        ...(showItems.length
+            ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: showItems }]
+            : []),
+        ...remainingRows,
+    ];
+
+    await Promise.all(prepared.map(item => savePoster(item)));
+    writePosterIndex();
+    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
+    console.log(`Current catalog refreshed: ${movieItems.length} movies and ${showItems.length} TV titles.`);
+}
+
 /** Enrich the last good catalog without repeating the slow public crawl. */
 async function enrichExistingCatalog() {
     if (!OMDB_API_KEY) {
@@ -1056,6 +1109,10 @@ async function refreshTop10Rows() {
     console.log(`Top 10 rows refreshed: ${top10.movieItems.length} movies and ${top10.showItems.length} shows.`);
 }
 
+if (process.env.CATALOG_DISCOVERY === 'refresh-current') {
+    await refreshCurrentCatalog();
+    process.exit(0);
+}
 if (process.env.CATALOG_DISCOVERY === 'enrich-existing') {
     await enrichExistingCatalog();
     process.exit(0);
