@@ -124,7 +124,7 @@ const NETFLIX_CURATED_SEEDS = [
     ['Big Mouth', 'tv', 'Netflix Originals & Series'],
     ['The Dragon Prince', 'tv', 'Netflix Originals & Series'],
     ['Blood of Zeus', 'tv', 'Netflix Originals & Series'],
-    ['The Last Airbender', 'tv', 'Netflix Originals & Series'],
+    ['Avatar: The Last Airbender', 'tv', 'Netflix Originals & Series'],
 
     // Korean Netflix Originals, including established catalogue favourites
     ['Kingdom', 'tv', 'Netflix Korean Originals'],
@@ -326,6 +326,7 @@ const NETFLIX_OFFICIAL_IDS = {
     'Gurren Lagann': '70213196',
     'Mobile Suit Gundam Seed': '80146549',
     'Blue Eye Samurai': '81144203',
+    Arcane: '81435684',
     PLUTO: '81712066',
     'KPop Demon Hunters': '81498621',
     'The Sandman': '81150303',
@@ -334,6 +335,22 @@ const NETFLIX_OFFICIAL_IDS = {
     Damsel: '80991090',
     'The Killer': '80234448',
     'Rebel Moon - Part One: A Child of Fire': '81464239',
+    'The Lincoln Lawyer': '81303831',
+    'The Recruit': '81396545',
+    'The Diplomat': '81288983',
+    'Virgin River': '80240027',
+    'Emily in Paris': '81037371',
+    'Avatar: The Last Airbender': '80237957',
+    'Terminator Zero': '81217220',
+    'Devil May Cry': '81506915',
+    Nimona: '81444554',
+    Klaus: '80183187',
+    Maestro: '81171868',
+    'Society of the Snow': '81268316',
+    'The Irishman': '80175798',
+    'Marriage Story': '80223779',
+    'Bird Box': '80196789',
+    "Don't Look Up": '81252357',
 };
 
 const SAMPLE_VIDEOS = [
@@ -638,18 +655,103 @@ const meta = (html, prop) => {
     return propertyMatch?.[1] ?? nameMatch?.[1];
 };
 
-async function getNetflixOfficialMetadata(netflixId) {
+function parseNetflixOfficialEpisodeMetadata(markdown) {
+    const source = String(markdown || '');
+    const episodeStart = source.search(/^##\s+Episodes\b/im);
+    if (episodeStart < 0) return {};
+    // Netflix's reader sometimes places the `## Trailers` heading before the
+    // episode bullets, so do not use that heading as the end delimiter.
+    const episodeSection = source.slice(episodeStart)
+        .split(/\n##\s+(?:More Details|Watch offline|Audio|Subtitles|Cast|You Might Also Like)\b/i)[0];
+    const inlineBulletPattern = /(?:^|\n|\s)\-\s+((?:\d+h\s*)?\d+m)\s+(\d+)\.\s+([\s\S]*?)(?=\s+\-\s+(?:\d+h\s*)?\d+m\s+\d+\.\s+|\s*$)/gi;
+    // Some Netflix reader responses preserve each real episode still as an
+    // image line, then put the number/title on the next line. Keep that shape
+    // too so official episode stills are not discarded.
+    const richBulletPattern = /(?:^|\n)\s*\-\s+(?:!\[[^\]]*\]\(([^)]+)\))?\s*((?:\d+h\s*)?\d+m)\s*(?:\n+)+\\?([0-9]+)\.\s+([^\n]+)(?:\n+)+([\s\S]*?)(?=\n\s*\-\s+|\s*$)/gi;
+    const parseBullets = (section, seasonNumber) => {
+        const inline = [...section.matchAll(inlineBulletPattern)].map(match => ({
+            season: seasonNumber,
+            episode: Number.parseInt(match[2], 10),
+            raw: match[3],
+        }));
+        const rich = [...section.matchAll(richBulletPattern)].map(match => ({
+            season: seasonNumber,
+            episode: Number.parseInt(match[3], 10),
+            name: match[4].trim(),
+            still_path: match[1],
+            raw: match[5],
+        }));
+        const parsed = [...rich, ...inline]
+            .filter((episode, index, all) => all.findIndex(candidate => (
+                candidate.season === episode.season && candidate.episode === episode.episode
+            )) === index)
+            .map(episode => {
+                const raw = String(episode.raw || '')
+                    .replace(/\s+(?:##|####)\s+.*$/s, '')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                const sentenceBoundary = raw.search(/(?<=[.!?])\s+(?=[A-Z0-9])/);
+                return {
+                    season: episode.season,
+                    episode: episode.episode,
+                    name: episode.name || (sentenceBoundary > 0 ? raw.slice(0, sentenceBoundary) : raw)
+                        .trim().slice(0, 180) || `Episode ${episode.episode}`,
+                    ...(episode.still_path ? { still_path: episode.still_path } : {}),
+                };
+            });
+        return parsed;
+    };
+
+    const seasonMarkers = [...episodeSection.matchAll(/Season\s+(\d+)/gi)];
+    const episodes = seasonMarkers.length
+        ? seasonMarkers.flatMap((marker, index) => parseBullets(
+            episodeSection.slice(marker.index, seasonMarkers[index + 1]?.index),
+            Number.parseInt(marker[1], 10),
+        ))
+        : parseBullets(episodeSection, 1);
+    if (!episodes.length) return {};
+
+    const grouped = new Map();
+    for (const episode of episodes) {
+        if (!grouped.has(episode.season)) grouped.set(episode.season, []);
+        grouped.get(episode.season).push(episode);
+    }
+    const seasons = [...grouped.entries()].map(([seasonNumber, seasonEpisodes]) => ({
+        season_number: seasonNumber,
+        name: `Season ${seasonNumber}`,
+        episode_count: seasonEpisodes.length,
+        episodes: seasonEpisodes,
+    }));
+    const seasonEpisodeCounts = seasons.map(season => season.episode_count);
+    return {
+        seasons,
+        seasonEpisodeCounts,
+        episodeCount: seasonEpisodeCounts.reduce((total, count) => total + count, 0),
+        duration: `${seasons.length} Season${seasons.length === 1 ? '' : 's'}`,
+    };
+}
+
+async function getNetflixOfficialMetadata(netflixId, kind = 'movie') {
     if (!netflixId) return {};
+    let metadata = {};
     try {
         const html = await getHtml(`https://www.netflix.com/title/${netflixId}`);
-        return {
+        metadata = {
             imageUrl: meta(html, 'og:image') || meta(html, 'twitter:image') || '',
             description: decodeHtml(meta(html, 'og:description') || ''),
         };
     } catch (error) {
         console.log(`Netflix official metadata unavailable for ${netflixId} (${error.message})`);
-        return {};
     }
+    if (kind === 'tv') {
+        try {
+            const markdown = await getJinaReaderPage(`https://www.netflix.com/title/${netflixId}`);
+            metadata = { ...metadata, ...parseNetflixOfficialEpisodeMetadata(markdown) };
+        } catch (error) {
+            console.log(`Netflix official episode list unavailable for ${netflixId} (${error.message})`);
+        }
+    }
+    return metadata;
 }
 
 const decodeHtml = (value) => String(value || '')
@@ -1200,12 +1302,14 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const known = existingByTitle.get(normalizeLookupTitle(title));
             const netflixId = getNetflixOfficialId(title);
             const officialUrl = netflixId ? `https://www.netflix.com/title/${netflixId}` : undefined;
-            const official = netflixId && !known?.imageUrl
-                ? await getNetflixOfficialMetadata(netflixId)
+            const needsOfficialEpisodes = mediaType === 'tv' && !Array.isArray(known?.seasons);
+            const official = netflixId && (!known?.imageUrl || needsOfficialEpisodes)
+                ? await getNetflixOfficialMetadata(netflixId, mediaType)
                 : {};
             if (known) {
                 return {
                     ...known,
+                    ...official,
                     ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
                     imageUrl: known.imageUrl || official.imageUrl || '',
                     description: known.description || official.description,
@@ -1227,6 +1331,7 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const omdb = await getOmdbMetadata(base, mediaType);
             return {
                 ...base,
+                ...official,
                 ...omdb,
                 catalogSource: 'netflix-original',
                 catalogCollection,
