@@ -5,17 +5,18 @@
             "type": "top_10",
             "movies": [
                 {
-                    "id": "jw-vishwanath-and-sons",
+                    "id": "jw-catalog-movie-vishwanath-and-sons",
                     "title": "Vishwanath & Sons",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-vishwanath-and-sons",
+                    "imageUrl": "local:jw-catalog-movie-vishwanath-and-sons",
                     "ranking_text": "#1 in India Today",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                    "catalogSource": "justwatch"
                 },
                 {
-                    "id": "fp-irumudi",
-                    "imageUrl": "local:fp-irumudi",
+                    "id": "jw-catalog-movie-irumudi-2026",
+                    "imageUrl": "local:jw-catalog-movie-irumudi-2026",
                     "title": "Irumudi",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -23,11 +24,13 @@
                     "embed_provider": "nxsha",
                     "year": "2026",
                     "description": "An alcoholic with a violent past — living peacefully with his daughter beside a waterfall — decides to take Ayyappa Deeksha, a 41-day spiritual vow of intense austerity, at her request. Starring Ravi Teja.",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "catalogSource": "justwatch",
                     "ranking_text": "#2 in India Today"
                 },
                 {
-                    "id": "fp-alpha",
-                    "imageUrl": "local:fp-alpha",
+                    "id": "jw-catalog-movie-alpha-2025-0",
+                    "imageUrl": "local:jw-catalog-movie-alpha-2025-0",
                     "title": "Alpha",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -35,16 +38,19 @@
                     "embed_provider": "nxsha",
                     "year": "2026",
                     "description": "When Sita, a highly trained assassin raised in isolation as a super-soldier by a rogue commander, discovers the dark truth about her family, she teams up with her long-lost sister to take down her creator.",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "catalogSource": "justwatch",
                     "ranking_text": "#3 in India Today"
                 },
                 {
-                    "id": "jw-modha-rathiri",
+                    "id": "jw-catalog-movie-modha-rathiri",
                     "title": "Modha Rathri",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-modha-rathiri",
+                    "imageUrl": "local:jw-catalog-movie-modha-rathiri",
                     "ranking_text": "#7 in India Today",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                    "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-cocktail-2-2026",
@@ -65,8 +71,8 @@
                     "ranking_text": "#8 in India Today"
                 },
                 {
-                    "id": "fp-dhamaal-4",
-                    "imageUrl": "local:fp-dhamaal-4",
+                    "id": "jw-catalog-movie-dhamaal-4",
+                    "imageUrl": "local:jw-catalog-movie-dhamaal-4",
                     "title": "Dhamaal 4",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -74,16 +80,19 @@
                     "embed_provider": "nxsha",
                     "year": "2026",
                     "description": "The Dhamaal boys are back for another treasure hunt, facing hilarious challenges in their quest for the Treasure of Life.",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                    "catalogSource": "justwatch",
                     "ranking_text": "#9 in India Today"
                 },
                 {
-                    "id": "jw-g-d-n-2026",
+                    "id": "jw-catalog-movie-g-d-n-2026",
                     "title": "G.D.N",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:jw-g-d-n-2026",
+                    "imageUrl": "local:jw-catalog-movie-g-d-n-2026",
                     "ranking_text": "#10 in India Today",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "catalogSource": "justwatch"
                 }
             ]
         },
@@ -92,8 +101,8 @@
             "type": "top_10",
             "movies": [
                 {
-                    "id": "fp-indias-got-latent",
-                    "imageUrl": "local:fp-indias-got-latent",
+                    "id": "jw-catalog-tv-indias-got-latent",
+                    "imageUrl": "local:jw-catalog-tv-indias-got-latent",
                     "title": "India's Got Latent",
                     "episodeCount": 2,
                     "seasonEpisodeCounts": [
@@ -132,11 +141,13 @@
                             ]
                         }
                     ],
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                    "catalogSource": "justwatch",
                     "ranking_text": "#4 in India Today"
                 },
                 {
-                    "id": "fp-chumbak",
-                    "imageUrl": "local:fp-chumbak",
+                    "id": "jw-catalog-tv-chumbak-2026",
+                    "imageUrl": "local:jw-catalog-tv-chumbak-2026",
                     "title": "Chumbak",
                     "episodeCount": 16,
                     "seasonEpisodeCounts": [
@@ -154,16 +165,18 @@
                         "Navina Bole",
                         "Nikhil Sansanwal"
                     ],
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                    "catalogSource": "justwatch",
                     "ranking_text": "#5 in India Today"
                 },
                 {
-                    "id": "jw-the-mentalist",
+                    "id": "jw-catalog-tv-the-mentalist",
                     "title": "The Mentalist",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "imageUrl": "local:jw-the-mentalist",
+                    "imageUrl": "local:jw-catalog-tv-the-mentalist",
                     "ranking_text": "#6 in India Today",
-                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "imdb_id": "tt1196946",
                     "year": "2008",
                     "description": "Patrick Jane is a crime consultant with the California Bureau of Investigation. He has a particular gift for astute observation and reading people, honed through years of being a faux psychic. His gift makes him brilliant at solving murders, which is why the CBI have him around. However, his motive for taking on the role is purely one of revenge: find and kill the man who killed his wife and daughter - Red John.",
@@ -991,7 +1004,8 @@
                         22,
                         13
                     ],
-                    "episodeCount": 151
+                    "episodeCount": 151,
+                    "catalogSource": "justwatch"
                 }
             ]
         },
@@ -48013,18 +48027,6 @@
             "type": "normal",
             "movies": [
                 {
-                    "id": "fp-lust-stories-3",
-                    "imageUrl": "local:fp-lust-stories-3",
-                    "title": "Lust Stories 3",
-                    "type": "FILM",
-                    "mediaType": "movie",
-                    "tmdb_id": "1451944",
-                    "embed_provider": "nxsha",
-                    "year": "2026",
-                    "description": "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships and repressed desire, offering fresh perspectives on intimacy and human connection.",
-                    "ranking_text": "#8 in India Today"
-                },
-                {
                     "id": "jw-catalog-movie-sapio",
                     "title": "Sapio",
                     "type": "FILM",
@@ -48183,6 +48185,20 @@
                     "director": "James L. Edwards",
                     "rating": "4.5",
                     "duration": "119 min"
+                },
+                {
+                    "id": "jw-catalog-movie-lust-stories-3",
+                    "imageUrl": "local:jw-catalog-movie-lust-stories-3",
+                    "title": "Lust Stories 3",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1451944",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships and repressed desire, offering fresh perspectives on intimacy and human connection.",
+                    "ranking_text": "#8 in India Today",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                    "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-desire-2026",
