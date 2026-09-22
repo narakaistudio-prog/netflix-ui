@@ -12,6 +12,8 @@ import {
 } from './embeds';
 
 export interface EmbedSettings {
+    /** Bumped when a new playback default needs a one-time local migration. */
+    settingsVersion: number;
     defaultProvider: ProviderId;
     strictHindi: boolean;
     nxshaMovieTemplate: string;
@@ -24,9 +26,12 @@ export interface EmbedSettings {
     nhdApiKey: string;
 }
 
+const SETTINGS_VERSION = 2;
+
 export const DEFAULT_SETTINGS: EmbedSettings = {
+    settingsVersion: SETTINGS_VERSION,
     defaultProvider: 'nxsha',
-    strictHindi: false,
+    strictHindi: true,
     nxshaMovieTemplate: DEFAULT_NXSHA_MOVIE,
     nxshaTvTemplate: DEFAULT_NXSHA_TV,
     nhdMovieTemplate: DEFAULT_NHD_MOVIE,
@@ -43,7 +48,15 @@ function safeParse(raw: string | null): EmbedSettings | null {
     try {
         const parsed = JSON.parse(raw);
         if (!parsed || typeof parsed !== 'object') return null;
-        return { ...DEFAULT_SETTINGS, ...parsed };
+        const merged = { ...DEFAULT_SETTINGS, ...parsed } as EmbedSettings;
+        // Existing browsers may have saved strictHindi=false before Hindi-first
+        // mode became the default. Migrate once, while preserving any explicit
+        // choice made after this version.
+        if (parsed.settingsVersion !== SETTINGS_VERSION) {
+            merged.settingsVersion = SETTINGS_VERSION;
+            merged.strictHindi = true;
+        }
+        return merged;
     } catch {
         return null;
     }

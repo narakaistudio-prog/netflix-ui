@@ -236,7 +236,7 @@ export default function AdminScreen() {
                             {settings.strictHindi ? <Ionicons name="checkmark" size={14} color="#fff" /> : null}
                         </Pressable>
                         <Text style={styles.label}>
-                            Strict Hindi (one_server=true) — sirf Nxsha ke liye
+                            Hindi-first mode (strict Hindi / one_server=true) — Nxsha ke liye
                         </Text>
                     </View>
                 </Section>
@@ -392,7 +392,7 @@ export default function AdminScreen() {
                         >
                             {testStrict ? <Ionicons name="checkmark" size={14} color="#fff" /> : null}
                         </Pressable>
-                        <Text style={styles.label}>Strict Hindi (one_server=true)</Text>
+                        <Text style={styles.label}>Hindi-first mode (one_server=true)</Text>
                     </View>
 
                     <TemplateInput value={testUrl} editable={false} monospace />
