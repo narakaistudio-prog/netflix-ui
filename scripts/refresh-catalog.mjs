@@ -549,7 +549,10 @@ async function scrapeFullPublicCatalog() {
         6,
         async item => {
             const shouldEnrich = Boolean(OMDB_API_KEY)
-                && (item.mediaType === 'tv' || !item.rating || !item.description)
+                && (item.mediaType === 'tv'
+                    || !item.rating
+                    || !item.description
+                    || (!item.imdb_id && !item.tmdb_id))
                 && (item.mediaType !== 'tv' || seriesEnriched++ < 300);
             if (!shouldEnrich) return item;
             const omdb = await getOmdbMetadata(item, item.mediaType);
@@ -685,6 +688,54 @@ async function scrapeFlixPatrol() {
 
 const existing = JSON.parse(readFileSync(join(ROOT, 'data/movies.json'), 'utf8'));
 const TRAILERS = JSON.parse(readFileSync(join(ROOT, 'data/trailers.json'), 'utf8'));
+
+/** Enrich the last good catalog without repeating the slow public crawl. */
+async function enrichExistingCatalog() {
+    if (!OMDB_API_KEY) {
+        throw new Error('enrich-existing requires the OMDB_API_KEY repository secret');
+    }
+
+    const rows = existing.movies ?? [];
+    const items = rows.flatMap(row => row.movies ?? []);
+    let resolvedIds = 0;
+    const enrichedItems = await mapConcurrent(
+        items,
+        6,
+        async item => {
+            const needsId = !item.imdb_id && !item.tmdb_id;
+            const needsEpisodeDetails = item.mediaType === 'tv' && !Array.isArray(item.seasons);
+            if (!needsId && !needsEpisodeDetails) return item;
+
+            const omdb = await getOmdbMetadata(item, item.mediaType === 'tv' ? 'tv' : 'movie');
+            const enriched = {
+                ...item,
+                ...omdb,
+                imageUrl: item.imageUrl || omdb.imageUrl || '',
+                description: item.description || omdb.description,
+                rating: item.rating || omdb.rating,
+            };
+            if (needsId && (enriched.imdb_id || enriched.tmdb_id)) resolvedIds += 1;
+            return enriched;
+        },
+        (completed, total) => console.log(`Embed ID enrichment: ${completed}/${total}`),
+    );
+
+    const byId = new Map(enrichedItems.map(item => [item.id, item]));
+    const enrichedRows = rows.map(row => ({
+        ...row,
+        movies: (row.movies ?? []).map(item => byId.get(item.id) ?? item),
+    }));
+    await Promise.all(enrichedItems.map(item => savePoster(item)));
+    writePosterIndex();
+    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: enrichedRows }, null, 4));
+    const playable = enrichedItems.filter(item => item.imdb_id || item.tmdb_id).length;
+    console.log(`Existing catalog enriched: ${resolvedIds} new IDs resolved; ${playable}/${enrichedItems.length} titles can use Nxsha/NHD embeds.`);
+}
+
+if (process.env.CATALOG_DISCOVERY === 'enrich-existing') {
+    await enrichExistingCatalog();
+    process.exit(0);
+}
 
 let data;
 const useFullSource = process.env.CATALOG_DISCOVERY !== 'top10';
