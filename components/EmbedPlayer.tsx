@@ -290,7 +290,9 @@ const styles = StyleSheet.create({
     },
     ghostButtonText: { color: '#fff', fontSize: 13, fontWeight: '600' },
     episodeBar: {
-        position: 'absolute', bottom: 16, left: 16, right: 16,
+        // Keep episode navigation above the embedded video's native control
+        // strip. The old bottom:16 placement covered Audio/Quality on web.
+        position: 'absolute', bottom: IS_WEB ? 82 : 16, left: 16, right: 16,
         flexDirection: 'row', justifyContent: 'space-between', zIndex: 2,
     },
     epButton: {
