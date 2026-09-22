@@ -261,6 +261,16 @@ export function WebNavBar() {
                                     <Ionicons name="bookmark-outline" size={16} color="#aaa" />
                                     <Text style={styles.menuItemText}>My List</Text>
                                 </Pressable>
+                                <Pressable
+                                    style={styles.menuItem}
+                                    onPress={() => {
+                                        setShowProfileMenu(false);
+                                        router.push('/admin');
+                                    }}
+                                >
+                                    <Ionicons name="settings-outline" size={16} color="#aaa" />
+                                    <Text style={styles.menuItemText}>Admin Panel</Text>
+                                </Pressable>
                                 <View style={styles.menuDivider} />
                                 <Pressable
                                     style={styles.menuItem}

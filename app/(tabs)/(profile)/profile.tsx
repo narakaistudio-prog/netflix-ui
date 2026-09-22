@@ -202,6 +202,21 @@ export default function ProfileScreen() {
                         </View>
                     </TouchableOpacity>
 
+                    <TouchableOpacity
+                        style={styles.menuItem}
+                        onPress={() => router.push('/admin')}
+                    >
+                        <View style={styles.menuIconContainer}>
+                            <View style={[styles.downloadIconContainer, { backgroundColor: '#E50914' }]}>
+                                <Ionicons name="settings-outline" size={24} color="#fff" />
+                            </View>
+                        </View>
+                        <View style={styles.menuContent}>
+                            <Text style={styles.menuText}>Admin Panel</Text>
+                            <Ionicons name="chevron-forward" size={20} color="#fff" />
+                        </View>
+                    </TouchableOpacity>
+
                     <View style={styles.section}>
                         <Text style={styles.sectionHeader}>TV Shows & Movies You've Liked</Text>
                         {renderLikedContent()}
