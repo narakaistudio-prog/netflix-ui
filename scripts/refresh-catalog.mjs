@@ -38,11 +38,46 @@ const FULL_ROW_SIZE = 48;
 const JUSTWATCH_CATALOG_PAGE_SIZE = 40;
 const JUSTWATCH_MAX_CATALOG_PAGES = 6;
 const BLOCKED_TOP10_TITLES = new Set(['365 dni']);
+const MATURE_ROW_TITLE = 'Mature & Adult Content';
+const MATURE_TITLE_PATTERNS = [
+    'sapio',
+    'nowlater',
+    'bugso',
+    'mahjongnights',
+    '20yearoldvirgins',
+    'thestoryo',
+    'womeninthedark',
+    'hernamewaschrista',
+    'luststories',
+    'desire',
+    'burningbetrayal',
+    '365days',
+    'eroticstories',
+    'sexlife',
+    'darkdesire',
+    'mastram',
+    'obsession',
+    'toohottohandle',
+    'sexycentral',
+    'superdrags',
+    'morethemerrier',
+    'bigsexyvalentinesdayspecial',
+    'mrsplaymen',
+    'sexexplained',
+    'sexeducation',
+    'thescandal',
+];
+const MATURE_DESCRIPTION_PATTERN = /sexual perversion|sex workers?|sexual tension|sex and intimacy|lose (?:their|her|his) virginity|bondage|adult animated|repressed desire/i;
 const TOP10_REPLACEMENTS = [
     {
         title: 'Alpha',
         mediaType: 'movie',
         url: 'https://www.justwatch.com/in/movie/alpha-2025-0',
+    },
+    {
+        title: 'Cocktail 2',
+        mediaType: 'movie',
+        url: 'https://www.justwatch.com/in/movie/cocktail-2-2026',
     },
 ];
 
@@ -380,6 +415,48 @@ const parseNumber = (value) => {
 
 const normalizeLookupTitle = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 
+function isMatureCatalogItem(item) {
+    const normalizedTitle = normalizeLookupTitle(item.title);
+    if (MATURE_TITLE_PATTERNS.some(pattern => normalizedTitle.includes(pattern.replace(/[^a-z0-9]+/g, '')))) {
+        return true;
+    }
+    return MATURE_DESCRIPTION_PATTERN.test(
+        [item.description, item.rated, item.rating].filter(Boolean).join(' '),
+    );
+}
+
+/** Remove mature titles from every normal shelf and append one dedicated row. */
+function moveMatureToBottom(rows) {
+    const matureItems = [];
+    const matureKeys = new Set();
+    const addMature = item => {
+        const key = normalizeLookupTitle(item.title) || item.id;
+        if (!key || matureKeys.has(key)) return;
+        matureKeys.add(key);
+        matureItems.push(item);
+    };
+    const cleanedRows = rows
+        .map(row => {
+            if (row.rowTitle === MATURE_ROW_TITLE) {
+                (row.movies ?? []).forEach(addMature);
+                return null;
+            }
+            const movies = (row.movies ?? []).filter(item => {
+                if (isMatureCatalogItem(item)) {
+                    addMature(item);
+                    return false;
+                }
+                return true;
+            });
+            return movies.length ? { ...row, movies } : null;
+        })
+        .filter(Boolean);
+
+    return matureItems.length
+        ? [...cleanedRows, { rowTitle: MATURE_ROW_TITLE, type: 'normal', movies: matureItems }]
+        : cleanedRows;
+}
+
 async function getOmdbMetadata(item, kind) {
     if (!OMDB_API_KEY) return {};
 
@@ -590,10 +667,16 @@ async function scrapeJustWatchTop10(existingItems) {
             mediaType: match[4].includes('/tv-show/') ? 'tv' : 'movie',
         });
     }
-    const filteredEntries = entries.filter(entry => !BLOCKED_TOP10_TITLES.has(entry.title));
+    const filteredEntries = entries.filter(entry => (
+        !BLOCKED_TOP10_TITLES.has(entry.title)
+        && !isMatureCatalogItem({ title: entry.title })
+    ));
     const occupiedRanks = new Set(filteredEntries.map(entry => entry.rank));
     for (const replacement of TOP10_REPLACEMENTS) {
         if (filteredEntries.length >= 10) break;
+        if (filteredEntries.some(entry => normalizeLookupTitle(entry.title) === normalizeLookupTitle(replacement.title))) {
+            continue;
+        }
         const rank = Array.from({ length: 10 }, (_, index) => index + 1)
             .find(candidate => !occupiedRanks.has(candidate));
         if (!rank) break;
@@ -1027,10 +1110,27 @@ async function refreshCurrentCatalog() {
     const rebuilt = new Set([
         'JustWatch Current Movies in India',
         'JustWatch Current TV Shows in India',
+        MATURE_ROW_TITLE,
     ]);
-    const top10Rows = existing.movies.filter(row => row.type === 'top_10');
+    let top10 = {
+        movieItems: existing.movies.find(row => row.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [],
+        showItems: existing.movies.find(row => row.rowTitle === 'Top 10 TV Shows in India Today')?.movies ?? [],
+    };
+    try {
+        top10 = await scrapeJustWatchTop10([...existingItems, ...prepared]);
+    } catch (error) {
+        console.log(`Current Top 10 refresh unavailable (${error.message}) — keeping previous chart rows.`);
+    }
+    const top10Rows = [
+        ...(top10.movieItems.length
+            ? [{ rowTitle: 'Top 10 Movies in India Today', type: 'top_10', movies: top10.movieItems }]
+            : []),
+        ...(top10.showItems.length
+            ? [{ rowTitle: 'Top 10 TV Shows in India Today', type: 'top_10', movies: top10.showItems }]
+            : []),
+    ];
     const remainingRows = existing.movies.filter(row => row.type !== 'top_10' && !rebuilt.has(row.rowTitle));
-    const nextRows = [
+    const nextRows = moveMatureToBottom([
         // Preserve the Home contract: Hero, Top 10 Movies, Top 10 TV Shows,
         // then the current shelves and the older broad catalog.
         ...top10Rows,
@@ -1041,9 +1141,9 @@ async function refreshCurrentCatalog() {
             ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: showItems }]
             : []),
         ...remainingRows,
-    ];
+    ]);
 
-    await Promise.all(prepared.map(item => savePoster(item)));
+    await Promise.all(prepared.concat(top10.movieItems, top10.showItems).map(item => savePoster(item)));
     writePosterIndex();
     writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
     console.log(`Current catalog refreshed: ${movieItems.length} movies and ${showItems.length} TV titles.`);
@@ -1096,9 +1196,13 @@ async function refreshTop10Rows() {
     const rows = existing.movies ?? [];
     const items = rows.flatMap(row => row.movies ?? []);
     const top10 = await scrapeJustWatchTop10(items);
-    const rebuilt = new Set(['Top 10 Movies in India Today', 'Top 10 TV Shows in India Today']);
+    const rebuilt = new Set([
+        'Top 10 Movies in India Today',
+        'Top 10 TV Shows in India Today',
+        MATURE_ROW_TITLE,
+    ]);
     const remainingRows = rows.filter(row => !rebuilt.has(row.rowTitle));
-    const nextRows = [
+    const nextRows = moveMatureToBottom([
         ...(top10.movieItems.length
             ? [{ rowTitle: 'Top 10 Movies in India Today', type: 'top_10', movies: top10.movieItems }]
             : []),
@@ -1106,7 +1210,7 @@ async function refreshTop10Rows() {
             ? [{ rowTitle: 'Top 10 TV Shows in India Today', type: 'top_10', movies: top10.showItems }]
             : []),
         ...remainingRows,
-    ];
+    ]);
     await Promise.all(top10.movieItems.concat(top10.showItems).map(item => savePoster(item)));
     writePosterIndex();
     writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
@@ -1186,11 +1290,11 @@ const sourceRows = discoveredRows ?? [
     { rowTitle: 'Top 10 Series in India Today', type: 'top_10', movies: showItems },
 ];
 
-const rows = [
+const rows = moveMatureToBottom([
     ...sourceRows,
     ...extra,
     ...evergreen,
-].filter(r => r && r.movies?.length);
+].filter(r => r && r.movies?.length));
 
 // If today's source omits artwork or blocks a download, reuse a bundled poster
 // from the last successful catalog for the same title before falling back to a

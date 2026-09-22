@@ -9,6 +9,7 @@ import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 export type CatalogKind = 'movie' | 'tv';
 
 const IS_WEB = Platform.OS === 'web';
+export const MATURE_ROW_TITLE = 'Mature & Adult Content';
 
 function isBroadCatalogRow(row: MovieRow) {
     return row.rowTitle.startsWith('Netflix India ');
@@ -109,7 +110,11 @@ function uniqueItems(items: Movie[]) {
 type CatalogShelf = MovieRow & { hideExploreAll?: boolean };
 
 function getEditorialShelves(sections: MovieRow[], kind: CatalogKind): CatalogShelf[] {
-    const allItems = uniqueItems(sections.flatMap(section => section.movies));
+    const allItems = uniqueItems(
+        sections
+            .filter(section => section.rowTitle !== MATURE_ROW_TITLE)
+            .flatMap(section => section.movies),
+    );
     const currentItems = uniqueItems(allItems.filter(item => item.catalogSource === 'justwatch'));
     const newItems = currentItems.length
         ? currentItems.slice(0, 40)
@@ -171,8 +176,11 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
     const editorialShelves = useMemo(() => getEditorialShelves(sections, kind), [sections, kind]);
     const displaySections = useMemo(() => {
         const top10 = sections.filter(section => section.type === 'top_10');
-        const otherSections = sections.filter(section => section.type !== 'top_10');
-        return [...top10, ...editorialShelves, ...otherSections];
+        const mature = sections.filter(section => section.rowTitle === MATURE_ROW_TITLE);
+        const otherSections = sections.filter(
+            section => section.type !== 'top_10' && section.rowTitle !== MATURE_ROW_TITLE,
+        );
+        return [...top10, ...editorialShelves, ...otherSections, ...mature];
     }, [sections, editorialShelves]);
     const copy = getPageCopy(kind);
     const uniqueTitleCount = useMemo(
