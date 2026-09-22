@@ -9,14 +9,14 @@
                     "title": "Vishwanath & Sons",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:fp-vishwanath-sons",
+                    "imageUrl": "local:jw-catalog-movie-vishwanath-and-sons",
                     "ranking_text": "#1 in India Today",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-irumudi-2026",
-                    "imageUrl": "local:fp-irumudi",
+                    "imageUrl": "local:jw-catalog-movie-irumudi-2026",
                     "title": "Irumudi",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -30,7 +30,7 @@
                 },
                 {
                     "id": "jw-catalog-movie-alpha-2025-0",
-                    "imageUrl": "local:fp-alpha",
+                    "imageUrl": "local:jw-catalog-movie-alpha-2025-0",
                     "title": "Alpha",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -47,7 +47,7 @@
                     "title": "Modha Rathri",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "imageUrl": "local:fp-modha-rathri",
+                    "imageUrl": "local:jw-catalog-movie-modha-rathiri",
                     "ranking_text": "#7 in India Today",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                     "catalogSource": "justwatch"
@@ -72,7 +72,7 @@
                 },
                 {
                     "id": "jw-catalog-movie-dhamaal-4",
-                    "imageUrl": "local:fp-dhamaal-4",
+                    "imageUrl": "local:jw-catalog-movie-dhamaal-4",
                     "title": "Dhamaal 4",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -147,7 +147,7 @@
                 },
                 {
                     "id": "jw-catalog-tv-chumbak-2026",
-                    "imageUrl": "local:fp-chumbak",
+                    "imageUrl": "local:jw-catalog-tv-chumbak-2026",
                     "title": "Chumbak",
                     "episodeCount": 16,
                     "seasonEpisodeCounts": [
@@ -40779,6 +40779,845 @@
                     "episodeCount": 24
                 },
                 {
+                    "id": "jw-original-aggretsuko",
+                    "title": "Aggretsuko",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-original-aggretsuko",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                    "netflixId": "80198505",
+                    "netflixUrl": "https://www.netflix.com/title/80198505",
+                    "catalogSource": "netflix-original",
+                    "catalogCollection": "Netflix Originals & Series",
+                    "description": "Frustrated with her thankless office job, Retsuko the red panda copes with her daily struggles by belting out death metal karaoke after work.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "A Day in the Life of Retsuko",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708844.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "A Good, Hard-Working Girl",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708845.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Short-Timer",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708846.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Walking Down the Aisle",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708847.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Exposed",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708848.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Stoking Rebellion",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708849.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "The Duel",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708850.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "The Out of Pocket Prince",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708851.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "A Rosy World",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708852.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "The Dream Ends",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708853.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 2,
+                            "name": "Season 2",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 2,
+                                    "episode": 1,
+                                    "name": "Time to Grow Up",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504981.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 2,
+                                    "name": "The New Hire Named Anai",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504982.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 3,
+                                    "name": "Double Moratorium",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504983.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 4,
+                                    "name": "Unavoidable Impact",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504984.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 5,
+                                    "name": "United Front",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504985.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 6,
+                                    "name": "Unknown Future",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504986.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 7,
+                                    "name": "Growing Affection",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504987.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 8,
+                                    "name": "He Lives Above the Clouds",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504988.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 9,
+                                    "name": "She's Dreaming",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504989.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 10,
+                                    "name": "Wonderful Life",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/201/504990.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 3,
+                            "name": "Season 3",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 3,
+                                    "episode": 1,
+                                    "name": "The Blessings of Life",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708824.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 2,
+                                    "name": "Deep in the Hole",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708825.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 3,
+                                    "name": "A Sheltered Life",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708826.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 4,
+                                    "name": "Winds of Change",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708827.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 5,
+                                    "name": "An Urchin in the Desert",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708828.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 6,
+                                    "name": "Crossroads",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708829.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 7,
+                                    "name": "An Impenetrable Wall",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708830.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 8,
+                                    "name": "Bursting Her Bubble",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708831.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 9,
+                                    "name": "The End of the Moratorium",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708832.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 10,
+                                    "name": "When You Count to Ten",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/283/708833.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 4,
+                            "name": "Season 4",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 4,
+                                    "episode": 1,
+                                    "name": "Someone from Work",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960115.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 2,
+                                    "name": "The New Boss",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960119.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 3,
+                                    "name": "Dirty Work",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960131.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 4,
+                                    "name": "Unkept Promises",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960154.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 5,
+                                    "name": "Options",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960158.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 6,
+                                    "name": "Struggle for Survival",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960179.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 7,
+                                    "name": "Moving Up",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960211.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 8,
+                                    "name": "Headhunting",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960295.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 9,
+                                    "name": "Unauthorized Access",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960366.jpg"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 10,
+                                    "name": "Rendezvous",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/384/960501.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 5,
+                            "name": "Season 5",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 5,
+                                    "episode": 1,
+                                    "name": "A Prison Called Freedom",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118851.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 2,
+                                    "name": "Spooky Shikabane",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118852.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 3,
+                                    "name": "ANAGURA and Reality",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118853.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 4,
+                                    "name": "Restart",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118854.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 5,
+                                    "name": "A Mysterious Messenger",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118855.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 6,
+                                    "name": "A Family Emergency",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118856.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 7,
+                                    "name": "Rage Mission",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118857.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 8,
+                                    "name": "Rising to the Challenge",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118858.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 9,
+                                    "name": "A Disconnected World",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118859.jpg"
+                                },
+                                {
+                                    "season": 5,
+                                    "episode": 10,
+                                    "name": "The Other Side of Rage",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/447/1118860.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        10,
+                        10,
+                        10,
+                        10,
+                        10
+                    ],
+                    "episodeCount": 50
+                },
+                {
+                    "id": "jw-original-hilda",
+                    "title": "Hilda",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-original-hilda",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "netflixId": "80115346",
+                    "netflixUrl": "https://www.netflix.com/title/80115346",
+                    "catalogSource": "netflix-original",
+                    "catalogCollection": "Netflix Originals & Series",
+                    "description": "Fearless, free-spirited Hilda finds new friends, adventure and magical creatures when she leaves her enchanted forest home and journeys to the city.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 13,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Chapter 1: The Hidden People",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722197.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Chapter 2: The Midnight Giant",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722198.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Chapter 3: The Bird Parade",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722199.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Chapter 4: The Sparrow Scouts",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722200.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Chapter 5: The Troll Rock",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722201.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Chapter 6: The Nightmare Spirit",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722202.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Chapter 7: The Lost Clan",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722203.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Chapter 8: The Tide Mice",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722204.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Chapter 9: The Ghost",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722205.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Chapter 10: The Storm",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722206.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 11,
+                                    "name": "Chapter 11: The House in the Woods",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722207.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 12,
+                                    "name": "Chapter 12: The Nisse",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722208.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 13,
+                                    "name": "Chapter 13: The Black Hound",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722209.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 2,
+                            "name": "Season 2",
+                            "episode_count": 13,
+                            "episodes": [
+                                {
+                                    "season": 2,
+                                    "episode": 1,
+                                    "name": "Chapter 1: The Troll Circle",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722184.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 2,
+                                    "name": "Chapter: 2: The Draugen",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722185.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 3,
+                                    "name": "Chapter 3: The Witch",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722186.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 4,
+                                    "name": "Chapter 4: The Eternal Warriors",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722187.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 5,
+                                    "name": "Chapter 5: The Windmill",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722188.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 6,
+                                    "name": "Chapter 6: The Old Bells of Trolberg",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722189.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 7,
+                                    "name": "Chapter 7: The Beast of Cauldron Island",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722190.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 8,
+                                    "name": "Chapter 8: The Fifty Year Night",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722191.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 9,
+                                    "name": "Chapter 9: The Deerfox",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722192.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 10,
+                                    "name": "Chapter: 10: The Yule Lads",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722193.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 11,
+                                    "name": "Chapter 11: The Jorts Incident",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722194.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 12,
+                                    "name": "Chapter 12: The Replacement",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722195.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 13,
+                                    "name": "Chapter 13: The Stone Forest",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/288/722196.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 3,
+                            "name": "Season 3",
+                            "episode_count": 8,
+                            "episodes": [
+                                {
+                                    "season": 3,
+                                    "episode": 1,
+                                    "name": "Chapter 1: The Train to Tofoten",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228098.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 2,
+                                    "name": "Chapter 2: The Fairy Mound",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228099.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 3,
+                                    "name": "Chapter 3: The Giantslayer",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228100.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 4,
+                                    "name": "Chapter 4: The Laughing Merman",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228101.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 5,
+                                    "name": "Chapter 5: The Job",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228102.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 6,
+                                    "name": "Chapter 6: The Forgotten Lake",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228103.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 7,
+                                    "name": "Chapter 7: Strange Frequencies",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228104.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 8,
+                                    "name": "Chapter 8: The Fairy Isle",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/491/1228105.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        13,
+                        13,
+                        8
+                    ],
+                    "episodeCount": 34
+                },
+                {
+                    "id": "jw-original-kipo-and-the-age-of-wonderbeasts",
+                    "title": "Kipo and the Age of Wonderbeasts",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-original-kipo-and-the-age-of-wonderbeasts",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                    "netflixId": "80221553",
+                    "netflixUrl": "https://www.netflix.com/title/80221553",
+                    "catalogSource": "netflix-original",
+                    "catalogCollection": "Netflix Originals & Series",
+                    "description": "Making her way in a world of mutant animals, a sheltered yet scrappy girl learns to survive — and discovers her powers — with help from a ragtag crew.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "Burrow Girl",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589693.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "Explosion Berries",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589694.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Real Cats Wear Plaid",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589695.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Cactus Town",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589696.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "The Astronomers in Turtlenecks",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589697.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Ratland",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589698.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Mulholland",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589699.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "Twin Beaks",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589700.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Mute-Eat-Mute World",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589701.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Beyond the Valley of the Dogs",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/235/589702.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 2,
+                            "name": "Season 2",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 2,
+                                    "episode": 1,
+                                    "name": "Paw of the Jaguar",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653064.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 2,
+                                    "name": "The Goat Cheese Prophecy",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653065.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 3,
+                                    "name": "The Ballad of Brunchington Beach",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653066.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 4,
+                                    "name": "To Catch a Deathstalker",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653067.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 5,
+                                    "name": "Fun Gus Part 1",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653068.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 6,
+                                    "name": "Fun Gus Part II",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653069.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 7,
+                                    "name": "Benson and the Beast",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653070.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 8,
+                                    "name": "Sympathy for the Mandrill",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653071.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 9,
+                                    "name": "All That Glitters",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653072.jpg"
+                                },
+                                {
+                                    "season": 2,
+                                    "episode": 10,
+                                    "name": "Heroes on Fire",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/261/653073.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "season_number": 3,
+                            "name": "Season 3",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 3,
+                                    "episode": 1,
+                                    "name": "Everything Is Crabs",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694713.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 2,
+                                    "name": "Code Word Milkshake",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694715.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 3,
+                                    "name": "A Wolf in Wolf's Clothing",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694716.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 4,
+                                    "name": "Don't You Forget a Meow Me",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694717.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 5,
+                                    "name": "Song ReMix",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694718.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 6,
+                                    "name": "It's a Trap",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694719.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 7,
+                                    "name": "Requiem for a Dave",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694720.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 8,
+                                    "name": "Hidden Treasures",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694721.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 9,
+                                    "name": "Prahmises",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694722.jpg"
+                                },
+                                {
+                                    "season": 3,
+                                    "episode": 10,
+                                    "name": "Age of the Wonderbeasts",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/277/694723.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        10,
+                        10,
+                        10
+                    ],
+                    "episodeCount": 30
+                },
+                {
+                    "id": "jw-original-maya-and-the-three",
+                    "title": "Maya and the Three",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-original-maya-and-the-three",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                    "netflixId": "80244283",
+                    "netflixUrl": "https://www.netflix.com/title/80244283",
+                    "catalogSource": "netflix-original",
+                    "catalogCollection": "Netflix Originals & Series",
+                    "description": "A spirited princess with the heart of a warrior embarks on a mission to fulfill an ancient prophecy and save humanity from the wrath of vengeful gods."
+                },
+                {
                     "id": "jw-catalog-tv-avatar-the-last-airbender",
                     "title": "Avatar: The Last Airbender",
                     "type": "SERIES",
@@ -49287,6 +50126,92 @@
                         8
                     ],
                     "episodeCount": 16
+                },
+                {
+                    "id": "jw-original-devilman-crybaby",
+                    "title": "Devilman Crybaby",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "imageUrl": "local:jw-original-devilman-crybaby",
+                    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    "netflixId": "80174974",
+                    "netflixUrl": "https://www.netflix.com/title/80174974",
+                    "catalogSource": "netflix-original",
+                    "catalogCollection": "Netflix Anime & Animation",
+                    "description": "With demons reawakened and humanity in turmoil, a sensitive demon-boy is led into a brutal, degenerate war against evil by his mysterious friend, Ryo.",
+                    "seasons": [
+                        {
+                            "season_number": 1,
+                            "name": "Season 1",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 1,
+                                    "episode": 1,
+                                    "name": "I Need You",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491839.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 2,
+                                    "name": "One Hand Is Enough",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491838.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 3,
+                                    "name": "Believe Me!",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491837.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 4,
+                                    "name": "Come, Akira",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491836.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 5,
+                                    "name": "Beautiful Silene",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491835.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 6,
+                                    "name": "Neither Demon Nor Human",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491834.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 7,
+                                    "name": "Weak Humans, Wise Demons",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491832.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 8,
+                                    "name": "I Must Know Myself",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491831.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 9,
+                                    "name": "Go to Hell, You Mortals",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491830.jpg"
+                                },
+                                {
+                                    "season": 1,
+                                    "episode": 10,
+                                    "name": "Crybaby",
+                                    "still_path": "https://static.tvmaze.com/uploads/images/original_untouched/196/491829.jpg"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        10
+                    ],
+                    "episodeCount": 10
                 },
                 {
                     "id": "jw-catalog-tv-the-fragrant-flower-blooms-with-dignity",
