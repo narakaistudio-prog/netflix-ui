@@ -125,6 +125,7 @@ const NETFLIX_CURATED_SEEDS = [
     ['BoJack Horseman', 'tv', 'Netflix Originals & Series'],
     ['Big Mouth', 'tv', 'Netflix Originals & Series'],
     ['The Dragon Prince', 'tv', 'Netflix Originals & Series'],
+    ['Love, Death & Robots', 'tv', 'Netflix Originals & Series'],
     ['Blood of Zeus', 'tv', 'Netflix Originals & Series'],
     ['Aggretsuko', 'tv', 'Netflix Originals & Series'],
     ['Hilda', 'tv', 'Netflix Originals & Series'],
@@ -338,6 +339,7 @@ const NETFLIX_OFFICIAL_IDS = {
     'KPop Demon Hunters': '81498621',
     'The Sandman': '81150303',
     'The Umbrella Academy': '80186863',
+    'Love, Death & Robots': '80174608',
     Aggretsuko: '80198505',
     Hilda: '80115346',
     'Kipo and the Age of Wonderbeasts': '80221553',
@@ -422,6 +424,28 @@ const CURATED_EPISODE_FALLBACKS = {
         seasonEpisodeCounts: [9],
         episodeCount: 9,
         duration: '1 Season',
+    },
+    'Love, Death & Robots': {
+        seasons: [{
+            season_number: 4,
+            name: 'Volume 4',
+            episode_count: 10,
+            episodes: [
+                'Close Encounters of the Mini Kind',
+                'Spider Rose',
+                'How Zeke Got Religion',
+                'The Other Large Thing',
+                '400 Boys',
+                'The Screaming of the Tyrannosaur',
+                'Golgotha',
+                'For He Can Creep',
+                'Smart Appliances, Stupid Owners',
+                "Can't Stop",
+            ].map((name, index) => ({ season: 4, episode: index + 1, name })),
+        }],
+        seasonEpisodeCounts: [10],
+        episodeCount: 10,
+        duration: '4 Volumes',
     },
 };
 
@@ -1020,7 +1044,25 @@ function moveMatureToBottom(rows) {
     const addMature = item => {
         if (isBlockedCatalogTitle(item)) return;
         const key = normalizeLookupTitle(item.title) || item.id;
-        if (!key || matureKeys.has(key)) return;
+        if (!key) return;
+        if (matureKeys.has(key)) {
+            const index = matureItems.findIndex(candidate => (normalizeLookupTitle(candidate.title) || candidate.id) === key);
+            if (index >= 0) {
+                const previous = matureItems[index];
+                matureItems[index] = {
+                    ...previous,
+                    ...item,
+                    // A later stale shelf must not erase real seasons/episodes
+                    // or bundled artwork discovered by an earlier shelf.
+                    seasons: item.seasons ?? previous.seasons,
+                    episodeCount: item.episodeCount ?? previous.episodeCount,
+                    seasonEpisodeCounts: item.seasonEpisodeCounts ?? previous.seasonEpisodeCounts,
+                    imageUrl: previous.imageUrl || item.imageUrl,
+                    description: previous.description || item.description,
+                };
+            }
+            return;
+        }
         matureKeys.add(key);
         matureItems.push(item);
     };

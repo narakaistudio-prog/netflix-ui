@@ -80789,7 +80789,71 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-love-death-and-robots",
                     "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "seasons": [
+                        {
+                            "season_number": 4,
+                            "name": "Volume 4",
+                            "episode_count": 10,
+                            "episodes": [
+                                {
+                                    "season": 4,
+                                    "episode": 1,
+                                    "name": "Close Encounters of the Mini Kind"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 2,
+                                    "name": "Spider Rose"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 3,
+                                    "name": "How Zeke Got Religion"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 4,
+                                    "name": "The Other Large Thing"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 5,
+                                    "name": "400 Boys"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 6,
+                                    "name": "The Screaming of the Tyrannosaur"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 7,
+                                    "name": "Golgotha"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 8,
+                                    "name": "For He Can Creep"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 9,
+                                    "name": "Smart Appliances, Stupid Owners"
+                                },
+                                {
+                                    "season": 4,
+                                    "episode": 10,
+                                    "name": "Can't Stop"
+                                }
+                            ]
+                        }
+                    ],
+                    "seasonEpisodeCounts": [
+                        10
+                    ],
+                    "episodeCount": 10,
+                    "duration": "4 Volumes"
                 },
                 {
                     "id": "jw-catalog-tv-the-scandal",
