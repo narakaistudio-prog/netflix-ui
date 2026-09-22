@@ -756,6 +756,64 @@ async function getNetflixOfficialMetadata(netflixId, kind = 'movie') {
     return metadata;
 }
 
+const tvMazeCache = new Map();
+async function getTvMazeEpisodeMetadata(title) {
+    const key = normalizeLookupTitle(title);
+    if (!key) return {};
+    if (tvMazeCache.has(key)) return tvMazeCache.get(key);
+    try {
+        const url = new URL('https://api.tvmaze.com/singlesearch/shows');
+        url.searchParams.set('q', title);
+        url.searchParams.set('embed', 'episodes');
+        const response = await fetchWithTimeout(url, { headers: UA });
+        if (!response.ok) throw new Error(`TVMaze HTTP ${response.status}`);
+        const show = await response.json();
+        if (!show?.name || normalizeLookupTitle(show.name) !== key) {
+            tvMazeCache.set(key, {});
+            return {};
+        }
+        const episodes = Array.isArray(show._embedded?.episodes)
+            ? show._embedded.episodes
+                .filter(episode => episode?.season > 0 && episode?.number > 0)
+                .map(episode => ({
+                    season: episode.season,
+                    episode: episode.number,
+                    name: episode.name || `Episode ${episode.number}`,
+                    ...(episode.image?.original || episode.image?.medium
+                        ? { still_path: episode.image.original || episode.image.medium }
+                        : {}),
+                }))
+            : [];
+        const grouped = new Map();
+        for (const episode of episodes) {
+            if (!grouped.has(episode.season)) grouped.set(episode.season, []);
+            grouped.get(episode.season).push(episode);
+        }
+        const seasons = [...grouped.entries()].map(([seasonNumber, seasonEpisodes]) => ({
+            season_number: seasonNumber,
+            name: `Season ${seasonNumber}`,
+            episode_count: seasonEpisodes.length,
+            episodes: seasonEpisodes,
+        }));
+        const seasonEpisodeCounts = seasons.map(season => season.episode_count);
+        const metadata = seasons.length
+            ? {
+                seasons,
+                seasonEpisodeCounts,
+                episodeCount: seasonEpisodeCounts.reduce((total, count) => total + count, 0),
+                ...(show.image?.original ? { imageUrl: show.image.original } : {}),
+                ...(show.summary ? { description: decodeHtml(show.summary) } : {}),
+            }
+            : {};
+        tvMazeCache.set(key, metadata);
+        return metadata;
+    } catch (error) {
+        console.log(`TVMaze episode enrichment skipped for ${title} (${error.message})`);
+        tvMazeCache.set(key, {});
+        return {};
+    }
+}
+
 const decodeHtml = (value) => String(value || '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&amp;/gi, '&')
@@ -1308,13 +1366,19 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const official = netflixId && (!known?.imageUrl || needsOfficialEpisodes)
                 ? await getNetflixOfficialMetadata(netflixId, mediaType)
                 : {};
+            const episodeFallback = mediaType === 'tv'
+                && !Array.isArray(known?.seasons)
+                && !Array.isArray(official.seasons)
+                ? await getTvMazeEpisodeMetadata(title)
+                : {};
             if (known) {
                 return {
                     ...known,
                     ...official,
+                    ...episodeFallback,
                     ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
-                    imageUrl: known.imageUrl || official.imageUrl || '',
-                    description: known.description || official.description,
+                    imageUrl: known.imageUrl || official.imageUrl || episodeFallback.imageUrl || '',
+                    description: known.description || official.description || episodeFallback.description,
                     catalogSource: 'netflix-original',
                     catalogCollection,
                 };
@@ -1334,11 +1398,12 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             return {
                 ...base,
                 ...official,
+                ...episodeFallback,
                 ...omdb,
                 catalogSource: 'netflix-original',
                 catalogCollection,
-                imageUrl: official.imageUrl || omdb.imageUrl || '',
-                description: official.description || omdb.description,
+                imageUrl: official.imageUrl || omdb.imageUrl || episodeFallback.imageUrl || '',
+                description: official.description || omdb.description || episodeFallback.description,
             };
         },
         (completed, total) => console.log(`Netflix curated enrichment: ${completed}/${total}`),
