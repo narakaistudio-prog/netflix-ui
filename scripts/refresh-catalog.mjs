@@ -81,6 +81,254 @@ const TOP10_REPLACEMENTS = [
     },
 ];
 
+// Netflix's official genre pages contain many Originals that do not appear in
+// the popularity-sorted JustWatch page. Keep this small editorial seed
+// server-side, enrich it with OMDb when available, and place it in dedicated
+// shelves instead of pretending it is today's popularity chart.
+const NETFLIX_CURATED_ROW_TITLES = new Set([
+    'Netflix Originals & Series',
+    'Netflix Korean Originals',
+    'Netflix Anime & Animation',
+    'Netflix Original Movies',
+    'Netflix Documentaries',
+]);
+
+const NETFLIX_CURATED_SEEDS = [
+    // Netflix Originals and series
+    ['Arcane', 'tv', 'Netflix Originals & Series'],
+    ['The Sandman', 'tv', 'Netflix Originals & Series'],
+    ['The Umbrella Academy', 'tv', 'Netflix Originals & Series'],
+    ['The Lincoln Lawyer', 'tv', 'Netflix Originals & Series'],
+    ['The Night Agent', 'tv', 'Netflix Originals & Series'],
+    ['The Recruit', 'tv', 'Netflix Originals & Series'],
+    ['The Diplomat', 'tv', 'Netflix Originals & Series'],
+    ['Virgin River', 'tv', 'Netflix Originals & Series'],
+    ['Emily in Paris', 'tv', 'Netflix Originals & Series'],
+    ['Love Is Blind', 'tv', 'Netflix Originals & Series'],
+    ['The Circle', 'tv', 'Netflix Originals & Series'],
+    ["The Queen's Gambit", 'tv', 'Netflix Originals & Series'],
+    ['Ozark', 'tv', 'Netflix Originals & Series'],
+    ['Narcos', 'tv', 'Netflix Originals & Series'],
+    ['The Haunting of Hill House', 'tv', 'Netflix Originals & Series'],
+    ['The Haunting of Bly Manor', 'tv', 'Netflix Originals & Series'],
+    ['Midnight Mass', 'tv', 'Netflix Originals & Series'],
+    ['Russian Doll', 'tv', 'Netflix Originals & Series'],
+    ['Maid', 'tv', 'Netflix Originals & Series'],
+    ['Unbelievable', 'tv', 'Netflix Originals & Series'],
+    ['The Watcher', 'tv', 'Netflix Originals & Series'],
+    ['Beef', 'tv', 'Netflix Originals & Series'],
+    ['One Day', 'tv', 'Netflix Originals & Series'],
+    ['The OA', 'tv', 'Netflix Originals & Series'],
+    ['The End of the F***ing World', 'tv', 'Netflix Originals & Series'],
+    ['BoJack Horseman', 'tv', 'Netflix Originals & Series'],
+    ['Big Mouth', 'tv', 'Netflix Originals & Series'],
+    ['The Dragon Prince', 'tv', 'Netflix Originals & Series'],
+    ['Blood of Zeus', 'tv', 'Netflix Originals & Series'],
+    ['The Last Airbender', 'tv', 'Netflix Originals & Series'],
+
+    // Korean Netflix Originals, including established catalogue favourites
+    ['Kingdom', 'tv', 'Netflix Korean Originals'],
+    ['My Name', 'tv', 'Netflix Korean Originals'],
+    ['Hellbound', 'tv', 'Netflix Korean Originals'],
+    ['Sweet Home', 'tv', 'Netflix Korean Originals'],
+    ['D.P.', 'tv', 'Netflix Korean Originals'],
+    ['Extraordinary Attorney Woo', 'tv', 'Netflix Korean Originals'],
+    ['Crash Landing on You', 'tv', 'Netflix Korean Originals'],
+    ['Business Proposal', 'tv', 'Netflix Korean Originals'],
+    ['Hometown Cha-Cha-Cha', 'tv', 'Netflix Korean Originals'],
+    ['Alchemy of Souls', 'tv', 'Netflix Korean Originals'],
+    ['Twenty-Five Twenty-One', 'tv', 'Netflix Korean Originals'],
+    ['Itaewon Class', 'tv', 'Netflix Korean Originals'],
+    ['Start-Up', 'tv', 'Netflix Korean Originals'],
+    ['Hospital Playlist', 'tv', 'Netflix Korean Originals'],
+    ['Reply 1988', 'tv', 'Netflix Korean Originals'],
+    ['Mr. Queen', 'tv', 'Netflix Korean Originals'],
+    ['True Beauty', 'tv', 'Netflix Korean Originals'],
+    ['The King: Eternal Monarch', 'tv', 'Netflix Korean Originals'],
+    ['The Uncanny Counter', 'tv', 'Netflix Korean Originals'],
+    ['Bloodhounds', 'tv', 'Netflix Korean Originals'],
+
+    // Anime and animated Netflix titles from the official Anime shelf
+    ['One-Punch Man', 'tv', 'Netflix Anime & Animation'],
+    ['Jujutsu Kaisen', 'tv', 'Netflix Anime & Animation'],
+    ['One Piece', 'tv', 'Netflix Anime & Animation'],
+    ['Naruto', 'tv', 'Netflix Anime & Animation'],
+    ['Hajime no Ippo: The Fighting!', 'tv', 'Netflix Anime & Animation'],
+    ['DEATH NOTE', 'tv', 'Netflix Anime & Animation'],
+    ['My Hero Academia', 'tv', 'Netflix Anime & Animation'],
+    ['Demon Slayer: Kimetsu no Yaiba', 'tv', 'Netflix Anime & Animation'],
+    ['Black Clover', 'tv', 'Netflix Anime & Animation'],
+    ['That Time I Got Reincarnated as a Slime', 'tv', 'Netflix Anime & Animation'],
+    ['The Disastrous Life of Saiki K.', 'tv', 'Netflix Anime & Animation'],
+    ['VINLAND SAGA', 'tv', 'Netflix Anime & Animation'],
+    ['Haikyu!!', 'tv', 'Netflix Anime & Animation'],
+    ['InuYasha', 'tv', 'Netflix Anime & Animation'],
+    ['Puella Magi Madoka Magica', 'tv', 'Netflix Anime & Animation'],
+    ['Gurren Lagann', 'tv', 'Netflix Anime & Animation'],
+    ['Mobile Suit Gundam Seed', 'tv', 'Netflix Anime & Animation'],
+    ['Violet Evergarden', 'tv', 'Netflix Anime & Animation'],
+    ['PLUTO', 'tv', 'Netflix Anime & Animation'],
+    ['Terminator Zero', 'tv', 'Netflix Anime & Animation'],
+    ['Devil May Cry', 'tv', 'Netflix Anime & Animation'],
+    ['The Fragrant Flower Blooms With Dignity', 'tv', 'Netflix Anime & Animation'],
+    ['Blue Box', 'tv', 'Netflix Anime & Animation'],
+    ['Rising Impact', 'tv', 'Netflix Anime & Animation'],
+    ['Blue Lock', 'tv', 'Netflix Anime & Animation'],
+    ['Hunter X Hunter (2011)', 'tv', 'Netflix Anime & Animation'],
+    ['Daemons of the Shadow Realm', 'tv', 'Netflix Anime & Animation'],
+    ['Record of Ragnarok', 'tv', 'Netflix Anime & Animation'],
+    ['BAKI-DOU: The Invincible Samurai', 'tv', 'Netflix Anime & Animation'],
+    ['The Seven Deadly Sins', 'tv', 'Netflix Anime & Animation'],
+    ['Chainsmoker Cat', 'tv', 'Netflix Anime & Animation'],
+    ["JoJo's Bizarre Adventure", 'tv', 'Netflix Anime & Animation'],
+    ['Assassination Classroom', 'tv', 'Netflix Anime & Animation'],
+    ['Shangri-La Frontier', 'tv', 'Netflix Anime & Animation'],
+    ['Tougen Anki', 'tv', 'Netflix Anime & Animation'],
+    ['Cyberpunk: Edgerunners', 'tv', 'Netflix Anime & Animation'],
+    ['Mob Psycho 100', 'tv', 'Netflix Anime & Animation'],
+    ['Overlord', 'tv', 'Netflix Anime & Animation'],
+    ['Baki', 'tv', 'Netflix Anime & Animation'],
+    ['SAKAMOTO DAYS', 'tv', 'Netflix Anime & Animation'],
+    ['Kengan Ashura', 'tv', 'Netflix Anime & Animation'],
+    ['BEASTARS', 'tv', 'Netflix Anime & Animation'],
+    ['Dr. Stone', 'tv', 'Netflix Anime & Animation'],
+    ['The Apothecary Diaries', 'tv', 'Netflix Anime & Animation'],
+    ['Magic and Muscles', 'tv', 'Netflix Anime & Animation'],
+    ['Baki Hanma', 'tv', 'Netflix Anime & Animation'],
+    ["Kuroko's Basketball", 'tv', 'Netflix Anime & Animation'],
+    ['Delicious in Dungeon', 'tv', 'Netflix Anime & Animation'],
+    ['Fullmetal Alchemist: Brotherhood', 'tv', 'Netflix Anime & Animation'],
+    ['My Dress-Up Darling', 'tv', 'Netflix Anime & Animation'],
+    ['Frieren: Beyond Journey\'s End', 'tv', 'Netflix Anime & Animation'],
+    ['Wind Breaker', 'tv', 'Netflix Anime & Animation'],
+    ['DAN DA DAN', 'tv', 'Netflix Anime & Animation'],
+    ['Kakegurui', 'tv', 'Netflix Anime & Animation'],
+    ['The Rising of the Shield Hero', 'tv', 'Netflix Anime & Animation'],
+    ['Neon Genesis Evangelion', 'tv', 'Netflix Anime & Animation'],
+    ['Castlevania: Nocturne', 'tv', 'Netflix Anime & Animation'],
+    ['Rurouni Kenshin', 'tv', 'Netflix Anime & Animation'],
+    ['My Happy Marriage', 'tv', 'Netflix Anime & Animation'],
+    ['Detective Conan', 'tv', 'Netflix Anime & Animation'],
+    ['Blue Eye Samurai', 'tv', 'Netflix Anime & Animation'],
+    ['Castlevania', 'tv', 'Netflix Anime & Animation'],
+    ['KPop Demon Hunters', 'movie', 'Netflix Anime & Animation'],
+    ['The Sea Beast', 'movie', 'Netflix Anime & Animation'],
+    ['Nimona', 'movie', 'Netflix Anime & Animation'],
+    ['Klaus', 'movie', 'Netflix Anime & Animation'],
+    ['The Mitchells vs. the Machines', 'movie', 'Netflix Anime & Animation'],
+
+    // Netflix Original films
+    ['Glass Onion: A Knives Out Mystery', 'movie', 'Netflix Original Movies'],
+    ['Red Notice', 'movie', 'Netflix Original Movies'],
+    ['Extraction', 'movie', 'Netflix Original Movies'],
+    ['Extraction 2', 'movie', 'Netflix Original Movies'],
+    ['The Gray Man', 'movie', 'Netflix Original Movies'],
+    ['Army of the Dead', 'movie', 'Netflix Original Movies'],
+    ['Rebel Moon - Part One: A Child of Fire', 'movie', 'Netflix Original Movies'],
+    ['Damsel', 'movie', 'Netflix Original Movies'],
+    ['The Killer', 'movie', 'Netflix Original Movies'],
+    ['Maestro', 'movie', 'Netflix Original Movies'],
+    ['Society of the Snow', 'movie', 'Netflix Original Movies'],
+    ['All Quiet on the Western Front', 'movie', 'Netflix Original Movies'],
+    ['Roma', 'movie', 'Netflix Original Movies'],
+    ['The Irishman', 'movie', 'Netflix Original Movies'],
+    ['Marriage Story', 'movie', 'Netflix Original Movies'],
+    ['The Old Guard', 'movie', 'Netflix Original Movies'],
+    ['Bird Box', 'movie', 'Netflix Original Movies'],
+    ["Don't Look Up", 'movie', 'Netflix Original Movies'],
+    ['The Platform', 'movie', 'Netflix Original Movies'],
+    ['The Mother', 'movie', 'Netflix Original Movies'],
+    ['Heart of Stone', 'movie', 'Netflix Original Movies'],
+    ['The Beautiful Game', 'movie', 'Netflix Original Movies'],
+    ['The Electric State', 'movie', 'Netflix Original Movies'],
+    ['The Adam Project', 'movie', 'Netflix Original Movies'],
+    ['Enola Holmes', 'movie', 'Netflix Original Movies'],
+    ['Murder Mystery', 'movie', 'Netflix Original Movies'],
+    ['To All the Boys I\'ve Loved Before', 'movie', 'Netflix Original Movies'],
+    ['Okja', 'movie', 'Netflix Original Movies'],
+    ["Guillermo del Toro's Pinocchio", 'movie', 'Netflix Original Movies'],
+    ['The Power of the Dog', 'movie', 'Netflix Original Movies'],
+    ['Beasts of No Nation', 'movie', 'Netflix Original Movies'],
+    ['The Two Popes', 'movie', 'Netflix Original Movies'],
+
+    // Netflix documentary originals
+    ['Our Planet', 'tv', 'Netflix Documentaries'],
+    ['Night on Earth', 'tv', 'Netflix Documentaries'],
+    ['Formula 1: Drive to Survive', 'tv', 'Netflix Documentaries'],
+    ['Beckham', 'tv', 'Netflix Documentaries'],
+    ["Chef's Table", 'tv', 'Netflix Documentaries'],
+    ['Making a Murderer', 'tv', 'Netflix Documentaries'],
+    ['The Last Dance', 'tv', 'Netflix Documentaries'],
+    ['Our Great National Parks', 'tv', 'Netflix Documentaries'],
+    ['The Social Dilemma', 'movie', 'Netflix Documentaries'],
+    ['My Octopus Teacher', 'movie', 'Netflix Documentaries'],
+    ['David Attenborough: A Life on Our Planet', 'movie', 'Netflix Documentaries'],
+];
+
+// Stable IDs copied from Netflix's official Anime genre page. They are kept
+// alongside the editorial title seed so a title remains traceable even when
+// OMDb has no exact spelling/region match.
+const NETFLIX_OFFICIAL_IDS = {
+    'One-Punch Man': '80117291',
+    'Jujutsu Kaisen': '81278456',
+    'One Piece': '80107103',
+    Naruto: '70205012',
+    'Hajime no Ippo: The Fighting!': '80995578',
+    'DEATH NOTE': '70204970',
+    'My Hero Academia': '80135674',
+    'Demon Slayer: Kimetsu no Yaiba': '81091393',
+    'Blue Lock': '81640753',
+    'Hunter X Hunter (2011)': '70300472',
+    'Black Clover': '80238012',
+    'Daemons of the Shadow Realm': '82719204',
+    'Record of Ragnarok': '81281579',
+    'BAKI-DOU: The Invincible Samurai': '81922765',
+    'The Seven Deadly Sins': '80050063',
+    'That Time I Got Reincarnated as a Slime': '81028712',
+    'Chainsmoker Cat': '82760630',
+    "JoJo's Bizarre Adventure": '80179831',
+    'The Disastrous Life of Saiki K.': '80117781',
+    'Assassination Classroom': '80045948',
+    'Shangri-La Frontier': '81727242',
+    'VINLAND SAGA': '81249833',
+    'Tougen Anki': '81969861',
+    'Haikyu!!': '80090673',
+    'Cyberpunk: Edgerunners': '81054853',
+    'Mob Psycho 100': '80179798',
+    Overlord: '80132110',
+    BAKI: '80204451',
+    'SAKAMOTO DAYS': '81663325',
+    'KENGAN ASHURA': '80992228',
+    BEASTARS: '81054847',
+    'Dr. Stone': '81046193',
+    'The Apothecary Diaries': '81712068',
+    'Magic and Muscles': '81685164',
+    'Baki Hanma': '81236338',
+    "Kuroko's Basketball": '80063153',
+    'Delicious in Dungeon': '81564899',
+    'Fullmetal Alchemist: Brotherhood': '70204981',
+    'My Dress-Up Darling': '81569754',
+    'Castlevania': '80095241',
+    "Frieren: Beyond Journey's End": '81726714',
+    'Wind Breaker': '81771389',
+    'DAN DA DAN': '81736884',
+    Kakegurui: '80175351',
+    'The Rising of the Shield Hero': '81058649',
+    'Blood of Zeus': '81001988',
+    'Neon Genesis Evangelion': '81033445',
+    'Castlevania: Nocturne': '81436901',
+    'Rurouni Kenshin': '81705252',
+    'My Happy Marriage': '81564905',
+    'Detective Conan': '80090370',
+    'Rising Impact': '81563026',
+    InuYasha: '70204995',
+    'Puella Magi Madoka Magica': '70302572',
+    'Gurren Lagann': '70213196',
+    'Mobile Suit Gundam Seed': '80146549',
+    'Blue Eye Samurai': '81442088',
+    PLUTO: '81712066',
+};
+
 const SAMPLE_VIDEOS = [
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
@@ -414,6 +662,15 @@ const parseNumber = (value) => {
 };
 
 const normalizeLookupTitle = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+const slugify = value => String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+const netflixOfficialIdByTitle = new Map(
+    Object.entries(NETFLIX_OFFICIAL_IDS)
+        .map(([title, id]) => [normalizeLookupTitle(title), id]),
+);
+const getNetflixOfficialId = title => netflixOfficialIdByTitle.get(normalizeLookupTitle(title));
 
 function isMatureCatalogItem(item) {
     const normalizedTitle = normalizeLookupTitle(item.title);
@@ -853,6 +1110,86 @@ function mergeCatalogItems(baseItems, currentItems) {
     return merged;
 }
 
+function netflixCuratedRows(items) {
+    const groups = new Map();
+    for (const item of items) {
+        const collection = item.catalogCollection;
+        if (!collection) continue;
+        if (!groups.has(collection)) groups.set(collection, []);
+        groups.get(collection).push(item);
+    }
+    return [...groups.entries()].map(([rowTitle, movies]) => ({
+        rowTitle,
+        type: 'normal',
+        movies,
+    }));
+}
+
+/**
+ * Curated Netflix-owned catalogue supplement. These titles are deliberately
+ * separate from the live JustWatch rows: they represent Netflix ownership or
+ * official Netflix editorial placement, not today's India popularity order.
+ */
+async function scrapeNetflixCuratedCatalog(existingItems) {
+    const existingByTitle = new Map(
+        existingItems
+            .filter(item => item?.title)
+            .map(item => [normalizeLookupTitle(item.title), item]),
+    );
+    const seen = new Set();
+    const seeds = NETFLIX_CURATED_SEEDS.filter(([title]) => {
+        const key = normalizeLookupTitle(title);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+
+    const items = await mapConcurrent(
+        seeds,
+        6,
+        async ([title, mediaType, catalogCollection], index) => {
+            const known = existingByTitle.get(normalizeLookupTitle(title));
+            const netflixId = getNetflixOfficialId(title);
+            const officialUrl = netflixId ? `https://www.netflix.com/title/${netflixId}` : undefined;
+            if (known) {
+                return {
+                    ...known,
+                    ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
+                    catalogSource: 'netflix-original',
+                    catalogCollection,
+                };
+            }
+            const base = {
+                id: `jw-original-${slugify(title) || `title-${index}`}`,
+                title,
+                type: mediaType === 'tv' ? 'SERIES' : 'FILM',
+                mediaType,
+                imageUrl: '',
+                videoUrl: SAMPLE_VIDEOS[index % SAMPLE_VIDEOS.length],
+                ...(netflixId ? { netflixId, netflixUrl: officialUrl } : {}),
+                catalogSource: 'netflix-original',
+                catalogCollection,
+            };
+            const omdb = await getOmdbMetadata(base, mediaType);
+            return {
+                ...base,
+                ...omdb,
+                catalogSource: 'netflix-original',
+                catalogCollection,
+                imageUrl: omdb.imageUrl || '',
+            };
+        },
+        (completed, total) => console.log(`Netflix curated enrichment: ${completed}/${total}`),
+    );
+    console.log(`Netflix curated catalogue: ${items.length} seeded titles.`);
+    return {
+        items,
+        movieItems: items.filter(item => item.mediaType === 'movie'),
+        showItems: items.filter(item => item.mediaType === 'tv'),
+        rows: netflixCuratedRows(items),
+    };
+}
+
 /**
  * Broad public discovery path. IsItInMyCountry publishes a sitemap of title
  * pages and each page includes an India availability row. It is not an
@@ -925,8 +1262,25 @@ async function scrapeFullPublicCatalog() {
     } catch (error) {
         console.log(`Current JustWatch catalog supplement unavailable (${error.message}) — keeping broad catalog only.`);
     }
-    const mergedMovies = mergeCatalogItems(fullMovies, currentCatalog.movieItems);
-    const mergedShows = mergeCatalogItems(fullShows, currentCatalog.showItems);
+    let curatedCatalog = { items: [], movieItems: [], showItems: [], rows: [] };
+    try {
+        curatedCatalog = await scrapeNetflixCuratedCatalog([
+            ...enriched,
+            ...currentCatalog.movieItems,
+            ...currentCatalog.showItems,
+            ...existing.movies.flatMap(row => row.movies ?? []),
+        ]);
+    } catch (error) {
+        console.log(`Netflix curated catalogue unavailable (${error.message}) — keeping live catalog only.`);
+    }
+    const mergedMovies = mergeCatalogItems(
+        mergeCatalogItems(fullMovies, currentCatalog.movieItems),
+        curatedCatalog.movieItems,
+    );
+    const mergedShows = mergeCatalogItems(
+        mergeCatalogItems(fullShows, currentCatalog.showItems),
+        curatedCatalog.showItems,
+    );
     let top10 = { movieItems: [], showItems: [] };
     try {
         top10 = await scrapeJustWatchTop10([
@@ -960,6 +1314,7 @@ async function scrapeFullPublicCatalog() {
             ...(currentCatalog.showItems.length
                 ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: currentCatalog.showItems }]
                 : []),
+            ...curatedCatalog.rows,
             ...fullCatalogRows('Netflix India Movies', mergedMovies),
             ...fullCatalogRows('Netflix India Series', mergedShows),
         ],
@@ -1107,9 +1462,16 @@ async function refreshCurrentCatalog() {
     );
     const movieItems = prepared.filter(item => item.mediaType === 'movie');
     const showItems = prepared.filter(item => item.mediaType === 'tv');
+    let curatedCatalog = { items: [], movieItems: [], showItems: [], rows: [] };
+    try {
+        curatedCatalog = await scrapeNetflixCuratedCatalog([...existingItems, ...prepared]);
+    } catch (error) {
+        console.log(`Netflix curated catalogue unavailable (${error.message}) — keeping existing editorial shelves.`);
+    }
     const rebuilt = new Set([
         'JustWatch Current Movies in India',
         'JustWatch Current TV Shows in India',
+        ...NETFLIX_CURATED_ROW_TITLES,
     ]);
     let top10 = {
         movieItems: existing.movies.find(row => row.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [],
@@ -1139,10 +1501,16 @@ async function refreshCurrentCatalog() {
         ...(showItems.length
             ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: showItems }]
             : []),
+        ...curatedCatalog.rows,
         ...remainingRows,
     ]);
 
-    await Promise.all(prepared.concat(top10.movieItems, top10.showItems).map(item => savePoster(item)));
+    await Promise.all([
+        ...prepared,
+        ...curatedCatalog.items,
+        ...top10.movieItems,
+        ...top10.showItems,
+    ].map(item => savePoster(item)));
     writePosterIndex();
     writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
     console.log(`Current catalog refreshed: ${movieItems.length} movies and ${showItems.length} TV titles.`);
@@ -1277,6 +1645,7 @@ const REBUILT = new Set([
     'Popular on Netflix',
     'JustWatch Current Movies in India',
     'JustWatch Current TV Shows in India',
+    ...(isFullCatalog ? NETFLIX_CURATED_ROW_TITLES : []),
 ]);
 const isRebuiltRow = row => REBUILT.has(row.rowTitle)
     || /^Netflix India (Movies|Series) \d+[–-]\d+$/.test(row.rowTitle);

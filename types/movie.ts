@@ -22,8 +22,13 @@ export interface Movie {
     type?: string;
     /** Canonical media type for embed building. */
     mediaType?: 'movie' | 'tv';
-    /** Discovery source marker for current editorial shelves. */
-    catalogSource?: 'justwatch' | 'isitinmycountry';
+    /** Discovery source marker for current/editorial shelves. */
+    catalogSource?: 'justwatch' | 'isitinmycountry' | 'netflix-original';
+    /** Editorial Netflix collection/shelf name. */
+    catalogCollection?: string;
+    /** Stable Netflix title id and canonical title URL when known. */
+    netflixId?: string;
+    netflixUrl?: string;
     /** TMDB numeric id (string or number). */
     tmdb_id?: string | number;
     /** IMDb id (tt…). */
