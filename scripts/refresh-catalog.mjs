@@ -78,7 +78,7 @@ const POSTERS_DIR = join(ROOT, 'assets', 'posters');
  */
 async function savePoster(item, fallbackImageUrl = '') {
     const src = item.imageUrl || '';
-    if (!/^https?:\/\//.test(src) || !/^(fp|movie|tv)-/.test(item.id)) {
+    if (!/^https?:\/\//.test(src) || !/^(fp|jw|movie|tv)-/.test(item.id)) {
         if (fallbackImageUrl) item.imageUrl = fallbackImageUrl;
         return;
     }
@@ -237,6 +237,29 @@ function isUsableFullSourceResponse(url, body) {
     // HTTP error. Treat that as unavailable so the Jina reader is attempted.
     return /availability by country/i.test(content)
         && !/please enable cookies|worker exceeded resource limits|error 1102/i.test(content);
+}
+
+/** Read a secondary public page through Jina without pretending it is the
+ * IsItInMyCountry source. Used only for the current Top 10 presentation rows. */
+async function getJinaReaderPage(url) {
+    const targetUrl = url.replace(/^http:/i, 'https:');
+    const proxyUrl = `https://r.jina.ai/${targetUrl}`;
+    let lastError;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+        try {
+            const response = await fetchWithTimeout(proxyUrl, { headers: JINA_HEADERS });
+            if (!response.ok) throw new Error(`Jina HTTP ${response.status}`);
+            const body = await response.text();
+            if (/performing security verification|please enable cookies|error 1102/i.test(body)) {
+                throw new Error('Jina returned a challenge page');
+            }
+            return body;
+        } catch (error) {
+            lastError = error;
+            if (attempt < 2) await sleep(350 * (attempt + 1));
+        }
+    }
+    throw lastError ?? new Error('Jina reader failed');
 }
 
 async function getFullSourcePage(url) {
@@ -525,6 +548,76 @@ function fullCatalogRows(label, items) {
     });
 }
 
+/** Current Netflix India presentation rows from JustWatch's daily provider
+ * page. The broad title discovery still comes from IsItInMyCountry; this is
+ * only the small, current Top 10 supplement used for the hero and first rows.
+ */
+async function scrapeJustWatchTop10(existingItems) {
+    const markdown = await getJinaReaderPage('https://www.justwatch.com/in/provider/netflix');
+    const start = markdown.indexOf('## Top 10 Movies & TV shows on Netflix');
+    const end = markdown.indexOf('## All movies & TV shows on Netflix', start + 1);
+    if (start < 0 || end <= start) throw new Error('JustWatch Top 10 section not found');
+    const section = markdown.slice(start, end);
+    const entries = [];
+    const pattern = /(?:^|\n)(10|[1-9])\s+\n+\[!\[Image\s+\d+:\s*([^\]]+)\]\(([^)]+)\)[\s\S]*?\]\((https:\/\/www\.justwatch\.com\/in\/(?:movie|tv-show)\/[^)]+)\)/gi;
+    for (const match of section.matchAll(pattern)) {
+        entries.push({
+            rank: Number.parseInt(match[1], 10),
+            title: match[2].trim(),
+            poster: match[3],
+            url: match[4],
+            mediaType: match[4].includes('/tv-show/') ? 'tv' : 'movie',
+        });
+    }
+    if (entries.length < 8) throw new Error(`JustWatch Top 10 too small (${entries.length})`);
+
+    const existingByTitle = new Map(
+        existingItems.map(item => [normalizeLookupTitle(item.title), item]),
+    );
+    const resolved = await Promise.all(entries.map(async entry => {
+        const known = existingByTitle.get(normalizeLookupTitle(entry.title));
+        if (known) {
+            let enrichedKnown = known;
+            if (!known.imdb_id && !known.tmdb_id) {
+                const omdb = await getOmdbMetadata(known, entry.mediaType);
+                enrichedKnown = {
+                    ...known,
+                    ...omdb,
+                    imageUrl: known.imageUrl || omdb.imageUrl || '',
+                    description: known.description || omdb.description,
+                    rating: known.rating || omdb.rating,
+                };
+            }
+            return {
+                ...enrichedKnown,
+                ranking_text: `#${entry.rank} in India Today`,
+            };
+        }
+        const slug = entry.url.split('/').filter(Boolean).pop() || `rank-${entry.rank}`;
+        const base = {
+            id: `jw-${slug}`,
+            title: entry.title,
+            type: entry.mediaType === 'tv' ? 'SERIES' : 'FILM',
+            mediaType: entry.mediaType,
+            imageUrl: entry.poster,
+            ranking_text: `#${entry.rank} in India Today`,
+            videoUrl: SAMPLE_VIDEOS[entry.rank % SAMPLE_VIDEOS.length],
+        };
+        const omdb = await getOmdbMetadata(base, entry.mediaType);
+        return {
+            ...base,
+            ...omdb,
+            imageUrl: base.imageUrl || omdb.imageUrl || '',
+            description: base.description || omdb.description,
+            rating: base.rating || omdb.rating,
+        };
+    }));
+    return {
+        movieItems: resolved.filter(item => item.mediaType === 'movie'),
+        showItems: resolved.filter(item => item.mediaType === 'tv'),
+    };
+}
+
 /**
  * Broad public discovery path. IsItInMyCountry publishes a sitemap of title
  * pages and each page includes an India availability row. It is not an
@@ -591,11 +684,33 @@ async function scrapeFullPublicCatalog() {
     );
     const fullMovies = enriched.filter(item => item.mediaType === 'movie');
     const fullShows = enriched.filter(item => item.mediaType === 'tv');
+    let top10 = { movieItems: [], showItems: [] };
+    try {
+        top10 = await scrapeJustWatchTop10([
+            ...enriched,
+            ...existing.movies.flatMap(row => row.movies ?? []),
+        ]);
+        console.log(`Current Netflix India Top 10: ${top10.movieItems.length} movies and ${top10.showItems.length} shows.`);
+    } catch (error) {
+        // Keep the last known chart visible if the daily presentation source
+        // is temporarily blocked; the broad catalog remains authoritative.
+        console.log(`Current Top 10 supplement unavailable (${error.message}) — keeping previous chart rows.`);
+        top10 = {
+            movieItems: existing.movies.find(row => row.rowTitle === 'Top 10 Movies in India Today')?.movies ?? [],
+            showItems: existing.movies.find(row => row.rowTitle === 'Top 10 TV Shows in India Today')?.movies ?? [],
+        };
+    }
     return {
         source: 'isitinmycountry',
         movieItems: fullMovies,
         showItems: fullShows,
         rows: [
+            ...(top10.movieItems.length
+                ? [{ rowTitle: 'Top 10 Movies in India Today', type: 'top_10', movies: top10.movieItems }]
+                : []),
+            ...(top10.showItems.length
+                ? [{ rowTitle: 'Top 10 TV Shows in India Today', type: 'top_10', movies: top10.showItems }]
+                : []),
             ...fullCatalogRows('Netflix India Movies', fullMovies),
             ...fullCatalogRows('Netflix India Series', fullShows),
         ],
@@ -754,8 +869,33 @@ async function enrichExistingCatalog() {
     console.log(`Existing catalog enriched: ${resolvedIds} new IDs resolved; ${playable}/${enrichedItems.length} titles can use Nxsha/NHD embeds.`);
 }
 
+async function refreshTop10Rows() {
+    const rows = existing.movies ?? [];
+    const items = rows.flatMap(row => row.movies ?? []);
+    const top10 = await scrapeJustWatchTop10(items);
+    const rebuilt = new Set(['Top 10 Movies in India Today', 'Top 10 TV Shows in India Today']);
+    const remainingRows = rows.filter(row => !rebuilt.has(row.rowTitle));
+    const nextRows = [
+        ...(top10.movieItems.length
+            ? [{ rowTitle: 'Top 10 Movies in India Today', type: 'top_10', movies: top10.movieItems }]
+            : []),
+        ...(top10.showItems.length
+            ? [{ rowTitle: 'Top 10 TV Shows in India Today', type: 'top_10', movies: top10.showItems }]
+            : []),
+        ...remainingRows,
+    ];
+    await Promise.all(top10.movieItems.concat(top10.showItems).map(item => savePoster(item)));
+    writePosterIndex();
+    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
+    console.log(`Top 10 rows refreshed: ${top10.movieItems.length} movies and ${top10.showItems.length} shows.`);
+}
+
 if (process.env.CATALOG_DISCOVERY === 'enrich-existing') {
     await enrichExistingCatalog();
+    process.exit(0);
+}
+if (process.env.CATALOG_DISCOVERY === 'refresh-top10') {
+    await refreshTop10Rows();
     process.exit(0);
 }
 

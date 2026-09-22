@@ -126,6 +126,12 @@ The bundled catalog is refreshed automatically by the
   titles whose page lists India availability. It pulls the title poster,
   description, year, type, rating, runtime, seasons and episode total, then
   commits the result to `data/movies.json`. **No discovery API key or sign-up.**
+- The Home screen keeps a separate current **Top 10 Movies** and **Top 10 TV
+  Shows** presentation pair above the broad catalog. Those small daily rows
+  are supplemented from JustWatch's India Netflix provider page; the broad
+  availability source remains IsItInMyCountry.
+- Manual workflow modes include `enrich-existing` (fill provider IDs without a
+  full crawl) and `refresh-top10` (refresh only the Hero/Top 10 rows).
 - If the broad public source is unavailable, it safely falls back to
   FlixPatrol's daily *TOP 10 on Netflix in India* rather than erasing the
   previous catalog.
