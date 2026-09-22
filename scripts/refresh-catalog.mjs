@@ -334,6 +334,7 @@ const NETFLIX_OFFICIAL_IDS = {
     'Gurren Lagann': '70213196',
     'Mobile Suit Gundam Seed': '80146549',
     'Blue Eye Samurai': '81144203',
+    'Violet Evergarden': '80182123',
     Arcane: '81435684',
     PLUTO: '81712066',
     'KPop Demon Hunters': '81498621',
@@ -838,6 +839,9 @@ async function getTvMazeEpisodeMetadata(title) {
             tvMazeCache.set(key, {});
             return {};
         }
+        const providerIds = show.externals?.imdb
+            ? { imdb_id: show.externals.imdb }
+            : {};
         const episodes = Array.isArray(show._embedded?.episodes)
             ? show._embedded.episodes
                 .filter(episode => episode?.season > 0 && episode?.number > 0)
@@ -852,8 +856,8 @@ async function getTvMazeEpisodeMetadata(title) {
                 .filter(episode => episode.name && !/^(?:episode\s+\d+|tba|to be announced)$/i.test(episode.name.trim()))
             : [];
         if (!episodes.length) {
-            tvMazeCache.set(key, {});
-            return {};
+            tvMazeCache.set(key, providerIds);
+            return providerIds;
         }
         const grouped = new Map();
         for (const episode of episodes) {
@@ -869,6 +873,7 @@ async function getTvMazeEpisodeMetadata(title) {
         const seasonEpisodeCounts = seasons.map(season => season.episode_count);
         const metadata = seasons.length
             ? {
+                ...providerIds,
                 seasons,
                 seasonEpisodeCounts,
                 episodeCount: seasonEpisodeCounts.reduce((total, count) => total + count, 0),
@@ -1539,8 +1544,7 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
                 return null;
             }
             const tvMazeFallback = mediaType === 'tv'
-                && !Array.isArray(known?.seasons)
-                && !Array.isArray(official.seasons)
+                && (!known?.imdb_id && !known?.tmdb_id || !Array.isArray(known?.seasons))
                 ? await getTvMazeEpisodeMetadata(title)
                 : {};
             const curatedEpisodeFallback = mediaType === 'tv'
@@ -1551,13 +1555,13 @@ async function scrapeNetflixCuratedCatalog(existingItems) {
             const episodeFallback = Array.isArray(tvMazeFallback.seasons)
                 ? tvMazeFallback
                 : curatedEpisodeFallback?.seasons
-                    ? curatedEpisodeFallback
+                    ? { ...tvMazeFallback, ...curatedEpisodeFallback }
                     : mediaType === 'tv'
                         && catalogCollection === 'Netflix Anime & Animation'
                         && !Array.isArray(known?.seasons)
                         && !Array.isArray(official.seasons)
-                        ? await getJikanEpisodeMetadata(title)
-                        : {};
+                        ? { ...tvMazeFallback, ...await getJikanEpisodeMetadata(title) }
+                        : tvMazeFallback;
             if (known) {
                 return {
                     ...known,

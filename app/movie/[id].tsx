@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Platform, Pressable, StyleSheet, Dimensions, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Dimensions, View } from 'react-native';
 import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
@@ -34,7 +34,10 @@ const DRAG_THRESHOLD = Math.min(Dimensions.get('window').height * 0.20, 150);
 const HORIZONTAL_DRAG_THRESHOLD = Math.min(Dimensions.get('window').width * 0.51, 80);
 const DIRECTION_LOCK_ANGLE = 45;
 const ENABLE_HORIZONTAL_DRAG_CLOSE = true;
-const FALLBACK_PREVIEW_URL = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4';
+// Refresh jobs historically attached generic Google sample clips to every
+// catalog item. Those are not title previews and must never be treated as
+// playback sources.
+const PLACEHOLDER_VIDEO_URL = /commondatastorage\.googleapis\.com\/gtv-videos-bucket\/sample\//i;
 
 export default function MovieScreen() {
     const { id } = useLocalSearchParams();
@@ -299,14 +302,15 @@ export default function MovieScreen() {
     }, [movie.embed_provider, movie.embed_url, settings.defaultProvider]);
 
     const currentProvider: ProviderId = cycle[providerIndex] ?? 'nxsha';
-    // Public catalog entries do not always have a playable provider id. Keep a
-    // safe HTTPS preview clip so the Netflix-style play button still works in
-    // the web preview instead of silently opening a dead player URL.
-    const fallbackVideoUrl = (movie.videoUrl || FALLBACK_PREVIEW_URL).replace(/^http:/i, 'https:');
-    const directFallback = !parsedTmdb && !movie.imdb_id && !movie.embed_url;
+    const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
+        ? movie.videoUrl.replace(/^http:/i, 'https:')
+        : undefined;
+    const hasProviderPlayback = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id);
+    const directFallback = !hasProviderPlayback && Boolean(directPreviewUrl);
+    const hasPlayablePlayback = hasProviderPlayback || directFallback;
 
     const buildSrc = useCallback(() => {
-        if (directFallback) return fallbackVideoUrl;
+        if (directFallback) return directPreviewUrl || '';
         try {
             return buildEmbedUrl(
                 currentProvider,
@@ -322,9 +326,9 @@ export default function MovieScreen() {
                 templateOverridesFor(settings, currentProvider),
             );
         } catch {
-            return fallbackVideoUrl;
+            return '';
         }
-    }, [currentProvider, directFallback, fallbackVideoUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
 
     const getEpisodeCountForSeason = useCallback((targetSeason: number) => {
         return movie.seasonEpisodeCounts?.[targetSeason - 1]
@@ -335,12 +339,21 @@ export default function MovieScreen() {
             ?? movie.episodeCount;
     }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
 
+    const officialNetflixUrl = movie.netflixUrl
+        || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
+        || `https://www.netflix.com/search?q=${encodeURIComponent(String(movie.title ?? '').trim())}`;
+
+    const openOfficialTitle = useCallback(() => {
+        if (IS_WEB) {
+            window.open(officialNetflixUrl, '_blank', 'noopener');
+        } else {
+            Linking.openURL(officialNetflixUrl).catch(() => {});
+        }
+    }, [officialNetflixUrl]);
+
     const handlePlayFull = useCallback(() => {
-        const canPlay = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id || fallbackVideoUrl);
-        if (!canPlay) {
-            const q = encodeURIComponent(String(movie.title ?? '').trim());
-            const url = `https://www.netflix.com/search?q=${q}`;
-            if (IS_WEB) window.open(url, '_blank', 'noopener');
+        if (!hasPlayablePlayback) {
+            openOfficialTitle();
             return;
         }
         const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
@@ -362,7 +375,7 @@ export default function MovieScreen() {
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, cycle, fallbackVideoUrl, getEpisodeCountForSeason]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -372,6 +385,10 @@ export default function MovieScreen() {
     }, [mediaType, getEpisodeCountForSeason]);
 
     const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
+        if (!hasPlayablePlayback) {
+            openOfficialTitle();
+            return;
+        }
         if (mediaType !== 'tv') {
             handlePlayFull();
             return;
@@ -381,7 +398,7 @@ export default function MovieScreen() {
         setEpisode(selectedEpisode);
         setTotalEps(getEpisodeCountForSeason(selectedSeason));
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, getEpisodeCountForSeason]);
+    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
@@ -403,7 +420,7 @@ export default function MovieScreen() {
         id: movie.id,
         title: movie.title || '',
         imageUrl: movie.imageUrl || '',
-        video_url: fallbackVideoUrl,
+        ...(directPreviewUrl ? { video_url: directPreviewUrl } : {}),
         year: movie.year || '2024',
         duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
         runtime: movie.runtime,
@@ -421,10 +438,12 @@ export default function MovieScreen() {
         imdb_id: movie.imdb_id,
         embed_provider: movie.embed_provider,
         embed_url: movie.embed_url,
+        netflixId: movie.netflixId,
+        netflixUrl: movie.netflixUrl,
         mediaType,
     };
 
-    const src = playerOpen ? buildSrc() : '';
+    const src = playerOpen && hasPlayablePlayback ? buildSrc() : '';
 
     if (IS_WEB) {
         return (

@@ -49,6 +49,8 @@ interface MovieData {
     imdb_id?: string;
     embed_provider?: 'nxsha' | 'nhd' | 'custom';
     embed_url?: string;
+    netflixId?: string;
+    netflixUrl?: string;
     initialSeason?: number;
     initialEpisode?: number;
     totalEpisodesInSeason?: number;
@@ -111,7 +113,6 @@ export function ExpandedPlayer({
     const moreLikeThis = (rows.find(r => r.type !== 'games' && r.movies.length >= 6) ?? rows[0])?.movies.slice(0, 6) ?? [];
 
     const defaultMovieData = {
-        video_url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         year: '2024',
         duration: '2h 30m',
         rating: 'PG-13',
@@ -206,23 +207,25 @@ export function ExpandedPlayer({
 
     const startTrailer = () => setTrailerStage('play');
 
-    // Use a provider embed when ids are available; otherwise play the safe
-    // HTTPS preview clip supplied by the catalog instead of leaving the button
-    // pointing at a dead external player.
+    // A catalog poster/Netflix id is not itself an embeddable playback source.
+    // Only provider ids, a manual embed, or an explicitly supplied direct video
+    // may open EmbedPlayer. Never disguise the generic sample clips as content.
     const hasProviderEmbed = Boolean(movieData.embed_url || movieData.tmdb_id || movieData.imdb_id);
     const hasDirectPreview = Boolean(movieData.video_url) && !hasProviderEmbed;
-    const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || movieData.video_url));
+    const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || hasDirectPreview));
+    const officialNetflixUrl = movieData.netflixUrl
+        || (movieData.netflixId ? `https://www.netflix.com/in/title/${movieData.netflixId}` : undefined);
     const handlePlay = () => {
         if (hasPlayableSource && onPlayFull) {
             onPlayFull(movieData);
             return;
         }
         const q = encodeURIComponent(String(movieData.title ?? '').trim());
-        const url = `https://www.netflix.com/search?q=${q}`;
+        const url = officialNetflixUrl || `https://www.netflix.com/search?q=${q}`;
         if (IS_WEB) {
             window.open(url, '_blank', 'noopener');
         } else {
-            Linking.openURL(url);
+            Linking.openURL(url).catch(() => {});
         }
     };
 
