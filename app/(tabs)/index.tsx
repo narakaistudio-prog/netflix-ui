@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Platform, View, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -32,16 +32,23 @@ const IS_WEB = Platform.OS === 'web';
 
 export default function HomeScreen() {
   const { rows: movies } = useCatalog();
+  // Keep the Home contract independent of refresh-row insertion order.
+  // Current editorial shelves may be refreshed separately, but Top 10 stays
+  // immediately below the hero like Netflix.
+  const orderedMovies = useMemo(() => [
+    ...movies.filter(row => row.type === 'top_10'),
+    ...movies.filter(row => row.type !== 'top_10'),
+  ], [movies]);
   const insets = useSafeAreaInsets();
   const { tiltX, tiltY } = useDeviceMotion();
   const { isVisionOS } = useVisionOS();
   const router = useRouter();
   const { selectedProfile } = useUser();
 
-  const allMovies = movies.flatMap(row => row.movies);
+  const allMovies = orderedMovies.flatMap(row => row.movies);
   // Hero = today's #1 title in India (first Top 10 row), always current
   const featuredMovie: any =
-    movies.find(r => r.type === 'top_10')?.movies[0] ?? allMovies[0] ?? { id: '1', imageUrl: '' };
+    orderedMovies.find(r => r.type === 'top_10')?.movies[0] ?? allMovies[0] ?? { id: '1', imageUrl: '' };
 
   const SCROLL_THRESHOLD = 4;
   const SLIDE_ACTIVATION_POINT = 90; // Point at which sliding can start
@@ -179,7 +186,7 @@ export default function HomeScreen() {
             }
           />
 
-          {movies.map(row => (
+          {orderedMovies.map(row => (
             <MovieList key={row.rowTitle} {...row} />
           ))}
         </Animated.ScrollView>

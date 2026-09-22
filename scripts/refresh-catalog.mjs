@@ -1028,8 +1028,12 @@ async function refreshCurrentCatalog() {
         'JustWatch Current Movies in India',
         'JustWatch Current TV Shows in India',
     ]);
-    const remainingRows = existing.movies.filter(row => !rebuilt.has(row.rowTitle));
+    const top10Rows = existing.movies.filter(row => row.type === 'top_10');
+    const remainingRows = existing.movies.filter(row => row.type !== 'top_10' && !rebuilt.has(row.rowTitle));
     const nextRows = [
+        // Preserve the Home contract: Hero, Top 10 Movies, Top 10 TV Shows,
+        // then the current shelves and the older broad catalog.
+        ...top10Rows,
         ...(movieItems.length
             ? [{ rowTitle: 'JustWatch Current Movies in India', type: 'normal', movies: movieItems }]
             : []),
