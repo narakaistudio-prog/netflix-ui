@@ -170,7 +170,7 @@ const WebPosterCard = ({ item, onPress }: {
     );
 };
 
-export function MovieList({ rowTitle, movies, type }: MovieRow) {
+export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow & { hideExploreAll?: boolean }) {
     const router = useRouter();
     const isTop10 = type === 'top_10';
     const { isVisionOS } = useVisionOS();
@@ -238,16 +238,18 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
             {IS_WEB ? (
                 <View style={rowStyles.headerRow}>
                     <Text style={[styles.sectionTitle, rowStyles.sectionTitle]}>{rowTitle}</Text>
-                    <Pressable
-                        style={({ hovered }: any) => [rowStyles.explore, hovered && rowStyles.exploreHover]}
-                        onPress={() => router.push({
-                            pathname: '/browse/[rowTitle]',
-                            params: { rowTitle },
-                        })}
-                    >
-                        <Text style={rowStyles.exploreText}>Explore All</Text>
-                        <Ionicons name="chevron-forward" size={13} color="#54b9c5" />
-                    </Pressable>
+                    {!hideExploreAll ? (
+                        <Pressable
+                            style={({ hovered }: any) => [rowStyles.explore, hovered && rowStyles.exploreHover]}
+                            onPress={() => router.push({
+                                pathname: '/browse/[rowTitle]',
+                                params: { rowTitle },
+                            })}
+                        >
+                            <Text style={rowStyles.exploreText}>Explore All</Text>
+                            <Ionicons name="chevron-forward" size={13} color="#54b9c5" />
+                        </Pressable>
+                    ) : null}
                 </View>
             ) : (
                 <Text style={styles.sectionTitle}>{rowTitle}</Text>

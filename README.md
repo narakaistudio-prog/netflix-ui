@@ -131,6 +131,10 @@ The bundled catalog is refreshed automatically by the
   Shows** presentation pair above the broad catalog. Those small daily rows
   are supplemented from JustWatch's India Netflix provider page; the broad
   availability source remains IsItInMyCountry.
+- A full refresh also merges JustWatch's current paginated Netflix India
+  popularity catalog (new releases, Korean series, anime and current movies)
+  into dedicated current rows, while retaining the older IsItInMyCountry
+  availability catalog. A JustWatch failure never replaces the broad source.
 - Manual workflow modes include `enrich-existing` (fill provider IDs without a
   full crawl) and `refresh-top10` (refresh only the Hero/Top 10 rows).
 - If the broad public source is unavailable, it safely falls back to

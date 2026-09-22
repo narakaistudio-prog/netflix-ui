@@ -22,6 +22,8 @@ export interface Movie {
     type?: string;
     /** Canonical media type for embed building. */
     mediaType?: 'movie' | 'tv';
+    /** Discovery source marker for current editorial shelves. */
+    catalogSource?: 'justwatch' | 'isitinmycountry';
     /** TMDB numeric id (string or number). */
     tmdb_id?: string | number;
     /** IMDb id (tt…). */

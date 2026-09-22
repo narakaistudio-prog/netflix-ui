@@ -4,10 +4,12 @@
  *
  * Public discovery needs no key:
  *  1. Crawls a public Netflix availability sitemap and filters India rows
- *  2. Falls back to FlixPatrol's daily India TOP 10 if the broad source fails
- *  3. Reads each discovered title's poster, plot, rating and availability data
- *  4. Optionally enriches titles with OMDb metadata and episode details
- *  5. Rewrites data/movies.json so the bundled catalog never goes stale
+ *  2. Supplements the broad catalog with JustWatch's current Netflix India
+ *     popularity pages (new releases, Korean series, anime and movies)
+ *  3. Falls back to FlixPatrol's daily India TOP 10 if the broad source fails
+ *  4. Reads each discovered title's poster, plot, rating and availability data
+ *  5. Optionally enriches titles with OMDb metadata and episode details
+ *  6. Rewrites data/movies.json so the bundled catalog never goes stale
  *
  * OMDb is an optional server-side enricher; the public discovery fallback
  * always remains available.
@@ -33,6 +35,8 @@ const FULL_PROXY_SOURCES = [
 ];
 const FULL_PAGE_CONCURRENCY = 8;
 const FULL_ROW_SIZE = 48;
+const JUSTWATCH_CATALOG_PAGE_SIZE = 40;
+const JUSTWATCH_MAX_CATALOG_PAGES = 6;
 const BLOCKED_TOP10_TITLES = new Set(['365 dni']);
 const TOP10_REPLACEMENTS = [
     {
@@ -250,21 +254,30 @@ function isUsableFullSourceResponse(url, body) {
 /** Read a secondary public page through Jina without pretending it is the
  * IsItInMyCountry source. Used only for the current Top 10 presentation rows. */
 async function getJinaReaderPage(url) {
-    const targetUrl = url.replace(/^http:/i, 'https:');
-    const proxyUrl = `https://r.jina.ai/${targetUrl}`;
+    // JustWatch's pagination is occasionally rendered differently between its
+    // HTTP and HTTPS origins. Try the requested origin first, then the other
+    // form, while always keeping the Jina reader as the public proxy.
+    const targetUrls = [
+        url,
+        url.replace(/^http:/i, 'https:'),
+        url.replace(/^https:/i, 'http:'),
+    ].filter((candidate, index, all) => all.indexOf(candidate) === index);
     let lastError;
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-        try {
-            const response = await fetchWithTimeout(proxyUrl, { headers: JINA_HEADERS });
-            if (!response.ok) throw new Error(`Jina HTTP ${response.status}`);
-            const body = await response.text();
-            if (/performing security verification|please enable cookies|error 1102/i.test(body)) {
-                throw new Error('Jina returned a challenge page');
+    for (const targetUrl of targetUrls) {
+        const proxyUrl = `https://r.jina.ai/${targetUrl}`;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+            try {
+                const response = await fetchWithTimeout(proxyUrl, { headers: JINA_HEADERS });
+                if (!response.ok) throw new Error(`Jina HTTP ${response.status}`);
+                const body = await response.text();
+                if (/performing security verification|please enable cookies|error 1102/i.test(body)) {
+                    throw new Error('Jina returned a challenge page');
+                }
+                return body;
+            } catch (error) {
+                lastError = error;
+                if (attempt < 2) await sleep(350 * (attempt + 1));
             }
-            return body;
-        } catch (error) {
-            lastError = error;
-            if (attempt < 2) await sleep(350 * (attempt + 1));
         }
     }
     throw lastError ?? new Error('Jina reader failed');
@@ -644,6 +657,120 @@ async function scrapeJustWatchTop10(existingItems) {
 }
 
 /**
+ * JustWatch publishes a popularity-sorted, paginated Netflix India catalog in
+ * addition to its daily Top 10. The broad availability crawl remains the
+ * IsItInMyCountry source of truth; these rows only add current titles that the
+ * public crawl can lag, including newer Korean, anime and 2025/2026 releases.
+ */
+function parseJustWatchCatalogPage(markdown, kind) {
+    const marker = kind === 'movie' ? '## All movies on Netflix' : '## All TV shows on Netflix';
+    const start = markdown.indexOf(marker);
+    const section = start >= 0 ? markdown.slice(start) : markdown;
+    const pattern = /!\[Image\s+\d+:\s*([^\]]+)\]\((https?:\/\/images\.justwatch\.com\/poster\/[^)]+)\)(?:TV)?\]\((https?:\/\/www\.justwatch\.com\/in\/(movie|tv-show)\/[^)\s]+)\)/gi;
+    const items = [];
+    for (const match of section.matchAll(pattern)) {
+        const mediaType = match[4] === 'tv-show' ? 'tv' : 'movie';
+        if (mediaType !== kind) continue;
+        const url = match[3];
+        const slug = url.split('/').filter(Boolean).pop();
+        if (!slug) continue;
+        items.push({
+            title: match[1].trim(),
+            poster: match[2],
+            url,
+            slug,
+            mediaType,
+        });
+    }
+    return items;
+}
+
+async function scrapeJustWatchCatalog() {
+    const kinds = [
+        { kind: 'movie', path: 'movies' },
+        { kind: 'tv', path: 'tv-shows' },
+    ];
+    const result = { movieItems: [], showItems: [] };
+
+    for (const { kind, path } of kinds) {
+        const firstUrl = `http://www.justwatch.com/in/provider/netflix/${path}`;
+        const firstPage = await getJinaReaderPage(firstUrl);
+        const totalMatch = firstPage.match(/\b\d+[–-]\d+\s*\/\s*([\d,]+)\b/);
+        const total = totalMatch ? Number.parseInt(totalMatch[1].replace(/,/g, ''), 10) : JUSTWATCH_CATALOG_PAGE_SIZE;
+        const pageCount = Math.min(
+            JUSTWATCH_MAX_CATALOG_PAGES,
+            Math.max(1, Math.ceil(total / JUSTWATCH_CATALOG_PAGE_SIZE)),
+        );
+        const pages = [firstPage];
+
+        const otherPages = await Promise.all(
+            Array.from({ length: pageCount - 1 }, async (_, index) => {
+                const pageNumber = index + 2;
+                try {
+                    return await getJinaReaderPage(`${firstUrl}?page=${pageNumber}`);
+                } catch (error) {
+                    console.log(`JustWatch ${kind} page ${pageNumber} skipped (${error.message})`);
+                    return '';
+                }
+            }),
+        );
+        pages.push(...otherPages.filter(Boolean));
+
+        const seen = new Set();
+        const parsed = pages
+            .flatMap(page => parseJustWatchCatalogPage(page, kind))
+            .filter(item => {
+                if (!item.url || seen.has(item.url) || BLOCKED_TOP10_TITLES.has(item.title)) return false;
+                seen.add(item.url);
+                return true;
+            });
+        const items = parsed.map((item, index) => ({
+            id: `jw-catalog-${kind}-${item.slug}`,
+            title: item.title,
+            type: kind === 'tv' ? 'SERIES' : 'FILM',
+            mediaType: kind,
+            imageUrl: item.poster,
+            videoUrl: SAMPLE_VIDEOS[index % SAMPLE_VIDEOS.length],
+            catalogSource: 'justwatch',
+        }));
+        if (kind === 'movie') result.movieItems = items;
+        else result.showItems = items;
+        console.log(`JustWatch current ${kind} catalog: ${items.length} titles from ${pages.length}/${pageCount} pages.`);
+    }
+
+    return result;
+}
+
+function mergeCatalogItems(baseItems, currentItems) {
+    const merged = [...baseItems];
+    const indexes = new Map();
+    merged.forEach((item, index) => {
+        const key = normalizeLookupTitle(item.title);
+        if (key && !indexes.has(key)) indexes.set(key, index);
+    });
+
+    for (const current of currentItems) {
+        const key = normalizeLookupTitle(current.title);
+        const existingIndex = indexes.get(key);
+        if (existingIndex === undefined) {
+            indexes.set(key, merged.length);
+            merged.push(current);
+            continue;
+        }
+        const existing = merged[existingIndex];
+        // Keep the broad source's description/IDs/episodes while using the
+        // current JustWatch poster and catalog identity for this refreshed item.
+        merged[existingIndex] = {
+            ...existing,
+            ...current,
+            description: existing.description || current.description,
+            imageUrl: current.imageUrl || existing.imageUrl,
+        };
+    }
+    return merged;
+}
+
+/**
  * Broad public discovery path. IsItInMyCountry publishes a sitemap of title
  * pages and each page includes an India availability row. It is not an
  * official Netflix API, but it is materially broader than a Top 10 chart.
@@ -709,6 +836,14 @@ async function scrapeFullPublicCatalog() {
     );
     const fullMovies = enriched.filter(item => item.mediaType === 'movie');
     const fullShows = enriched.filter(item => item.mediaType === 'tv');
+    let currentCatalog = { movieItems: [], showItems: [] };
+    try {
+        currentCatalog = await scrapeJustWatchCatalog();
+    } catch (error) {
+        console.log(`Current JustWatch catalog supplement unavailable (${error.message}) — keeping broad catalog only.`);
+    }
+    const mergedMovies = mergeCatalogItems(fullMovies, currentCatalog.movieItems);
+    const mergedShows = mergeCatalogItems(fullShows, currentCatalog.showItems);
     let top10 = { movieItems: [], showItems: [] };
     try {
         top10 = await scrapeJustWatchTop10([
@@ -726,9 +861,9 @@ async function scrapeFullPublicCatalog() {
         };
     }
     return {
-        source: 'isitinmycountry',
-        movieItems: fullMovies,
-        showItems: fullShows,
+        source: 'isitinmycountry+justwatch',
+        movieItems: mergedMovies,
+        showItems: mergedShows,
         rows: [
             ...(top10.movieItems.length
                 ? [{ rowTitle: 'Top 10 Movies in India Today', type: 'top_10', movies: top10.movieItems }]
@@ -736,8 +871,14 @@ async function scrapeFullPublicCatalog() {
             ...(top10.showItems.length
                 ? [{ rowTitle: 'Top 10 TV Shows in India Today', type: 'top_10', movies: top10.showItems }]
                 : []),
-            ...fullCatalogRows('Netflix India Movies', fullMovies),
-            ...fullCatalogRows('Netflix India Series', fullShows),
+            ...(currentCatalog.movieItems.length
+                ? [{ rowTitle: 'JustWatch Current Movies in India', type: 'normal', movies: currentCatalog.movieItems }]
+                : []),
+            ...(currentCatalog.showItems.length
+                ? [{ rowTitle: 'JustWatch Current TV Shows in India', type: 'normal', movies: currentCatalog.showItems }]
+                : []),
+            ...fullCatalogRows('Netflix India Movies', mergedMovies),
+            ...fullCatalogRows('Netflix India Series', mergedShows),
         ],
         extra: [],
     };
@@ -969,7 +1110,10 @@ if (!isFullCatalog && (!discoveredMovies.length || !discoveredShows.length)) {
 const REBUILT = new Set([
     'Top 10 Movies in India Today',
     'Top 10 Series in India Today',
+    'Top 10 TV Shows in India Today',
     'Popular on Netflix',
+    'JustWatch Current Movies in India',
+    'JustWatch Current TV Shows in India',
 ]);
 const isRebuiltRow = row => REBUILT.has(row.rowTitle)
     || /^Netflix India (Movies|Series) \d+[–-]\d+$/.test(row.rowTitle);

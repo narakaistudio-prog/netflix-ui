@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MovieRow } from '@/types/movie';
+import { Movie, MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
 import { MovieList } from '@/components/MovieList/MovieList';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
@@ -36,6 +36,120 @@ export function getCatalogSections(rows: MovieRow[], kind: CatalogKind): MovieRo
     return [...top10, ...curated, ...broadCatalog];
 }
 
+const KOREAN_TITLES = [
+    'all of us are dead',
+    'alchemy of souls',
+    'business proposal',
+    'crash landing on you',
+    'daily dose of sunshine',
+    'doctor romantic',
+    'dr romantic',
+    'extraordinary attorney woo',
+    'hierarchy',
+    'hometown cha cha cha',
+    'itaewon class',
+    'king the land',
+    'love alarm',
+    'love next door',
+    'my demon',
+    'our sticky love',
+    'parasyte the grey',
+    'queen of tears',
+    'romance in the house',
+    'squid game',
+    'the glory',
+    'the king eternal monarch',
+    'the silent sea',
+    'the uncanny counter',
+    'the wonderfools',
+    'trigger',
+    'vincenzo',
+    'weak hero',
+    'when life gives you tangerines',
+];
+
+const ANIME_TITLES = [
+    'bleach',
+    'black clover',
+    'boruto',
+    'demon slayer',
+    'death note',
+    'dragon ball',
+    'haikyu',
+    'hunter x hunter',
+    'jujutsu kaisen',
+    'kimetsu no yaiba',
+    'my hero academia',
+    'naruto',
+    'one piece',
+    'the apothecary diaries',
+    'that time i got reincarnated as a slime',
+    'vinland saga',
+];
+
+function normalizedTitle(title?: string) {
+    return String(title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function matchesCollection(title: string | undefined, collection: string[]) {
+    const normalized = normalizedTitle(title);
+    return collection.some(item => normalized === item || normalized.includes(item));
+}
+
+function uniqueItems(items: Movie[]) {
+    const seen = new Set<string>();
+    return items.filter(item => {
+        const key = item.id || normalizedTitle(item.title);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+}
+
+type CatalogShelf = MovieRow & { hideExploreAll?: boolean };
+
+function getEditorialShelves(sections: MovieRow[], kind: CatalogKind): CatalogShelf[] {
+    const allItems = uniqueItems(sections.flatMap(section => section.movies));
+    const currentItems = uniqueItems(allItems.filter(item => item.catalogSource === 'justwatch'));
+    const newItems = currentItems.length
+        ? currentItems.slice(0, 40)
+        : uniqueItems(allItems.filter(item => Number.parseInt(String(item.year || ''), 10) >= 2025)).slice(0, 40);
+    const shelves: CatalogShelf[] = [];
+
+    if (newItems.length) {
+        shelves.push({
+            rowTitle: 'New & Recently Added in India',
+            type: 'normal',
+            movies: newItems,
+            hideExploreAll: true,
+        });
+    }
+
+    if (kind === 'tv') {
+        const kDrama = uniqueItems(allItems.filter(item => matchesCollection(item.title, KOREAN_TITLES)));
+        if (kDrama.length) {
+            shelves.push({
+                rowTitle: 'K-Dramas & Korean Series',
+                type: 'normal',
+                movies: kDrama,
+                hideExploreAll: true,
+            });
+        }
+    }
+
+    const anime = uniqueItems(allItems.filter(item => matchesCollection(item.title, ANIME_TITLES)));
+    if (anime.length) {
+        shelves.push({
+            rowTitle: 'Anime & Animation',
+            type: 'normal',
+            movies: anime,
+            hideExploreAll: true,
+        });
+    }
+
+    return shelves;
+}
+
 function getPageCopy(kind: CatalogKind) {
     if (kind === 'movie') {
         return {
@@ -54,6 +168,12 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
     const { rows } = useCatalog();
     const insets = useSafeAreaInsets();
     const sections = useMemo(() => getCatalogSections(rows, kind), [rows, kind]);
+    const editorialShelves = useMemo(() => getEditorialShelves(sections, kind), [sections, kind]);
+    const displaySections = useMemo(() => {
+        const top10 = sections.filter(section => section.type === 'top_10');
+        const otherSections = sections.filter(section => section.type !== 'top_10');
+        return [...top10, ...editorialShelves, ...otherSections];
+    }, [sections, editorialShelves]);
     const copy = getPageCopy(kind);
     const uniqueTitleCount = useMemo(
         () => new Set(sections.flatMap(section => section.movies.map(item => item.id))).size,
@@ -78,8 +198,8 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
                 </View>
 
                 <View style={page.shelves}>
-                    {sections.map(section => (
-                        <MovieList key={section.rowTitle} {...section} />
+                    {displaySections.map((section, index) => (
+                        <MovieList key={`${section.rowTitle}-${index}`} {...section} />
                     ))}
                 </View>
             </ScrollView>
