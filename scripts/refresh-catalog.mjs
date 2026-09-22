@@ -38,6 +38,7 @@ const FULL_ROW_SIZE = 48;
 const JUSTWATCH_CATALOG_PAGE_SIZE = 40;
 const JUSTWATCH_MAX_CATALOG_PAGES = 6;
 const BLOCKED_TOP10_TITLES = new Set(['365 dni']);
+const BLOCKED_CATALOG_TITLE_PATTERN = /\b365\s*(?:dni|days)\b/i;
 const MATURE_ROW_TITLE = 'Mature & Adult Content';
 const MATURE_TITLE_PATTERNS = [
     'sapio',
@@ -962,6 +963,7 @@ const netflixOfficialIdByTitle = new Map(
         .map(([title, id]) => [normalizeLookupTitle(title), id]),
 );
 const getNetflixOfficialId = title => netflixOfficialIdByTitle.get(normalizeLookupTitle(title));
+const isBlockedCatalogTitle = item => BLOCKED_CATALOG_TITLE_PATTERN.test(String(item?.title || ''));
 
 function isMatureCatalogItem(item) {
     const normalizedTitle = normalizeLookupTitle(item.title);
@@ -978,6 +980,7 @@ function moveMatureToBottom(rows) {
     const matureItems = [];
     const matureKeys = new Set();
     const addMature = item => {
+        if (isBlockedCatalogTitle(item)) return;
         const key = normalizeLookupTitle(item.title) || item.id;
         if (!key || matureKeys.has(key)) return;
         matureKeys.add(key);
@@ -986,10 +989,11 @@ function moveMatureToBottom(rows) {
     const cleanedRows = rows
         .map(row => {
             if (row.rowTitle === MATURE_ROW_TITLE) {
-                (row.movies ?? []).forEach(addMature);
+                (row.movies ?? []).filter(item => !isBlockedCatalogTitle(item)).forEach(addMature);
                 return null;
             }
             const movies = (row.movies ?? []).filter(item => {
+                if (isBlockedCatalogTitle(item)) return false;
                 if (isMatureCatalogItem(item)) {
                     addMature(item);
                     return false;
@@ -1217,6 +1221,7 @@ async function scrapeJustWatchTop10(existingItems) {
     }
     const filteredEntries = entries.filter(entry => (
         !BLOCKED_TOP10_TITLES.has(entry.title)
+        && !isBlockedCatalogTitle(entry)
         && !isMatureCatalogItem({ title: entry.title })
     ));
     const occupiedRanks = new Set(filteredEntries.map(entry => entry.rank));
@@ -1351,7 +1356,7 @@ async function scrapeJustWatchCatalog() {
         const parsed = pages
             .flatMap(page => parseJustWatchCatalogPage(page, kind))
             .filter(item => {
-                if (!item.url || seen.has(item.url) || BLOCKED_TOP10_TITLES.has(item.title)) return false;
+                if (!item.url || seen.has(item.url) || BLOCKED_TOP10_TITLES.has(item.title) || isBlockedCatalogTitle(item)) return false;
                 seen.add(item.url);
                 return true;
             });
@@ -1535,7 +1540,7 @@ async function scrapeFullPublicCatalog() {
         (completed, total) => console.log(`Full catalog pages: ${completed}/${total}`),
     );
     const fetched = pages.length - pageFailures;
-    const items = pages.map(page => page.item).filter(Boolean);
+    const items = pages.map(page => page.item).filter(item => item && !isBlockedCatalogTitle(item));
     const movies = items.filter(item => item.mediaType === 'movie');
     const shows = items.filter(item => item.mediaType === 'tv');
     console.log(`Full catalog source: ${slugs.length} sitemap titles, ${fetched} pages fetched, ${items.length} India titles parsed.`);
