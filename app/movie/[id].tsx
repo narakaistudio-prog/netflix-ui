@@ -100,6 +100,19 @@ export default function MovieScreen() {
         return allMovies[0] ?? { id: rawId, imageUrl: '', title: '' };
     }, [allMovies, rawId]);
 
+    const handleSelectRelated = useCallback((related: Movie) => {
+        if (!related.id || related.id === movie.id) return;
+        // Replace rather than stack another transparent detail modal on top.
+        // The keyed detail view starts at the top with fresh trailer/episode state.
+        setPlayerOpen(false);
+        setProviderIndex(0);
+        setSeason(1);
+        setEpisode(1);
+        setTotalEps(undefined);
+        scrollOffset.value = 0;
+        router.replace({ pathname: '/movie/[id]', params: { id: related.id } });
+    }, [movie.id, router, scrollOffset]);
+
     const handleHapticFeedback = useCallback(() => {
         impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }, []);
@@ -453,6 +466,7 @@ export default function MovieScreen() {
                 <Animated.View style={[webStyles.modal, animatedStyle]}>
                     <View style={{ flex: 1, position: 'relative' }}>
                         <ExpandedPlayer
+                            key={String(movie.id)}
                             onClose={goBack}
                             scrollComponent={ScrollComponent}
                             movie={movieProps}
@@ -460,6 +474,7 @@ export default function MovieScreen() {
                             onPlayEpisode={handlePlayEpisode}
                             currentSeason={season}
                             onSelectSeason={handleSelectSeason}
+                            onSelectRelated={handleSelectRelated}
                         />
                         {playerOpen && src ? (
                             <View style={webStyles.playerLayer} pointerEvents="box-none">
@@ -488,6 +503,7 @@ export default function MovieScreen() {
             <StatusBar animated={true} style={statusBarStyle.value} />
             <Animated.View style={[styles.modalContent, animatedStyle]}>
                 <ExpandedPlayer
+                    key={String(movie.id)}
                     onClose={goBack}
                     scrollComponent={ScrollComponent}
                     movie={movieProps}
@@ -495,6 +511,7 @@ export default function MovieScreen() {
                     onPlayEpisode={handlePlayEpisode}
                     currentSeason={season}
                     onSelectSeason={handleSelectSeason}
+                    onSelectRelated={handleSelectRelated}
                 />
                 {playerOpen && src ? (
                     <View style={styles.nativePlayerLayer} pointerEvents="box-none">

@@ -110,6 +110,13 @@ describe('buildEmbedUrl', () => {
         ).toBe(manual);
     });
 
+    it('does not rewrite a manual Nxsha server selection', () => {
+        const manual = 'https://nxsha.space/embed/movie/1?server=GbruHindi';
+        expect(
+            buildEmbedUrl('nxsha', 'movie', { tmdbId: 1, strictHindi: true, embed_url: manual }),
+        ).toBe(manual);
+    });
+
     it('supports template overrides', () => {
         const url = buildEmbedUrl(
             'nxsha',

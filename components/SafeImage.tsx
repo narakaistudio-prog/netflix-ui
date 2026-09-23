@@ -21,6 +21,8 @@ interface SafeImageProps {
     blurRadius?: number;
     fallbackLabel?: string;
     hideOnError?: boolean;
+    /** The hero may load immediately; posters elsewhere wait until near the viewport. */
+    loading?: 'eager' | 'lazy';
 }
 
 /**
@@ -39,6 +41,7 @@ export function SafeImage({
     blurRadius,
     fallbackLabel,
     hideOnError = false,
+    loading = 'lazy',
 }: SafeImageProps) {
     const [failed, setFailed] = useState(false);
 
@@ -80,20 +83,27 @@ export function SafeImage({
         }
 
         const objectFit = contentFit === 'contain' ? 'contain' : 'cover';
+        // The <img> must live in a sized frame. A raw image ignores the RN style
+        // and expands to its intrinsic size — that is what blew search results
+        // up into full-bleed cards.
         return (
-            <img
-                src={imgSrc}
-                alt={fallbackLabel || 'poster'}
-                loading="eager"
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit,
-                    display: 'block',
-                    borderRadius: 'inherit',
-                } as any}
-                onError={() => setFailed(true)}
-            />
+            <View style={[style as StyleProp<ViewStyle>, styles.frame]}>
+                <img
+                    src={imgSrc}
+                    alt={fallbackLabel || 'poster'}
+                    loading={loading}
+                    decoding="async"
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit,
+                        display: 'block',
+                    } as any}
+                    onError={() => setFailed(true)}
+                />
+            </View>
         );
     }
 
@@ -138,6 +148,10 @@ export function SafeImage({
 }
 
 const styles = StyleSheet.create({
+    frame: {
+        overflow: 'hidden',
+        position: 'relative',
+    },
     fallback: {
         backgroundColor: '#1a1a24',
         alignItems: 'center',

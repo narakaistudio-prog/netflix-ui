@@ -7,6 +7,7 @@ import { useVisionOS } from '@/hooks/useVisionOS';
 import { HoverableView } from '@/components/ui/VisionContainer';
 import { SafeImage } from '@/components/SafeImage';
 import { Ionicons } from '@expo/vector-icons';
+import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselWindow';
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
@@ -71,6 +72,9 @@ const WebTop10Card = ({ item, index, onPress }: {
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
+            accessibilityRole="button"
+            accessibilityLabel={`Open ${item.title || 'title'}`}
+            testID={`movie-card-${item.id}`}
             style={[top10.wrap, hovered && top10.wrapHover]}
         >
             <View style={top10.row}>
@@ -121,6 +125,9 @@ const WebPosterCard = ({ item, onPress }: {
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
+            accessibilityRole="button"
+            accessibilityLabel={`Open ${item.title || 'title'}`}
+            testID={`movie-card-${item.id}`}
             style={[card.wrap, hovered && card.wrapHover]}
         >
             <View style={[card.posterBox, hovered && card.posterBoxHover]}>
@@ -180,6 +187,12 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     const listRef = useRef<any>(null);
     const offsetX = useRef(0);
     const [contentWidth, setContentWidth] = useState(0);
+    // A shelf can have 200+ titles. Keep its scroll distance, but mount only
+    // nearby cards so hydration and the first click don't wait on every poster.
+    const [windowStart, setWindowStart] = useState(0);
+    const virtualized = IS_WEB && !isTop10 && movies.length > WEB_CAROUSEL_WINDOW;
+    const start = virtualized ? Math.min(windowStart, movies.length - WEB_CAROUSEL_WINDOW) : 0;
+    const end = virtualized ? Math.min(movies.length, start + WEB_CAROUSEL_WINDOW) : movies.length;
 
     const pageStep = windowWidth * 0.75;
     const pages = Math.max(1, Math.ceil(contentWidth / pageStep));
@@ -258,11 +271,16 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                 {IS_WEB ? (
                     <ScrollView
                         ref={listRef as any}
+                        testID={`movie-carousel-${rowTitle}`}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         onScroll={(e: any) => {
                             offsetX.current = e.nativeEvent.contentOffset.x;
                             setPage(Math.min(pages - 1, Math.round(offsetX.current / pageStep)));
+                            if (virtualized) {
+                                const nextStart = getCarouselWindow(movies.length, offsetX.current).start;
+                                setWindowStart(previous => previous === nextStart ? previous : nextStart);
+                            }
                         }}
                         scrollEventThrottle={16}
                         onContentSizeChange={(w) => setContentWidth(w)}
@@ -277,7 +295,13 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                             },
                         ]}
                     >
-                        {movies.map((item, index) => renderItem({ item, index }))}
+                        {virtualized && start > 0 ? (
+                            <View testID="carousel-spacer-before" style={{ width: spacerWidth(start), flexShrink: 0 }} />
+                        ) : null}
+                        {movies.slice(start, end).map((item, index) => renderItem({ item, index: start + index }))}
+                        {virtualized && end < movies.length ? (
+                            <View testID="carousel-spacer-after" style={{ width: spacerWidth(movies.length - end), flexShrink: 0 }} />
+                        ) : null}
                     </ScrollView>
                 ) : (
                     <FlatList

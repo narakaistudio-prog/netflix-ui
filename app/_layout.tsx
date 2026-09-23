@@ -122,14 +122,13 @@ function AnimatedStack() {
                     <Stack.Screen
                         name="search"
                         options={{
-                            // presentation: 'card',
-                            // animation: 'none',
                             headerShown: false,
+                            animation: 'none',
+                            animationDuration: 1,
                             contentStyle: {
-                                backgroundColor: 'transparent',
+                                backgroundColor: '#000',
                             },
                         }}
-
                     />
 
                     <Stack.Screen

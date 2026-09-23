@@ -4,11 +4,12 @@ import { DeviceMotion } from 'expo-sensors';
 import { useSharedValue, withSpring } from 'react-native-reanimated';
 import { DeviceMotionData } from '@/types/movie';
 
-export function useDeviceMotion() {
+export function useDeviceMotion(enabled = true) {
     const tiltX = useSharedValue(0);
     const tiltY = useSharedValue(0);
 
     useEffect(() => {
+        if (!enabled) return;
         // On web, expo-sensors' DeviceMotion is not fully implemented: its web
         // module has no `addListener`/`setUpdateInterval` (calling them throws
         // "this._nativeModule.addListener is not a function") and it never
@@ -37,7 +38,7 @@ export function useDeviceMotion() {
         return () => {
             subscription.remove();
         };
-    }, []);
+    }, [enabled]);
 
     return { tiltX, tiltY };
 }

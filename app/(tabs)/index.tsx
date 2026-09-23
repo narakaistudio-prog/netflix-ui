@@ -14,7 +14,7 @@ import Animated, {
 import { styles } from '@/styles';
 import { AnimatedHeader } from '@/components/Header/AnimatedHeader';
 import { FeaturedContent } from '@/components/FeaturedContent/FeaturedContent';
-import { MovieList } from '@/components/MovieList/MovieList';
+import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
 import { useDeviceMotion } from '@/hooks/useDeviceMotion';
 import { MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -40,7 +40,9 @@ export default function HomeScreen() {
     ...movies.filter(row => row.type !== 'top_10'),
   ], [movies]);
   const insets = useSafeAreaInsets();
-  const { tiltX, tiltY } = useDeviceMotion();
+  // The web billboard does not use tilt transforms; don't start a continuous
+  // device-orientation listener just to animate values no one can see.
+  const { tiltX, tiltY } = useDeviceMotion(!IS_WEB);
   const { isVisionOS } = useVisionOS();
   const router = useRouter();
   const { selectedProfile } = useUser();
@@ -147,7 +149,7 @@ export default function HomeScreen() {
             styles.scrollView,
             isVisionOS && { paddingHorizontal: 20 }
           ]}
-          onScroll={scrollHandler}
+          onScroll={IS_WEB ? undefined : scrollHandler}
           scrollEventThrottle={16}
           contentContainerStyle={[styles.scrollViewContent, IS_WEB && { paddingBottom: 80, paddingTop: 0 }]}
           showsVerticalScrollIndicator={false}
@@ -161,6 +163,7 @@ export default function HomeScreen() {
             />
           )}
 
+          {(pathname === '/' || pathname === '/index') && (
           <FeaturedContent
             movie={{
               id: featuredMovie.id,
@@ -185,9 +188,10 @@ export default function HomeScreen() {
               })
             }
           />
+          )}
 
-          {orderedMovies.map(row => (
-            <MovieList key={row.rowTitle} {...row} />
+          {orderedMovies.map((row, index) => (
+            <DeferredMovieList key={row.rowTitle} eager={index < 2} {...row} />
           ))}
         </Animated.ScrollView>
       </VisionContainer>

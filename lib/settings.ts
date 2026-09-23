@@ -26,7 +26,14 @@ export interface EmbedSettings {
     nhdApiKey: string;
 }
 
-const SETTINGS_VERSION = 2;
+// v3 briefly changed Nxsha's default server. Bump once more so browsers
+// that saved that default return to the original template too.
+const SETTINGS_VERSION = 4;
+
+const V3_NXSHA_MOVIE =
+    'https://nxsha.space/embed/movie/{id}?server=VidHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true&one_server=true';
+const V3_NXSHA_TV =
+    'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=VidHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true&one_server=true';
 
 export const DEFAULT_SETTINGS: EmbedSettings = {
     settingsVersion: SETTINGS_VERSION,
@@ -49,12 +56,23 @@ function safeParse(raw: string | null): EmbedSettings | null {
         const parsed = JSON.parse(raw);
         if (!parsed || typeof parsed !== 'object') return null;
         const merged = { ...DEFAULT_SETTINGS, ...parsed } as EmbedSettings;
-        // Existing browsers may have saved strictHindi=false before Hindi-first
-        // mode became the default. Migrate once, while preserving any explicit
-        // choice made after this version.
+        // Preserve the original Hindi-first migration for pre-v2 settings,
+        // without overriding later explicit choices of the strict-mode toggle.
         if (parsed.settingsVersion !== SETTINGS_VERSION) {
             merged.settingsVersion = SETTINGS_VERSION;
-            merged.strictHindi = true;
+            if (typeof parsed.settingsVersion !== 'number' || parsed.settingsVersion < 2) {
+                merged.strictHindi = true;
+            }
+            // Only undo the exact Nxsha defaults installed by v3. Do not
+            // replace templates someone deliberately customized in Admin.
+            if (parsed.settingsVersion === 3) {
+                if (merged.nxshaMovieTemplate === V3_NXSHA_MOVIE) {
+                    merged.nxshaMovieTemplate = DEFAULT_NXSHA_MOVIE;
+                }
+                if (merged.nxshaTvTemplate === V3_NXSHA_TV) {
+                    merged.nxshaTvTemplate = DEFAULT_NXSHA_TV;
+                }
+            }
         }
         return merged;
     } catch {
@@ -76,7 +94,17 @@ function writeRaw(value: string) {
 }
 
 export function loadSettings(): EmbedSettings {
-    return safeParse(readRaw()) ?? { ...DEFAULT_SETTINGS };
+    const raw = readRaw();
+    const settings = safeParse(raw);
+    if (!settings) return { ...DEFAULT_SETTINGS };
+    // Persist the one-time template rollback so the same browser keeps using
+    // the original server after reloading or saving Admin settings.
+    try {
+        if (JSON.parse(raw!)?.settingsVersion !== SETTINGS_VERSION) {
+            writeRaw(JSON.stringify(settings));
+        }
+    } catch {}
+    return settings;
 }
 
 export function saveSettings(next: EmbedSettings) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Pressable, StyleSheet, Platform, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,6 +35,13 @@ export function WebNavBar() {
     const [searchQuery, setSearchQuery] = useState('');
     const [showBellMenu, setShowBellMenu] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const searchBoxRef = useRef<View>(null);
+    const submitLock = useRef(false);
+
+    const closeSearch = () => {
+        setSearchOpen(false);
+        setSearchQuery('');
+    };
 
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
@@ -51,13 +58,42 @@ export function WebNavBar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Collapse the bar the moment focus leaves it, Escape is pressed, or the
+    // route changes — don't wait for a blur that only fires when the box is empty.
+    useEffect(() => {
+        if (!searchOpen || Platform.OS !== 'web' || typeof document === 'undefined') return;
+
+        const onPointerDown = (event: MouseEvent) => {
+            const node = searchBoxRef.current as unknown as HTMLElement | null;
+            if (node && event.target instanceof Node && node.contains(event.target)) return;
+            closeSearch();
+        };
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') closeSearch();
+        };
+
+        document.addEventListener('pointerdown', onPointerDown, true);
+        document.addEventListener('keydown', onKeyDown);
+        return () => {
+            document.removeEventListener('pointerdown', onPointerDown, true);
+            document.removeEventListener('keydown', onKeyDown);
+        };
+    }, [searchOpen]);
+
+    useEffect(() => {
+        setSearchOpen(false);
+        setSearchQuery('');
+    }, [pathname]);
+
     if (Platform.OS !== 'web' || !selectedProfile) return null;
 
     const handleSearchSubmit = () => {
-        if (searchQuery.trim()) {
+        const query = searchQuery.trim();
+        closeSearch();
+        if (query) {
             router.push({
                 pathname: '/search',
-                params: { q: searchQuery.trim() },
+                params: { q: query },
             });
         }
     };
@@ -124,7 +160,7 @@ export function WebNavBar() {
                 <View style={styles.right}>
                     {/* Expandable Search Input */}
                     {searchOpen ? (
-                        <View style={styles.searchBox}>
+                        <View ref={searchBoxRef} style={styles.searchBox}>
                             <Ionicons name="search" size={18} color="#fff" />
                             <TextInput
                                 placeholder="Titles, people, genres"
@@ -132,17 +168,16 @@ export function WebNavBar() {
                                 value={searchQuery}
                                 onChangeText={setSearchQuery}
                                 onSubmitEditing={handleSearchSubmit}
+                                onKeyPress={(event) => {
+                                    if (event.nativeEvent.key === 'Enter') handleSearchSubmit();
+                                    if (event.nativeEvent.key === 'Escape') closeSearch();
+                                }}
                                 autoFocus
                                 style={styles.searchInput}
-                                onBlur={() => {
-                                    if (!searchQuery) setSearchOpen(false);
-                                }}
                             />
-                            {searchQuery.length > 0 && (
-                                <Pressable onPress={() => setSearchQuery('')}>
-                                    <Ionicons name="close" size={18} color="#aaa" />
-                                </Pressable>
-                            )}
+                            <Pressable onPress={closeSearch} hitSlop={8}>
+                                <Ionicons name="close" size={18} color="#aaa" />
+                            </Pressable>
                         </View>
                     ) : (
                         <Pressable
@@ -152,14 +187,6 @@ export function WebNavBar() {
                             <Ionicons name="search" size={20} color="#fff" />
                         </Pressable>
                     )}
-
-                    {/* Children link */}
-                    <Pressable
-                        onPress={() => router.push('/search')}
-                        style={({ hovered }: any) => [styles.childrenBtn, hovered && { opacity: 0.8 }]}
-                    >
-                        <Text style={styles.childrenText}>Children</Text>
-                    </Pressable>
 
                     {/* Notifications Bell */}
                     <View style={styles.bellContainer}>
@@ -366,14 +393,6 @@ const styles = StyleSheet.create({
         flex: 1,
         outlineStyle: 'none',
     } as any,
-    childrenBtn: {
-        paddingVertical: 4,
-    },
-    childrenText: {
-        color: '#e5e5e5',
-        fontSize: 13.5,
-        fontWeight: '500',
-    },
     bellContainer: {
         position: 'relative',
     },

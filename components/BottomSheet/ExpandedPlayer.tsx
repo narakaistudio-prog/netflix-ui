@@ -4,7 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
-import { useState, useRef, createElement, useEffect } from 'react';
+import { useState, useRef, createElement, useEffect, useMemo } from 'react';
 import { expandedPlayerStyles as styles } from '@/styles/expanded-player';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -13,6 +13,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import { newStyles } from '@/styles/new';
 import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
+import { selectRelatedTitles } from '@/lib/relatedTitles';
 import type { Episode, Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -76,6 +77,8 @@ interface ExpandedPlayerProps {
     currentSeason?: number;
     /** Changes the selected season without starting playback. */
     onSelectSeason?: (season: number) => void;
+    /** Replace the current title detail with the selected recommendation. */
+    onSelectRelated: (movie: Movie) => void;
 }
 
 interface PlaybackStatus {
@@ -100,6 +103,7 @@ export function ExpandedPlayer({
     onPlayEpisode,
     currentSeason = 1,
     onSelectSeason,
+    onSelectRelated,
 }: ExpandedPlayerProps) {
     const ScrollComponentToUse = scrollComponent || ScrollView;
     const insets = useSafeAreaInsets();
@@ -111,7 +115,12 @@ export function ExpandedPlayer({
     const max = useSharedValue(100);
     const [duration, setDuration] = useState(0);
     const { rows } = useCatalog();
-    const moreLikeThis = (rows.find(r => r.type !== 'games' && r.movies.length >= 6) ?? rows[0])?.movies.slice(0, 6) ?? [];
+    const moreLikeThis = useMemo(() => selectRelatedTitles(rows, {
+        id: String(movie.id ?? ''),
+        title: movie.title,
+        year: movie.year,
+        mediaType: movie.mediaType ?? (movie.type === 'SERIES' ? 'tv' : 'movie'),
+    }), [rows, movie.id, movie.title, movie.year, movie.mediaType, movie.type]);
 
     const defaultMovieData = {
         year: '2024',
@@ -279,6 +288,7 @@ export function ExpandedPlayer({
                                 source={{ uri: movieData.imageUrl }}
                                 style={StyleSheet.absoluteFill}
                                 contentFit="cover"
+                                loading="eager"
                             />
                         ) : null}
                         <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.55)' }]} />
@@ -538,16 +548,23 @@ export function ExpandedPlayer({
                         <ThemedText style={[styles.moreLikeThisTitle, { opacity: 0.4 }]}>Trailers & More</ThemedText>
                     </View>
                     <View style={styles.movieGrid}>
-                        {moreLikeThis.map((movie: any) => (
-                            <View key={movie.id} style={styles.moviePoster}>
+                        {moreLikeThis.map(item => (
+                            <Pressable
+                                key={item.id}
+                                testID={`related-title-${item.id}`}
+                                style={({ hovered }: any) => [styles.moviePoster, hovered && styles.moviePosterHover]}
+                                onPress={() => onSelectRelated(item)}
+                                accessibilityRole="button"
+                                accessibilityLabel={`Open ${item.title || 'title'}`}
+                            >
                                 <SafeImage
-                                    source={{ uri: movie.imageUrl }}
+                                    source={{ uri: item.imageUrl }}
                                     style={{ width: '100%', height: '100%', borderRadius: 4 }}
                                     cachePolicy="memory-disk"
                                     transition={200}
-                                    fallbackLabel={movie.title}
+                                    fallbackLabel={item.title}
                                 />
-                            </View>
+                            </Pressable>
                         ))}
                     </View>
                 </View>
