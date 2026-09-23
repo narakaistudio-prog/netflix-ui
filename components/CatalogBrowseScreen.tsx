@@ -3,7 +3,7 @@ import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Movie, MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
-import { MovieList } from '@/components/MovieList/MovieList';
+import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
 export type CatalogKind = 'movie' | 'tv';
@@ -207,7 +207,7 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
 
                 <View style={page.shelves}>
                     {displaySections.map((section, index) => (
-                        <MovieList key={`${section.rowTitle}-${index}`} {...section} />
+                        <DeferredMovieList key={`${section.rowTitle}-${index}`} eager={index === 0} {...section} />
                     ))}
                 </View>
             </ScrollView>

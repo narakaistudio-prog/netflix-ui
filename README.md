@@ -100,6 +100,26 @@ project-root/
 └── contexts/               # App-wide state management
 ```
 
+## Deploy on Vercel (web)
+
+This is an Expo Router app, not a Next.js app. Import the repository with the
+**Other** framework preset and the repository root as the Root Directory.
+`vercel.json` sets the build command to `npm run build:web`, the output directory
+to `dist`, clean URLs for static pages, and rewrites for movie/shelf deep links.
+Do **not** deploy the Expo development server (`npm run web`).
+
+The build copies the locally bundled poster images into `dist/assets/posters`;
+Expo's static export alone does not include the URL-based poster files. To test
+locally, run `npm run build:web` and check that these exported files exist:
+`dist/index.html`, `dist/movie/[id].html`, and
+`dist/assets/posters/catalog/billboard-jawan.jpg`.
+
+After deployment, check `/`, `/browse/movies`, a movie URL such as
+`/movie/jw-catalog-movie-vishwanath-and-sons`, and a local poster URL such as
+`/assets/posters/catalog/billboard-jawan.jpg`. No API key is required for the
+bundled catalog. Video playback runs in third-party iframe providers (Nxsha or
+NHD), so availability of a particular stream cannot be guaranteed by Vercel.
+
 ## TODO
 
 - [ ] Shared transition on modal navigation

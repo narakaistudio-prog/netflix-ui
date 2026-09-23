@@ -9,6 +9,10 @@
                     "title": "Vishwanath & Sons",
                     "type": "FILM",
                     "mediaType": "movie",
+                    "tmdb_id": "1408162",
+                    "embed_provider": "nxsha",
+                    "netflixId": "82034837",
+                    "netflixUrl": "https://www.netflix.com/in/title/82034837",
                     "imageUrl": "https://images.justwatch.com/poster/345836211/s332/vishwanath-and-sons.jpg",
                     "ranking_text": "#1 in India Today",
                     "catalogSource": "justwatch"
@@ -1033,6 +1037,10 @@
                     "title": "Vishwanath & Sons",
                     "type": "FILM",
                     "mediaType": "movie",
+                    "tmdb_id": "1408162",
+                    "embed_provider": "nxsha",
+                    "netflixId": "82034837",
+                    "netflixUrl": "https://www.netflix.com/in/title/82034837",
                     "imageUrl": "local:jw-catalog-movie-vishwanath-and-sons",
                     "ranking_text": "#1 in India Today",
                     "catalogSource": "justwatch"

@@ -56,6 +56,7 @@ export function FeaturedContent({
                     source={billboardSrc}
                     style={web.backdrop}
                     contentFit="cover"
+                    loading="eager"
                     cachePolicy="memory-disk"
                 />
 
@@ -96,6 +97,7 @@ export function FeaturedContent({
                     <SafeImage
                         source={{ uri: movie.thumbnail }}
                         style={web.rightPosterImage}
+                        loading="eager"
                         fallbackLabel={movie.title}
                     />
                 </View>

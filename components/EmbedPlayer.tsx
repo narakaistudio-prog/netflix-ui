@@ -9,6 +9,7 @@ import {
     View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { detectProviderFromUrl } from '@/lib/embeds';
 
 /**
  * Third-party iframe embed player.
@@ -35,6 +36,12 @@ export interface EmbedPlayerProps {
 
 const IS_WEB = Platform.OS === 'web';
 const isDirectVideoSource = (url: string) => /\.(?:mp4|webm|ogg)(?:[?#]|$)/i.test(url);
+// Nxsha does not expose scan/playback events to its embedding page. This is
+// only a visual cover for the scan, not a way to speed it up or auto-play it.
+const SCAN_COVER_DELAY_MS = 350;
+// Bound the visual cover so a stream that loads quickly is not hidden too long.
+const SCAN_COVER_MS = 12000;
+const EPISODE_NAV_IDLE_MS = 2500;
 
 export function EmbedPlayer({
     src,
@@ -49,10 +56,16 @@ export function EmbedPlayer({
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
+    const [scanCovered, setScanCovered] = useState(false);
+    const [episodeNavVisible, setEpisodeNavVisible] = useState(true);
+    const episodeNavHidden = IS_WEB && !episodeNavVisible;
     const directVideo = isDirectVideoSource(src);
+    const nxshaEmbed = !directVideo && detectProviderFromUrl(src) === 'nxsha';
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const iframeRef = useRef<HTMLIFrameElement | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const episodeHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const episodeNavHoveredRef = useRef(false);
 
     useEffect(() => {
         setLoading(true);
@@ -103,6 +116,86 @@ export function EmbedPlayer({
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [src, title, directVideo]);
+
+    // Clicking the red Play button happens inside Nxsha's cross-origin frame;
+    // the parent does not receive that click. Focus moving into the iframe is
+    // the only signal available here. Wait until the click has completed so
+    // the cover never steals it, then show our own neutral loading screen.
+    // Auto-reveal after a bounded time: Nxsha has no scan-complete signal, so
+    // keeping the cover up indefinitely could hide an already playing video.
+    useEffect(() => {
+        setScanCovered(false);
+        if (!IS_WEB || !nxshaEmbed) return;
+        let focusTimer: ReturnType<typeof setTimeout> | undefined;
+        let revealTimer: ReturnType<typeof setTimeout> | undefined;
+        let started = false;
+        const onBlur = () => {
+            if (started || focusTimer) return;
+            focusTimer = setTimeout(() => {
+                focusTimer = undefined;
+                if (document.visibilityState === 'hidden' ||
+                    !iframeRef.current?.isConnected ||
+                    document.activeElement !== iframeRef.current) return;
+                started = true;
+                setScanCovered(true);
+                revealTimer = setTimeout(() => setScanCovered(false), SCAN_COVER_MS);
+            }, SCAN_COVER_DELAY_MS);
+        };
+        // Depending on the browser, either the parent window blurs or the
+        // iframe element receives a focus event when it is clicked.
+        const iframe = iframeRef.current;
+        window.addEventListener('blur', onBlur);
+        iframe?.addEventListener('focus', onBlur);
+        return () => {
+            window.removeEventListener('blur', onBlur);
+            iframe?.removeEventListener('focus', onBlur);
+            if (focusTimer) clearTimeout(focusTimer);
+            if (revealTimer) clearTimeout(revealTimer);
+        };
+    }, [src, title, nxshaEmbed]);
+
+    // Nxsha's controls fade when the cursor is idle, but our episode buttons
+    // live *outside* its iframe. Hide them separately after a short idle period.
+    // Cross-origin iframe mousemove does not reach us, so the small button-sized
+    // hover areas remain available to bring the controls back without covering
+    // the video or preventing clicks inside the provider player.
+    const scheduleEpisodeHide = useCallback(() => {
+        if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
+        episodeHideTimerRef.current = setTimeout(() => {
+            episodeHideTimerRef.current = null;
+            if (!episodeNavHoveredRef.current) setEpisodeNavVisible(false);
+        }, EPISODE_NAV_IDLE_MS);
+    }, []);
+
+    useEffect(() => {
+        if (!IS_WEB || !isTv || !onNextEpisode) return;
+        setEpisodeNavVisible(true);
+        scheduleEpisodeHide();
+        return () => {
+            if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
+            episodeHideTimerRef.current = null;
+        };
+    }, [src, isTv, onNextEpisode, scheduleEpisodeHide]);
+
+    const showEpisodeNavTemporarily = () => {
+        if (!IS_WEB || !isTv || !onNextEpisode) return;
+        setEpisodeNavVisible(true);
+        scheduleEpisodeHide();
+    };
+    const showEpisodeNav = () => {
+        if (!IS_WEB) return;
+        episodeNavHoveredRef.current = true;
+        if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
+        episodeHideTimerRef.current = null;
+        setEpisodeNavVisible(true);
+    };
+    const hideEpisodeNav = () => {
+        if (!IS_WEB) return;
+        episodeNavHoveredRef.current = false;
+        if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
+        episodeHideTimerRef.current = null;
+        setEpisodeNavVisible(false);
+    };
 
     /**
      * Kill the playing iframe HARD: navigating it to about:blank tears down
@@ -172,7 +265,13 @@ export function EmbedPlayer({
     }
 
     return (
-        <View style={styles.container}>
+        <View
+            style={styles.container}
+            onPointerEnter={showEpisodeNavTemporarily}
+            onPointerMove={showEpisodeNavTemporarily}
+            onPointerLeave={hideEpisodeNav}
+            testID="embed-player"
+        >
             {directVideo ? (
                 React.createElement('video', {
                     src,
@@ -209,6 +308,13 @@ export function EmbedPlayer({
                 <View style={styles.loadingOverlay} pointerEvents="none">
                     <ActivityIndicator size="large" color="#E50914" />
                     <Text style={styles.loadingText}>Loading player…</Text>
+                </View>
+            ) : null}
+
+            {scanCovered && !loading && !timedOut ? (
+                <View style={styles.scanCover} pointerEvents="none" testID="nxsha-scan-cover">
+                    <ActivityIndicator size="large" color="#E50914" />
+                    <Text style={styles.scanCoverText}>Loading video…</Text>
                 </View>
             ) : null}
 
@@ -263,19 +369,42 @@ export function EmbedPlayer({
             </View>
 
             {isTv && onNextEpisode ? (
-                <View style={styles.episodeBar}>
-                    <Pressable
-                        style={[styles.epButton, !onPrevEpisode && styles.epButtonDisabled]}
-                        disabled={!onPrevEpisode}
-                        onPress={onPrevEpisode}
+                <View style={styles.episodeBar} pointerEvents="box-none" testID="episode-navigation">
+                    <View
+                        testID="prev-episode-hotspot"
+                        onPointerEnter={showEpisodeNav}
+                        onPointerLeave={hideEpisodeNav}
                     >
-                        <Ionicons name="play-skip-back" size={18} color={onPrevEpisode ? '#fff' : '#666'} />
-                        <Text style={[styles.epButtonText, !onPrevEpisode && { color: '#666' }]}>Prev</Text>
-                    </Pressable>
-                    <Pressable style={styles.epButton} onPress={onNextEpisode}>
-                        <Text style={styles.epButtonText}>Next Episode</Text>
-                        <Ionicons name="play-skip-forward" size={18} color="#fff" />
-                    </Pressable>
+                        <Pressable
+                            style={[styles.epButton, !onPrevEpisode && styles.epButtonDisabled, episodeNavHidden && styles.epButtonHidden]}
+                            pointerEvents={episodeNavHidden ? 'none' : undefined}
+                            disabled={!onPrevEpisode}
+                            onPress={onPrevEpisode}
+                            onFocus={showEpisodeNav}
+                            onBlur={hideEpisodeNav}
+                            accessibilityLabel="Previous episode"
+                        >
+                            <Ionicons name="play-skip-back" size={18} color={onPrevEpisode ? '#fff' : '#666'} />
+                            <Text style={[styles.epButtonText, !onPrevEpisode && { color: '#666' }]}>Prev</Text>
+                        </Pressable>
+                    </View>
+                    <View
+                        testID="next-episode-hotspot"
+                        onPointerEnter={showEpisodeNav}
+                        onPointerLeave={hideEpisodeNav}
+                    >
+                        <Pressable
+                            style={[styles.epButton, episodeNavHidden && styles.epButtonHidden]}
+                            pointerEvents={episodeNavHidden ? 'none' : undefined}
+                            onPress={onNextEpisode}
+                            onFocus={showEpisodeNav}
+                            onBlur={hideEpisodeNav}
+                            accessibilityLabel="Next episode"
+                        >
+                            <Text style={styles.epButtonText}>Next Episode</Text>
+                            <Ionicons name="play-skip-forward" size={18} color="#fff" />
+                        </Pressable>
+                    </View>
                 </View>
             ) : null}
         </View>
@@ -301,6 +430,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.6)', gap: 14,
     },
     loadingText: { color: '#ccc', fontSize: 13 },
+    scanCover: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#000',
+        alignItems: 'center', justifyContent: 'center', gap: 14, zIndex: 1,
+    },
+    scanCoverText: { color: '#ccc', fontSize: 14 },
     timeoutOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',
@@ -321,9 +456,9 @@ const styles = StyleSheet.create({
     },
     ghostButtonText: { color: '#fff', fontSize: 13, fontWeight: '600' },
     episodeBar: {
-        // Keep episode navigation above the embedded video's native control
-        // strip. The old bottom:16 placement covered Audio/Quality on web.
-        position: 'absolute', bottom: IS_WEB ? 82 : 16, left: 16, right: 16,
+        // Sit well above the embed's Audio/Quality strip. 82 still overlapped
+        // those controls, so the Next Episode action is shifted further up.
+        position: 'absolute', bottom: IS_WEB ? 168 : 72, left: 16, right: 16,
         flexDirection: 'row', justifyContent: 'space-between', zIndex: 2,
     },
     epButton: {
@@ -331,8 +466,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.6)',
         paddingHorizontal: 14, paddingVertical: 10, borderRadius: 6,
         borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)',
+        ...(IS_WEB ? {
+            transitionProperty: 'opacity', transitionDuration: '180ms',
+            transitionTimingFunction: 'ease-out',
+        } : {}),
     },
     epButtonDisabled: { opacity: 0.6 },
+    epButtonHidden: { opacity: 0 },
     epButtonText: { color: '#fff', fontSize: 13, fontWeight: '600' },
     nativeFallback: {
         flex: 1, backgroundColor: '#000',

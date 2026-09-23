@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -203,9 +203,19 @@ export const expandedPlayerStyles = StyleSheet.create({
         gap: 8,
     },
     moviePoster: {
-        width: '31%',
+        // Five compact posters per row on desktop, two on a narrow phone.
+        width: Platform.OS === 'web' ? '18%' : '31%',
+        minWidth: Platform.OS === 'web' ? 130 : undefined,
+        maxWidth: Platform.OS === 'web' ? 178 : undefined,
         aspectRatio: 2 / 3,
         borderRadius: 4,
+        overflow: 'hidden',
+        backgroundColor: '#242424',
+        ...(Platform.OS === 'web' ? { cursor: 'pointer' as any } : {}),
+    },
+    moviePosterHover: {
+        borderWidth: 2,
+        borderColor: '#fff',
     },
     sliderContainer: {
         position: 'absolute',

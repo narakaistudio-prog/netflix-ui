@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
     Platform,
     View,
@@ -7,14 +7,12 @@ import {
     TouchableOpacity,
     ScrollView,
     Text,
-    ActivityIndicator,
 } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { Movie } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
-import { useDebounce } from 'use-debounce';
 import { SafeImage } from '@/components/SafeImage';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
@@ -22,16 +20,34 @@ const IS_WEB = Platform.OS === 'web';
 
 export default function Search() {
     const params = useLocalSearchParams<{ q?: string }>();
-    // Everything comes from the live catalog
     const { rows } = useCatalog();
-    const tvAndMovies = rows.flatMap(r => r.movies);
-
-    const [searchQuery, setSearchQuery] = useState(params.q ?? '');
-    const [isLoading, setIsLoading] = useState(false);
-    const [filteredShows, setFilteredShows] = useState<Movie[]>(tvAndMovies);
-    const [debouncedSearchTerm] = useDebounce(searchQuery, 500);
-    const inputRef = useRef<TextInput>(null);
     const router = useRouter();
+    const inputRef = useRef<TextInput>(null);
+    const [searchQuery, setSearchQuery] = useState(params.q ?? '');
+
+    const catalog = useMemo(() => {
+        const seen = new Set<string>();
+        const unique: Movie[] = [];
+        for (const row of rows) {
+            for (const show of row.movies) {
+                const key = String(show.id ?? show.title ?? '');
+                if (!key || seen.has(key)) continue;
+                seen.add(key);
+                unique.push(show);
+            }
+        }
+        return unique;
+    }, [rows]);
+
+    // Same-frame filter. A debounce left the previous results on screen after
+    // the query changed or was cleared.
+    const filteredShows = useMemo(() => {
+        const searchText = searchQuery.trim().toLowerCase();
+        if (!searchText) return catalog.slice(0, 18);
+        return catalog
+            .filter(show => (show.title ?? '').toLowerCase().includes(searchText))
+            .slice(0, 40);
+    }, [catalog, searchQuery]);
 
     useEffect(() => {
         if (params.q !== undefined && params.q !== searchQuery) {
@@ -39,45 +55,35 @@ export default function Search() {
         }
     }, [params.q]);
 
-    // Keep results in sync when the live catalog arrives
-    useEffect(() => {
-        if (!searchQuery.trim()) {
-            setFilteredShows(tvAndMovies);
-        }
-    }, [rows]);
+    const closeSearch = () => {
+        inputRef.current?.blur();
+        if (router.canGoBack()) router.back();
+        else router.replace('/');
+    };
 
     useEffect(() => {
-        if (!debouncedSearchTerm.trim()) {
-            setFilteredShows(tvAndMovies);
-            setIsLoading(false);
-            return;
-        }
+        if (!IS_WEB || typeof window === 'undefined') return;
+        const onKey = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') closeSearch();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [router]);
 
-        const searchText = debouncedSearchTerm.toLowerCase();
-        const matchedShows = tvAndMovies.filter(show =>
-            (show.title ?? '').toLowerCase().includes(searchText)
-        );
-
-        setFilteredShows(matchedShows);
-        setIsLoading(false);
-    }, [debouncedSearchTerm]);
-
-    const NoResultsView = () => (
-        <View style={styles.noResults}>
-            <Text style={styles.noResultsTitle}>Oh darn. We don't have that.</Text>
-            <Text style={styles.noResultsSubtitle}>
-                Try searching for another movie, show, actor, director, or genre.
-            </Text>
-        </View>
-    );
+    const openTitle = (id: string) => {
+        inputRef.current?.blur();
+        // Replace so search unmounts immediately instead of staying under the
+        // title modal until a stack animation finishes.
+        router.replace(`/movie/${id}` as any);
+    };
 
     return (
         <View style={styles.container}>
             <StatusBar style="light" />
-            <Stack.Screen options={{ headerShown: false }} />
+            <Stack.Screen options={{ headerShown: false, animation: 'none' }} />
 
             <View style={[styles.header, IS_WEB && webStyles.header]}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+                <TouchableOpacity onPress={closeSearch} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={24} color="white" />
                 </TouchableOpacity>
                 <View style={styles.searchInputContainer}>
@@ -90,53 +96,54 @@ export default function Search() {
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                         autoCapitalize="none"
+                        autoFocus={!params.q}
+                        returnKeyType="search"
                     />
                     {searchQuery.length > 0 && (
-                        <TouchableOpacity onPress={() => setSearchQuery('')}>
+                        <TouchableOpacity onPress={() => setSearchQuery('')} hitSlop={8}>
                             <Ionicons name="close-circle" size={20} color="#666" />
                         </TouchableOpacity>
                     )}
                 </View>
             </View>
 
-            {isLoading ? (
-                <View style={styles.loaderContainer}>
-                    <ActivityIndicator size="large" color="#fff" />
+            {searchQuery.trim() !== '' && filteredShows.length === 0 ? (
+                <View style={styles.noResults}>
+                    <Text style={styles.noResultsTitle}>Oh darn. We don't have that.</Text>
+                    <Text style={styles.noResultsSubtitle}>
+                        Try searching for another movie, show, actor, director, or genre.
+                    </Text>
                 </View>
-            ) : searchQuery.trim() !== '' && filteredShows.length === 0 ? (
-                <NoResultsView />
             ) : (
-                <ScrollView style={[styles.content, IS_WEB && webStyles.content]}>
-                    {/* TV Shows & Movies Section - only show if there are shows */}
-                    {filteredShows.length > 0 && (
-                        <View style={styles.section}>
-                            <Text style={styles.sectionTitle}>
-                                {searchQuery.trim() ? 'Top Results - Shows & Movies' : 'Recommended TV Shows & Movies'}
-                            </Text>
-                            <View style={styles.showsList}>
-                                {filteredShows.map((item, index) => (
-                                    <TouchableOpacity
-                                        key={index}
-                                        style={styles.showItem}
-                                        onPress={() => router.push(`/movie/${item.id}`)}
-                                    >
-                                        <SafeImage
-                                            source={{ uri: item.imageUrl }}
-                                            style={styles.showImage}
-                                            transition={200}
-                                            fallbackLabel={item.title}
-                                        />
-                                        <View style={styles.showInfo}>
-                                            <Text style={styles.showTitle}>{item.title}</Text>
-                                        </View>
-                                        <TouchableOpacity style={styles.playButton}>
-                                            <Ionicons name="play-circle-outline" size={32} color="white" />
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                        </View>
-                    )}
+                <ScrollView
+                    style={styles.content}
+                    contentContainerStyle={[styles.section, IS_WEB && webStyles.section]}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <Text style={styles.sectionTitle}>
+                        {searchQuery.trim() ? 'Top Results' : 'Recommended'}
+                    </Text>
+                    <View style={styles.grid}>
+                        {filteredShows.map((item) => (
+                            <TouchableOpacity
+                                key={String(item.id)}
+                                style={styles.card}
+                                onPress={() => openTitle(String(item.id))}
+                                activeOpacity={0.85}
+                            >
+                                <View style={styles.posterBox}>
+                                    <SafeImage
+                                        source={{ uri: item.imageUrl }}
+                                        style={styles.poster}
+                                        fallbackLabel={item.title}
+                                    />
+                                </View>
+                                <Text style={styles.cardTitle} numberOfLines={1}>
+                                    {item.title}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
                 </ScrollView>
             )}
         </View>
@@ -146,8 +153,19 @@ export default function Search() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000',
-    },
+        backgroundColor: '#141414',
+        ...(Platform.OS === 'web'
+            ? {
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 20,
+                minHeight: '100vh',
+            }
+            : null),
+    } as any,
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -167,7 +185,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 10,
-
     },
     searchIcon: {
         marginRight: 8,
@@ -176,54 +193,46 @@ const styles = StyleSheet.create({
         flex: 1,
         color: 'white',
         fontSize: 16,
-    },
+        outlineStyle: 'none',
+    } as any,
     content: {
         flex: 1,
     },
     section: {
-        paddingVertical: 16,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        paddingBottom: 48,
     },
     sectionTitle: {
-        color: 'white',
+        color: '#e5e5e5',
         fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 16,
-        paddingHorizontal: 16,
+        fontWeight: '700',
+        marginBottom: 14,
     },
-    gamesRow: {
-        paddingHorizontal: 16,
-        gap: 12,
-    },
-    showsList: {
-        paddingHorizontal: 16,
-    },
-    showItem: {
+    grid: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
+        flexWrap: 'wrap',
+        gap: 14,
     },
-    showImage: {
-        width: 150,
-        height: 80,
+    card: {
+        width: 168,
+    },
+    posterBox: {
+        width: 168,
+        height: 96,
         borderRadius: 4,
-        backgroundColor: '#333',
+        overflow: 'hidden',
+        backgroundColor: '#222',
     },
-    showInfo: {
-        flex: 1,
-        marginLeft: 12,
+    poster: {
+        width: '100%',
+        height: '100%',
     },
-    showTitle: {
-        color: 'white',
-        fontSize: 16,
-    },
-    playButton: {
-        padding: 8,
-    },
-    loaderContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#000',
+    cardTitle: {
+        color: '#e5e5e5',
+        fontSize: 13,
+        fontWeight: '600',
+        marginTop: 6,
     },
     noResults: {
         flex: 1,
@@ -247,15 +256,12 @@ const styles = StyleSheet.create({
 
 const webStyles = StyleSheet.create({
     header: {
-        paddingTop: WEB_NAV_HEIGHT + 12,
+        paddingTop: WEB_NAV_HEIGHT + 16,
         marginTop: 0,
-        maxWidth: 1000,
+        paddingHorizontal: 48,
         width: '100%',
-        alignSelf: 'center',
     },
-    content: {
-        maxWidth: 1000,
-        width: '100%',
-        alignSelf: 'center',
+    section: {
+        paddingHorizontal: 48,
     },
 });

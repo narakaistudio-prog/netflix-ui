@@ -8,6 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build": "npm run build:web",
+    "build:web": "expo export --platform web && node scripts/prepare-web-dist.mjs",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },
