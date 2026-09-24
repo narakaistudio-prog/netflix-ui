@@ -79,6 +79,8 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
         };
     });
 
+    const [focusedProfileId, setFocusedProfileId] = useState<string | null>(null);
+
     const handleProfileSelect = async (profile: Profile) => {
         try {
             const { sound } = await Audio.Sound.createAsync(
@@ -91,13 +93,15 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
                 }
             });
             await sound.playAsync();
+        } catch (error) {
+            console.log('Error playing sound:', error);
+        }
 
-            const layout = profileLayouts[profile.id];
-            if (layout) {
-                setSelectedId(profile.id);
-                setSelectedProfile(profile);
-                setIsAnimating(true);
-            }
+        const layout = profileLayouts[profile.id];
+        if (layout) {
+            setSelectedId(profile.id);
+            setSelectedProfile(profile);
+            setIsAnimating(true);
 
             setTimeout(() => {
                 setShowSpinner(true);
@@ -117,8 +121,13 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
                     runOnJS(onProfileSelect)(profile.id);
                 }, 500);
             }, 2000);
-        } catch (error) {
-            console.log('Error playing sound:', error);
+        } else {
+            // Direct select fallback on web / Smart TV
+            setSelectedId(profile.id);
+            setSelectedProfile(profile);
+            setTimeout(() => {
+                onProfileSelect(profile.id);
+            }, 300);
         }
     };
 
@@ -254,42 +263,82 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
     }));
 
     return (
-        <SafeAreaView style={[
-            styles.container,
-            { backgroundColor: isMinimizing ? 'transparent' : '#000' }
-        ]}>
+        <SafeAreaView
+            style={[
+                styles.container,
+                { backgroundColor: isMinimizing ? 'transparent' : '#000' }
+            ]}
+            {...({ dataSet: { tvScope: 'who-is-watching' } } as any)}
+        >
             <StatusBar barStyle="light-content" />
             <Animated.View style={[styles.header, headerStyle]}>
                 <View style={styles.headerTitle}>
                     <ThemedText style={styles.title}>Who's Watching?</ThemedText>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    tabIndex={0}
+                    accessibilityRole="button"
+                    {...({ dataSet: { tvFocusable: 'true', tvRow: 'header', tvId: 'edit-profiles' } } as any)}
+                >
                     <ThemedText style={styles.editButton}>Edit</ThemedText>
                 </TouchableOpacity>
             </Animated.View>
 
             <View style={styles.content}>
                 <Animated.View style={[styles.gridContainer, containerStyle]}>
-                    {profiles.map((profile, index) => (
-                        <Animated.View
-                            key={profile.id}
-                            entering={FadeIn.delay(index * 100)}
-                            style={styles.profileWrapper}
-                        >
-                            <TouchableOpacity
-                                onPress={() => handleProfileSelect(profile)}
-                                style={styles.profileButton}
-                                onLayout={(event) => handleProfileLayout(profile, event)}
+                    {profiles.map((profile, index) => {
+                        const isFocused = focusedProfileId === profile.id;
+                        return (
+                            <Animated.View
+                                key={profile.id}
+                                entering={FadeIn.delay(index * 100)}
+                                style={styles.profileWrapper}
                             >
-                                <Animated.View style={styles.profileContainer}>
-                                    <View style={styles.avatar}>
-                                        <ProfileBadge name={profile.name} id={profile.id} borderRadius={6} />
-                                    </View>
-                                    <ThemedText style={styles.profileName}>{profile.name}</ThemedText>
-                                </Animated.View>
-                            </TouchableOpacity>
-                        </Animated.View>
-                    ))}
+                                <TouchableOpacity
+                                    onPress={() => handleProfileSelect(profile)}
+                                    style={[
+                                        styles.profileButton,
+                                        isFocused && {
+                                            transform: [{ scale: 1.08 }],
+                                        },
+                                    ]}
+                                    onFocus={() => setFocusedProfileId(profile.id)}
+                                    onBlur={() => setFocusedProfileId(null)}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={`Select profile ${profile.name}`}
+                                    {...({
+                                        dataSet: {
+                                            tvFocusable: 'true',
+                                            tvRow: 'profiles',
+                                            tvIndex: String(index),
+                                            ...(index === 0 ? { tvInitial: 'true' } : {}),
+                                        },
+                                    } as any)}
+                                    onLayout={(event) => handleProfileLayout(profile, event)}
+                                >
+                                    <Animated.View style={styles.profileContainer}>
+                                        <View style={[
+                                            styles.avatar,
+                                            isFocused && {
+                                                borderColor: '#ffffff',
+                                                borderWidth: 3,
+                                                shadowColor: '#ffffff',
+                                                shadowOpacity: 0.9,
+                                                shadowRadius: 16,
+                                            },
+                                        ]}>
+                                            <ProfileBadge name={profile.name} id={profile.id} borderRadius={6} />
+                                        </View>
+                                        <ThemedText style={[
+                                            styles.profileName,
+                                            isFocused && { color: '#ffffff', fontWeight: '700' },
+                                        ]}>{profile.name}</ThemedText>
+                                    </Animated.View>
+                                </TouchableOpacity>
+                            </Animated.View>
+                        );
+                    })}
                 </Animated.View>
             </View>
 

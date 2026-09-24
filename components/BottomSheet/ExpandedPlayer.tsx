@@ -324,6 +324,16 @@ export function ExpandedPlayer({
                     <Pressable
                         style={styles.closeButton}
                         onPress={() => onClose?.()}
+                        tabIndex={0}
+                        accessibilityRole="button"
+                        accessibilityLabel="Close detail dialog"
+                        {...({
+                            dataSet: {
+                                tvFocusable: 'true',
+                                tvRow: 'detail-top',
+                                tvId: 'detail-close-btn',
+                            },
+                        } as any)}
                     >
                         <Ionicons name="close-outline" size={26} color="white" />
                     </Pressable>
@@ -369,7 +379,21 @@ export function ExpandedPlayer({
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <Pressable style={styles.playButton} onPress={handlePlay}>
+                        <Pressable
+                            style={styles.playButton}
+                            onPress={handlePlay}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel="Play title"
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: 'detail-actions',
+                                    tvId: 'detail-play-btn',
+                                    tvInitial: 'true',
+                                },
+                            } as any)}
+                        >
                             <Ionicons name="play" size={24} color="black" />
                             <ThemedText style={styles.playButtonText}>
                                 {hasDirectPreview
@@ -456,6 +480,16 @@ export function ExpandedPlayer({
                                         if (onPlayEpisode) onPlayEpisode(currentSeason, episode.episode);
                                         else handlePlay();
                                     }}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={`Play episode ${episode.episode}`}
+                                    {...({
+                                        dataSet: {
+                                            tvFocusable: 'true',
+                                            tvRow: 'episodes-list',
+                                            tvIndex: String(episode.episode),
+                                        },
+                                    } as any)}
                                 >
                                     <View style={{
                                         width: 120,
@@ -548,14 +582,22 @@ export function ExpandedPlayer({
                         <ThemedText style={[styles.moreLikeThisTitle, { opacity: 0.4 }]}>Trailers & More</ThemedText>
                     </View>
                     <View style={styles.movieGrid}>
-                        {moreLikeThis.map(item => (
+                        {moreLikeThis.map((item, idx) => (
                             <Pressable
                                 key={item.id}
                                 testID={`related-title-${item.id}`}
                                 style={({ hovered }: any) => [styles.moviePoster, hovered && styles.moviePosterHover]}
                                 onPress={() => onSelectRelated(item)}
+                                tabIndex={0}
                                 accessibilityRole="button"
                                 accessibilityLabel={`Open ${item.title || 'title'}`}
+                                {...({
+                                    dataSet: {
+                                        tvFocusable: 'true',
+                                        tvRow: 'related-titles',
+                                        tvIndex: String(idx),
+                                    },
+                                } as any)}
                             >
                                 <SafeImage
                                     source={{ uri: item.imageUrl }}

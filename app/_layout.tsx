@@ -30,6 +30,7 @@ import {useUser} from '@/contexts/UserContext';
 import useCachedResources from '@/hooks/useCachedResources';
 import { useVisionOS } from '@/hooks/useVisionOS';
 import { WebNavBar } from '@/components/WebNavBar';
+import { initSpatialNavigation } from '@/lib/spatialNavigation';
 
 function AnimatedStack() {
     const {scale} = useRootScale();
@@ -173,6 +174,10 @@ export default function RootLayout() {
 
     useEffect(() => {
         SplashScreen.hideAsync();
+        if (Platform.OS === 'web') {
+            const cleanup = initSpatialNavigation();
+            return cleanup;
+        }
     }, []);
 
     if (!isLoaded) {

@@ -64,4 +64,27 @@ a,
 [data-hoverable="true"] {
   transition: transform 180ms ease;
 }
+
+/* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode */
+body.tv-remote-mode,
+body.tv-remote-mode * {
+  cursor: none !important;
+}
+
+/* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State */
+[data-tv-focused="true"],
+.tv-focused,
+:focus-visible[data-tv-focusable="true"] {
+  outline: 4px solid #ffffff !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.95), 0 0 45px rgba(229, 9, 20, 0.7) !important;
+  transform: scale(1.07) !important;
+  z-index: 100 !important;
+  transition: transform 180ms cubic-bezier(0.2, 0, 0.2, 1), box-shadow 180ms ease, outline 180ms ease !important;
+}
+
+/* Smooth scrolling for spatial navigation */
+html {
+  scroll-behavior: smooth;
+}
 `;

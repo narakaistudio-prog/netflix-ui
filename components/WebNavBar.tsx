@@ -6,6 +6,8 @@ import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '@/contexts/UserContext';
 import { SafeImage } from '@/components/SafeImage';
 import { ProfileBadge } from '@/components/ProfileBadge';
+import { TvRemoteHelper } from '@/components/TvRemoteHelper';
+import { useTvMode } from '@/hooks/useTvNavigation';
 
 export const WEB_NAV_HEIGHT = 68;
 
@@ -35,6 +37,8 @@ export function WebNavBar() {
     const [searchQuery, setSearchQuery] = useState('');
     const [showBellMenu, setShowBellMenu] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [showTvGuide, setShowTvGuide] = useState(false);
+    const { isTvMode } = useTvMode();
     const searchBoxRef = useRef<View>(null);
     const submitLock = useRef(false);
 
@@ -117,6 +121,16 @@ export function WebNavBar() {
                 {/* Netflix Brand Wordmark */}
                 <Pressable
                     onPress={() => router.push('/')}
+                    tabIndex={0}
+                    accessibilityRole="button"
+                    accessibilityLabel="Netflix Home"
+                    {...({
+                        dataSet: {
+                            tvFocusable: 'true',
+                            tvRow: 'navbar',
+                            tvIndex: '0',
+                        },
+                    } as any)}
                     style={({ hovered }: any) => [styles.logoBtn, hovered && { opacity: 0.85 }]}
                 >
                     <Text style={styles.logo}>NETFLIX</Text>
@@ -124,7 +138,7 @@ export function WebNavBar() {
 
                 {/* Main Desktop Links */}
                 <View style={styles.links}>
-                    {NAV_LINKS.map((link) => {
+                    {NAV_LINKS.map((link, i) => {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
                         const isCatalog = link.type === 'catalog' && pathname === `/browse/${link.catalog}`;
                         const isMyList = link.label === 'My List' && pathname.startsWith('/profile');
@@ -133,6 +147,16 @@ export function WebNavBar() {
                         return (
                             <Pressable
                                 key={link.label}
+                                tabIndex={0}
+                                accessibilityRole="button"
+                                accessibilityLabel={link.label}
+                                {...({
+                                    dataSet: {
+                                        tvFocusable: 'true',
+                                        tvRow: 'navbar',
+                                        tvIndex: String(i + 1),
+                                    },
+                                } as any)}
                                 onPress={() => {
                                     if (link.type === 'route') {
                                         router.push(link.href);
@@ -182,11 +206,47 @@ export function WebNavBar() {
                     ) : (
                         <Pressable
                             onPress={() => setSearchOpen(true)}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel="Search"
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: 'navbar',
+                                    tvIndex: '10',
+                                },
+                            } as any)}
                             style={({ hovered }: any) => [styles.iconBtn, hovered && { opacity: 0.75 }]}
                         >
                             <Ionicons name="search" size={20} color="#fff" />
                         </Pressable>
                     )}
+
+                    {/* TV Remote Mode Guide Button */}
+                    <Pressable
+                        onPress={() => setShowTvGuide(true)}
+                        tabIndex={0}
+                        accessibilityRole="button"
+                        accessibilityLabel="Smart TV Remote Guide"
+                        {...({
+                            dataSet: {
+                                tvFocusable: 'true',
+                                tvRow: 'navbar',
+                                tvIndex: '11',
+                            },
+                        } as any)}
+                        style={({ hovered }: any) => [
+                            styles.tvBtn,
+                            isTvMode && styles.tvBtnActive,
+                            hovered && { opacity: 0.85 },
+                        ]}
+                    >
+                        <Ionicons name="tv-outline" size={17} color={isTvMode ? '#46d369' : '#fff'} />
+                        <Text style={[styles.tvBtnText, isTvMode && { color: '#46d369' }]}>
+                            {isTvMode ? 'TV Mode' : 'TV Guide'}
+                        </Text>
+                        {isTvMode && <View style={styles.tvActiveDot} />}
+                    </Pressable>
 
                     {/* Notifications Bell */}
                     <View style={styles.bellContainer}>
@@ -195,6 +255,16 @@ export function WebNavBar() {
                                 setShowBellMenu((prev) => !prev);
                                 setShowProfileMenu(false);
                             }}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel="Notifications"
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: 'navbar',
+                                    tvIndex: '12',
+                                },
+                            } as any)}
                             style={({ hovered }: any) => [styles.iconBtn, hovered && { opacity: 0.75 }]}
                         >
                             <Ionicons name="notifications-outline" size={21} color="#fff" />
@@ -232,6 +302,16 @@ export function WebNavBar() {
                                 setShowProfileMenu((prev) => !prev);
                                 setShowBellMenu(false);
                             }}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Profile ${selectedProfile.name}`}
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: 'navbar',
+                                    tvIndex: '13',
+                                },
+                            } as any)}
                             style={styles.profileBtn}
                         >
                             <ProfileBadge
@@ -309,6 +389,8 @@ export function WebNavBar() {
                     </View>
                 </View>
             </View>
+
+            <TvRemoteHelper isOpen={showTvGuide} onClose={() => setShowTvGuide(false)} />
         </View>
     );
 }
@@ -517,5 +599,31 @@ const styles = StyleSheet.create({
         color: '#b3b3b3',
         fontSize: 12.5,
         fontWeight: '500',
+    },
+    tvBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 16,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    tvBtnActive: {
+        backgroundColor: 'rgba(70, 211, 105, 0.12)',
+        borderColor: '#46d369',
+    },
+    tvBtnText: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '700',
+    },
+    tvActiveDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: '#46d369',
     },
 });

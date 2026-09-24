@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { detectProviderFromUrl } from '@/lib/embeds';
+import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 /**
  * Third-party iframe embed player.
@@ -220,6 +221,11 @@ export function EmbedPlayer({
         onClose?.();
     }, [killIframe, onClose]);
 
+    useTvBackHandler(() => {
+        handleClose();
+        return true;
+    }, true);
+
     const openExternal = (url: string) => {
         if (IS_WEB) {
             try { window.open(url, '_blank', 'noopener'); } catch {}
@@ -271,6 +277,7 @@ export function EmbedPlayer({
             onPointerMove={showEpisodeNavTemporarily}
             onPointerLeave={hideEpisodeNav}
             testID="embed-player"
+            {...({ dataSet: { tvScope: 'player' } } as any)}
         >
             {directVideo ? (
                 React.createElement('video', {
@@ -354,16 +361,56 @@ export function EmbedPlayer({
             ) : null}
 
             <View style={styles.topBar} pointerEvents="box-none">
-                <Pressable style={styles.iconButton} onPress={handleClose} accessibilityLabel="Close player">
+                <Pressable
+                    style={styles.iconButton}
+                    onPress={handleClose}
+                    accessibilityLabel="Close player"
+                    tabIndex={0}
+                    accessibilityRole="button"
+                    {...({
+                        dataSet: {
+                            tvFocusable: 'true',
+                            tvRow: 'player-top',
+                            tvId: 'player-close',
+                            tvInitial: 'true',
+                        },
+                    } as any)}
+                >
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
                 <View style={{ flex: 1 }} />
                 {onSwitchProvider ? (
-                    <Pressable style={styles.iconButton} onPress={onSwitchProvider} accessibilityLabel="Switch player provider">
+                    <Pressable
+                        style={styles.iconButton}
+                        onPress={onSwitchProvider}
+                        accessibilityLabel="Switch player provider"
+                        tabIndex={0}
+                        accessibilityRole="button"
+                        {...({
+                            dataSet: {
+                                tvFocusable: 'true',
+                                tvRow: 'player-top',
+                                tvId: 'player-switch',
+                            },
+                        } as any)}
+                    >
                         <Ionicons name="swap-horizontal" size={20} color="#fff" />
                     </Pressable>
                 ) : null}
-                <Pressable style={styles.iconButton} onPress={openInNewTab} accessibilityLabel="Open in new tab">
+                <Pressable
+                    style={styles.iconButton}
+                    onPress={openInNewTab}
+                    accessibilityLabel="Open in new tab"
+                    tabIndex={0}
+                    accessibilityRole="button"
+                    {...({
+                        dataSet: {
+                            tvFocusable: 'true',
+                            tvRow: 'player-top',
+                            tvId: 'player-tab',
+                        },
+                    } as any)}
+                >
                     <Ionicons name="open-outline" size={20} color="#fff" />
                 </Pressable>
             </View>
@@ -383,6 +430,15 @@ export function EmbedPlayer({
                             onFocus={showEpisodeNav}
                             onBlur={hideEpisodeNav}
                             accessibilityLabel="Previous episode"
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: 'player-episodes',
+                                    tvId: 'player-prev',
+                                },
+                            } as any)}
                         >
                             <Ionicons name="play-skip-back" size={18} color={onPrevEpisode ? '#fff' : '#666'} />
                             <Text style={[styles.epButtonText, !onPrevEpisode && { color: '#666' }]}>Prev</Text>
@@ -400,6 +456,15 @@ export function EmbedPlayer({
                             onFocus={showEpisodeNav}
                             onBlur={hideEpisodeNav}
                             accessibilityLabel="Next episode"
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: 'player-episodes',
+                                    tvId: 'player-next',
+                                },
+                            } as any)}
                         >
                             <Text style={styles.epButtonText}>Next Episode</Text>
                             <Ionicons name="play-skip-forward" size={18} color="#fff" />

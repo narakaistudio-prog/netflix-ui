@@ -27,6 +27,7 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { markWatched } from '@/lib/recentlyWatched';
+import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
 const SCALE_FACTOR = 0.83;
@@ -262,10 +263,19 @@ export default function MovieScreen() {
         opacity: withSpring(1),
     }));
 
+    useTvBackHandler(() => {
+        if (playerOpen) {
+            setPlayerOpen(false);
+            return true;
+        }
+        goBack();
+        return true;
+    }, true);
+
     useEffect(() => {
         if (!IS_WEB) return;
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') goBack();
+            if (e.key === 'Escape' || e.keyCode === 10009) goBack();
         };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
@@ -463,7 +473,10 @@ export default function MovieScreen() {
             <ThemedView style={styles.container}>
                 <StatusBar animated={true} style="light" />
                 <Pressable style={webStyles.backdrop} onPress={goBack} />
-                <Animated.View style={[webStyles.modal, animatedStyle]}>
+                <Animated.View
+                    style={[webStyles.modal, animatedStyle]}
+                    {...({ dataSet: { tvScope: playerOpen ? 'player' : 'modal' } } as any)}
+                >
                     <View style={{ flex: 1, position: 'relative' }}>
                         <ExpandedPlayer
                             key={String(movie.id)}
