@@ -158,6 +158,18 @@ export function FeaturedContent({
                                 (pressed || hovered) && web.playBtnHover,
                             ]}
                             onPress={() => onPlay?.()}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Play ${movie.title}`}
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvId: 'hero-play',
+                                    tvRow: 'billboard',
+                                    tvIndex: '0',
+                                    tvInitial: 'true',
+                                },
+                            } as any)}
                         >
                             <Ionicons name="play" size={26} color="#000" />
                             <Text style={web.playBtnText}>Play</Text>
@@ -169,6 +181,17 @@ export function FeaturedContent({
                                 (pressed || hovered) && web.infoBtnHover,
                             ]}
                             onPress={() => onPlay?.()}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel={`More info about ${movie.title}`}
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvId: 'hero-info',
+                                    tvRow: 'billboard',
+                                    tvIndex: '1',
+                                },
+                            } as any)}
                         >
                             <Ionicons name="information-circle-outline" size={26} color="#fff" />
                             <Text style={web.infoBtnText}>More Info</Text>

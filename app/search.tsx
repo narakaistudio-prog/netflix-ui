@@ -15,6 +15,7 @@ import { Movie } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
 import { SafeImage } from '@/components/SafeImage';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
+import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -61,6 +62,11 @@ export default function Search() {
         else router.replace('/');
     };
 
+    useTvBackHandler(() => {
+        closeSearch();
+        return true;
+    }, true);
+
     useEffect(() => {
         if (!IS_WEB || typeof window === 'undefined') return;
         const onKey = (event: KeyboardEvent) => {
@@ -83,7 +89,14 @@ export default function Search() {
             <Stack.Screen options={{ headerShown: false, animation: 'none' }} />
 
             <View style={[styles.header, IS_WEB && webStyles.header]}>
-                <TouchableOpacity onPress={closeSearch} style={styles.backButton}>
+                <TouchableOpacity
+                    onPress={closeSearch}
+                    style={styles.backButton}
+                    tabIndex={0}
+                    accessibilityRole="button"
+                    accessibilityLabel="Back to browsing"
+                    {...({ dataSet: { tvFocusable: 'true', tvRow: 'search-top', tvId: 'search-back' } } as any)}
+                >
                     <Ionicons name="chevron-back" size={24} color="white" />
                 </TouchableOpacity>
                 <View style={styles.searchInputContainer}>
@@ -124,12 +137,23 @@ export default function Search() {
                         {searchQuery.trim() ? 'Top Results' : 'Recommended'}
                     </Text>
                     <View style={styles.grid}>
-                        {filteredShows.map((item) => (
+                        {filteredShows.map((item, idx) => (
                             <TouchableOpacity
                                 key={String(item.id)}
                                 style={styles.card}
                                 onPress={() => openTitle(String(item.id))}
                                 activeOpacity={0.85}
+                                tabIndex={0}
+                                accessibilityRole="button"
+                                accessibilityLabel={`Open ${item.title}`}
+                                {...({
+                                    dataSet: {
+                                        tvFocusable: 'true',
+                                        tvRow: 'search-grid',
+                                        tvIndex: String(idx),
+                                        ...(idx === 0 ? { tvInitial: 'true' } : {}),
+                                    },
+                                } as any)}
                             >
                                 <View style={styles.posterBox}>
                                     <SafeImage

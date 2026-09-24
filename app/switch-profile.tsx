@@ -19,6 +19,7 @@ import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import { impactAsync } from '@/utils/haptics';
 import { Ionicons } from '@expo/vector-icons';
+import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const { width, height } = Dimensions.get('window');
 const SCALE_FACTOR = 0.83;
@@ -59,6 +60,11 @@ export default function SwitchProfileScreen() {
             });
         }
     }, [router, handleHapticFeedback]);
+
+    useTvBackHandler(() => {
+        goBack();
+        return true;
+    }, true);
 
     const handleScale = useCallback((newScale: number) => {
         try {
@@ -276,6 +282,17 @@ export default function SwitchProfileScreen() {
                                         <TouchableOpacity
                                             onPress={() => handleProfileSelect(profile.id)}
                                             style={styles.profileButton}
+                                            tabIndex={0}
+                                            accessibilityRole="button"
+                                            accessibilityLabel={`Switch to ${profile.name}`}
+                                            {...({
+                                                dataSet: {
+                                                    tvFocusable: 'true',
+                                                    tvRow: 'switch-profiles',
+                                                    tvIndex: String(index),
+                                                    ...(index === 0 ? { tvInitial: 'true' } : {}),
+                                                },
+                                            } as any)}
                                         >
                                             <View style={styles.profileContainer}>
                                                 <View style={styles.avatar}>

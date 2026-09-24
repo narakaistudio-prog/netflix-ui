@@ -59,23 +59,36 @@ const MovieItem = ({ item, router, index, isTop10 }: {
  * Authentic Netflix India Top 10 Card:
  * Stylized large rank number on the left with 2:3 vertical poster on the right.
  */
-const WebTop10Card = ({ item, index, onPress }: {
+const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
     item: Movie;
     index: number;
+    rowTitle?: string;
     onPress: () => void;
 }) => {
     const [hovered, setHovered] = useState(false);
+    const [focused, setFocused] = useState(false);
     const num = index + 1;
+    const isActive = hovered || focused;
 
     return (
         <Pressable
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            tabIndex={0}
             accessibilityRole="button"
             accessibilityLabel={`Open ${item.title || 'title'}`}
             testID={`movie-card-${item.id}`}
-            style={[top10.wrap, hovered && top10.wrapHover]}
+            {...({
+                dataSet: {
+                    tvFocusable: 'true',
+                    tvRow: rowTitle,
+                    tvIndex: String(index),
+                },
+            } as any)}
+            style={[top10.wrap, isActive && top10.wrapHover]}
         >
             <View style={top10.row}>
                 {/* Netflix Stylized Rank Number */}
@@ -84,7 +97,7 @@ const WebTop10Card = ({ item, index, onPress }: {
                 </View>
 
                 {/* Vertical Poster Card */}
-                <View style={[top10.posterBox, hovered && top10.posterBoxHover]}>
+                <View style={[top10.posterBox, isActive && top10.posterBoxHover]}>
                     <SafeImage
                         source={{ uri: item.imageUrl }}
                         style={top10.poster}
@@ -94,7 +107,7 @@ const WebTop10Card = ({ item, index, onPress }: {
                         <Text style={top10.badgeText}>TOP 10</Text>
                     </View>
 
-                    {hovered && (
+                    {isActive && (
                         <View style={top10.quickOverlay}>
                             <View style={card.playCircle}>
                                 <Ionicons name="play" size={16} color="#000" />
@@ -114,23 +127,37 @@ const WebTop10Card = ({ item, index, onPress }: {
  * Authentic Netflix India Vertical Poster Card:
  * Full 2:3 aspect ratio poster with hover zoom and quick action bar.
  */
-const WebPosterCard = ({ item, onPress }: {
+const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
     item: Movie;
+    index?: number;
+    rowTitle?: string;
     onPress: () => void;
 }) => {
     const [hovered, setHovered] = useState(false);
+    const [focused, setFocused] = useState(false);
+    const isActive = hovered || focused;
 
     return (
         <Pressable
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            tabIndex={0}
             accessibilityRole="button"
             accessibilityLabel={`Open ${item.title || 'title'}`}
             testID={`movie-card-${item.id}`}
-            style={[card.wrap, hovered && card.wrapHover]}
+            {...({
+                dataSet: {
+                    tvFocusable: 'true',
+                    tvRow: rowTitle,
+                    tvIndex: String(index),
+                },
+            } as any)}
+            style={[card.wrap, isActive && card.wrapHover]}
         >
-            <View style={[card.posterBox, hovered && card.posterBoxHover]}>
+            <View style={[card.posterBox, isActive && card.posterBoxHover]}>
                 <SafeImage
                     source={{ uri: item.imageUrl }}
                     style={card.poster}
@@ -143,7 +170,7 @@ const WebPosterCard = ({ item, onPress }: {
                 </View>
 
                 {/* Hover overlay with action buttons and title */}
-                {hovered && (
+                {isActive && (
                     <View style={card.hoverOverlay}>
                         <View style={card.actionsRow}>
                             <View style={card.playCircle}>
@@ -222,6 +249,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                         key={`${item.id}-${index}`}
                         item={item}
                         index={index}
+                        rowTitle={rowTitle}
                         onPress={() => openMovie(item)}
                     />
                 );
@@ -230,6 +258,8 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                 <WebPosterCard
                     key={`${item.id}-${index}`}
                     item={item}
+                    index={index}
+                    rowTitle={rowTitle}
                     onPress={() => openMovie(item)}
                 />
             );
@@ -258,6 +288,16 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                                 pathname: '/browse/[rowTitle]',
                                 params: { rowTitle },
                             })}
+                            tabIndex={0}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Explore all titles in ${rowTitle}`}
+                            {...({
+                                dataSet: {
+                                    tvFocusable: 'true',
+                                    tvRow: `${rowTitle}-header`,
+                                    tvId: `explore-${rowTitle}`,
+                                },
+                            } as any)}
                         >
                             <Text style={rowStyles.exploreText}>Explore All</Text>
                             <Ionicons name="chevron-forward" size={13} color="#54b9c5" />
@@ -334,6 +374,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                                 hovered && rowStyles.arrowHover,
                             ]}
                             onPress={() => scrollByPage(-1)}
+                            {...({ dataSet: { tvIgnore: 'true' } } as any)}
                         >
                             <Ionicons name="chevron-back" size={32} color="#fff" />
                         </Pressable>
@@ -344,6 +385,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                                 hovered && rowStyles.arrowHover,
                             ]}
                             onPress={() => scrollByPage(1)}
+                            {...({ dataSet: { tvIgnore: 'true' } } as any)}
                         >
                             <Ionicons name="chevron-forward" size={32} color="#fff" />
                         </Pressable>

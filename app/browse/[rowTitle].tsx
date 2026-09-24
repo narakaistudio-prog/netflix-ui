@@ -7,6 +7,7 @@ import { SafeImage } from '@/components/SafeImage';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 import { Movie } from '@/types/movie';
 import { CatalogBrowseScreen, CatalogKind } from '@/components/CatalogBrowseScreen';
+import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -34,6 +35,11 @@ export default function BrowseRow() {
     const row = rows.find(r => r.rowTitle === rowTitle) ?? rows[0];
     const movies: Movie[] = row?.movies ?? [];
 
+    useTvBackHandler(() => {
+        router.back();
+        return true;
+    }, true);
+
     return (
         <View style={page.container}>
             <Stack.Screen options={{ headerShown: false }} />
@@ -47,6 +53,10 @@ export default function BrowseRow() {
                     <Pressable
                         style={({ hovered }: any) => [page.backBtn, hovered && page.backBtnHover]}
                         onPress={() => router.back()}
+                        tabIndex={0}
+                        accessibilityRole="button"
+                        accessibilityLabel="Back"
+                        {...({ dataSet: { tvFocusable: 'true', tvRow: 'browse-top', tvId: 'browse-back' } } as any)}
                     >
                         <Ionicons name="chevron-back" size={22} color="#fff" />
                     </Pressable>
@@ -91,6 +101,17 @@ function GridCard({ item, index, isTop10, onPress }: {
             onPress={onPress}
             onHoverIn={() => setHovered(true)}
             onHoverOut={() => setHovered(false)}
+            tabIndex={0}
+            accessibilityRole="button"
+            accessibilityLabel={`Open ${item.title}`}
+            {...({
+                dataSet: {
+                    tvFocusable: 'true',
+                    tvRow: 'browse-grid',
+                    tvIndex: String(index),
+                    ...(index === 0 ? { tvInitial: 'true' } : {}),
+                },
+            } as any)}
             style={[page.card, hovered && page.cardHover]}
         >
             <View style={page.cardArt}>
