@@ -21,6 +21,10 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Shared with the client: a refresh must never restore removed titles.
+const CATALOG_EXCLUSIONS = JSON.parse(readFileSync(join(ROOT, 'data/catalog-exclusions.json'), 'utf8'));
+const REMOVED_CATALOG_IDS = new Set(CATALOG_EXCLUSIONS.ids);
+const REMOVED_CATALOG_TITLE_KEYS = new Set(CATALOG_EXCLUSIONS.titleKeys);
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' };
 // Jina's Cloudflare front door can reject a browser-shaped Chrome UA; use its
 // neutral reader UA for proxy requests instead of reusing the source headers.
@@ -491,6 +495,7 @@ function findBundledPosterId(item) {
 }
 
 async function savePoster(item, fallbackImageUrl = '') {
+    if (isBlockedCatalogTitle(item)) return;
     const src = item.imageUrl || '';
     if (!/^https?:\/\//.test(src) || !/^(fp|jw|movie|tv)-/.test(item.id)) {
         const bundledPosterId = findBundledPosterId(item);
@@ -1068,7 +1073,9 @@ const CURATED_PLAYBACK_IMDB_IDS = {
 };
 const getNetflixOfficialId = title => netflixOfficialIdByTitle.get(normalizeLookupTitle(title));
 const getCuratedPlaybackImdbId = title => CURATED_PLAYBACK_IMDB_IDS[title];
-const isBlockedCatalogTitle = item => BLOCKED_CATALOG_TITLE_PATTERN.test(String(item?.title || ''));
+const isBlockedCatalogTitle = item => BLOCKED_CATALOG_TITLE_PATTERN.test(String(item?.title || ''))
+    || REMOVED_CATALOG_IDS.has(String(item?.id || ''))
+    || REMOVED_CATALOG_TITLE_KEYS.has(normalizeLookupTitle(item?.title));
 
 function isMatureCatalogItem(item) {
     const normalizedTitle = normalizeLookupTitle(item.title);
@@ -2028,10 +2035,10 @@ async function enrichExistingCatalog() {
     );
 
     const byId = new Map(enrichedItems.map(item => [item.id, item]));
-    const enrichedRows = rows.map(row => ({
+    const enrichedRows = moveMatureToBottom(rows.map(row => ({
         ...row,
         movies: (row.movies ?? []).map(item => byId.get(item.id) ?? item),
-    }));
+    })));
     await Promise.all(enrichedItems.map(item => savePoster(item)));
     writePosterIndex();
     writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: enrichedRows }, null, 4));

@@ -31,7 +31,7 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
                 <button id="logo" data-tv-focusable="true" data-tv-row="navbar">NETFLIX</button>
                 <button id="home-link" data-tv-focusable="true" data-tv-row="navbar">Home</button>
             </nav>
-            <div id="scroller" data-tv-scroll-container="true">
+            <div id="scroller" data-tv-scroll-container="true" data-tv-route-page="/">
                 <div id="hero" data-tv-pointer-catch-zone="true" data-tv-pointer-redirect="hero-play">
                     <button id="play" data-tv-focusable="true" data-tv-id="hero-play" data-tv-row="billboard" data-tv-index="0">Play</button>
                     <button id="info" data-tv-focusable="true" data-tv-id="hero-info" data-tv-row="billboard" data-tv-index="1">Info</button>
@@ -76,6 +76,33 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         jest.advanceTimersByTime(20);
     }
 
+    function mountCatalog(path: string) {
+        const root = document.createElement('div');
+        root.setAttribute('data-tv-scroll-container', 'true');
+        root.setAttribute('data-tv-route-page', path);
+        root.innerHTML = `
+            <div data-tv-shelf="true" data-tv-shelf-count="2">
+                <button id="catalog-first" data-tv-focusable="true" data-tv-card="true" data-tv-row="top-10" data-tv-index="0">First catalog poster</button>
+                <button id="catalog-second" data-tv-focusable="true" data-tv-card="true" data-tv-row="top-10" data-tv-index="1">Second catalog poster</button>
+            </div>
+            <div data-tv-shelf="true" data-tv-shelf-count="1">
+                <button id="catalog-next" data-tv-focusable="true" data-tv-card="true" data-tv-row="recent" data-tv-index="0">Next catalog shelf</button>
+            </div>
+        `;
+        container.appendChild(root); // previous tab can still be mounted and opaque
+        const first = root.querySelector<HTMLElement>('#catalog-first')!;
+        const second = root.querySelector<HTMLElement>('#catalog-second')!;
+        const next = root.querySelector<HTMLElement>('#catalog-next')!;
+        Object.defineProperties(root, {
+            scrollHeight: { value: 1900, configurable: true },
+            clientHeight: { value: 800, configurable: true },
+        });
+        first.getBoundingClientRect = () => rect(48, 280 - root.scrollTop, 175, 255) as any;
+        second.getBoundingClientRect = () => rect(235, 280 - root.scrollTop, 175, 255) as any;
+        next.getBoundingClientRect = () => rect(48, 760 - root.scrollTop, 175, 255) as any;
+        return { root, first, second, next };
+    }
+
     beforeEach(() => {
         jest.useFakeTimers();
         localStorage.clear();
@@ -85,6 +112,7 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         container = document.createElement('div');
         document.body.appendChild(container);
         spatialNav.init();
+        window.history.replaceState(null, '', '/');
         spatialNav.setPointerModePreference('auto');
         spatialNav.setTvMode(false, false);
         (spatialNav as any).lastKeyInputAt = 0;
@@ -94,6 +122,7 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
     });
 
     afterEach(() => {
+        window.history.replaceState(null, '', '/');
         spatialNav.destroy();
         spatialNav.setTvMode(false, false);
         container.remove();
@@ -109,6 +138,134 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         press('ArrowDown');
         expect(spatialNav.getCurrentFocus()).toBe(nextCard);
         expect(document.activeElement).toBe(nextCard);
+    });
+
+    it.each(['/browse/movies', '/browse/tv', '/movies', '/tv'])(
+        'Down enters the active %s catalog, not the still-mounted Home screen', path => {
+            const { first, second, next } = mountCatalog(path);
+            spatialNav.setFocus(logo);
+            window.history.pushState(null, '', path);
+            expect(spatialNav.getCurrentFocus()).toBe(first);
+            expect(document.activeElement).toBe(first);
+            expect(play.hasAttribute('data-tv-focused')).toBe(false);
+
+            // The first Down after category entry reaches the next shelf;
+            // rapid remote steps must never fall back to the old Home hero.
+            press('ArrowDown');
+            expect(spatialNav.getCurrentFocus()).toBe(next);
+            press('ArrowUp');
+            expect(spatialNav.getCurrentFocus()).toBe(first);
+            press('ArrowRight');
+            expect(spatialNav.getCurrentFocus()).toBe(second);
+            expect(document.activeElement).toBe(second);
+            press('ArrowUp');
+            expect(spatialNav.getCurrentFocus()?.getAttribute('data-tv-row')).toBe('navbar');
+        },
+    );
+
+    it('retains focus during a slow catalog mount and enters the shelf when it arrives', async () => {
+        spatialNav.setFocus(logo);
+        window.history.pushState(null, '', '/browse/movies');
+        press('ArrowDown'); // React has not committed the next route yet.
+        expect(spatialNav.getCurrentFocus()).toBe(logo);
+        expect(document.activeElement).toBe(logo);
+        expect(play.hasAttribute('data-tv-focused')).toBe(false);
+
+        const { first } = mountCatalog('/browse/movies');
+        await jest.advanceTimersByTimeAsync(240); // flush MutationObserver + route debounce
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+        expect(document.activeElement).toBe(first);
+    });
+
+    it('waits for an outgoing tab transition to reveal the catalog page', async () => {
+        const { root, first } = mountCatalog('/browse/tv');
+        root.style.opacity = '0';
+        spatialNav.setFocus(logo);
+        window.history.pushState(null, '', '/browse/tv');
+        expect(spatialNav.getCurrentFocus()).toBe(logo);
+
+        root.style.opacity = '1'; // Reanimated changes style, not DOM children.
+        await jest.advanceTimersByTimeAsync(50);
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+    });
+
+    it('switches from Movies to TV Shows without focusing the old catalog shelf', () => {
+        const movies = mountCatalog('/browse/movies');
+        spatialNav.setFocus(logo);
+        window.history.pushState(null, '', '/browse/movies');
+        expect(spatialNav.getCurrentFocus()).toBe(movies.first);
+
+        const tv = mountCatalog('/browse/tv');
+        window.history.pushState(null, '', '/browse/tv');
+        expect(spatialNav.getCurrentFocus()).toBe(tv.first);
+        expect(document.activeElement).toBe(tv.first);
+        expect(movies.first.hasAttribute('data-tv-focused')).toBe(false);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(tv.next);
+    });
+
+    it('does not keep native focus on a Home poster when the Movies route replaces it', () => {
+        const { first } = mountCatalog('/browse/movies');
+        spatialNav.setFocus(topCard);
+        window.history.pushState(null, '', '/browse/movies');
+        expect(spatialNav.getCurrentFocus()).not.toBe(topCard);
+        expect(document.activeElement).not.toBe(topCard);
+        jest.advanceTimersByTime(240);
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+    });
+
+    it('still lets a non-catalog detail screen mount before recovering its focus', () => {
+        spatialNav.setFocus(topCard);
+        window.history.pushState(null, '', '/movie/example');
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+
+        const details = document.createElement('button');
+        details.setAttribute('data-tv-focusable', 'true');
+        details.textContent = 'Play this title';
+        details.getBoundingClientRect = () => rect(48, 280, 175, 50) as any;
+        container.appendChild(details);
+        jest.advanceTimersByTime(240);
+        expect(spatialNav.getCurrentFocus()).toBe(details);
+        expect(document.activeElement).toBe(details);
+    });
+
+    it('ignores a parked pointer hit on an old Home card after entering TV Shows', () => {
+        const { first } = mountCatalog('/browse/tv');
+        spatialNav.setFocus(logo);
+        window.history.pushState(null, '', '/browse/tv');
+        spatialNav.setPointerModePreference('on');
+        pointer(logo, 90, 28);
+        pointer(logo, 90, 46);
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+        jest.advanceTimersByTime(300);
+        pointer(play, 110, 430, 'mouseover');
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+        expect(document.activeElement).toBe(first);
+    });
+
+    it('does not snap back to a parked Movies-link cursor after the route auto-focuses a poster', () => {
+        const link = document.createElement('button');
+        link.setAttribute('data-tv-focusable', 'true');
+        link.setAttribute('data-tv-row', 'navbar');
+        link.setAttribute('data-tv-route-link', '/browse/movies');
+        link.textContent = 'Movies';
+        container.querySelector('#navbar')!.appendChild(link);
+        link.getBoundingClientRect = () => rect(310, 16, 76, 40) as any;
+        const { first, next } = mountCatalog('/browse/movies');
+        spatialNav.setPointerModePreference('on');
+        spatialNav.setFocus(link);
+        pointer(link, 348, 28);
+        window.history.pushState(null, '', '/browse/movies');
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+        // Expo can replace the URL again after rendering the same path.
+        window.history.replaceState(null, '', '/browse/movies');
+        jest.advanceTimersByTime(300);
+
+        pointer(link, 348, 28, 'mouseover'); // the old firmware hit is not a new navigation intent
+        expect(spatialNav.getCurrentFocus()).toBe(first);
+        pointer(link, 348, 45); // a real D-pad Down still advances immediately
+        expect(spatialNav.getCurrentFocus()).toBe(next);
+        expect(document.activeElement).toBe(next);
     });
 
     it('Down from the Netflix logo goes to Play, then the first shelf without hydrating the whole page', () => {

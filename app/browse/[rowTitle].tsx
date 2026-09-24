@@ -27,7 +27,7 @@ export default function BrowseRow() {
         return (
             <>
                 <Stack.Screen options={{ headerShown: false }} />
-                <CatalogBrowseScreen kind={catalogKind} />
+                <CatalogBrowseScreen kind={catalogKind} routePath={`/browse/${rowTitle}`} />
             </>
         );
     }
@@ -44,6 +44,7 @@ export default function BrowseRow() {
         <View style={page.container}>
             <Stack.Screen options={{ headerShown: false }} />
             <ScrollView
+                {...({ dataSet: { tvScrollContainer: 'true', tvRoutePage: `/browse/${rowTitle}` } } as any)}
                 contentContainerStyle={[
                     page.content,
                     IS_WEB && { paddingTop: WEB_NAV_HEIGHT + 36, paddingBottom: 90 },

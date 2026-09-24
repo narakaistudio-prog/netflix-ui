@@ -145,7 +145,7 @@ export default function HomeScreen() {
 
         <Animated.ScrollView
           ref={scrollViewRef}
-          {...({ dataSet: { tvScrollContainer: 'true' } } as any)}
+          {...({ dataSet: { tvScrollContainer: 'true', tvRoutePage: '/' } } as any)}
           style={[
             styles.scrollView,
             isVisionOS && { paddingHorizontal: 20 }

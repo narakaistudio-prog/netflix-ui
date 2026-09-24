@@ -17,7 +17,7 @@ export default function TVShowsScreen() {
             isActive={pathname === '/tv'}
             slideDirection={slideDirection}
         >
-            <CatalogBrowseScreen kind="tv" />
+            <CatalogBrowseScreen kind="tv" routePath="/tv" />
         </TabScreenWrapper>
     );
 }

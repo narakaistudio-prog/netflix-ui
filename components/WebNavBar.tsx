@@ -155,6 +155,7 @@ export function WebNavBar() {
                                         tvFocusable: 'true',
                                         tvRow: 'navbar',
                                         tvIndex: String(i + 1),
+                                        tvRouteLink: link.href,
                                     },
                                 } as any)}
                                 onPress={() => {

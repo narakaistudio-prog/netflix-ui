@@ -102,6 +102,14 @@ class SpatialNavigationManager {
     private lastEdgeScrollAt = 0;
     private focusWatchdog: any = null;
     private routeDebounce: any = null;
+    private lastRoutePath: string | null = null;
+    /** Keep the navbar ring while React mounts the selected Movies/TV shelf. */
+    private pendingRouteEntry: {
+        path: string;
+        origin: HTMLElement;
+        observer: MutationObserver | null;
+        timeout: ReturnType<typeof setTimeout>;
+    } | null = null;
     /** True once the user explicitly switched TV mode off - auto-detect must not undo it. */
     private userDisabledTvMode = false;
     /** 'auto' = detect, 'on' = remote drives an on-screen arrow, 'off' = arrow keys only. */
@@ -277,6 +285,7 @@ class SpatialNavigationManager {
         if (this.isTvModeActive === active) {
             if (!active) {
                 this.cancelPendingFocus();
+                this.cancelPendingRouteEntry();
                 this.clearFocusRing();
                 this.exitPointerMode();
                 this.resetPointerSteering();
@@ -289,6 +298,7 @@ class SpatialNavigationManager {
         this.isTvModeActive = active;
         if (!active) {
             this.cancelPendingFocus();
+            this.cancelPendingRouteEntry();
             this.clearFocusRing();
             this.exitPointerMode();
             this.resetPointerSteering();
@@ -367,6 +377,7 @@ class SpatialNavigationManager {
     public init() {
         if (this.isInitialized || typeof window === 'undefined') return;
         this.isInitialized = true;
+        this.lastRoutePath = this.getRoutePath();
 
         this.registerTizenKeys();
 
@@ -411,6 +422,7 @@ class SpatialNavigationManager {
         this.stopPointerTracking();
         this.stopFocusWatchdog();
         this.cancelPendingFocus();
+        this.cancelPendingRouteEntry();
         if (this.focusRepairFrame != null) {
             this.cancelFrame(this.focusRepairFrame);
             this.focusRepairFrame = null;
@@ -505,6 +517,19 @@ class SpatialNavigationManager {
         this.pointerSteering = false;
         this.pointerSteerOrigin = null;
         this.pointerSteerPosition = null;
+    }
+
+    /** Route entry auto-focus is also a remote move: keep a cursor parked on
+     * the old category link from undoing it, without blocking genuine moves. */
+    private armRoutePointer(origin: HTMLElement) {
+        if (!this.pointerFollowActive()) return;
+        const r = origin.getBoundingClientRect();
+        const pos = this.pointerPosition || { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        this.pointerAnchor = { ...pos };
+        this.pointerSteering = true;
+        this.pointerSteerOrigin = origin;
+        this.pointerSteerPosition = { ...pos };
+        this.pointerSteeredAt = Date.now();
     }
 
     /**
@@ -644,6 +669,12 @@ class SpatialNavigationManager {
         if (!target || target.nodeType !== 1) return;
         const scope = this.getActiveScope();
         if (!scope.contains(target)) return;
+        const targetPage = target.closest?.('[data-tv-route-page]') as HTMLElement | null;
+        if (targetPage && this.isWrongRoutePage(targetPage)) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
         const direct = this.closestFocusable(target, scope);
         const parked = this.isPointerStillParked(direct, event.clientX, event.clientY);
         const steeredFocus = this.pointerSteering && parked &&
@@ -765,7 +796,8 @@ class SpatialNavigationManager {
         const step = Math.max(160, Math.round(viewportHeight * 0.28)) * direction;
         const selector = '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]';
         const tagged = (hit?.closest?.(selector) || this.currentFocusedElement?.closest?.(selector)) as HTMLElement | null;
-        if (tagged && this.getActiveScope().contains(tagged) &&
+        if (hit && this.isInsideHiddenSubtree(hit, this.getActiveScope())) return false;
+        if (tagged && this.isFocusAttachedToScope(tagged, this.getActiveScope()) &&
             tagged.scrollHeight > tagged.clientHeight + 20) {
             const before = tagged.scrollTop;
             try { tagged.scrollTop = before + step; } catch { return false; }
@@ -827,7 +859,8 @@ class SpatialNavigationManager {
                 const redirect: HTMLElement | null = scope.querySelector<HTMLElement>(
                     `[data-tv-id="${zoneId}"]`
                 );
-                if (redirect && redirect !== node && this.isSelfVisible(redirect)) return redirect;
+                if (redirect && redirect !== node && this.isSelfVisible(redirect) &&
+                    !this.isInsideHiddenSubtree(redirect, scope)) return redirect;
             }
 
             if (node === scope || node === document.body || node === document.documentElement) break;
@@ -863,6 +896,7 @@ class SpatialNavigationManager {
         while (node && node.nodeType === 1 && guard++ < 40) {
             if ((node as any).hidden) return true;
             if (node !== el && node.getAttribute('aria-hidden') === 'true') return true;
+            if (this.isWrongRoutePage(node)) return true;
             const inline = node.style;
             if (inline) {
                 if (inline.display === 'none' || inline.visibility === 'hidden') return true;
@@ -1009,13 +1043,109 @@ class SpatialNavigationManager {
         });
     };
 
+    private cancelPendingRouteEntry() {
+        const pending = this.pendingRouteEntry;
+        if (!pending) return;
+        this.pendingRouteEntry = null;
+        pending.observer?.disconnect();
+        clearTimeout(pending.timeout);
+    }
+
+    private tryPendingRouteEntry(pending: NonNullable<SpatialNavigationManager['pendingRouteEntry']>): boolean {
+        if (this.pendingRouteEntry !== pending) return false;
+        const scope = this.getActiveScope();
+        if (!this.isTvModeActive || this.getRoutePath() !== pending.path ||
+            this.currentFocusedElement !== pending.origin ||
+            !this.isFocusAttachedToScope(pending.origin, scope)) {
+            this.cancelPendingRouteEntry();
+            return false;
+        }
+        // The latest matching page wins when a tab and a browse route overlap.
+        const pages = scope.querySelectorAll<HTMLElement>('[data-tv-route-page]');
+        let root: HTMLElement | null = null;
+        for (const page of Array.from(pages)) {
+            if (page.getAttribute('data-tv-route-page') === pending.path &&
+                (page.getAttribute('data-tv-scroll-container') === 'true' ||
+                    page.getAttribute('data-tvscrollcontainer') === 'true') &&
+                !this.isOwnFocusBlocked(page) && !this.hasHiddenAncestor(page, scope, new Map())) root = page;
+        }
+        const first = root?.querySelector<HTMLElement>('[data-tv-shelf="true"]');
+        if (!first || this.isOwnFocusBlocked(first) || this.hasHiddenAncestor(first, scope, new Map())) return false;
+        const r = pending.origin.getBoundingClientRect();
+        this.cancelPendingRouteEntry();
+        this.focusShelf(first, r.left + r.width / 2, 0);
+        if (this.currentFocusedElement !== pending.origin) this.armRoutePointer(pending.origin);
+        return true;
+    }
+
+    private startRouteEntry(path: string, origin: HTMLElement) {
+        this.cancelPendingRouteEntry();
+        const pending: NonNullable<SpatialNavigationManager['pendingRouteEntry']> = {
+            path, origin, observer: null, timeout: null as any,
+        };
+        this.pendingRouteEntry = pending;
+        pending.timeout = setTimeout(() => {
+            if (this.pendingRouteEntry === pending) this.cancelPendingRouteEntry();
+        }, 1500);
+        if (typeof MutationObserver !== 'undefined') {
+            pending.observer = new MutationObserver(() => this.tryPendingRouteEntry(pending));
+            // A retained tab may become visible via opacity rather than DOM
+            // insertion. Observe both without watching focus-ring attributes.
+            pending.observer.observe(document.body, {
+                childList: true, subtree: true, attributes: true,
+                attributeFilter: ['style', 'aria-hidden'],
+            });
+        }
+        this.tryPendingRouteEntry(pending);
+    }
+
+    /** Move focus off an outgoing page before its focused card unmounts. */
+    private focusRouteNavbar(path: string, scope: HTMLElement): boolean {
+        const links = scope.querySelectorAll<HTMLElement>('[data-tv-row="navbar"][data-tv-route-link]');
+        for (const link of Array.from(links)) {
+            if (link.getAttribute('data-tv-route-link') === path && this.isVisible(link)) {
+                this.setFocus(link, 'none');
+                return true;
+            }
+        }
+        const anchor = this.lastKnownRect;
+        return this.focusNearestNavbar(scope, anchor ? anchor.left + anchor.width / 2 : 0);
+    }
+
     private handleRouteChange = () => {
         if (typeof window === 'undefined') return;
-        // A new screen has new hit targets; don't keep the old logo/cursor
-        // suppression latched across navigation.
-        this.resetPointerSteering();
-        this.pointerAnchor = null;
-        this.clearPointerQueue();
+        const path = this.getRoutePath();
+        const changed = path !== this.lastRoutePath;
+        this.lastRoutePath = path;
+        // Only a different page invalidates the old cursor target. Expo may
+        // replaceState again on the SAME route just after its first commit;
+        // clearing steering then lets the parked navbar pointer steal focus.
+        if (changed) {
+            this.resetPointerSteering();
+            this.pointerAnchor = this.pointerPosition ? { ...this.pointerPosition } : null;
+            this.clearPointerQueue();
+            this.cancelPendingFocus();
+            this.cancelPendingRouteEntry();
+        }
+        if (this.isTvModeActive && changed) {
+            const scope = this.getActiveScope();
+            const current = this.currentFocusedElement;
+            if (current && !this.isFocusAttachedToScope(current, scope) &&
+                this.isCatalogRoute(path) && scope === document.body) {
+                // Old Home can remain opaque during a Movies/TV push. Put the
+                // ring on the route's header synchronously, not 220ms later
+                // when the TV has already drawn its native pointer. Other
+                // screens keep the existing deferred recovery so their first
+                // action has time to mount before focus is assigned.
+                if (!this.focusRouteNavbar(path, scope)) this.recoverFocus(scope);
+            }
+            const nav = this.currentFocusedElement;
+            if (this.isCatalogRoute(path) && scope === document.body && nav?.getAttribute('data-tv-row') === 'navbar') {
+                // A category has no hero. Focus its first shelf when React
+                // commits it, while keeping the header focused in the gap.
+                this.startRouteEntry(path, nav);
+            }
+        }
         if (this.routeDebounce != null) clearTimeout(this.routeDebounce);
         this.routeDebounce = setTimeout(() => {
             this.routeDebounce = null;
@@ -1282,6 +1412,28 @@ class SpatialNavigationManager {
         return document.body;
     }
 
+    /** Route identity, not visual opacity: stacked Expo screens can both be opaque. */
+    private getRoutePath(): string {
+        if (typeof window === 'undefined') return '/';
+        try {
+            return decodeURIComponent(window.location.pathname).replace(/\/+$/, '') || '/';
+        } catch {
+            return window.location.pathname.replace(/\/+$/, '') || '/';
+        }
+    }
+
+    private isCatalogRoute(path: string): boolean {
+        return path === '/browse/movies' || path === '/browse/tv' || path === '/movies' || path === '/tv';
+    }
+
+    /** A background Home/tab page may remain mounted and visible behind a route. */
+    private isWrongRoutePage(element: HTMLElement): boolean {
+        const pagePath = element.getAttribute('data-tv-route-page');
+        if (pagePath === null) return false;
+        const path = this.getRoutePath();
+        return pagePath !== path && !(pagePath === '/' && path === '/index');
+    }
+
     /**
      * Own-element checks only — no ancestor walk, no getComputedStyle.
      *
@@ -1292,7 +1444,7 @@ class SpatialNavigationManager {
     private isOwnFocusBlocked(element: HTMLElement): boolean {
         if (!element || element.nodeType !== 1) return true;
         if ((element as any).hidden) return true;
-        if (element.getAttribute('aria-hidden') === 'true') return true;
+        if (element.getAttribute('aria-hidden') === 'true' || this.isWrongRoutePage(element)) return true;
         const inline = element.style;
         if (inline) {
             if (inline.display === 'none' || inline.visibility === 'hidden' || inline.visibility === 'collapse') {
@@ -1323,7 +1475,7 @@ class SpatialNavigationManager {
      */
     private ancestorBlocksFocus(node: HTMLElement): boolean {
         if ((node as any).hidden) return true;
-        if (node.getAttribute('aria-hidden') === 'true') return true;
+        if (node.getAttribute('aria-hidden') === 'true' || this.isWrongRoutePage(node)) return true;
         const inline = node.style;
         if (inline) {
             if (inline.display === 'none' || inline.visibility === 'hidden' || inline.visibility === 'collapse') {
@@ -1501,6 +1653,7 @@ class SpatialNavigationManager {
      */
     public setFocus(element: HTMLElement | null, scroll: ScrollAxis = 'both') {
         if (!element) return;
+        if (this.pendingRouteEntry && element !== this.pendingRouteEntry.origin) this.cancelPendingRouteEntry();
         this.cancelPendingFocus();
 
         if (this.currentFocusedElement === element) {
@@ -1778,6 +1931,8 @@ class SpatialNavigationManager {
         if (!card) return;
         this.cancelPendingFocus();
         this.setFocus(card);
+        if (pending.origin.getAttribute('data-tv-row') === 'navbar' &&
+            this.isCatalogRoute(this.getRoutePath())) this.armRoutePointer(pending.origin);
     }
 
     /**
@@ -1866,11 +2021,16 @@ class SpatialNavigationManager {
             const r = current.getBoundingClientRect();
             return r.left + r.width / 2;
         })();
-        const roots = scope.querySelectorAll<HTMLElement>(
+        const roots = Array.from(scope.querySelectorAll<HTMLElement>(
             '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
-        );
+        ));
+        const path = this.getRoutePath();
+        // A previous tab stays mounted behind the catalog, sometimes without
+        // opacity:0. Match its route marker instead of taking the first hero.
+        const matching = roots.filter(root => root.getAttribute('data-tv-route-page') === path);
+        const ordered = matching.length ? matching.reverse() : roots;
         const hidden = new Map<Element, boolean>();
-        for (const root of Array.from(roots)) {
+        for (const root of ordered) {
             if (this.isOwnFocusBlocked(root) || this.hasHiddenAncestor(root, scope, hidden)) continue;
             const play = root.querySelector<HTMLElement>('[data-tv-id="hero-play"]');
             if (play && this.isSelfVisible(play) && !this.hasHiddenAncestor(play, scope, hidden)) {
@@ -1882,6 +2042,12 @@ class SpatialNavigationManager {
                 this.focusShelf(first, centerX);
                 return true;
             }
+        }
+        // The category may still be mounting. Keep native DOM focus on the
+        // navbar rather than falling through to an old page or browser arrow.
+        if (this.isCatalogRoute(path)) {
+            this.retainFocus(current);
+            return true;
         }
         return false;
     }
@@ -1986,6 +2152,10 @@ class SpatialNavigationManager {
      */
     public moveFocus(dir: Direction) {
         const scope = this.getActiveScope();
+        if (this.pendingRouteEntry) {
+            if (dir === 'down' && this.tryPendingRouteEntry(this.pendingRouteEntry)) return;
+            if (dir !== 'down') this.cancelPendingRouteEntry();
+        }
 
         // Focus was lost (a virtualised shelf unmounted the card, a row
         // re-rendered, or the previous tab became hidden). Recover NEARBY —

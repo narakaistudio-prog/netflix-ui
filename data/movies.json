@@ -1074,46 +1074,6 @@
                     "catalogSource": "justwatch"
                 },
                 {
-                    "id": "jw-catalog-movie-madrid-1987",
-                    "title": "Madrid, 1987",
-                    "type": "FILM",
-                    "mediaType": "movie",
-                    "imageUrl": "local:jw-catalog-movie-madrid-1987",
-                    "catalogSource": "justwatch",
-                    "imdb_id": "tt1760980",
-                    "year": "2012",
-                    "description": "Madrid, 1987 ...is a two-character story with a verbose discourse on writing, journalism, careerism, aging and politics. Shot mostly within a very constricted space, the story follows an older, celebrated journalist Miguel (José Sacristán) who meets the beautiful and coy journalism-student Angela (María Valverde) to give an interview - but becomes intent upon seducing her. They end up spending time in the most unusual manner ...discussing literature, prose and career trajectories ...gradually divulging little insights into their own selves as we start to understand the old journalist's cynicism and the young protégé's intentions.",
-                    "cast": [
-                        "José Sacristán",
-                        "María Valverde",
-                        "Ramon Fontserè"
-                    ],
-                    "director": "David Trueba",
-                    "rating": "6.2",
-                    "rated": "Not Rated",
-                    "duration": "105 min"
-                },
-                {
-                    "id": "jw-catalog-movie-chatterbox",
-                    "title": "Chatterbox!",
-                    "type": "FILM",
-                    "mediaType": "movie",
-                    "imageUrl": "local:jw-catalog-movie-chatterbox",
-                    "catalogSource": "justwatch",
-                    "imdb_id": "tt0075830",
-                    "year": "1977",
-                    "description": "A young woman who works in a beauty parlor discovers that her vagina can talk, which causes her no end of trouble.",
-                    "cast": [
-                        "Candice Rialson",
-                        "Larry Gelman",
-                        "Jane Kean"
-                    ],
-                    "director": "Tom DeSimone",
-                    "rating": "5.1",
-                    "rated": "R",
-                    "duration": "73 min"
-                },
-                {
                     "id": "jw-catalog-movie-irumudi-2026",
                     "imageUrl": "local:jw-catalog-movie-irumudi-2026",
                     "title": "Irumudi",

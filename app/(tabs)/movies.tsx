@@ -17,7 +17,7 @@ export default function MoviesScreen() {
             isActive={pathname === '/movies'}
             slideDirection={slideDirection}
         >
-            <CatalogBrowseScreen kind="movie" />
+            <CatalogBrowseScreen kind="movie" routePath="/movies" />
         </TabScreenWrapper>
     );
 }

@@ -169,7 +169,7 @@ function getPageCopy(kind: CatalogKind) {
     };
 }
 
-export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
+export function CatalogBrowseScreen({ kind, routePath }: { kind: CatalogKind; routePath: string }) {
     const { rows } = useCatalog();
     const insets = useSafeAreaInsets();
     const sections = useMemo(() => getCatalogSections(rows, kind), [rows, kind]);
@@ -191,7 +191,7 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
     return (
         <View style={page.container}>
             <ScrollView
-                {...({ dataSet: { tvScrollContainer: 'true' } } as any)}
+                {...({ dataSet: { tvScrollContainer: 'true', tvRoutePage: routePath } } as any)}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[
                     page.content,

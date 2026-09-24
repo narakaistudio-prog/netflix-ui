@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Movie, MovieRow } from '@/types/movie';
 import trailerMap from '@/data/trailers.json';
 import staticMovies from '@/data/movies.json';
+import { withoutRemovedCatalogTitles } from '@/lib/catalogExclusions';
 
 const TRAILERS = trailerMap as Record<string, string>;
 
-const staticRows = (staticMovies as unknown as { movies: MovieRow[] }).movies;
+const staticRows = withoutRemovedCatalogTitles((staticMovies as unknown as { movies: MovieRow[] }).movies);
 
 /**
  * `local:<id>` imageUrl values point at `assets/posters`; preserve the marker
