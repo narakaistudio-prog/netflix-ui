@@ -21,6 +21,11 @@ export default function Root({ children }: PropsWithChildren) {
         */}
         <ScrollViewStyleReset />
 
+        {/* Samsung Smart TV: synchronously tag <html> before first paint so the
+            TV-browser arrow cursor is hidden even before React hydrates.
+            Keep this script ES5 — it runs raw on Chromium 69 (Tizen 5.5). */}
+        <script dangerouslySetInnerHTML={{ __html: tvDetectScript }} />
+
         {/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode. */}
         <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
       </head>
@@ -28,6 +33,8 @@ export default function Root({ children }: PropsWithChildren) {
     </html>
   );
 }
+
+const tvDetectScript = `(function(){try{var ua=navigator.userAgent||'';if(/SmartTV|SMART-TV|Tizen|SamsungBrowser.*TV|Web0S|webOS|AppleTV|BRAVIA|GoogleTV|Android.*TV|NetCast|POV_TV|Viera/i.test(ua)){document.documentElement.className+=' tv-device';}}catch(e){}})();`;
 
 const globalStyles = `
 html,
@@ -68,6 +75,8 @@ a,
 /* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode.
    1x1 transparent PNG cursor: Samsung Internet for TV ignores plain
    cursor:none in pointer-fallback states, this data URI guarantees the arrow never shows. */
+html.tv-device,
+html.tv-device *,
 body.tv-remote-mode,
 body.tv-remote-mode * {
   cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==') 0 0, none !important;

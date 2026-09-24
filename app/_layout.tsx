@@ -1,3 +1,6 @@
+// Must stay the first import: backfills JS runtime APIs missing on old Smart TV
+// browsers (Samsung Tizen 5.5 = Chromium 69) before any other module runs.
+import '@/lib/polyfills';
 import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
