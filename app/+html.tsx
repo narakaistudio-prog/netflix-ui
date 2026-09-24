@@ -114,10 +114,13 @@ html.tv-remote-mode *:focus:not([data-tv-focused='true']) {
   outline: none !important;
 }
 
-/* The remote is driving an on-screen arrow (Samsung Internet for TV / LG webOS
-   pointer mode): keep the ring snappy so it tracks the arrow closely. */
+/* The ring follows the remote instantly; only its compositor transform eases.
+   Long transitions trail behind fast D-pad bursts on 30fps TV browsers. */
+html.tv-remote-mode [data-tv-focused='true'] {
+  transition: transform 70ms ease-out !important;
+}
 body.tv-pointer-mode [data-tv-focused='true'] {
-  transition: transform 80ms linear !important;
+  transition: transform 55ms ease-out !important;
 }
 
 /* Desktop poster hover cards render extra icons, text, shadows and transforms.

@@ -33,8 +33,8 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
             </nav>
             <div id="scroller" data-tv-scroll-container="true">
                 <div id="hero" data-tv-pointer-catch-zone="true" data-tv-pointer-redirect="hero-play">
-                    <button id="play" data-tv-focusable="true" data-tv-id="hero-play" data-tv-row="billboard">Play</button>
-                    <button id="info" data-tv-focusable="true" data-tv-id="hero-info" data-tv-row="billboard">Info</button>
+                    <button id="play" data-tv-focusable="true" data-tv-id="hero-play" data-tv-row="billboard" data-tv-index="0">Play</button>
+                    <button id="info" data-tv-focusable="true" data-tv-id="hero-info" data-tv-row="billboard" data-tv-index="1">Info</button>
                 </div>
                 <div id="top-shelf" data-tv-shelf="true" data-tv-shelf-count="2">
                     <button id="top-card" data-tv-focusable="true" data-tv-card="true" data-tv-row="top-10" data-tv-index="0">Top 10</button>
@@ -102,6 +102,15 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         jest.useRealTimers();
     });
 
+    it('keeps every fast key press from the logo through the second shelf', () => {
+        spatialNav.setFocus(logo);
+        press('ArrowDown');
+        press('ArrowDown');
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(nextCard);
+        expect(document.activeElement).toBe(nextCard);
+    });
+
     it('Down from the Netflix logo goes to Play, then the first shelf without hydrating the whole page', () => {
         const hydrateAll = jest.fn();
         window.addEventListener('arena-hydrate-shelf', hydrateAll);
@@ -122,6 +131,44 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         } finally {
             window.removeEventListener('arena-hydrate-shelf', hydrateAll);
         }
+    });
+
+    it('moves through the navbar and hero in either direction without scanning posters', () => {
+        const farRows = Array.from({ length: 10 }, (_, row) => `<div data-tv-shelf="true">${
+            Array.from({ length: 32 }, (_, i) => `<button data-tv-card="true" data-tv-row="far-${row}" data-tv-index="${i}">Far</button>`).join('')
+        }</div>`).join('');
+        scroller.insertAdjacentHTML('beforeend', farRows);
+        let farReads = 0;
+        scroller.querySelectorAll('[data-tv-row^="far-"]').forEach((card: HTMLElement) => {
+            card.getBoundingClientRect = () => { farReads++; return rect(48, 2000, 175, 255) as any; };
+        });
+        spatialNav.setFocus(logo);
+        press('ArrowRight');
+        expect(spatialNav.getCurrentFocus()).toBe(homeLink);
+        press('ArrowLeft');
+        expect(spatialNav.getCurrentFocus()).toBe(logo);
+        press('ArrowUp');
+        expect(spatialNav.getCurrentFocus()).toBe(logo);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        press('ArrowRight');
+        expect(spatialNav.getCurrentFocus()?.getAttribute('data-tv-id')).toBe('hero-info');
+        press('ArrowLeft');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        press('ArrowLeft');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        expect(farReads).toBe(0);
+    });
+
+    it('does not read geometry repeatedly while holding Right at a shelf boundary', () => {
+        spatialNav.setFocus(nextCard);
+        const originalRect = nextCard.getBoundingClientRect;
+        let reads = 0;
+        nextCard.getBoundingClientRect = () => { reads++; return originalRect.call(nextCard); };
+        for (let i = 0; i < 12; i++) press('ArrowRight');
+        expect(spatialNav.getCurrentFocus()).toBe(nextCard);
+        expect(document.activeElement).toBe(nextCard);
+        expect(reads).toBeLessThan(3);
     });
 
     it('Down from the logo does not measure or hydrate hundreds of distant posters', () => {
@@ -172,6 +219,8 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         // If the TV gives the logo native DOM focus because its cursor is parked
         // there, repair it back to the actual, ringed poster on the next frame.
         logo.focus();
+        // Repair in focusin, before the next TV paint (not 700ms later).
+        expect(document.activeElement).toBe(topCard);
         jest.advanceTimersByTime(20);
         expect(document.activeElement).toBe(topCard);
 
@@ -266,6 +315,105 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         expect(scroller.scrollTop).toBeGreaterThan(0);
     });
 
+    it('keeps two rapid pointer Down presses before one paint, without double-counting duplicate mouse/pointer events', () => {
+        spatialNav.setFocus(logo);
+        pointer(logo, 90, 28); // Establish the TV arrow location.
+        document.elementFromPoint = jest.fn(() => logo);
+        logo.dispatchEvent(new MouseEvent('mousemove', { clientX: 90, clientY: 45, bubbles: true }));
+        logo.dispatchEvent(new MouseEvent('pointermove', { clientX: 90, clientY: 45, bubbles: true }));
+        logo.dispatchEvent(new MouseEvent('mousemove', { clientX: 90, clientY: 62, bubbles: true }));
+        jest.advanceTimersByTime(20); // TV only renders one frame for both presses.
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+        expect(scroller.scrollTop).toBeGreaterThan(0);
+        jest.advanceTimersByTime(100);
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('treats two small mousemoves from one physical press as a single step', () => {
+        pointer(hero, 110, 320);
+        document.elementFromPoint = jest.fn(() => hero);
+        hero.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 329, bubbles: true }));
+        hero.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 338, bubbles: true }));
+        jest.advanceTimersByTime(20);
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('drains a longer pointer burst across two frames without losing its destination', () => {
+        const extra = Array.from({ length: 3 }, (_, i) => `
+            <div data-tv-shelf="true" data-tv-shelf-count="1">
+                <button id="burst-${i}" data-tv-card="true" data-tv-row="burst-${i}" data-tv-index="0">Row ${i}</button>
+            </div>
+        `).join('');
+        scroller.insertAdjacentHTML('beforeend', extra);
+        for (let i = 0; i < 3; i++) {
+            container.querySelector<HTMLElement>(`#burst-${i}`)!.getBoundingClientRect = () =>
+                rect(48, 1500 + 380 * i - scroller.scrollTop, 175, 255) as any;
+        }
+        pointer(hero, 110, 320);
+        document.elementFromPoint = jest.fn(() => hero);
+        for (const y of [337, 354, 371, 388, 405]) {
+            hero.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: y, bubbles: true }));
+        }
+        jest.advanceTimersByTime(20);
+        expect(spatialNav.getCurrentFocus()).toBe(container.querySelector('#burst-0'));
+        jest.advanceTimersByTime(20);
+        expect(spatialNav.getCurrentFocus()).toBe(container.querySelector('#burst-2'));
+    });
+
+    it('preserves rapid Down then Up before a paint instead of keeping only the last direction', () => {
+        spatialNav.setFocus(topCard);
+        pointer(topCard, 110, 330);
+        document.elementFromPoint = jest.fn(() => topCard);
+        topCard.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 347, bubbles: true }));
+        topCard.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 330, bubbles: true }));
+        jest.advanceTimersByTime(20);
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('accepts pointer Down shortly after a key-driven step, but ignores its same-press echo', () => {
+        spatialNav.setFocus(logo);
+        pointer(logo, 90, 28);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        jest.advanceTimersByTime(50);
+        pointer(logo, 90, 45); // Same physical press echoed as pointer motion.
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        jest.advanceTimersByTime(160);
+        pointer(logo, 90, 62); // Next intentional Down should NOT wait 1.2s.
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('flushes pointer Down before OK when the user presses both faster than a paint', () => {
+        const openCard = jest.fn();
+        const openPlay = jest.fn();
+        topCard.addEventListener('click', openCard);
+        play.addEventListener('click', openPlay);
+        spatialNav.setFocus(play);
+        pointer(hero, 110, 320);
+        document.elementFromPoint = jest.fn(() => hero);
+        hero.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 337, bubbles: true }));
+        hero.dispatchEvent(new MouseEvent('click', { clientX: 110, clientY: 337, bubbles: true, cancelable: true }));
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+        expect(openCard).toHaveBeenCalledTimes(1);
+        expect(openPlay).not.toHaveBeenCalled();
+        jest.advanceTimersByTime(20);
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('flushes a pointer move before a same-frame Enter key selects the destination once', () => {
+        const openCard = jest.fn();
+        const openPlay = jest.fn();
+        topCard.addEventListener('click', openCard);
+        play.addEventListener('click', openPlay);
+        pointer(hero, 110, 320);
+        document.elementFromPoint = jest.fn(() => hero);
+        hero.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 337, bubbles: true }));
+        press('Enter');
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+        expect(openCard).toHaveBeenCalledTimes(1);
+        expect(openPlay).not.toHaveBeenCalled();
+    });
+
     it('a pointer-only TV can go Down through shelves and Up again while still over hero art', () => {
         pointer(hero, 110, 320);
         pointer(hero, 110, 337);
@@ -319,6 +467,27 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         expect(spatialNav.getCurrentFocus()).toBe(topCard);
         pointer(hero, 110, 337, 'pointermove');
         expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('stops geometry reads once it passes the matching poster in a large destination shelf', () => {
+        const shelf = container.querySelector<HTMLElement>('#next-shelf')!;
+        shelf.setAttribute('data-tv-shelf-count', '32');
+        let distantReads = 0;
+        for (let i = 1; i < 32; i++) {
+            const card = document.createElement('button');
+            card.setAttribute('data-tv-card', 'true');
+            card.setAttribute('data-tv-row', 'trending');
+            card.setAttribute('data-tv-index', String(i));
+            card.getBoundingClientRect = () => {
+                distantReads++;
+                return rect(48 + i * 187, 1080 - scroller.scrollTop, 175, 255) as any;
+            };
+            shelf.appendChild(card);
+        }
+        spatialNav.setFocus(topCard);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(nextCard);
+        expect(distantReads).toBeLessThan(3);
     });
 
     it('reads geometry only from the destination shelf, not every poster in the entire catalog', () => {
@@ -377,6 +546,32 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         press('ArrowDown'); // intent is the shelf AFTER the pending one
         expect(spatialNav.getCurrentFocus()).toBe(third);
         await jest.advanceTimersByTimeAsync(60);
+        expect(spatialNav.getCurrentFocus()).toBe(third);
+    });
+
+    it('keeps a rapid pointer burst aimed past a hydrating shelf', async () => {
+        const loading = container.querySelector<HTMLElement>('#next-shelf')!;
+        loading.innerHTML = '<div class="placeholder">Loading</div>';
+        loading.addEventListener('arena-hydrate-shelf', () => {
+            setTimeout(() => {
+                loading.innerHTML = '<button data-tv-card="true" data-tv-row="trending">Ready</button>';
+            }, 30);
+        });
+        loading.insertAdjacentHTML('afterend', `
+            <div data-tv-shelf="true" data-tv-shelf-count="1">
+                <button id="third" data-tv-card="true" data-tv-row="third" data-tv-index="0">Third</button>
+            </div>
+        `);
+        const third = container.querySelector<HTMLElement>('#third')!;
+        third.getBoundingClientRect = () => rect(48, 1450 - scroller.scrollTop, 175, 255) as any;
+        spatialNav.setFocus(topCard);
+        pointer(topCard, 110, 330);
+        document.elementFromPoint = jest.fn(() => topCard);
+        topCard.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 347, bubbles: true }));
+        topCard.dispatchEvent(new MouseEvent('mousemove', { clientX: 110, clientY: 364, bubbles: true }));
+        await jest.advanceTimersByTimeAsync(20);
+        expect(spatialNav.getCurrentFocus()).toBe(third);
+        await jest.advanceTimersByTimeAsync(50);
         expect(spatialNav.getCurrentFocus()).toBe(third);
     });
 

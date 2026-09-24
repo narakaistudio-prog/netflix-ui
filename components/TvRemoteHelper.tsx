@@ -130,7 +130,8 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                 </Text>
                                 <Text style={styles.tipText}>
                                     <Text style={styles.bold}>TV ka arrow dikhta rehta hai: </Text>
-                                    woh TV browser khud draw karta hai; website OS cursor ko hamesha hide nahi kar sakti.
+                                    TV Mode website ka cursor chhupata hai, lekin TV browser ka system arrow website band
+                                    nahi kar sakti. Browser me Link Browsing / arrow-key mode mile to use try karein.
                                     Agar upar status me "Waiting for remote input" hi rahe, browser site ko na keys bhej raha hai
                                     na pointer movement. Apna TV model aur browser batayein — bina DOM input ke website remote
                                     button ko detect nahi kar sakti.

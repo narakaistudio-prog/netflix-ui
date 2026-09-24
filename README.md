@@ -138,12 +138,15 @@ forwards keyboard or pointer events to the page**:
   pointing at a different control still selects it. OK activates the ring even
   if the OS cursor has not yet left the logo/hero. The screen-edge scroll assist
   is still available.
-- **Fast shelves:** only the destination row is measured on each D-pad step.
-  Deferred shelves mount on demand rather than hydrating the whole catalog;
-  a pending step waits for its poster to exist, and a virtualized carousel can
-  bring the next unmounted card into its render window without jumping rows.
-  The focused row settles around 32% from the top with direct, non-animated
-  scrollTop/scrollLeft assignments.
+- **Fast shelves:** TV pointer bursts keep each distinct direction (up to six
+  queued, at most three processed per frame), while duplicate mouse/pointer
+  events at the same coordinates count once. OK consumes pending moves before
+  selection. Key/pointer echoes have a short suppression window so the next
+  real tap isn't ignored. Only the needed part of the destination shelf is
+  measured; navbar/hero/edge moves avoid poster-wide layout scans. Deferred
+  shelves mount on demand, and repeated presses across a loading shelf retain
+  their destination. The focused row settles around 32% from the top with
+  direct, non-animated scrollTop/scrollLeft assignments.
 - **Manual settings:** navbar TV Mode and the `?` guide offer *Auto detect ·
   Pointer arrow · Arrow keys*. Choices are stored locally; the guide reports
   the last input seen (`keys`, `pointer`, or `Waiting for remote input`).
@@ -153,10 +156,11 @@ Down again, Up, and Right/OK on a poster. In a pointer-only browser, move the
 cursor a little downward while it is over Play or a poster instead. If the
 status stays `Waiting for remote input`, the browser is not forwarding those
 presses/moves; TV Mode alone cannot intercept hardware events the TV firmware
-never gives a web page. The OS-drawn mouse arrow may remain visible despite
-CSS cursor hiding. In that case note the TV model, browser, and guide status;
-if your TV has a pointer/Link Browsing toggle, arrow-key mode may feel closer
-to a native app. Do not evaluate a development-server preview for performance:
+never gives a web page. **TV Mode hides the page's CSS cursor, not a hardware
+cursor drawn by the TV firmware**. The latter can still show while navigating;
+no web API can promise to turn it off. In that case note the TV model, browser,
+and guide input status; a browser option for Link Browsing / arrow-key navigation
+may avoid pointer mode. Do not evaluate a development-server preview for performance:
 use `npm run build:web` and serve the exported `dist` build.
 
 ## TODO
