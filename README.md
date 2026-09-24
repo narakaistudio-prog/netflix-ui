@@ -137,6 +137,17 @@ native Netflix TV app:
   hydration on `ArrowDown`, smart scroll that parks the highlighted row ~32 %
   from the top, and a 1.2 s focus watchdog that re-asserts focus so a TV browser
   cannot silently fall back to pointer mode mid-session.
+- **Hero ↔ first shelf step.** The billboard hero and the first poster shelf
+  overlap on screen, so plain geometry finds no card below the hero `Play`
+  button. `ArrowDown` on `Play`/`More Info` now steps straight onto the nearest
+  card of the first shelf (keeping the column), and `ArrowUp` from that first
+  shelf returns to `Play`. Deeper shelves keep walking row by row.
+- **No blank hero for the pointer arrow.** The hero is art + gradients, so a TV
+  pointer parked anywhere except the two buttons used to resolve to nothing and
+  the ring disappeared (Samsung then redraws its own mouse arrow). The billboard
+  is marked as a pointer catch zone (`data-tv-pointer-catch-zone` +
+  `data-tv-pointer-redirect="hero-play"`), so the arrow anywhere inside the hero
+  lands on `Play`.
 - **Keys**: D-pad moves, `OK`/`Enter` selects, `Return`/`Escape`/`Backspace`
   goes back (handlers are pushed by modals and the player), media keys toggle
   playback.

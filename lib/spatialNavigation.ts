@@ -26,6 +26,21 @@ const POINTER_MODE_STORAGE_KEY = 'netflix-tv-pointer-mode';
 const POINTER_MODE_CLASS = 'tv-pointer-mode';
 
 /**
+ * `data-tv-row` value of the web billboard hero (its Play / More Info buttons).
+ * The hero is the one row that does not follow the shelf geometry rules, so it
+ * is recognised by name instead of by position.
+ */
+const HERO_ROW = 'billboard';
+
+/**
+ * Marks a large non-interactive region (the hero billboard) as a pointer catch
+ * zone: when the TV arrow stops anywhere inside it, the ring goes to the
+ * element named by `data-tv-pointer-redirect` instead of nowhere.
+ */
+const POINTER_CATCH_ATTR = 'data-tv-pointer-catch-zone';
+const POINTER_REDIRECT_ATTR = 'data-tv-pointer-redirect';
+
+/**
  * A held D-pad can send many repeated keydowns. The first press is always
  * handled synchronously; repeated events are coalesced only inside one 60fps
  * frame so we never add a visible remote-to-ring delay while avoiding duplicate
@@ -469,7 +484,7 @@ class SpatialNavigationManager {
         const target = event.target as HTMLElement | null;
         if (!target || target.nodeType !== 1) return;
         const scope = this.getActiveScope();
-        const focusTarget = this.closestFocusable(target, scope);
+        const focusTarget = this.resolvePointerTarget(target, scope);
         if (!focusTarget) return;
         this.lastInputSource = 'pointer';
         if (focusTarget !== this.currentFocusedElement) this.setFocus(focusTarget, 'none');
@@ -500,7 +515,7 @@ class SpatialNavigationManager {
         }
 
         const scope = this.getActiveScope();
-        const target = this.closestFocusable(hit, scope);
+        const target = this.resolvePointerTarget(hit, scope);
         if (!target || target === this.currentFocusedElement) return;
         // Same reason as ArrowDown: hydrate deferred shelves so the pointer can
         // keep travelling into rows that are still below the fold.
@@ -561,6 +576,39 @@ class SpatialNavigationManager {
         let guard = 0;
         while (node && node.nodeType === 1 && guard++ < 40) {
             if (this.isFocusableElement(node) && !this.isInsideHiddenSubtree(node, scope)) return node;
+            if (node === scope || node === document.body || node === document.documentElement) break;
+            node = node.parentElement;
+        }
+        return null;
+    }
+
+    /**
+     * Pointer hit-test that also understands "catch zones".
+     *
+     * The TV arrow spends most of its time over the hero billboard, which is
+     * art + gradients + text with only two focusable buttons in it. A plain
+     * hit-test resolves to nothing there, so the ring stayed parked on the
+     * shelf below (or vanished with it) and the TV browser fell back to its own
+     * mouse arrow — the blank hero gap. Walking up through a marked catch zone
+     * redirects the arrow to that zone's primary action instead.
+     */
+    private resolvePointerTarget(hit: HTMLElement | null, scope: HTMLElement): HTMLElement | null {
+        if (typeof document === 'undefined' || !hit) return null;
+        // A real focusable ancestor always wins over a catch zone redirect.
+        const direct = this.closestFocusable(hit, scope);
+        if (direct) return direct;
+
+        let node: HTMLElement | null = hit;
+        let guard = 0;
+        while (node && node.nodeType === 1 && guard++ < 40) {
+            const zoneId: string | null = node.getAttribute(POINTER_REDIRECT_ATTR);
+            if (node.getAttribute(POINTER_CATCH_ATTR) === 'true' && zoneId) {
+                const redirect: HTMLElement | null = scope.querySelector<HTMLElement>(
+                    `[data-tv-id="${zoneId}"]`
+                );
+                if (redirect && redirect !== node && this.isSelfVisible(redirect)) return redirect;
+            }
+
             if (node === scope || node === document.body || node === document.documentElement) break;
             node = node.parentElement;
         }
@@ -1323,6 +1371,83 @@ class SpatialNavigationManager {
     }
 
     /**
+     * Netflix billboard step: the hero's Play / More Info buttons sit INSIDE the
+     * hero art, and the first poster shelf starts under the hero's bottom
+     * gradient — so the two bands visually overlap. Strict geometry
+     * ("candidate must start below the button's bottom edge") therefore finds no
+     * shelf at all on ArrowDown and the ring stays stuck on Play, which is the
+     * "hero se niche nahi jaata" bug. Step explicitly instead: nearest card row
+     * below the hero, card closest to the button's horizontal centre.
+     */
+    private stepFromHeroToFirstShelf(
+        current: HTMLElement,
+        currentRect: DOMRect,
+        ctx: FocusContext
+    ): boolean {
+        const currentCenterX = currentRect.left + currentRect.width / 2;
+        const cards = this.shelfCards(ctx);
+        if (cards.length === 0) return false;
+
+        const BUCKET = 40;
+        const below = cards.filter(el => {
+            if (this.isOwnFocusBlocked(el)) return false;
+            return ctx.rect(el).top >= currentRect.bottom - currentRect.height;
+        });
+        if (below.length === 0) return false;
+
+        // Nearest row below the hero, bucketed so cards of one shelf count as a
+        // single line even when posters differ by a few px.
+        let targetTop = Infinity;
+        for (const el of below) targetTop = Math.min(targetTop, ctx.rect(el).top);
+        const row = below.filter(el => Math.abs(ctx.rect(el).top - targetTop) <= BUCKET);
+
+        row.sort((a, b) => {
+            const ra = ctx.rect(a);
+            const rb = ctx.rect(b);
+            return Math.abs(ra.left + ra.width / 2 - currentCenterX) -
+                Math.abs(rb.left + rb.width / 2 - currentCenterX);
+        });
+
+        this.setFocus(row[0]);
+        return true;
+    }
+
+    /**
+     * Mirror of the step above: ArrowUp from the FIRST shelf returns to the hero
+     * Play button instead of the navbar. Only the first shelf does this — from
+     * any deeper row ArrowUp must keep walking up the shelves.
+     */
+    private stepFromFirstShelfToHero(current: HTMLElement, ctx: FocusContext): boolean {
+        if (typeof document === 'undefined') return false;
+        const hero = document.querySelector<HTMLElement>(
+            `[${POINTER_REDIRECT_ATTR}="hero-play"], [data-tv-id="hero-play"]`
+        );
+        if (!hero || !this.isFirstShelfCard(current, ctx)) return false;
+        if (!this.isSelfVisible(hero)) return false;
+
+        this.setFocus(hero);
+        return true;
+    }
+
+    /**
+     * Is `el` a card of the topmost shelf? Compared by shelf identity in DOM
+     * order, not by measured position: this costs one DOM read instead of a
+     * getBoundingClientRect per card, and it stays correct while the page is
+     * scrolled (where the first shelf can sit above the viewport).
+     */
+    private isFirstShelfCard(el: HTMLElement, ctx: FocusContext): boolean {
+        const row = el.getAttribute('data-tv-row');
+        if (!row) return false;
+        const firstCard = ctx.elements.find(card => card.getAttribute('data-tv-card') === 'true');
+        return !!firstCard && firstCard.getAttribute('data-tv-row') === row;
+    }
+
+    /** Every poster/title card in scope — i.e. the shelves, never the hero or navbar. */
+    private shelfCards(ctx: FocusContext): HTMLElement[] {
+        return ctx.elements.filter(el => el.getAttribute('data-tv-card') === 'true');
+    }
+
+    /**
      * Move focus in given direction.
      *
      * Samsung TV 60fps: candidate geometry is cached ONCE per keypress
@@ -1368,6 +1493,16 @@ class SpatialNavigationManager {
 
         // --- ROW-AWARE LOGIC (Shelves / Carousels) ---
         if (currentRow) {
+            if (vertical) {
+                // The web billboard hero is not a shelf: hand its vertical
+                // moves to the explicit hero <-> first-shelf step above.
+                if (currentRow === HERO_ROW && dir === 'down') {
+                    if (this.stepFromHeroToFirstShelf(current, currentRect, ctx)) return;
+                } else if (dir === 'up' && currentRow !== HERO_ROW) {
+                    if (this.stepFromFirstShelfToHero(current, ctx)) return;
+                }
+            }
+
             // Moving Left/Right within same row
             if (dir === 'right' || dir === 'left') {
                 const toRight = dir === 'right';

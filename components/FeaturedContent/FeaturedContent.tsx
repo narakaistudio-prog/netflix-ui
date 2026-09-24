@@ -50,7 +50,21 @@ export function FeaturedContent({
                 : { uri: movie.thumbnail };
 
         return (
-            <View style={[web.container, { height: billboardHeight }]}>
+            <View
+                style={[web.container, { height: billboardHeight }]}
+                {...({
+                    // The billboard is art + gradients + text: only Play and
+                    // More Info are focusable in it, so a TV pointer arrow
+                    // parked anywhere else used to resolve to nothing and the
+                    // focus ring disappeared (Samsung then redraws its own
+                    // mouse arrow). Marking the hero as a pointer catch zone
+                    // sends the arrow to Play instead.
+                    dataSet: {
+                        tvPointerCatchZone: 'true',
+                        tvPointerRedirect: 'hero-play',
+                    },
+                } as any)}
+            >
                 {/* Full-bleed Backdrop Image */}
                 <SafeImage
                     source={billboardSrc}
