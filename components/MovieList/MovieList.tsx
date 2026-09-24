@@ -1,4 +1,4 @@
-import React, { useId, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { View, Text, Pressable, FlatList, ScrollView, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { styles } from '@/styles';
@@ -7,7 +7,7 @@ import { useVisionOS } from '@/hooks/useVisionOS';
 import { HoverableView } from '@/components/ui/VisionContainer';
 import { SafeImage } from '@/components/SafeImage';
 import { Ionicons } from '@expo/vector-icons';
-import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselWindow';
+import { getCarouselWindow, spacerWidth, WEB_CARD_GAP, WEB_CARD_WIDTH, WEB_CAROUSEL_WINDOW } from './carouselWindow';
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
@@ -224,6 +224,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     // Web uses a horizontal ScrollView while native uses FlatList; both refs
     // expose different imperative scroll methods.
     const listRef = useRef<any>(null);
+    const rowRef = useRef<View>(null);
     const offsetX = useRef(0);
     const [contentWidth, setContentWidth] = useState(0);
     // A shelf can have 200+ titles. Keep its scroll distance, but mount only
@@ -236,6 +237,28 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     const pageStep = windowWidth * 0.75;
     const pages = Math.max(1, Math.ceil(contentWidth / pageStep));
     const [page, setPage] = useState(0);
+
+    useEffect(() => {
+        if (!virtualized) return;
+        const row = rowRef.current as unknown as HTMLElement | null;
+        const shelf = row?.closest?.('[data-tv-shelf="true"]');
+        if (!shelf) return;
+        const reveal = (event: Event) => {
+            const index = Number((event as CustomEvent<{ index: number }>).detail?.index);
+            if (!Number.isInteger(index) || index < 0 || index >= movies.length) return;
+            // Keep the requested poster a little in from the left edge. Set
+            // the window AND the scroll position in the same update so a rapid
+            // Right press cannot land on an unmounted poster or another row.
+            const scroller = row?.querySelector<HTMLElement>('[data-tv-carousel="true"]');
+            const viewportWidth = scroller?.clientWidth || windowWidth;
+            const nextX = Math.max(0, Math.round(index * (WEB_CARD_WIDTH + WEB_CARD_GAP) - viewportWidth * 0.35));
+            setWindowStart(getCarouselWindow(movies.length, nextX).start);
+            offsetX.current = nextX;
+            if (scroller) scroller.scrollLeft = nextX;
+        };
+        shelf.addEventListener('arena-tv-reveal-card', reveal);
+        return () => shelf.removeEventListener('arena-tv-reveal-card', reveal);
+    }, [virtualized, movies.length, windowWidth]);
 
     const scrollByPage = (dir: 1 | -1) => {
         const next = Math.max(0, offsetX.current + dir * pageStep);
@@ -289,7 +312,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     };
 
     return (
-        <View style={[styles.container, IS_WEB && rowStyles.rowContainer]}>
+        <View ref={rowRef} style={[styles.container, IS_WEB && rowStyles.rowContainer]}>
             {IS_WEB ? (
                 <View style={rowStyles.headerRow}>
                     <Text style={[styles.sectionTitle, rowStyles.sectionTitle]}>{rowTitle}</Text>
@@ -328,6 +351,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                     <ScrollView
                         ref={listRef as any}
                         testID={`movie-carousel-${rowTitle}`}
+                        {...({ dataSet: { tvCarousel: 'true' } } as any)}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         onScroll={(e: any) => {

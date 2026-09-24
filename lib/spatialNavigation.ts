@@ -112,6 +112,20 @@ class SpatialNavigationManager {
     /** Last direction + time of an accepted move: coalesces D-pad auto-repeat. */
     private lastMoveDir: Direction | null = null;
     private lastMoveAt = 0;
+    /** Pointer-only TV browsers move a cursor instead of emitting D-pad keys. */
+    private pointerAnchor: { x: number; y: number } | null = null;
+    private pendingPointerDirection: Direction | null = null;
+    private pointerSteering = false;
+    private pointerSteeredAt = 0;
+    /** A deferred shelf / virtualized poster may arrive on the next React commit. */
+    private pendingFocus: {
+        shelf: HTMLElement;
+        index: number | null;
+        preferredX: number;
+        origin: HTMLElement;
+        observer: MutationObserver | null;
+        timeout: ReturnType<typeof setTimeout>;
+    } | null = null;
 
     constructor() {
         if (typeof window === 'undefined') return;
@@ -188,6 +202,11 @@ class SpatialNavigationManager {
      */
     public setPointerModePreference(preference: TvPointerPreference) {
         this.pointerModePreference = preference === 'on' || preference === 'off' ? preference : 'auto';
+        this.pointerAnchor = null;
+        this.pendingPointerDirection = null;
+        this.pointerSteering = false;
+        if (this.pointerModePreference === 'off') this.exitPointerMode();
+        if (this.pointerModePreference === 'on') this.lastKeyInputAt = 0;
         try {
             if (typeof localStorage !== 'undefined') {
                 if (this.pointerModePreference === 'auto') {
@@ -248,16 +267,24 @@ class SpatialNavigationManager {
         }
         if (this.isTvModeActive === active) {
             if (!active) {
+                this.cancelPendingFocus();
                 this.clearFocusRing();
                 this.exitPointerMode();
+                this.pointerSteering = false;
+                this.pointerAnchor = null;
+                this.pendingPointerDirection = null;
                 this.stopFocusWatchdog();
             }
             return;
         }
         this.isTvModeActive = active;
         if (!active) {
+            this.cancelPendingFocus();
             this.clearFocusRing();
             this.exitPointerMode();
+            this.pointerSteering = false;
+            this.pointerAnchor = null;
+            this.pendingPointerDirection = null;
             this.stopFocusWatchdog();
         } else {
             this.startFocusWatchdog();
@@ -372,6 +399,7 @@ class SpatialNavigationManager {
         }
         this.stopPointerTracking();
         this.stopFocusWatchdog();
+        this.cancelPendingFocus();
         if (this.focusRepairFrame != null) {
             this.cancelFrame(this.focusRepairFrame);
             this.focusRepairFrame = null;
@@ -416,7 +444,7 @@ class SpatialNavigationManager {
         document.addEventListener('mouseover', this.handlePointerMove, { capture: true, passive: true });
         // A few TV browsers deliver the arrow as mouseover + mousedown only.
         document.addEventListener('mousedown', this.handlePointerMove, { capture: true, passive: true });
-        document.addEventListener('click', this.handlePointerClick, { capture: true, passive: true });
+        document.addEventListener('click', this.handlePointerClick, { capture: true });
     }
 
     private stopPointerTracking() {
@@ -431,6 +459,44 @@ class SpatialNavigationManager {
             this.cancelFrame(this.pointerRaf);
             this.pointerRaf = null;
         }
+        this.pointerPosition = null;
+        this.pointerTarget = null;
+        this.pointerAnchor = null;
+        this.pendingPointerDirection = null;
+        this.pointerSteering = false;
+        this.pendingEdgeScroll = 0;
+    }
+
+    /**
+     * In pointer-only TV browsers a D-pad press is observable only as cursor
+     * motion. Small moves INSIDE the same poster/hero must still count as a
+     * directional step; otherwise Down requires dragging the cursor hundreds
+     * of pixels to the bottom edge before the page scrolls at all. Accumulate
+     * sub-pixel moves and coalesce mousemove + pointermove in one animation frame.
+     */
+    private trackPointerDirection(event: MouseEvent | PointerEvent, x: number, y: number) {
+        if (event.type !== 'mousemove' && event.type !== 'pointermove') return;
+        const previous = this.pointerAnchor;
+        if (!previous) this.pointerAnchor = { x, y };
+        // Some TV browsers send ONE mousemove per press but include movementY.
+        // Use that first event rather than requiring an extra Down press just
+        // to establish an anchor; other browsers fall back to x/y accumulation.
+        const dx = previous ? x - previous.x : (event as MouseEvent).movementX || 0;
+        const dy = previous ? y - previous.y : (event as MouseEvent).movementY || 0;
+        // A Magic Remote can teleport its cursor: follow the actual hit target
+        // in that case rather than interpreting a large jump as 20 D-pad taps.
+        if (Math.abs(dx) > 160 || Math.abs(dy) > 160) {
+            this.pointerAnchor = { x, y };
+            return;
+        }
+        if (Math.abs(dy) >= 8 && Math.abs(dy) > Math.abs(dx) * 1.4) {
+            this.pendingPointerDirection = dy > 0 ? 'down' : 'up';
+        } else if (Math.abs(dx) >= 12 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+            this.pendingPointerDirection = dx > 0 ? 'right' : 'left';
+        } else {
+            return;
+        }
+        this.pointerAnchor = { x, y };
     }
 
     private handlePointerMove = (event: MouseEvent | PointerEvent) => {
@@ -454,6 +520,7 @@ class SpatialNavigationManager {
 
         const target = event.target as HTMLElement | null;
         this.pointerTarget = target && target.nodeType === 1 ? target : this.pointerTarget;
+        this.trackPointerDirection(event, x, y);
         this.pointerPosition = { x, y };
         this.lastInputSource = 'pointer';
         this.enterPointerMode();
@@ -474,9 +541,10 @@ class SpatialNavigationManager {
     };
 
     /**
-     * OK was pressed while the TV was driving its on-screen arrow: keep the ring
-     * on whatever got activated. Never preventDefault — the native click still
-     * has to reach React so the card opens.
+     * A native click on an actual button/card must reach React exactly once.
+     * But after a pointer-only D-pad step the cursor can still sit on empty
+     * hero art: on that background OK should activate the visible focus ring,
+     * not silently do nothing (or snap back to Play).
      */
     private handlePointerClick = (event: MouseEvent) => {
         if (!this.isTvModeActive || !this.pointerFollowActive()) return;
@@ -484,10 +552,26 @@ class SpatialNavigationManager {
         const target = event.target as HTMLElement | null;
         if (!target || target.nodeType !== 1) return;
         const scope = this.getActiveScope();
-        const focusTarget = this.resolvePointerTarget(target, scope);
+        if (!scope.contains(target)) return;
+        const direct = this.closestFocusable(target, scope);
+        const steeredFocus = this.pointerSteering &&
+            this.isFocusAttachedToScope(this.currentFocusedElement, scope)
+            ? this.currentFocusedElement : null;
+        const focusTarget = steeredFocus || direct || this.resolvePointerTarget(target, scope);
         if (!focusTarget) return;
         this.lastInputSource = 'pointer';
         if (focusTarget !== this.currentFocusedElement) this.setFocus(focusTarget, 'none');
+        if (direct === focusTarget) {
+            this.pointerSteering = false;
+            return; // React handles an ordinary button/card click exactly once.
+        }
+        if (steeredFocus || target.closest(`[${POINTER_CATCH_ATTR}="true"]`)) {
+            // The browser's cursor can remain on Play after a Down step. Do not
+            // let its native click open the hero while the ring is on a poster.
+            event.preventDefault();
+            event.stopPropagation();
+            this.triggerClick(focusTarget);
+        }
     };
 
     /**
@@ -506,7 +590,9 @@ class SpatialNavigationManager {
         if (!hit) hit = this.pointerTarget;
         if (!hit) return;
 
-        const edgeScroll = this.pendingEdgeScroll;
+        // A D-pad-like pointer move already steps/scrolls its destination row;
+        // adding edge assist in the same frame would jump two shelves at once.
+        const edgeScroll = this.pendingPointerDirection ? 0 : this.pendingEdgeScroll;
         this.pendingEdgeScroll = 0;
         if (edgeScroll !== 0) {
             const scrolled = this.scrollEdgeBy(hit, edgeScroll);
@@ -515,15 +601,34 @@ class SpatialNavigationManager {
         }
 
         const scope = this.getActiveScope();
-        const target = this.resolvePointerTarget(hit, scope);
+        if (!scope.contains(hit)) return;
+        const direct = this.closestFocusable(hit, scope);
+        const intent = this.pendingPointerDirection;
+        this.pendingPointerDirection = null;
+        const current = this.currentFocusedElement;
+        const browseFocus = current?.getAttribute('data-tv-row') === HERO_ROW ||
+            current?.getAttribute('data-tv-card') === 'true';
+        const settling = this.pointerSteering && Date.now() - this.pointerSteeredAt < 140;
+
+        // D-pad in a pointer-only browser: moving within a button/poster (or
+        // over blank hero art) IS a directional press. Do not wait for the
+        // cursor to travel the height of the entire billboard/poster. A cursor
+        // landing directly on a different card still follows that card normally.
+        if (intent && browseFocus && (!direct || direct === current || settling)) {
+            this.moveFocus(intent);
+            this.pointerSteering = true;
+            this.pointerSteeredAt = Date.now();
+            return;
+        }
+        // After programmatic scrolling the art can still sit under the TV's
+        // fixed cursor for a frame. Avoid immediately undoing the D-pad move.
+        if (this.pointerSteering && (!direct || settling)) return;
+        this.pointerSteering = false;
+
+        const target = direct || this.resolvePointerTarget(hit, scope);
         if (!target || target === this.currentFocusedElement) return;
-        // Same reason as ArrowDown: hydrate deferred shelves so the pointer can
-        // keep travelling into rows that are still below the fold.
-        this.dispatchHydrateShelves();
-        // 'none': the TV is drawing its own arrow at a fixed screen position. If
-        // we scrolled the card into a "nice" spot, the arrow would end up over a
-        // different card and the ring would visibly snap away on the very next
-        // pointer event. Scrolling here is driven only by the edge assist above.
+        // Direct pointer hits never reposition the page: the cursor must remain
+        // over the thing it is pointing at. Directional steps above DO scroll.
         this.setFocus(target, 'none');
     }
 
@@ -550,6 +655,14 @@ class SpatialNavigationManager {
 
         const viewportHeight = window.innerHeight || 800;
         const step = Math.max(160, Math.round(viewportHeight * 0.28)) * direction;
+        const selector = '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]';
+        const tagged = (hit?.closest?.(selector) || this.currentFocusedElement?.closest?.(selector)) as HTMLElement | null;
+        if (tagged && this.getActiveScope().contains(tagged) &&
+            tagged.scrollHeight > tagged.clientHeight + 20) {
+            const before = tagged.scrollTop;
+            try { tagged.scrollTop = before + step; } catch { return false; }
+            return tagged.scrollTop !== before;
+        }
         let node: HTMLElement | null = hit;
         let guard = 0;
         while (node && node !== document.body && guard++ < 40) {
@@ -593,7 +706,7 @@ class SpatialNavigationManager {
      * redirects the arrow to that zone's primary action instead.
      */
     private resolvePointerTarget(hit: HTMLElement | null, scope: HTMLElement): HTMLElement | null {
-        if (typeof document === 'undefined' || !hit) return null;
+        if (typeof document === 'undefined' || !hit || !scope.contains(hit)) return null;
         // A real focusable ancestor always wins over a catch zone redirect.
         const direct = this.closestFocusable(hit, scope);
         if (direct) return direct;
@@ -696,6 +809,7 @@ class SpatialNavigationManager {
     private assertFocusHeld() {
         if (!this.isTvModeActive || typeof document === 'undefined' || !document.body) return;
         if (this.isEditingText()) return;
+        if (this.pendingFocus) return; // React is mounting the next card/row.
 
         const scope = this.getActiveScope();
         const current = this.currentFocusedElement;
@@ -736,6 +850,7 @@ class SpatialNavigationManager {
         if (next && next !== document.body && next !== document.documentElement) return;
         if (this.isEditingText()) return;
         const current = this.currentFocusedElement;
+        if (this.pendingFocus?.origin === current) return;
         if (!current || !document.body.contains(current)) return;
         if (this.focusRepairFrame != null) return;
         this.focusRepairFrame = this.requestFrame(() => {
@@ -811,8 +926,18 @@ class SpatialNavigationManager {
         );
 
         if (isDirectionalKey || isEnterKey || isBackKey || isMediaKey) {
-            this.lastInputSource = 'keys';
-            this.lastKeyInputAt = Date.now();
+            // A pointer-only TV still sends Enter for OK. Suppress pointer motion
+            // only after an ACTUAL directional key, not for 1.2 seconds after
+            // every OK/Back press (which made Down feel dead after selecting).
+            if (isDirectionalKey) {
+                this.lastInputSource = 'keys';
+                this.lastKeyInputAt = Date.now();
+                this.pointerSteering = false;
+                this.pointerAnchor = null;
+                this.pendingPointerDirection = null;
+            } else if (this.lastInputSource !== 'pointer') {
+                this.lastInputSource = 'keys';
+            }
             // Auto-enable on TV-like hardware only. A desktop/laptop keyboard
             // must keep scrolling normally - that is what the navbar TV Mode
             // button (and its localStorage memory) is for.
@@ -1223,6 +1348,7 @@ class SpatialNavigationManager {
      */
     public setFocus(element: HTMLElement | null, scroll: ScrollAxis = 'both') {
         if (!element) return;
+        this.cancelPendingFocus();
 
         if (this.currentFocusedElement === element) {
             // Already ringed: only re-assert the native focus so the TV browser
@@ -1240,10 +1366,14 @@ class SpatialNavigationManager {
         element.setAttribute('data-tv-focused', 'true');
         element.classList.add('tv-focused');
 
-        // Focus natively without default window jump
+        // Focus natively without default window jump. Older TV Chromium may
+        // reject focus options: fall back immediately instead of waiting for
+        // the watchdog while the browser draws its own arrow.
         try {
             element.focus({ preventScroll: true });
-        } catch {}
+        } catch {
+            try { element.focus(); } catch {}
+        }
 
         this.scrollIntoViewSmart(element, { axis: scroll });
         this.rememberPosition(element);
@@ -1314,18 +1444,22 @@ class SpatialNavigationManager {
         const diff = elRect.top - desiredTop;
         if (Math.abs(diff) < 24) return;
 
-        // Fast path: the tagged home TV scroll container (dataSet.tvScrollContainer).
+        // The web page deliberately locks body scrolling: Home/Catalog scroll
+        // inside a React Native ScrollView. Scroll *that* element directly.
+        // Nudging window.scrollBy afterwards forced another layout/repaint on
+        // every remote step and on some TVs triggered the browser's own cursor.
         let scrollParent: HTMLElement | null = null;
         try {
-            scrollParent = element.closest?.(
+            const tagged = element.closest?.(
                 '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
             ) as HTMLElement | null;
+            if (tagged && tagged.scrollHeight > tagged.clientHeight + 10) scrollParent = tagged;
         } catch {}
-        // Fallback: nearest vertically scrollable parent via direct geometry.
         if (!scrollParent) {
             let p = element.parentElement;
             let guard = 0;
             while (p && p !== document.body && guard++ < 40) {
+                // A horizontal carousel can be wider but is not the page scroller.
                 if (p.scrollHeight > p.clientHeight + 10) {
                     scrollParent = p;
                     break;
@@ -1333,23 +1467,13 @@ class SpatialNavigationManager {
                 p = p.parentElement;
             }
         }
-
-        try {
-            if (scrollParent) {
-                scrollParent.scrollTop = scrollParent.scrollTop + diff;
-            } else if (typeof document !== 'undefined' && document.documentElement) {
-                const base = document.documentElement.scrollTop || window.scrollY || 0;
-                document.documentElement.scrollTop = base + diff;
-                // Keep body in sync for Samsung TV browser quirks.
-                try { document.body.scrollTop = document.documentElement.scrollTop; } catch {}
-            }
-            // Some TV browsers only follow the window scroller. Nudge it too
-            // when the tagged container could not absorb the whole delta.
-            const stillOff = element.getBoundingClientRect().top - desiredTop;
-            if (Math.abs(stillOff) > 40 && typeof window !== 'undefined' && typeof window.scrollBy === 'function') {
-                try { window.scrollBy(0, stillOff); } catch {}
-            }
-        } catch {}
+        if (!scrollParent) {
+            const doc = document.scrollingElement as HTMLElement | null;
+            if (doc && doc.scrollHeight > doc.clientHeight + 10) scrollParent = doc;
+        }
+        if (scrollParent) {
+            try { scrollParent.scrollTop += diff; } catch {}
+        }
     }
 
     /**
@@ -1387,28 +1511,23 @@ class SpatialNavigationManager {
         const currentCenterX = currentRect.left + currentRect.width / 2;
         const cards = this.shelfCards(ctx);
         if (cards.length === 0) return false;
-
-        const BUCKET = 40;
-        const below = cards.filter(el => {
-            if (this.isOwnFocusBlocked(el)) return false;
-            return ctx.rect(el).top >= currentRect.bottom - currentRect.height;
-        });
-        if (below.length === 0) return false;
-
-        // Nearest row below the hero, bucketed so cards of one shelf count as a
-        // single line even when posters differ by a few px.
-        let targetTop = Infinity;
-        for (const el of below) targetTop = Math.min(targetTop, ctx.rect(el).top);
-        const row = below.filter(el => Math.abs(ctx.rect(el).top - targetTop) <= BUCKET);
-
-        row.sort((a, b) => {
-            const ra = ctx.rect(a);
-            const rb = ctx.rect(b);
-            return Math.abs(ra.left + ra.width / 2 - currentCenterX) -
-                Math.abs(rb.left + rb.width / 2 - currentCenterX);
-        });
-
-        this.setFocus(row[0]);
+        // DOM order is the shelf order even when the hero and posters overlap.
+        // Only read geometry for the FIRST row, not every poster on the page.
+        const firstRow = cards[0].getAttribute('data-tv-row');
+        let closest: HTMLElement | null = null;
+        let distance = Infinity;
+        for (const card of cards) {
+            if (card.getAttribute('data-tv-row') !== firstRow) break;
+            const r = ctx.rect(card);
+            if (r.width <= 0 || r.height <= 0) continue;
+            const d = Math.abs(r.left + r.width / 2 - currentCenterX);
+            if (d < distance) {
+                closest = card;
+                distance = d;
+            }
+        }
+        if (!closest) return false;
+        this.setFocus(closest);
         return true;
     }
 
@@ -1418,10 +1537,10 @@ class SpatialNavigationManager {
      * any deeper row ArrowUp must keep walking up the shelves.
      */
     private stepFromFirstShelfToHero(current: HTMLElement, ctx: FocusContext): boolean {
-        if (typeof document === 'undefined') return false;
-        const hero = document.querySelector<HTMLElement>(
-            `[${POINTER_REDIRECT_ATTR}="hero-play"], [data-tv-id="hero-play"]`
-        );
+        // The catch-zone wrapper comes BEFORE the Play button in DOM order.
+        // Focusing that wrapper gives the *whole banner* the ring, and the next
+        // Down press cannot find its billboard row — the real-TV stuck bug.
+        const hero = ctx.elements.find(el => el.getAttribute('data-tv-id') === 'hero-play');
         if (!hero || !this.isFirstShelfCard(current, ctx)) return false;
         if (!this.isSelfVisible(hero)) return false;
 
@@ -1447,33 +1566,206 @@ class SpatialNavigationManager {
         return ctx.elements.filter(el => el.getAttribute('data-tv-card') === 'true');
     }
 
+    /** Home/catalog shelves are siblings inside a tagged vertical ScrollView. */
+    private adjacentShelf(shelf: HTMLElement, dir: 'up' | 'down'): HTMLElement | null {
+        let node = dir === 'down' ? shelf.nextElementSibling : shelf.previousElementSibling;
+        while (node) {
+            if (node.getAttribute('data-tv-shelf') === 'true' &&
+                !this.isOwnFocusBlocked(node as HTMLElement)) return node as HTMLElement;
+            node = dir === 'down' ? node.nextElementSibling : node.previousElementSibling;
+        }
+        return null;
+    }
+
+    /** Only measure posters in the *destination* row, never the whole catalog. */
+    private cardInShelf(shelf: HTMLElement, preferredX: number, index: number | null): HTMLElement | null {
+        if (index !== null) {
+            const card = shelf.querySelector<HTMLElement>(`[data-tv-card="true"][data-tv-index="${index}"]`);
+            return card && this.isSelfVisible(card) ? card : null;
+        }
+        let closest: HTMLElement | null = null;
+        let distance = Infinity;
+        const cards = shelf.querySelectorAll<HTMLElement>('[data-tv-card="true"]');
+        for (const card of Array.from(cards)) {
+            if (this.isOwnFocusBlocked(card)) continue;
+            const r = card.getBoundingClientRect();
+            if (r.width <= 0 || r.height <= 0) continue;
+            const d = Math.abs(r.left + r.width / 2 - preferredX);
+            if (d < distance) {
+                distance = d;
+                closest = card;
+            }
+        }
+        return closest;
+    }
+
+    private cancelPendingFocus() {
+        const pending = this.pendingFocus;
+        if (!pending) return;
+        this.pendingFocus = null;
+        pending.observer?.disconnect();
+        clearTimeout(pending.timeout);
+    }
+
+    private tryPendingFocus(pending: NonNullable<SpatialNavigationManager['pendingFocus']>) {
+        if (this.pendingFocus !== pending) return;
+        const scope = this.getActiveScope();
+        if (!this.isTvModeActive || this.currentFocusedElement !== pending.origin ||
+            !document.body.contains(pending.shelf) || !scope.contains(pending.shelf) ||
+            this.isOwnFocusBlocked(pending.shelf) ||
+            this.hasHiddenAncestor(pending.shelf, scope, new Map())) {
+            this.cancelPendingFocus();
+            return;
+        }
+        // The origin can be virtualized away *during* the scroll that mounted
+        // the requested card. Keep the target, as long as its shelf is active.
+        const card = this.cardInShelf(pending.shelf, pending.preferredX, pending.index);
+        if (!card) return;
+        this.cancelPendingFocus();
+        this.setFocus(card);
+    }
+
     /**
-     * Move focus in given direction.
-     *
-     * Samsung TV 60fps: candidate geometry is cached ONCE per keypress
-     * (getBoundingClientRect forces layout). No window.getComputedStyle().
+     * React may not have mounted the next deferred shelf or virtualized poster
+     * yet. Keep the ring where it is, ask JUST that row to mount, then focus on
+     * its actual DOM card (never a blank placeholder or a card in another row).
      */
-    public moveFocus(dir: Direction) {
-        // Samsung Smart TV (UA32T4410): ArrowDown hydrates deferred
-        // below-the-fold shelves so focus never drops into the void (which
-        // triggers Samsung's mouse-pointer fallback + arrow). DeferredMovieList
-        // only hydrates the shelves that are actually near the viewport, so this
-        // stays cheap instead of mounting every row in the app at once.
-        if (dir === 'down') {
-            this.dispatchHydrateShelves();
+    private focusShelf(shelf: HTMLElement, preferredX: number, index: number | null = null) {
+        const card = this.cardInShelf(shelf, preferredX, index);
+        if (card) {
+            this.setFocus(card);
+            return;
+        }
+        this.cancelPendingFocus();
+        const origin = this.currentFocusedElement;
+        if (!origin) return;
+        const pending: NonNullable<SpatialNavigationManager['pendingFocus']> = {
+            shelf, index, preferredX, origin, observer: null, timeout: null as any,
+        };
+        this.pendingFocus = pending;
+        if (typeof MutationObserver !== 'undefined') {
+            pending.observer = new MutationObserver(() => this.tryPendingFocus(pending));
+            pending.observer.observe(shelf, { childList: true, subtree: true });
+        }
+        pending.timeout = setTimeout(() => {
+            if (this.pendingFocus !== pending) return;
+            this.cancelPendingFocus();
+            if (this.isFocusAttachedToScope(origin, this.getActiveScope())) this.retainFocus(origin);
+            else this.recoverFocus();
+        }, 1800);
+        try {
+            if (index === null) {
+                shelf.dispatchEvent(new Event('arena-hydrate-shelf'));
+            } else {
+                shelf.dispatchEvent(new CustomEvent('arena-tv-reveal-card', { detail: { index } }));
+            }
+        } catch {}
+        this.tryPendingFocus(pending);
+    }
+
+    /** Rapid presses while React is mounting should advance the pending target. */
+    private advancePendingFocus(dir: Direction): boolean {
+        const pending = this.pendingFocus;
+        if (!pending || pending.origin !== this.currentFocusedElement) return false;
+        if (pending.index !== null && (dir === 'left' || dir === 'right')) {
+            const next = pending.index + (dir === 'right' ? 1 : -1);
+            const count = Number(pending.shelf.getAttribute('data-tv-shelf-count'));
+            if (next >= 0 && next < count) this.focusShelf(pending.shelf, pending.preferredX, next);
+            return true;
+        }
+        if (pending.index === null && (dir === 'up' || dir === 'down')) {
+            const next = this.adjacentShelf(pending.shelf, dir);
+            if (next) this.focusShelf(next, pending.preferredX);
+            else if (dir === 'up') this.cancelPendingFocus(); // back at source/hero
+            return true;
+        }
+        this.cancelPendingFocus();
+        return false;
+    }
+
+    /**
+     * Fast path for the home billboard and catalog shelves: use their actual DOM
+     * order, not hundreds of forced getBoundingClientRect reads per keypress.
+     * Also prevents a Down press from skipping an unmounted placeholder row.
+     */
+    private moveInBrowseScroller(dir: Direction, scope: HTMLElement): boolean {
+        const current = this.currentFocusedElement;
+        if (!current) return false;
+        const root = current.closest?.(
+            '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
+        ) as HTMLElement | null;
+        if (!root || !scope.contains(root)) return false;
+        const isHero = current.getAttribute('data-tv-row') === HERO_ROW;
+        const shelf = current.closest?.('[data-tv-shelf="true"]') as HTMLElement | null;
+        if (!isHero && (current.getAttribute('data-tv-card') !== 'true' || !shelf)) return false;
+        const currentRect = current.getBoundingClientRect();
+        const centerX = currentRect.left + currentRect.width / 2;
+
+        if (dir === 'left' || dir === 'right') {
+            if (isHero || !shelf) return false; // Play / More Info use normal navigation.
+            const index = Number(current.getAttribute('data-tv-index'));
+            const count = Number(shelf.getAttribute('data-tv-shelf-count'));
+            if (!Number.isInteger(index) || !Number.isInteger(count) || count < 1) return false;
+            const next = index + (dir === 'right' ? 1 : -1);
+            if (next < 0 || next >= count) {
+                this.retainFocus(current);
+                return true;
+            }
+            this.focusShelf(shelf, centerX, next);
+            return true;
         }
 
+        if (isHero && dir === 'down') {
+            const first = root.querySelector<HTMLElement>('[data-tv-shelf="true"]');
+            if (first) {
+                this.focusShelf(first, centerX);
+                return true;
+            }
+            return false;
+        }
+        if (!shelf) return false; // Hero Up goes to the navbar via geometry.
+        const target = this.adjacentShelf(shelf, dir);
+        if (target) {
+            this.focusShelf(target, centerX);
+            return true;
+        }
+        if (dir === 'up') {
+            // Select the PLAY BUTTON, not the billboard's pointer catch-zone div.
+            const play = root.querySelector<HTMLElement>('[data-tv-id="hero-play"]');
+            if (play && this.isSelfVisible(play)) {
+                this.setFocus(play);
+                return true;
+            }
+            return false; // A Movies/TV catalog starts at the navbar.
+        }
+        this.retainFocus(current); // Last shelf: keep keyboard focus on the TV.
+        return true;
+    }
+
+    /**
+     * Move focus in given direction. Tagged shelves take the constant-size
+     * adjacent-row path; grids/modals without tags retain geometric navigation.
+     */
+    public moveFocus(dir: Direction) {
         const scope = this.getActiveScope();
 
         // Focus was lost (a virtualised shelf unmounted the card, a row
         // re-rendered, or the previous tab became hidden). Recover NEARBY —
         // never teleport back to the hero, that is the "arrow wapas pehle card
         // par aa jaata hai" bug.
+        if (this.pendingFocus && scope.contains(this.pendingFocus.shelf) &&
+            !this.hasHiddenAncestor(this.pendingFocus.shelf, scope, new Map()) &&
+            this.advancePendingFocus(dir)) return;
         if (!this.isFocusAttachedToScope(this.currentFocusedElement, scope)) {
+            this.cancelPendingFocus();
             this.recoverFocus(scope, dir);
             return;
         }
+        if (this.moveInBrowseScroller(dir, scope)) return;
 
+        // Legacy/grid/modal fallback: hydrate nearby shelves only when the
+        // markup does not provide targeted shelf navigation.
+        if (dir === 'down') this.dispatchHydrateShelves();
         const ctx = this.createFocusContext(scope);
         const focusables = ctx.elements;
         if (focusables.length === 0) return;

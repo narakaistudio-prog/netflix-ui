@@ -57,10 +57,15 @@ export function useTvMode() {
         window.addEventListener('keydown', markKeys, { capture: true });
         document.addEventListener('mousemove', markPointer, { capture: true, passive: true });
         document.addEventListener('pointermove', markPointer, { capture: true, passive: true });
+        // Some TV browsers emit only mouseover/mousedown instead of mousemove.
+        document.addEventListener('mouseover', markPointer, { capture: true, passive: true });
+        document.addEventListener('mousedown', markPointer, { capture: true, passive: true });
         return () => {
             window.removeEventListener('keydown', markKeys, { capture: true } as any);
             document.removeEventListener('mousemove', markPointer, { capture: true } as any);
             document.removeEventListener('pointermove', markPointer, { capture: true } as any);
+            document.removeEventListener('mouseover', markPointer, { capture: true } as any);
+            document.removeEventListener('mousedown', markPointer, { capture: true } as any);
         };
     }, []);
 

@@ -57,6 +57,7 @@ it('hydrates only near-viewport shelves, then opens any visible card immediately
         </View>,
     ));
     expect(container.querySelector('[data-testid="deferred-row-Long Movies"]')).toBeTruthy();
+    expect(container.querySelector('[data-tv-shelf="true"]')?.getAttribute('data-tv-shelf-count')).toBe('80');
     expect(cards()).toHaveLength(0);
     expect(observers).toHaveLength(1);
     expect(observers[0].options.root).toBe(container.firstChild);
@@ -74,6 +75,7 @@ it('hydrates only near-viewport shelves, then opens any visible card immediately
 it('keeps nearby cards reachable when the horizontal carousel is scrolled', () => {
     act(() => root.render(<DeferredMovieList rowTitle="Long Movies" movies={movies} eager />));
     const carousel = container.querySelector('[data-testid="movie-carousel-Long Movies"]') as HTMLElement;
+    expect(carousel.getAttribute('data-tv-carousel')).toBe('true');
     expect(cards()).toHaveLength(32);
     act(() => {
         carousel.scrollLeft = 40 * 187;
@@ -86,4 +88,32 @@ it('keeps nearby cards reachable when the horizontal carousel is scrolled', () =
     act(() => (container.querySelector('[data-testid="movie-card-item-67"]') as HTMLElement)
         .dispatchEvent(new MouseEvent('click', { bubbles: true })));
     expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id: 'item-67' } });
+});
+
+it('mounts exactly the requested virtual poster when the TV remote reaches an unmounted card', () => {
+    act(() => root.render(<DeferredMovieList rowTitle="Long Movies" movies={movies} eager />));
+    const shelf = container.querySelector('[data-tv-shelf="true"]') as HTMLElement;
+    const carousel = container.querySelector('[data-tv-carousel="true"]') as HTMLElement;
+    expect(container.querySelector('[data-testid="movie-card-item-64"]')).toBeNull();
+
+    act(() => shelf.dispatchEvent(new CustomEvent('arena-tv-reveal-card', { detail: { index: 64 } })));
+
+    expect(container.querySelector('[data-testid="movie-card-item-64"]')).toBeTruthy();
+    expect(carousel.scrollLeft).toBeGreaterThan(0);
+    expect(cards()).toHaveLength(32);
+});
+
+it('hydrates only the requested deferred shelf, preserving the other placeholders', () => {
+    act(() => root.render(<>
+        <DeferredMovieList rowTitle="First" movies={movies.slice(0, 2)} />
+        <DeferredMovieList rowTitle="Second" movies={movies.slice(2, 4)} />
+    </>));
+    const [first] = Array.from(container.querySelectorAll('[data-tv-shelf="true"]'));
+    expect(container.querySelectorAll('[data-testid^="deferred-row-"]')).toHaveLength(2);
+
+    act(() => first.dispatchEvent(new Event('arena-hydrate-shelf')));
+
+    expect(container.querySelector('[data-testid="deferred-row-First"]')).toBeNull();
+    expect(container.querySelector('[data-testid="deferred-row-Second"]')).toBeTruthy();
+    expect(cards()).toHaveLength(2);
 });

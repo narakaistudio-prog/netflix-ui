@@ -50,10 +50,20 @@ export function DeferredMovieList({ eager = false, ...row }: Props) {
         return () => observer.disconnect();
     }, [ready]);
 
-    // Samsung Smart TV (UA32T4410): spatial navigation dispatches
-    // 'arena-hydrate-shelf' on ArrowDown so below-the-fold shelves hydrate
-    // instantly — focus never lands on an empty placeholder, which is what
-    // made the Samsung browser fall back to mouse-pointer mode.
+    // A directional step targets ONE placeholder. The navigator waits for its
+    // actual card to mount before transferring focus; rendering every deferred
+    // row on the first Down press used to freeze low-end TV browsers.
+    useEffect(() => {
+        if (ready || !IS_WEB) return;
+        const element = ref.current as unknown as HTMLElement | null;
+        if (!element) return;
+        const hydrate = () => setReady(true);
+        element.addEventListener('arena-hydrate-shelf', hydrate);
+        return () => element.removeEventListener('arena-hydrate-shelf', hydrate);
+    }, [ready]);
+
+    // Legacy non-shelf/grid navigation and pointer edge scrolling can still
+    // prewarm just the shelves near the viewport (not the whole catalog).
     useEffect(() => {
         if (ready || !IS_WEB) return;
         if (typeof window === 'undefined') return;
@@ -79,7 +89,11 @@ export function DeferredMovieList({ eager = false, ...row }: Props) {
     if (!IS_WEB) return <MovieList {...row} />;
 
     return (
-        <View ref={ref} style={styles.wrapper}>
+        <View
+            ref={ref}
+            style={styles.wrapper}
+            {...({ dataSet: { tvShelf: 'true', tvShelfCount: String(row.movies.length) } } as any)}
+        >
             {ready ? <MovieList {...row} /> : (
                 <View style={styles.placeholder} testID={`deferred-row-${row.rowTitle}`}>
                     <Text style={styles.title}>{row.rowTitle}</Text>

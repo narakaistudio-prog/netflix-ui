@@ -192,7 +192,10 @@ export default function HomeScreen() {
           )}
 
           {orderedMovies.map((row, index) => (
-            <DeferredMovieList key={row.rowTitle} eager={index < 5} {...row} />
+            // Keep just the immediately reachable Top 10 shelves eager. On TV,
+            // mounting 5 shelves up front decoded ~100 posters before the
+            // first D-pad press; later shelves now hydrate as focus approaches.
+            <DeferredMovieList key={row.rowTitle} eager={index < 2} {...row} />
           ))}
         </Animated.ScrollView>
       </VisionContainer>

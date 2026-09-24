@@ -105,7 +105,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                             >
                                 <Ionicons name={isTvMode ? 'checkmark-circle' : 'tv-outline'} size={20} color="#fff" />
                                 <Text style={styles.primaryBtnText}>
-                                    {isTvMode ? 'TV Mode ON — Netflix TV app jaisa' : 'TV Mode ON karein'}
+                                    {isTvMode ? 'TV Mode ON — remote navigation active' : 'TV Mode ON karein'}
                                 </Text>
                             </Pressable>
 
@@ -117,20 +117,23 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                 </View>
                                 <Text style={styles.tipText}>
                                     <Text style={styles.bold}>Kaam kaise karta hai: </Text>
-                                    Chahe TV ka D-pad apna on-screen arrow chalaye ya seedhe arrow keys bheje — dono me site chalti
-                                    hai. Jab TV ka arrow chalta hai, hamara <Text style={styles.bold}>white ring</Text> usi card par
-                                    chala jaata hai, row apne aap scroll hoti hai, aur <Text style={styles.bold}>OK</Text> dabane par
-                                    wahi title khulta hai.
+                                    Arrow keys milne par <Text style={styles.bold}>Down</Text> Play se pehli shelf par
+                                    jaata hai aur page scroll hota hai. Agar TV sirf pointer bhejta hai, arrow ko
+                                    Play ya poster ke andar neeche hilane par bhi ring agli shelf par jaati hai.
+                                    <Text style={styles.bold}> OK</Text> ring waala title select karta hai.
                                 </Text>
                                 <Text style={styles.tipText}>
                                     <Text style={styles.bold}>Screen ke kinare: </Text>
-                                    arrow ko screen ke top ya bottom kinare par le jaayein — shelf apne aap scroll hogi (pehle
-                                    yahi kaam nahi karta tha).
+                                    Down ko Play par dabayein. Pointer-only browser me cursor ko neeche hilayein; kinare
+                                    par jaane par bhi page scroll karta hai. Arrow keys mode browser support kare to woh
+                                    zyada TV-app jaisa lagta hai.
                                 </Text>
                                 <Text style={styles.tipText}>
                                     <Text style={styles.bold}>TV ka arrow dikhta rehta hai: </Text>
-                                    woh TV browser khud draw karta hai, website use hataa nahi sakti — par hamara highlight uske
-                                    saath chalta hai, isliye remote kabhi dead nahi hota. Koi TV setting badalne ki zaroorat nahi.
+                                    woh TV browser khud draw karta hai; website OS cursor ko hamesha hide nahi kar sakti.
+                                    Agar upar status me "Waiting for remote input" hi rahe, browser site ko na keys bhej raha hai
+                                    na pointer movement. Apna TV model aur browser batayein — bina DOM input ke website remote
+                                    button ko detect nahi kar sakti.
                                 </Text>
                             </View>
 

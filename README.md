@@ -122,48 +122,40 @@ NHD), so availability of a particular stream cannot be guaranteed by Vercel.
 
 ## Smart TV remote mode (Samsung Tizen / LG webOS / Android TV)
 
-The web build runs as a normal website, but the remote is handled by a spatial
-navigation engine (`lib/spatialNavigation.ts`) that makes it behave like the
-native Netflix TV app:
+The web build is still a website, not a native TV app. Its spatial-navigation
+engine (`lib/spatialNavigation.ts`) handles the remote **when the TV browser
+forwards keyboard or pointer events to the page**:
 
-- **Two remote styles are supported.** Some TV browsers send real
-  `ArrowUp/ArrowDown/ArrowLeft/ArrowRight` keydowns; others (Samsung Internet for
-  TV, LG webOS Magic Remote, most Android TV browsers in pointer mode) move an
-  on-screen **mouse arrow** with the D-pad and never send arrow key events. The
-  engine detects the second style from pointer events, mirrors the TV arrow onto
-  the Netflix focus ring, and auto-scrolls the shelf under the arrow — so the
-  D-pad keeps working even when the TV browser insists on showing its pointer.
-- **Row-aware focus** (`data-tv-row`, `data-tv-index`), automatic shelf
-  hydration on `ArrowDown`, smart scroll that parks the highlighted row ~32 %
-  from the top, and a 1.2 s focus watchdog that re-asserts focus so a TV browser
-  cannot silently fall back to pointer mode mid-session.
-- **Hero ↔ first shelf step.** The billboard hero and the first poster shelf
-  overlap on screen, so plain geometry finds no card below the hero `Play`
-  button. `ArrowDown` on `Play`/`More Info` now steps straight onto the nearest
-  card of the first shelf (keeping the column), and `ArrowUp` from that first
-  shelf returns to `Play`. Deeper shelves keep walking row by row.
-- **No blank hero for the pointer arrow.** The hero is art + gradients, so a TV
-  pointer parked anywhere except the two buttons used to resolve to nothing and
-  the ring disappeared (Samsung then redraws its own mouse arrow). The billboard
-  is marked as a pointer catch zone (`data-tv-pointer-catch-zone` +
-  `data-tv-pointer-redirect="hero-play"`), so the arrow anywhere inside the hero
-  lands on `Play`.
-- **Keys**: D-pad moves, `OK`/`Enter` selects, `Return`/`Escape`/`Backspace`
-  goes back (handlers are pushed by modals and the player), media keys toggle
-  playback.
-- **Pointer arrow on screen?** No TV setting has to be changed: the white ring
-  follows the TV arrow, `OK` opens the title under it, and an arrow parked at
-  the top/bottom edge scrolls the shelves. (If the TV browser happens to expose
-  a pointer/`Link Browsing` toggle, switching it off gives the fully native
-  arrow-key feel — but it is never required.)
-- **Manual override**: the guide modal (`?` in the navbar) has
-  *Auto detect · Pointer arrow · Arrow keys*. Choosing **Pointer arrow** forces
-  the focus ring to follow the remote arrow even on a TV whose browser the site
-  could not recognise, and the choice is stored in
-  `localStorage` (`netflix-tv-pointer-mode`).
-- **TV Mode** is remembered in `localStorage` (`netflix-tv-mode-enabled`) and can
-  be toggled from the navbar (`TV Mode` button) or the guide modal (`?` button),
-  which also shows live input diagnostics (`keys` vs `pointer`).
+- **Arrow-key browsers:** Down on hero Play/More Info focuses a poster in the
+  first shelf and scrolls the *inner page ScrollView* (the body does not scroll).
+  Up from that shelf returns to the actual Play button, not the hero artwork.
+  Left/Right moves through posters; OK/Enter selects; Return/Escape goes back.
+- **Pointer-only browsers:** when the D-pad moves the TV's cursor instead of
+  sending Arrow keys, a small directional movement *within* Play, blank hero
+  art, or a focused poster also steps the focus ring and scrolls to the next
+  shelf. Pointing directly at a different card selects it; OK activates the
+  ring even if the OS cursor has not yet left the hero. The screen-edge scroll
+  assist is still available.
+- **Fast shelves:** only the destination row is measured on each D-pad step.
+  Deferred shelves mount on demand rather than hydrating the whole catalog;
+  a pending step waits for its poster to exist, and a virtualized carousel can
+  bring the next unmounted card into its render window without jumping rows.
+  The focused row settles around 32% from the top with direct, non-animated
+  scrollTop/scrollLeft assignments.
+- **Manual settings:** navbar TV Mode and the `?` guide offer *Auto detect ·
+  Pointer arrow · Arrow keys*. Choices are stored locally; the guide reports
+  the last input seen (`keys`, `pointer`, or `Waiting for remote input`).
+
+**Test on the TV:** reload the *new build*, focus Play, press Down, then press
+Down again, Up, and Right/OK on a poster. In a pointer-only browser, move the
+cursor a little downward while it is over Play or a poster instead. If the
+status stays `Waiting for remote input`, the browser is not forwarding those
+presses/moves; TV Mode alone cannot intercept hardware events the TV firmware
+never gives a web page. The OS-drawn mouse arrow may remain visible despite
+CSS cursor hiding. In that case note the TV model, browser, and guide status;
+if your TV has a pointer/Link Browsing toggle, arrow-key mode may feel closer
+to a native app. Do not evaluate a development-server preview for performance:
+use `npm run build:web` and serve the exported `dist` build.
 
 ## TODO
 
