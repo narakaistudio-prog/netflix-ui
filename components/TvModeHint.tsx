@@ -16,9 +16,11 @@ export function TvModeHint() {
     const [visible, setVisible] = useState(false);
     const [mode, setMode] = useState<'keys' | 'pointer' | 'none'>('none');
 
+    // Show for a moment when TV mode turns on, and again on the first remote
+    // press so the user immediately sees that the remote reached the site —
+    // and which style (arrow keys vs TV pointer) their TV is using.
     useEffect(() => {
-        if (Platform.OS !== 'web') return;
-        if (!isTvMode) {
+        if (Platform.OS !== 'web' || !isTvMode) {
             setVisible(false);
             return;
         }
@@ -27,12 +29,13 @@ export function TvModeHint() {
         return () => clearTimeout(timer);
     }, [isTvMode]);
 
-    // Switch the copy once when the TV reveals which input style it uses.
     useEffect(() => {
-        if (!isTvMode || mode !== 'none') return;
-        if (inputSource === 'keys') setMode('keys');
-        else if (inputSource === 'pointer') setMode('pointer');
-    }, [isTvMode, inputSource, mode]);
+        if (Platform.OS !== 'web' || !isTvMode || inputSource === 'none') return;
+        setMode(inputSource === 'keys' ? 'keys' : 'pointer');
+        setVisible(true);
+        const timer = setTimeout(() => setVisible(false), 6000);
+        return () => clearTimeout(timer);
+    }, [isTvMode, inputSource]);
 
     if (Platform.OS !== 'web' || !isTvMode || !visible) return null;
 
