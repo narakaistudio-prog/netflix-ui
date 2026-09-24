@@ -41,7 +41,7 @@ export function TvModeHint() {
 
     const message =
         mode === 'pointer'
-            ? 'TV pointer mode detected — arrow ko card par le jaayein, white ring usi ko follow karega. OK = select.'
+            ? 'TV pointer mode — TV ka arrow jis card par jaayega, white ring usi par aayega. OK = select.'
             : mode === 'keys'
             ? 'TV Mode: D-pad se up/down/left/right, OK se select karein.'
             : 'TV Mode ON — remote ke arrow ya pointer se navigate karein.';

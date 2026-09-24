@@ -1,6 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Platform } from 'react-native';
-import { spatialNav, isTvDevice, isPointerDrivenDevice } from '@/lib/spatialNavigation';
+import {
+    spatialNav,
+    isTvDevice,
+    isPointerDrivenDevice,
+    setTvPointerPreference,
+    getTvPointerPreference,
+    type TvPointerPreference,
+} from '@/lib/spatialNavigation';
 
 export type TvInputSource = 'none' | 'keys' | 'pointer';
 
@@ -9,12 +16,17 @@ export type TvInputSource = 'none' | 'keys' | 'pointer';
  *
  * `inputSource` matters a lot on real TVs: a Samsung/LG/Android TV browser can
  * either send real ArrowUp/ArrowDown keydowns ('keys') or move an on-screen
- * pointer arrow with the D-pad ('pointer'). Both are supported now.
+ * pointer arrow with the D-pad ('pointer'). Both are supported, and
+ * `pointerPreference` lets the user force the pointer behaviour when their TV
+ * hides the browser's own pointer setting.
  */
 export function useTvMode() {
     const [isTv, setIsTv] = useState(() => (Platform.OS === 'web' ? spatialNav.isTvMode() : false));
     const [inputSource, setInputSource] = useState<TvInputSource>(() =>
         Platform.OS === 'web' ? spatialNav.getLastInputSource() : 'none'
+    );
+    const [pointerPreference, setPointerPreferenceState] = useState<TvPointerPreference>(() =>
+        Platform.OS === 'web' ? getTvPointerPreference() : 'auto'
     );
 
     useEffect(() => {
@@ -56,11 +68,24 @@ export function useTvMode() {
         setInputSource(spatialNav.getLastInputSource());
     }, []);
 
+    const setPointerPreference = useCallback((preference: TvPointerPreference) => {
+        if (Platform.OS !== 'web') return;
+        setTvPointerPreference(preference);
+        setPointerPreferenceState(getTvPointerPreference());
+        // Forcing "pointer arrow" also arms TV mode, otherwise nothing would
+        // follow the arrow on a TV that auto-detection did not recognise.
+        if (preference === 'on' && !spatialNav.isTvMode()) {
+            spatialNav.setTvMode(true, true);
+        }
+    }, []);
+
     return {
         isTvMode: isTv,
         isTvDevice: Platform.OS === 'web' ? isTvDevice() : false,
         isPointerDriven: Platform.OS === 'web' ? isPointerDrivenDevice() : false,
         inputSource,
+        pointerPreference,
+        setPointerPreference,
         setTvMode: (active: boolean) => spatialNav.setTvMode(active),
         toggleTvMode,
     };

@@ -11,7 +11,15 @@ interface Props {
 const tv = (attrs: Record<string, string>) => ({ dataSet: attrs } as any);
 
 export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
-    const { isTvMode, isTvDevice, isPointerDriven, inputSource, toggleTvMode } = useTvMode();
+    const {
+        isTvMode,
+        isTvDevice,
+        isPointerDriven,
+        inputSource,
+        pointerPreference,
+        setPointerPreference,
+        toggleTvMode,
+    } = useTvMode();
     const [internalOpen, setInternalOpen] = useState(false);
     const [showDiagnostics, setShowDiagnostics] = useState(false);
 
@@ -105,25 +113,82 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                             <View style={styles.tipBox}>
                                 <View style={styles.tipTitleRow}>
                                     <Ionicons name="bulb-outline" size={22} color="#f5c518" />
-                                    <Text style={styles.tipHeading}>TV par mouse vale arrow ko kaise hatayein</Text>
+                                    <Text style={styles.tipHeading}>TV ka mouse arrow? Koi setting badalne ki zaroorat nahi</Text>
                                 </View>
                                 <Text style={styles.tipText}>
-                                    <Text style={styles.bold}>1. </Text>
-                                    Remote par arrow / pointer button dabayein (Samsung: browser ke top-right{' '}
-                                    <Text style={styles.bold}>'Link Browsing'</Text> icon par OK, LG Magic Remote: pointer band karke D-pad use karein).
+                                    <Text style={styles.bold}>Kaam kaise karta hai: </Text>
+                                    Chahe TV ka D-pad apna on-screen arrow chalaye ya seedhe arrow keys bheje — dono me site chalti
+                                    hai. Jab TV ka arrow chalta hai, hamara <Text style={styles.bold}>white ring</Text> usi card par
+                                    chala jaata hai, row apne aap scroll hoti hai, aur <Text style={styles.bold}>OK</Text> dabane par
+                                    wahi title khulta hai.
                                 </Text>
                                 <Text style={styles.tipText}>
-                                    <Text style={styles.bold}>2. </Text>
-                                    Site ke andar TV Mode ON hone par mouse arrow chhup jaata hai aur website native{' '}
-                                    <Text style={styles.bold}>Netflix TV app</Text> ki tarah chalti hai — bada white ring highlight, D-pad se up/down/left/right.
+                                    <Text style={styles.bold}>Screen ke kinare: </Text>
+                                    arrow ko screen ke top ya bottom kinare par le jaayein — shelf apne aap scroll hogi (pehle
+                                    yahi kaam nahi karta tha).
                                 </Text>
                                 <Text style={styles.tipText}>
-                                    <Text style={styles.bold}>3. </Text>
-                                    Agar TV apna arrow phir bhi dikhata hai (kuch TV usse hataane nahi dete) to koi dikkat nahi:
-                                    arrow ko card par le jaayein — <Text style={styles.bold}>white ring usi card ko follow karega</Text>, OK
-                                    dabane par wahi title khulega, aur rows apne aap scroll hongi.
+                                    <Text style={styles.bold}>TV ka arrow dikhta rehta hai: </Text>
+                                    woh TV browser khud draw karta hai, website use hataa nahi sakti — par hamara highlight uske
+                                    saath chalta hai, isliye remote kabhi dead nahi hota. Koi TV setting badalne ki zaroorat nahi.
                                 </Text>
                             </View>
+
+                            {/* Manual remote-style override */}
+                            <Text style={styles.sectionHeader}>Mera remote kaise chalta hai?</Text>
+                            <View style={styles.modeRow}>
+                                <Pressable
+                                    onPress={() => setPointerPreference('auto')}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Remote style auto detect"
+                                    {...tv({ tvFocusable: 'true', tvRow: 'tv-modal-modes', tvIndex: '0' })}
+                                    style={({ hovered }: any) => [
+                                        styles.modeCard,
+                                        pointerPreference === 'auto' && styles.modeCardActive,
+                                        hovered && { opacity: 0.88 },
+                                    ]}
+                                >
+                                    <Text style={styles.modeTitle}>Auto detect (recommended)</Text>
+                                    <Text style={styles.modeDesc}>Site khud pehchaan leti hai</Text>
+                                </Pressable>
+
+                                <Pressable
+                                    onPress={() => setPointerPreference('on')}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Remote style pointer arrow"
+                                    {...tv({ tvFocusable: 'true', tvRow: 'tv-modal-modes', tvIndex: '1' })}
+                                    style={({ hovered }: any) => [
+                                        styles.modeCard,
+                                        pointerPreference === 'on' && styles.modeCardActive,
+                                        hovered && { opacity: 0.88 },
+                                    ]}
+                                >
+                                    <Text style={styles.modeTitle}>Pointer arrow</Text>
+                                    <Text style={styles.modeDesc}>Remote ek mouse arrow chalata hai</Text>
+                                </Pressable>
+
+                                <Pressable
+                                    onPress={() => setPointerPreference('off')}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Remote style arrow keys"
+                                    {...tv({ tvFocusable: 'true', tvRow: 'tv-modal-modes', tvIndex: '2' })}
+                                    style={({ hovered }: any) => [
+                                        styles.modeCard,
+                                        pointerPreference === 'off' && styles.modeCardActive,
+                                        hovered && { opacity: 0.88 },
+                                    ]}
+                                >
+                                    <Text style={styles.modeTitle}>Arrow keys</Text>
+                                    <Text style={styles.modeDesc}>Remote seedhe arrow keys bhejta hai</Text>
+                                </Pressable>
+                            </View>
+                            <Text style={styles.modeHint}>
+                                Agar up/down kaam na kare to <Text style={styles.bold}>Pointer arrow</Text> chun lein — TV ka arrow
+                                chalu hote hi highlight usko follow karega. Filhaal: {pointerPreference}
+                            </Text>
 
                             {/* Remote buttons legend */}
                             <Text style={styles.sectionHeader}>Remote Controls</Text>
@@ -190,8 +255,10 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     <Text style={styles.diagLine}>TV device (user-agent): {String(isTvDevice)}</Text>
                                     <Text style={styles.diagLine}>Big screen without mouse: {String(isPointerDriven)}</Text>
                                     <Text style={styles.diagLine}>TV Mode: {String(isTvMode)}</Text>
+                                    <Text style={styles.diagLine}>Remote style setting: {pointerPreference}</Text>
                                     <Text style={styles.diagHint}>
                                         Remote par koi bhi arrow dabayein — yahan 'keys' ya 'pointer' turant badlega.
+                                        Kuch na badle to upar 'Pointer arrow' chun lein.
                                     </Text>
                                 </View>
                             )}
@@ -357,6 +424,44 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         letterSpacing: 1,
         marginBottom: 12,
+        marginTop: 4,
+    },
+    modeRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 10,
+        marginBottom: 10,
+    },
+    modeCard: {
+        flexGrow: 1,
+        flexBasis: 190,
+        backgroundColor: '#1c1c1c',
+        borderWidth: 2,
+        borderColor: '#333',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 14,
+    },
+    modeCardActive: {
+        borderColor: '#46d369',
+        backgroundColor: 'rgba(70, 211, 105, 0.10)',
+    },
+    modeTitle: {
+        color: '#e8e8e8',
+        fontSize: 14.5,
+        fontWeight: '800',
+        marginBottom: 4,
+    },
+    modeDesc: {
+        color: '#aaa',
+        fontSize: 12.5,
+        lineHeight: 18,
+    },
+    modeHint: {
+        color: '#cfcfcf',
+        fontSize: 12.5,
+        lineHeight: 19,
+        marginBottom: 18,
     },
     controlsGrid: {
         gap: 10,

@@ -22,7 +22,11 @@ export interface SpatialNavOptions {
 type BackHandler = () => boolean;
 
 const TV_MODE_STORAGE_KEY = 'netflix-tv-mode-enabled';
+const POINTER_MODE_STORAGE_KEY = 'netflix-tv-pointer-mode';
 const POINTER_MODE_CLASS = 'tv-pointer-mode';
+
+/** How the user's remote drives the TV browser. */
+export type TvPointerPreference = 'auto' | 'on' | 'off';
 
 class SpatialNavigationManager {
     private isInitialized = false;
@@ -47,15 +51,28 @@ class SpatialNavigationManager {
     private lastEdgeScrollAt = 0;
     private focusWatchdog: any = null;
     private routeDebounce: any = null;
-    /** True once the user explicitly switched TV mode off — auto-detect must not undo it. */
+    /** True once the user explicitly switched TV mode off - auto-detect must not undo it. */
     private userDisabledTvMode = false;
+    /** 'auto' = detect, 'on' = remote drives an on-screen arrow, 'off' = arrow keys only. */
+    private pointerModePreference: TvPointerPreference = 'auto';
+    /** Element the last pointer event hit - fallback when elementFromPoint is unusable. */
+    private pointerTarget: HTMLElement | null = null;
+    /** Timestamp of the last key event, so remote keys always win over a parked pointer. */
+    private lastKeyInputAt = 0;
 
     constructor() {
         if (typeof window === 'undefined') return;
         let stored: string | null = null;
+        let storedPointer: string | null = null;
         try {
-            stored = typeof localStorage !== 'undefined' ? localStorage.getItem(TV_MODE_STORAGE_KEY) : null;
+            if (typeof localStorage !== 'undefined') {
+                stored = localStorage.getItem(TV_MODE_STORAGE_KEY);
+                storedPointer = localStorage.getItem(POINTER_MODE_STORAGE_KEY);
+            }
         } catch {}
+        if (storedPointer === 'on' || storedPointer === 'off') {
+            this.pointerModePreference = storedPointer;
+        }
         if (stored === 'true') this.isTvModeActive = true;
         else if (stored === 'false') {
             this.isTvModeActive = false;
@@ -104,8 +121,47 @@ class SpatialNavigationManager {
 
     /** True when the D-pad drives an on-screen pointer instead of keydown events. */
     public isPointerDrivenDevice(): boolean {
+        if (this.pointerModePreference === 'on') return true;
+        if (this.pointerModePreference === 'off') return false;
         if (this.detectTvDevice()) return true;
         return this.isPointerDrivenTvScreen();
+    }
+
+    /**
+     * Manual override for the TV guide UI. Some TVs hide their pointer mode
+     * completely (no "Link Browsing" button in the browser toolbar), so the user
+     * can force "Pointer arrow" and the engine will mirror the remote arrow onto
+     * the focus ring even when auto-detection guessed wrong.
+     */
+    public setPointerModePreference(preference: TvPointerPreference) {
+        this.pointerModePreference = preference === 'on' || preference === 'off' ? preference : 'auto';
+        try {
+            if (typeof localStorage !== 'undefined') {
+                if (this.pointerModePreference === 'auto') {
+                    localStorage.removeItem(POINTER_MODE_STORAGE_KEY);
+                } else {
+                    localStorage.setItem(POINTER_MODE_STORAGE_KEY, this.pointerModePreference);
+                }
+            }
+        } catch {}
+        // Forcing "pointer arrow" also arms TV mode, otherwise nothing would
+        // follow the arrow on a TV that auto-detection did not recognise.
+        if (this.pointerModePreference === 'on' && !this.isTvModeActive) {
+            this.setTvMode(true, true);
+        }
+        this.notifyListeners();
+    }
+
+    public getPointerModePreference(): TvPointerPreference {
+        return this.pointerModePreference;
+    }
+
+    /** Should pointer events be treated as remote input right now? */
+    private pointerFollowActive(): boolean {
+        if (!this.pointerFollowEnabled) return false;
+        if (this.pointerModePreference === 'off') return false;
+        if (this.pointerModePreference === 'on') return true;
+        return this.detectTvDevice() || this.isPointerDrivenTvScreen();
     }
 
     public isTvMode(): boolean {
@@ -289,6 +345,8 @@ class SpatialNavigationManager {
         // Some TV browsers only emit mouseover while moving the arrow, and a few
         // jump straight to the click — keep the ring in sync for both.
         document.addEventListener('mouseover', this.handlePointerMove, { capture: true, passive: true });
+        // A few TV browsers deliver the arrow as mouseover + mousedown only.
+        document.addEventListener('mousedown', this.handlePointerMove, { capture: true, passive: true });
         document.addEventListener('click', this.handlePointerClick, { capture: true, passive: true });
     }
 
@@ -298,6 +356,7 @@ class SpatialNavigationManager {
         document.removeEventListener('mousemove', this.handlePointerMove, { capture: true });
         document.removeEventListener('pointermove', this.handlePointerMove, { capture: true });
         document.removeEventListener('mouseover', this.handlePointerMove, { capture: true });
+        document.removeEventListener('mousedown', this.handlePointerMove, { capture: true });
         document.removeEventListener('click', this.handlePointerClick, { capture: true });
         if (this.pointerRaf != null) {
             this.cancelFrame(this.pointerRaf);
@@ -306,19 +365,26 @@ class SpatialNavigationManager {
     }
 
     private handlePointerMove = (event: MouseEvent | PointerEvent) => {
-        if (!this.pointerFollowEnabled) return;
-        // On a desktop with a real mouse the pointer must never steal the
-        // remote focus ring, only TV-style pointers do.
-        if (!this.isPointerDrivenDevice()) return;
+        // On a desktop with a real mouse the pointer must never steal the remote
+        // focus ring. TV-style pointers (or a forced "Pointer arrow" mode) do.
+        if (!this.pointerFollowActive()) return;
         // A TV browser whose user agent is not recognisable still gets the TV
         // experience: the first D-pad press (which moves this pointer) switches
         // the page into TV mode automatically — unless the user turned it off.
-        if (!this.isTvModeActive && !this.userDisabledTvMode) this.setTvMode(true, false);
+        if (!this.isTvModeActive) {
+            if (this.userDisabledTvMode && this.pointerModePreference !== 'on') return;
+            this.setTvMode(true, false);
+        }
+        // Remote keys win: a parked pointer must not yank the ring back while
+        // the user is navigating with ArrowUp/ArrowDown.
+        if (Date.now() - this.lastKeyInputAt < 1200) return;
 
         const x = (event as MouseEvent).clientX;
         const y = (event as MouseEvent).clientY;
         if (typeof x !== 'number' || typeof y !== 'number' || (x === 0 && y === 0)) return;
 
+        const target = event.target as HTMLElement | null;
+        this.pointerTarget = target && target.nodeType === 1 ? target : this.pointerTarget;
         this.pointerPosition = { x, y };
         this.lastInputSource = 'pointer';
         this.enterPointerMode();
@@ -344,8 +410,8 @@ class SpatialNavigationManager {
      * has to reach React so the card opens.
      */
     private handlePointerClick = (event: MouseEvent) => {
-        if (!this.isTvModeActive || !this.pointerFollowEnabled) return;
-        if (!this.isPointerDrivenDevice() || this.isEditingText()) return;
+        if (!this.isTvModeActive || !this.pointerFollowActive()) return;
+        if (this.isEditingText()) return;
         const target = event.target as HTMLElement | null;
         if (!target || target.nodeType !== 1) return;
         const scope = this.getActiveScope();
@@ -366,6 +432,9 @@ class SpatialNavigationManager {
 
         const { x, y } = this.pointerPosition;
         let hit = this.hitTest(x, y);
+        // Some TV browsers give an unusable elementFromPoint but still report a
+        // real event target on the mouseover/mousemove that moved the arrow.
+        if (!hit) hit = this.pointerTarget;
         if (!hit) return;
 
         const edgeScroll = this.pendingEdgeScroll;
@@ -594,11 +663,22 @@ class SpatialNavigationManager {
 
         if (isDirectionalKey || isEnterKey || isBackKey || isMediaKey) {
             this.lastInputSource = 'keys';
+            this.lastKeyInputAt = Date.now();
             // Auto-enable on TV-like hardware only. A desktop/laptop keyboard
-            // must keep scrolling normally — that is what the navbar TV Mode
+            // must keep scrolling normally - that is what the navbar TV Mode
             // button (and its localStorage memory) is for.
             if (!this.isTvModeActive && !this.userDisabledTvMode && this.isPointerDrivenDevice()) {
                 this.setTvMode(true, false);
+            }
+            // Self-heal: a TV that only forwards OK/Return (no arrow keys) must
+            // still light up the first card instead of looking dead.
+            if (
+                this.isTvModeActive &&
+                !this.currentFocusedElement &&
+                typeof document !== 'undefined' &&
+                document.activeElement === document.body
+            ) {
+                this.focusInitialElement();
             }
         }
 
@@ -1174,6 +1254,15 @@ export function getTvInputSource(): 'none' | 'keys' | 'pointer' {
 /** True when the D-pad drives an on-screen arrow instead of sending keydowns. */
 export function isPointerDrivenDevice() {
     return spatialNav.isPointerDrivenDevice();
+}
+
+/** Manual override chosen in the TV guide: 'auto' | 'on' (pointer arrow) | 'off' (keys). */
+export function setTvPointerPreference(preference: TvPointerPreference) {
+    spatialNav.setPointerModePreference(preference);
+}
+
+export function getTvPointerPreference(): TvPointerPreference {
+    return spatialNav.getPointerModePreference();
 }
 
 export function pushBackHandler(handler: BackHandler) {

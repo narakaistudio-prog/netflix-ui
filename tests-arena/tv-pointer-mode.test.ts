@@ -154,6 +154,62 @@ describe('Smart TV pointer-mode remote navigation', () => {
         expect(spatialNav.getCurrentFocus()).toBe(real);
     });
 
+    it('follows the pointer even on an unrecognised TV when the user forces Pointer arrow', () => {
+        // Desktop-like UA and a fine pointer: auto-detection says "not a TV".
+        setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36');
+        window.matchMedia = ((query: string) => ({
+            matches: /hover: hover/.test(query),
+            media: query,
+            addListener: () => {},
+            removeListener: () => {},
+            addEventListener: () => {},
+            removeEventListener: () => {},
+            dispatchEvent: () => false,
+        })) as any;
+
+        container.innerHTML = `<button id="card-0" data-tv-focusable="true" data-tv-row="row-0">Card 0</button>`;
+        const card0 = container.querySelector('#card-0') as HTMLButtonElement;
+        card0.getBoundingClientRect = () => ({ left: 0, right: 200, top: 100, bottom: 300, width: 200, height: 200 } as any);
+
+        // Before the override the page is not in TV mode at all.
+        expect(spatialNav.isTvMode()).toBe(false);
+
+        spatialNav.setPointerModePreference('on');
+        expect(spatialNav.getPointerModePreference()).toBe('on');
+        expect(spatialNav.isTvMode()).toBe(true);
+
+        movePointerTo(card0, 150, 200);
+        jest.advanceTimersByTime(32);
+
+        expect(spatialNav.getCurrentFocus()).toBe(card0);
+        expect(spatialNav.getLastInputSource()).toBe('pointer');
+
+        // The choice survives a reload.
+        expect(localStorage.getItem('netflix-tv-pointer-mode')).toBe('on');
+    });
+
+    it('stops following the pointer when the user picks Arrow keys', () => {
+        container.innerHTML = `<button id="card-0" data-tv-focusable="true" data-tv-row="row-0">Card 0</button>`;
+        const card0 = container.querySelector('#card-0') as HTMLButtonElement;
+
+        spatialNav.setTvMode(true, false);
+        spatialNav.setPointerModePreference('off');
+        const before = spatialNav.getCurrentFocus();
+
+        movePointerTo(card0, 150, 200);
+        jest.advanceTimersByTime(32);
+
+        expect(spatialNav.getCurrentFocus()).toBe(before);
+        expect(spatialNav.isPointerDrivenDevice()).toBe(false);
+
+        // Arrow keys still work in that mode.
+        spatialNav.setFocus(card0);
+        window.dispatchEvent(
+            new KeyboardEvent('keydown', { key: 'ArrowDown', keyCode: 40, bubbles: true, cancelable: true })
+        );
+        expect(spatialNav.getLastInputSource()).toBe('keys');
+    });
+
     it('re-asserts the focus ring so the TV browser cannot fall back to pointer mode', () => {
         container.innerHTML = `<button id="card-0" data-tv-focusable="true" data-tv-row="row-0">Card 0</button>`;
         const card0 = container.querySelector('#card-0') as HTMLButtonElement;

@@ -140,10 +140,16 @@ native Netflix TV app:
 - **Keys**: D-pad moves, `OK`/`Enter` selects, `Return`/`Escape`/`Backspace`
   goes back (handlers are pushed by modals and the player), media keys toggle
   playback.
-- **Pointer arrow on screen?** Press the remote's pointer/`Link Browsing` toggle
-  (Samsung) to switch the browser back to arrow keys. When that is not possible
-  the site still works: the white ring follows the TV arrow, `OK` opens the
-  title under it, and edge-parked arrows scroll the page.
+- **Pointer arrow on screen?** No TV setting has to be changed: the white ring
+  follows the TV arrow, `OK` opens the title under it, and an arrow parked at
+  the top/bottom edge scrolls the shelves. (If the TV browser happens to expose
+  a pointer/`Link Browsing` toggle, switching it off gives the fully native
+  arrow-key feel — but it is never required.)
+- **Manual override**: the guide modal (`?` in the navbar) has
+  *Auto detect · Pointer arrow · Arrow keys*. Choosing **Pointer arrow** forces
+  the focus ring to follow the remote arrow even on a TV whose browser the site
+  could not recognise, and the choice is stored in
+  `localStorage` (`netflix-tv-pointer-mode`).
 - **TV Mode** is remembered in `localStorage` (`netflix-tv-mode-enabled`) and can
   be toggled from the navbar (`TV Mode` button) or the guide modal (`?` button),
   which also shows live input diagnostics (`keys` vs `pointer`).
