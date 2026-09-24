@@ -33,6 +33,7 @@ import {useUser} from '@/contexts/UserContext';
 import useCachedResources from '@/hooks/useCachedResources';
 import { useVisionOS } from '@/hooks/useVisionOS';
 import { WebNavBar } from '@/components/WebNavBar';
+import { TvModeHint } from '@/components/TvModeHint';
 import { initSpatialNavigation } from '@/lib/spatialNavigation';
 
 function AnimatedStack() {
@@ -197,6 +198,7 @@ export default function RootLayout() {
                             <WebMediaWatchdog/>
                             <AnimatedStack/>
                             <WebNavBar/>
+                            <TvModeHint/>
                         </OverlayProvider>
                     </RootScaleProvider>
                 </ThemeProvider>

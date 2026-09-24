@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Pressable, StyleSheet, Platform, Modal } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Pressable, StyleSheet, Platform, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTvMode, useTvBackHandler } from '@/hooks/useTvNavigation';
 
@@ -8,20 +8,14 @@ interface Props {
     onClose?: () => void;
 }
 
+const tv = (attrs: Record<string, string>) => ({ dataSet: attrs } as any);
+
 export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
-    const { isTvMode, isTvDevice, toggleTvMode } = useTvMode();
+    const { isTvMode, isTvDevice, isPointerDriven, inputSource, toggleTvMode } = useTvMode();
     const [internalOpen, setInternalOpen] = useState(false);
-    const [dismissedBanner, setDismissedBanner] = useState(false);
+    const [showDiagnostics, setShowDiagnostics] = useState(false);
 
     const isModalOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalOpen;
-
-    // Auto-show tip banner once on Smart TV
-    useEffect(() => {
-        if (Platform.OS !== 'web') return;
-        if (isTvDevice && !dismissedBanner) {
-            // Keep banner visible or let user open full guide
-        }
-    }, [isTvDevice, dismissedBanner]);
 
     useTvBackHandler(() => {
         if (isModalOpen) {
@@ -39,115 +33,181 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
 
     if (Platform.OS !== 'web') return null;
 
+    const inputLabel =
+        inputSource === 'keys'
+            ? 'Arrow keys (D-pad) ✔'
+            : inputSource === 'pointer'
+            ? 'Pointer arrow (D-pad is moving the on-screen arrow)'
+            : 'Waiting for remote input…';
+
     return (
         <>
-            {/* TV Mode Guide Modal */}
             {isModalOpen && (
-                <View
-                    style={styles.modalBackdrop}
-                    {...({ dataSet: { tvScope: 'tv-guide-modal' } } as any)}
-                >
-                    <View style={styles.modalCard}>
-                        {/* Header */}
-                        <View style={styles.modalHeader}>
-                            <View style={styles.headerTitleRow}>
-                                <Ionicons name="tv-outline" size={26} color="#E50914" />
-                                <Text style={styles.modalTitle}>Samsung Smart TV Remote Control</Text>
-                            </View>
-                            <Pressable
-                                onPress={handleClose}
-                                tabIndex={0}
-                                accessibilityRole="button"
-                                accessibilityLabel="Close TV remote guide"
-                                {...({ dataSet: { tvFocusable: 'true', tvRow: 'tv-modal-close' } } as any)}
-                                style={({ hovered }: any) => [styles.closeBtn, hovered && { backgroundColor: '#333' }]}
-                            >
-                                <Ionicons name="close" size={24} color="#fff" />
-                            </Pressable>
-                        </View>
-
-                        {/* Samsung Browser Arrow Pointer Solution */}
-                        <View style={styles.tipBox}>
-                            <View style={styles.tipTitleRow}>
-                                <Ionicons name="bulb-outline" size={22} color="#f5c518" />
-                                <Text style={styles.tipHeading}>
-                                    Samsung TV Browser me Arrow Pointer ko kaise hatayein:
-                                </Text>
-                            </View>
-                            <Text style={styles.tipText}>
-                                1. Samsung TV browser ke top-right corner par <Text style={styles.bold}>'Link Browsing'</Text> (pointer switch) icon par OK dabayein.
-                            </Text>
-                            <Text style={styles.tipText}>
-                                2. Mouse ka arrow pointer band ho jayega aur website bilkul <Text style={styles.bold}>Netflix TV App</Text> ki tarah chalegi!
-                            </Text>
-                        </View>
-
-                        {/* Remote Buttons Legend */}
-                        <Text style={styles.sectionHeader}>Remote Controls Guide</Text>
-                        <View style={styles.controlsGrid}>
-                            <View style={styles.controlItem}>
-                                <View style={styles.keyBadge}>
-                                    <Text style={styles.keyText}>⬆️ ⬇️ ⬅️ ➡️</Text>
+                <View style={styles.modalBackdrop} {...tv({ tvScope: 'modal' })}>
+                    <ScrollView
+                        style={styles.modalScroll}
+                        contentContainerStyle={styles.modalScrollContent}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <View style={styles.modalCard}>
+                            {/* Header */}
+                            <View style={styles.modalHeader}>
+                                <View style={styles.headerTitleRow}>
+                                    <Ionicons name="tv-outline" size={26} color="#E50914" />
+                                    <Text style={styles.modalTitle}>TV Mode</Text>
                                 </View>
-                                <View style={styles.controlTextCol}>
-                                    <Text style={styles.controlTitle}>D-Pad Arrows</Text>
-                                    <Text style={styles.controlDesc}>Movies, rows aur menus ke beech move karein</Text>
-                                </View>
+                                <Pressable
+                                    onPress={handleClose}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Close TV remote guide"
+                                    {...tv({ tvFocusable: 'true', tvRow: 'tv-modal', tvIndex: '9', tvId: 'tv-modal-close' })}
+                                    style={({ hovered }: any) => [styles.closeBtn, hovered && { backgroundColor: '#333' }]}
+                                >
+                                    <Ionicons name="close" size={24} color="#fff" />
+                                </Pressable>
                             </View>
 
-                            <View style={styles.controlItem}>
-                                <View style={styles.keyBadge}>
-                                    <Text style={styles.keyText}>OK / ENTER</Text>
+                            {/* Live status */}
+                            <View style={styles.statusBox}>
+                                <View style={styles.statusRow}>
+                                    <View style={[styles.statusDot, { backgroundColor: isTvMode ? '#46d369' : '#888' }]} />
+                                    <Text style={styles.statusText}>
+                                        TV Mode: <Text style={styles.bold}>{isTvMode ? 'ON' : 'OFF'}</Text>
+                                        {isTvDevice ? '  •  TV detected' : isPointerDriven ? '  •  Big screen (no mouse)' : ''}
+                                    </Text>
                                 </View>
-                                <View style={styles.controlTextCol}>
-                                    <Text style={styles.controlTitle}>Select / Play</Text>
-                                    <Text style={styles.controlDesc}>Selected movie open karein ya video play karein</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.controlItem}>
-                                <View style={styles.keyBadge}>
-                                    <Text style={styles.keyText}>RETURN / ↩️</Text>
-                                </View>
-                                <View style={styles.controlTextCol}>
-                                    <Text style={styles.controlTitle}>Back Button</Text>
-                                    <Text style={styles.controlDesc}>Player ya detail modal band karke wapas jayein</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.controlItem}>
-                                <View style={styles.keyBadge}>
-                                    <Text style={styles.keyText}>⏯️ PLAY/PAUSE</Text>
-                                </View>
-                                <View style={styles.controlTextCol}>
-                                    <Text style={styles.controlTitle}>Media Keys</Text>
-                                    <Text style={styles.controlDesc}>Video pause ya resume karein</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        {/* Status & Toggle */}
-                        <View style={styles.footerRow}>
-                            <View style={styles.statusIndicator}>
-                                <View style={[styles.statusDot, { backgroundColor: isTvMode ? '#46d369' : '#888' }]} />
-                                <Text style={styles.statusText}>
-                                    Spatial Remote Mode: <Text style={styles.bold}>{isTvMode ? 'Active (ON)' : 'Standard'}</Text>
+                                <Text style={styles.statusSub}>
+                                    Remote input: <Text style={styles.bold}>{inputLabel}</Text>
                                 </Text>
                             </View>
 
+                            {/* The one button that matters */}
                             <Pressable
                                 onPress={toggleTvMode}
                                 tabIndex={0}
                                 accessibilityRole="button"
-                                {...({ dataSet: { tvFocusable: 'true', tvRow: 'tv-modal-toggle' } } as any)}
-                                style={({ hovered }: any) => [styles.toggleBtn, hovered && { opacity: 0.85 }]}
+                                accessibilityLabel={isTvMode ? 'Turn TV mode off' : 'Turn TV mode on'}
+                                {...tv({ tvFocusable: 'true', tvRow: 'tv-modal', tvIndex: '0', tvInitial: 'true', tvId: 'tv-mode-toggle' })}
+                                style={({ hovered }: any) => [
+                                    styles.primaryBtn,
+                                    isTvMode && styles.primaryBtnOn,
+                                    hovered && { opacity: 0.88 },
+                                ]}
                             >
-                                <Text style={styles.toggleBtnText}>
-                                    {isTvMode ? 'Disable TV Mode' : 'Enable TV Mode'}
+                                <Ionicons name={isTvMode ? 'checkmark-circle' : 'tv-outline'} size={20} color="#fff" />
+                                <Text style={styles.primaryBtnText}>
+                                    {isTvMode ? 'TV Mode ON — Netflix TV app jaisa' : 'TV Mode ON karein'}
                                 </Text>
                             </Pressable>
+
+                            {/* Arrow / pointer help */}
+                            <View style={styles.tipBox}>
+                                <View style={styles.tipTitleRow}>
+                                    <Ionicons name="bulb-outline" size={22} color="#f5c518" />
+                                    <Text style={styles.tipHeading}>TV par mouse vale arrow ko kaise hatayein</Text>
+                                </View>
+                                <Text style={styles.tipText}>
+                                    <Text style={styles.bold}>1. </Text>
+                                    Remote par arrow / pointer button dabayein (Samsung: browser ke top-right{' '}
+                                    <Text style={styles.bold}>'Link Browsing'</Text> icon par OK, LG Magic Remote: pointer band karke D-pad use karein).
+                                </Text>
+                                <Text style={styles.tipText}>
+                                    <Text style={styles.bold}>2. </Text>
+                                    Site ke andar TV Mode ON hone par mouse arrow chhup jaata hai aur website native{' '}
+                                    <Text style={styles.bold}>Netflix TV app</Text> ki tarah chalti hai — bada white ring highlight, D-pad se up/down/left/right.
+                                </Text>
+                                <Text style={styles.tipText}>
+                                    <Text style={styles.bold}>3. </Text>
+                                    Agar TV apna arrow phir bhi dikhata hai (kuch TV usse hataane nahi dete) to koi dikkat nahi:
+                                    arrow ko card par le jaayein — <Text style={styles.bold}>white ring usi card ko follow karega</Text>, OK
+                                    dabane par wahi title khulega, aur rows apne aap scroll hongi.
+                                </Text>
+                            </View>
+
+                            {/* Remote buttons legend */}
+                            <Text style={styles.sectionHeader}>Remote Controls</Text>
+                            <View style={styles.controlsGrid}>
+                                <View style={styles.controlItem}>
+                                    <View style={styles.keyBadge}>
+                                        <Text style={styles.keyText}>⬆️ ⬇️ ⬅️ ➡️</Text>
+                                    </View>
+                                    <View style={styles.controlTextCol}>
+                                        <Text style={styles.controlTitle}>D-Pad</Text>
+                                        <Text style={styles.controlDesc}>Rows aur cards ke beech move karein</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles.controlItem}>
+                                    <View style={styles.keyBadge}>
+                                        <Text style={styles.keyText}>OK / ENTER</Text>
+                                    </View>
+                                    <View style={styles.controlTextCol}>
+                                        <Text style={styles.controlTitle}>Select / Play</Text>
+                                        <Text style={styles.controlDesc}>Highlighted title kholein ya video play karein</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles.controlItem}>
+                                    <View style={styles.keyBadge}>
+                                        <Text style={styles.keyText}>RETURN / ↩️</Text>
+                                    </View>
+                                    <View style={styles.controlTextCol}>
+                                        <Text style={styles.controlTitle}>Back</Text>
+                                        <Text style={styles.controlDesc}>Player / detail band karke wapas jayein</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles.controlItem}>
+                                    <View style={styles.keyBadge}>
+                                        <Text style={styles.keyText}>⏯️ PLAY / PAUSE</Text>
+                                    </View>
+                                    <View style={styles.controlTextCol}>
+                                        <Text style={styles.controlTitle}>Media Keys</Text>
+                                        <Text style={styles.controlDesc}>Video pause ya resume karein</Text>
+                                    </View>
+                                </View>
+                            </View>
+
+                            {/* Diagnostics (opt-in) */}
+                            <Pressable
+                                onPress={() => setShowDiagnostics(v => !v)}
+                                tabIndex={0}
+                                accessibilityRole="button"
+                                accessibilityLabel="Toggle TV input diagnostics"
+                                {...tv({ tvFocusable: 'true', tvRow: 'tv-modal', tvIndex: '5' })}
+                                style={({ hovered }: any) => [styles.diagToggle, hovered && { opacity: 0.85 }]}
+                            >
+                                <Ionicons name="pulse-outline" size={16} color="#8ab4f8" />
+                                <Text style={styles.diagToggleText}>
+                                    {showDiagnostics ? 'Input diagnostics band karein' : 'Mere TV se kya aa raha hai? (diagnostics)'}
+                                </Text>
+                            </Pressable>
+
+                            {showDiagnostics && (
+                                <View style={styles.diagBox}>
+                                    <Text style={styles.diagLine}>Detected input: {inputSource}</Text>
+                                    <Text style={styles.diagLine}>TV device (user-agent): {String(isTvDevice)}</Text>
+                                    <Text style={styles.diagLine}>Big screen without mouse: {String(isPointerDriven)}</Text>
+                                    <Text style={styles.diagLine}>TV Mode: {String(isTvMode)}</Text>
+                                    <Text style={styles.diagHint}>
+                                        Remote par koi bhi arrow dabayein — yahan 'keys' ya 'pointer' turant badlega.
+                                    </Text>
+                                </View>
+                            )}
+
+                            <Pressable
+                                onPress={handleClose}
+                                tabIndex={0}
+                                accessibilityRole="button"
+                                accessibilityLabel="Done"
+                                {...tv({ tvFocusable: 'true', tvRow: 'tv-modal', tvIndex: '8' })}
+                                style={({ hovered }: any) => [styles.darkBtn, hovered && { backgroundColor: '#2a2a2a' }]}
+                            >
+                                <Text style={styles.darkBtnText}>Ho gaya, browse karein</Text>
+                            </Pressable>
                         </View>
-                    </View>
+                    </ScrollView>
                 </View>
             )}
         </>
@@ -161,18 +221,26 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.85)',
+        backgroundColor: 'rgba(0,0,0,0.88)',
         zIndex: 99999,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         padding: 20,
     },
+    modalScroll: {
+        maxHeight: '94%' as any,
+        width: '100%',
+    },
+    modalScrollContent: {
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
     modalCard: {
-        width: '92%',
-        maxWidth: 680,
+        width: '96%',
+        maxWidth: 720,
         backgroundColor: '#181818',
         borderRadius: 12,
-        padding: 28,
+        padding: 26,
         borderWidth: 1,
         borderColor: '#333',
         shadowColor: '#000',
@@ -184,8 +252,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 20,
-        paddingBottom: 16,
+        marginBottom: 16,
+        paddingBottom: 14,
         borderBottomWidth: 1,
         borderBottomColor: '#282828',
     },
@@ -195,7 +263,7 @@ const styles = StyleSheet.create({
         gap: 12,
     },
     modalTitle: {
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: '800',
         color: '#fff',
     },
@@ -207,13 +275,62 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#222',
     },
+    statusBox: {
+        backgroundColor: '#101010',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#262626',
+        padding: 14,
+        marginBottom: 14,
+        gap: 6,
+    },
+    statusRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    statusDot: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+    },
+    statusText: {
+        fontSize: 14,
+        color: '#ddd',
+    },
+    statusSub: {
+        fontSize: 13,
+        color: '#aaa',
+    },
+    bold: {
+        fontWeight: '700',
+        color: '#fff',
+    },
+    primaryBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+        backgroundColor: '#E50914',
+        paddingVertical: 14,
+        borderRadius: 8,
+        marginBottom: 18,
+    },
+    primaryBtnOn: {
+        backgroundColor: '#1f7a37',
+    },
+    primaryBtnText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '800',
+    },
     tipBox: {
-        backgroundColor: 'rgba(245, 197, 24, 0.1)',
+        backgroundColor: 'rgba(245, 197, 24, 0.08)',
         borderLeftWidth: 4,
         borderLeftColor: '#f5c518',
         borderRadius: 8,
         padding: 16,
-        marginBottom: 22,
+        marginBottom: 20,
     },
     tipTitleRow: {
         flexDirection: 'row',
@@ -225,28 +342,25 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
         color: '#f5c518',
+        flexShrink: 1,
     },
     tipText: {
         fontSize: 14,
         color: '#e5e5e5',
         lineHeight: 22,
-        marginBottom: 4,
-    },
-    bold: {
-        fontWeight: '700',
-        color: '#fff',
+        marginBottom: 6,
     },
     sectionHeader: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
         color: '#aaa',
         textTransform: 'uppercase',
         letterSpacing: 1,
-        marginBottom: 14,
+        marginBottom: 12,
     },
     controlsGrid: {
-        gap: 12,
-        marginBottom: 24,
+        gap: 10,
+        marginBottom: 18,
     },
     controlItem: {
         flexDirection: 'row',
@@ -258,7 +372,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     keyBadge: {
-        minWidth: 110,
+        minWidth: 130,
         paddingVertical: 6,
         paddingHorizontal: 12,
         backgroundColor: '#333',
@@ -286,37 +400,49 @@ const styles = StyleSheet.create({
         color: '#aaa',
         marginTop: 2,
     },
-    footerRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingTop: 16,
-        borderTopWidth: 1,
-        borderTopColor: '#282828',
-    },
-    statusIndicator: {
+    diagToggle: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
-    },
-    statusDot: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-    },
-    statusText: {
-        fontSize: 14,
-        color: '#ccc',
-    },
-    toggleBtn: {
-        backgroundColor: '#E50914',
         paddingVertical: 8,
-        paddingHorizontal: 16,
+        marginBottom: 8,
+    },
+    diagToggleText: {
+        color: '#8ab4f8',
+        fontSize: 13,
+        fontWeight: '600',
+    },
+    diagBox: {
+        backgroundColor: '#0d1117',
+        borderWidth: 1,
+        borderColor: '#26303d',
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 16,
+        gap: 4,
+    },
+    diagLine: {
+        color: '#c9d1d9',
+        fontSize: 13,
+        fontFamily: Platform.OS === 'web' ? ('monospace' as any) : undefined,
+    },
+    diagHint: {
+        color: '#8b949e',
+        fontSize: 12,
+        marginTop: 6,
+    },
+    darkBtn: {
+        alignSelf: 'center',
+        backgroundColor: '#222',
+        borderWidth: 1,
+        borderColor: '#3a3a3a',
+        paddingVertical: 10,
+        paddingHorizontal: 22,
         borderRadius: 6,
     },
-    toggleBtnText: {
+    darkBtnText: {
         color: '#fff',
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: '700',
     },
 });

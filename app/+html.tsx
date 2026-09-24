@@ -34,7 +34,19 @@ export default function Root({ children }: PropsWithChildren) {
   );
 }
 
-const tvDetectScript = `(function(){try{var ua=navigator.userAgent||'';if(/SmartTV|SMART-TV|Tizen|SamsungBrowser.*TV|Web0S|webOS|AppleTV|BRAVIA|GoogleTV|Android.*TV|NetCast|POV_TV|Viera/i.test(ua)){document.documentElement.className+=' tv-device';}}catch(e){}})();`;
+const tvDetectScript = `(function(){try{
+  var ua = navigator.userAgent || '';
+  var isTv = /SmartTV|SMART-TV|Tizen|Web0S|webOS|NetCast|AppleTV|tvOS|BRAVIA|GoogleTV|Google TV|Android ?TV|AFT[BMRS]|FireTV|Fire TV|MiBOX|MiTV|VIDAA|Hisense|Skyworth|Philips ?TV|Roku|POV_TV|Viera|HbbTV|TV Safari/i.test(ua);
+  var bigNoMouse = false;
+  try {
+    var mq = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)');
+    bigNoMouse = (!mq || !mq.matches) && (((window.screen && window.screen.width) || window.innerWidth || 0) >= 1024);
+  } catch (e) {}
+  if (isTv || bigNoMouse) { document.documentElement.className += ' tv-device'; }
+  var stored = null;
+  try { stored = localStorage.getItem('netflix-tv-mode-enabled'); } catch (e) {}
+  if (stored !== 'false' && (isTv || bigNoMouse)) { document.documentElement.className += ' tv-remote-mode'; }
+}catch(e){}})();`;
 
 const globalStyles = `
 html,
@@ -77,9 +89,37 @@ a,
    cursor:none in pointer-fallback states, this data URI guarantees the arrow never shows. */
 html.tv-device,
 html.tv-device *,
+html.tv-device body,
+html.tv-remote-mode,
+html.tv-remote-mode *,
+html.tv-remote-mode body,
 body.tv-remote-mode,
-body.tv-remote-mode * {
+body.tv-remote-mode *,
+body.tv-pointer-mode,
+body.tv-pointer-mode * {
   cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==') 0 0, none !important;
+}
+
+/* TV mode: no text selection, no blue highlight, no native focus outlines and
+   no tap flash — the white Netflix ring is the only highlight on screen. */
+html.tv-remote-mode,
+html.tv-remote-mode body {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  overflow: hidden;
+}
+html.tv-remote-mode ::selection {
+  background: transparent;
+}
+html.tv-remote-mode *:focus:not([data-tv-focused='true']) {
+  outline: none !important;
+}
+
+/* The remote is driving an on-screen arrow (Samsung Internet for TV / LG webOS
+   pointer mode): keep the ring snappy so it tracks the arrow closely. */
+body.tv-pointer-mode [data-tv-focused='true'] {
+  transition: transform 80ms linear !important;
 }
 
 /* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State.
