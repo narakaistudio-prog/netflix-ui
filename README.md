@@ -120,6 +120,40 @@ After deployment, check `/`, `/browse/movies`, a movie URL such as
 bundled catalog. Video playback runs in third-party iframe providers (Nxsha or
 NHD), so availability of a particular stream cannot be guaranteed by Vercel.
 
+## Smart TV remote mode (Samsung Tizen / LG webOS / Android TV)
+
+The web build runs as a normal website, but the remote is handled by a spatial
+navigation engine (`lib/spatialNavigation.ts`) that makes it behave like the
+native Netflix TV app:
+
+- **Two remote styles are supported.** Some TV browsers send real
+  `ArrowUp/ArrowDown/ArrowLeft/ArrowRight` keydowns; others (Samsung Internet for
+  TV, LG webOS Magic Remote, most Android TV browsers in pointer mode) move an
+  on-screen **mouse arrow** with the D-pad and never send arrow key events. The
+  engine detects the second style from pointer events, mirrors the TV arrow onto
+  the Netflix focus ring, and auto-scrolls the shelf under the arrow — so the
+  D-pad keeps working even when the TV browser insists on showing its pointer.
+- **Row-aware focus** (`data-tv-row`, `data-tv-index`), automatic shelf
+  hydration on `ArrowDown`, smart scroll that parks the highlighted row ~32 %
+  from the top, and a 1.2 s focus watchdog that re-asserts focus so a TV browser
+  cannot silently fall back to pointer mode mid-session.
+- **Keys**: D-pad moves, `OK`/`Enter` selects, `Return`/`Escape`/`Backspace`
+  goes back (handlers are pushed by modals and the player), media keys toggle
+  playback.
+- **Pointer arrow on screen?** No TV setting has to be changed: the white ring
+  follows the TV arrow, `OK` opens the title under it, and an arrow parked at
+  the top/bottom edge scrolls the shelves. (If the TV browser happens to expose
+  a pointer/`Link Browsing` toggle, switching it off gives the fully native
+  arrow-key feel — but it is never required.)
+- **Manual override**: the guide modal (`?` in the navbar) has
+  *Auto detect · Pointer arrow · Arrow keys*. Choosing **Pointer arrow** forces
+  the focus ring to follow the remote arrow even on a TV whose browser the site
+  could not recognise, and the choice is stored in
+  `localStorage` (`netflix-tv-pointer-mode`).
+- **TV Mode** is remembered in `localStorage` (`netflix-tv-mode-enabled`) and can
+  be toggled from the navbar (`TV Mode` button) or the guide modal (`?` button),
+  which also shows live input diagnostics (`keys` vs `pointer`).
+
 ## TODO
 
 - [ ] Shared transition on modal navigation

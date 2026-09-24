@@ -16,7 +16,9 @@ describe('Spatial Navigation & Samsung Smart TV Remote Control', () => {
         document.body.appendChild(container);
         window.scrollBy = jest.fn();
         spatialNav.init();
-        spatialNav.setTvMode(false);
+        // Programmatic reset (persist = false): an explicit user "off" is now
+        // remembered separately and would block the auto-activation tests.
+        spatialNav.setTvMode(false, false);
     });
 
     afterEach(() => {
@@ -65,16 +67,26 @@ describe('Spatial Navigation & Samsung Smart TV Remote Control', () => {
     });
 
     it('automatically activates TV remote mode when arrow keys or TV keys are pressed', () => {
-        expect(spatialNav.isTvMode()).toBe(false);
-        expect(document.body.classList.contains('tv-remote-mode')).toBe(false);
+        const originalUa = navigator.userAgent;
+        Object.defineProperty(navigator, 'userAgent', {
+            value: 'Mozilla/5.0 (SMART-TV; Linux; Tizen 5.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/2.1 Chrome/69.0.3497.106 TV Safari/537.36',
+            configurable: true,
+        });
 
-        // Simulate pressing Samsung TV remote ArrowRight key
-        window.dispatchEvent(
-            new KeyboardEvent('keydown', { key: 'ArrowRight', keyCode: 39, bubbles: true })
-        );
+        try {
+            expect(spatialNav.isTvMode()).toBe(false);
+            expect(document.body.classList.contains('tv-remote-mode')).toBe(false);
 
-        expect(spatialNav.isTvMode()).toBe(true);
-        expect(document.body.classList.contains('tv-remote-mode')).toBe(true);
+            // Simulate pressing Samsung TV remote ArrowRight key
+            window.dispatchEvent(
+                new KeyboardEvent('keydown', { key: 'ArrowRight', keyCode: 39, bubbles: true })
+            );
+
+            expect(spatialNav.isTvMode()).toBe(true);
+            expect(document.body.classList.contains('tv-remote-mode')).toBe(true);
+        } finally {
+            Object.defineProperty(navigator, 'userAgent', { value: originalUa, configurable: true });
+        }
     });
 
     it('navigates horizontally across cards in the same shelf with ArrowRight and ArrowLeft', () => {

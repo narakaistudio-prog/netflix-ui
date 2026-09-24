@@ -38,7 +38,7 @@ export function WebNavBar() {
     const [showBellMenu, setShowBellMenu] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showTvGuide, setShowTvGuide] = useState(false);
-    const { isTvMode } = useTvMode();
+    const { isTvMode, toggleTvMode } = useTvMode();
     const searchBoxRef = useRef<View>(null);
     const submitLock = useRef(false);
 
@@ -222,12 +222,12 @@ export function WebNavBar() {
                         </Pressable>
                     )}
 
-                    {/* TV Remote Mode Guide Button */}
+                    {/* TV Mode: one press = remote mode ON/OFF, '?' opens the guide */}
                     <Pressable
-                        onPress={() => setShowTvGuide(true)}
+                        onPress={toggleTvMode}
                         tabIndex={0}
                         accessibilityRole="button"
-                        accessibilityLabel="Smart TV Remote Guide"
+                        accessibilityLabel={isTvMode ? 'Turn TV mode off' : 'Turn TV mode on'}
                         {...({
                             dataSet: {
                                 tvFocusable: 'true',
@@ -243,9 +243,26 @@ export function WebNavBar() {
                     >
                         <Ionicons name="tv-outline" size={17} color={isTvMode ? '#46d369' : '#fff'} />
                         <Text style={[styles.tvBtnText, isTvMode && { color: '#46d369' }]}>
-                            {isTvMode ? 'TV Mode' : 'TV Guide'}
+                            {isTvMode ? 'TV Mode: ON' : 'TV Mode'}
                         </Text>
                         {isTvMode && <View style={styles.tvActiveDot} />}
+                    </Pressable>
+
+                    <Pressable
+                        onPress={() => setShowTvGuide(true)}
+                        tabIndex={0}
+                        accessibilityRole="button"
+                        accessibilityLabel="TV Mode guide and remote help"
+                        {...({
+                            dataSet: {
+                                tvFocusable: 'true',
+                                tvRow: 'navbar',
+                                tvIndex: '12',
+                            },
+                        } as any)}
+                        style={({ hovered }: any) => [styles.tvHelpBtn, hovered && { opacity: 0.8 }]}
+                    >
+                        <Ionicons name="help-circle-outline" size={18} color="#ddd" />
                     </Pressable>
 
                     {/* Notifications Bell */}
@@ -625,5 +642,15 @@ const styles = StyleSheet.create({
         height: 6,
         borderRadius: 3,
         backgroundColor: '#46d369',
+    },
+    tvHelpBtn: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.18)',
     },
 });

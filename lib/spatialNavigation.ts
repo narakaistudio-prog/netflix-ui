@@ -21,6 +21,13 @@ export interface SpatialNavOptions {
 // Back handler callback returns true if it handled the event, false to pass to next
 type BackHandler = () => boolean;
 
+const TV_MODE_STORAGE_KEY = 'netflix-tv-mode-enabled';
+const POINTER_MODE_STORAGE_KEY = 'netflix-tv-pointer-mode';
+const POINTER_MODE_CLASS = 'tv-pointer-mode';
+
+/** How the user's remote drives the TV browser. */
+export type TvPointerPreference = 'auto' | 'on' | 'off';
+
 class SpatialNavigationManager {
     private isInitialized = false;
     private isTvModeActive = false;
@@ -29,10 +36,48 @@ class SpatialNavigationManager {
     private listeners: Array<(active: boolean) => void> = [];
     private scrollTimer: any = null;
 
+    // --- Smart TV pointer-mode support -------------------------------------
+    // Samsung Internet for TV, LG webOS and most Android TV browsers move an
+    // on-screen mouse arrow with the D-pad instead of sending ArrowDown/ArrowUp
+    // keydowns. When that happens the remote looks "dead" (nothing scrolls,
+    // nothing highlights) no matter how good the key handling is. We mirror the
+    // TV pointer onto the Netflix-style focus ring so the D-pad keeps working.
+    private pointerFollowEnabled = true;
+    private lastInputSource: 'none' | 'keys' | 'pointer' = 'none';
+    private pointerPosition: { x: number; y: number } | null = null;
+    private pointerRaf: any = null;
+    private pointerListening = false;
+    private pendingEdgeScroll: 0 | 1 | -1 = 0;
+    private lastEdgeScrollAt = 0;
+    private focusWatchdog: any = null;
+    private routeDebounce: any = null;
+    /** True once the user explicitly switched TV mode off - auto-detect must not undo it. */
+    private userDisabledTvMode = false;
+    /** 'auto' = detect, 'on' = remote drives an on-screen arrow, 'off' = arrow keys only. */
+    private pointerModePreference: TvPointerPreference = 'auto';
+    /** Element the last pointer event hit - fallback when elementFromPoint is unusable. */
+    private pointerTarget: HTMLElement | null = null;
+    /** Timestamp of the last key event, so remote keys always win over a parked pointer. */
+    private lastKeyInputAt = 0;
+
     constructor() {
-        if (typeof window !== 'undefined') {
-            this.isTvModeActive = this.detectTvDevice();
+        if (typeof window === 'undefined') return;
+        let stored: string | null = null;
+        let storedPointer: string | null = null;
+        try {
+            if (typeof localStorage !== 'undefined') {
+                stored = localStorage.getItem(TV_MODE_STORAGE_KEY);
+                storedPointer = localStorage.getItem(POINTER_MODE_STORAGE_KEY);
+            }
+        } catch {}
+        if (storedPointer === 'on' || storedPointer === 'off') {
+            this.pointerModePreference = storedPointer;
         }
+        if (stored === 'true') this.isTvModeActive = true;
+        else if (stored === 'false') {
+            this.isTvModeActive = false;
+            this.userDisabledTvMode = true;
+        } else this.isTvModeActive = this.detectTvDevice() || this.isPointerDrivenTvScreen();
     }
 
     /**
@@ -41,26 +86,120 @@ class SpatialNavigationManager {
     public detectTvDevice(): boolean {
         if (typeof navigator === 'undefined') return false;
         const ua = navigator.userAgent || '';
+        // NOTE: a bare /SamsungBrowser/ match used to live here and made every
+        // Samsung *phone* boot into TV mode. Only real TV tokens count now.
         return (
-            /SmartTV|SMART-TV|Tizen|SamsungBrowser.*TV|Web0S|webOS|AppleTV|BRAVIA|GoogleTV|Android.*TV|NetCast|POV_TV|Viera/i.test(ua) ||
-            /SamsungBrowser/i.test(ua) ||
+            /SmartTV|SMART-TV|Tizen|SamsungBrowser\/[\d.]+.*(TV|Tizen)|Web0S|webOS|NetCast|AppleTV|tvOS|BRAVIA|GoogleTV|Google TV|Android ?TV|AFT[BMRS]|FireTV|Fire TV|MiBOX|MiTV|VIDAA|Hisense|Skyworth|Philips ?TV|Roku|POV_TV|Viera|HbbTV|TV Safari|CE-HTML/i.test(ua) ||
             (typeof window !== 'undefined' && ('tizen' in window || 'webapis' in window))
         );
+    }
+
+    /**
+     * A big screen without a real mouse (no fine pointer / no hover) behaves like
+     * a TV even when the user agent says nothing useful — e.g. a TV browser that
+     * reports a plain Chrome/Android UA. Phones are excluded by screen size.
+     */
+    public isPointerDrivenTvScreen(): boolean {
+        if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+        try {
+            const ua = navigator.userAgent || '';
+            if (/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(ua) && !/TV|Tizen|webOS|BRAVIA|AFT/i.test(ua)) return false;
+            let noFinePointer = true;
+            if (typeof window.matchMedia === 'function') {
+                noFinePointer = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            }
+            const screenWidth = Math.max(
+                (window.screen && window.screen.width) || 0,
+                window.innerWidth || 0
+            );
+            // Phones report ~360-430 CSS px even on 4K panels, TVs report 1280+.
+            return noFinePointer && screenWidth >= 960;
+        } catch {
+            return false;
+        }
+    }
+
+    /** True when the D-pad drives an on-screen pointer instead of keydown events. */
+    public isPointerDrivenDevice(): boolean {
+        if (this.pointerModePreference === 'on') return true;
+        if (this.pointerModePreference === 'off') return false;
+        if (this.detectTvDevice()) return true;
+        return this.isPointerDrivenTvScreen();
+    }
+
+    /**
+     * Manual override for the TV guide UI. Some TVs hide their pointer mode
+     * completely (no "Link Browsing" button in the browser toolbar), so the user
+     * can force "Pointer arrow" and the engine will mirror the remote arrow onto
+     * the focus ring even when auto-detection guessed wrong.
+     */
+    public setPointerModePreference(preference: TvPointerPreference) {
+        this.pointerModePreference = preference === 'on' || preference === 'off' ? preference : 'auto';
+        try {
+            if (typeof localStorage !== 'undefined') {
+                if (this.pointerModePreference === 'auto') {
+                    localStorage.removeItem(POINTER_MODE_STORAGE_KEY);
+                } else {
+                    localStorage.setItem(POINTER_MODE_STORAGE_KEY, this.pointerModePreference);
+                }
+            }
+        } catch {}
+        // Forcing "pointer arrow" also arms TV mode, otherwise nothing would
+        // follow the arrow on a TV that auto-detection did not recognise.
+        if (this.pointerModePreference === 'on' && !this.isTvModeActive) {
+            this.setTvMode(true, true);
+        }
+        this.notifyListeners();
+    }
+
+    public getPointerModePreference(): TvPointerPreference {
+        return this.pointerModePreference;
+    }
+
+    /** Should pointer events be treated as remote input right now? */
+    private pointerFollowActive(): boolean {
+        if (!this.pointerFollowEnabled) return false;
+        if (this.pointerModePreference === 'off') return false;
+        if (this.pointerModePreference === 'on') return true;
+        return this.detectTvDevice() || this.isPointerDrivenTvScreen();
     }
 
     public isTvMode(): boolean {
         return this.isTvModeActive;
     }
 
-    public setTvMode(active: boolean) {
+    public setPointerFollowEnabled(enabled: boolean) {
+        this.pointerFollowEnabled = enabled;
+    }
+
+    public getLastInputSource(): 'none' | 'keys' | 'pointer' {
+        return this.lastInputSource;
+    }
+
+    public hasReceivedRemoteInput(): boolean {
+        return this.lastInputSource !== 'none';
+    }
+
+    public setTvMode(active: boolean, persist = true) {
+        if (typeof document !== 'undefined' && document.body) {
+            document.documentElement.classList.toggle('tv-remote-mode', active);
+            document.body.classList.toggle('tv-remote-mode', active);
+        }
+        if (persist) {
+            this.userDisabledTvMode = !active;
+            try {
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem(TV_MODE_STORAGE_KEY, active ? 'true' : 'false');
+                }
+            } catch {}
+        }
         if (this.isTvModeActive === active) return;
         this.isTvModeActive = active;
-        if (typeof document !== 'undefined' && document.body) {
-            if (active) {
-                document.body.classList.add('tv-remote-mode');
-            } else {
-                document.body.classList.remove('tv-remote-mode');
-            }
+        if (!active) {
+            this.exitPointerMode();
+            this.stopFocusWatchdog();
+        } else {
+            this.startFocusWatchdog();
         }
         this.notifyListeners();
         if (active && !this.currentFocusedElement) {
@@ -135,11 +274,17 @@ class SpatialNavigationManager {
         this.registerTizenKeys();
 
         if (this.isTvModeActive && typeof document !== 'undefined' && document.body) {
+            document.documentElement.classList.add('tv-remote-mode');
             document.body.classList.add('tv-remote-mode');
         }
 
         window.addEventListener('keydown', this.handleKeyDown, { capture: true });
         window.addEventListener('keyup', this.handleKeyUp, { capture: true });
+        window.addEventListener('popstate', this.handleRouteChange);
+        window.addEventListener('hashchange', this.handleRouteChange);
+        this.hookHistory();
+        this.startPointerTracking();
+        this.startFocusWatchdog();
 
         // Auto-focus on first user interaction or route load
         if (this.isTvModeActive) {
@@ -158,6 +303,338 @@ class SpatialNavigationManager {
         this.isInitialized = false;
         window.removeEventListener('keydown', this.handleKeyDown, { capture: true });
         window.removeEventListener('keyup', this.handleKeyUp, { capture: true });
+        window.removeEventListener('popstate', this.handleRouteChange);
+        window.removeEventListener('hashchange', this.handleRouteChange);
+        this.stopPointerTracking();
+        this.stopFocusWatchdog();
+        if (this.routeDebounce != null) {
+            clearTimeout(this.routeDebounce);
+            this.routeDebounce = null;
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // Remote pointer (D-pad driven arrow) support
+    // ---------------------------------------------------------------------
+
+    private requestFrame(cb: () => void): any {
+        if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
+            return window.requestAnimationFrame(() => cb());
+        }
+        return setTimeout(cb, 16);
+    }
+
+    private cancelFrame(handle: any) {
+        if (handle == null) return;
+        try {
+            if (typeof window !== 'undefined' && typeof window.cancelAnimationFrame === 'function') {
+                window.cancelAnimationFrame(handle);
+            } else {
+                clearTimeout(handle);
+            }
+        } catch {}
+    }
+
+    private startPointerTracking() {
+        if (this.pointerListening || typeof window === 'undefined') return;
+        this.pointerListening = true;
+        // mousemove covers Samsung/Tizen + desktop, pointermove covers webOS
+        // Magic Remote and Android TV browsers that only emit pointer events.
+        document.addEventListener('mousemove', this.handlePointerMove, { capture: true, passive: true });
+        document.addEventListener('pointermove', this.handlePointerMove, { capture: true, passive: true });
+        // Some TV browsers only emit mouseover while moving the arrow, and a few
+        // jump straight to the click — keep the ring in sync for both.
+        document.addEventListener('mouseover', this.handlePointerMove, { capture: true, passive: true });
+        // A few TV browsers deliver the arrow as mouseover + mousedown only.
+        document.addEventListener('mousedown', this.handlePointerMove, { capture: true, passive: true });
+        document.addEventListener('click', this.handlePointerClick, { capture: true, passive: true });
+    }
+
+    private stopPointerTracking() {
+        if (!this.pointerListening || typeof document === 'undefined') return;
+        this.pointerListening = false;
+        document.removeEventListener('mousemove', this.handlePointerMove, { capture: true });
+        document.removeEventListener('pointermove', this.handlePointerMove, { capture: true });
+        document.removeEventListener('mouseover', this.handlePointerMove, { capture: true });
+        document.removeEventListener('mousedown', this.handlePointerMove, { capture: true });
+        document.removeEventListener('click', this.handlePointerClick, { capture: true });
+        if (this.pointerRaf != null) {
+            this.cancelFrame(this.pointerRaf);
+            this.pointerRaf = null;
+        }
+    }
+
+    private handlePointerMove = (event: MouseEvent | PointerEvent) => {
+        // On a desktop with a real mouse the pointer must never steal the remote
+        // focus ring. TV-style pointers (or a forced "Pointer arrow" mode) do.
+        if (!this.pointerFollowActive()) return;
+        // A TV browser whose user agent is not recognisable still gets the TV
+        // experience: the first D-pad press (which moves this pointer) switches
+        // the page into TV mode automatically — unless the user turned it off.
+        if (!this.isTvModeActive) {
+            if (this.userDisabledTvMode && this.pointerModePreference !== 'on') return;
+            this.setTvMode(true, false);
+        }
+        // Remote keys win: a parked pointer must not yank the ring back while
+        // the user is navigating with ArrowUp/ArrowDown.
+        if (Date.now() - this.lastKeyInputAt < 1200) return;
+
+        const x = (event as MouseEvent).clientX;
+        const y = (event as MouseEvent).clientY;
+        if (typeof x !== 'number' || typeof y !== 'number' || (x === 0 && y === 0)) return;
+
+        const target = event.target as HTMLElement | null;
+        this.pointerTarget = target && target.nodeType === 1 ? target : this.pointerTarget;
+        this.pointerPosition = { x, y };
+        this.lastInputSource = 'pointer';
+        this.enterPointerMode();
+
+        // TV browsers scroll the *window* when the arrow hits the screen edge,
+        // but this app scrolls inside its own shelves container — so a pointer
+        // parked at the top/bottom edge did nothing before (the classic "ne
+        // niche hota hai ne upar"). Assist it explicitly.
+        const viewportHeight = (typeof window !== 'undefined' && window.innerHeight) || 800;
+        const edge = 48;
+        this.pendingEdgeScroll = y >= viewportHeight - edge ? 1 : y <= edge ? -1 : 0;
+
+        if (this.pointerRaf != null) return;
+        this.pointerRaf = this.requestFrame(() => {
+            this.pointerRaf = null;
+            this.applyPointerFocus();
+        });
+    };
+
+    /**
+     * OK was pressed while the TV was driving its on-screen arrow: keep the ring
+     * on whatever got activated. Never preventDefault — the native click still
+     * has to reach React so the card opens.
+     */
+    private handlePointerClick = (event: MouseEvent) => {
+        if (!this.isTvModeActive || !this.pointerFollowActive()) return;
+        if (this.isEditingText()) return;
+        const target = event.target as HTMLElement | null;
+        if (!target || target.nodeType !== 1) return;
+        const scope = this.getActiveScope();
+        const focusTarget = this.closestFocusable(target, scope);
+        if (!focusTarget) return;
+        this.lastInputSource = 'pointer';
+        if (focusTarget !== this.currentFocusedElement) this.setFocus(focusTarget);
+    };
+
+    /**
+     * The TV remote is driving an on-screen arrow. Mirror it onto the Netflix
+     * focus ring so the user still gets a big visible highlight + auto scroll.
+     */
+    private applyPointerFocus() {
+        if (typeof document === 'undefined' || !this.pointerPosition) return;
+        if (!this.isTvModeActive) return;
+        if (this.isEditingText()) return;
+
+        const { x, y } = this.pointerPosition;
+        let hit = this.hitTest(x, y);
+        // Some TV browsers give an unusable elementFromPoint but still report a
+        // real event target on the mouseover/mousemove that moved the arrow.
+        if (!hit) hit = this.pointerTarget;
+        if (!hit) return;
+
+        const edgeScroll = this.pendingEdgeScroll;
+        this.pendingEdgeScroll = 0;
+        if (edgeScroll !== 0) {
+            const scrolled = this.scrollEdgeBy(hit, edgeScroll);
+            // Re-hit-test: the scroll moved the content under the arrow.
+            if (scrolled) hit = this.hitTest(x, y) || hit;
+        }
+
+        const scope = this.getActiveScope();
+        const target = this.closestFocusable(hit, scope);
+        if (!target || target === this.currentFocusedElement) return;
+        // Same reason as ArrowDown: hydrate deferred shelves so the pointer can
+        // keep travelling into rows that are still below the fold.
+        this.dispatchHydrateShelves();
+        this.setFocus(target);
+    }
+
+    private hitTest(x: number, y: number): HTMLElement | null {
+        try {
+            return typeof document.elementFromPoint === 'function'
+                ? (document.elementFromPoint(x, y) as HTMLElement | null)
+                : null;
+        } catch {
+            return null;
+        }
+    }
+
+    /**
+     * Scroll the scrollable ancestor of `hit` by roughly half a shelf when the
+     * TV pointer sits on the screen edge. Throttled so a held D-pad scrolls
+     * smoothly instead of flying to the bottom.
+     */
+    private scrollEdgeBy(hit: HTMLElement | null, direction: 1 | -1): boolean {
+        if (typeof window === 'undefined' || typeof document === 'undefined') return false;
+        const now = Date.now();
+        if (now - this.lastEdgeScrollAt < 240) return false;
+        this.lastEdgeScrollAt = now;
+
+        const viewportHeight = window.innerHeight || 800;
+        const step = Math.max(160, Math.round(viewportHeight * 0.28)) * direction;
+        let node: HTMLElement | null = hit;
+        let guard = 0;
+        while (node && node !== document.body && guard++ < 40) {
+            if (node.scrollHeight > node.clientHeight + 20 && node.clientHeight > 160) {
+                const before = node.scrollTop;
+                try { node.scrollTop = before + step; } catch { return false; }
+                return node.scrollTop !== before;
+            }
+            node = node.parentElement;
+        }
+        const doc = document.scrollingElement as HTMLElement | null;
+        if (doc && doc.scrollHeight > doc.clientHeight + 20) {
+            const before = doc.scrollTop;
+            try { doc.scrollTop = before + step; } catch { return false; }
+            return doc.scrollTop !== before;
+        }
+        return false;
+    }
+
+    /** Walk up the DOM from a pointer hit-test to the nearest focusable card. */
+    private closestFocusable(start: HTMLElement | null, scope: HTMLElement): HTMLElement | null {
+        if (typeof document === 'undefined' || !start) return null;
+        let node: HTMLElement | null = start;
+        let guard = 0;
+        while (node && node.nodeType === 1 && guard++ < 40) {
+            if (this.isFocusableElement(node) && !this.isInsideHiddenSubtree(node, scope)) return node;
+            if (node === scope || node === document.body || node === document.documentElement) break;
+            node = node.parentElement;
+        }
+        return null;
+    }
+
+    private isFocusableElement(el: HTMLElement): boolean {
+        if (!el || el.nodeType !== 1) return false;
+        if (el.getAttribute('data-tv-ignore') === 'true') return false;
+        if (el.getAttribute('aria-disabled') === 'true') return false;
+        if ((el as any).disabled) return false;
+        if (el.getAttribute('data-tv-focusable') === 'true') return true;
+        const tabIndex = el.getAttribute('tabindex');
+        if (tabIndex !== null && Number(tabIndex) >= 0) return true;
+        const tag = el.tagName ? el.tagName.toLowerCase() : '';
+        const role = el.getAttribute('role');
+        if (role === 'button' || role === 'link' || role === 'tab') return true;
+        if (tag === 'button' || tag === 'a' || tag === 'input' || tag === 'select' || tag === 'textarea') return true;
+        return false;
+    }
+
+    /**
+     * React Navigation keeps inactive tab screens mounted with opacity 0 (and
+     * modals keep the page behind them). Reject anything inside those so the
+     * pointer can never focus an invisible card.
+     */
+    private isInsideHiddenSubtree(el: HTMLElement, scope: HTMLElement): boolean {
+        if (typeof document === 'undefined') return false;
+        let node: HTMLElement | null = el;
+        let guard = 0;
+        while (node && node.nodeType === 1 && guard++ < 40) {
+            if ((node as any).hidden) return true;
+            const inline = node.style;
+            if (inline) {
+                if (inline.display === 'none' || inline.visibility === 'hidden') return true;
+                if (inline.pointerEvents === 'none') return true;
+                // Reanimated writes "opacity: 0" inline while a screen slides out.
+                if (inline.opacity === '0' && node !== el) return true;
+            }
+            if (node === scope || node === document.body) break;
+            node = node.parentElement;
+        }
+        return false;
+    }
+
+    private enterPointerMode() {
+        if (typeof document === 'undefined' || !document.body) return;
+        if (document.body.classList.contains(POINTER_MODE_CLASS)) return;
+        document.body.classList.add(POINTER_MODE_CLASS);
+    }
+
+    private exitPointerMode() {
+        if (typeof document === 'undefined' || !document.body) return;
+        document.body.classList.remove(POINTER_MODE_CLASS);
+    }
+
+    // ---------------------------------------------------------------------
+    // Focus watchdog + route refocus
+    // ---------------------------------------------------------------------
+
+    /**
+     * Samsung Internet for TV drops back to its mouse-pointer arrow when the
+     * page stops holding keyboard focus, and React Navigation silently detaches
+     * the focused card on every route change. Re-assert focus so the remote
+     * always keeps working — that is what makes the site feel like the native
+     * Netflix TV app.
+     */
+    private startFocusWatchdog() {
+        if (typeof window === 'undefined' || this.focusWatchdog != null) return;
+        this.focusWatchdog = setInterval(() => this.assertFocusHeld(), 1200);
+    }
+
+    private stopFocusWatchdog() {
+        if (this.focusWatchdog == null) return;
+        clearInterval(this.focusWatchdog);
+        this.focusWatchdog = null;
+    }
+
+    private assertFocusHeld() {
+        if (!this.isTvModeActive || typeof document === 'undefined' || !document.body) return;
+        if (this.isEditingText()) return;
+
+        const current = this.currentFocusedElement;
+        if (current && !document.body.contains(current)) {
+            this.currentFocusedElement = null;
+            this.focusInitialElement();
+            return;
+        }
+        if (!current) {
+            const active = document.activeElement as HTMLElement | null;
+            if (!active || active === document.body) this.focusInitialElement();
+            return;
+        }
+        const active = document.activeElement as HTMLElement | null;
+        const stillHolding =
+            active === current ||
+            (!!active && current.contains(active)) ||
+            (!!active && active.contains(current));
+        // Never yank focus away from a player iframe or a real control.
+        if (!stillHolding && (!active || active === document.body)) {
+            this.retainFocus(current);
+        }
+    }
+
+    private handleRouteChange = () => {
+        if (typeof window === 'undefined') return;
+        if (this.routeDebounce != null) clearTimeout(this.routeDebounce);
+        this.routeDebounce = setTimeout(() => {
+            this.routeDebounce = null;
+            if (!this.isTvModeActive) return;
+            const current = this.currentFocusedElement;
+            if (current && typeof document !== 'undefined' && document.body.contains(current)) return;
+            this.currentFocusedElement = null;
+            this.focusInitialElement();
+        }, 220);
+    };
+
+    private hookHistory() {
+        if (typeof window === 'undefined' || typeof window.history === 'undefined') return;
+        const history = window.history as any;
+        if (history.__arenaTvHooked) return;
+        history.__arenaTvHooked = true;
+        const self = this;
+        (['pushState', 'replaceState'] as const).forEach(method => {
+            const original = history[method];
+            if (typeof original !== 'function') return;
+            history[method] = function patched(...args: any[]) {
+                const result = original.apply(this, args);
+                try { self.handleRouteChange(); } catch {}
+                return result;
+            };
+        });
     }
 
     private handleKeyDown = (event: KeyboardEvent) => {
@@ -185,8 +662,23 @@ class SpatialNavigationManager {
         );
 
         if (isDirectionalKey || isEnterKey || isBackKey || isMediaKey) {
-            if (!this.isTvModeActive) {
-                this.setTvMode(true);
+            this.lastInputSource = 'keys';
+            this.lastKeyInputAt = Date.now();
+            // Auto-enable on TV-like hardware only. A desktop/laptop keyboard
+            // must keep scrolling normally - that is what the navbar TV Mode
+            // button (and its localStorage memory) is for.
+            if (!this.isTvModeActive && !this.userDisabledTvMode && this.isPointerDrivenDevice()) {
+                this.setTvMode(true, false);
+            }
+            // Self-heal: a TV that only forwards OK/Return (no arrow keys) must
+            // still light up the first card instead of looking dead.
+            if (
+                this.isTvModeActive &&
+                !this.currentFocusedElement &&
+                typeof document !== 'undefined' &&
+                document.activeElement === document.body
+            ) {
+                this.focusInitialElement();
             }
         }
 
@@ -197,6 +689,16 @@ class SpatialNavigationManager {
                 (document.activeElement as HTMLElement)?.blur();
                 event.preventDefault();
                 event.stopPropagation();
+                return;
+            }
+            // TV remote: Up/Down must leave the keyboard instead of trapping the
+            // user inside the search field (the native Netflix TV app does this).
+            if (isDirectionalKey && (keyCode === 40 || keyCode === 38 || key === 'ArrowDown' || key === 'ArrowUp')) {
+                const dir: Direction = keyCode === 38 || key === 'ArrowUp' ? 'up' : 'down';
+                try { (document.activeElement as HTMLElement)?.blur(); } catch {}
+                event.preventDefault();
+                event.stopPropagation();
+                this.moveFocus(dir);
             }
             return;
         }
@@ -497,6 +999,12 @@ class SpatialNavigationManager {
                     // Keep body in sync for Samsung TV browser quirks.
                     try { document.body.scrollTop = document.documentElement.scrollTop; } catch {}
                 }
+                // Some TV browsers only follow the window scroller. Nudge it too
+                // when the tagged container could not absorb the whole delta.
+                const stillOff = element.getBoundingClientRect().top - desiredTop;
+                if (Math.abs(stillOff) > 40 && typeof window.scrollBy === 'function') {
+                    try { window.scrollBy(0, stillOff); } catch {}
+                }
             } catch {}
         }
     }
@@ -730,12 +1238,31 @@ export function isTvDevice() {
     return spatialNav.detectTvDevice();
 }
 
-export function setTvMode(active: boolean) {
-    spatialNav.setTvMode(active);
+export function setTvMode(active: boolean, persist = true) {
+    spatialNav.setTvMode(active, persist);
 }
 
 export function getTvMode() {
     return spatialNav.isTvMode();
+}
+
+/** Latest remote input we actually saw: 'keys' (D-pad keydowns) or 'pointer'. */
+export function getTvInputSource(): 'none' | 'keys' | 'pointer' {
+    return spatialNav.getLastInputSource();
+}
+
+/** True when the D-pad drives an on-screen arrow instead of sending keydowns. */
+export function isPointerDrivenDevice() {
+    return spatialNav.isPointerDrivenDevice();
+}
+
+/** Manual override chosen in the TV guide: 'auto' | 'on' (pointer arrow) | 'off' (keys). */
+export function setTvPointerPreference(preference: TvPointerPreference) {
+    spatialNav.setPointerModePreference(preference);
+}
+
+export function getTvPointerPreference(): TvPointerPreference {
+    return spatialNav.getPointerModePreference();
 }
 
 export function pushBackHandler(handler: BackHandler) {
