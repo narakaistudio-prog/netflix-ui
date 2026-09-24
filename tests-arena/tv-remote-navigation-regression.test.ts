@@ -20,11 +20,17 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
     let topCard: HTMLElement;
     let nextCard: HTMLElement;
     let hero: HTMLElement;
+    let logo: HTMLElement;
+    let homeLink: HTMLElement;
     const oldUA = navigator.userAgent;
     const oldHeight = window.innerHeight;
 
     function mountHome() {
         container.innerHTML = `
+            <nav id="navbar">
+                <button id="logo" data-tv-focusable="true" data-tv-row="navbar">NETFLIX</button>
+                <button id="home-link" data-tv-focusable="true" data-tv-row="navbar">Home</button>
+            </nav>
             <div id="scroller" data-tv-scroll-container="true">
                 <div id="hero" data-tv-pointer-catch-zone="true" data-tv-pointer-redirect="hero-play">
                     <button id="play" data-tv-focusable="true" data-tv-id="hero-play" data-tv-row="billboard">Play</button>
@@ -45,12 +51,16 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         play = el('play');
         topCard = el('top-card');
         nextCard = el('next-card');
+        logo = el('logo');
+        homeLink = el('home-link');
         Object.defineProperties(scroller, {
             scrollHeight: { value: 2900, configurable: true },
             clientHeight: { value: 800, configurable: true },
         });
         scroller.scrollTop = 0;
         hero.getBoundingClientRect = () => rect(0, -scroller.scrollTop, 1280, 550) as any;
+        logo.getBoundingClientRect = () => rect(48, 14, 145, 42) as any;
+        homeLink.getBoundingClientRect = () => rect(220, 16, 68, 40) as any;
         play.getBoundingClientRect = () => rect(60, 410 - scroller.scrollTop, 150, 45) as any;
         el('info').getBoundingClientRect = () => rect(230, 410 - scroller.scrollTop, 150, 45) as any;
         topCard.getBoundingClientRect = () => rect(48, 660 - scroller.scrollTop, 175, 255) as any;
@@ -90,6 +100,129 @@ describe('TV remote: hero, nested scrolling and rapid shelf navigation', () => {
         Object.defineProperty(navigator, 'userAgent', { value: oldUA, configurable: true });
         Object.defineProperty(window, 'innerHeight', { value: oldHeight, configurable: true });
         jest.useRealTimers();
+    });
+
+    it('Down from the Netflix logo goes to Play, then the first shelf without hydrating the whole page', () => {
+        const hydrateAll = jest.fn();
+        window.addEventListener('arena-hydrate-shelf', hydrateAll);
+        try {
+            spatialNav.setFocus(logo);
+            press('ArrowDown');
+            expect(spatialNav.getCurrentFocus()).toBe(play);
+            expect(document.activeElement).toBe(play);
+            expect(hydrateAll).not.toHaveBeenCalled();
+
+            press('ArrowDown');
+            expect(spatialNav.getCurrentFocus()).toBe(topCard);
+            expect(scroller.scrollTop).toBeGreaterThan(0);
+            press('ArrowUp');
+            expect(spatialNav.getCurrentFocus()).toBe(play);
+            press('ArrowUp');
+            expect(spatialNav.getCurrentFocus()).toBe(logo);
+        } finally {
+            window.removeEventListener('arena-hydrate-shelf', hydrateAll);
+        }
+    });
+
+    it('Down from the logo does not measure or hydrate hundreds of distant posters', () => {
+        const otherRows = Array.from({ length: 20 }, (_, row) => `<div data-tv-shelf="true" data-tv-shelf-count="32">${
+            Array.from({ length: 32 }, (_, index) => `<button data-tv-focusable="true" data-tv-card="true" data-tv-row="row-${row}" data-tv-index="${index}">Poster</button>`).join('')
+        }</div>`).join('');
+        scroller.insertAdjacentHTML('beforeend', otherRows);
+        let reads = 0;
+        scroller.querySelectorAll('[data-tv-row^="row-"]').forEach((card: HTMLElement) => {
+            card.getBoundingClientRect = () => { reads++; return rect(48, 1600, 175, 255) as any; };
+        });
+        spatialNav.setFocus(logo);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        expect(reads).toBe(0);
+    });
+
+    it('does not enter the hero of a hidden inactive tab before the visible Home page', () => {
+        const hiddenTab = document.createElement('div');
+        hiddenTab.style.opacity = '0';
+        hiddenTab.innerHTML = '<div data-tv-scroll-container="true"><button data-tv-id="hero-play" data-tv-row="billboard">Hidden Play</button></div>';
+        const hiddenPlay = hiddenTab.querySelector<HTMLElement>('button')!;
+        hiddenPlay.getBoundingClientRect = () => rect(60, 410, 150, 45) as any;
+        container.insertBefore(hiddenTab, container.firstChild);
+        spatialNav.setFocus(logo);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        expect(hiddenPlay.hasAttribute('data-tv-focused')).toBe(false);
+    });
+
+    it('a pointer-only remote moves Down from the logo without snapping back to the parked TV arrow', () => {
+        spatialNav.setFocus(logo);
+        pointer(logo, 90, 28);
+        pointer(logo, 90, 46); // Down while the cursor is still ON the logo.
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+
+        jest.advanceTimersByTime(250);
+        pointer(logo, 90, 46, 'mouseover'); // Firmware repeats the old hit.
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+
+        pointer(logo, 90, 63); // Another Down, even after the old 140ms grace period.
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+        expect(scroller.scrollTop).toBeGreaterThan(0);
+
+        jest.advanceTimersByTime(250);
+        pointer(logo, 90, 63, 'mousedown');
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+        // If the TV gives the logo native DOM focus because its cursor is parked
+        // there, repair it back to the actual, ringed poster on the next frame.
+        logo.focus();
+        jest.advanceTimersByTime(20);
+        expect(document.activeElement).toBe(topCard);
+
+        // A deliberate move to a DIFFERENT header control must still follow it.
+        pointer(homeLink, 260, 35);
+        expect(spatialNav.getCurrentFocus()).toBe(homeLink);
+    });
+
+    it('does not jump back to the logo when a mixed key/pointer TV repeats its parked cursor', () => {
+        spatialNav.setFocus(logo);
+        pointer(logo, 90, 28);
+        press('ArrowDown');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        jest.advanceTimersByTime(1300); // past the key-priority suppression window
+        pointer(logo, 90, 28, 'mouseover');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+        pointer(logo, 90, 46);
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+    });
+
+    it('lets a deliberately moved pointer return from a steered poster to blank hero art', () => {
+        pointer(hero, 110, 320);
+        pointer(hero, 110, 337);
+        expect(spatialNav.getCurrentFocus()).toBe(topCard);
+        jest.advanceTimersByTime(250);
+        pointer(hero, 700, 220); // A real move away, not a stale parked hit.
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+    });
+
+    it('can infer Down from a TV that only emits mouseover near the logo', () => {
+        spatialNav.setFocus(logo);
+        pointer(logo, 90, 28, 'mouseover');
+        pointer(logo, 90, 46, 'mouseover');
+        expect(spatialNav.getCurrentFocus()).toBe(play);
+    });
+
+    it('Down from the navbar on a catalog WITHOUT a hero targets its first shelf, then Up returns', () => {
+        hero.remove();
+        const hydrateAll = jest.fn();
+        window.addEventListener('arena-hydrate-shelf', hydrateAll);
+        try {
+            spatialNav.setFocus(logo);
+            press('ArrowDown');
+            expect(spatialNav.getCurrentFocus()).toBe(topCard);
+            expect(scroller.scrollTop).toBeGreaterThan(0);
+            expect(hydrateAll).not.toHaveBeenCalled();
+            press('ArrowUp');
+            expect(spatialNav.getCurrentFocus()).toBe(logo);
+        } finally {
+            window.removeEventListener('arena-hydrate-shelf', hydrateAll);
+        }
     });
 
     it('Down from Play scrolls the NESTED page to the first poster, and Up returns to Play (not the catch zone)', () => {

@@ -117,6 +117,9 @@ class SpatialNavigationManager {
     private pendingPointerDirection: Direction | null = null;
     private pointerSteering = false;
     private pointerSteeredAt = 0;
+    /** The cursor's old hit can remain on the logo/hero after a D-pad step. */
+    private pointerSteerOrigin: HTMLElement | null = null;
+    private pointerSteerPosition: { x: number; y: number } | null = null;
     /** A deferred shelf / virtualized poster may arrive on the next React commit. */
     private pendingFocus: {
         shelf: HTMLElement;
@@ -204,7 +207,7 @@ class SpatialNavigationManager {
         this.pointerModePreference = preference === 'on' || preference === 'off' ? preference : 'auto';
         this.pointerAnchor = null;
         this.pendingPointerDirection = null;
-        this.pointerSteering = false;
+        this.resetPointerSteering();
         if (this.pointerModePreference === 'off') this.exitPointerMode();
         if (this.pointerModePreference === 'on') this.lastKeyInputAt = 0;
         try {
@@ -270,7 +273,7 @@ class SpatialNavigationManager {
                 this.cancelPendingFocus();
                 this.clearFocusRing();
                 this.exitPointerMode();
-                this.pointerSteering = false;
+                this.resetPointerSteering();
                 this.pointerAnchor = null;
                 this.pendingPointerDirection = null;
                 this.stopFocusWatchdog();
@@ -282,7 +285,7 @@ class SpatialNavigationManager {
             this.cancelPendingFocus();
             this.clearFocusRing();
             this.exitPointerMode();
-            this.pointerSteering = false;
+            this.resetPointerSteering();
             this.pointerAnchor = null;
             this.pendingPointerDirection = null;
             this.stopFocusWatchdog();
@@ -463,8 +466,45 @@ class SpatialNavigationManager {
         this.pointerTarget = null;
         this.pointerAnchor = null;
         this.pendingPointerDirection = null;
-        this.pointerSteering = false;
+        this.resetPointerSteering();
         this.pendingEdgeScroll = 0;
+    }
+
+    private resetPointerSteering() {
+        this.pointerSteering = false;
+        this.pointerSteerOrigin = null;
+        this.pointerSteerPosition = null;
+    }
+
+    /**
+     * Some TV remotes emit ArrowDown AND leave a native cursor parked on the
+     * old logo. Once key-priority expires, its mouseover must not reset focus.
+     */
+    private latchParkedPointerAfterKey() {
+        const pos = this.pointerPosition;
+        const hit = this.pointerTarget;
+        if (!pos || !hit || !this.pointerFollowActive()) return;
+        const scope = this.getActiveScope();
+        if (!scope.contains(hit)) return;
+        const origin = this.closestFocusable(hit, scope) || this.resolvePointerTarget(hit, scope);
+        if (!origin || origin === this.currentFocusedElement ||
+            this.isInsideHiddenSubtree(origin, scope)) return;
+        this.pointerSteering = true;
+        this.pointerSteerOrigin = origin;
+        this.pointerSteerPosition = { ...pos };
+        this.pointerSteeredAt = Date.now();
+    }
+
+    /** Has the TV cursor really left where a D-pad step started? */
+    private isPointerStillParked(direct: HTMLElement | null, x: number, y: number): boolean {
+        if (!this.pointerSteering || !this.pointerSteerPosition) return false;
+        // A scroll/repaint may change the element under a cursor that never
+        // actually moved. Equally, repeated mouseover on the logo (including
+        // its child text) must not drag the ring back from Play/a poster.
+        const near = Math.abs(x - this.pointerSteerPosition.x) < 8 &&
+            Math.abs(y - this.pointerSteerPosition.y) < 8;
+        const origin = this.pointerSteerOrigin;
+        return near || !!(origin && direct && (direct === origin || origin.contains(direct)));
     }
 
     /**
@@ -475,7 +515,13 @@ class SpatialNavigationManager {
      * sub-pixel moves and coalesce mousemove + pointermove in one animation frame.
      */
     private trackPointerDirection(event: MouseEvent | PointerEvent, x: number, y: number) {
-        if (event.type !== 'mousemove' && event.type !== 'pointermove') return;
+        // Some Samsung browsers send mouseover instead of mousemove as the
+        // remote crosses header/hero layers. Mousedown (OK) only seeds the
+        // anchor; clicking must never manufacture another D-pad step.
+        if (event.type !== 'mousemove' && event.type !== 'pointermove' && event.type !== 'mouseover') {
+            if (!this.pointerAnchor) this.pointerAnchor = { x, y };
+            return;
+        }
         const previous = this.pointerAnchor;
         if (!previous) this.pointerAnchor = { x, y };
         // Some TV browsers send ONE mousemove per press but include movementY.
@@ -554,7 +600,8 @@ class SpatialNavigationManager {
         const scope = this.getActiveScope();
         if (!scope.contains(target)) return;
         const direct = this.closestFocusable(target, scope);
-        const steeredFocus = this.pointerSteering &&
+        const parked = this.isPointerStillParked(direct, event.clientX, event.clientY);
+        const steeredFocus = this.pointerSteering && parked &&
             this.isFocusAttachedToScope(this.currentFocusedElement, scope)
             ? this.currentFocusedElement : null;
         const focusTarget = steeredFocus || direct || this.resolvePointerTarget(target, scope);
@@ -606,26 +653,36 @@ class SpatialNavigationManager {
         const intent = this.pendingPointerDirection;
         this.pendingPointerDirection = null;
         const current = this.currentFocusedElement;
+        // The navbar is outside the page ScrollView. It needs the SAME pointer
+        // steering as Play/posters or Down on the NETFLIX logo only moves the
+        // firmware's arrow, with no focus/scroll at all.
         const browseFocus = current?.getAttribute('data-tv-row') === HERO_ROW ||
+            current?.getAttribute('data-tv-row') === 'navbar' ||
             current?.getAttribute('data-tv-card') === 'true';
+        if (this.pointerSteerOrigin && !document.body.contains(this.pointerSteerOrigin)) {
+            this.resetPointerSteering();
+        }
+        const parked = this.isPointerStillParked(direct, x, y);
         const settling = this.pointerSteering && Date.now() - this.pointerSteeredAt < 140;
 
-        // D-pad in a pointer-only browser: moving within a button/poster (or
-        // over blank hero art) IS a directional press. Do not wait for the
-        // cursor to travel the height of the entire billboard/poster. A cursor
-        // landing directly on a different card still follows that card normally.
-        if (intent && browseFocus && (!direct || direct === current || settling)) {
+        // D-pad in a pointer-only browser: moving within the logo, a button,
+        // poster or blank hero art IS a directional press. In particular, a
+        // second Down must keep advancing even if the OS cursor is STILL on
+        // the logo several seconds after the first Down.
+        if (intent && browseFocus && (!direct || direct === current || parked || settling)) {
             this.moveFocus(intent);
             this.pointerSteering = true;
             this.pointerSteeredAt = Date.now();
+            if (!parked || !this.pointerSteerPosition) this.pointerSteerOrigin = direct || hit;
+            this.pointerSteerPosition = { x, y };
             return;
         }
-        // After programmatic scrolling the art can still sit under the TV's
-        // fixed cursor for a frame. Avoid immediately undoing the D-pad move.
-        if (this.pointerSteering && (!direct || settling)) return;
-        this.pointerSteering = false;
-
         const target = direct || this.resolvePointerTarget(hit, scope);
+        // A parked cursor, or artwork that slid underneath it on scroll, must
+        // never undo the logical D-pad move. Once it truly leaves, a different
+        // control OR a new catch zone (blank hero art) may take focus again.
+        if (this.pointerSteering && (parked || settling || !target)) return;
+        this.resetPointerSteering();
         if (!target || target === this.currentFocusedElement) return;
         // Direct pointer hits never reposition the page: the cursor must remain
         // over the thing it is pointing at. Directional steps above DO scroll.
@@ -806,6 +863,13 @@ class SpatialNavigationManager {
         this.focusWatchdog = null;
     }
 
+    /** The TV firmware sometimes gives DOM focus back to its parked cursor. */
+    private isSteeredPointerOrigin(element: HTMLElement | null): boolean {
+        const origin = this.pointerSteerOrigin;
+        return !!(this.pointerSteering && origin && element &&
+            (element === origin || origin.contains(element)));
+    }
+
     private assertFocusHeld() {
         if (!this.isTvModeActive || typeof document === 'undefined' || !document.body) return;
         if (this.isEditingText()) return;
@@ -830,8 +894,11 @@ class SpatialNavigationManager {
             active === current ||
             (!!active && current.contains(active)) ||
             (!!active && active.contains(current));
-        // Never yank focus away from a player iframe or a real control.
-        if (!stillHolding && (!active || active === document.body || active === document.documentElement)) {
+        // Do not yank focus from a player/input/another real control. The one
+        // exception is the parked TV cursor's OLD control: the ring has already
+        // stepped away, so the logo must not steal native focus back.
+        if (!stillHolding && (!active || active === document.body ||
+            active === document.documentElement || this.isSteeredPointerOrigin(active))) {
             this.retainFocus(current);
         }
     }
@@ -844,10 +911,12 @@ class SpatialNavigationManager {
      */
     private handleFocusOut = (event: FocusEvent) => {
         if (!this.isTvModeActive || typeof document === 'undefined') return;
-        // Focus moving to another real control (search box, iframe, button) is
-        // legitimate — only repair a drop to <body>/nothing.
+        // Focus moving to a real control is legitimate, except when the TV
+        // browser re-focuses the logo under its parked cursor AFTER the ring
+        // was steered to Play/a poster. Repair that in the next frame too.
         const next = (event.relatedTarget as HTMLElement | null) || null;
-        if (next && next !== document.body && next !== document.documentElement) return;
+        if (next && next !== document.body && next !== document.documentElement &&
+            !this.isSteeredPointerOrigin(next)) return;
         if (this.isEditingText()) return;
         const current = this.currentFocusedElement;
         if (this.pendingFocus?.origin === current) return;
@@ -863,7 +932,8 @@ class SpatialNavigationManager {
                 return;
             }
             if (active === current || (active && current.contains(active))) return;
-            if (!active || active === document.body || active === document.documentElement) {
+            if (!active || active === document.body || active === document.documentElement ||
+                this.isSteeredPointerOrigin(active)) {
                 this.retainFocus(current);
             }
         });
@@ -871,6 +941,10 @@ class SpatialNavigationManager {
 
     private handleRouteChange = () => {
         if (typeof window === 'undefined') return;
+        // A new screen has new hit targets; don't keep the old logo/cursor
+        // suppression latched across navigation.
+        this.resetPointerSteering();
+        this.pointerAnchor = null;
         if (this.routeDebounce != null) clearTimeout(this.routeDebounce);
         this.routeDebounce = setTimeout(() => {
             this.routeDebounce = null;
@@ -932,8 +1006,10 @@ class SpatialNavigationManager {
             if (isDirectionalKey) {
                 this.lastInputSource = 'keys';
                 this.lastKeyInputAt = Date.now();
-                this.pointerSteering = false;
-                this.pointerAnchor = null;
+                this.resetPointerSteering();
+                // Preserve the old cursor location: the next TV mousemove may
+                // be its first pointer-only Down after a key-driven step.
+                this.pointerAnchor = this.pointerPosition ? { ...this.pointerPosition } : null;
                 this.pendingPointerDirection = null;
             } else if (this.lastInputSource !== 'pointer') {
                 this.lastInputSource = 'keys';
@@ -1020,6 +1096,7 @@ class SpatialNavigationManager {
             this.lastMoveAt = now;
 
             this.moveFocus(dir);
+            this.latchParkedPointerAfterKey();
             return;
         }
 
@@ -1684,6 +1761,58 @@ class SpatialNavigationManager {
     }
 
     /**
+     * The fixed Netflix navbar sits OUTSIDE the page's tagged ScrollView.
+     * Falling back to the global geometric search here used to measure every
+     * poster and broadcast "hydrate all shelves" on a single Down from the
+     * logo — on a low-end TV that stalls long enough for its arrow to return.
+     * Enter only the visible page: Play on Home, the first shelf on a catalog.
+     */
+    private moveFromNavbarDown(dir: Direction, scope: HTMLElement): boolean {
+        const current = this.currentFocusedElement;
+        if (dir !== 'down' || !current || current.getAttribute('data-tv-row') !== 'navbar') return false;
+        const centerX = (() => {
+            const r = current.getBoundingClientRect();
+            return r.left + r.width / 2;
+        })();
+        const roots = scope.querySelectorAll<HTMLElement>(
+            '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
+        );
+        const hidden = new Map<Element, boolean>();
+        for (const root of Array.from(roots)) {
+            if (this.isOwnFocusBlocked(root) || this.hasHiddenAncestor(root, scope, hidden)) continue;
+            const play = root.querySelector<HTMLElement>('[data-tv-id="hero-play"]');
+            if (play && this.isSelfVisible(play) && !this.hasHiddenAncestor(play, scope, hidden)) {
+                this.setFocus(play);
+                return true;
+            }
+            const first = root.querySelector<HTMLElement>('[data-tv-shelf="true"]');
+            if (first && !this.isOwnFocusBlocked(first) && !this.hasHiddenAncestor(first, scope, hidden)) {
+                this.focusShelf(first, centerX);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Header navigation only measures header controls, not every catalog card. */
+    private focusNearestNavbar(scope: HTMLElement, preferredX: number): boolean {
+        let closest: HTMLElement | null = null;
+        let distance = Infinity;
+        const hidden = new Map<Element, boolean>();
+        for (const el of Array.from(scope.querySelectorAll<HTMLElement>('[data-tv-row="navbar"]'))) {
+            if (!this.isFocusableElement(el) || this.isOwnFocusBlocked(el) ||
+                this.hasHiddenAncestor(el, scope, hidden)) continue;
+            const r = el.getBoundingClientRect();
+            if (r.width <= 0 || r.height <= 0) continue;
+            const d = Math.abs(r.left + r.width / 2 - preferredX);
+            if (d < distance) { closest = el; distance = d; }
+        }
+        if (!closest) return false;
+        this.setFocus(closest);
+        return true;
+    }
+
+    /**
      * Fast path for the home billboard and catalog shelves: use their actual DOM
      * order, not hundreds of forced getBoundingClientRect reads per keypress.
      * Also prevents a Down press from skipping an unmounted placeholder row.
@@ -1723,7 +1852,8 @@ class SpatialNavigationManager {
             }
             return false;
         }
-        if (!shelf) return false; // Hero Up goes to the navbar via geometry.
+        if (isHero && dir === 'up' && this.focusNearestNavbar(scope, centerX)) return true;
+        if (!shelf) return false; // Other hero controls use the geometric fallback.
         const target = this.adjacentShelf(shelf, dir);
         if (target) {
             this.focusShelf(target, centerX);
@@ -1736,7 +1866,9 @@ class SpatialNavigationManager {
                 this.setFocus(play);
                 return true;
             }
-            return false; // A Movies/TV catalog starts at the navbar.
+            // A Movies/TV catalog has no hero; Up from its first shelf goes
+            // back to the navbar without a global poster geometry scan.
+            return this.focusNearestNavbar(scope, centerX);
         }
         this.retainFocus(current); // Last shelf: keep keyboard focus on the TV.
         return true;
@@ -1761,6 +1893,7 @@ class SpatialNavigationManager {
             this.recoverFocus(scope, dir);
             return;
         }
+        if (this.moveFromNavbarDown(dir, scope)) return;
         if (this.moveInBrowseScroller(dir, scope)) return;
 
         // Legacy/grid/modal fallback: hydrate nearby shelves only when the

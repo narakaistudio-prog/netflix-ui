@@ -117,9 +117,9 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                 </View>
                                 <Text style={styles.tipText}>
                                     <Text style={styles.bold}>Kaam kaise karta hai: </Text>
-                                    Arrow keys milne par <Text style={styles.bold}>Down</Text> Play se pehli shelf par
+                                    <Text style={styles.bold}>Down</Text> NETFLIX logo se Play par, phir pehli shelf par
                                     jaata hai aur page scroll hota hai. Agar TV sirf pointer bhejta hai, arrow ko
-                                    Play ya poster ke andar neeche hilane par bhi ring agli shelf par jaati hai.
+                                    logo, Play ya poster ke andar neeche hilane par bhi ring aage jaati hai.
                                     <Text style={styles.bold}> OK</Text> ring waala title select karta hai.
                                 </Text>
                                 <Text style={styles.tipText}>

@@ -84,9 +84,10 @@ a,
   transition: transform 180ms ease;
 }
 
-/* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode.
-   1x1 transparent PNG cursor: Samsung Internet for TV ignores plain
-   cursor:none in pointer-fallback states, this data URI guarantees the arrow never shows. */
+/* Hide the page's CSS cursor in TV mode. Some TV browsers ignore cursor:none,
+   so a transparent image is also provided. Firmware-drawn hardware cursors are
+   outside the page's control and may still be visible; keep focus/navigation
+   working even when the OS arrow remains on the logo. */
 html.tv-remote-mode,
 html.tv-remote-mode *,
 html.tv-remote-mode body,

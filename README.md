@@ -126,16 +126,18 @@ The web build is still a website, not a native TV app. Its spatial-navigation
 engine (`lib/spatialNavigation.ts`) handles the remote **when the TV browser
 forwards keyboard or pointer events to the page**:
 
-- **Arrow-key browsers:** Down on hero Play/More Info focuses a poster in the
-  first shelf and scrolls the *inner page ScrollView* (the body does not scroll).
-  Up from that shelf returns to the actual Play button, not the hero artwork.
+- **Arrow-key browsers:** Down on the NETFLIX navbar logo goes to hero Play;
+  Down again focuses a poster in the first shelf and scrolls the *inner page
+  ScrollView* (the body does not scroll). Up goes back through Play to the
+  navbar. On catalog pages without a hero, navbar Down enters the first shelf.
   Left/Right moves through posters; OK/Enter selects; Return/Escape goes back.
 - **Pointer-only browsers:** when the D-pad moves the TV's cursor instead of
-  sending Arrow keys, a small directional movement *within* Play, blank hero
-  art, or a focused poster also steps the focus ring and scrolls to the next
-  shelf. Pointing directly at a different card selects it; OK activates the
-  ring even if the OS cursor has not yet left the hero. The screen-edge scroll
-  assist is still available.
+  sending Arrow keys, a small directional movement *within* the logo, Play,
+  blank hero art, or a focused poster also steps the ring and scrolls. A parked
+  cursor over the old logo/button must not pull the ring back after a step;
+  pointing at a different control still selects it. OK activates the ring even
+  if the OS cursor has not yet left the logo/hero. The screen-edge scroll assist
+  is still available.
 - **Fast shelves:** only the destination row is measured on each D-pad step.
   Deferred shelves mount on demand rather than hydrating the whole catalog;
   a pending step waits for its poster to exist, and a virtualized carousel can
