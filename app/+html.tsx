@@ -65,26 +65,31 @@ a,
   transition: transform 180ms ease;
 }
 
-/* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode */
+/* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode.
+   1x1 transparent PNG cursor: Samsung Internet for TV ignores plain
+   cursor:none in pointer-fallback states, this data URI guarantees the arrow never shows. */
 body.tv-remote-mode,
 body.tv-remote-mode * {
-  cursor: none !important;
+  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==') 0 0, none !important;
 }
 
-/* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State */
+/* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State.
+   60fps on low-end TV SoCs: no heavy 45px-blur box-shadow, no box-shadow /
+   outline transitions (CPU repaints). GPU-composited transform only. */
 [data-tv-focused="true"],
 .tv-focused,
 :focus-visible[data-tv-focusable="true"] {
   outline: 4px solid #ffffff !important;
   outline-offset: 3px !important;
-  box-shadow: 0 0 24px rgba(255, 255, 255, 0.95), 0 0 45px rgba(229, 9, 20, 0.7) !important;
-  transform: scale(1.07) !important;
+  transform: translate3d(0, 0, 0) scale(1.06) !important;
+  will-change: transform !important;
   z-index: 100 !important;
-  transition: transform 180ms cubic-bezier(0.2, 0, 0.2, 1), box-shadow 180ms ease, outline 180ms ease !important;
+  transition: transform 120ms linear !important;
 }
 
-/* Smooth scrolling for spatial navigation */
+/* Instant programmatic scrolling for spatial navigation (TV 60fps).
+   Direct scrollTop/scrollLeft positioning — never smooth-animated. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 `;

@@ -8,6 +8,15 @@ const IS_WEB = Platform.OS === 'web';
 type Props = MovieRow & { eager?: boolean; hideExploreAll?: boolean };
 
 function scrollParent(element: HTMLElement): HTMLElement | null {
+    // Fast path (Samsung TV 60fps): the home vertical scroller is tagged with
+    // data-tv-scroll-container="true" so we can find it without a
+    // window.getComputedStyle() walk on low-end TV SoCs.
+    try {
+        const tagged = (element as HTMLElement).closest?.(
+            '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
+        ) as HTMLElement | null;
+        if (tagged) return tagged;
+    } catch {}
     let parent = element.parentElement;
     while (parent) {
         // The shelves live in a nested ScrollView rather than window scroll.
@@ -39,6 +48,18 @@ export function DeferredMovieList({ eager = false, ...row }: Props) {
         }, { root: scrollParent(element), rootMargin: '700px 0px' });
         observer.observe(element);
         return () => observer.disconnect();
+    }, [ready]);
+
+    // Samsung Smart TV (UA32T4410): spatial navigation dispatches
+    // 'arena-hydrate-shelf' on ArrowDown so below-the-fold shelves hydrate
+    // instantly — focus never lands on an empty placeholder, which is what
+    // made the Samsung browser fall back to mouse-pointer mode.
+    useEffect(() => {
+        if (ready || !IS_WEB) return;
+        if (typeof window === 'undefined') return;
+        const hydrate = () => setReady(true);
+        window.addEventListener('arena-hydrate-shelf', hydrate as EventListener);
+        return () => window.removeEventListener('arena-hydrate-shelf', hydrate as EventListener);
     }, [ready]);
 
     if (!IS_WEB) return <MovieList {...row} />;
