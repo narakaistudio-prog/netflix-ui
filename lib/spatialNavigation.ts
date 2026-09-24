@@ -26,12 +26,12 @@ const POINTER_MODE_STORAGE_KEY = 'netflix-tv-pointer-mode';
 const POINTER_MODE_CLASS = 'tv-pointer-mode';
 
 /**
- * A held D-pad sends 15-30 keydowns per second. Each one used to run a full
- * candidate scan + a shelf scroll + a React re-render, which on a TV SoC drops
- * frames and makes the ring stutter. Coalesce repeats to ~12 moves/second:
- * still faster than anyone can tap, but the browser keeps up.
+ * A held D-pad can send many repeated keydowns. The first press is always
+ * handled synchronously; repeated events are coalesced only inside one 60fps
+ * frame so we never add a visible remote-to-ring delay while avoiding duplicate
+ * layout work during key repeat.
  */
-const MIN_MOVE_INTERVAL_MS = 80;
+const MIN_MOVE_INTERVAL_MS = 16;
 
 /** Broad net for candidate nodes; `isFocusableElement()` then refines it. */
 const FOCUSABLE_SELECTOR = [
@@ -967,17 +967,22 @@ class SpatialNavigationManager {
      * style recalc per candidate on low-end TV SoCs. Inline + geometry checks
      * are enough: display:none and detached nodes report a zero rect.
      */
-    private getSelfVisibleRect(element: HTMLElement): DOMRect | null {
-        if (!element || element.nodeType !== 1) return null;
-        if ((element as any).hidden) return null;
+    private isOwnFocusBlocked(element: HTMLElement): boolean {
+        if (!element || element.nodeType !== 1) return true;
+        if ((element as any).hidden) return true;
+        if (element.getAttribute('aria-hidden') === 'true') return true;
         const inline = element.style;
         if (inline) {
             if (inline.display === 'none' || inline.visibility === 'hidden' || inline.visibility === 'collapse') {
-                return null;
+                return true;
             }
-            if (inline.opacity === '0') return null;
+            if (inline.opacity === '0') return true;
         }
-        if (element.getAttribute('aria-hidden') === 'true') return null;
+        return false;
+    }
+
+    private getSelfVisibleRect(element: HTMLElement): DOMRect | null {
+        if (this.isOwnFocusBlocked(element)) return null;
         const rect = element.getBoundingClientRect();
         return rect.width > 0 && rect.height > 0 ? rect : null;
     }
@@ -1106,9 +1111,9 @@ class SpatialNavigationManager {
     }
 
     /**
-     * One read-only layout pass over the scope: attributes -> visibility
-     * (ancestor verdicts memoised) -> a single getBoundingClientRect() per
-     * surviving candidate.
+     * Build the candidate list without forcing layout. Ancestor visibility is
+     * memoised, and geometry is read lazily by the returned context only for
+     * candidates that the current direction actually compares.
      *
      * The previous implementation measured every candidate inside isVisible()
      * and then measured them AGAIN in moveFocus(), so each keypress forced two
@@ -1129,10 +1134,13 @@ class SpatialNavigationManager {
             // Reject an inactive tab BEFORE reading layout. On a real TV those
             // screens contain hundreds of mounted cards at the same coordinates.
             if (this.hasHiddenAncestor(el, scope, hiddenAncestors)) continue;
-            const rect = this.getSelfVisibleRect(el);
-            if (!rect) continue;
+            // Do not call getBoundingClientRect for every card here. Horizontal
+            // D-pad navigation usually needs only the current shelf; measuring
+            // all mounted cards was the remaining source of key-to-ring delay.
+            // Geometry is read lazily by ctx.rect only for candidates considered
+            // in this move.
+            if (this.isOwnFocusBlocked(el)) continue;
             elements.push(el);
-            rects.set(el, rect);
         }
 
         return {

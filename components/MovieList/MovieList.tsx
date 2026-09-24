@@ -12,6 +12,10 @@ import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselW
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
 
+/** TV mode uses the native-style ring, not desktop hover cards/box-shadows. */
+const isTvRemoteMode = () =>
+    IS_WEB && typeof document !== 'undefined' && document.body.classList.contains('tv-remote-mode');
+
 const NumberBackground = ({ number }: { number: number }) => {
     const num = (number).toString().padStart(2, '0');
 
@@ -68,15 +72,15 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
     const num = index + 1;
-    const isActive = hovered || focused;
+    const isActive = !isTvRemoteMode() && (hovered || focused);
 
     return (
         <Pressable
             onPress={onPress}
-            onHoverIn={() => setHovered(true)}
-            onHoverOut={() => setHovered(false)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onHoverIn={() => { if (!isTvRemoteMode()) setHovered(true); }}
+            onHoverOut={() => { if (!isTvRemoteMode()) setHovered(false); }}
+            onFocus={() => { if (!isTvRemoteMode()) setFocused(true); }}
+            onBlur={() => { if (!isTvRemoteMode()) setFocused(false); }}
             tabIndex={0}
             accessibilityRole="button"
             accessibilityLabel={`Open ${item.title || 'title'}`}
@@ -84,6 +88,7 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
             {...({
                 dataSet: {
                     tvFocusable: 'true',
+                    tvCard: 'true',
                     tvRow: rowTitle,
                     tvIndex: String(index),
                 },
@@ -108,7 +113,7 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
                     </View>
 
                     {isActive && (
-                        <View style={top10.quickOverlay}>
+                        <View style={top10.quickOverlay} {...({ dataSet: { tvCardOverlay: 'true' } } as any)}>
                             <View style={card.playCircle}>
                                 <Ionicons name="play" size={16} color="#000" />
                             </View>
@@ -135,15 +140,15 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
 }) => {
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
-    const isActive = hovered || focused;
+    const isActive = !isTvRemoteMode() && (hovered || focused);
 
     return (
         <Pressable
             onPress={onPress}
-            onHoverIn={() => setHovered(true)}
-            onHoverOut={() => setHovered(false)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onHoverIn={() => { if (!isTvRemoteMode()) setHovered(true); }}
+            onHoverOut={() => { if (!isTvRemoteMode()) setHovered(false); }}
+            onFocus={() => { if (!isTvRemoteMode()) setFocused(true); }}
+            onBlur={() => { if (!isTvRemoteMode()) setFocused(false); }}
             tabIndex={0}
             accessibilityRole="button"
             accessibilityLabel={`Open ${item.title || 'title'}`}
@@ -151,6 +156,7 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
             {...({
                 dataSet: {
                     tvFocusable: 'true',
+                    tvCard: 'true',
                     tvRow: rowTitle,
                     tvIndex: String(index),
                 },
@@ -171,7 +177,7 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
 
                 {/* Hover overlay with action buttons and title */}
                 {isActive && (
-                    <View style={card.hoverOverlay}>
+                    <View style={card.hoverOverlay} {...({ dataSet: { tvCardOverlay: 'true' } } as any)}>
                         <View style={card.actionsRow}>
                             <View style={card.playCircle}>
                                 <Ionicons name="play" size={16} color="#000" />
