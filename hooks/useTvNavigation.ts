@@ -50,8 +50,9 @@ export function useTvMode() {
             if (isRemoteKey) setInputSource(spatialNav.getLastInputSource());
         };
         const markPointer = (event: MouseEvent | PointerEvent) => {
-            if (!spatialNav.isTvMode() || !spatialNav.isPointerDrivenDevice()) return;
-            if (event.clientX === 0 && event.clientY === 0) return;
+            if (!spatialNav.isTvMode() ||
+                (!spatialNav.isPointerDrivenDevice() && !spatialNav.isTvPointerLocked())) return;
+            if (!spatialNav.isTvPointerLocked() && event.clientX === 0 && event.clientY === 0) return;
             setInputSource('pointer');
         };
         window.addEventListener('keydown', markKeys, { capture: true });

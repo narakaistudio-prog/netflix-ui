@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, StyleSheet, Platform, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTvMode, useTvBackHandler } from '@/hooks/useTvNavigation';
+import { spatialNav } from '@/lib/spatialNavigation';
 
 interface Props {
     isOpen?: boolean;
@@ -22,6 +23,25 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
     } = useTvMode();
     const [internalOpen, setInternalOpen] = useState(false);
     const [showDiagnostics, setShowDiagnostics] = useState(false);
+    const [cursorTest, setCursorTest] = useState<'idle' | 'trying' | 'locked' | 'released' | 'unavailable'>(
+        () => spatialNav.isTvPointerLocked() ? 'locked' : 'idle'
+    );
+
+    useEffect(() => {
+        if (Platform.OS !== 'web') return;
+        return spatialNav.subscribeTvPointerLock(locked => {
+            setCursorTest(previous => locked ? 'locked' : previous === 'locked' ? 'released' : previous);
+        });
+    }, []);
+
+    const tryHideBrowserArrow = () => {
+        setCursorTest('trying');
+        // Call immediately from the OK/click handler: Pointer Lock needs the
+        // browser's transient user activation, and may be unsupported on TV.
+        void spatialNav.tryLockTvPointer().then(locked => {
+            setCursorTest(locked || spatialNav.isTvPointerLocked() ? 'locked' : 'unavailable');
+        });
+    };
 
     const isModalOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalOpen;
 
@@ -193,6 +213,46 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                 Agar up/down kaam na kare to <Text style={styles.bold}>Pointer arrow</Text> chun lein — TV ka arrow
                                 chalu hote hi highlight usko follow karega. Filhaal: {pointerPreference}
                             </Text>
+
+                            {/* Optional browser-only experiment; never enable automatically. */}
+                            <View style={styles.cursorTestBox}>
+                                <Text style={styles.cursorTestTitle}>Browser arrow hide karein (optional)</Text>
+                                <Text style={styles.cursorTestDescription}>
+                                    Website ka cursor TV Mode mein hidden hai. Agar alag TV arrow dikhta hai,
+                                    Pointer Lock try kar sakte hain. Yeh browser par depend karta hai — TV ka
+                                    apna arrow phir bhi dikh sakta hai. Upar Pointer arrow / Arrow keys settings
+                                    sirf remote input ke liye hain, arrow hide karne ke liye nahi.
+                                </Text>
+                                {isTvMode && (
+                                    <Pressable
+                                        onPress={cursorTest === 'locked' ? () => spatialNav.releaseTvPointerLock() : tryHideBrowserArrow}
+                                        disabled={cursorTest === 'trying'}
+                                        tabIndex={0}
+                                        accessibilityRole="button"
+                                        accessibilityLabel={cursorTest === 'locked' ? 'Release browser pointer lock' : 'Try hiding browser arrow'}
+                                        {...tv({ tvFocusable: 'true', tvRow: 'tv-modal', tvIndex: '4', tvId: 'tv-cursor-test' })}
+                                        style={({ hovered }: any) => [styles.cursorTestButton, hovered && { opacity: 0.85 }]}
+                                    >
+                                        <Text style={styles.cursorTestButtonText}>
+                                            {cursorTest === 'locked' ? 'Pointer Lock band karein' :
+                                                cursorTest === 'trying' ? 'Browser se pooch rahe hain…' :
+                                                'Browser arrow hide try karein'}
+                                        </Text>
+                                    </Pressable>
+                                )}
+                                <Text style={styles.cursorTestStatus}>
+                                    {!isTvMode ? 'Pehle TV Mode ON karein.' :
+                                        cursorTest === 'locked' ? 'Browser ne Pointer Lock allow kiya. Ring se navigate karein.' :
+                                        cursorTest === 'unavailable' ? 'Browser ne Pointer Lock allow nahi kiya. Normal TV navigation chalu hai.' :
+                                        cursorTest === 'released' ? 'Pointer Lock release ho gaya. Normal TV navigation chalu hai.' :
+                                        cursorTest === 'trying' ? 'Agar TV ijazat maange to allow karein.' :
+                                        'Sirf aapke OK par try hoga; automatic nahi.'}
+                                </Text>
+                                <Text style={styles.cursorTestDescription}>
+                                    Agar remote ruk jaye, RETURN / Escape dabakar unlock karein.
+                                    TV Mode OFF karne se bhi unlock hoga. Browser refuse kare to focus ring pehle ki tarah chalegi.
+                                </Text>
+                            </View>
 
                             {/* Remote buttons legend */}
                             <Text style={styles.sectionHeader}>Remote Controls</Text>
@@ -466,6 +526,45 @@ const styles = StyleSheet.create({
         fontSize: 12.5,
         lineHeight: 19,
         marginBottom: 18,
+    },
+    cursorTestBox: {
+        backgroundColor: '#121920',
+        borderWidth: 1,
+        borderColor: '#385267',
+        borderRadius: 8,
+        padding: 16,
+        marginBottom: 20,
+    },
+    cursorTestTitle: {
+        color: '#e8f5ff',
+        fontSize: 16,
+        fontWeight: '800',
+        marginBottom: 8,
+    },
+    cursorTestDescription: {
+        color: '#d0d9e0',
+        fontSize: 12.5,
+        lineHeight: 19,
+        marginBottom: 8,
+    },
+    cursorTestButton: {
+        backgroundColor: '#286998',
+        borderRadius: 7,
+        paddingVertical: 13,
+        paddingHorizontal: 15,
+        alignItems: 'center',
+        marginVertical: 8,
+    },
+    cursorTestButtonText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '800',
+    },
+    cursorTestStatus: {
+        color: '#a9dbfa',
+        fontSize: 12.5,
+        lineHeight: 19,
+        marginBottom: 8,
     },
     controlsGrid: {
         gap: 10,

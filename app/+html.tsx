@@ -84,10 +84,9 @@ a,
   transition: transform 180ms ease;
 }
 
-/* Hide the page's CSS cursor in TV mode. Some TV browsers ignore cursor:none,
-   so a transparent image is also provided. Firmware-drawn hardware cursors are
-   outside the page's control and may still be visible; keep focus/navigation
-   working even when the OS arrow remains on the logo. */
+/* Hide the page's CSS cursor in TV mode. Tizen 5.5 can reject custom data-URI
+   cursors, so retain a plain 'none' declaration before the transparent PNG
+   fallback. A firmware-drawn arrow is outside the page's control. */
 html.tv-remote-mode,
 html.tv-remote-mode *,
 html.tv-remote-mode body,
@@ -95,6 +94,7 @@ body.tv-remote-mode,
 body.tv-remote-mode *,
 body.tv-pointer-mode,
 body.tv-pointer-mode * {
+  cursor: none !important;
   cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==') 0 0, none !important;
 }
 

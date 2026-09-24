@@ -86,6 +86,18 @@ class SpatialNavigationManager {
     private backHandlerStack: BackHandler[] = [];
     private listeners: Array<(active: boolean) => void> = [];
     private scrollTimer: any = null;
+    /** React route changes should never drop the page-controlled cursor rule. */
+    private tvCursorGuard: MutationObserver | null = null;
+    /** Pointer Lock is always opt-in, never stored or automatically re-entered. */
+    private pointerLockPending: {
+        resolve: (locked: boolean) => void;
+        timeout: ReturnType<typeof setTimeout>;
+    } | null = null;
+    private pointerLockListeners: Array<(locked: boolean) => void> = [];
+    private lockedPointerDelta = { x: 0, y: 0 };
+    private lastLockedMove: { type: string; x: number; y: number; at: number } | null = null;
+    private lastPointerLockExitAt = 0;
+    private hadTvPointerLock = false;
 
     // --- Smart TV pointer-mode support -------------------------------------
     // Samsung Internet for TV, LG webOS and most Android TV browsers move an
@@ -269,7 +281,133 @@ class SpatialNavigationManager {
         return this.lastInputSource !== 'none';
     }
 
+    /** A browser may refuse this API, or draw its own arrow even when locked. */
+    public isTvPointerLocked(): boolean {
+        return typeof document !== 'undefined' && !!document.body &&
+            document.pointerLockElement === document.body;
+    }
+
+    public subscribeTvPointerLock(listener: (locked: boolean) => void): () => void {
+        this.pointerLockListeners.push(listener);
+        listener(this.isTvPointerLocked());
+        return () => {
+            this.pointerLockListeners = this.pointerLockListeners.filter(l => l !== listener);
+        };
+    }
+
+    private notifyPointerLockListeners() {
+        for (const listener of this.pointerLockListeners) {
+            try { listener(this.isTvPointerLocked()); } catch {}
+        }
+    }
+
+    private finishPointerLockAttempt(locked: boolean) {
+        const pending = this.pointerLockPending;
+        if (!pending) return;
+        this.pointerLockPending = null;
+        clearTimeout(pending.timeout);
+        pending.resolve(locked);
+    }
+
+    private handlePointerLockChange = () => {
+        const locked = this.isTvPointerLocked();
+        const wasLocked = this.hadTvPointerLock;
+        this.hadTvPointerLock = locked;
+        if (locked && !this.isTvModeActive) {
+            // A late grant must not leave the browser locked after TV Mode Off.
+            this.releaseTvPointerLock();
+            return;
+        }
+        this.clearPointerQueue();
+        this.pointerPosition = null;
+        this.pointerTarget = null;
+        this.pointerAnchor = null;
+        this.lockedPointerDelta = { x: 0, y: 0 };
+        this.lastLockedMove = null;
+        this.resetPointerSteering();
+        if (!locked && wasLocked) this.lastPointerLockExitAt = Date.now();
+        this.finishPointerLockAttempt(locked);
+        this.notifyPointerLockListeners();
+    };
+
+    private handlePointerLockError = () => {
+        this.finishPointerLockAttempt(false);
+        this.notifyPointerLockListeners();
+    };
+
+    /** Must be called directly from a user action; TV browsers can refuse it. */
+    public tryLockTvPointer(): Promise<boolean> {
+        if (typeof document === 'undefined' || !this.isTvModeActive || !document.body) {
+            return Promise.resolve(false);
+        }
+        if (this.isTvPointerLocked()) return Promise.resolve(true);
+        const request = (document.body as any).requestPointerLock;
+        // Only offer a lock we can explicitly undo with Back / TV Mode OFF.
+        if (typeof request !== 'function' || typeof document.exitPointerLock !== 'function') {
+            return Promise.resolve(false);
+        }
+        this.init(); // listen for pointerlockchange even if the modal mounted first
+        if (this.pointerLockPending) return Promise.resolve(false);
+        return new Promise<boolean>(resolve => {
+            this.pointerLockPending = {
+                resolve,
+                timeout: setTimeout(() => {
+                    if (this.isTvPointerLocked()) this.handlePointerLockChange();
+                    else this.finishPointerLockAttempt(false);
+                }, 1800),
+            };
+            try {
+                // Do not await before requesting: transient user activation
+                // (a remote OK/click) expires after the current event handler.
+                const result = request.call(document.body);
+                if (result && typeof result.then === 'function') {
+                    result.then(() => {
+                        if (this.isTvPointerLocked()) this.handlePointerLockChange();
+                    }, () => this.finishPointerLockAttempt(false));
+                }
+                if (this.pointerLockPending && this.isTvPointerLocked()) this.handlePointerLockChange();
+            } catch {
+                this.finishPointerLockAttempt(false);
+            }
+        });
+    }
+
+    public releaseTvPointerLock() {
+        this.finishPointerLockAttempt(false);
+        if (!this.isTvPointerLocked()) return;
+        try { document.exitPointerLock?.(); } catch {}
+        this.notifyPointerLockListeners();
+    }
+
+    private syncTvCursorClasses = () => {
+        if (!this.isTvModeActive || typeof document === 'undefined' || !document.body) return;
+        if (!document.documentElement.classList.contains('tv-remote-mode')) {
+            document.documentElement.classList.add('tv-remote-mode');
+        }
+        if (!document.body.classList.contains('tv-remote-mode')) {
+            document.body.classList.add('tv-remote-mode');
+        }
+    };
+
+    private startTvCursorGuard() {
+        if (this.tvCursorGuard || typeof MutationObserver === 'undefined' || !document.body) return;
+        this.tvCursorGuard = new MutationObserver(this.syncTvCursorClasses);
+        // Only html/body classes: observing the entire catalog makes rapid
+        // shelf navigation expensive on a 30fps TV browser.
+        this.tvCursorGuard.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        this.tvCursorGuard.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    private stopTvCursorGuard() {
+        this.tvCursorGuard?.disconnect();
+        this.tvCursorGuard = null;
+    }
+
     public setTvMode(active: boolean, persist = true) {
+        if (!active) {
+            this.stopTvCursorGuard();
+            this.releaseTvPointerLock();
+        }
         if (typeof document !== 'undefined' && document.body) {
             document.documentElement.classList.toggle('tv-remote-mode', active);
             document.body.classList.toggle('tv-remote-mode', active);
@@ -283,6 +421,7 @@ class SpatialNavigationManager {
             } catch {}
         }
         if (this.isTvModeActive === active) {
+            if (active) this.startTvCursorGuard();
             if (!active) {
                 this.cancelPendingFocus();
                 this.cancelPendingRouteEntry();
@@ -296,6 +435,7 @@ class SpatialNavigationManager {
             return;
         }
         this.isTvModeActive = active;
+        if (active) this.startTvCursorGuard();
         if (!active) {
             this.cancelPendingFocus();
             this.cancelPendingRouteEntry();
@@ -382,9 +522,11 @@ class SpatialNavigationManager {
         this.registerTizenKeys();
 
         if (this.isTvModeActive && typeof document !== 'undefined' && document.body) {
-            document.documentElement.classList.add('tv-remote-mode');
-            document.body.classList.add('tv-remote-mode');
+            this.syncTvCursorClasses();
+            this.startTvCursorGuard();
         }
+        document.addEventListener('pointerlockchange', this.handlePointerLockChange);
+        document.addEventListener('pointerlockerror', this.handlePointerLockError);
 
         window.addEventListener('keydown', this.handleKeyDown, { capture: true });
         window.addEventListener('keyup', this.handleKeyUp, { capture: true });
@@ -418,7 +560,11 @@ class SpatialNavigationManager {
         if (typeof document !== 'undefined') {
             document.removeEventListener('focusout', this.handleFocusOut, true);
             document.removeEventListener('focusin', this.handleFocusIn, true);
+            document.removeEventListener('pointerlockchange', this.handlePointerLockChange);
+            document.removeEventListener('pointerlockerror', this.handlePointerLockError);
         }
+        this.stopTvCursorGuard();
+        this.releaseTvPointerLock();
         this.stopPointerTracking();
         this.stopFocusWatchdog();
         this.cancelPendingFocus();
@@ -477,7 +623,7 @@ class SpatialNavigationManager {
 
     /** OK must consume queued D-pad moves before clicking the visible ring. */
     private flushPointerFocus() {
-        if (!this.isTvModeActive || !this.pointerFollowActive()) return;
+        if (!this.isTvModeActive || (!this.pointerFollowActive() && !this.isTvPointerLocked())) return;
         if (this.pointerRaf == null && !this.pendingPointerDirections.length) return;
         this.cancelPointerFrame();
         this.applyPointerFocus(true);
@@ -612,10 +758,52 @@ class SpatialNavigationManager {
         this.pointerAnchor = { x, y };
     }
 
+    /** Pointer Lock pins clientX/Y (often to 0,0). Follow relative movement
+     * rather than hit-testing the pinned browser pointer. */
+    private trackLockedPointerDirection(event: MouseEvent | PointerEvent) {
+        if (event.type !== 'mousemove' && event.type !== 'pointermove') return;
+        const dx = Number((event as MouseEvent).movementX || 0);
+        const dy = Number((event as MouseEvent).movementY || 0);
+        if (!dx && !dy) return;
+        const now = Date.now();
+        const last = this.lastLockedMove;
+        // TV engines may emit both a pointermove and a matching mousemove for
+        // one D-pad press. Do not count that single movement twice.
+        if (last && last.type !== event.type && last.x === dx && last.y === dy && now - last.at < 8) {
+            this.lastLockedMove = { type: event.type, x: dx, y: dy, at: now };
+            return;
+        }
+        this.lastLockedMove = { type: event.type, x: dx, y: dy, at: now };
+        if (Math.abs(dx) > 160 || Math.abs(dy) > 160) {
+            this.lockedPointerDelta = { x: 0, y: 0 };
+            return;
+        }
+        this.lockedPointerDelta.x += dx;
+        this.lockedPointerDelta.y += dy;
+        const { x, y } = this.lockedPointerDelta;
+        let dir: Direction | null = null;
+        if (Math.abs(y) >= 8 && Math.abs(y) > Math.abs(x) * 1.4) dir = y > 0 ? 'down' : 'up';
+        else if (Math.abs(x) >= 12 && Math.abs(x) > Math.abs(y) * 1.4) dir = x > 0 ? 'right' : 'left';
+        if (!dir) return;
+        this.lockedPointerDelta = { x: 0, y: 0 };
+        if (this.pendingPointerDirections.length < MAX_QUEUED_POINTER_MOVES) {
+            this.pendingPointerDirections.push(dir);
+        }
+    }
+
     private handlePointerMove = (event: MouseEvent | PointerEvent) => {
         // On a desktop with a real mouse the pointer must never steal the remote
         // focus ring. TV-style pointers (or a forced "Pointer arrow" mode) do.
-        if (!this.pointerFollowActive()) return;
+        if (!this.pointerFollowActive() && !this.isTvPointerLocked()) return;
+        if (this.isTvPointerLocked()) {
+            if (this.lastKeyInputAt && Date.now() - this.lastKeyInputAt < KEY_POINTER_ECHO_MS) return;
+            this.trackLockedPointerDirection(event);
+            if (!this.pendingPointerDirections.length) return;
+            this.lastInputSource = 'pointer';
+            this.enterPointerMode();
+            this.schedulePointerFocus();
+            return;
+        }
         // A TV browser whose user agent is not recognisable still gets the TV
         // experience: the first D-pad press (which moves this pointer) switches
         // the page into TV mode automatically — unless the user turned it off.
@@ -632,7 +820,7 @@ class SpatialNavigationManager {
         // A hybrid TV can echo a key press as mouse motion. Suppress only that
         // brief echo, remembering where the arrow ended up; the next real
         // pointer Down must work immediately instead of waiting 1.2 seconds.
-        if (Date.now() - this.lastKeyInputAt < KEY_POINTER_ECHO_MS) {
+        if (this.lastKeyInputAt && Date.now() - this.lastKeyInputAt < KEY_POINTER_ECHO_MS) {
             this.pointerPosition = { x, y };
             this.pointerAnchor = { x, y };
             return;
@@ -660,7 +848,21 @@ class SpatialNavigationManager {
      * not silently do nothing (or snap back to Play).
      */
     private handlePointerClick = (event: MouseEvent) => {
-        if (!this.isTvModeActive || !this.pointerFollowActive()) return;
+        if (!this.isTvModeActive || (!this.pointerFollowActive() && !this.isTvPointerLocked())) return;
+        if (this.isTvPointerLocked()) {
+            // Under Pointer Lock the native click targets the locked body,
+            // never the white-ring card. Route it to the focused control once;
+            // let our own synthetic click on that control pass through to React.
+            this.flushPointerFocus();
+            if (this.isEditingText()) return;
+            const focus = this.currentFocusedElement;
+            if (!focus || !this.isFocusAttachedToScope(focus, this.getActiveScope())) return;
+            if (event.target instanceof Node && focus.contains(event.target)) return;
+            event.preventDefault();
+            event.stopPropagation();
+            this.triggerClick(focus);
+            return;
+        }
         // OK can arrive in the SAME frame as one or several pointer Downs.
         // Consume them first so we click the highlighted destination, not Play.
         this.flushPointerFocus();
@@ -702,6 +904,16 @@ class SpatialNavigationManager {
      * focus ring so the user still gets a big visible highlight + auto scroll.
      */
     private applyPointerFocus(flushAll = false) {
+        if (this.isTvPointerLocked()) {
+            this.pendingEdgeScroll = 0;
+            if (this.isEditingText()) { this.pendingPointerDirections.length = 0; return; }
+            const intents = this.pendingPointerDirections.splice(
+                0, flushAll ? MAX_QUEUED_POINTER_MOVES : MAX_POINTER_STEPS_PER_FRAME
+            );
+            for (const intent of intents) this.moveFocus(intent);
+            if (this.pendingPointerDirections.length) this.schedulePointerFocus();
+            return;
+        }
         if (typeof document === 'undefined' || !this.pointerPosition ||
             !this.isTvModeActive || !this.pointerFollowActive() || this.isEditingText()) {
             this.pendingPointerDirections.length = 0;
@@ -1114,6 +1326,7 @@ class SpatialNavigationManager {
 
     private handleRouteChange = () => {
         if (typeof window === 'undefined') return;
+        this.syncTvCursorClasses();
         const path = this.getRoutePath();
         const changed = path !== this.lastRoutePath;
         this.lastRoutePath = path;
@@ -1123,6 +1336,8 @@ class SpatialNavigationManager {
         if (changed) {
             this.resetPointerSteering();
             this.pointerAnchor = this.pointerPosition ? { ...this.pointerPosition } : null;
+            this.lockedPointerDelta = { x: 0, y: 0 };
+            this.lastLockedMove = null;
             this.clearPointerQueue();
             this.cancelPendingFocus();
             this.cancelPendingRouteEntry();
@@ -1231,6 +1446,17 @@ class SpatialNavigationManager {
             ) {
                 this.focusInitialElement();
             }
+        }
+
+        // Return/Escape first unlocks the browser without closing a modal or
+        // leaving the page. Some browsers exit automatically just BEFORE the
+        // keydown arrives; absorb that same key too, not the next Back press.
+        if (isBackKey && (this.isTvPointerLocked() ||
+            (this.lastPointerLockExitAt && Date.now() - this.lastPointerLockExitAt < 80))) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.releaseTvPointerLock();
+            return;
         }
 
         // If user is currently typing in an input field, let native handling happen
