@@ -311,12 +311,49 @@ class SpatialNavigationManager {
 
     public isVisible(element: HTMLElement): boolean {
         if (!element) return false;
-        const style = window.getComputedStyle(element);
-        if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
-            return false;
+        // Samsung TV 60fps: NEVER call window.getComputedStyle() here — it forces
+        // a style recalc on every keypress across hundreds of candidates on
+        // low-end TV SoCs. Inline + geometry checks are sufficient: display:none
+        // and detached nodes report a zero rect, which already fails below.
+        if ((element as any).hidden) return false;
+        const inline = (element as HTMLElement).style;
+        if (inline) {
+            if (inline.display === 'none' || inline.visibility === 'hidden' || inline.opacity === '0') {
+                return false;
+            }
         }
+        if (element.getAttribute('aria-hidden') === 'true') return false;
         const rect = element.getBoundingClientRect();
         return rect.width > 0 && rect.height > 0;
+    }
+
+    /**
+     * Samsung Smart TV (UA32T4410): tell deferred below-the-fold shelves to
+     * hydrate instantly so ArrowDown never focuses an empty placeholder.
+     */
+    private dispatchHydrateShelves() {
+        if (typeof window === 'undefined') return;
+        try {
+            window.dispatchEvent(new CustomEvent('arena-hydrate-shelf'));
+        } catch {
+            try { window.dispatchEvent(new Event('arena-hydrate-shelf')); } catch {}
+        }
+    }
+
+    /**
+     * Samsung Smart TV (UA32T4410): retain focus on the current (bottom-shelf)
+     * card when there is nowhere to go. If focus is lost, the Samsung browser
+     * falls back to mouse-pointer mode and shows the arrow cursor.
+     */
+    private retainFocus(element: HTMLElement | null) {
+        if (!element) return;
+        try {
+            element.setAttribute('data-tv-focused', 'true');
+            element.classList.add('tv-focused');
+            element.focus({ preventScroll: true });
+        } catch {
+            try { (element as HTMLElement).focus(); } catch {}
+        }
     }
 
     /**
@@ -371,70 +408,82 @@ class SpatialNavigationManager {
     /**
      * Smart scroll: centers element horizontally in shelf,
      * and positions row vertically in the main viewport.
+     *
+     * Samsung TV 60fps: no window.getComputedStyle() walks and no
+     * behavior:'smooth' animations (CPU-blocking on Tizen). Direct hardware
+     * scrollLeft / scrollTop positioning only — the compositor handles it.
      */
     public scrollIntoViewSmart(element: HTMLElement) {
         if (typeof window === 'undefined') return;
 
-        // 1. Horizontal Scroll: Find nearest horizontally scrollable parent
+        // Geometry cached once per call — getBoundingClientRect() forces layout.
+        const elRect = element.getBoundingClientRect();
+
+        // 1. Horizontal Scroll: nearest horizontally scrollable parent via
+        // direct geometry check (no computed-style overflow inspection).
         let parent = element.parentElement;
         while (parent && parent !== document.body) {
-            const style = window.getComputedStyle(parent);
-            const isScrollableX = /auto|scroll|hidden/.test(style.overflowX) && parent.scrollWidth > parent.clientWidth + 10;
-            if (isScrollableX) {
-                const elRect = element.getBoundingClientRect();
+            if (parent.scrollWidth > parent.clientWidth + 10) {
                 const parentRect = parent.getBoundingClientRect();
                 const targetScrollLeft = parent.scrollLeft + (elRect.left - parentRect.left) - (parent.clientWidth - elRect.width) / 2;
-                try {
-                    if (typeof parent.scrollTo === 'function') {
-                        parent.scrollTo({
-                            left: Math.max(0, targetScrollLeft),
-                            behavior: 'smooth',
-                        });
-                    } else {
-                        parent.scrollLeft = Math.max(0, targetScrollLeft);
-                    }
-                } catch {
-                    try { parent.scrollLeft = Math.max(0, targetScrollLeft); } catch {}
-                }
+                try { parent.scrollLeft = Math.max(0, targetScrollLeft); } catch {}
                 break;
             }
             parent = parent.parentElement;
         }
 
-        // 2. Vertical Scroll: Position the row/element around 35% from top of viewport (Netflix style)
-        const rect = element.getBoundingClientRect();
+        // 2. Vertical Scroll: Position the row/element around 32% from top of viewport (Netflix style)
         const viewportHeight = window.innerHeight || 800;
         const desiredTop = viewportHeight * 0.32;
-        const currentTop = rect.top;
-        const diff = currentTop - desiredTop;
+        const diff = elRect.top - desiredTop;
 
         if (Math.abs(diff) > 40) {
-            // Find vertically scrollable parent or window
+            // Fast path: the tagged home TV scroll container (dataSet.tvScrollContainer).
             let scrollParent: HTMLElement | null = null;
-            let p = element.parentElement;
-            while (p && p !== document.body) {
-                const style = window.getComputedStyle(p);
-                if (/auto|scroll/.test(style.overflowY) && p.scrollHeight > p.clientHeight + 10) {
-                    scrollParent = p;
-                    break;
+            try {
+                scrollParent = element.closest?.(
+                    '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
+                ) as HTMLElement | null;
+            } catch {}
+            // Fallback: nearest vertically scrollable parent via direct geometry.
+            if (!scrollParent) {
+                let p = element.parentElement;
+                while (p && p !== document.body) {
+                    if (p.scrollHeight > p.clientHeight + 10) {
+                        scrollParent = p;
+                        break;
+                    }
+                    p = p.parentElement;
                 }
-                p = p.parentElement;
             }
 
             try {
-                if (scrollParent && typeof scrollParent.scrollBy === 'function') {
-                    scrollParent.scrollBy({ top: diff, behavior: 'smooth' });
-                } else if (typeof window.scrollBy === 'function') {
-                    window.scrollBy({ top: diff, behavior: 'smooth' });
+                if (scrollParent) {
+                    scrollParent.scrollTop = scrollParent.scrollTop + diff;
+                } else if (typeof document !== 'undefined' && document.documentElement) {
+                    const base = document.documentElement.scrollTop || window.scrollY || 0;
+                    document.documentElement.scrollTop = base + diff;
+                    // Keep body in sync for Samsung TV browser quirks.
+                    try { document.body.scrollTop = document.documentElement.scrollTop; } catch {}
                 }
             } catch {}
         }
     }
 
     /**
-     * Move focus in given direction
+     * Move focus in given direction.
+     *
+     * Samsung TV 60fps: candidate geometry is cached ONCE per keypress
+     * (getBoundingClientRect forces layout). No window.getComputedStyle().
      */
     public moveFocus(dir: Direction) {
+        // Samsung Smart TV (UA32T4410): ArrowDown hydrates deferred
+        // below-the-fold shelves instantly so focus never drops into the
+        // void (which triggers Samsung's mouse-pointer fallback + arrow).
+        if (dir === 'down') {
+            this.dispatchHydrateShelves();
+        }
+
         const scope = this.getActiveScope();
         const focusables = this.getFocusableElements(scope);
         if (focusables.length === 0) return;
@@ -446,8 +495,20 @@ class SpatialNavigationManager {
         }
 
         const current = this.currentFocusedElement;
+
+        // --- Geometry cached once per keypress (layout is expensive on TV) ---
+        const rectCache = new Map<HTMLElement, DOMRect>();
+        const getRect = (el: HTMLElement): DOMRect => {
+            let r = rectCache.get(el);
+            if (!r) {
+                r = el.getBoundingClientRect();
+                rectCache.set(el, r);
+            }
+            return r;
+        };
+
         const currentRow = current.getAttribute('data-tv-row');
-        const currentRect = current.getBoundingClientRect();
+        const currentRect = getRect(current);
         const currentCenterX = currentRect.left + currentRect.width / 2;
         const currentCenterY = currentRect.top + currentRect.height / 2;
 
@@ -457,9 +518,9 @@ class SpatialNavigationManager {
             if (dir === 'right') {
                 const sameRowRights = focusables.filter(el => {
                     if (el === current || el.getAttribute('data-tv-row') !== currentRow) return false;
-                    const r = el.getBoundingClientRect();
+                    const r = getRect(el);
                     return r.left >= currentRect.left + 5;
-                }).sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+                }).sort((a, b) => getRect(a).left - getRect(b).left);
 
                 if (sameRowRights.length > 0) {
                     this.setFocus(sameRowRights[0]);
@@ -468,9 +529,9 @@ class SpatialNavigationManager {
             } else if (dir === 'left') {
                 const sameRowLefts = focusables.filter(el => {
                     if (el === current || el.getAttribute('data-tv-row') !== currentRow) return false;
-                    const r = el.getBoundingClientRect();
+                    const r = getRect(el);
                     return r.right <= currentRect.right - 5;
-                }).sort((a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right);
+                }).sort((a, b) => getRect(b).right - getRect(a).right);
 
                 if (sameRowLefts.length > 0) {
                     this.setFocus(sameRowLefts[0]);
@@ -479,22 +540,22 @@ class SpatialNavigationManager {
             } else if (dir === 'down') {
                 // Find candidates in rows below
                 const candidatesBelow = focusables.filter(el => {
-                    const r = el.getBoundingClientRect();
+                    const r = getRect(el);
                     return r.top >= currentRect.bottom - 10;
                 });
 
                 if (candidatesBelow.length > 0) {
                     // Find the nearest row top below
-                    const rowTops = candidatesBelow.map(el => Math.round(el.getBoundingClientRect().top / 40) * 40);
+                    const rowTops = candidatesBelow.map(el => Math.round(getRect(el).top / 40) * 40);
                     const minRowTop = Math.min(...rowTops);
                     const immediateRowCandidates = candidatesBelow.filter(el =>
-                        Math.abs(Math.round(el.getBoundingClientRect().top / 40) * 40 - minRowTop) <= 20
+                        Math.abs(Math.round(getRect(el).top / 40) * 40 - minRowTop) <= 20
                     );
 
                     // Pick candidate with closest horizontal center
                     immediateRowCandidates.sort((a, b) => {
-                        const ra = a.getBoundingClientRect();
-                        const rb = b.getBoundingClientRect();
+                        const ra = getRect(a);
+                        const rb = getRect(b);
                         const da = Math.abs((ra.left + ra.width / 2) - currentCenterX);
                         const db = Math.abs((rb.left + rb.width / 2) - currentCenterX);
                         return da - db;
@@ -508,21 +569,21 @@ class SpatialNavigationManager {
             } else if (dir === 'up') {
                 // Find candidates in rows above
                 const candidatesAbove = focusables.filter(el => {
-                    const r = el.getBoundingClientRect();
+                    const r = getRect(el);
                     return r.bottom <= currentRect.top + 10;
                 });
 
                 if (candidatesAbove.length > 0) {
                     // Find nearest row bottom above
-                    const rowBottoms = candidatesAbove.map(el => Math.round(el.getBoundingClientRect().bottom / 40) * 40);
+                    const rowBottoms = candidatesAbove.map(el => Math.round(getRect(el).bottom / 40) * 40);
                     const maxRowBottom = Math.max(...rowBottoms);
                     const immediateRowCandidates = candidatesAbove.filter(el =>
-                        Math.abs(Math.round(el.getBoundingClientRect().bottom / 40) * 40 - maxRowBottom) <= 20
+                        Math.abs(Math.round(getRect(el).bottom / 40) * 40 - maxRowBottom) <= 20
                     );
 
                     immediateRowCandidates.sort((a, b) => {
-                        const ra = a.getBoundingClientRect();
-                        const rb = b.getBoundingClientRect();
+                        const ra = getRect(a);
+                        const rb = getRect(b);
                         const da = Math.abs((ra.left + ra.width / 2) - currentCenterX);
                         const db = Math.abs((rb.left + rb.width / 2) - currentCenterX);
                         return da - db;
@@ -542,7 +603,7 @@ class SpatialNavigationManager {
 
         for (const candidate of focusables) {
             if (candidate === current) continue;
-            const cRect = candidate.getBoundingClientRect();
+            const cRect = getRect(candidate);
             const cCenterX = cRect.left + cRect.width / 2;
             const cCenterY = cRect.top + cRect.height / 2;
 
@@ -586,6 +647,10 @@ class SpatialNavigationManager {
 
         if (bestCandidate) {
             this.setFocus(bestCandidate);
+        } else if (dir === 'down') {
+            // Bottom shelf: retain focus on the current card so the Samsung
+            // TV browser never falls back to mouse-pointer mode + arrow.
+            this.retainFocus(current);
         }
     }
 

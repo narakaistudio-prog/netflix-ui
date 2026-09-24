@@ -145,6 +145,7 @@ export default function HomeScreen() {
 
         <Animated.ScrollView
           ref={scrollViewRef}
+          {...({ dataSet: { tvScrollContainer: 'true' } } as any)}
           style={[
             styles.scrollView,
             isVisionOS && { paddingHorizontal: 20 }
@@ -191,7 +192,7 @@ export default function HomeScreen() {
           )}
 
           {orderedMovies.map((row, index) => (
-            <DeferredMovieList key={row.rowTitle} eager={index < 2} {...row} />
+            <DeferredMovieList key={row.rowTitle} eager={index < 5} {...row} />
           ))}
         </Animated.ScrollView>
       </VisionContainer>
