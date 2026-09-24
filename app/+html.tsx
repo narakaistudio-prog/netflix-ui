@@ -87,9 +87,6 @@ a,
 /* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode.
    1x1 transparent PNG cursor: Samsung Internet for TV ignores plain
    cursor:none in pointer-fallback states, this data URI guarantees the arrow never shows. */
-html.tv-device,
-html.tv-device *,
-html.tv-device body,
 html.tv-remote-mode,
 html.tv-remote-mode *,
 html.tv-remote-mode body,
@@ -120,6 +117,17 @@ html.tv-remote-mode *:focus:not([data-tv-focused='true']) {
    pointer mode): keep the ring snappy so it tracks the arrow closely. */
 body.tv-pointer-mode [data-tv-focused='true'] {
   transition: transform 80ms linear !important;
+}
+
+/* Desktop poster hover cards render extra icons, text, shadows and transforms.
+   On a TV the focus ring is the only active state; hiding the hover layer keeps
+   a D-pad press synchronous on low-end TV browsers. The focus rule below wins
+   back the scale for the selected card. */
+body.tv-remote-mode [data-tv-card='true']:not([data-tv-focused='true']) {
+  transform: translate3d(0, 0, 0) !important;
+}
+body.tv-remote-mode [data-tv-card-overlay='true'] {
+  display: none !important;
 }
 
 /* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State.

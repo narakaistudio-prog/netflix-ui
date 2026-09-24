@@ -133,6 +133,96 @@ describe('Spatial Navigation & Samsung Smart TV Remote Control', () => {
         expect(spatialNav.getCurrentFocus()).toBe(card1);
     });
 
+    it('does not move the ring into an inactive tab screen with the same shelf row', () => {
+        container.innerHTML = `
+            <div style="position:absolute;opacity:0">
+                <div data-tv-row="same-row">
+                    <button id="ghost-0" data-tv-focusable="true" data-tv-row="same-row" data-tv-index="0">Ghost 0</button>
+                    <button id="ghost-1" data-tv-focusable="true" data-tv-row="same-row" data-tv-index="1">Ghost 1</button>
+                </div>
+            </div>
+            <div>
+                <div data-tv-row="same-row">
+                    <button id="real-0" data-tv-focusable="true" data-tv-row="same-row" data-tv-index="0">Real 0</button>
+                    <button id="real-1" data-tv-focusable="true" data-tv-row="same-row" data-tv-index="1">Real 1</button>
+                </div>
+            </div>
+        `;
+        const ghost0 = container.querySelector('#ghost-0') as HTMLButtonElement;
+        const ghost1 = container.querySelector('#ghost-1') as HTMLButtonElement;
+        const real0 = container.querySelector('#real-0') as HTMLButtonElement;
+        const real1 = container.querySelector('#real-1') as HTMLButtonElement;
+        const rect = (left: number) => ({ left, right: left + 100, top: 100, bottom: 250, width: 100, height: 150 } as any);
+        ghost0.getBoundingClientRect = () => rect(0);
+        ghost1.getBoundingClientRect = () => rect(110);
+        real0.getBoundingClientRect = () => rect(0);
+        real1.getBoundingClientRect = () => rect(110);
+
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(real0);
+        window.dispatchEvent(new KeyboardEvent('keydown', {
+            key: 'ArrowRight', keyCode: 39, bubbles: true, cancelable: true,
+        }));
+
+        expect(spatialNav.getCurrentFocus()).toBe(real1);
+        expect(spatialNav.getCurrentFocus()).not.toBe(ghost1);
+    });
+
+    it('recovers when the focused tab becomes hidden instead of navigating from it', () => {
+        container.innerHTML = `
+            <div id="old-tab" style="position:absolute;opacity:0">
+                <button id="old-card" data-tv-focusable="true" data-tv-row="old-row" data-tv-index="0">Old</button>
+            </div>
+            <div id="new-tab">
+                <button id="new-card" data-tv-focusable="true" data-tv-row="new-row" data-tv-index="0">New</button>
+            </div>
+        `;
+        const oldCard = container.querySelector('#old-card') as HTMLButtonElement;
+        const newCard = container.querySelector('#new-card') as HTMLButtonElement;
+        oldCard.getBoundingClientRect = () => ({ left: 0, right: 100, top: 100, bottom: 250, width: 100, height: 150 } as any);
+        newCard.getBoundingClientRect = () => ({ left: 0, right: 100, top: 100, bottom: 250, width: 100, height: 150 } as any);
+
+        spatialNav.setTvMode(true, false);
+        // Simulate the tab transition completing after the ring was on it.
+        oldCard.style.opacity = '1';
+        spatialNav.setFocus(oldCard);
+        oldCard.style.opacity = '0';
+
+        window.dispatchEvent(new KeyboardEvent('keydown', {
+            key: 'ArrowRight', keyCode: 39, bubbles: true, cancelable: true,
+        }));
+
+        expect(spatialNav.getCurrentFocus()).toBe(newCard);
+    });
+
+    it('recovers beside a card when a virtualized shelf unmounts it', () => {
+        container.innerHTML = `
+            <div data-tv-row="windowed-row">
+                <button id="card-0" data-tv-focusable="true" data-tv-row="windowed-row" data-tv-index="0">Card 0</button>
+                <button id="card-1" data-tv-focusable="true" data-tv-row="windowed-row" data-tv-index="1">Card 1</button>
+                <button id="card-2" data-tv-focusable="true" data-tv-row="windowed-row" data-tv-index="2">Card 2</button>
+            </div>
+        `;
+        const card0 = container.querySelector('#card-0') as HTMLButtonElement;
+        const card1 = container.querySelector('#card-1') as HTMLButtonElement;
+        const card2 = container.querySelector('#card-2') as HTMLButtonElement;
+        const rect = (left: number) => ({ left, right: left + 100, top: 100, bottom: 250, width: 100, height: 150 } as any);
+        card0.getBoundingClientRect = () => rect(0);
+        card1.getBoundingClientRect = () => rect(110);
+        card2.getBoundingClientRect = () => rect(220);
+
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(card1);
+        card1.remove();
+
+        window.dispatchEvent(new KeyboardEvent('keydown', {
+            key: 'ArrowRight', keyCode: 39, bubbles: true, cancelable: true,
+        }));
+
+        expect(spatialNav.getCurrentFocus()).toBe(card2);
+        expect(card2.getAttribute('data-tv-focused')).toBe('true');
+    });
+
     it('navigates vertically between rows, preserving horizontal alignment', () => {
         container.innerHTML = `
             <div id="row-0" data-tv-row="row-0" style="display: flex;">

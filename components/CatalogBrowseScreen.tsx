@@ -191,6 +191,7 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
     return (
         <View style={page.container}>
             <ScrollView
+                {...({ dataSet: { tvScrollContainer: 'true' } } as any)}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[
                     page.content,

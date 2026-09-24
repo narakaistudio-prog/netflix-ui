@@ -57,7 +57,21 @@ export function DeferredMovieList({ eager = false, ...row }: Props) {
     useEffect(() => {
         if (ready || !IS_WEB) return;
         if (typeof window === 'undefined') return;
-        const hydrate = () => setReady(true);
+        const hydrate = () => {
+            // Only the shelves the remote is actually approaching. The previous
+            // version hydrated EVERY deferred row in the app on the first
+            // ArrowDown — on Home + Movies + TV that mounts well over a thousand
+            // poster cards at once and freezes a TV SoC for seconds. ArrowDown
+            // re-dispatches this event on every press, so shelves still hydrate
+            // progressively as the ring travels down.
+            const element = ref.current as unknown as HTMLElement | null;
+            if (element && typeof element.getBoundingClientRect === 'function') {
+                const budget = ((window.innerHeight || 800) * 2) + 400;
+                const top = element.getBoundingClientRect().top;
+                if (top > budget || top < -budget) return;
+            }
+            setReady(true);
+        };
         window.addEventListener('arena-hydrate-shelf', hydrate as EventListener);
         return () => window.removeEventListener('arena-hydrate-shelf', hydrate as EventListener);
     }, [ready]);

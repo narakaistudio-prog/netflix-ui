@@ -49,16 +49,18 @@ export function useTvMode() {
                 key === 'GoBack' || key === 'Back' || keyCode === 10009;
             if (isRemoteKey) setInputSource(spatialNav.getLastInputSource());
         };
-        const markPointer = (event: MouseEvent) => {
+        const markPointer = (event: MouseEvent | PointerEvent) => {
             if (!spatialNav.isTvMode() || !spatialNav.isPointerDrivenDevice()) return;
             if (event.clientX === 0 && event.clientY === 0) return;
             setInputSource('pointer');
         };
         window.addEventListener('keydown', markKeys, { capture: true });
         document.addEventListener('mousemove', markPointer, { capture: true, passive: true });
+        document.addEventListener('pointermove', markPointer, { capture: true, passive: true });
         return () => {
             window.removeEventListener('keydown', markKeys, { capture: true } as any);
             document.removeEventListener('mousemove', markPointer, { capture: true } as any);
+            document.removeEventListener('pointermove', markPointer, { capture: true } as any);
         };
     }, []);
 

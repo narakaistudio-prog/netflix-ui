@@ -25,6 +25,37 @@ const TV_MODE_STORAGE_KEY = 'netflix-tv-mode-enabled';
 const POINTER_MODE_STORAGE_KEY = 'netflix-tv-pointer-mode';
 const POINTER_MODE_CLASS = 'tv-pointer-mode';
 
+/**
+ * A held D-pad can send many repeated keydowns. The first press is always
+ * handled synchronously; repeated events are coalesced only inside one 60fps
+ * frame so we never add a visible remote-to-ring delay while avoiding duplicate
+ * layout work during key repeat.
+ */
+const MIN_MOVE_INTERVAL_MS = 16;
+
+/** Broad net for candidate nodes; `isFocusableElement()` then refines it. */
+const FOCUSABLE_SELECTOR = [
+    '[data-tv-focusable="true"]',
+    '[tabindex="0"]',
+    '[role="button"]:not([aria-disabled="true"])',
+    '[role="link"]',
+    '[role="tab"]',
+    'button:not([disabled])',
+    'a[href]',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+].join(', ');
+
+/** Candidate list plus a cached geometry accessor, built in one layout pass. */
+interface FocusContext {
+    elements: HTMLElement[];
+    rect(el: HTMLElement): DOMRect;
+}
+
+/** How much the page is allowed to move when the ring lands on a card. */
+type ScrollAxis = 'both' | 'x' | 'y' | 'none';
+
 /** How the user's remote drives the TV browser. */
 export type TvPointerPreference = 'auto' | 'on' | 'off';
 
@@ -59,6 +90,13 @@ class SpatialNavigationManager {
     private pointerTarget: HTMLElement | null = null;
     /** Timestamp of the last key event, so remote keys always win over a parked pointer. */
     private lastKeyInputAt = 0;
+    /** rAF handle used to re-assert focus the instant the browser drops it. */
+    private focusRepairFrame: any = null;
+    /** Where the ring was before its element was unmounted, so we can recover nearby. */
+    private lastKnownRect: { left: number; top: number; width: number; height: number } | null = null;
+    /** Last direction + time of an accepted move: coalesces D-pad auto-repeat. */
+    private lastMoveDir: Direction | null = null;
+    private lastMoveAt = 0;
 
     constructor() {
         if (typeof window === 'undefined') return;
@@ -193,16 +231,24 @@ class SpatialNavigationManager {
                 }
             } catch {}
         }
-        if (this.isTvModeActive === active) return;
+        if (this.isTvModeActive === active) {
+            if (!active) {
+                this.clearFocusRing();
+                this.exitPointerMode();
+                this.stopFocusWatchdog();
+            }
+            return;
+        }
         this.isTvModeActive = active;
         if (!active) {
+            this.clearFocusRing();
             this.exitPointerMode();
             this.stopFocusWatchdog();
         } else {
             this.startFocusWatchdog();
         }
         this.notifyListeners();
-        if (active && !this.currentFocusedElement) {
+        if (active && !this.isFocusAttachedToScope(this.currentFocusedElement, this.getActiveScope())) {
             this.focusInitialElement();
         }
     }
@@ -282,6 +328,7 @@ class SpatialNavigationManager {
         window.addEventListener('keyup', this.handleKeyUp, { capture: true });
         window.addEventListener('popstate', this.handleRouteChange);
         window.addEventListener('hashchange', this.handleRouteChange);
+        document.addEventListener('focusout', this.handleFocusOut, true);
         this.hookHistory();
         this.startPointerTracking();
         this.startFocusWatchdog();
@@ -305,8 +352,15 @@ class SpatialNavigationManager {
         window.removeEventListener('keyup', this.handleKeyUp, { capture: true });
         window.removeEventListener('popstate', this.handleRouteChange);
         window.removeEventListener('hashchange', this.handleRouteChange);
+        if (typeof document !== 'undefined') {
+            document.removeEventListener('focusout', this.handleFocusOut, true);
+        }
         this.stopPointerTracking();
         this.stopFocusWatchdog();
+        if (this.focusRepairFrame != null) {
+            this.cancelFrame(this.focusRepairFrame);
+            this.focusRepairFrame = null;
+        }
         if (this.routeDebounce != null) {
             clearTimeout(this.routeDebounce);
             this.routeDebounce = null;
@@ -418,7 +472,7 @@ class SpatialNavigationManager {
         const focusTarget = this.closestFocusable(target, scope);
         if (!focusTarget) return;
         this.lastInputSource = 'pointer';
-        if (focusTarget !== this.currentFocusedElement) this.setFocus(focusTarget);
+        if (focusTarget !== this.currentFocusedElement) this.setFocus(focusTarget, 'none');
     };
 
     /**
@@ -451,7 +505,11 @@ class SpatialNavigationManager {
         // Same reason as ArrowDown: hydrate deferred shelves so the pointer can
         // keep travelling into rows that are still below the fold.
         this.dispatchHydrateShelves();
-        this.setFocus(target);
+        // 'none': the TV is drawing its own arrow at a fixed screen position. If
+        // we scrolled the card into a "nice" spot, the arrow would end up over a
+        // different card and the ring would visibly snap away on the very next
+        // pointer event. Scrolling here is driven only by the edge assist above.
+        this.setFocus(target, 'none');
     }
 
     private hitTest(x: number, y: number): HTMLElement | null {
@@ -535,11 +593,15 @@ class SpatialNavigationManager {
         let guard = 0;
         while (node && node.nodeType === 1 && guard++ < 40) {
             if ((node as any).hidden) return true;
+            if (node !== el && node.getAttribute('aria-hidden') === 'true') return true;
             const inline = node.style;
             if (inline) {
                 if (inline.display === 'none' || inline.visibility === 'hidden') return true;
-                if (inline.pointerEvents === 'none') return true;
-                // Reanimated writes "opacity: 0" inline while a screen slides out.
+                // Reanimated writes "opacity: 0" inline while a screen slides out,
+                // and React Navigation parks inactive tab screens at opacity 0.
+                // NOTE: pointer-events is deliberately NOT checked — React Native's
+                // pointerEvents="box-none" sets it on containers whose children
+                // stay interactive (the player's top and episode bars).
                 if (inline.opacity === '0' && node !== el) return true;
             }
             if (node === scope || node === document.body) break;
@@ -572,7 +634,9 @@ class SpatialNavigationManager {
      */
     private startFocusWatchdog() {
         if (typeof window === 'undefined' || this.focusWatchdog != null) return;
-        this.focusWatchdog = setInterval(() => this.assertFocusHeld(), 1200);
+        // Safety net only: handleFocusOut repairs the common case on the next
+        // frame, so this just catches browsers that never fire focusout.
+        this.focusWatchdog = setInterval(() => this.assertFocusHeld(), 700);
     }
 
     private stopFocusWatchdog() {
@@ -585,15 +649,18 @@ class SpatialNavigationManager {
         if (!this.isTvModeActive || typeof document === 'undefined' || !document.body) return;
         if (this.isEditingText()) return;
 
+        const scope = this.getActiveScope();
         const current = this.currentFocusedElement;
-        if (current && !document.body.contains(current)) {
-            this.currentFocusedElement = null;
-            this.focusInitialElement();
+        if (current && !this.isFocusAttachedToScope(current, scope)) {
+            // The card was unmounted or its tab became inactive. Recover NEARBY
+            // instead of restarting at the hero — restarting is what makes the
+            // ring "jump back" on TV.
+            this.recoverFocus(scope);
             return;
         }
         if (!current) {
             const active = document.activeElement as HTMLElement | null;
-            if (!active || active === document.body) this.focusInitialElement();
+            if (!active || active === document.body) this.focusInitialElement(scope);
             return;
         }
         const active = document.activeElement as HTMLElement | null;
@@ -602,10 +669,42 @@ class SpatialNavigationManager {
             (!!active && current.contains(active)) ||
             (!!active && active.contains(current));
         // Never yank focus away from a player iframe or a real control.
-        if (!stillHolding && (!active || active === document.body)) {
+        if (!stillHolding && (!active || active === document.body || active === document.documentElement)) {
             this.retainFocus(current);
         }
     }
+
+    /**
+     * The instant the browser drops focus to <body> the TV browser redraws its
+     * own mouse arrow on top of the site — for a full watchdog interval, which
+     * is exactly the "arrow baar baar wapas aa jaata hai" flicker. React on the
+     * focusout itself and put the ring back on the next frame instead.
+     */
+    private handleFocusOut = (event: FocusEvent) => {
+        if (!this.isTvModeActive || typeof document === 'undefined') return;
+        // Focus moving to another real control (search box, iframe, button) is
+        // legitimate — only repair a drop to <body>/nothing.
+        const next = (event.relatedTarget as HTMLElement | null) || null;
+        if (next && next !== document.body && next !== document.documentElement) return;
+        if (this.isEditingText()) return;
+        const current = this.currentFocusedElement;
+        if (!current || !document.body.contains(current)) return;
+        if (this.focusRepairFrame != null) return;
+        this.focusRepairFrame = this.requestFrame(() => {
+            this.focusRepairFrame = null;
+            if (!this.isTvModeActive) return;
+            if (this.isEditingText()) return;
+            const active = document.activeElement as HTMLElement | null;
+            if (!document.body.contains(current)) {
+                this.recoverFocus();
+                return;
+            }
+            if (active === current || (active && current.contains(active))) return;
+            if (!active || active === document.body || active === document.documentElement) {
+                this.retainFocus(current);
+            }
+        });
+    };
 
     private handleRouteChange = () => {
         if (typeof window === 'undefined') return;
@@ -613,10 +712,12 @@ class SpatialNavigationManager {
         this.routeDebounce = setTimeout(() => {
             this.routeDebounce = null;
             if (!this.isTvModeActive) return;
+            const scope = this.getActiveScope();
             const current = this.currentFocusedElement;
-            if (current && typeof document !== 'undefined' && document.body.contains(current)) return;
-            this.currentFocusedElement = null;
-            this.focusInitialElement();
+            if (this.isFocusAttachedToScope(current, scope)) return;
+            // New screen: recover near where the ring was rather than always
+            // restarting at the hero.
+            this.recoverFocus(scope);
         }, 220);
     };
 
@@ -720,13 +821,30 @@ class SpatialNavigationManager {
 
         // Handle Directional navigation
         if (isDirectionalKey) {
-            event.preventDefault();
-            event.stopPropagation();
+            // With TV mode off the arrows belong to the browser: a laptop user
+            // must be able to scroll the page. (The comment above promised this;
+            // the code never actually did it.)
+            if (!this.isTvModeActive) return;
+
             let dir: Direction = 'right';
             if (key === 'ArrowUp' || key === 'Up' || keyCode === 38) dir = 'up';
             else if (key === 'ArrowDown' || key === 'Down' || keyCode === 40) dir = 'down';
             else if (key === 'ArrowLeft' || key === 'Left' || keyCode === 37) dir = 'left';
             else if (key === 'ArrowRight' || key === 'Right' || keyCode === 39) dir = 'right';
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            // A held D-pad fires 15-30 repeats/second. Coalesce them so each
+            // accepted move still gets a full frame to scroll + repaint.
+            const now = Date.now();
+            // Browsers mark a held key as `repeat`; do not debounce distinct OK
+            // taps or two quick intentional presses (both are common on TVs and
+            // must feel one-to-one). Older TV browsers sometimes omit `repeat`,
+            // but the layout work below is now bounded enough to remain usable.
+            if (event.repeat && dir === this.lastMoveDir && now - this.lastMoveAt < MIN_MOVE_INTERVAL_MS) return;
+            this.lastMoveDir = dir;
+            this.lastMoveAt = now;
 
             this.moveFocus(dir);
             return;
@@ -842,22 +960,111 @@ class SpatialNavigationManager {
         return document.body;
     }
 
-    public isVisible(element: HTMLElement): boolean {
-        if (!element) return false;
-        // Samsung TV 60fps: NEVER call window.getComputedStyle() here — it forces
-        // a style recalc on every keypress across hundreds of candidates on
-        // low-end TV SoCs. Inline + geometry checks are sufficient: display:none
-        // and detached nodes report a zero rect, which already fails below.
-        if ((element as any).hidden) return false;
-        const inline = (element as HTMLElement).style;
+    /**
+     * Own-element checks only — no ancestor walk, no getComputedStyle.
+     *
+     * Samsung TV 60fps: NEVER call window.getComputedStyle() here, it forces a
+     * style recalc per candidate on low-end TV SoCs. Inline + geometry checks
+     * are enough: display:none and detached nodes report a zero rect.
+     */
+    private isOwnFocusBlocked(element: HTMLElement): boolean {
+        if (!element || element.nodeType !== 1) return true;
+        if ((element as any).hidden) return true;
+        if (element.getAttribute('aria-hidden') === 'true') return true;
+        const inline = element.style;
         if (inline) {
-            if (inline.display === 'none' || inline.visibility === 'hidden' || inline.opacity === '0') {
+            if (inline.display === 'none' || inline.visibility === 'hidden' || inline.visibility === 'collapse') {
+                return true;
+            }
+            if (inline.opacity === '0') return true;
+        }
+        return false;
+    }
+
+    private getSelfVisibleRect(element: HTMLElement): DOMRect | null {
+        if (this.isOwnFocusBlocked(element)) return null;
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 ? rect : null;
+    }
+
+    private isSelfVisible(element: HTMLElement): boolean {
+        return this.getSelfVisibleRect(element) !== null;
+    }
+
+    /**
+     * Does this ANCESTOR hide its whole subtree from the remote?
+     *
+     * Deliberately ignores `pointer-events`: React Native's
+     * `pointerEvents="box-none"` sets pointer-events:none on a container while
+     * its children stay interactive (the player's top/episode bars do exactly
+     * that), so treating it as "hidden" would make those controls unreachable.
+     */
+    private ancestorBlocksFocus(node: HTMLElement): boolean {
+        if ((node as any).hidden) return true;
+        if (node.getAttribute('aria-hidden') === 'true') return true;
+        const inline = node.style;
+        if (inline) {
+            if (inline.display === 'none' || inline.visibility === 'hidden' || inline.visibility === 'collapse') {
+                return true;
+            }
+            // React Navigation keeps every tab screen mounted and stacks them at
+            // the SAME coordinates, hiding the inactive ones with opacity:0.
+            if (inline.opacity === '0') return true;
+        }
+        return false;
+    }
+
+    /**
+     * Walk to `stop` looking for a hidden ancestor. `cache` memoises the verdict
+     * per node so a whole shelf of cards sharing one screen wrapper costs one
+     * walk instead of one per card.
+     */
+    private hasHiddenAncestor(el: HTMLElement, stop: HTMLElement | null, cache: Map<Element, boolean>): boolean {
+        if (typeof document === 'undefined') return false;
+        let node: HTMLElement | null = el.parentElement;
+        const path: HTMLElement[] = [];
+        let guard = 0;
+        while (node && node.nodeType === 1 && guard++ < 60) {
+            const cached = cache.get(node);
+            if (cached !== undefined) {
+                path.forEach(item => cache.set(item, cached));
+                return cached;
+            }
+
+            path.push(node);
+            if (this.ancestorBlocksFocus(node)) {
+                path.forEach(item => cache.set(item, true));
+                return true;
+            }
+            if (node === stop || node === document.body || node === document.documentElement) {
+                path.forEach(item => cache.set(item, false));
                 return false;
             }
+            node = node.parentElement;
         }
-        if (element.getAttribute('aria-hidden') === 'true') return false;
-        const rect = element.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0;
+        path.forEach(item => cache.set(item, false));
+        return false;
+    }
+
+    public isVisible(element: HTMLElement): boolean {
+        if (!element) return false;
+        if (!this.isSelfVisible(element)) return false;
+        // Without the ancestor walk the ring happily travels into an invisible
+        // tab screen whose cards are pixel-for-pixel twins of the visible ones,
+        // which is exactly the "white ring stops moving / snaps back" symptom.
+        return !this.hasHiddenAncestor(element, document.body, new Map());
+    }
+
+    /**
+     * Attachment/visibility without a geometry read. The watchdog uses this
+     * version because a TV browser can briefly report a zero rect while a shelf
+     * is repainting; that is not a reason to throw away a perfectly good ring.
+     */
+    private isFocusAttachedToScope(element: HTMLElement | null, scope: HTMLElement): boolean {
+        if (!element || typeof document === 'undefined' || !document.body.contains(element)) return false;
+        if (!scope || !scope.contains(element)) return false;
+        if (this.ancestorBlocksFocus(element)) return false;
+        return !this.hasHiddenAncestor(element, scope, new Map());
     }
 
     /**
@@ -870,6 +1077,19 @@ class SpatialNavigationManager {
             window.dispatchEvent(new CustomEvent('arena-hydrate-shelf'));
         } catch {
             try { window.dispatchEvent(new Event('arena-hydrate-shelf')); } catch {}
+        }
+    }
+
+    private clearFocusRing() {
+        if (this.currentFocusedElement) {
+            this.currentFocusedElement.removeAttribute('data-tv-focused');
+            this.currentFocusedElement.classList.remove('tv-focused');
+        }
+        this.currentFocusedElement = null;
+        this.lastKnownRect = null;
+        if (this.focusRepairFrame != null) {
+            this.cancelFrame(this.focusRepairFrame);
+            this.focusRepairFrame = null;
         }
     }
 
@@ -887,37 +1107,83 @@ class SpatialNavigationManager {
         } catch {
             try { (element as HTMLElement).focus(); } catch {}
         }
+        this.rememberPosition(element);
+    }
+
+    /**
+     * Build the candidate list without forcing layout. Ancestor visibility is
+     * memoised, and geometry is read lazily by the returned context only for
+     * candidates that the current direction actually compares.
+     *
+     * The previous implementation measured every candidate inside isVisible()
+     * and then measured them AGAIN in moveFocus(), so each keypress forced two
+     * full layout passes over hundreds of nodes with DOM writes in between.
+     * That is the "TV par bahut lag karta hai".
+     */
+    private createFocusContext(scope: HTMLElement): FocusContext {
+        const rects = new Map<HTMLElement, DOMRect>();
+        const elements: HTMLElement[] = [];
+        if (!scope) return { elements, rect: (el: HTMLElement) => rects.get(el) || this.measure(el, rects) };
+
+        const all = Array.from(scope.querySelectorAll(FOCUSABLE_SELECTOR)) as HTMLElement[];
+        const hiddenAncestors = new Map<Element, boolean>();
+
+        for (const el of all) {
+            if (el.getAttribute('data-tv-ignore') === 'true') continue;
+            if (!this.isFocusableElement(el)) continue;
+            // Reject an inactive tab BEFORE reading layout. On a real TV those
+            // screens contain hundreds of mounted cards at the same coordinates.
+            if (this.hasHiddenAncestor(el, scope, hiddenAncestors)) continue;
+            // Do not call getBoundingClientRect for every card here. Horizontal
+            // D-pad navigation usually needs only the current shelf; measuring
+            // all mounted cards was the remaining source of key-to-ring delay.
+            // Geometry is read lazily by ctx.rect only for candidates considered
+            // in this move.
+            if (this.isOwnFocusBlocked(el)) continue;
+            elements.push(el);
+        }
+
+        return {
+            elements,
+            rect: (el: HTMLElement) => this.measure(el, rects),
+        };
+    }
+
+    private measure(el: HTMLElement, cache: Map<HTMLElement, DOMRect>): DOMRect {
+        const cached = cache.get(el);
+        if (cached) return cached;
+        const rect = el.getBoundingClientRect();
+        cache.set(el, rect);
+        return rect;
     }
 
     /**
      * Find all visible focusable elements within the active scope
      */
     public getFocusableElements(scope: HTMLElement = this.getActiveScope()): HTMLElement[] {
-        if (!scope) return [];
-
-        const selector = [
-            '[data-tv-focusable="true"]',
-            '[tabindex="0"]',
-            '[role="button"]:not([aria-disabled="true"])',
-            'button:not([disabled])',
-            'a[href]',
-            'input:not([disabled])',
-        ].join(', ');
-
-        const all = Array.from(scope.querySelectorAll(selector)) as HTMLElement[];
-        return all.filter(el => {
-            if (el.getAttribute('data-tv-ignore') === 'true') return false;
-            return this.isVisible(el);
-        });
+        return this.createFocusContext(scope).elements;
     }
 
     /**
-     * Set focus on a specific element
+     * Set focus on a specific element.
+     *
+     * `scroll` picks how much the page may move to reveal the card:
+     *   'both' - key navigation (default)
+     *   'none' - the TV is driving its own on-screen arrow; scrolling would move
+     *            the card out from under the arrow and the ring would visibly
+     *            snap somewhere else on the next pointer event.
      */
-    public setFocus(element: HTMLElement | null) {
+    public setFocus(element: HTMLElement | null, scroll: ScrollAxis = 'both') {
         if (!element) return;
 
-        if (this.currentFocusedElement && this.currentFocusedElement !== element) {
+        if (this.currentFocusedElement === element) {
+            // Already ringed: only re-assert the native focus so the TV browser
+            // never drops back to its mouse-pointer arrow.
+            this.retainFocus(element);
+            return;
+        }
+
+        if (this.currentFocusedElement) {
             this.currentFocusedElement.removeAttribute('data-tv-focused');
             this.currentFocusedElement.classList.remove('tv-focused');
         }
@@ -931,82 +1197,129 @@ class SpatialNavigationManager {
             element.focus({ preventScroll: true });
         } catch {}
 
-        this.scrollIntoViewSmart(element);
+        this.scrollIntoViewSmart(element, { axis: scroll });
+        this.rememberPosition(element);
+    }
+
+    /** Where the ring currently sits, so an unmount can be recovered nearby. */
+    private rememberPosition(element: HTMLElement) {
+        try {
+            const r = element.getBoundingClientRect();
+            if (r.width > 0 || r.height > 0) {
+                this.lastKnownRect = { left: r.left, top: r.top, width: r.width, height: r.height };
+            }
+        } catch {}
     }
 
     public getCurrentFocus(): HTMLElement | null {
         return this.currentFocusedElement;
     }
 
-    /**
-     * Smart scroll: centers element horizontally in shelf,
-     * and positions row vertically in the main viewport.
-     *
-     * Samsung TV 60fps: no window.getComputedStyle() walks and no
-     * behavior:'smooth' animations (CPU-blocking on Tizen). Direct hardware
-     * scrollLeft / scrollTop positioning only — the compositor handles it.
-     */
-    public scrollIntoViewSmart(element: HTMLElement) {
-        if (typeof window === 'undefined') return;
-
-        // Geometry cached once per call — getBoundingClientRect() forces layout.
-        const elRect = element.getBoundingClientRect();
-
-        // 1. Horizontal Scroll: nearest horizontally scrollable parent via
-        // direct geometry check (no computed-style overflow inspection).
+    /** Nearest horizontally scrollable ancestor, found by geometry only. */
+    private horizontalScroller(element: HTMLElement): HTMLElement | null {
+        if (typeof document === 'undefined') return null;
         let parent = element.parentElement;
-        while (parent && parent !== document.body) {
-            if (parent.scrollWidth > parent.clientWidth + 10) {
-                const parentRect = parent.getBoundingClientRect();
-                const targetScrollLeft = parent.scrollLeft + (elRect.left - parentRect.left) - (parent.clientWidth - elRect.width) / 2;
-                try { parent.scrollLeft = Math.max(0, targetScrollLeft); } catch {}
-                break;
-            }
+        let guard = 0;
+        while (parent && parent !== document.body && guard++ < 40) {
+            if (parent.scrollWidth > parent.clientWidth + 10) return parent;
             parent = parent.parentElement;
         }
+        return null;
+    }
 
-        // 2. Vertical Scroll: Position the row/element around 32% from top of viewport (Netflix style)
-        const viewportHeight = window.innerHeight || 800;
+    /**
+     * Netflix shelf behaviour: the row only scrolls when the focused card is
+     * about to leave the visible band, and then only by the amount needed to
+     * bring it back in (plus a sliver of the next card).
+     *
+     * The old code RE-CENTRED the card in the shelf on every single keypress.
+     * Two consequences on a real TV:
+     *   1. the ring looked stuck in the middle while the whole shelf slid under
+     *      it ("white ring sahi se move nahi kar raha"), and
+     *   2. every D-pad step repainted an entire 32-card shelf — the main source
+     *      of the lag.
+     */
+    private revealHorizontally(element: HTMLElement, elRect: DOMRect) {
+        const parent = this.horizontalScroller(element);
+        if (!parent) return;
+        const parentRect = parent.getBoundingClientRect();
+        // Keep a sliver of the neighbouring card visible, like Netflix does.
+        const edge = Math.max(12, Math.min(48, parent.clientWidth * 0.05));
+        const overflowRight = elRect.right - (parentRect.right - edge);
+        const overflowLeft = parentRect.left + edge - elRect.left;
+        const delta = overflowRight > 0 ? overflowRight : overflowLeft > 0 ? -overflowLeft : 0;
+        if (Math.abs(delta) < 2) return;
+        try { parent.scrollLeft = Math.max(0, parent.scrollLeft + delta); } catch {}
+    }
+
+    /**
+     * Vertical: leave the page alone while the card is comfortably on screen,
+     * otherwise settle its row around 32% from the top (the Netflix band).
+     */
+    private revealVertically(element: HTMLElement, elRect: DOMRect) {
+        const viewportHeight = (typeof window !== 'undefined' && window.innerHeight) || 800;
+        // Already fully readable on screen -> never scroll. Moving left/right
+        // inside a shelf must not make the whole page jump.
+        if (elRect.top >= viewportHeight * 0.12 && elRect.bottom <= viewportHeight * 0.9) return;
+
         const desiredTop = viewportHeight * 0.32;
         const diff = elRect.top - desiredTop;
+        if (Math.abs(diff) < 24) return;
 
-        if (Math.abs(diff) > 40) {
-            // Fast path: the tagged home TV scroll container (dataSet.tvScrollContainer).
-            let scrollParent: HTMLElement | null = null;
-            try {
-                scrollParent = element.closest?.(
-                    '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
-                ) as HTMLElement | null;
-            } catch {}
-            // Fallback: nearest vertically scrollable parent via direct geometry.
-            if (!scrollParent) {
-                let p = element.parentElement;
-                while (p && p !== document.body) {
-                    if (p.scrollHeight > p.clientHeight + 10) {
-                        scrollParent = p;
-                        break;
-                    }
-                    p = p.parentElement;
+        // Fast path: the tagged home TV scroll container (dataSet.tvScrollContainer).
+        let scrollParent: HTMLElement | null = null;
+        try {
+            scrollParent = element.closest?.(
+                '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
+            ) as HTMLElement | null;
+        } catch {}
+        // Fallback: nearest vertically scrollable parent via direct geometry.
+        if (!scrollParent) {
+            let p = element.parentElement;
+            let guard = 0;
+            while (p && p !== document.body && guard++ < 40) {
+                if (p.scrollHeight > p.clientHeight + 10) {
+                    scrollParent = p;
+                    break;
                 }
+                p = p.parentElement;
             }
-
-            try {
-                if (scrollParent) {
-                    scrollParent.scrollTop = scrollParent.scrollTop + diff;
-                } else if (typeof document !== 'undefined' && document.documentElement) {
-                    const base = document.documentElement.scrollTop || window.scrollY || 0;
-                    document.documentElement.scrollTop = base + diff;
-                    // Keep body in sync for Samsung TV browser quirks.
-                    try { document.body.scrollTop = document.documentElement.scrollTop; } catch {}
-                }
-                // Some TV browsers only follow the window scroller. Nudge it too
-                // when the tagged container could not absorb the whole delta.
-                const stillOff = element.getBoundingClientRect().top - desiredTop;
-                if (Math.abs(stillOff) > 40 && typeof window.scrollBy === 'function') {
-                    try { window.scrollBy(0, stillOff); } catch {}
-                }
-            } catch {}
         }
+
+        try {
+            if (scrollParent) {
+                scrollParent.scrollTop = scrollParent.scrollTop + diff;
+            } else if (typeof document !== 'undefined' && document.documentElement) {
+                const base = document.documentElement.scrollTop || window.scrollY || 0;
+                document.documentElement.scrollTop = base + diff;
+                // Keep body in sync for Samsung TV browser quirks.
+                try { document.body.scrollTop = document.documentElement.scrollTop; } catch {}
+            }
+            // Some TV browsers only follow the window scroller. Nudge it too
+            // when the tagged container could not absorb the whole delta.
+            const stillOff = element.getBoundingClientRect().top - desiredTop;
+            if (Math.abs(stillOff) > 40 && typeof window !== 'undefined' && typeof window.scrollBy === 'function') {
+                try { window.scrollBy(0, stillOff); } catch {}
+            }
+        } catch {}
+    }
+
+    /**
+     * Smart scroll: reveals the focused card in its shelf and in the viewport.
+     *
+     * Samsung TV 60fps: no window.getComputedStyle() walks and no
+     * behavior:'smooth' animations (CPU-blocking on Tizen). Direct
+     * scrollLeft / scrollTop positioning only — the compositor handles it.
+     */
+    public scrollIntoViewSmart(element: HTMLElement, options: { axis?: ScrollAxis } = {}) {
+        if (typeof window === 'undefined') return;
+        const axis = options.axis || 'both';
+        if (axis === 'none') return;
+
+        // Geometry read once per call — getBoundingClientRect() forces layout.
+        const elRect = element.getBoundingClientRect();
+        if (axis === 'both' || axis === 'x') this.revealHorizontally(element, elRect);
+        if (axis === 'both' || axis === 'y') this.revealVertically(element, elRect);
     }
 
     /**
@@ -1017,109 +1330,88 @@ class SpatialNavigationManager {
      */
     public moveFocus(dir: Direction) {
         // Samsung Smart TV (UA32T4410): ArrowDown hydrates deferred
-        // below-the-fold shelves instantly so focus never drops into the
-        // void (which triggers Samsung's mouse-pointer fallback + arrow).
+        // below-the-fold shelves so focus never drops into the void (which
+        // triggers Samsung's mouse-pointer fallback + arrow). DeferredMovieList
+        // only hydrates the shelves that are actually near the viewport, so this
+        // stays cheap instead of mounting every row in the app at once.
         if (dir === 'down') {
             this.dispatchHydrateShelves();
         }
 
         const scope = this.getActiveScope();
-        const focusables = this.getFocusableElements(scope);
-        if (focusables.length === 0) return;
 
-        // If no element currently focused or current focus is detached, find initial
-        if (!this.currentFocusedElement || !document.body.contains(this.currentFocusedElement)) {
-            this.focusInitialElement(scope);
+        // Focus was lost (a virtualised shelf unmounted the card, a row
+        // re-rendered, or the previous tab became hidden). Recover NEARBY —
+        // never teleport back to the hero, that is the "arrow wapas pehle card
+        // par aa jaata hai" bug.
+        if (!this.isFocusAttachedToScope(this.currentFocusedElement, scope)) {
+            this.recoverFocus(scope, dir);
             return;
         }
 
-        const current = this.currentFocusedElement;
+        const ctx = this.createFocusContext(scope);
+        const focusables = ctx.elements;
+        if (focusables.length === 0) return;
 
-        // --- Geometry cached once per keypress (layout is expensive on TV) ---
-        const rectCache = new Map<HTMLElement, DOMRect>();
-        const getRect = (el: HTMLElement): DOMRect => {
-            let r = rectCache.get(el);
-            if (!r) {
-                r = el.getBoundingClientRect();
-                rectCache.set(el, r);
-            }
-            return r;
-        };
-
+        const getRect = ctx.rect;
+        const current = this.currentFocusedElement as HTMLElement;
         const currentRow = current.getAttribute('data-tv-row');
         const currentRect = getRect(current);
         const currentCenterX = currentRect.left + currentRect.width / 2;
         const currentCenterY = currentRect.top + currentRect.height / 2;
+        const vertical = dir === 'up' || dir === 'down';
+        // Row headers ("Explore All") sit in the vertical flow of the page but
+        // are not part of it: ArrowUp must land on the shelf above, not on the
+        // small text link of the very row you are in.
+        const inVerticalFlow = (el: HTMLElement) =>
+            !vertical || el.getAttribute('data-tv-vertical-ignore') !== 'true';
 
         // --- ROW-AWARE LOGIC (Shelves / Carousels) ---
         if (currentRow) {
             // Moving Left/Right within same row
-            if (dir === 'right') {
-                const sameRowRights = focusables.filter(el => {
+            if (dir === 'right' || dir === 'left') {
+                const toRight = dir === 'right';
+                const sameRow = focusables.filter(el => {
                     if (el === current || el.getAttribute('data-tv-row') !== currentRow) return false;
                     const r = getRect(el);
-                    return r.left >= currentRect.left + 5;
-                }).sort((a, b) => getRect(a).left - getRect(b).left);
-
-                if (sameRowRights.length > 0) {
-                    this.setFocus(sameRowRights[0]);
-                    return;
-                }
-            } else if (dir === 'left') {
-                const sameRowLefts = focusables.filter(el => {
-                    if (el === current || el.getAttribute('data-tv-row') !== currentRow) return false;
-                    const r = getRect(el);
-                    return r.right <= currentRect.right - 5;
-                }).sort((a, b) => getRect(b).right - getRect(a).right);
-
-                if (sameRowLefts.length > 0) {
-                    this.setFocus(sameRowLefts[0]);
-                    return;
-                }
-            } else if (dir === 'down') {
-                // Find candidates in rows below
-                const candidatesBelow = focusables.filter(el => {
-                    const r = getRect(el);
-                    return r.top >= currentRect.bottom - 10;
+                    return toRight ? r.left >= currentRect.left + 5 : r.right <= currentRect.right - 5;
                 });
 
-                if (candidatesBelow.length > 0) {
-                    // Find the nearest row top below
-                    const rowTops = candidatesBelow.map(el => Math.round(getRect(el).top / 40) * 40);
-                    const minRowTop = Math.min(...rowTops);
-                    const immediateRowCandidates = candidatesBelow.filter(el =>
-                        Math.abs(Math.round(getRect(el).top / 40) * 40 - minRowTop) <= 20
-                    );
-
-                    // Pick candidate with closest horizontal center
-                    immediateRowCandidates.sort((a, b) => {
+                if (sameRow.length > 0) {
+                    sameRow.sort((a, b) => {
                         const ra = getRect(a);
                         const rb = getRect(b);
-                        const da = Math.abs((ra.left + ra.width / 2) - currentCenterX);
-                        const db = Math.abs((rb.left + rb.width / 2) - currentCenterX);
-                        return da - db;
+                        return toRight ? ra.left - rb.left : rb.right - ra.right;
                     });
-
-                    if (immediateRowCandidates.length > 0) {
-                        this.setFocus(immediateRowCandidates[0]);
-                        return;
-                    }
+                    this.setFocus(sameRow[0]);
+                    return;
                 }
-            } else if (dir === 'up') {
-                // Find candidates in rows above
-                const candidatesAbove = focusables.filter(el => {
+            } else {
+                // Nearest shelf above / below, bucketed so cards of the same
+                // row count as one line even when posters differ by a few px.
+                const BUCKET = 40;
+                const candidates = focusables.filter(el => {
+                    if (el === current || !inVerticalFlow(el)) return false;
                     const r = getRect(el);
-                    return r.bottom <= currentRect.top + 10;
+                    return dir === 'down'
+                        ? r.top >= currentRect.bottom - 10
+                        : r.bottom <= currentRect.top + 10;
                 });
 
-                if (candidatesAbove.length > 0) {
-                    // Find nearest row bottom above
-                    const rowBottoms = candidatesAbove.map(el => Math.round(getRect(el).bottom / 40) * 40);
-                    const maxRowBottom = Math.max(...rowBottoms);
-                    const immediateRowCandidates = candidatesAbove.filter(el =>
-                        Math.abs(Math.round(getRect(el).bottom / 40) * 40 - maxRowBottom) <= 20
-                    );
+                if (candidates.length > 0) {
+                    const bucketOf = (el: HTMLElement) => {
+                        const r = getRect(el);
+                        const edge = dir === 'down' ? r.top : r.bottom;
+                        return Math.round(edge / BUCKET) * BUCKET;
+                    };
+                    let targetBucket = bucketOf(candidates[0]);
+                    for (const el of candidates) {
+                        const b = bucketOf(el);
+                        if (dir === 'down' ? b < targetBucket : b > targetBucket) targetBucket = b;
+                    }
+                    const immediateRowCandidates = candidates.filter(el => Math.abs(bucketOf(el) - targetBucket) <= 20);
 
+                    // Pick candidate with closest horizontal center
                     immediateRowCandidates.sort((a, b) => {
                         const ra = getRect(a);
                         const rb = getRect(b);
@@ -1141,10 +1433,8 @@ class SpatialNavigationManager {
         let bestScore = Infinity;
 
         for (const candidate of focusables) {
-            if (candidate === current) continue;
+            if (candidate === current || !inVerticalFlow(candidate)) continue;
             const cRect = getRect(candidate);
-            const cCenterX = cRect.left + cRect.width / 2;
-            const cCenterY = cRect.top + cRect.height / 2;
 
             let primaryDist = 0;
             let secondaryDist = 0;
@@ -1153,22 +1443,22 @@ class SpatialNavigationManager {
             if (dir === 'right') {
                 primaryDist = cRect.left - currentRect.right;
                 if (primaryDist < -currentRect.width * 0.4) continue; // Behind or heavily overlapping
-                secondaryDist = Math.abs(cCenterY - currentCenterY);
+                secondaryDist = Math.abs((cRect.top + cRect.height / 2) - currentCenterY);
                 hasOverlap = Math.max(0, Math.min(currentRect.bottom, cRect.bottom) - Math.max(currentRect.top, cRect.top)) > 0;
             } else if (dir === 'left') {
                 primaryDist = currentRect.left - cRect.right;
                 if (primaryDist < -currentRect.width * 0.4) continue;
-                secondaryDist = Math.abs(cCenterY - currentCenterY);
+                secondaryDist = Math.abs((cRect.top + cRect.height / 2) - currentCenterY);
                 hasOverlap = Math.max(0, Math.min(currentRect.bottom, cRect.bottom) - Math.max(currentRect.top, cRect.top)) > 0;
             } else if (dir === 'down') {
                 primaryDist = cRect.top - currentRect.bottom;
                 if (primaryDist < -currentRect.height * 0.4) continue;
-                secondaryDist = Math.abs(cCenterX - currentCenterX);
+                secondaryDist = Math.abs((cRect.left + cRect.width / 2) - currentCenterX);
                 hasOverlap = Math.max(0, Math.min(currentRect.right, cRect.right) - Math.max(currentRect.left, cRect.left)) > 0;
-            } else if (dir === 'up') {
+            } else {
                 primaryDist = currentRect.top - cRect.bottom;
                 if (primaryDist < -currentRect.height * 0.4) continue;
-                secondaryDist = Math.abs(cCenterX - currentCenterX);
+                secondaryDist = Math.abs((cRect.left + cRect.width / 2) - currentCenterX);
                 hasOverlap = Math.max(0, Math.min(currentRect.right, cRect.right) - Math.max(currentRect.left, cRect.left)) > 0;
             }
 
@@ -1186,18 +1476,86 @@ class SpatialNavigationManager {
 
         if (bestCandidate) {
             this.setFocus(bestCandidate);
-        } else if (dir === 'down') {
-            // Bottom shelf: retain focus on the current card so the Samsung
-            // TV browser never falls back to mouse-pointer mode + arrow.
-            this.retainFocus(current);
+            return;
         }
+
+        // Edge of the page: hold the ring exactly where it is. Losing DOM focus
+        // here is what makes the Samsung browser fall back to mouse-pointer
+        // mode and draw its arrow on top of the site.
+        this.retainFocus(current);
+    }
+
+    /**
+     * The ring's element disappeared (virtualised shelf, re-rendered row, route
+     * change). Netflix keeps you where you were, so recover the closest
+     * surviving card in the same shelf, then the closest by position, and only
+     * then fall back to the hero.
+     */
+    private recoverFocus(scope: HTMLElement = this.getActiveScope(), direction?: Direction) {
+        const lost = this.currentFocusedElement;
+        const lostRow = lost && typeof lost.getAttribute === 'function' ? lost.getAttribute('data-tv-row') : null;
+        const lostIndexRaw = lost && typeof lost.getAttribute === 'function' ? lost.getAttribute('data-tv-index') : null;
+        const lostIndex = lostIndexRaw === null ? NaN : Number(lostIndexRaw);
+        const anchor = this.lastKnownRect;
+
+        this.currentFocusedElement = null;
+        const ctx = this.createFocusContext(scope);
+        if (ctx.elements.length === 0) return;
+
+        if (lostRow) {
+            const sameShelf = ctx.elements.filter(el => el.getAttribute('data-tv-row') === lostRow);
+            if (sameShelf.length > 0) {
+                sameShelf.sort((a, b) => {
+                    const ia = Number(a.getAttribute('data-tv-index'));
+                    const ib = Number(b.getAttribute('data-tv-index'));
+                    const da = Number.isFinite(ia) && Number.isFinite(lostIndex) ? Math.abs(ia - lostIndex) : Infinity;
+                    const db = Number.isFinite(ib) && Number.isFinite(lostIndex) ? Math.abs(ib - lostIndex) : Infinity;
+                    // If the card disappeared between two repeated remote
+                    // presses, continue in the direction of that press rather
+                    // than bouncing one card backwards on the tie.
+                    if (direction === 'right' || direction === 'down') {
+                        const aBehind = Number.isFinite(ia) && Number.isFinite(lostIndex) && ia < lostIndex ? 1 : 0;
+                        const bBehind = Number.isFinite(ib) && Number.isFinite(lostIndex) && ib < lostIndex ? 1 : 0;
+                        if (aBehind !== bBehind) return aBehind - bBehind;
+                    } else if (direction === 'left' || direction === 'up') {
+                        const aAhead = Number.isFinite(ia) && Number.isFinite(lostIndex) && ia > lostIndex ? 1 : 0;
+                        const bAhead = Number.isFinite(ib) && Number.isFinite(lostIndex) && ib > lostIndex ? 1 : 0;
+                        if (aAhead !== bAhead) return aAhead - bAhead;
+                    }
+                    if (da !== db) return da - db;
+                    return ia - ib;
+                });
+                this.setFocus(sameShelf[0]);
+                return;
+            }
+        }
+
+        if (anchor) {
+            let best: HTMLElement | null = null;
+            let bestScore = Infinity;
+            for (const el of ctx.elements) {
+                const r = ctx.rect(el);
+                const score = Math.abs(r.left - anchor.left) + Math.abs(r.top - anchor.top) * 1.6;
+                if (score < bestScore) {
+                    bestScore = score;
+                    best = el;
+                }
+            }
+            if (best) {
+                this.setFocus(best);
+                return;
+            }
+        }
+
+        this.focusInitialElement(scope, ctx);
     }
 
     /**
      * Focus initial prominent element (Hero Play button, first card, or primary action)
      */
-    public focusInitialElement(scope: HTMLElement = this.getActiveScope()) {
-        const focusables = this.getFocusableElements(scope);
+    public focusInitialElement(scope: HTMLElement = this.getActiveScope(), context?: FocusContext) {
+        const ctx = context || this.createFocusContext(scope);
+        const focusables = ctx.elements;
         if (focusables.length === 0) return;
 
         // 1. Explicit initial target

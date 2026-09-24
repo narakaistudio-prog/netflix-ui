@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
 import { View, Text, Pressable, FlatList, ScrollView, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { styles } from '@/styles';
@@ -11,6 +11,10 @@ import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselW
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
+
+/** TV mode uses the native-style ring, not desktop hover cards/box-shadows. */
+const isTvRemoteMode = () =>
+    IS_WEB && typeof document !== 'undefined' && document.body.classList.contains('tv-remote-mode');
 
 const NumberBackground = ({ number }: { number: number }) => {
     const num = (number).toString().padStart(2, '0');
@@ -68,15 +72,15 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
     const num = index + 1;
-    const isActive = hovered || focused;
+    const isActive = !isTvRemoteMode() && (hovered || focused);
 
     return (
         <Pressable
             onPress={onPress}
-            onHoverIn={() => setHovered(true)}
-            onHoverOut={() => setHovered(false)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onHoverIn={() => { if (!isTvRemoteMode()) setHovered(true); }}
+            onHoverOut={() => { if (!isTvRemoteMode()) setHovered(false); }}
+            onFocus={() => { if (!isTvRemoteMode()) setFocused(true); }}
+            onBlur={() => { if (!isTvRemoteMode()) setFocused(false); }}
             tabIndex={0}
             accessibilityRole="button"
             accessibilityLabel={`Open ${item.title || 'title'}`}
@@ -84,6 +88,7 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
             {...({
                 dataSet: {
                     tvFocusable: 'true',
+                    tvCard: 'true',
                     tvRow: rowTitle,
                     tvIndex: String(index),
                 },
@@ -108,7 +113,7 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
                     </View>
 
                     {isActive && (
-                        <View style={top10.quickOverlay}>
+                        <View style={top10.quickOverlay} {...({ dataSet: { tvCardOverlay: 'true' } } as any)}>
                             <View style={card.playCircle}>
                                 <Ionicons name="play" size={16} color="#000" />
                             </View>
@@ -135,15 +140,15 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
 }) => {
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
-    const isActive = hovered || focused;
+    const isActive = !isTvRemoteMode() && (hovered || focused);
 
     return (
         <Pressable
             onPress={onPress}
-            onHoverIn={() => setHovered(true)}
-            onHoverOut={() => setHovered(false)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onHoverIn={() => { if (!isTvRemoteMode()) setHovered(true); }}
+            onHoverOut={() => { if (!isTvRemoteMode()) setHovered(false); }}
+            onFocus={() => { if (!isTvRemoteMode()) setFocused(true); }}
+            onBlur={() => { if (!isTvRemoteMode()) setFocused(false); }}
             tabIndex={0}
             accessibilityRole="button"
             accessibilityLabel={`Open ${item.title || 'title'}`}
@@ -151,6 +156,7 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
             {...({
                 dataSet: {
                     tvFocusable: 'true',
+                    tvCard: 'true',
                     tvRow: rowTitle,
                     tvIndex: String(index),
                 },
@@ -171,7 +177,7 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
 
                 {/* Hover overlay with action buttons and title */}
                 {isActive && (
-                    <View style={card.hoverOverlay}>
+                    <View style={card.hoverOverlay} {...({ dataSet: { tvCardOverlay: 'true' } } as any)}>
                         <View style={card.actionsRow}>
                             <View style={card.playCircle}>
                                 <Ionicons name="play" size={16} color="#000" />
@@ -207,6 +213,12 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
 export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow & { hideExploreAll?: boolean }) {
     const router = useRouter();
     const isTop10 = type === 'top_10';
+    // Home, Movies and TV Shows are all mounted at the same time and reuse the
+    // same rowTitle, so a bare `data-tv-row={rowTitle}` makes the remote treat
+    // three different shelves as ONE row — the ring then walks into a screen the
+    // user cannot see. Suffix a per-instance id so every shelf is unique.
+    const shelfUid = useId().replace(/:/g, '');
+    const navRow = `${rowTitle}#${shelfUid}`;
     const { isVisionOS } = useVisionOS();
     const { width: windowWidth } = useWindowDimensions();
     // Web uses a horizontal ScrollView while native uses FlatList; both refs
@@ -249,7 +261,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                         key={`${item.id}-${index}`}
                         item={item}
                         index={index}
-                        rowTitle={rowTitle}
+                        rowTitle={navRow}
                         onPress={() => openMovie(item)}
                     />
                 );
@@ -259,7 +271,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                     key={`${item.id}-${index}`}
                     item={item}
                     index={index}
-                    rowTitle={rowTitle}
+                    rowTitle={navRow}
                     onPress={() => openMovie(item)}
                 />
             );
@@ -294,8 +306,12 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                             {...({
                                 dataSet: {
                                     tvFocusable: 'true',
-                                    tvRow: `${rowTitle}-header`,
+                                    tvRow: `${navRow}-header`,
                                     tvId: `explore-${rowTitle}`,
+                                    // Not part of the page's vertical flow: ArrowUp
+                                    // from this shelf must reach the shelf above,
+                                    // not this little text link.
+                                    tvVerticalIgnore: 'true',
                                 },
                             } as any)}
                         >
@@ -330,8 +346,12 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                             {
                                 paddingHorizontal: ROW_PADDING,
                                 columnGap: isTop10 ? 28 : 12,
-                                paddingTop: 10,
-                                paddingBottom: 22,
+                                // The TV focus ring is scale(1.06) + a 4px outline
+                                // with a 3px offset, i.e. ~15px taller than the
+                                // poster. This ScrollView clips overflow, so without
+                                // this headroom the top of the ring is cut off.
+                                paddingTop: IS_WEB ? 18 : 10,
+                                paddingBottom: IS_WEB ? 26 : 22,
                             },
                         ]}
                     >
