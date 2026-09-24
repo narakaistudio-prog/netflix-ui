@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
 import { View, Text, Pressable, FlatList, ScrollView, StyleSheet, Platform, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { styles } from '@/styles';
@@ -207,6 +207,12 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
 export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow & { hideExploreAll?: boolean }) {
     const router = useRouter();
     const isTop10 = type === 'top_10';
+    // Home, Movies and TV Shows are all mounted at the same time and reuse the
+    // same rowTitle, so a bare `data-tv-row={rowTitle}` makes the remote treat
+    // three different shelves as ONE row — the ring then walks into a screen the
+    // user cannot see. Suffix a per-instance id so every shelf is unique.
+    const shelfUid = useId().replace(/:/g, '');
+    const navRow = `${rowTitle}#${shelfUid}`;
     const { isVisionOS } = useVisionOS();
     const { width: windowWidth } = useWindowDimensions();
     // Web uses a horizontal ScrollView while native uses FlatList; both refs
@@ -249,7 +255,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                         key={`${item.id}-${index}`}
                         item={item}
                         index={index}
-                        rowTitle={rowTitle}
+                        rowTitle={navRow}
                         onPress={() => openMovie(item)}
                     />
                 );
@@ -259,7 +265,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                     key={`${item.id}-${index}`}
                     item={item}
                     index={index}
-                    rowTitle={rowTitle}
+                    rowTitle={navRow}
                     onPress={() => openMovie(item)}
                 />
             );
@@ -294,8 +300,12 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                             {...({
                                 dataSet: {
                                     tvFocusable: 'true',
-                                    tvRow: `${rowTitle}-header`,
+                                    tvRow: `${navRow}-header`,
                                     tvId: `explore-${rowTitle}`,
+                                    // Not part of the page's vertical flow: ArrowUp
+                                    // from this shelf must reach the shelf above,
+                                    // not this little text link.
+                                    tvVerticalIgnore: 'true',
                                 },
                             } as any)}
                         >
@@ -330,8 +340,12 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                             {
                                 paddingHorizontal: ROW_PADDING,
                                 columnGap: isTop10 ? 28 : 12,
-                                paddingTop: 10,
-                                paddingBottom: 22,
+                                // The TV focus ring is scale(1.06) + a 4px outline
+                                // with a 3px offset, i.e. ~15px taller than the
+                                // poster. This ScrollView clips overflow, so without
+                                // this headroom the top of the ring is cut off.
+                                paddingTop: IS_WEB ? 18 : 10,
+                                paddingBottom: IS_WEB ? 26 : 22,
                             },
                         ]}
                     >

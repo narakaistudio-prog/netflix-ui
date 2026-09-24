@@ -5,7 +5,6 @@ import Animated, {
     withTiming,
     useSharedValue,
     withSpring,
-    runOnJS
 } from 'react-native-reanimated';
 import { useNavigation } from 'expo-router';
 
@@ -18,7 +17,6 @@ interface Props {
 export function TabScreenWrapper({ children, isActive, slideDirection }: Props) {
     const navigation = useNavigation();
     const [hasInitialized, setHasInitialized] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(false);
 
     // Only animate if it's a tab navigation
     const state = navigation.getState();
@@ -44,14 +42,11 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
             setHasInitialized(true);
         }
 
-        setIsAnimating(true);
         if (isActive) {
             translateX.value = withSpring(0, {
                 damping: 25,
                 stiffness: 120,
                 mass: 0.4
-            }, () => {
-                runOnJS(setIsAnimating)(false);
             });
             opacity.value = withTiming(1, { duration: 100 });
         } else {
@@ -60,9 +55,7 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
                 stiffness: 120,
                 mass: 0.4
             });
-            opacity.value = withTiming(0, { duration: 100 }, () => {
-                runOnJS(setIsAnimating)(false);
-            });
+            opacity.value = withTiming(0, { duration: 100 });
         }
     }, [isActive, slideDirection, shouldAnimate]);
 
@@ -80,12 +73,19 @@ export function TabScreenWrapper({ children, isActive, slideDirection }: Props) 
 
     return (
         <View style={{ flex: 1, backgroundColor: '#000' }}>
-            <Animated.View style={[{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                backgroundColor: '#000',
-            }, isAnimating ? animatedStyle : null]}>
+            {/* Keep the final animated values applied after the transition ends.
+                Removing opacity: 0 after an inactive tab's animation made every
+                tab visible again, so the spatial navigator saw duplicate shelves
+                and the focus ring appeared to stop or jump backwards. */}
+            <Animated.View
+                pointerEvents={isActive ? 'auto' : 'none'}
+                style={[{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: '#000',
+                }, animatedStyle]}
+            >
                 {children}
             </Animated.View>
         </View>
