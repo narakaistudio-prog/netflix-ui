@@ -139,10 +139,17 @@ class SpatialNavigationManager {
         }
 
         window.addEventListener('keydown', this.handleKeyDown, { capture: true });
+        window.addEventListener('keyup', this.handleKeyUp, { capture: true });
 
         // Auto-focus on first user interaction or route load
         if (this.isTvModeActive) {
-            setTimeout(() => this.focusInitialElement(), 400);
+            [400, 1200, 2500].forEach(delay => {
+                setTimeout(() => {
+                    if (this.isTvModeActive && !this.currentFocusedElement) {
+                        this.focusInitialElement();
+                    }
+                }, delay);
+            });
         }
     }
 
@@ -150,22 +157,23 @@ class SpatialNavigationManager {
         if (!this.isInitialized || typeof window === 'undefined') return;
         this.isInitialized = false;
         window.removeEventListener('keydown', this.handleKeyDown, { capture: true });
+        window.removeEventListener('keyup', this.handleKeyUp, { capture: true });
     }
 
     private handleKeyDown = (event: KeyboardEvent) => {
         const key = event.key;
-        const keyCode = event.keyCode;
+        const keyCode = event.keyCode || (event as any).which || 0;
 
         // Activate TV mode automatically on arrow / TV keys
         const isDirectionalKey = (
-            key === 'ArrowUp' || keyCode === 38 ||
-            key === 'ArrowDown' || keyCode === 40 ||
-            key === 'ArrowLeft' || keyCode === 37 ||
-            key === 'ArrowRight' || keyCode === 39
+            key === 'ArrowUp' || key === 'Up' || keyCode === 38 ||
+            key === 'ArrowDown' || key === 'Down' || keyCode === 40 ||
+            key === 'ArrowLeft' || key === 'Left' || keyCode === 37 ||
+            key === 'ArrowRight' || key === 'Right' || keyCode === 39
         );
         const isEnterKey = key === 'Enter' || keyCode === 13;
         const isBackKey = (
-            key === 'GoBack' || key === 'Back' || keyCode === 10009 ||
+            key === 'GoBack' || key === 'Back' || key === 'Return' || keyCode === 10009 ||
             key === 'Escape' || keyCode === 27 ||
             keyCode === 8 && !this.isEditingText() // Backspace outside text input
         );
@@ -213,10 +221,10 @@ class SpatialNavigationManager {
             event.preventDefault();
             event.stopPropagation();
             let dir: Direction = 'right';
-            if (key === 'ArrowUp' || keyCode === 38) dir = 'up';
-            else if (key === 'ArrowDown' || keyCode === 40) dir = 'down';
-            else if (key === 'ArrowLeft' || keyCode === 37) dir = 'left';
-            else if (key === 'ArrowRight' || keyCode === 39) dir = 'right';
+            if (key === 'ArrowUp' || key === 'Up' || keyCode === 38) dir = 'up';
+            else if (key === 'ArrowDown' || key === 'Down' || keyCode === 40) dir = 'down';
+            else if (key === 'ArrowLeft' || key === 'Left' || keyCode === 37) dir = 'left';
+            else if (key === 'ArrowRight' || key === 'Right' || keyCode === 39) dir = 'right';
 
             this.moveFocus(dir);
             return;
@@ -230,6 +238,29 @@ class SpatialNavigationManager {
                 event.stopPropagation();
                 this.triggerClick(target);
             }
+        }
+    };
+
+    private handleKeyUp = (event: KeyboardEvent) => {
+        if (this.isEditingText()) return;
+        const key = event.key;
+        const keyCode = event.keyCode || (event as any).which || 0;
+        const isRemoteKey = (
+            key === 'ArrowUp' || key === 'Up' || keyCode === 38 ||
+            key === 'ArrowDown' || key === 'Down' || keyCode === 40 ||
+            key === 'ArrowLeft' || key === 'Left' || keyCode === 37 ||
+            key === 'ArrowRight' || key === 'Right' || keyCode === 39 ||
+            key === 'Enter' || keyCode === 13 ||
+            key === 'GoBack' || key === 'Back' || key === 'Return' || keyCode === 10009 ||
+            key === 'Escape' || keyCode === 27 ||
+            key === 'MediaPlayPause' || keyCode === 10252 ||
+            key === 'MediaPlay' || keyCode === 415 ||
+            key === 'MediaPause' || keyCode === 19 ||
+            key === 'MediaStop' || keyCode === 413
+        );
+        if (isRemoteKey) {
+            event.preventDefault();
+            event.stopPropagation();
         }
     };
 
