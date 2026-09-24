@@ -1,0 +1,764 @@
+diff --git a/app/(tabs)/index.tsx b/app/(tabs)/index.tsx
+index 8c01cb7..60d13b0 100644
+--- a/app/(tabs)/index.tsx
++++ b/app/(tabs)/index.tsx
+@@ -145,6 +145,7 @@ export default function HomeScreen() {
+ 
+         <Animated.ScrollView
+           ref={scrollViewRef}
++          {...({ dataSet: { tvScrollContainer: 'true' } } as any)}
+           style={[
+             styles.scrollView,
+             isVisionOS && { paddingHorizontal: 20 }
+@@ -191,7 +192,7 @@ export default function HomeScreen() {
+           )}
+ 
+           {orderedMovies.map((row, index) => (
+-            <DeferredMovieList key={row.rowTitle} eager={index < 2} {...row} />
++            <DeferredMovieList key={row.rowTitle} eager={index < 5} {...row} />
+           ))}
+         </Animated.ScrollView>
+       </VisionContainer>
+diff --git a/app/+html.tsx b/app/+html.tsx
+index b59c2e6..fc680cb 100644
+--- a/app/+html.tsx
++++ b/app/+html.tsx
+@@ -21,6 +21,11 @@ export default function Root({ children }: PropsWithChildren) {
+         */}
+         <ScrollViewStyleReset />
+ 
++        {/* Samsung Smart TV: synchronously tag <html> before first paint so the
++            TV-browser arrow cursor is hidden even before React hydrates.
++            Keep this script ES5 — it runs raw on Chromium 69 (Tizen 5.5). */}
++        <script dangerouslySetInnerHTML={{ __html: tvDetectScript }} />
++
+         {/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode. */}
+         <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
+       </head>
+@@ -29,6 +34,8 @@ export default function Root({ children }: PropsWithChildren) {
+   );
+ }
+ 
++const tvDetectScript = `(function(){try{var ua=navigator.userAgent||'';if(/SmartTV|SMART-TV|Tizen|SamsungBrowser.*TV|Web0S|webOS|AppleTV|BRAVIA|GoogleTV|Android.*TV|NetCast|POV_TV|Viera/i.test(ua)){document.documentElement.className+=' tv-device';}}catch(e){}})();`;
++
+ const globalStyles = `
+ html,
+ body {
+@@ -65,26 +72,33 @@ a,
+   transition: transform 180ms ease;
+ }
+ 
+-/* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode */
++/* Samsung Smart TV Remote Control - Hide mouse cursor in TV mode.
++   1x1 transparent PNG cursor: Samsung Internet for TV ignores plain
++   cursor:none in pointer-fallback states, this data URI guarantees the arrow never shows. */
+ body.tv-remote-mode,
+-body.tv-remote-mode * {
+-  cursor: none !important;
++body.tv-remote-mode *,
++html.tv-device,
++html.tv-device * {
++  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==') 0 0, none !important;
+ }
+ 
+-/* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State */
++/* Samsung Smart TV Remote Control - Authentic Netflix TV Focus State.
++   60fps on low-end TV SoCs: no heavy 45px-blur box-shadow, no box-shadow /
++   outline transitions (CPU repaints). GPU-composited transform only. */
+ [data-tv-focused="true"],
+ .tv-focused,
+ :focus-visible[data-tv-focusable="true"] {
+   outline: 4px solid #ffffff !important;
+   outline-offset: 3px !important;
+-  box-shadow: 0 0 24px rgba(255, 255, 255, 0.95), 0 0 45px rgba(229, 9, 20, 0.7) !important;
+-  transform: scale(1.07) !important;
++  transform: translate3d(0, 0, 0) scale(1.06) !important;
++  will-change: transform !important;
+   z-index: 100 !important;
+-  transition: transform 180ms cubic-bezier(0.2, 0, 0.2, 1), box-shadow 180ms ease, outline 180ms ease !important;
++  transition: transform 120ms linear !important;
+ }
+ 
+-/* Smooth scrolling for spatial navigation */
++/* Instant programmatic scrolling for spatial navigation (TV 60fps).
++   Direct scrollTop/scrollLeft positioning — never smooth-animated. */
+ html {
+-  scroll-behavior: smooth;
++  scroll-behavior: auto;
+ }
+ `;
+diff --git a/app/_layout.tsx b/app/_layout.tsx
+index c63bdd8..afbb90f 100644
+--- a/app/_layout.tsx
++++ b/app/_layout.tsx
+@@ -1,3 +1,6 @@
++// Must stay the first import: backfills JS runtime APIs missing on old Smart TV
++// browsers (Samsung Tizen 5.5 = Chromium 69) before any other module runs.
++import '@/lib/polyfills';
+ import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+ import {Stack} from 'expo-router';
+ import * as SplashScreen from 'expo-splash-screen';
+diff --git a/babel.config.js b/babel.config.js
+index d872de3..79dceaa 100644
+--- a/babel.config.js
++++ b/babel.config.js
+@@ -2,6 +2,19 @@ module.exports = function (api) {
+   api.cache(true);
+   return {
+     presets: ['babel-preset-expo'],
+-    plugins: ['react-native-reanimated/plugin'],
++    plugins: [
++      // Samsung Smart TV support (Tizen 5.5 = Chromium 69, 2020 models like
++      // UA32T4410): babel-preset-expo's web preset does NOT downlevel modern
++      // syntax, so raw `?.` / `??` / class-fields shipped in the bundle and the
++      // whole app failed to parse on the TV (blank/frozen page, dead remote,
++      // visible cursor). Force these transforms for every platform — the
++      // output runs everywhere including old TV browsers.
++      '@babel/plugin-transform-optional-chaining',
++      '@babel/plugin-transform-nullish-coalescing-operator',
++      ['@babel/plugin-transform-class-properties', { loose: true }],
++      '@babel/plugin-transform-logical-assignment-operators',
++      // NOTE: reanimated plugin must stay last.
++      'react-native-reanimated/plugin',
++    ],
+   };
+ };
+diff --git a/components/MovieList/DeferredMovieList.tsx b/components/MovieList/DeferredMovieList.tsx
+index fdc77b1..a9980ca 100644
+--- a/components/MovieList/DeferredMovieList.tsx
++++ b/components/MovieList/DeferredMovieList.tsx
+@@ -8,6 +8,15 @@ const IS_WEB = Platform.OS === 'web';
+ type Props = MovieRow & { eager?: boolean; hideExploreAll?: boolean };
+ 
+ function scrollParent(element: HTMLElement): HTMLElement | null {
++    // Fast path (Samsung TV 60fps): the home vertical scroller is tagged with
++    // data-tv-scroll-container="true" so we can find it without a
++    // window.getComputedStyle() walk on low-end TV SoCs.
++    try {
++        const tagged = (element as HTMLElement).closest?.(
++            '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
++        ) as HTMLElement | null;
++        if (tagged) return tagged;
++    } catch {}
+     let parent = element.parentElement;
+     while (parent) {
+         // The shelves live in a nested ScrollView rather than window scroll.
+@@ -41,6 +50,18 @@ export function DeferredMovieList({ eager = false, ...row }: Props) {
+         return () => observer.disconnect();
+     }, [ready]);
+ 
++    // Samsung Smart TV (UA32T4410): spatial navigation dispatches
++    // 'arena-hydrate-shelf' on ArrowDown so below-the-fold shelves hydrate
++    // instantly — focus never lands on an empty placeholder, which is what
++    // made the Samsung browser fall back to mouse-pointer mode.
++    useEffect(() => {
++        if (ready || !IS_WEB) return;
++        if (typeof window === 'undefined') return;
++        const hydrate = () => setReady(true);
++        window.addEventListener('arena-hydrate-shelf', hydrate as EventListener);
++        return () => window.removeEventListener('arena-hydrate-shelf', hydrate as EventListener);
++    }, [ready]);
++
+     if (!IS_WEB) return <MovieList {...row} />;
+ 
+     return (
+diff --git a/lib/polyfills.ts b/lib/polyfills.ts
+new file mode 100644
+index 0000000..ddb3f28
+--- /dev/null
++++ b/lib/polyfills.ts
+@@ -0,0 +1,6 @@
++/**
++ * Native (iOS/Android) stub — Hermes already provides every API that
++ * lib/polyfills.web.ts backfills for old TV browsers. Metro resolves
++ * `@/lib/polyfills` to `polyfills.web.ts` on web and to this file elsewhere.
++ */
++export {};
+diff --git a/lib/polyfills.web.ts b/lib/polyfills.web.ts
+new file mode 100644
+index 0000000..42b5be3
+--- /dev/null
++++ b/lib/polyfills.web.ts
+@@ -0,0 +1,177 @@
++// @ts-nocheck
++/**
++ * Web-only runtime polyfills for old Smart TV browsers.
++ *
++ * Samsung Tizen 5.5 (2020 models like UA32T4410) runs Chromium 69. Syntax is
++ * downleveled by babel (see babel.config.js), but these *runtime* APIs don't
++ * exist there and would throw the moment app/library code touches them.
++ * Each polyfill installs itself only when the native API is missing, so
++ * modern browsers are completely unaffected.
++ *
++ * NOTE: keep this file dependency-free and ES5-style. It must parse on the
++ * oldest engine we support. Imported first in app/_layout.tsx.
++ */
++
++(function installTvPolyfills() {
++    var G: any =
++        typeof globalThis !== 'undefined'
++            ? globalThis
++            : typeof window !== 'undefined'
++              ? window
++              : typeof self !== 'undefined'
++                ? self
++                : {};
++
++    // globalThis (Chrome 71+) — must come first; later code may reference it.
++    if (typeof G.globalThis === 'undefined') {
++        try {
++            Object.defineProperty(G, 'globalThis', {
++                configurable: true,
++                enumerable: false,
++                writable: true,
++                value: G,
++            });
++        } catch (e) {
++            try { G.globalThis = G; } catch (_) { /* ignore */ }
++        }
++    }
++
++    // queueMicrotask (Chrome 71+).
++    if (typeof G.queueMicrotask !== 'function') {
++        G.queueMicrotask = function (cb: any) {
++            G.Promise.resolve()
++                .then(cb)
++                .catch(function (err: any) {
++                    setTimeout(function () { throw err; }, 0);
++                });
++        };
++    }
++
++    // Array.prototype.flat / flatMap (Chrome 69+; older Tizen needs this).
++    if (G.Array && !G.Array.prototype.flat) {
++        G.Array.prototype.flat = function (depth: any) {
++            var d = depth === undefined ? 1 : Number(depth);
++            var flatten = function (arr: any, current: any): any {
++                var out: any[] = [];
++                for (var i = 0; i < arr.length; i++) {
++                    var v = arr[i];
++                    if (current < d && Object.prototype.toString.call(v) === '[object Array]') {
++                        out = out.concat(flatten(v, current + 1));
++                    } else {
++                        out.push(v);
++                    }
++                }
++                return out;
++            };
++            return flatten(this, 0);
++        };
++    }
++    if (G.Array && !G.Array.prototype.flatMap) {
++        G.Array.prototype.flatMap = function (cb: any, thisArg: any) {
++            var mapped: any[] = [];
++            for (var i = 0; i < this.length; i++) {
++                if (i in this) mapped.push(cb.call(thisArg, this[i], i, this));
++            }
++            return mapped.reduce(function (acc: any[], v: any) {
++                return acc.concat(v);
++            }, []);
++        };
++    }
++
++    // Array.prototype.at (Chrome 92+).
++    if (G.Array && !G.Array.prototype.at) {
++        G.Array.prototype.at = function (index: any) {
++            var i = Number(index);
++            if (isNaN(i)) i = 0;
++            if (i < 0) i = this.length + i;
++            return this[i];
++        };
++    }
++
++    // Object.fromEntries (Chrome 73+).
++    if (G.Object && !G.Object.fromEntries) {
++        G.Object.fromEntries = function (entries: any) {
++            var obj: any = {};
++            var it = entries && entries[Symbol.iterator] ? entries : Array.prototype.slice.call(entries || []);
++            var next = typeof it.next === 'function' ? it : it[Symbol.iterator] ? it[Symbol.iterator]() : null;
++            if (next) {
++                var step = next.next();
++                while (!step.done) {
++                    var pair = step.value;
++                    obj[pair[0]] = pair[1];
++                    step = next.next();
++                }
++            } else if (it && it.length !== undefined) {
++                for (var i = 0; i < it.length; i++) obj[it[i][0]] = it[i][1];
++            }
++            return obj;
++        };
++    }
++
++    // Object.hasOwn (Chrome 93+).
++    if (G.Object && !G.Object.hasOwn) {
++        G.Object.hasOwn = function (obj: any, prop: any) {
++            return Object.prototype.hasOwnProperty.call(Object(obj), prop);
++        };
++    }
++
++    // Promise.prototype.finally (Chrome 63+; harmless insurance for old Tizen).
++    if (G.Promise && !G.Promise.prototype.finally) {
++        G.Promise.prototype.finally = function (onFinally: any) {
++            var C = this.constructor;
++            var handler = typeof onFinally === 'function' ? onFinally : function () {};
++            return this.then(
++                function (value: any) { return C.resolve(handler()).then(function () { return value; }); },
++                function (reason: any) { return C.resolve(handler()).then(function () { throw reason; }); }
++            );
++        };
++    }
++
++    // Promise.allSettled (Chrome 76+).
++    if (G.Promise && !G.Promise.allSettled) {
++        G.Promise.allSettled = function (promises: any) {
++            var list = G.Array.from ? G.Array.from(promises) : Array.prototype.slice.call(promises);
++            return G.Promise.all(
++                list.map(function (p: any) {
++                    return G.Promise.resolve(p).then(
++                        function (value: any) { return { status: 'fulfilled', value: value }; },
++                        function (reason: any) { return { status: 'rejected', reason: reason }; }
++                    );
++                })
++            );
++        };
++    }
++
++    // String.prototype.replaceAll (Chrome 85+).
++    if (G.String && !G.String.prototype.replaceAll) {
++        G.String.prototype.replaceAll = function (search: any, replace: any) {
++            if (search instanceof RegExp && !search.global) {
++                throw new TypeError('replaceAll must be called with a global RegExp');
++            }
++            if (search instanceof RegExp) return this.replace(search, replace);
++            return this.split(search).join(replace);
++        };
++    }
++
++    // String.prototype.matchAll (Chrome 73+). Minimal version returning an array.
++    if (G.String && !G.String.prototype.matchAll) {
++        G.String.prototype.matchAll = function (regexp: any) {
++            var re = regexp instanceof RegExp ? regexp : new RegExp(regexp, 'g');
++            if (!re.global) throw new TypeError('matchAll must be called with a global RegExp');
++            var clone = new RegExp(re.source, re.flags || 'g');
++            var matches: any[] = [];
++            var m = clone.exec(this);
++            while (m) {
++                matches.push(m);
++                if (clone.lastIndex === m.index) clone.lastIndex++;
++                m = clone.exec(this);
++            }
++            matches[Symbol.iterator] = function () {
++                var i = 0;
++                var self = this;
++                return { next: function () { return i < self.length ? { value: self[i++], done: false } : { done: true }; } };
++            };
++            return matches;
++        };
++    }
++})();
+diff --git a/lib/spatialNavigation.ts b/lib/spatialNavigation.ts
+index 1759923..428bb8f 100644
+--- a/lib/spatialNavigation.ts
++++ b/lib/spatialNavigation.ts
+@@ -139,10 +139,21 @@ class SpatialNavigationManager {
+         }
+ 
+         window.addEventListener('keydown', this.handleKeyDown, { capture: true });
++        // Samsung Tizen insurance: some firmware scrolls/activates on keyup
++        // even when keydown was cancelled — swallow those defaults too.
++        window.addEventListener('keyup', this.handleKeyUp, { capture: true });
+ 
+-        // Auto-focus on first user interaction or route load
++        // Auto-focus for TV: retry while nothing is focused yet. Cheap TVs
++        // hydrate slowly (bundle parse + catalog fetch), so a single 400ms
++        // attempt often runs before any focusable element exists.
+         if (this.isTvModeActive) {
+-            setTimeout(() => this.focusInitialElement(), 400);
++            [400, 1200, 2500].forEach(delay => {
++                setTimeout(() => {
++                    if (this.isTvModeActive && !this.currentFocusedElement) {
++                        this.focusInitialElement();
++                    }
++                }, delay);
++            });
+         }
+     }
+ 
+@@ -150,22 +161,26 @@ class SpatialNavigationManager {
+         if (!this.isInitialized || typeof window === 'undefined') return;
+         this.isInitialized = false;
+         window.removeEventListener('keydown', this.handleKeyDown, { capture: true });
++        window.removeEventListener('keyup', this.handleKeyUp, { capture: true });
+     }
+ 
+     private handleKeyDown = (event: KeyboardEvent) => {
+         const key = event.key;
+-        const keyCode = event.keyCode;
++        // Old Tizen WebKit may leave keyCode 0/undefined — fall back to `which`.
++        const keyCode = event.keyCode || (event as any).which || 0;
+ 
+-        // Activate TV mode automatically on arrow / TV keys
++        // Activate TV mode automatically on arrow / TV keys.
++        // Legacy names ('Up'/'Down'/...) cover pre-2019 Tizen WebKit builds
++        // that never implemented the standard 'ArrowXxx' key values.
+         const isDirectionalKey = (
+-            key === 'ArrowUp' || keyCode === 38 ||
+-            key === 'ArrowDown' || keyCode === 40 ||
+-            key === 'ArrowLeft' || keyCode === 37 ||
+-            key === 'ArrowRight' || keyCode === 39
++            key === 'ArrowUp' || key === 'Up' || keyCode === 38 ||
++            key === 'ArrowDown' || key === 'Down' || keyCode === 40 ||
++            key === 'ArrowLeft' || key === 'Left' || keyCode === 37 ||
++            key === 'ArrowRight' || key === 'Right' || keyCode === 39
+         );
+         const isEnterKey = key === 'Enter' || keyCode === 13;
+         const isBackKey = (
+-            key === 'GoBack' || key === 'Back' || keyCode === 10009 ||
++            key === 'GoBack' || key === 'Back' || key === 'Return' || keyCode === 10009 ||
+             key === 'Escape' || keyCode === 27 ||
+             keyCode === 8 && !this.isEditingText() // Backspace outside text input
+         );
+@@ -213,10 +228,10 @@ class SpatialNavigationManager {
+             event.preventDefault();
+             event.stopPropagation();
+             let dir: Direction = 'right';
+-            if (key === 'ArrowUp' || keyCode === 38) dir = 'up';
+-            else if (key === 'ArrowDown' || keyCode === 40) dir = 'down';
+-            else if (key === 'ArrowLeft' || keyCode === 37) dir = 'left';
+-            else if (key === 'ArrowRight' || keyCode === 39) dir = 'right';
++            if (key === 'ArrowUp' || key === 'Up' || keyCode === 38) dir = 'up';
++            else if (key === 'ArrowDown' || key === 'Down' || keyCode === 40) dir = 'down';
++            else if (key === 'ArrowLeft' || key === 'Left' || keyCode === 37) dir = 'left';
++            else if (key === 'ArrowRight' || key === 'Right' || keyCode === 39) dir = 'right';
+ 
+             this.moveFocus(dir);
+             return;
+@@ -233,6 +248,34 @@ class SpatialNavigationManager {
+         }
+     };
+ 
++    /**
++     * Swallow keyup defaults for remote keys. Navigation itself happens on
++     * keydown; this only stops Tizen firmware that scrolls or re-activates
++     * controls on key release.
++     */
++    private handleKeyUp = (event: KeyboardEvent) => {
++        if (this.isEditingText()) return;
++        const key = event.key;
++        const keyCode = event.keyCode || (event as any).which || 0;
++        const isRemoteKey = (
++            key === 'ArrowUp' || key === 'Up' || keyCode === 38 ||
++            key === 'ArrowDown' || key === 'Down' || keyCode === 40 ||
++            key === 'ArrowLeft' || key === 'Left' || keyCode === 37 ||
++            key === 'ArrowRight' || key === 'Right' || keyCode === 39 ||
++            key === 'Enter' || keyCode === 13 ||
++            key === 'GoBack' || key === 'Back' || key === 'Return' || keyCode === 10009 ||
++            key === 'Escape' || keyCode === 27 ||
++            key === 'MediaPlayPause' || keyCode === 10252 ||
++            key === 'MediaPlay' || keyCode === 415 ||
++            key === 'MediaPause' || keyCode === 19 ||
++            key === 'MediaStop' || keyCode === 413
++        );
++        if (isRemoteKey) {
++            event.preventDefault();
++            event.stopPropagation();
++        }
++    };
++
+     private isEditingText(): boolean {
+         if (typeof document === 'undefined') return false;
+         const active = document.activeElement;
+@@ -311,14 +354,51 @@ class SpatialNavigationManager {
+ 
+     public isVisible(element: HTMLElement): boolean {
+         if (!element) return false;
+-        const style = window.getComputedStyle(element);
+-        if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+-            return false;
++        // Samsung TV 60fps: NEVER call window.getComputedStyle() here — it forces
++        // a style recalc on every keypress across hundreds of candidates on
++        // low-end TV SoCs. Inline + geometry checks are sufficient: display:none
++        // and detached nodes report a zero rect, which already fails below.
++        if ((element as any).hidden) return false;
++        const inline = (element as HTMLElement).style;
++        if (inline) {
++            if (inline.display === 'none' || inline.visibility === 'hidden' || inline.opacity === '0') {
++                return false;
++            }
+         }
++        if (element.getAttribute('aria-hidden') === 'true') return false;
+         const rect = element.getBoundingClientRect();
+         return rect.width > 0 && rect.height > 0;
+     }
+ 
++    /**
++     * Samsung Smart TV (UA32T4410): tell deferred below-the-fold shelves to
++     * hydrate instantly so ArrowDown never focuses an empty placeholder.
++     */
++    private dispatchHydrateShelves() {
++        if (typeof window === 'undefined') return;
++        try {
++            window.dispatchEvent(new CustomEvent('arena-hydrate-shelf'));
++        } catch {
++            try { window.dispatchEvent(new Event('arena-hydrate-shelf')); } catch {}
++        }
++    }
++
++    /**
++     * Samsung Smart TV (UA32T4410): retain focus on the current (bottom-shelf)
++     * card when there is nowhere to go. If focus is lost, the Samsung browser
++     * falls back to mouse-pointer mode and shows the arrow cursor.
++     */
++    private retainFocus(element: HTMLElement | null) {
++        if (!element) return;
++        try {
++            element.setAttribute('data-tv-focused', 'true');
++            element.classList.add('tv-focused');
++            element.focus({ preventScroll: true });
++        } catch {
++            try { (element as HTMLElement).focus(); } catch {}
++        }
++    }
++
+     /**
+      * Find all visible focusable elements within the active scope
+      */
+@@ -371,70 +451,82 @@ class SpatialNavigationManager {
+     /**
+      * Smart scroll: centers element horizontally in shelf,
+      * and positions row vertically in the main viewport.
++     *
++     * Samsung TV 60fps: no window.getComputedStyle() walks and no
++     * behavior:'smooth' animations (CPU-blocking on Tizen). Direct hardware
++     * scrollLeft / scrollTop positioning only — the compositor handles it.
+      */
+     public scrollIntoViewSmart(element: HTMLElement) {
+         if (typeof window === 'undefined') return;
+ 
+-        // 1. Horizontal Scroll: Find nearest horizontally scrollable parent
++        // Geometry cached once per call — getBoundingClientRect() forces layout.
++        const elRect = element.getBoundingClientRect();
++
++        // 1. Horizontal Scroll: nearest horizontally scrollable parent via
++        // direct geometry check (no computed-style overflow inspection).
+         let parent = element.parentElement;
+         while (parent && parent !== document.body) {
+-            const style = window.getComputedStyle(parent);
+-            const isScrollableX = /auto|scroll|hidden/.test(style.overflowX) && parent.scrollWidth > parent.clientWidth + 10;
+-            if (isScrollableX) {
+-                const elRect = element.getBoundingClientRect();
++            if (parent.scrollWidth > parent.clientWidth + 10) {
+                 const parentRect = parent.getBoundingClientRect();
+                 const targetScrollLeft = parent.scrollLeft + (elRect.left - parentRect.left) - (parent.clientWidth - elRect.width) / 2;
+-                try {
+-                    if (typeof parent.scrollTo === 'function') {
+-                        parent.scrollTo({
+-                            left: Math.max(0, targetScrollLeft),
+-                            behavior: 'smooth',
+-                        });
+-                    } else {
+-                        parent.scrollLeft = Math.max(0, targetScrollLeft);
+-                    }
+-                } catch {
+-                    try { parent.scrollLeft = Math.max(0, targetScrollLeft); } catch {}
+-                }
++                try { parent.scrollLeft = Math.max(0, targetScrollLeft); } catch {}
+                 break;
+             }
+             parent = parent.parentElement;
+         }
+ 
+-        // 2. Vertical Scroll: Position the row/element around 35% from top of viewport (Netflix style)
+-        const rect = element.getBoundingClientRect();
++        // 2. Vertical Scroll: Position the row/element around 32% from top of viewport (Netflix style)
+         const viewportHeight = window.innerHeight || 800;
+         const desiredTop = viewportHeight * 0.32;
+-        const currentTop = rect.top;
+-        const diff = currentTop - desiredTop;
++        const diff = elRect.top - desiredTop;
+ 
+         if (Math.abs(diff) > 40) {
+-            // Find vertically scrollable parent or window
++            // Fast path: the tagged home TV scroll container (dataSet.tvScrollContainer).
+             let scrollParent: HTMLElement | null = null;
+-            let p = element.parentElement;
+-            while (p && p !== document.body) {
+-                const style = window.getComputedStyle(p);
+-                if (/auto|scroll/.test(style.overflowY) && p.scrollHeight > p.clientHeight + 10) {
+-                    scrollParent = p;
+-                    break;
++            try {
++                scrollParent = element.closest?.(
++                    '[data-tv-scroll-container="true"], [data-tvscrollcontainer="true"]'
++                ) as HTMLElement | null;
++            } catch {}
++            // Fallback: nearest vertically scrollable parent via direct geometry.
++            if (!scrollParent) {
++                let p = element.parentElement;
++                while (p && p !== document.body) {
++                    if (p.scrollHeight > p.clientHeight + 10) {
++                        scrollParent = p;
++                        break;
++                    }
++                    p = p.parentElement;
+                 }
+-                p = p.parentElement;
+             }
+ 
+             try {
+-                if (scrollParent && typeof scrollParent.scrollBy === 'function') {
+-                    scrollParent.scrollBy({ top: diff, behavior: 'smooth' });
+-                } else if (typeof window.scrollBy === 'function') {
+-                    window.scrollBy({ top: diff, behavior: 'smooth' });
++                if (scrollParent) {
++                    scrollParent.scrollTop = scrollParent.scrollTop + diff;
++                } else if (typeof document !== 'undefined' && document.documentElement) {
++                    const base = document.documentElement.scrollTop || window.scrollY || 0;
++                    document.documentElement.scrollTop = base + diff;
++                    // Keep body in sync for Samsung TV browser quirks.
++                    try { document.body.scrollTop = document.documentElement.scrollTop; } catch {}
+                 }
+             } catch {}
+         }
+     }
+ 
+     /**
+-     * Move focus in given direction
++     * Move focus in given direction.
++     *
++     * Samsung TV 60fps: candidate geometry is cached ONCE per keypress
++     * (getBoundingClientRect forces layout). No window.getComputedStyle().
+      */
+     public moveFocus(dir: Direction) {
++        // Samsung Smart TV (UA32T4410): ArrowDown hydrates deferred
++        // below-the-fold shelves instantly so focus never drops into the
++        // void (which triggers Samsung's mouse-pointer fallback + arrow).
++        if (dir === 'down') {
++            this.dispatchHydrateShelves();
++        }
++
+         const scope = this.getActiveScope();
+         const focusables = this.getFocusableElements(scope);
+         if (focusables.length === 0) return;
+@@ -446,8 +538,20 @@ class SpatialNavigationManager {
+         }
+ 
+         const current = this.currentFocusedElement;
++
++        // --- Geometry cached once per keypress (layout is expensive on TV) ---
++        const rectCache = new Map<HTMLElement, DOMRect>();
++        const getRect = (el: HTMLElement): DOMRect => {
++            let r = rectCache.get(el);
++            if (!r) {
++                r = el.getBoundingClientRect();
++                rectCache.set(el, r);
++            }
++            return r;
++        };
++
+         const currentRow = current.getAttribute('data-tv-row');
+-        const currentRect = current.getBoundingClientRect();
++        const currentRect = getRect(current);
+         const currentCenterX = currentRect.left + currentRect.width / 2;
+         const currentCenterY = currentRect.top + currentRect.height / 2;
+ 
+@@ -457,9 +561,9 @@ class SpatialNavigationManager {
+             if (dir === 'right') {
+                 const sameRowRights = focusables.filter(el => {
+                     if (el === current || el.getAttribute('data-tv-row') !== currentRow) return false;
+-                    const r = el.getBoundingClientRect();
++                    const r = getRect(el);
+                     return r.left >= currentRect.left + 5;
+-                }).sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
++                }).sort((a, b) => getRect(a).left - getRect(b).left);
+ 
+                 if (sameRowRights.length > 0) {
+                     this.setFocus(sameRowRights[0]);
+@@ -468,9 +572,9 @@ class SpatialNavigationManager {
+             } else if (dir === 'left') {
+                 const sameRowLefts = focusables.filter(el => {
+                     if (el === current || el.getAttribute('data-tv-row') !== currentRow) return false;
+-                    const r = el.getBoundingClientRect();
++                    const r = getRect(el);
+                     return r.right <= currentRect.right - 5;
+-                }).sort((a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right);
++                }).sort((a, b) => getRect(b).right - getRect(a).right);
+ 
+                 if (sameRowLefts.length > 0) {
+                     this.setFocus(sameRowLefts[0]);
+@@ -479,22 +583,22 @@ class SpatialNavigationManager {
+             } else if (dir === 'down') {
+                 // Find candidates in rows below
+                 const candidatesBelow = focusables.filter(el => {
+-                    const r = el.getBoundingClientRect();
++                    const r = getRect(el);
+                     return r.top >= currentRect.bottom - 10;
+                 });
+ 
+                 if (candidatesBelow.length > 0) {
+                     // Find the nearest row top below
+-                    const rowTops = candidatesBelow.map(el => Math.round(el.getBoundingClientRect().top / 40) * 40);
++                    const rowTops = candidatesBelow.map(el => Math.round(getRect(el).top / 40) * 40);
+                     const minRowTop = Math.min(...rowTops);
+                     const immediateRowCandidates = candidatesBelow.filter(el =>
+-                        Math.abs(Math.round(el.getBoundingClientRect().top / 40) * 40 - minRowTop) <= 20
++                        Math.abs(Math.round(getRect(el).top / 40) * 40 - minRowTop) <= 20
+                     );
+ 
+                     // Pick candidate with closest horizontal center
+                     immediateRowCandidates.sort((a, b) => {
+-                        const ra = a.getBoundingClientRect();
+-                        const rb = b.getBoundingClientRect();
++                        const ra = getRect(a);
++                        const rb = getRect(b);
+                         const da = Math.abs((ra.left + ra.width / 2) - currentCenterX);
+                         const db = Math.abs((rb.left + rb.width / 2) - currentCenterX);
+                         return da - db;
+@@ -508,21 +612,21 @@ class SpatialNavigationManager {
+             } else if (dir === 'up') {
+                 // Find candidates in rows above
+                 const candidatesAbove = focusables.filter(el => {
+-                    const r = el.getBoundingClientRect();
++                    const r = getRect(el);
+                     return r.bottom <= currentRect.top + 10;
+                 });
+ 
+                 if (candidatesAbove.length > 0) {
+                     // Find nearest row bottom above
+-                    const rowBottoms = candidatesAbove.map(el => Math.round(el.getBoundingClientRect().bottom / 40) * 40);
++                    const rowBottoms = candidatesAbove.map(el => Math.round(getRect(el).bottom / 40) * 40);
+                     const maxRowBottom = Math.max(...rowBottoms);
+                     const immediateRowCandidates = candidatesAbove.filter(el =>
+-                        Math.abs(Math.round(el.getBoundingClientRect().bottom / 40) * 40 - maxRowBottom) <= 20
++                        Math.abs(Math.round(getRect(el).bottom / 40) * 40 - maxRowBottom) <= 20
+                     );
+ 
+                     immediateRowCandidates.sort((a, b) => {
+-                        const ra = a.getBoundingClientRect();
+-                        const rb = b.getBoundingClientRect();
++                        const ra = getRect(a);
++                        const rb = getRect(b);
+                         const da = Math.abs((ra.left + ra.width / 2) - currentCenterX);
+                         const db = Math.abs((rb.left + rb.width / 2) - currentCenterX);
+                         return da - db;
+@@ -542,7 +646,7 @@ class SpatialNavigationManager {
+ 
+         for (const candidate of focusables) {
+             if (candidate === current) continue;
+-            const cRect = candidate.getBoundingClientRect();
++            const cRect = getRect(candidate);
+             const cCenterX = cRect.left + cRect.width / 2;
+             const cCenterY = cRect.top + cRect.height / 2;
+ 
+@@ -586,6 +690,10 @@ class SpatialNavigationManager {
+ 
+         if (bestCandidate) {
+             this.setFocus(bestCandidate);
++        } else if (dir === 'down') {
++            // Bottom shelf: retain focus on the current card so the Samsung
++            // TV browser never falls back to mouse-pointer mode + arrow.
++            this.retainFocus(current);
+         }
+     }
+ 
