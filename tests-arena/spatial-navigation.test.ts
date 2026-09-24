@@ -324,3 +324,144 @@ describe('Spatial Navigation & Samsung Smart TV Remote Control', () => {
         expect(spatialNav.getCurrentFocus()).toBe(modalAction);
     });
 });
+
+/**
+ * Netflix-style billboard hero navigation:
+ *   1. ArrowDown on the hero Play button must land on the first poster shelf.
+ *   2. ArrowUp from that first shelf must come back to the hero.
+ * The hero art and the first shelf overlap on screen (the shelf starts under
+ * the hero's bottom gradient), which is exactly what broke plain geometric
+ * navigation.
+ */
+describe('Smart TV hero billboard navigation', () => {
+    let container: HTMLDivElement;
+
+    const rect = (left: number, top: number, width: number, height: number) => ({
+        left, top, width, height,
+        right: left + width, bottom: top + height,
+        x: left, y: top,
+    });
+
+    const press = (key: string, keyCode: number) => {
+        window.dispatchEvent(
+            new KeyboardEvent('keydown', { key, keyCode, bubbles: true, cancelable: true })
+        );
+    };
+
+    /**
+     * Hero billboard + Top 10 shelf pulled up under the hero + a second shelf.
+     * Every shelf also carries its "Explore All" header link, which is marked
+     * `data-tv-vertical-ignore` so it is skipped by row-aware navigation but
+     * NOT by the generic geometric fallback - that is what made ArrowDown from
+     * the hero land on the little text link instead of the first poster.
+     */
+    function mountHome() {
+        container.innerHTML = `
+            <div id="billboard" data-tv-pointer-catch-zone="true" data-tv-pointer-redirect="hero-play">
+                <button id="hero-play" data-tv-focusable="true" data-tv-id="hero-play"
+                        data-tv-row="billboard" data-tv-index="0">Play</button>
+                <button id="hero-info" data-tv-focusable="true" data-tv-id="hero-info"
+                        data-tv-row="billboard" data-tv-index="1">More Info</button>
+            </div>
+            <div data-tv-row="top-10">
+                <button id="explore-top10" data-tv-focusable="true" data-tv-row="top-10-header"
+                        data-tv-id="explore-top10" data-tv-vertical-ignore="true">Explore All</button>
+                <button id="t10-0" data-tv-focusable="true" data-tv-card="true"
+                        data-tv-row="top-10" data-tv-index="0">Top 10 #1</button>
+                <button id="t10-1" data-tv-focusable="true" data-tv-card="true"
+                        data-tv-row="top-10" data-tv-index="1">Top 10 #2</button>
+            </div>
+            <div data-tv-row="trending">
+                <button id="explore-trending" data-tv-focusable="true" data-tv-row="trending-header"
+                        data-tv-id="explore-trending" data-tv-vertical-ignore="true">Explore All</button>
+                <button id="tr-0" data-tv-focusable="true" data-tv-card="true"
+                        data-tv-row="trending" data-tv-index="0">Trending 1</button>
+            </div>
+        `;
+        const el = (id: string) => container.querySelector(`#${id}`) as HTMLElement;
+        // The hero buttons sit inside the hero art, so the Top 10 posters start
+        // ABOVE the bottom edge of the Play button (the shelf slides under the
+        // hero's bottom gradient, exactly like netflix.com).
+        el('hero-play').getBoundingClientRect = () => rect(64, 460, 150, 40) as any;
+        el('hero-info').getBoundingClientRect = () => rect(230, 460, 170, 40) as any;
+        el('explore-top10').getBoundingClientRect = () => rect(1080, 440, 120, 24) as any;
+        el('t10-0').getBoundingClientRect = () => rect(48, 470, 175, 255) as any;
+        el('t10-1').getBoundingClientRect = () => rect(235, 470, 175, 255) as any;
+        el('explore-trending').getBoundingClientRect = () => rect(1080, 840, 120, 24) as any;
+        el('tr-0').getBoundingClientRect = () => rect(48, 860, 175, 255) as any;
+        return el;
+    }
+
+    beforeEach(() => {
+        container = document.createElement('div');
+        document.body.appendChild(container);
+        window.scrollBy = jest.fn();
+        spatialNav.init();
+        spatialNav.setTvMode(false, false);
+    });
+
+    afterEach(() => {
+        spatialNav.destroy();
+        container.remove();
+        document.body.classList.remove('tv-remote-mode');
+        document.body.classList.remove('tv-pointer-mode');
+    });
+
+    it('moves ArrowDown from the hero Play button to the first card of the first shelf', () => {
+        const el = mountHome();
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('hero-play'));
+
+        press('ArrowDown', 40);
+
+        expect(spatialNav.getCurrentFocus()).toBe(el('t10-0'));
+        expect(el('t10-0').getAttribute('data-tv-focused')).toBe('true');
+        expect(el('hero-play').hasAttribute('data-tv-focused')).toBe(false);
+    });
+
+    it('keeps the column when dropping from More Info into the first shelf', () => {
+        const el = mountHome();
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('hero-info'));
+
+        press('ArrowDown', 40);
+
+        // More Info sits over the second poster, so that is the card it lands on.
+        expect(spatialNav.getCurrentFocus()).toBe(el('t10-1'));
+    });
+
+    it('moves ArrowUp from the first shelf back to the hero Play button', () => {
+        container.innerHTML = `
+            <button id="nav-home" data-tv-focusable="true" data-tv-row="navbar">Home</button>
+            <button id="hero-play" data-tv-focusable="true" data-tv-id="hero-play"
+                    data-tv-row="billboard" data-tv-index="0">Play</button>
+            <button id="t10-0" data-tv-focusable="true" data-tv-card="true"
+                    data-tv-row="top-10" data-tv-index="0">Top 10 #1</button>
+            <button id="tr-0" data-tv-focusable="true" data-tv-card="true"
+                    data-tv-row="trending" data-tv-index="0">Trending 1</button>
+        `;
+        const el = (id: string) => container.querySelector(`#${id}`) as HTMLElement;
+        el('nav-home').getBoundingClientRect = () => rect(48, 20, 90, 44) as any;
+        el('hero-play').getBoundingClientRect = () => rect(64, 120, 150, 280) as any;
+        el('t10-0').getBoundingClientRect = () => rect(48, 380, 175, 220) as any;
+        el('tr-0').getBoundingClientRect = () => rect(48, 900, 175, 255) as any;
+
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('t10-0'));
+
+        press('ArrowUp', 38);
+
+        expect(spatialNav.getCurrentFocus()).toBe(el('hero-play'));
+    });
+
+    it('still walks up shelf by shelf from the second row', () => {
+        const el = mountHome();
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('tr-0'));
+
+        press('ArrowUp', 38);
+
+        // ArrowUp from a deeper shelf goes to the shelf above, not to the hero.
+        expect(spatialNav.getCurrentFocus()).toBe(el('t10-0'));
+    });
+});

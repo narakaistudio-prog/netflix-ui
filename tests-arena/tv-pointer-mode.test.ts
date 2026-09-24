@@ -239,3 +239,129 @@ describe('Smart TV pointer-mode remote navigation', () => {
         expect(() => cleanup()).not.toThrow();
     });
 });
+
+/**
+ * The web billboard hero is art + gradients + text: apart from Play and More
+ * Info there is nothing focusable in it, so a TV pointer arrow parked over the
+ * hero used to resolve to no card at all. The ring stayed on the shelf below
+ * (or vanished with it) and the Samsung browser fell back to its own mouse
+ * arrow - the "blank hero gap".
+ */
+describe('Smart TV pointer over the billboard hero', () => {
+    let container: HTMLDivElement;
+    const originalUa = navigator.userAgent;
+
+    const rect = (left: number, top: number, width: number, height: number) => ({
+        left, top, width, height,
+        right: left + width, bottom: top + height,
+        x: left, y: top,
+    });
+
+    function movePointerTo(element: HTMLElement | null, x = 100, y = 100) {
+        document.elementFromPoint = jest.fn(() => element);
+        document.dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, bubbles: true }));
+    }
+
+    function mountHero() {
+        container.innerHTML = `
+            <div id="billboard" data-tv-pointer-catch-zone="true" data-tv-pointer-redirect="hero-play">
+                <img id="backdrop" alt="" />
+                <button id="hero-play" data-tv-focusable="true" data-tv-id="hero-play"
+                        data-tv-row="billboard" data-tv-index="0">Play</button>
+                <button id="hero-info" data-tv-focusable="true" data-tv-id="hero-info"
+                        data-tv-row="billboard" data-tv-index="1">More Info</button>
+            </div>
+            <button id="card-0" data-tv-focusable="true" data-tv-card="true"
+                    data-tv-row="top-10" data-tv-index="0">Top 10 #1</button>
+        `;
+        const el = (id: string) => container.querySelector(`#${id}`) as HTMLElement;
+        el('billboard').getBoundingClientRect = () => rect(0, 0, 1280, 700) as any;
+        el('backdrop').getBoundingClientRect = () => rect(0, 0, 1280, 700) as any;
+        el('hero-play').getBoundingClientRect = () => rect(64, 460, 150, 40) as any;
+        el('hero-info').getBoundingClientRect = () => rect(230, 460, 170, 40) as any;
+        el('card-0').getBoundingClientRect = () => rect(48, 720, 175, 255) as any;
+        return el;
+    }
+
+    beforeEach(() => {
+        jest.useFakeTimers();
+        try { localStorage.clear(); } catch {}
+        Object.defineProperty(navigator, 'userAgent', { value: SAMSUNG_TV_UA, configurable: true });
+        container = document.createElement('div');
+        document.body.appendChild(container);
+        window.scrollBy = jest.fn();
+        spatialNav.init();
+        spatialNav.setTvMode(false, false);
+        // `spatialNav` is a singleton, so state set by an earlier suite in this
+        // file survives destroy(): the pointer choice ('off' disables pointer
+        // following) and the last-key timestamp (fake timers move Date.now()
+        // backwards between tests, which would otherwise look like "a key was
+        // just pressed" and swallow the pointer move).
+        spatialNav.setPointerModePreference('auto');
+        (spatialNav as any).lastKeyInputAt = 0;
+    });
+
+    afterEach(() => {
+        spatialNav.setPointerModePreference('auto');
+        spatialNav.destroy();
+        container.remove();
+        document.body.classList.remove('tv-remote-mode');
+        document.body.classList.remove('tv-pointer-mode');
+        Object.defineProperty(navigator, 'userAgent', { value: originalUa, configurable: true });
+        jest.useRealTimers();
+    });
+
+    it('focuses hero Play when the TV arrow parks on the blank hero', () => {
+        const el = mountHero();
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('card-0'));
+
+        // The arrow leaves the shelf and stops over the hero art.
+        movePointerTo(el('billboard'), 900, 200);
+        jest.advanceTimersByTime(32);
+
+        expect(spatialNav.getCurrentFocus()).toBe(el('hero-play'));
+        expect(el('hero-play').getAttribute('data-tv-focused')).toBe('true');
+        expect(el('card-0').hasAttribute('data-tv-focused')).toBe(false);
+        expect(document.body.classList.contains('tv-pointer-mode')).toBe(true);
+    });
+
+    it('resolves the hero through its backdrop child too', () => {
+        const el = mountHero();
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('card-0'));
+
+        movePointerTo(el('backdrop'), 700, 120);
+        jest.advanceTimersByTime(32);
+
+        expect(spatialNav.getCurrentFocus()).toBe(el('hero-play'));
+    });
+
+    it('lets a real hero button win over the catch-zone redirect', () => {
+        const el = mountHero();
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(el('card-0'));
+
+        movePointerTo(el('hero-info'), 300, 480);
+        jest.advanceTimersByTime(32);
+
+        expect(spatialNav.getCurrentFocus()).toBe(el('hero-info'));
+    });
+
+    it('does not hijack the ring outside a catch zone', () => {
+        container.innerHTML = `
+            <div id="empty"><span id="label">Nothing focusable here</span></div>
+            <button id="card-0" data-tv-focusable="true" data-tv-row="top-10">Top 10 #1</button>
+        `;
+        const label = container.querySelector('#label') as HTMLElement;
+        const card0 = container.querySelector('#card-0') as HTMLButtonElement;
+
+        spatialNav.setTvMode(true, false);
+        spatialNav.setFocus(card0);
+
+        movePointerTo(label, 640, 300);
+        jest.advanceTimersByTime(32);
+
+        expect(spatialNav.getCurrentFocus()).toBe(card0);
+    });
+});
