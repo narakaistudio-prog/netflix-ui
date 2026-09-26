@@ -6,6 +6,8 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
 import { ExpandedPlayer } from '@/components/BottomSheet/ExpandedPlayer';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
+import { CrunchyrollPlayer } from '@/components/CrunchyrollPlayer';
+import { isAnimeTitle } from '@/services/animeStreamService';
 import { useRootScale } from '@/contexts/RootScaleContext';
 import Animated, {
     useSharedValue,
@@ -307,6 +309,7 @@ export default function MovieScreen() {
     })();
     const isSeries = movie.mediaType === 'tv'
         || (movie.mediaType !== 'movie' && movie.type === 'SERIES');
+    const isAnime = isAnimeTitle(movie.title, movie.catalogCollection, movie.type);
     const mediaType: 'movie' | 'tv' =
         movie.mediaType ??
         (isSeries || (typeof movie.id === 'string' && (movie.id.includes('tv-') || movie.id.startsWith('tv-')))
@@ -314,15 +317,16 @@ export default function MovieScreen() {
             : 'movie');
 
     // Cycle order: default provider → other built-in providers → custom (if embed_url set)
+    // For anime titles, crunchyroll (Hindi Dub • 0 Ads) is placed first.
     const settings = loadSettings();
     const cycle: ProviderId[] = useMemo(() => {
         const list: ProviderId[] = [];
-        const def = movie.embed_provider ?? settings.defaultProvider;
+        const def = movie.embed_provider ?? (isAnime ? 'crunchyroll' : settings.defaultProvider);
         list.push(def);
         for (const p of PROVIDERS) if (p.id !== def) list.push(p.id);
         if (movie.embed_url) list.push('custom');
         return Array.from(new Set(list));
-    }, [movie.embed_provider, movie.embed_url, settings.defaultProvider]);
+    }, [movie.embed_provider, movie.embed_url, settings.defaultProvider, isAnime]);
 
     const currentProvider: ProviderId = cycle[providerIndex] ?? 'nxsha';
     const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
@@ -489,21 +493,37 @@ export default function MovieScreen() {
                             onSelectSeason={handleSelectSeason}
                             onSelectRelated={handleSelectRelated}
                         />
-                        {playerOpen && src ? (
-                            <View style={webStyles.playerLayer} pointerEvents="box-none">
-                                <View style={StyleSheet.absoluteFill} pointerEvents="auto">
-                                    <EmbedPlayer
-                                        src={src}
-                                        title={movie.title}
-                                        onClose={handleCloseInline}
-                                        onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                        onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
-                                        onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
-                                        isTv={mediaType === 'tv'}
-                                        fallbackUrl={officialNetflixUrl}
-                                    />
+                        {playerOpen ? (
+                            currentProvider === 'crunchyroll' ? (
+                                <CrunchyrollPlayer
+                                    title={movie.title || 'Anime Stream'}
+                                    tmdbId={parsedTmdb}
+                                    season={season}
+                                    episode={episode}
+                                    totalEpisodes={totalEps}
+                                    initialAudio="hindi"
+                                    onClose={handleCloseInline}
+                                    onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
+                                    onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
+                                    onSelectEpisode={ep => setEpisode(ep)}
+                                    onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                                />
+                            ) : src ? (
+                                <View style={webStyles.playerLayer} pointerEvents="box-none">
+                                    <View style={StyleSheet.absoluteFill} pointerEvents="auto">
+                                        <EmbedPlayer
+                                            src={src}
+                                            title={movie.title}
+                                            onClose={handleCloseInline}
+                                            onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                                            onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
+                                            onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
+                                            isTv={mediaType === 'tv'}
+                                            fallbackUrl={officialNetflixUrl}
+                                        />
+                                    </View>
                                 </View>
-                            </View>
+                            ) : null
                         ) : null}
                     </View>
                 </Animated.View>
@@ -526,21 +546,37 @@ export default function MovieScreen() {
                     onSelectSeason={handleSelectSeason}
                     onSelectRelated={handleSelectRelated}
                 />
-                {playerOpen && src ? (
-                    <View style={styles.nativePlayerLayer} pointerEvents="box-none">
-                        <View style={StyleSheet.absoluteFill} pointerEvents="auto">
-                            <EmbedPlayer
-                                src={src}
-                                title={movie.title}
-                                onClose={handleCloseInline}
-                                onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
-                                onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
-                                isTv={mediaType === 'tv'}
-                                fallbackUrl={officialNetflixUrl}
-                            />
+                {playerOpen ? (
+                    currentProvider === 'crunchyroll' ? (
+                        <CrunchyrollPlayer
+                            title={movie.title || 'Anime Stream'}
+                            tmdbId={parsedTmdb}
+                            season={season}
+                            episode={episode}
+                            totalEpisodes={totalEps}
+                            initialAudio="hindi"
+                            onClose={handleCloseInline}
+                            onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
+                            onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
+                            onSelectEpisode={ep => setEpisode(ep)}
+                            onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                        />
+                    ) : src ? (
+                        <View style={styles.nativePlayerLayer} pointerEvents="box-none">
+                            <View style={StyleSheet.absoluteFill} pointerEvents="auto">
+                                <EmbedPlayer
+                                    src={src}
+                                    title={movie.title}
+                                    onClose={handleCloseInline}
+                                    onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                                    onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
+                                    onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
+                                    isTv={mediaType === 'tv'}
+                                    fallbackUrl={officialNetflixUrl}
+                                />
+                            </View>
                         </View>
-                    </View>
+                    ) : null
                 ) : null}
             </Animated.View>
         </ThemedView>

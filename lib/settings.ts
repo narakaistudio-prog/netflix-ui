@@ -142,5 +142,8 @@ export function templateOverridesFor(
                 movieTemplate: settings.customMovieTemplate,
                 tvTemplate: settings.customTvTemplate,
             };
+        case 'crunchyroll':
+        default:
+            return {};
     }
 }

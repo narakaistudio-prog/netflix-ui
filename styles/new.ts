@@ -242,5 +242,20 @@ export const newStyles = StyleSheet.create({
         fontSize: 17,
         color: '#fff',
         fontWeight: 'bold',
-    }
+    },
+    crunchyBadge: {
+        backgroundColor: 'rgba(244, 117, 33, 0.2)',
+        borderColor: '#F47521',
+        borderWidth: 1,
+        borderRadius: 6,
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        marginLeft: 8,
+    },
+    crunchyBadgeText: {
+        color: '#F47521',
+        fontSize: 11,
+        fontWeight: 'bold',
+        letterSpacing: 0.5,
+    },
 });

@@ -11,7 +11,7 @@
  */
 
 export type MediaType = 'movie' | 'tv';
-export type ProviderId = 'nxsha' | 'nhd' | 'custom';
+export type ProviderId = 'nxsha' | 'nhd' | 'crunchyroll' | 'custom';
 
 export interface Provider {
     id: ProviderId;
@@ -55,6 +55,9 @@ export const DEFAULT_NXSHA_TV =
 export const DEFAULT_NHD_MOVIE = 'https://nhdapi.com/movie/{id}';
 export const DEFAULT_NHD_TV = 'https://nhdapi.com/tv/{id}/{s}/{e}';
 
+export const DEFAULT_CRUNCHYROLL_MOVIE = 'https://crunchyroll.direct/movie/{id}';
+export const DEFAULT_CRUNCHYROLL_TV = 'https://crunchyroll.direct/tv/{id}/{s}/{e}';
+
 /* -------------------------------------------------------------------------- */
 /*  Known providers                                                          */
 /* -------------------------------------------------------------------------- */
@@ -71,6 +74,12 @@ export const PROVIDERS: Provider[] = [
         name: 'NHD',
         movieTemplate: DEFAULT_NHD_MOVIE,
         tvTemplate: DEFAULT_NHD_TV,
+    },
+    {
+        id: 'crunchyroll',
+        name: 'Crunchyroll (Hindi Dub • 0 Ads)',
+        movieTemplate: DEFAULT_CRUNCHYROLL_MOVIE,
+        tvTemplate: DEFAULT_CRUNCHYROLL_TV,
     },
 ];
 
@@ -101,6 +110,7 @@ export function detectProviderFromUrl(url: string): ProviderId | null {
         const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
         if (host === 'nxsha.space' || host === 'web.nxsha.app') return 'nxsha';
         if (host === 'nhdapi.com' || host === 'nhdapi.st') return 'nhd';
+        if (host.includes('crunchyroll')) return 'crunchyroll';
         return 'custom';
     } catch {
         return null;

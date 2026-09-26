@@ -41,24 +41,21 @@ export function FeaturedContent({
 
     if (variant === 'billboard') {
         const billboardHeight = Math.max(540, Math.min(windowHeight * 0.8, 760));
-        // Use high-res billboard image if available, fallback to movie thumbnail
-        const billboardSrc =
-            movie.title?.toLowerCase().includes('jawan')
-                ? getLocalPoster('billboard-jawan') || { uri: movie.thumbnail }
-                : movie.title?.toLowerCase().includes('extraction')
-                ? getLocalPoster('billboard-extraction') || { uri: movie.thumbnail }
-                : { uri: movie.thumbnail };
+
+        // Prioritize robust local billboard assets and verified catalog posters
+        const localHero =
+            (movie.id && getLocalPoster(movie.id)) ||
+            (movie.title && getLocalPoster(movie.title)) ||
+            (movie.title?.toLowerCase().includes('extraction')
+                ? getLocalPoster('billboard-extraction')
+                : getLocalPoster('billboard-jawan'));
+
+        const billboardSrc = localHero || (movie.thumbnail && !thumbFailed ? { uri: movie.thumbnail } : { uri: '/assets/posters/catalog/billboard-jawan.jpg' });
 
         return (
             <View
                 style={[web.container, { height: billboardHeight }]}
                 {...({
-                    // The billboard is art + gradients + text: only Play and
-                    // More Info are focusable in it, so a TV pointer arrow
-                    // parked anywhere else used to resolve to nothing and the
-                    // focus ring disappeared (Samsung then redraws its own
-                    // mouse arrow). Marking the hero as a pointer catch zone
-                    // sends the arrow to Play instead.
                     dataSet: {
                         tvPointerCatchZone: 'true',
                         tvPointerRedirect: 'hero-play',
@@ -72,6 +69,7 @@ export function FeaturedContent({
                     contentFit="cover"
                     loading="eager"
                     cachePolicy="memory-disk"
+                    fallbackLabel={movie.title}
                 />
 
                 {/* Left vignette gradient for text readability */}
@@ -109,7 +107,7 @@ export function FeaturedContent({
                 {/* Right side poster display */}
                 <View style={[web.posterRight, { pointerEvents: 'none' } as any]}>
                     <SafeImage
-                        source={{ uri: movie.thumbnail }}
+                        source={localHero || (movie.thumbnail ? { uri: movie.thumbnail } : { uri: '/assets/posters/catalog/billboard-jawan.jpg' })}
                         style={web.rightPosterImage}
                         loading="eager"
                         fallbackLabel={movie.title}
@@ -128,7 +126,7 @@ export function FeaturedContent({
 
                     {/* Movie Title */}
                     <Text style={web.title} numberOfLines={2}>
-                        {movie.title}
+                        {movie.title || 'Jawan'}
                     </Text>
 
                     {/* Red Top 10 Ranking Badge */}

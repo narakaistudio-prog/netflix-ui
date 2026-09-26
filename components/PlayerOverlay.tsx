@@ -9,6 +9,8 @@ import {
     Dimensions,
 } from 'react-native';
 import { EmbedPlayer } from './EmbedPlayer';
+import { CrunchyrollPlayer } from './CrunchyrollPlayer';
+import { isAnimeTitle } from '@/services/animeStreamService';
 import {
     PROVIDERS,
     ProviderId,
@@ -88,22 +90,24 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
 
     // Determine available providers. If a title has a custom embed_url,
     // add a "custom" slot so the switcher can toggle between that and
-    // the standard providers.
+    // the standard providers. For anime titles, crunchyroll is placed first.
+    const isAnime = isAnimeTitle(title);
     const cycle = useMemo<ProviderId[]>(() => {
         const list: ProviderId[] = [];
         if (forcedProvider) {
             list.push(forcedProvider);
         } else {
-            list.push(settings.defaultProvider);
+            const def = isAnime ? 'crunchyroll' : settings.defaultProvider;
+            list.push(def);
             // Include the other one for quick switching.
             for (const p of PROVIDERS) {
-                if (p.id !== settings.defaultProvider) list.push(p.id);
+                if (p.id !== def) list.push(p.id);
             }
         }
         if (embedUrl) list.push('custom');
         // De-dupe while preserving order.
         return Array.from(new Set(list));
-    }, [forcedProvider, settings.defaultProvider, embedUrl]);
+    }, [forcedProvider, settings.defaultProvider, embedUrl, isAnime]);
 
     // Reset provider index + episode when the overlay (re)opens.
     useEffect(() => {
@@ -200,6 +204,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
     const providerLabel = useMemo(() => {
         if (currentProvider === 'nxsha') return 'Nxsha';
         if (currentProvider === 'nhd') return 'NHD';
+        if (currentProvider === 'crunchyroll') return 'Crunchyroll (Hindi Dub)';
         return 'Custom';
     }, [currentProvider]);
 
@@ -212,7 +217,21 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
             <View style={[webStyles.backdrop, { minHeight: height }]}>
                 <Pressable style={webStyles.veil} onPress={onRequestClose} />
                 <View style={webStyles.sheet}>
-                    {src ? (
+                    {currentProvider === 'crunchyroll' ? (
+                        <CrunchyrollPlayer
+                            title={title || 'Anime Stream'}
+                            tmdbId={tmdbId}
+                            season={season}
+                            episode={episode}
+                            totalEpisodes={totalEpisodesInSeason}
+                            initialAudio="hindi"
+                            onClose={onRequestClose}
+                            onNextEpisode={canGoNext ? handleNextEpisode : undefined}
+                            onPrevEpisode={canGoPrev ? handlePrevEpisode : undefined}
+                            onSelectEpisode={ep => setEpisode(ep)}
+                            onSwitchProvider={cycle.length > 1 ? handleSwitchProvider : undefined}
+                        />
+                    ) : src ? (
                         <EmbedPlayer
                             src={src}
                             title={title}
@@ -269,7 +288,21 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
             onRequestClose={onRequestClose}
         >
             <View style={styles.nativeRoot}>
-                {src ? (
+                {currentProvider === 'crunchyroll' ? (
+                    <CrunchyrollPlayer
+                        title={title || 'Anime Stream'}
+                        tmdbId={tmdbId}
+                        season={season}
+                        episode={episode}
+                        totalEpisodes={totalEpisodesInSeason}
+                        initialAudio="hindi"
+                        onClose={onRequestClose}
+                        onNextEpisode={canGoNext ? handleNextEpisode : undefined}
+                        onPrevEpisode={canGoPrev ? handlePrevEpisode : undefined}
+                        onSelectEpisode={ep => setEpisode(ep)}
+                        onSwitchProvider={cycle.length > 1 ? handleSwitchProvider : undefined}
+                    />
+                ) : src ? (
                     <EmbedPlayer
                         src={src}
                         title={title}

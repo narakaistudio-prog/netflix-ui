@@ -14,6 +14,7 @@ import { newStyles } from '@/styles/new';
 import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
 import { selectRelatedTitles } from '@/lib/relatedTitles';
+import { isAnimeTitle } from '@/services/animeStreamService';
 import type { Episode, Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -49,7 +50,7 @@ interface MovieData {
     mediaType?: 'movie' | 'tv';
     tmdb_id?: string | number;
     imdb_id?: string;
-    embed_provider?: 'nxsha' | 'nhd' | 'custom';
+    embed_provider?: 'nxsha' | 'nhd' | 'crunchyroll' | 'custom';
     embed_url?: string;
     netflixId?: string;
     netflixUrl?: string;
@@ -152,6 +153,7 @@ export function ExpandedPlayer({
 
     const isSeries = movieData.mediaType === 'tv'
         || (movieData.mediaType !== 'movie' && movieData.type === 'SERIES');
+    const isAnime = isAnimeTitle(movieData.title, movieData.catalogCollection, movieData.type);
     const episodeCount = isSeries
         ? movieData.episodeCount
             ?? movieData.totalEpisodesInSeason
@@ -358,6 +360,11 @@ export function ExpandedPlayer({
                         <Text style={newStyles.netflixTag}>
                             {isSeries ? 'SERIES' : 'FILM'}
                         </Text>
+                        {isAnime ? (
+                            <View style={newStyles.crunchyBadge}>
+                                <Text style={newStyles.crunchyBadgeText}>⚡ CRUNCHYROLL • 🇮🇳 HINDI DUB (0 ADS)</Text>
+                            </View>
+                        ) : null}
                     </View>
                     <ThemedText style={styles.title}>{movieData.title}</ThemedText>
 
@@ -398,9 +405,11 @@ export function ExpandedPlayer({
                             <ThemedText style={styles.playButtonText}>
                                 {hasDirectPreview
                                     ? 'Play preview'
-                                    : (hasProviderEmbed
-                                        ? (isSeries ? 'Play S1:E1' : 'Play')
-                                        : 'Play on Netflix')}
+                                    : (isAnime
+                                        ? (isSeries ? 'Play S1:E1 • Hindi Dub (0 Ads)' : 'Play Anime • Hindi Dub (0 Ads)')
+                                        : (hasProviderEmbed
+                                            ? (isSeries ? 'Play S1:E1' : 'Play')
+                                            : 'Play on Netflix'))}
                             </ThemedText>
                         </Pressable>
 
