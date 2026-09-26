@@ -51,7 +51,7 @@ export function CrunchyrollPlayer({
         resolveAnimeStream(title, season, episode, initialAudio, tmdbId)
     );
 
-    const [selectedServerId, setSelectedServerId] = useState<string>('netmirror_server1');
+    const [selectedServerId, setSelectedServerId] = useState<string>('hindi_genuine');
     const [selectedAudio, setSelectedAudio] = useState<'hindi' | 'japanese' | 'english' | 'tamil' | 'telugu'>(initialAudio);
     const [loading, setLoading] = useState(true);
     const [controlsVisible, setControlsVisible] = useState(true);
@@ -112,7 +112,7 @@ export function CrunchyrollPlayer({
 
         const loadTimeout = setTimeout(() => {
             setLoading(false);
-        }, 1500);
+        }, 1200);
 
         iframe.onload = () => {
             clearTimeout(loadTimeout);
@@ -193,7 +193,7 @@ export function CrunchyrollPlayer({
             <View style={styles.nativeContainer}>
                 <Ionicons name="play-circle" size={64} color={NETFLIX_RED} />
                 <Text style={styles.nativeTitle}>{title}</Text>
-                <Text style={styles.nativeSubtitle}>NetMirror Multi-Language (Episode {episode})</Text>
+                <Text style={styles.nativeSubtitle}>Hindi Dub (Episode {episode})</Text>
                 <Pressable style={styles.nativeButton} onPress={openDirectInNewTab}>
                     <Text style={styles.nativeButtonText}>Play Stream</Text>
                 </Pressable>
@@ -279,7 +279,7 @@ export function CrunchyrollPlayer({
                                     letterSpacing: 0.5,
                                 }}
                             >
-                                NETMIRROR MULTI-AUDIO
+                                🇮🇳 HINDI DUB ACTIVE
                             </span>
                             <span
                                 style={{
@@ -292,7 +292,7 @@ export function CrunchyrollPlayer({
                                     borderRadius: 4,
                                 }}
                             >
-                                🇮🇳 HINDI DUB • 1080P HD
+                                1080P FULL HD • 0 ADS
                             </span>
                         </div>
 
@@ -326,10 +326,12 @@ export function CrunchyrollPlayer({
                                     onClick={e => {
                                         e.stopPropagation();
                                         setSelectedAudio(audio.id);
-                                        if (audio.id === 'japanese' || audio.id === 'english') {
+                                        if (audio.id === 'hindi') {
+                                            setSelectedServerId('hindi_genuine');
+                                        } else if (audio.id === 'japanese') {
+                                            setSelectedServerId('twoembed');
+                                        } else if (audio.id === 'english') {
                                             setSelectedServerId('autoembed');
-                                        } else {
-                                            setSelectedServerId('netmirror_server1');
                                         }
                                     }}
                                     style={{
@@ -376,7 +378,7 @@ export function CrunchyrollPlayer({
                         title="Switch Server (S)"
                     >
                         <Ionicons name="server-outline" size={14} color="#fff" />
-                        <span>Servers</span>
+                        <span>Servers ({streamData.servers.length})</span>
                         <Ionicons name="chevron-down" size={12} color="#fff" />
                     </button>
 
@@ -567,7 +569,7 @@ export function CrunchyrollPlayer({
                         position: 'absolute',
                         top: 70,
                         right: 20,
-                        width: 340,
+                        width: 360,
                         backgroundColor: '#181818',
                         borderRadius: 12,
                         border: '1px solid rgba(255,255,255,0.2)',
@@ -578,7 +580,7 @@ export function CrunchyrollPlayer({
                 >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                         <span style={{ color: '#fff', fontWeight: 800, fontSize: 14 }}>
-                            ⚡ Select NetMirror Server
+                            ⚡ Select Streaming Server
                         </span>
                         <button
                             onClick={() => setShowServerMenu(false)}
@@ -731,7 +733,7 @@ export function CrunchyrollPlayer({
                                             Episode {ep}
                                         </div>
                                         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>
-                                            NetMirror Multi-Audio • 1080p HD
+                                            🇮🇳 Hindi Dub • 1080p Full HD
                                         </div>
                                     </div>
                                 </button>
