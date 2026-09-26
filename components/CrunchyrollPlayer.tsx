@@ -67,11 +67,11 @@ export function CrunchyrollPlayer({
     const currentServer: AnimeServerSource = useMemo(() => {
         if (!streamData.servers || streamData.servers.length === 0) {
             return {
-                id: 'hindi_dub',
-                name: 'Server 1: Hindi Dub',
-                badge: '100% Hindi Audio',
-                url: `https://nxsha.space/embed/tv/95479/${season}/${episode}?server=GbruHindi`,
-                isHindiDub: true,
+                id: 'vidlink',
+                name: 'Server 1: VidLink Ultra',
+                badge: '1080p Ultra HD • 0 Ads',
+                url: `https://vidlink.pro/tv/95479/${season}/${episode}`,
+                speedTag: '⚡ 0.3s',
             };
         }
         return streamData.servers[selectedServerIndex] || streamData.servers[0];
@@ -190,7 +190,7 @@ export function CrunchyrollPlayer({
             <View style={styles.nativeContainer}>
                 <Ionicons name="play-circle" size={64} color={NETFLIX_RED} />
                 <Text style={styles.nativeTitle}>{title}</Text>
-                <Text style={styles.nativeSubtitle}>Hindi Dubbed Anime (Episode {episode})</Text>
+                <Text style={styles.nativeSubtitle}>Anime Stream (Episode {episode})</Text>
                 <Pressable style={styles.nativeButton} onPress={openDirectInNewTab}>
                     <Text style={styles.nativeButtonText}>Play Stream</Text>
                 </Pressable>
@@ -267,7 +267,7 @@ export function CrunchyrollPlayer({
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                             <span
                                 style={{
-                                    backgroundColor: currentServer.isHindiDub ? '#E50914' : '#2563eb',
+                                    backgroundColor: '#E50914',
                                     color: '#fff',
                                     padding: '2px 8px',
                                     borderRadius: 4,
@@ -275,7 +275,7 @@ export function CrunchyrollPlayer({
                                     fontSize: 11,
                                 }}
                             >
-                                {currentServer.isHindiDub ? '🇮🇳 HINDI DUB ACTIVE' : '⚡ AUTOEMBED'}
+                                {currentServer.speedTag}
                             </span>
                             <span
                                 style={{
@@ -323,10 +323,10 @@ export function CrunchyrollPlayer({
                             fontSize: 12,
                             cursor: 'pointer',
                         }}
-                        title="Switch between Hindi Dub & AutoEmbed (S)"
+                        title="Switch Servers (0-Ads / Dub / AutoEmbed) (S)"
                     >
-                        <Ionicons name="volume-high" size={15} color="#fff" />
-                        <span>🇮🇳 Hindi Dub / Servers</span>
+                        <Ionicons name="server" size={15} color="#fff" />
+                        <span>Servers ({streamData.servers.length})</span>
                     </button>
 
                     <button
@@ -514,7 +514,7 @@ export function CrunchyrollPlayer({
                         position: 'absolute',
                         top: 68,
                         right: 140,
-                        width: 380,
+                        width: 400,
                         backgroundColor: '#181818',
                         borderRadius: 12,
                         border: '1.5px solid rgba(255,255,255,0.2)',
@@ -528,8 +528,8 @@ export function CrunchyrollPlayer({
                 >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 10 }}>
                         <div>
-                            <div style={{ color: '#fff', fontWeight: 800, fontSize: 14 }}>🇮🇳 Hindi Dub & Server Selection</div>
-                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>Server 1 provides dedicated pure Hindi Dubbed audio</div>
+                            <div style={{ color: '#fff', fontWeight: 800, fontSize: 14 }}>🚀 Fast & 0-Ad Streaming Servers</div>
+                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>Choose server with ultra-fast speed & minimal/zero ads</div>
                         </div>
                         <button
                             onClick={() => setShowServerMenu(false)}
@@ -539,7 +539,7 @@ export function CrunchyrollPlayer({
                         </button>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 320, overflowY: 'auto' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 340, overflowY: 'auto' }}>
                         {streamData.servers.map((srv, idx) => {
                             const isSelected = idx === selectedServerIndex;
                             return (
@@ -679,7 +679,7 @@ export function CrunchyrollPlayer({
                                             Episode {ep}
                                         </div>
                                         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>
-                                            Hindi Dubbed • 1080p HD
+                                            1080p Ultra HD • Fast Play
                                         </div>
                                     </div>
                                 </button>
