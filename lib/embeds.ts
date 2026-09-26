@@ -11,7 +11,7 @@
  */
 
 export type MediaType = 'movie' | 'tv';
-export type ProviderId = 'nxsha' | 'nhd' | 'crunchyroll' | 'custom';
+export type ProviderId = 'nxsha' | 'nhd' | 'netmirror' | 'crunchyroll' | 'custom';
 
 export interface Provider {
     id: ProviderId;
@@ -52,6 +52,9 @@ export const DEFAULT_NXSHA_MOVIE =
 export const DEFAULT_NXSHA_TV =
     'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
 
+export const DEFAULT_NETMIRROR_MOVIE = 'https://net27.cc/embed/tmdb/{tmdb}?lang=hi';
+export const DEFAULT_NETMIRROR_TV = 'https://net27.cc/embed/tmdb/{tmdb}?s={s}&e={e}&lang=hi';
+
 export const DEFAULT_NHD_MOVIE = 'https://nhdapi.com/movie/{id}';
 export const DEFAULT_NHD_TV = 'https://nhdapi.com/tv/{id}/{s}/{e}';
 
@@ -63,6 +66,12 @@ export const DEFAULT_CRUNCHYROLL_TV = 'https://crunchyroll.direct/tv/{id}/{s}/{e
 /* -------------------------------------------------------------------------- */
 
 export const PROVIDERS: Provider[] = [
+    {
+        id: 'netmirror',
+        name: 'NetMirror (Multi-Language Hindi Dub)',
+        movieTemplate: DEFAULT_NETMIRROR_MOVIE,
+        tvTemplate: DEFAULT_NETMIRROR_TV,
+    },
     {
         id: 'nxsha',
         name: 'Nxsha',
@@ -108,6 +117,7 @@ export function detectProviderFromUrl(url: string): ProviderId | null {
     if (!url) return null;
     try {
         const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+        if (host.includes('net27') || host.includes('net77') || host.includes('netmirror') || host.includes('pcmirror') || host.includes('iosmirror')) return 'netmirror';
         if (host === 'nxsha.space' || host === 'web.nxsha.app') return 'nxsha';
         if (host === 'nhdapi.com' || host === 'nhdapi.st') return 'nhd';
         if (host.includes('crunchyroll')) return 'crunchyroll';
