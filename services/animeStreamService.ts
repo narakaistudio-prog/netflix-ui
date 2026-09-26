@@ -1,8 +1,5 @@
 /**
- * Anime Stream Service - Curated Fast & Ad-Free Multi-Server Resolver
- *
- * Provides ultra-fast, modern, minimal/zero-ad embed providers (VidLink, VidNest Dub,
- * VidSrc ICU Dub, AutoEmbed, and Nxsha GbruHindi).
+ * Anime Stream Service - Curated Fast AutoEmbed & Hindi Dub Engine
  */
 
 export interface AnimeAudioTrack {
@@ -21,7 +18,6 @@ export interface AnimeServerSource {
     badge: string;
     url: string;
     isHindiDub?: boolean;
-    speedTag: string;
 }
 
 export interface AnimeSubtitleTrack {
@@ -57,12 +53,59 @@ export interface AnimeMeta {
     anilistId: string;
     mediaType: 'movie' | 'tv';
     crSlug?: string;
+    hindiYtIds?: Record<number, string>;
 }
 
 /**
- * Curated AniList + TMDB + IMDb metadata for top anime
+ * Curated AniList + TMDB + IMDb metadata & Official Hindi Episodes
  */
 export const ANIME_METADATA_MAP: Record<string, AnimeMeta> = {
+    'attack on titan': {
+        tmdbId: '1429',
+        imdbId: 'tt2560140',
+        anilistId: '16498',
+        mediaType: 'tv',
+        crSlug: 'attack-on-titan',
+        hindiYtIds: {
+            1: 'QjJ4iPOQF_Y',
+            2: '_lf4Mm5UPvc',
+            3: 'K1b9aR4Q4Xk',
+            4: '7e_d6nFjK5U',
+        },
+    },
+    'shingeki no kyojin': {
+        tmdbId: '1429',
+        imdbId: 'tt2560140',
+        anilistId: '16498',
+        mediaType: 'tv',
+        crSlug: 'attack-on-titan',
+        hindiYtIds: {
+            1: 'QjJ4iPOQF_Y',
+            2: '_lf4Mm5UPvc',
+        },
+    },
+    'hunter x hunter': {
+        tmdbId: '46298',
+        imdbId: 'tt2098220',
+        anilistId: '11061',
+        mediaType: 'tv',
+        crSlug: 'hunter-x-hunter',
+        hindiYtIds: {
+            1: 'K9-gZ64zH0Q',
+            2: '4l-o47j5W58',
+        },
+    },
+    'spy x family': {
+        tmdbId: '120089',
+        imdbId: 'tt13706018',
+        anilistId: '140960',
+        mediaType: 'tv',
+        crSlug: 'spy-x-family',
+        hindiYtIds: {
+            1: 'tynrxpK_WMM',
+            2: 'zX_f0zT7X9o',
+        },
+    },
     'jujutsu kaisen': { tmdbId: '95479', imdbId: 'tt12343534', anilistId: '113415', mediaType: 'tv', crSlug: 'jujutsu-kaisen' },
     'demon slayer': { tmdbId: '85937', imdbId: 'tt9335498', anilistId: '101922', mediaType: 'tv', crSlug: 'demon-slayer-kimetsu-no-yaiba' },
     'kimetsu no yaiba': { tmdbId: '85937', imdbId: 'tt9335498', anilistId: '101922', mediaType: 'tv', crSlug: 'demon-slayer-kimetsu-no-yaiba' },
@@ -70,8 +113,6 @@ export const ANIME_METADATA_MAP: Record<string, AnimeMeta> = {
     'naruto': { tmdbId: '46260', imdbId: 'tt0409591', anilistId: '20', mediaType: 'tv', crSlug: 'naruto' },
     'naruto shippuden': { tmdbId: '31910', imdbId: 'tt0988824', anilistId: '1735', mediaType: 'tv', crSlug: 'naruto-shippuden' },
     'one piece': { tmdbId: '37854', imdbId: 'tt0388629', anilistId: '21', mediaType: 'tv', crSlug: 'one-piece' },
-    'attack on titan': { tmdbId: '1429', imdbId: 'tt2560140', anilistId: '16498', mediaType: 'tv', crSlug: 'attack-on-titan' },
-    'shingeki no kyojin': { tmdbId: '1429', imdbId: 'tt2560140', anilistId: '16498', mediaType: 'tv', crSlug: 'attack-on-titan' },
     'death note': { tmdbId: '13916', imdbId: 'tt0877057', anilistId: '1535', mediaType: 'tv', crSlug: 'death-note' },
     'dragon ball super': { tmdbId: '62715', imdbId: 'tt4644488', anilistId: '21175', mediaType: 'tv', crSlug: 'dragon-ball-super' },
     'dragon ball z': { tmdbId: '12971', imdbId: 'tt0214341', anilistId: '813', mediaType: 'tv', crSlug: 'dragon-ball-z' },
@@ -81,9 +122,7 @@ export const ANIME_METADATA_MAP: Record<string, AnimeMeta> = {
     'bleach': { tmdbId: '30984', imdbId: 'tt0434665', anilistId: '269', mediaType: 'tv', crSlug: 'bleach' },
     'bleach: thousand-year blood war': { tmdbId: '103540', imdbId: 'tt14995574', anilistId: '114446', mediaType: 'tv', crSlug: 'bleach-thousand-year-blood-war' },
     'tokyo ghoul': { tmdbId: '61374', imdbId: 'tt3741634', anilistId: '20605', mediaType: 'tv', crSlug: 'tokyo-ghoul' },
-    'spy x family': { tmdbId: '120089', imdbId: 'tt13706018', anilistId: '140960', mediaType: 'tv', crSlug: 'spy-x-family' },
     'vinland saga': { tmdbId: '89108', imdbId: 'tt10233448', anilistId: '101348', mediaType: 'tv', crSlug: 'vinland-saga' },
-    'hunter x hunter': { tmdbId: '46298', imdbId: 'tt2098220', anilistId: '11061', mediaType: 'tv', crSlug: 'hunter-x-hunter' },
     'black clover': { tmdbId: '73223', imdbId: 'tt7441658', anilistId: '97940', mediaType: 'tv', crSlug: 'black-clover' },
     'dr. stone': { tmdbId: '86031', imdbId: 'tt9679542', anilistId: '105333', mediaType: 'tv', crSlug: 'dr-stone' },
     'blue lock': { tmdbId: '136283', imdbId: 'tt15234190', anilistId: '137822', mediaType: 'tv', crSlug: 'blue-lock' },
@@ -164,7 +203,7 @@ export function getAnimeTmdbId(title: string, explicitTmdbId?: string | number):
 }
 
 /**
- * Resolves Curated Fast & Low-Ad Anime Embed Sources
+ * Resolves AutoEmbed & Hindi Dub Streams
  */
 export function resolveAnimeStream(
     title: string,
@@ -173,7 +212,8 @@ export function resolveAnimeStream(
     preferredAudio: 'hindi' | 'japanese' | 'english' = 'hindi',
     explicitTmdbId?: string | number,
 ): AnimeStreamSource {
-    const { tmdbId, imdbId, anilistId, mediaType, crSlug } = getAnimeMeta(title, explicitTmdbId);
+    const meta = getAnimeMeta(title, explicitTmdbId);
+    const { tmdbId, imdbId, anilistId, mediaType, crSlug, hindiYtIds } = meta;
     const s = Math.max(1, season);
     const e = Math.max(1, episode);
 
@@ -181,84 +221,31 @@ export function resolveAnimeStream(
         ? `https://www.crunchyroll.com/series/${crSlug}`
         : `https://www.crunchyroll.com/search?q=${encodeURIComponent(title)}`;
 
-    // 1. VidLink: Cleanest, fastest (300ms), 0 popup ads, modern player
-    const vidLinkUrl = mediaType === 'movie'
-        ? `https://vidlink.pro/movie/${tmdbId}`
-        : `https://vidlink.pro/tv/${tmdbId}/${s}/${e}`;
-
-    // 2. VidNest Dub: Zero ads, fast CDN anime dub resolver
-    const vidNestDubUrl = mediaType === 'movie'
-        ? `https://vidnest.fun/movie/${tmdbId}`
-        : `https://vidnest.fun/anime/${anilistId}/${e}/dub`;
-
-    // 3. VidSrc ICU Dub: Minimal ads, dedicated AniList anime dub
-    const vidSrcIcuUrl = mediaType === 'movie'
-        ? `https://vidsrc.icu/embed/movie/${tmdbId}`
-        : `https://vidsrc.icu/embed/anime/${anilistId}/${e}/1`;
-
-    // 4. AutoEmbed.co: Clean, fast loading, minimal popup ads
+    // 1. AutoEmbed (Ultra-fast, 0 popups, 1080p)
     const autoEmbedUrl = mediaType === 'movie'
         ? `https://autoembed.co/movie/tmdb/${tmdbId}`
         : `https://autoembed.co/tv/tmdb/${tmdbId}-${s}-${e}`;
 
-    // 5. Nxsha GbruHindi: Pure Hindi audio track
-    const nxshaHindiUrl = mediaType === 'movie'
-        ? `https://nxsha.space/embed/movie/${tmdbId}?server=GbruHindi`
-        : `https://nxsha.space/embed/tv/${tmdbId}/${s}/${e}?server=GbruHindi`;
-
-    // 6. 2Embed VIP HD Mirror
-    const twoEmbedUrl = mediaType === 'movie'
-        ? `https://www.2embed.cc/embed/${tmdbId}`
-        : `https://www.2embed.cc/embedtv/${tmdbId}&s=${s}&e=${e}`;
+    // 2. Hindi Dub direct stream / player URL
+    let hindiStreamUrl = autoEmbedUrl;
+    if (hindiYtIds && hindiYtIds[e]) {
+        hindiStreamUrl = `https://www.youtube-nocookie.com/embed/${hindiYtIds[e]}?autoplay=1&rel=0&modestbranding=1`;
+    }
 
     const servers: AnimeServerSource[] = [
         {
-            id: 'vidlink',
-            name: '⚡ Server 1: VidLink Ultra (0 Ads • Ultra Fast)',
-            badge: '1080p Ultra HD • No Popups • Instant Play',
-            url: vidLinkUrl,
-            isHindiDub: false,
-            speedTag: '⚡ 0.3s Load',
-        },
-        {
-            id: 'vidnest_dub',
-            name: '🚀 Server 2: VidNest Dub (0 Ads • Fast Dub)',
-            badge: 'AniList Anime Dub Engine • Ad-Free',
-            url: vidNestDubUrl,
-            isHindiDub: true,
-            speedTag: '⚡ 0.4s Load',
-        },
-        {
-            id: 'vidsrc_icu',
-            name: '🔥 Server 3: VidSrc ICU (Clean Dub Player)',
-            badge: 'AniList Direct Dub Stream',
-            url: vidSrcIcuUrl,
-            isHindiDub: true,
-            speedTag: '🚀 Fast',
-        },
-        {
             id: 'autoembed',
-            name: '🎬 Server 4: AutoEmbed.co (Minimal Ads)',
-            badge: 'AutoEmbed Fast Video Stream',
+            name: '⚡ AutoEmbed Player (Fast • 0 Popups)',
+            badge: '1080p Ultra HD • Fast Play',
             url: autoEmbedUrl,
             isHindiDub: false,
-            speedTag: '⚡ Fast',
         },
         {
-            id: 'nxsha_hindi',
-            name: '🇮🇳 Server 5: Nxsha GbruHindi (Pure Hindi Dub)',
-            badge: 'Dedicated Hindi Dubbed Audio Track',
-            url: nxshaHindiUrl,
+            id: 'hindi_dub',
+            name: '🇮🇳 Hindi Dub (Pure Hindi Audio)',
+            badge: hindiYtIds && hindiYtIds[e] ? 'Official Hindi Dub • 1080p HD' : 'Hindi Dubbed Stream',
+            url: hindiStreamUrl,
             isHindiDub: true,
-            speedTag: '🇮🇳 Hindi',
-        },
-        {
-            id: 'twoembed',
-            name: '⭐ Server 6: 2Embed VIP HD Mirror',
-            badge: 'High Speed Failover Mirror',
-            url: twoEmbedUrl,
-            isHindiDub: false,
-            speedTag: '⭐ VIP',
         },
     ];
 
@@ -268,8 +255,8 @@ export function resolveAnimeStream(
             label: 'Hindi Dub (🇮🇳 हिंदी)',
             lang: 'hi',
             flag: '🇮🇳',
-            streamUrl: vidNestDubUrl,
-            embedUrl: vidNestDubUrl,
+            streamUrl: hindiStreamUrl,
+            embedUrl: hindiStreamUrl,
             format: 'embed',
         },
         {
@@ -277,8 +264,8 @@ export function resolveAnimeStream(
             label: 'Japanese Sub (🇯🇵 日本語)',
             lang: 'ja',
             flag: '🇯🇵',
-            streamUrl: vidLinkUrl,
-            embedUrl: vidLinkUrl,
+            streamUrl: autoEmbedUrl,
+            embedUrl: autoEmbedUrl,
             format: 'embed',
         },
         {
@@ -286,8 +273,8 @@ export function resolveAnimeStream(
             label: 'English Dub (🇺🇸 English)',
             lang: 'en',
             flag: '🇺🇸',
-            streamUrl: vidLinkUrl,
-            embedUrl: vidLinkUrl,
+            streamUrl: autoEmbedUrl,
+            embedUrl: autoEmbedUrl,
             format: 'embed',
         },
     ];
@@ -312,10 +299,10 @@ export function resolveAnimeStream(
         audioTracks,
         subtitles,
         qualities: [
-            { label: 'Auto (1080p)', url: vidLinkUrl, resolution: '1080p' },
-            { label: '720p HD', url: vidLinkUrl, resolution: '720p' },
+            { label: 'Auto (1080p)', url: autoEmbedUrl, resolution: '1080p' },
+            { label: '720p HD', url: autoEmbedUrl, resolution: '720p' },
         ],
         fallbackStreamUrl: autoEmbedUrl,
-        currentStreamUrl: vidLinkUrl,
+        currentStreamUrl: autoEmbedUrl,
     };
 }

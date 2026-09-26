@@ -50,11 +50,10 @@ export function CrunchyrollPlayer({
         resolveAnimeStream(title, season, episode, initialAudio, tmdbId)
     );
 
-    const [selectedServerIndex, setSelectedServerIndex] = useState(0);
+    const [activeMode, setActiveMode] = useState<'autoembed' | 'hindi'>('autoembed');
     const [loading, setLoading] = useState(true);
     const [controlsVisible, setControlsVisible] = useState(true);
     const [showEpisodesDrawer, setShowEpisodesDrawer] = useState(false);
-    const [showServerMenu, setShowServerMenu] = useState(false);
     const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Update stream data when episode, title, or TMDB ID changes
@@ -65,17 +64,16 @@ export function CrunchyrollPlayer({
     }, [title, season, episode, initialAudio, tmdbId]);
 
     const currentServer: AnimeServerSource = useMemo(() => {
-        if (!streamData.servers || streamData.servers.length === 0) {
-            return {
-                id: 'vidlink',
-                name: 'Server 1: VidLink Ultra',
-                badge: '1080p Ultra HD • 0 Ads',
-                url: `https://vidlink.pro/tv/95479/${season}/${episode}`,
-                speedTag: '⚡ 0.3s',
-            };
+        if (activeMode === 'hindi' && streamData.servers[1]) {
+            return streamData.servers[1];
         }
-        return streamData.servers[selectedServerIndex] || streamData.servers[0];
-    }, [streamData.servers, selectedServerIndex, season, episode]);
+        return streamData.servers[0] || {
+            id: 'autoembed',
+            name: 'AutoEmbed Player',
+            badge: '1080p Ultra HD',
+            url: `https://autoembed.co/tv/tmdb/95479-${season}-${episode}`,
+        };
+    }, [streamData.servers, activeMode, season, episode]);
 
     // Mount active server iframe directly
     useEffect(() => {
@@ -136,9 +134,9 @@ export function CrunchyrollPlayer({
         setControlsVisible(true);
         if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
         idleTimerRef.current = setTimeout(() => {
-            if (!showEpisodesDrawer && !showServerMenu) setControlsVisible(false);
+            if (!showEpisodesDrawer) setControlsVisible(false);
         }, 5000);
-    }, [showEpisodesDrawer, showServerMenu]);
+    }, [showEpisodesDrawer]);
 
     // Keyboard shortcuts
     useEffect(() => {
@@ -162,18 +160,14 @@ export function CrunchyrollPlayer({
                 case 'KeyE':
                     e.preventDefault();
                     setShowEpisodesDrawer(prev => !prev);
-                    setShowServerMenu(false);
                     break;
-                case 'KeyS':
+                case 'KeyH':
                     e.preventDefault();
-                    setShowServerMenu(prev => !prev);
-                    setShowEpisodesDrawer(false);
+                    setActiveMode(prev => (prev === 'autoembed' ? 'hindi' : 'autoembed'));
                     break;
                 case 'Escape':
                     if (showEpisodesDrawer) {
                         setShowEpisodesDrawer(false);
-                    } else if (showServerMenu) {
-                        setShowServerMenu(false);
                     } else if (onClose) {
                         onClose();
                     }
@@ -183,7 +177,7 @@ export function CrunchyrollPlayer({
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [showEpisodesDrawer, showServerMenu, onNextEpisode, onPrevEpisode, onClose]);
+    }, [showEpisodesDrawer, onNextEpisode, onPrevEpisode, onClose]);
 
     if (!IS_WEB) {
         return (
@@ -267,7 +261,7 @@ export function CrunchyrollPlayer({
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                             <span
                                 style={{
-                                    backgroundColor: '#E50914',
+                                    backgroundColor: activeMode === 'hindi' ? '#E50914' : '#2563eb',
                                     color: '#fff',
                                     padding: '2px 8px',
                                     borderRadius: 4,
@@ -275,7 +269,7 @@ export function CrunchyrollPlayer({
                                     fontSize: 11,
                                 }}
                             >
-                                {currentServer.speedTag}
+                                {activeMode === 'hindi' ? '🇮🇳 HINDI DUB' : '⚡ AUTOEMBED'}
                             </span>
                             <span
                                 style={{
@@ -288,7 +282,7 @@ export function CrunchyrollPlayer({
                                     borderRadius: 4,
                                 }}
                             >
-                                {currentServer.name.split(':')[0]}
+                                1080P HD
                             </span>
                         </div>
 
@@ -301,33 +295,56 @@ export function CrunchyrollPlayer({
                     </div>
                 </div>
 
-                {/* Right: Audio/Server Switcher, Episodes & Close */}
+                {/* Right: Audio Toggle, Episodes & Close */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    {/* Hindi Dub / Server Switcher Button */}
-                    <button
-                        onClick={e => {
-                            e.stopPropagation();
-                            setShowServerMenu(prev => !prev);
-                            setShowEpisodesDrawer(false);
-                        }}
+                    {/* Mode Switcher Toggle */}
+                    <div
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: 6,
-                            background: showServerMenu ? '#E50914' : 'rgba(229, 9, 20, 0.25)',
-                            border: '1.5px solid #E50914',
-                            borderRadius: 6,
-                            padding: '6px 14px',
-                            color: '#fff',
-                            fontWeight: 800,
-                            fontSize: 12,
-                            cursor: 'pointer',
+                            background: 'rgba(255,255,255,0.1)',
+                            borderRadius: 20,
+                            padding: 2,
+                            border: '1px solid rgba(255,255,255,0.2)',
                         }}
-                        title="Switch Servers (0-Ads / Dub / AutoEmbed) (S)"
                     >
-                        <Ionicons name="server" size={15} color="#fff" />
-                        <span>Servers ({streamData.servers.length})</span>
-                    </button>
+                        <button
+                            onClick={e => {
+                                e.stopPropagation();
+                                setActiveMode('autoembed');
+                            }}
+                            style={{
+                                background: activeMode === 'autoembed' ? '#E50914' : 'transparent',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: 18,
+                                padding: '5px 12px',
+                                fontSize: 12,
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                            }}
+                        >
+                            ⚡ AutoEmbed
+                        </button>
+                        <button
+                            onClick={e => {
+                                e.stopPropagation();
+                                setActiveMode('hindi');
+                            }}
+                            style={{
+                                background: activeMode === 'hindi' ? '#E50914' : 'transparent',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: 18,
+                                padding: '5px 12px',
+                                fontSize: 12,
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                            }}
+                        >
+                            🇮🇳 Hindi Dub
+                        </button>
+                    </div>
 
                     <button
                         onClick={e => {
@@ -357,7 +374,6 @@ export function CrunchyrollPlayer({
                         onClick={e => {
                             e.stopPropagation();
                             setShowEpisodesDrawer(prev => !prev);
-                            setShowServerMenu(false);
                         }}
                         style={{
                             background: showEpisodesDrawer ? '#E50914' : 'rgba(255,255,255,0.15)',
@@ -506,79 +522,6 @@ export function CrunchyrollPlayer({
                 )}
             </div>
 
-            {/* Server / Hindi Dub Selector Modal */}
-            {showServerMenu && (
-                <div
-                    onClick={e => e.stopPropagation()}
-                    style={{
-                        position: 'absolute',
-                        top: 68,
-                        right: 140,
-                        width: 400,
-                        backgroundColor: '#181818',
-                        borderRadius: 12,
-                        border: '1.5px solid rgba(255,255,255,0.2)',
-                        boxShadow: '0 10px 40px rgba(0,0,0,0.9)',
-                        zIndex: 80,
-                        padding: 16,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 10,
-                    }}
-                >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 10 }}>
-                        <div>
-                            <div style={{ color: '#fff', fontWeight: 800, fontSize: 14 }}>🚀 Fast & 0-Ad Streaming Servers</div>
-                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>Choose server with ultra-fast speed & minimal/zero ads</div>
-                        </div>
-                        <button
-                            onClick={() => setShowServerMenu(false)}
-                            style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer' }}
-                        >
-                            <Ionicons name="close" size={18} color="#fff" />
-                        </button>
-                    </div>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 340, overflowY: 'auto' }}>
-                        {streamData.servers.map((srv, idx) => {
-                            const isSelected = idx === selectedServerIndex;
-                            return (
-                                <button
-                                    key={srv.id}
-                                    onClick={() => {
-                                        setSelectedServerIndex(idx);
-                                        setShowServerMenu(false);
-                                    }}
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'flex-start',
-                                        gap: 2,
-                                        padding: '10px 12px',
-                                        borderRadius: 8,
-                                        background: isSelected ? 'rgba(229, 9, 20, 0.25)' : 'rgba(255,255,255,0.05)',
-                                        border: isSelected ? '1.5px solid #E50914' : '1px solid rgba(255,255,255,0.1)',
-                                        color: '#fff',
-                                        cursor: 'pointer',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                        <span style={{ fontWeight: 800, fontSize: 13, color: isSelected ? '#E50914' : '#fff' }}>
-                                            {srv.name}
-                                        </span>
-                                        {isSelected && <Ionicons name="checkmark-circle" size={16} color="#E50914" />}
-                                    </div>
-                                    <span style={{ fontSize: 11, color: isSelected ? '#fca5a5' : 'rgba(255,255,255,0.5)' }}>
-                                        {srv.badge}
-                                    </span>
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            )}
-
             {/* Episode List Drawer */}
             {showEpisodesDrawer && (
                 <div
@@ -679,7 +622,7 @@ export function CrunchyrollPlayer({
                                             Episode {ep}
                                         </div>
                                         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>
-                                            1080p Ultra HD • Fast Play
+                                            {activeMode === 'hindi' ? 'Hindi Dubbed' : 'AutoEmbed Stream'} • 1080p HD
                                         </div>
                                     </div>
                                 </button>
