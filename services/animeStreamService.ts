@@ -1,7 +1,8 @@
 /**
- * Anime Stream Service - Dedicated AutoEmbed Resolver
+ * Anime Stream Service - Multi-Server & Dedicated Hindi Dub Resolver
  *
- * Dedicated strictly to https://autoembed.co/ embed engine.
+ * AutoEmbed provides global English/Sub streams.
+ * Nxsha (GbruHindi) and VidSrc provide dedicated Hindi Dubbed anime streams.
  */
 
 export interface AnimeAudioTrack {
@@ -19,6 +20,7 @@ export interface AnimeServerSource {
     name: string;
     badge: string;
     url: string;
+    isHindiDub?: boolean;
 }
 
 export interface AnimeSubtitleTrack {
@@ -161,7 +163,7 @@ export function getAnimeTmdbId(title: string, explicitTmdbId?: string | number):
 }
 
 /**
- * Resolves AutoEmbed embed URLs
+ * Resolves Multi-Server Streams (Nxsha Hindi Dub, AutoEmbed, VidSrc Dub)
  */
 export function resolveAnimeStream(
     title: string,
@@ -178,12 +180,22 @@ export function resolveAnimeStream(
         ? `https://www.crunchyroll.com/series/${crSlug}`
         : `https://www.crunchyroll.com/search?q=${encodeURIComponent(title)}`;
 
-    // Official AutoEmbed.co TMDB endpoint
+    // 1. Dedicated Hindi Dub Server (GbruHindi)
+    const hindiDubUrl = mediaType === 'movie'
+        ? `https://nxsha.space/embed/movie/${tmdbId}?server=GbruHindi`
+        : `https://nxsha.space/embed/tv/${tmdbId}/${s}/${e}?server=GbruHindi`;
+
+    // 2. AutoEmbed.co TMDB endpoint
     const autoEmbedTmdbUrl = mediaType === 'movie'
         ? `https://autoembed.co/movie/tmdb/${tmdbId}`
         : `https://autoembed.co/tv/tmdb/${tmdbId}-${s}-${e}`;
 
-    // Official AutoEmbed.co IMDb endpoint
+    // 3. VidSrc Anime Dub
+    const vidsrcDubUrl = mediaType === 'movie'
+        ? `https://vidsrc.cc/v2/embed/movie/${tmdbId}`
+        : `https://vidsrc.cc/v2/embed/anime/${anilistId}/${e}/dub`;
+
+    // 4. AutoEmbed IMDb Mirror
     const autoEmbedImdbUrl = imdbId
         ? (mediaType === 'movie'
             ? `https://autoembed.co/movie/imdb/${imdbId}`
@@ -192,16 +204,32 @@ export function resolveAnimeStream(
 
     const servers: AnimeServerSource[] = [
         {
+            id: 'hindi_dub',
+            name: '🇮🇳 Server 1: Pure Hindi Dub (GbruHindi)',
+            badge: '100% Hindi Dubbed Audio Track',
+            url: hindiDubUrl,
+            isHindiDub: true,
+        },
+        {
             id: 'autoembed_tmdb',
-            name: '⚡ AutoEmbed (TMDB Stream)',
-            badge: '1080p Ultra HD • Hindi Dub / Dual Audio',
+            name: '⚡ Server 2: AutoEmbed (English / Sub)',
+            badge: '1080p Ultra HD • AutoEmbed.co',
             url: autoEmbedTmdbUrl,
+            isHindiDub: false,
+        },
+        {
+            id: 'vidsrc_dub',
+            name: '🔥 Server 3: VidSrc Dub (AniList Anime)',
+            badge: 'AniList HD Dub Mirror',
+            url: vidsrcDubUrl,
+            isHindiDub: true,
         },
         {
             id: 'autoembed_imdb',
-            name: '🎬 AutoEmbed (IMDb Mirror)',
-            badge: 'High Speed Dual Audio Stream',
+            name: '🎬 Server 4: AutoEmbed (IMDb Mirror)',
+            badge: 'AutoEmbed Backup Mirror',
             url: autoEmbedImdbUrl,
+            isHindiDub: false,
         },
     ];
 
@@ -211,8 +239,8 @@ export function resolveAnimeStream(
             label: 'Hindi Dub (🇮🇳 हिंदी)',
             lang: 'hi',
             flag: '🇮🇳',
-            streamUrl: autoEmbedTmdbUrl,
-            embedUrl: autoEmbedTmdbUrl,
+            streamUrl: hindiDubUrl,
+            embedUrl: hindiDubUrl,
             format: 'embed',
         },
         {
@@ -255,10 +283,10 @@ export function resolveAnimeStream(
         audioTracks,
         subtitles,
         qualities: [
-            { label: 'Auto (1080p)', url: autoEmbedTmdbUrl, resolution: '1080p' },
-            { label: '720p HD', url: autoEmbedTmdbUrl, resolution: '720p' },
+            { label: 'Auto (1080p)', url: hindiDubUrl, resolution: '1080p' },
+            { label: '720p HD', url: hindiDubUrl, resolution: '720p' },
         ],
-        fallbackStreamUrl: autoEmbedImdbUrl,
-        currentStreamUrl: autoEmbedTmdbUrl,
+        fallbackStreamUrl: autoEmbedTmdbUrl,
+        currentStreamUrl: hindiDubUrl,
     };
 }
