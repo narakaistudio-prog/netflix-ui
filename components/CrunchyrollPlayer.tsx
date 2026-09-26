@@ -10,10 +10,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
-    AnimeAudioTrack,
     AnimeServerSource,
     AnimeStreamSource,
-    AnimeSubtitleTrack,
     resolveAnimeStream,
 } from '@/services/animeStreamService';
 
@@ -52,9 +50,11 @@ export function CrunchyrollPlayer({
         resolveAnimeStream(title, season, episode, initialAudio, tmdbId)
     );
 
+    const [selectedServerIndex, setSelectedServerIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [controlsVisible, setControlsVisible] = useState(true);
     const [showEpisodesDrawer, setShowEpisodesDrawer] = useState(false);
+    const [showServerMenu, setShowServerMenu] = useState(false);
     const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Update stream data when episode, title, or TMDB ID changes
@@ -64,18 +64,19 @@ export function CrunchyrollPlayer({
         setLoading(true);
     }, [title, season, episode, initialAudio, tmdbId]);
 
-    // AutoEmbed Hindi/Dual-Audio URL
-    const autoEmbedUrl = useMemo(() => {
-        const tId = streamData.tmdbId || '95479';
-        const s = Math.max(1, season);
-        const e = Math.max(1, episode);
-        if (streamData.mediaType === 'movie') {
-            return `https://autoembed.co/movie/tmdb/${tId}`;
+    const currentServer: AnimeServerSource = useMemo(() => {
+        if (!streamData.servers || streamData.servers.length === 0) {
+            return {
+                id: 'autoembed',
+                name: 'Server 1: AutoEmbed',
+                badge: '1080p HD',
+                url: `https://autoembed.co/tv/tmdb/95479-${season}-${episode}`,
+            };
         }
-        return `https://autoembed.co/tv/tmdb/${tId}-${s}-${e}`;
-    }, [streamData, season, episode]);
+        return streamData.servers[selectedServerIndex] || streamData.servers[0];
+    }, [streamData.servers, selectedServerIndex, season, episode]);
 
-    // Mount AutoEmbed iframe directly
+    // Mount active server iframe directly
     useEffect(() => {
         if (!IS_WEB) return;
         const host = iframeHostRef.current;
@@ -86,9 +87,9 @@ export function CrunchyrollPlayer({
 
         const iframe = document.createElement('iframe');
         iframe.setAttribute('data-arena-embed', '1');
-        iframe.setAttribute('data-autoembed', '1');
-        iframe.src = autoEmbedUrl;
-        iframe.title = `${title} Episode ${episode}`;
+        iframe.setAttribute('data-server', currentServer.id);
+        iframe.src = currentServer.url;
+        iframe.title = `${title} Episode ${episode} - ${currentServer.name}`;
         iframe.setAttribute(
             'allow',
             'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen',
@@ -120,13 +121,13 @@ export function CrunchyrollPlayer({
             try { iframe.src = 'about:blank'; } catch {}
             try { iframe.remove(); } catch {}
         };
-    }, [autoEmbedUrl, title, season, episode]);
+    }, [currentServer.url, currentServer.id, title, season, episode]);
 
     const openDirectInNewTab = () => {
         if (IS_WEB) {
-            window.open(autoEmbedUrl, '_blank', 'noopener,noreferrer');
+            window.open(currentServer.url, '_blank', 'noopener,noreferrer');
         } else {
-            Linking.openURL(autoEmbedUrl).catch(() => {});
+            Linking.openURL(currentServer.url).catch(() => {});
         }
     };
 
@@ -134,9 +135,9 @@ export function CrunchyrollPlayer({
         setControlsVisible(true);
         if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
         idleTimerRef.current = setTimeout(() => {
-            if (!showEpisodesDrawer) setControlsVisible(false);
-        }, 4500);
-    }, [showEpisodesDrawer]);
+            if (!showEpisodesDrawer && !showServerMenu) setControlsVisible(false);
+        }, 5000);
+    }, [showEpisodesDrawer, showServerMenu]);
 
     // Keyboard shortcuts
     useEffect(() => {
@@ -160,10 +161,18 @@ export function CrunchyrollPlayer({
                 case 'KeyE':
                     e.preventDefault();
                     setShowEpisodesDrawer(prev => !prev);
+                    setShowServerMenu(false);
+                    break;
+                case 'KeyS':
+                    e.preventDefault();
+                    setShowServerMenu(prev => !prev);
+                    setShowEpisodesDrawer(false);
                     break;
                 case 'Escape':
                     if (showEpisodesDrawer) {
                         setShowEpisodesDrawer(false);
+                    } else if (showServerMenu) {
+                        setShowServerMenu(false);
                     } else if (onClose) {
                         onClose();
                     }
@@ -173,14 +182,14 @@ export function CrunchyrollPlayer({
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [showEpisodesDrawer, onNextEpisode, onPrevEpisode, onClose]);
+    }, [showEpisodesDrawer, showServerMenu, onNextEpisode, onPrevEpisode, onClose]);
 
     if (!IS_WEB) {
         return (
             <View style={styles.nativeContainer}>
                 <Ionicons name="play-circle" size={64} color={NETFLIX_RED} />
                 <Text style={styles.nativeTitle}>{title}</Text>
-                <Text style={styles.nativeSubtitle}>AutoEmbed Hindi Dub (Episode {episode})</Text>
+                <Text style={styles.nativeSubtitle}>Hindi Dubbed Anime (Episode {episode})</Text>
                 <Pressable style={styles.nativeButton} onPress={openDirectInNewTab}>
                     <Text style={styles.nativeButtonText}>Play Stream</Text>
                 </Pressable>
@@ -217,9 +226,9 @@ export function CrunchyrollPlayer({
                     top: 0,
                     left: 0,
                     right: 0,
-                    height: 56,
+                    height: 60,
                     padding: '0 20px',
-                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0) 100%)',
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.75) 70%, rgba(0,0,0,0) 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -265,7 +274,7 @@ export function CrunchyrollPlayer({
                                     fontSize: 11,
                                 }}
                             >
-                                AUTOEMBED HINDI DUB
+                                🇮🇳 HINDI DUB ACTIVE
                             </span>
                             <span
                                 style={{
@@ -278,11 +287,11 @@ export function CrunchyrollPlayer({
                                     borderRadius: 4,
                                 }}
                             >
-                                1080P HD • 0 ADS
+                                {currentServer.name.split(':')[0]}
                             </span>
                         </div>
 
-                        <h2 style={{ margin: '2px 0 0 0', color: '#fff', fontSize: 15, fontWeight: 800 }}>
+                        <h2 style={{ margin: '2px 0 0 0', color: '#fff', fontSize: 14, fontWeight: 800 }}>
                             {title}
                             <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 500, fontSize: 13, marginLeft: 8 }}>
                                 Season {season} : Episode {episode}
@@ -291,8 +300,34 @@ export function CrunchyrollPlayer({
                     </div>
                 </div>
 
-                {/* Right: Pop-out, Episodes & Close */}
+                {/* Right: Server Switcher, Episodes & Close */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {/* Hindi Dub / Server Switcher Button */}
+                    <button
+                        onClick={e => {
+                            e.stopPropagation();
+                            setShowServerMenu(prev => !prev);
+                            setShowEpisodesDrawer(false);
+                        }}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 6,
+                            background: showServerMenu ? '#E50914' : 'rgba(229, 9, 20, 0.25)',
+                            border: '1.5px solid #E50914',
+                            borderRadius: 6,
+                            padding: '6px 14px',
+                            color: '#fff',
+                            fontWeight: 800,
+                            fontSize: 12,
+                            cursor: 'pointer',
+                        }}
+                        title="Change Hindi Server (S)"
+                    >
+                        <Ionicons name="volume-high" size={15} color="#fff" />
+                        <span>🇮🇳 Audio / Servers ({streamData.servers.length})</span>
+                    </button>
+
                     <button
                         onClick={e => {
                             e.stopPropagation();
@@ -321,6 +356,7 @@ export function CrunchyrollPlayer({
                         onClick={e => {
                             e.stopPropagation();
                             setShowEpisodesDrawer(prev => !prev);
+                            setShowServerMenu(false);
                         }}
                         style={{
                             background: showEpisodesDrawer ? '#E50914' : 'rgba(255,255,255,0.15)',
@@ -335,7 +371,7 @@ export function CrunchyrollPlayer({
                             fontWeight: 700,
                             cursor: 'pointer',
                         }}
-                        title="Browse episodes"
+                        title="Browse episodes (E)"
                     >
                         <Ionicons name="list" size={14} color="#fff" />
                         <span>Episodes</span>
@@ -395,7 +431,7 @@ export function CrunchyrollPlayer({
                 >
                     <ActivityIndicator size="large" color="#E50914" />
                     <span style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>
-                        Connecting AutoEmbed Stream…
+                        Connecting {currentServer.name}…
                     </span>
                 </div>
             )}
@@ -468,6 +504,79 @@ export function CrunchyrollPlayer({
                     </button>
                 )}
             </div>
+
+            {/* Server / Hindi Dub Selector Modal */}
+            {showServerMenu && (
+                <div
+                    onClick={e => e.stopPropagation()}
+                    style={{
+                        position: 'absolute',
+                        top: 68,
+                        right: 140,
+                        width: 360,
+                        backgroundColor: '#181818',
+                        borderRadius: 12,
+                        border: '1.5px solid rgba(255,255,255,0.2)',
+                        boxShadow: '0 10px 40px rgba(0,0,0,0.9)',
+                        zIndex: 80,
+                        padding: 16,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 10,
+                    }}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 10 }}>
+                        <div>
+                            <div style={{ color: '#fff', fontWeight: 800, fontSize: 14 }}>🇮🇳 Audio & Server Selection</div>
+                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>Choose server with direct Hindi Dub stream</div>
+                        </div>
+                        <button
+                            onClick={() => setShowServerMenu(false)}
+                            style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer' }}
+                        >
+                            <Ionicons name="close" size={18} color="#fff" />
+                        </button>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 320, overflowY: 'auto' }}>
+                        {streamData.servers.map((srv, idx) => {
+                            const isSelected = idx === selectedServerIndex;
+                            return (
+                                <button
+                                    key={srv.id}
+                                    onClick={() => {
+                                        setSelectedServerIndex(idx);
+                                        setShowServerMenu(false);
+                                    }}
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start',
+                                        gap: 2,
+                                        padding: '10px 12px',
+                                        borderRadius: 8,
+                                        background: isSelected ? 'rgba(229, 9, 20, 0.25)' : 'rgba(255,255,255,0.05)',
+                                        border: isSelected ? '1.5px solid #E50914' : '1px solid rgba(255,255,255,0.1)',
+                                        color: '#fff',
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                        <span style={{ fontWeight: 800, fontSize: 13, color: isSelected ? '#E50914' : '#fff' }}>
+                                            {srv.name}
+                                        </span>
+                                        {isSelected && <Ionicons name="checkmark-circle" size={16} color="#E50914" />}
+                                    </div>
+                                    <span style={{ fontSize: 11, color: isSelected ? '#fca5a5' : 'rgba(255,255,255,0.5)' }}>
+                                        {srv.badge}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
 
             {/* Episode List Drawer */}
             {showEpisodesDrawer && (

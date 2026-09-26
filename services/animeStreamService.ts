@@ -1,8 +1,8 @@
 /**
  * Anime Stream Service & Clean Hindi Dub Embed Resolver
  *
- * Provides a single best, fast, 0-popup-ad Hindi Dub anime embed engine
- * backed by AutoEmbed & VidNest TMDB/AniList resolvers.
+ * Provides a rich multi-server Hindi Dub anime embed engine
+ * backed by AutoEmbed, Nxsha GbruHindi, VidSrc Dub, and VidNest AniList resolvers.
  */
 
 export interface AnimeAudioTrack {
@@ -69,133 +69,86 @@ export const ANIME_METADATA_MAP: Record<string, AnimeMeta> = {
     'attack on titan': { tmdbId: '1429', anilistId: '16498', mediaType: 'tv', crSlug: 'attack-on-titan' },
     'shingeki no kyojin': { tmdbId: '1429', anilistId: '16498', mediaType: 'tv', crSlug: 'attack-on-titan' },
     'death note': { tmdbId: '13916', anilistId: '1535', mediaType: 'tv', crSlug: 'death-note' },
-    'one-punch man': { tmdbId: '63926', anilistId: '21087', mediaType: 'tv', crSlug: 'one-punch-man' },
-    'one punch man': { tmdbId: '63926', anilistId: '21087', mediaType: 'tv', crSlug: 'one-punch-man' },
-    'my hero academia': { tmdbId: '65930', anilistId: '21459', mediaType: 'tv', crSlug: 'my-hero-academia' },
-    'black clover': { tmdbId: '73223', anilistId: '97940', mediaType: 'tv', crSlug: 'black-clover' },
-    'chainsaw man': { tmdbId: '114410', anilistId: '127230', mediaType: 'tv', crSlug: 'chainsaw-man' },
-    'bleach': { tmdbId: '30984', anilistId: '269', mediaType: 'tv', crSlug: 'bleach' },
-    'dragon ball z': { tmdbId: '12971', anilistId: '813', mediaType: 'tv', crSlug: 'dragon-ball-z' },
     'dragon ball super': { tmdbId: '62715', anilistId: '21175', mediaType: 'tv', crSlug: 'dragon-ball-super' },
-    'dragon ball': { tmdbId: '12609', anilistId: '223', mediaType: 'tv', crSlug: 'dragon-ball' },
-    'hunter x hunter': { tmdbId: '46298', anilistId: '11061', mediaType: 'tv', crSlug: 'hunter-x-hunter' },
-    'fullmetal alchemist brotherhood': { tmdbId: '31911', anilistId: '5114', mediaType: 'tv', crSlug: 'fullmetal-alchemist-brotherhood' },
-    'fullmetal alchemist: brotherhood': { tmdbId: '31911', anilistId: '5114', mediaType: 'tv', crSlug: 'fullmetal-alchemist-brotherhood' },
-    'blue lock': { tmdbId: '127532', anilistId: '137822', mediaType: 'tv', crSlug: 'blue-lock' },
+    'dragon ball z': { tmdbId: '12971', anilistId: '813', mediaType: 'tv', crSlug: 'dragon-ball-z' },
+    'chainsaw man': { tmdbId: '114410', anilistId: '127230', mediaType: 'tv', crSlug: 'chainsaw-man' },
+    'my hero academia': { tmdbId: '65930', anilistId: '21459', mediaType: 'tv', crSlug: 'my-hero-academia' },
+    'boku no hero academia': { tmdbId: '65930', anilistId: '21459', mediaType: 'tv', crSlug: 'my-hero-academia' },
+    'bleach': { tmdbId: '30984', anilistId: '269', mediaType: 'tv', crSlug: 'bleach' },
+    'bleach: thousand-year blood war': { tmdbId: '103540', anilistId: '114446', mediaType: 'tv', crSlug: 'bleach-thousand-year-blood-war' },
     'tokyo ghoul': { tmdbId: '61374', anilistId: '20605', mediaType: 'tv', crSlug: 'tokyo-ghoul' },
-    'dr stone': { tmdbId: '86031', anilistId: '105333', mediaType: 'tv', crSlug: 'dr-stone' },
-    'dr. stone': { tmdbId: '86031', anilistId: '105333', mediaType: 'tv', crSlug: 'dr-stone' },
-    'mob psycho 100': { tmdbId: '67075', anilistId: '21507', mediaType: 'tv', crSlug: 'mob-psycho-100' },
     'spy x family': { tmdbId: '120089', anilistId: '140960', mediaType: 'tv', crSlug: 'spy-x-family' },
-    'haikyu': { tmdbId: '60863', anilistId: '20464', mediaType: 'tv', crSlug: 'haikyu' },
-    'cyberpunk edgerunners': { tmdbId: '105248', anilistId: '120377', mediaType: 'tv', crSlug: 'cyberpunk-edgerunners' },
+    'vinland saga': { tmdbId: '89108', anilistId: '101348', mediaType: 'tv', crSlug: 'vinland-saga' },
+    'hunter x hunter': { tmdbId: '46298', anilistId: '11061', mediaType: 'tv', crSlug: 'hunter-x-hunter' },
+    'black clover': { tmdbId: '73223', anilistId: '97940', mediaType: 'tv', crSlug: 'black-clover' },
+    'dr. stone': { tmdbId: '86031', anilistId: '105333', mediaType: 'tv', crSlug: 'dr-stone' },
+    'blue lock': { tmdbId: '136283', anilistId: '137822', mediaType: 'tv', crSlug: 'blue-lock' },
+    'wind breaker': { tmdbId: '241257', anilistId: '163270', mediaType: 'tv', crSlug: 'wind-breaker' },
+    'kaiju no. 8': { tmdbId: '207347', anilistId: '153288', mediaType: 'tv', crSlug: 'kaiju-no-8' },
+    'mashle': { tmdbId: '205324', anilistId: '151801', mediaType: 'tv', crSlug: 'mashle-magic-and-muscles' },
+    'classroom of the elite': { tmdbId: '72636', anilistId: '98659', mediaType: 'tv', crSlug: 'classroom-of-the-elite' },
+    'hell\'s paradise': { tmdbId: '117465', anilistId: '128893', mediaType: 'tv', crSlug: 'hells-paradise' },
+    'jigokuraku': { tmdbId: '117465', anilistId: '128893', mediaType: 'tv', crSlug: 'hells-paradise' },
+    'fullmetal alchemist: brotherhood': { tmdbId: '31911', anilistId: '5114', mediaType: 'tv', crSlug: 'fullmetal-alchemist-brotherhood' },
     'cyberpunk: edgerunners': { tmdbId: '105248', anilistId: '120377', mediaType: 'tv', crSlug: 'cyberpunk-edgerunners' },
-    'vinland saga': { tmdbId: '86034', anilistId: '101348', mediaType: 'tv', crSlug: 'vinland-saga' },
-    'that time i got reincarnated as a slime': { tmdbId: '83627', anilistId: '101280', mediaType: 'tv', crSlug: 'that-time-i-got-reincarnated-as-a-slime' },
-    'the apothecary diaries': { tmdbId: '220085', anilistId: '161645', mediaType: 'tv', crSlug: 'the-apothecary-diaries' },
-    'frieren beyond journeys end': { tmdbId: '209867', anilistId: '154587', mediaType: 'tv', crSlug: 'frieren-beyond-journeys-end' },
-    'wind breaker': { tmdbId: '240411', anilistId: '163270', mediaType: 'tv', crSlug: 'wind-breaker' },
-    'kakegurui': { tmdbId: '72636', anilistId: '98314', mediaType: 'tv', crSlug: 'kakegurui' },
-    'the rising of the shield hero': { tmdbId: '83097', anilistId: '99263', mediaType: 'tv', crSlug: 'the-rising-of-the-shield-hero' },
-    'neon genesis evangelion': { tmdbId: '890', anilistId: '30', mediaType: 'tv', crSlug: 'neon-genesis-evangelion' },
-    'castlevania': { tmdbId: '69424', anilistId: '100966', mediaType: 'tv', crSlug: 'castlevania' },
-    'blue box': { tmdbId: '240413', anilistId: '173828', mediaType: 'tv', crSlug: 'blue-box' },
-    'delicious in dungeon': { tmdbId: '208248', anilistId: '153518', mediaType: 'tv', crSlug: 'delicious-in-dungeon' },
-    'my dress-up darling': { tmdbId: '132717', anilistId: '132405', mediaType: 'tv', crSlug: 'my-dress-up-darling' },
-    'my dress up darling': { tmdbId: '132717', anilistId: '132405', mediaType: 'tv', crSlug: 'my-dress-up-darling' },
+    'sword art online': { tmdbId: '45782', anilistId: '11757', mediaType: 'tv', crSlug: 'sword-art-online' },
+    'mob psycho 100': { tmdbId: '67070', anilistId: '21507', mediaType: 'tv', crSlug: 'mob-psycho-100' },
+    'one punch man': { tmdbId: '63926', anilistId: '21087', mediaType: 'tv', crSlug: 'one-punch-man' },
+    'overlord': { tmdbId: '64196', anilistId: '20832', mediaType: 'tv', crSlug: 'overlord' },
+    're:zero': { tmdbId: '65942', anilistId: '21355', mediaType: 'tv', crSlug: 're-zero-starting-life-in-another-world-' },
+    'haikyu!!': { tmdbId: '60863', anilistId: '20464', mediaType: 'tv', crSlug: 'haikyu' },
+    'fate/stay night: unlimited blade works': { tmdbId: '61415', anilistId: '19603', mediaType: 'tv', crSlug: 'fatestay-night-unlimited-blade-works' },
+    'your name': { tmdbId: '372058', anilistId: '21519', mediaType: 'movie', crSlug: 'your-name' },
+    'suzume': { tmdbId: '916224', anilistId: '142385', mediaType: 'movie', crSlug: 'suzume' },
+    'weathering with you': { tmdbId: '568160', anilistId: '106286', mediaType: 'movie', crSlug: 'weathering-with-you' },
+    'a silent voice': { tmdbId: '378064', anilistId: '20954', mediaType: 'movie', crSlug: 'a-silent-voice' },
+    'spirited away': { tmdbId: '129', anilistId: '199', mediaType: 'movie', crSlug: 'spirited-away' },
+    'demon slayer: mugen train': { tmdbId: '635302', anilistId: '112151', mediaType: 'movie', crSlug: 'demon-slayer-kimetsu-no-yaiba-the-movie-mugen-train' },
+    'jujutsu kaisen 0': { tmdbId: '810693', anilistId: '131573', mediaType: 'movie', crSlug: 'jujutsu-kaisen-0' },
 };
 
-const KNOWN_ANIME_KEYWORDS = [
-    'anime',
-    'jujutsu kaisen',
-    'demon slayer',
-    'kimetsu no yaiba',
-    'solo leveling',
-    'naruto',
-    'boruto',
-    'one piece',
-    'death note',
-    'one-punch man',
-    'one punch man',
-    'my hero academia',
-    'boku no hero',
-    'black clover',
-    'bleach',
-    'attack on titan',
-    'shingeki no kyojin',
-    'dragon ball',
-    'chainsaw man',
-    'hunter x hunter',
-    'fullmetal alchemist',
-    'blue lock',
-    'tokyo ghoul',
-    'dr. stone',
-    'dr stone',
-    'mob psycho 100',
-    'spy x family',
-    'haikyu',
-    'cyberpunk: edgerunners',
-    'cyberpunk edgerunners',
-    'baki',
-    'baki hanma',
-    'the apothecary diaries',
-    'frieren',
-    'wind breaker',
-    'kakegurui',
-    'castlevania',
-    'sakamoto days',
-    'vinland saga',
-    'that time i got reincarnated as a slime',
-    'inuyasha',
-    'violet evergarden',
-    'pluto',
-    'terminator zero',
-    'devil may cry',
-    'devilman crybaby',
-    'blue box',
-    'record of ragnarok',
-    'seven deadly sins',
-    'jojo',
-    'assassination classroom',
-    'overlord',
-    'kengan ashura',
-    'beastars',
-    'delicious in dungeon',
-    'my dress-up darling',
-    'neon genesis evangelion',
-    'my happy marriage',
-    'blue eye samurai',
-];
-
-export function isAnimeTitle(title?: string, collection?: string, type?: string): boolean {
-    const normTitle = String(title || '').toLowerCase().trim();
-    const normCollection = String(collection || '').toLowerCase().trim();
-
-    if (normCollection.includes('anime') || normCollection.includes('animation')) {
-        return true;
+/**
+ * Returns true if the title is identified as an Anime title
+ */
+export function isAnimeTitle(title?: string): boolean {
+    if (!title) return false;
+    const lower = title.toLowerCase().trim();
+    for (const key of Object.keys(ANIME_METADATA_MAP)) {
+        if (lower.includes(key) || key.includes(lower)) return true;
     }
-
-    return KNOWN_ANIME_KEYWORDS.some(kw => normTitle.includes(kw) || normCollection.includes(kw));
+    const animeKeywords = [
+        'anime', 'shippuden', 'jujutsu', 'kaisen', 'kimetsu', 'yaiba', 'titan', 'bleach',
+        'dragon ball', 'chainsaw', 'hero academia', 'tokyo ghoul', 'spy x family', 'vinland',
+        'hunter x hunter', 'death note', 'boruto', 'black clover', 'dr. stone', 'blue lock',
+        'mashle', 'kaiju', 'wind breaker', 'solo leveling', 'naruto', 'one piece',
+    ];
+    return animeKeywords.some(kw => lower.includes(kw));
 }
 
-function cleanTitle(title: string): string {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-}
-
+/**
+ * Resolves metadata (tmdbId, anilistId, mediaType) for a given title
+ */
 export function getAnimeMeta(title: string, explicitTmdbId?: string | number): AnimeMeta {
-    if (explicitTmdbId && String(explicitTmdbId).trim() && !isNaN(Number(explicitTmdbId))) {
-        return { tmdbId: String(explicitTmdbId).trim(), anilistId: '113415', mediaType: 'tv' };
-    }
-
-    const cleaned = cleanTitle(title);
-    if (ANIME_METADATA_MAP[cleaned]) {
-        return ANIME_METADATA_MAP[cleaned];
-    }
-
-    for (const [key, val] of Object.entries(ANIME_METADATA_MAP)) {
-        if (cleaned.includes(key) || key.includes(cleaned)) {
-            return val;
+    if (explicitTmdbId) {
+        const idStr = String(explicitTmdbId);
+        for (const meta of Object.values(ANIME_METADATA_MAP)) {
+            if (meta.tmdbId === idStr) return meta;
         }
+    }
+
+    const lower = title.toLowerCase().trim();
+    for (const [key, meta] of Object.entries(ANIME_METADATA_MAP)) {
+        if (lower.includes(key) || key.includes(lower)) {
+            return meta;
+        }
+    }
+
+    if (explicitTmdbId) {
+        return {
+            tmdbId: String(explicitTmdbId),
+            anilistId: '113415',
+            mediaType: 'tv',
+        };
     }
 
     return { tmdbId: '95479', anilistId: '113415', mediaType: 'tv', crSlug: 'jujutsu-kaisen' };
@@ -207,7 +160,7 @@ export function getAnimeTmdbId(title: string, explicitTmdbId?: string | number):
 }
 
 /**
- * Resolves the single cleanest Hindi Dub Anime Embed URL
+ * Resolves the multi-server Hindi Dub Anime Embed URLs
  */
 export function resolveAnimeStream(
     title: string,
@@ -224,33 +177,66 @@ export function resolveAnimeStream(
         ? `https://www.crunchyroll.com/series/${crSlug}`
         : `https://www.crunchyroll.com/search?q=${encodeURIComponent(title)}`;
 
-    // Single cleanest Hindi Dub & Multi-audio embed: AutoEmbed (0 Ads, Fast, Clean)
-    const primaryEmbedUrl = mediaType === 'movie'
+    const autoEmbedUrl = mediaType === 'movie'
         ? `https://autoembed.co/movie/tmdb/${tmdbId}`
         : `https://autoembed.co/tv/tmdb/${tmdbId}-${s}-${e}`;
+
+    const nxshaHindiUrl = mediaType === 'movie'
+        ? `https://nxsha.space/embed/movie/${tmdbId}?server=GbruHindi`
+        : `https://nxsha.space/embed/tv/${tmdbId}/${s}/${e}?server=GbruHindi`;
+
+    const vidsrcDubUrl = mediaType === 'movie'
+        ? `https://vidsrc.cc/v2/embed/movie/${tmdbId}`
+        : `https://vidsrc.cc/v2/embed/anime/${anilistId}/${e}/dub`;
+
+    const vidnestDubUrl = mediaType === 'movie'
+        ? `https://vidnest.fun/movie/${tmdbId}`
+        : `https://vidnest.fun/anime/${anilistId}/${e}/dub`;
+
+    const multiEmbedUrl = mediaType === 'movie'
+        ? `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1`
+        : `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&s=${s}&e=${e}`;
+
+    const twoEmbedUrl = mediaType === 'movie'
+        ? `https://www.2embed.cc/embed/${tmdbId}`
+        : `https://www.2embed.cc/embedtv/${tmdbId}&s=${s}&e=${e}`;
 
     const servers: AnimeServerSource[] = [
         {
             id: 'autoembed',
-            name: '⚡ Server 1 (AutoEmbed Hindi Dub - 0 Ads)',
-            badge: '1080p Ultra HD • Hindi Dub / Dual Audio',
-            url: primaryEmbedUrl,
+            name: '⚡ Server 1: AutoEmbed (Hindi / Dual Audio)',
+            badge: '1080p Ultra HD • Hindi Dub / Multi-Audio',
+            url: autoEmbedUrl,
+        },
+        {
+            id: 'nxsha_hindi',
+            name: '🇮🇳 Server 2: Nxsha (Direct Hindi Dub)',
+            badge: 'GbruHindi Pure Hindi Track',
+            url: nxshaHindiUrl,
+        },
+        {
+            id: 'vidsrc_dub',
+            name: '🔥 Server 3: VidSrc Dub (AniList Hindi/Dub)',
+            badge: 'AniList Direct Dubbed Mirror',
+            url: vidsrcDubUrl,
+        },
+        {
+            id: 'vidnest_dub',
+            name: '🎬 Server 4: VidNest Pahe Dub',
+            badge: 'AnimePahe Dub Stream',
+            url: vidnestDubUrl,
+        },
+        {
+            id: 'multiembed',
+            name: '⭐ Server 5: MultiEmbed VIP',
+            badge: 'High Speed Dual Audio Mirror',
+            url: multiEmbedUrl,
         },
         {
             id: 'twoembed',
-            name: '🎬 Server 2 (2Embed Multi-Audio)',
-            badge: 'Fast Mirror • Zero Ads',
-            url: mediaType === 'movie'
-                ? `https://www.2embed.cc/embed/${tmdbId}`
-                : `https://www.2embed.cc/embedtv/${tmdbId}&s=${s}&e=${e}`,
-        },
-        {
-            id: 'vidsrc_pro',
-            name: '🚀 Server 3 (VidSrc Pro Anime)',
-            badge: 'AniList HD Mirror',
-            url: mediaType === 'movie'
-                ? `https://vidsrc.cc/v2/embed/movie/${tmdbId}`
-                : `https://vidsrc.cc/v2/embed/anime/${anilistId}/${e}/dub`,
+            name: '🚀 Server 6: 2Embed HD',
+            badge: 'Fast Failover Mirror',
+            url: twoEmbedUrl,
         },
     ];
 
@@ -260,8 +246,8 @@ export function resolveAnimeStream(
             label: 'Hindi Dub (🇮🇳 हिंदी)',
             lang: 'hi',
             flag: '🇮🇳',
-            streamUrl: primaryEmbedUrl,
-            embedUrl: primaryEmbedUrl,
+            streamUrl: autoEmbedUrl,
+            embedUrl: autoEmbedUrl,
             format: 'embed',
         },
         {
@@ -269,8 +255,8 @@ export function resolveAnimeStream(
             label: 'Japanese Sub (🇯🇵 日本語)',
             lang: 'ja',
             flag: '🇯🇵',
-            streamUrl: primaryEmbedUrl,
-            embedUrl: primaryEmbedUrl,
+            streamUrl: autoEmbedUrl,
+            embedUrl: autoEmbedUrl,
             format: 'embed',
         },
         {
@@ -278,37 +264,35 @@ export function resolveAnimeStream(
             label: 'English Dub (🇺🇸 English)',
             lang: 'en',
             flag: '🇺🇸',
-            streamUrl: primaryEmbedUrl,
-            embedUrl: primaryEmbedUrl,
+            streamUrl: autoEmbedUrl,
+            embedUrl: autoEmbedUrl,
             format: 'embed',
         },
     ];
 
     const subtitles: AnimeSubtitleTrack[] = [
-        { id: 'sub-hi', label: 'Hindi Subtitles', lang: 'hi', default: true },
-        { id: 'sub-en', label: 'English Subtitles', lang: 'en', default: false },
-    ];
-
-    const qualities = [
-        { label: 'Auto (1080p)', url: primaryEmbedUrl, resolution: '1080p' },
-        { label: '1080p Full HD', url: primaryEmbedUrl, resolution: '1080p' },
+        { id: 'hi', label: 'Hindi (हिंदी)', lang: 'hi', default: true },
+        { id: 'en', label: 'English', lang: 'en' },
     ];
 
     return {
-        title: `${title} - S${season}:E${episode}`,
+        title: `${title} - Episode ${e}`,
         animeTitle: title,
         tmdbId,
         anilistId,
-        season,
-        episode,
-        episodeTitle: `Episode ${episode}`,
+        season: s,
+        episode: e,
+        episodeTitle: `Episode ${e}`,
         mediaType,
         crunchyrollOfficialUrl,
         servers,
         audioTracks,
         subtitles,
-        qualities,
-        fallbackStreamUrl: primaryEmbedUrl,
-        currentStreamUrl: primaryEmbedUrl,
+        qualities: [
+            { label: 'Auto (1080p)', url: autoEmbedUrl, resolution: '1080p' },
+            { label: '720p HD', url: autoEmbedUrl, resolution: '720p' },
+        ],
+        fallbackStreamUrl: nxshaHindiUrl,
+        currentStreamUrl: autoEmbedUrl,
     };
 }
