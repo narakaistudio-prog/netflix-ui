@@ -50,7 +50,7 @@ export function CrunchyrollPlayer({
         resolveAnimeStream(title, season, episode, initialAudio, tmdbId)
     );
 
-    const [activeMode, setActiveMode] = useState<'autoembed' | 'hindi'>('autoembed');
+    const [activeMode, setActiveMode] = useState<'hindi' | 'autoembed'>('hindi');
     const [loading, setLoading] = useState(true);
     const [controlsVisible, setControlsVisible] = useState(true);
     const [showEpisodesDrawer, setShowEpisodesDrawer] = useState(false);
@@ -64,14 +64,15 @@ export function CrunchyrollPlayer({
     }, [title, season, episode, initialAudio, tmdbId]);
 
     const currentServer: AnimeServerSource = useMemo(() => {
-        if (activeMode === 'hindi' && streamData.servers[1]) {
+        if (activeMode === 'autoembed' && streamData.servers[1]) {
             return streamData.servers[1];
         }
         return streamData.servers[0] || {
-            id: 'autoembed',
-            name: 'AutoEmbed Player',
-            badge: '1080p Ultra HD',
-            url: `https://autoembed.co/tv/tmdb/95479-${season}-${episode}`,
+            id: 'animesalt_hindi',
+            name: 'AnimeSalt Hindi Dub',
+            badge: 'Hindi • Tamil • Telugu • English • Japanese',
+            url: `https://animesalt.me/tv/jujutsu-kaisen/`,
+            isHindiDub: true,
         };
     }, [streamData.servers, activeMode, season, episode]);
 
@@ -163,7 +164,7 @@ export function CrunchyrollPlayer({
                     break;
                 case 'KeyH':
                     e.preventDefault();
-                    setActiveMode(prev => (prev === 'autoembed' ? 'hindi' : 'autoembed'));
+                    setActiveMode(prev => (prev === 'hindi' ? 'autoembed' : 'hindi'));
                     break;
                 case 'Escape':
                     if (showEpisodesDrawer) {
@@ -184,7 +185,7 @@ export function CrunchyrollPlayer({
             <View style={styles.nativeContainer}>
                 <Ionicons name="play-circle" size={64} color={NETFLIX_RED} />
                 <Text style={styles.nativeTitle}>{title}</Text>
-                <Text style={styles.nativeSubtitle}>Anime Stream (Episode {episode})</Text>
+                <Text style={styles.nativeSubtitle}>Hindi Dub Anime (Episode {episode})</Text>
                 <Pressable style={styles.nativeButton} onPress={openDirectInNewTab}>
                     <Text style={styles.nativeButtonText}>Play Stream</Text>
                 </Pressable>
@@ -269,7 +270,7 @@ export function CrunchyrollPlayer({
                                     fontSize: 11,
                                 }}
                             >
-                                {activeMode === 'hindi' ? '🇮🇳 HINDI DUB' : '⚡ AUTOEMBED'}
+                                {activeMode === 'hindi' ? '🇮🇳 HINDI DUB ACTIVE' : '⚡ AUTOEMBED'}
                             </span>
                             <span
                                 style={{
@@ -282,7 +283,7 @@ export function CrunchyrollPlayer({
                                     borderRadius: 4,
                                 }}
                             >
-                                1080P HD
+                                1080P HD • MULTI-AUDIO
                             </span>
                         </div>
 
@@ -311,6 +312,24 @@ export function CrunchyrollPlayer({
                         <button
                             onClick={e => {
                                 e.stopPropagation();
+                                setActiveMode('hindi');
+                            }}
+                            style={{
+                                background: activeMode === 'hindi' ? '#E50914' : 'transparent',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: 18,
+                                padding: '5px 12px',
+                                fontSize: 12,
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                            }}
+                        >
+                            🇮🇳 Hindi Dub (AnimeSalt)
+                        </button>
+                        <button
+                            onClick={e => {
+                                e.stopPropagation();
                                 setActiveMode('autoembed');
                             }}
                             style={{
@@ -325,24 +344,6 @@ export function CrunchyrollPlayer({
                             }}
                         >
                             ⚡ AutoEmbed
-                        </button>
-                        <button
-                            onClick={e => {
-                                e.stopPropagation();
-                                setActiveMode('hindi');
-                            }}
-                            style={{
-                                background: activeMode === 'hindi' ? '#E50914' : 'transparent',
-                                color: '#fff',
-                                border: 'none',
-                                borderRadius: 18,
-                                padding: '5px 12px',
-                                fontSize: 12,
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                            }}
-                        >
-                            🇮🇳 Hindi Dub
                         </button>
                     </div>
 
@@ -622,7 +623,7 @@ export function CrunchyrollPlayer({
                                             Episode {ep}
                                         </div>
                                         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>
-                                            {activeMode === 'hindi' ? 'Hindi Dubbed' : 'AutoEmbed Stream'} • 1080p HD
+                                            {activeMode === 'hindi' ? 'AnimeSalt Hindi Dub' : 'AutoEmbed Stream'} • 1080p HD
                                         </div>
                                     </div>
                                 </button>
