@@ -342,11 +342,7 @@ export function resolveAnimeStream(
         episode: e,
         episodeTitle: `Episode ${e}`,
         duration: '24m',
-<<<<<<< HEAD
-        embedUrl: autoEmbedUrl,
-=======
         embedUrl: vidSyncUrl,
->>>>>>> 265f3ad (feat(player): set VidSync as primary multi-audio provider across movies, tv & crunchyroll)
         totalEpisodes: meta.totalEpisodes,
         servers,
     };
