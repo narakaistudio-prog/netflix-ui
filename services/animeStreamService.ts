@@ -310,20 +310,24 @@ export function resolveAnimeStream(
     // 1. Primary AutoEmbed Server (Fastest, zero popup ads, 1080p stream)
     const autoEmbedUrl = `https://autoembed.co/tv/tmdb/${tmdbId}-${s}-${e}`;
 
-    // 2. 2Embed Multi-Server
+    // 2. VidSrc Anime HD Server (Fast loading, multi-resolution)
+    const vidsrcUrl = `https://vidsrc.xyz/embed/tv/${tmdbId}/${s}/${e}`;
+
+    // 3. EmbedSU Multi-Server Engine
+    const embedSuUrl = `https://embed.su/embed/tv/${tmdbId}/${s}/${e}`;
+
+    // 4. SmashyStream Multi-Audio Stream
+    const smashyUrl = `https://player.smashy.stream/tv/${tmdbId}?s=${s}&e=${e}`;
+
+    // 5. 2Embed Multi-Server
     const twoEmbedUrl = `https://www.2embed.cc/embedtv/${tmdbId}&s=${s}&e=${e}`;
-
-    // 3. VidSrc.cc Dual Audio Server
-    const vidsrcUrl = `https://vidsrc.cc/v2/embed/tv/${tmdbId}/${s}/${e}`;
-
-    // 4. MultiEmbed VIP Server
-    const multiEmbedUrl = `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&s=${s}&e=${e}`;
 
     const servers = [
         { id: 'autoembed', name: '⚡ AutoEmbed (Fast 1080p)', url: autoEmbedUrl },
-        { id: 'twoembed', name: '🛡️ 2Embed (Multi-Audio)', url: twoEmbedUrl },
-        { id: 'vidsrc', name: '🎬 VidSrc (1080p HD)', url: vidsrcUrl },
-        { id: 'multiembed', name: '🚀 MultiEmbed VIP', url: multiEmbedUrl },
+        { id: 'vidsrc', name: '🎬 VidSrc HD Multi-Stream', url: vidsrcUrl },
+        { id: 'embedsu', name: '🌐 EmbedSU Fast Stream', url: embedSuUrl },
+        { id: 'smashy', name: '🎧 SmashyStream (Multi-Audio)', url: smashyUrl },
+        { id: 'twoembed', name: '🛡️ 2Embed Backup Server', url: twoEmbedUrl },
     ];
 
     return {
