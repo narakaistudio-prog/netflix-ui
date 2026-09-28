@@ -307,26 +307,30 @@ export function resolveAnimeStream(
     const e = Math.max(1, episode);
     const tmdbId = meta.tmdbId;
 
-    // 1. Primary AutoEmbed Server (Fastest, zero popup ads, 1080p stream)
+    // 1. VidSync Multi-Audio (Hindi, English, Japanese, Tamil, Telugu - 0 Ads)
+    const vidSyncUrl = `https://vidsync.pro/embed/tv/${tmdbId}/${s}/${e}?accent=FF640A`;
+
+    // 2. Primary AutoEmbed Server (Fastest, zero popup ads, 1080p stream)
     const autoEmbedUrl = `https://autoembed.co/tv/tmdb/${tmdbId}-${s}-${e}`;
 
-    // 2. VidSrc Anime HD Server (Fast loading, multi-resolution)
+    // 3. VidSrc Anime HD Server (Fast loading, multi-resolution)
     const vidsrcUrl = `https://vidsrc.xyz/embed/tv/${tmdbId}/${s}/${e}`;
-
-    // 3. EmbedSU Multi-Server Engine
-    const embedSuUrl = `https://embed.su/embed/tv/${tmdbId}/${s}/${e}`;
 
     // 4. SmashyStream Multi-Audio Stream
     const smashyUrl = `https://player.smashy.stream/tv/${tmdbId}?s=${s}&e=${e}`;
 
-    // 5. 2Embed Multi-Server
+    // 5. EmbedSU Multi-Server Engine
+    const embedSuUrl = `https://embed.su/embed/tv/${tmdbId}/${s}/${e}`;
+
+    // 6. 2Embed Multi-Server
     const twoEmbedUrl = `https://www.2embed.cc/embedtv/${tmdbId}&s=${s}&e=${e}`;
 
     const servers = [
+        { id: 'vidsync', name: '🏆 VidSync (12+ Audio: Hindi/Eng/Jap • 0 Ads)', url: vidSyncUrl },
         { id: 'autoembed', name: '⚡ AutoEmbed (Fast 1080p)', url: autoEmbedUrl },
         { id: 'vidsrc', name: '🎬 VidSrc HD Multi-Stream', url: vidsrcUrl },
-        { id: 'embedsu', name: '🌐 EmbedSU Fast Stream', url: embedSuUrl },
         { id: 'smashy', name: '🎧 SmashyStream (Multi-Audio)', url: smashyUrl },
+        { id: 'embedsu', name: '🌐 EmbedSU Fast Stream', url: embedSuUrl },
         { id: 'twoembed', name: '🛡️ 2Embed Backup Server', url: twoEmbedUrl },
     ];
 
@@ -338,7 +342,11 @@ export function resolveAnimeStream(
         episode: e,
         episodeTitle: `Episode ${e}`,
         duration: '24m',
+<<<<<<< HEAD
         embedUrl: autoEmbedUrl,
+=======
+        embedUrl: vidSyncUrl,
+>>>>>>> 265f3ad (feat(player): set VidSync as primary multi-audio provider across movies, tv & crunchyroll)
         totalEpisodes: meta.totalEpisodes,
         servers,
     };

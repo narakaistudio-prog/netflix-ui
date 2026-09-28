@@ -8,6 +8,8 @@ import {
     DEFAULT_NHD_TV,
     DEFAULT_NXSHA_MOVIE,
     DEFAULT_NXSHA_TV,
+    DEFAULT_VIDSYNC_MOVIE,
+    DEFAULT_VIDSYNC_TV,
     ProviderId,
 } from './embeds';
 
@@ -20,6 +22,8 @@ export interface EmbedSettings {
     nxshaTvTemplate: string;
     nhdMovieTemplate: string;
     nhdTvTemplate: string;
+    vidsyncMovieTemplate?: string;
+    vidsyncTvTemplate?: string;
     customMovieTemplate: string;
     customTvTemplate: string;
     /** Optional; only needed for paid/JSON endpoints. Embeds don't require it. */
@@ -37,12 +41,14 @@ const V3_NXSHA_TV =
 
 export const DEFAULT_SETTINGS: EmbedSettings = {
     settingsVersion: SETTINGS_VERSION,
-    defaultProvider: 'nxsha',
+    defaultProvider: 'vidsync',
     strictHindi: true,
     nxshaMovieTemplate: DEFAULT_NXSHA_MOVIE,
     nxshaTvTemplate: DEFAULT_NXSHA_TV,
     nhdMovieTemplate: DEFAULT_NHD_MOVIE,
     nhdTvTemplate: DEFAULT_NHD_TV,
+    vidsyncMovieTemplate: DEFAULT_VIDSYNC_MOVIE,
+    vidsyncTvTemplate: DEFAULT_VIDSYNC_TV,
     customMovieTemplate: 'https://example.com/embed/{id}',
     customTvTemplate: 'https://example.com/embed/{id}/{s}/{e}',
     nhdApiKey: process.env.EXPO_PUBLIC_NHD_API_KEY ?? '',
@@ -127,6 +133,11 @@ export function templateOverridesFor(
     provider: ProviderId,
 ): { movieTemplate?: string; tvTemplate?: string } {
     switch (provider) {
+        case 'vidsync':
+            return {
+                movieTemplate: settings.vidsyncMovieTemplate,
+                tvTemplate: settings.vidsyncTvTemplate,
+            };
         case 'nxsha':
             return {
                 movieTemplate: settings.nxshaMovieTemplate,

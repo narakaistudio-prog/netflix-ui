@@ -11,7 +11,7 @@
  */
 
 export type MediaType = 'movie' | 'tv';
-export type ProviderId = 'nxsha' | 'nhd' | 'netmirror' | 'crunchyroll' | 'custom';
+export type ProviderId = 'vidsync' | 'crunchyroll' | 'netmirror' | 'nxsha' | 'nhd' | 'custom';
 
 export interface Provider {
     id: ProviderId;
@@ -46,6 +46,9 @@ export interface CustomTemplateOverrides {
 /*  Default templates (section 2 of the brief).                              */
 /* -------------------------------------------------------------------------- */
 
+export const DEFAULT_VIDSYNC_MOVIE = 'https://vidsync.pro/embed/movie/{id}?accent=FF640A';
+export const DEFAULT_VIDSYNC_TV = 'https://vidsync.pro/embed/tv/{id}/{s}/{e}?accent=FF640A';
+
 export const DEFAULT_NXSHA_MOVIE =
     'https://nxsha.space/embed/movie/{id}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
 
@@ -67,6 +70,21 @@ export const DEFAULT_CRUNCHYROLL_TV = 'https://crunchyroll.direct/tv/{id}/{s}/{e
 
 export const PROVIDERS: Provider[] = [
     {
+<<<<<<< HEAD
+=======
+        id: 'vidsync',
+        name: 'VidSync (Multi-Audio: Hindi, English, Tamil, Telugu • 0 Ads)',
+        movieTemplate: DEFAULT_VIDSYNC_MOVIE,
+        tvTemplate: DEFAULT_VIDSYNC_TV,
+    },
+    {
+        id: 'crunchyroll',
+        name: 'Crunchyroll (Hindi Dub • 0 Ads)',
+        movieTemplate: DEFAULT_CRUNCHYROLL_MOVIE,
+        tvTemplate: DEFAULT_CRUNCHYROLL_TV,
+    },
+    {
+>>>>>>> 265f3ad (feat(player): set VidSync as primary multi-audio provider across movies, tv & crunchyroll)
         id: 'netmirror',
         name: 'NetMirror (Multi-Language Hindi Dub)',
         movieTemplate: DEFAULT_NETMIRROR_MOVIE,
@@ -117,6 +135,10 @@ export function detectProviderFromUrl(url: string): ProviderId | null {
     if (!url) return null;
     try {
         const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+<<<<<<< HEAD
+=======
+        if (host.includes('vidsync.pro') || host.includes('vidsync')) return 'vidsync';
+>>>>>>> 265f3ad (feat(player): set VidSync as primary multi-audio provider across movies, tv & crunchyroll)
         if (host.includes('net27') || host.includes('net77') || host.includes('netmirror') || host.includes('pcmirror') || host.includes('iosmirror')) return 'netmirror';
         if (host === 'nxsha.space' || host === 'web.nxsha.app') return 'nxsha';
         if (host === 'nhdapi.com' || host === 'nhdapi.st') return 'nhd';
