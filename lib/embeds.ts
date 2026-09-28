@@ -89,15 +89,33 @@ export const PROVIDERS: Provider[] = [
     },
     {
         id: 'nxsha',
-        name: 'Nxsha',
+        name: 'Nxsha (Gbru Hindi Dub)',
         movieTemplate: DEFAULT_NXSHA_MOVIE,
         tvTemplate: DEFAULT_NXSHA_TV,
+    },
+    {
+        id: 'vidsync',
+        name: 'VidSync (Multi-Audio: Hindi, English, Tamil, Telugu • 0 Ads)',
+        movieTemplate: DEFAULT_VIDSYNC_MOVIE,
+        tvTemplate: DEFAULT_VIDSYNC_TV,
+    },
+    {
+        id: 'netmirror',
+        name: 'NetMirror (Multi-Language Hindi Dub)',
+        movieTemplate: DEFAULT_NETMIRROR_MOVIE,
+        tvTemplate: DEFAULT_NETMIRROR_TV,
     },
     {
         id: 'nhd',
         name: 'NHD',
         movieTemplate: DEFAULT_NHD_MOVIE,
         tvTemplate: DEFAULT_NHD_TV,
+    },
+    {
+        id: 'crunchyroll',
+        name: 'Crunchyroll (Hindi Dub • 0 Ads)',
+        movieTemplate: DEFAULT_CRUNCHYROLL_MOVIE,
+        tvTemplate: DEFAULT_CRUNCHYROLL_TV,
     },
 ];
 
