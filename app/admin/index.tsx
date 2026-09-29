@@ -39,7 +39,8 @@ const IS_WEB = Platform.OS === 'web';
  * Admin screen for embed configuration. Accessible via /admin.
  *
  * Features:
- *  - Global embed templates (nxsha/nhd/custom), default provider, strict Hindi toggle.
+ *  - Global embed templates (Nxsha/VidSync/NHD/custom), plus strict Hindi toggle.
+ *  - Catalog playback policy: Hindi movies use VidSync; series use Nxsha.
  *  - NHD API key field (optional — embeds don't need it).
  *  - Per-title "Test Embed" builder (paste IDs, pick provider, build URL & open in new tab).
  *  - Episode generator: TMDB fetch OR manual "S=N E=1..M" fallback.
@@ -115,12 +116,16 @@ export default function AdminScreen() {
                     movieTemplate:
                         testProvider === 'nxsha'
                             ? settings.nxshaMovieTemplate
+                            : testProvider === 'vidsync'
+                            ? settings.vidsyncMovieTemplate
                             : testProvider === 'nhd'
                             ? settings.nhdMovieTemplate
                             : settings.customMovieTemplate,
                     tvTemplate:
                         testProvider === 'nxsha'
                             ? settings.nxshaTvTemplate
+                            : testProvider === 'vidsync'
+                            ? settings.vidsyncTvTemplate
                             : testProvider === 'nhd'
                             ? settings.nhdTvTemplate
                             : settings.customTvTemplate,
@@ -228,6 +233,9 @@ export default function AdminScreen() {
                             onPress={() => patch({ defaultProvider: 'custom' })}
                         />
                     </View>
+                    <Text style={styles.helperText}>
+                        Automatic catalog routing: all series → Nxsha; Hindi movie rail → VidSync.
+                    </Text>
                     <View style={[styles.row, { marginTop: 10 }]}>
                         <Pressable
                             style={[styles.checkbox, settings.strictHindi && styles.checkboxOn]}
@@ -256,6 +264,22 @@ export default function AdminScreen() {
                         placeholder="https://nxsha.space/embed/tv/{id}/{s}/{e}?..."
                     />
                 </Section>
+                <Section title="VidSync movie template">
+                    <TemplateInput
+                        value={settings.vidsyncMovieTemplate}
+                        onChange={v => patch({ vidsyncMovieTemplate: v })}
+                        placeholder="https://vidsync.pro/embed/movie/{id}"
+                    />
+                    <Hint>Hindi movies ke liye ad-free player.</Hint>
+                </Section>
+                <Section title="VidSync TV template">
+                    <TemplateInput
+                        value={settings.vidsyncTvTemplate}
+                        onChange={v => patch({ vidsyncTvTemplate: v })}
+                        placeholder="https://vidsync.pro/embed/tv/{id}/{s}/{e}"
+                    />
+                </Section>
+
                 <Section title="NHD movie template">
                     <TemplateInput
                         value={settings.nhdMovieTemplate}
@@ -642,6 +666,7 @@ const styles = StyleSheet.create({
     pillText: { color: '#ccc', fontSize: 12, fontWeight: '700' },
     pillTextActive: { color: '#fff' },
     label: { color: '#ccc', fontSize: 12, marginLeft: 8 },
+    helperText: { color: '#888', fontSize: 12, lineHeight: 18, marginTop: 4 },
     fieldLabel: { color: '#888', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5 },
     input: {
         backgroundColor: '#111',

@@ -16,10 +16,11 @@ import { useTvBackHandler } from '@/hooks/useTvNavigation';
  * Third-party iframe embed player.
  *
  * HARD RULES:
- *   - NO `sandbox` attribute (Nxsha refuses sandboxed frames).
- *   - NO contentWindow/document access (cross-origin → SecurityError).
- *   - NO postMessage listeners — providers don't emit them.
- *   - Player MUST open after a user click — never auto-open.
+ *   - Cross-origin frame contents are never inspected or rewritten.
+ *   - No postMessage listeners — providers don't emit reliable playback events.
+ *   - The player opens only after a user click — never auto-open.
+ *   - Nxsha frames use a restrictive sandbox without `allow-popups`, which
+ *     blocks ad windows/redirects while retaining scripts, media and fullscreen.
  */
 
 export interface EmbedPlayerProps {
@@ -30,8 +31,6 @@ export interface EmbedPlayerProps {
     onNextEpisode?: () => void;
     onPrevEpisode?: () => void;
     isTv?: boolean;
-    /** Official title page to offer if the third-party player cannot load. */
-    fallbackUrl?: string;
     timeoutMs?: number;
 }
 
@@ -43,6 +42,10 @@ const SCAN_COVER_DELAY_MS = 350;
 // Bound the visual cover so a stream that loads quickly is not hidden too long.
 const SCAN_COVER_MS = 12000;
 const EPISODE_NAV_IDLE_MS = 2500;
+// Deliberately omit allow-popups and allow-top-navigation from the sandbox.
+// The provider's player still has scripts, same-origin storage, forms and
+// presentation/fullscreen support, while ad click-outs stay inside the frame.
+const NXSHA_SANDBOX = 'allow-forms allow-presentation allow-same-origin allow-scripts';
 
 export function EmbedPlayer({
     src,
@@ -52,7 +55,6 @@ export function EmbedPlayer({
     onNextEpisode,
     onPrevEpisode,
     isTv,
-    fallbackUrl,
     timeoutMs = 12000,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
@@ -92,6 +94,10 @@ export function EmbedPlayer({
         iframe.setAttribute('data-arena-embed', '1');
         iframe.src = src;
         iframe.title = title ?? 'Video player';
+        if (nxshaEmbed) {
+            iframe.setAttribute('sandbox', NXSHA_SANDBOX);
+            iframe.setAttribute('data-arena-popup-shield', 'enabled');
+        }
         iframe.setAttribute(
             'allow',
             'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen',
@@ -116,7 +122,7 @@ export function EmbedPlayer({
             killIframe();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [src, title, directVideo]);
+    }, [src, title, directVideo, nxshaEmbed]);
 
     // Clicking the red Play button happens inside Nxsha's cross-origin frame;
     // the parent does not receive that click. Focus moving into the iframe is
@@ -235,9 +241,6 @@ export function EmbedPlayer({
     };
 
     const openInNewTab = () => openExternal(src);
-    const openOfficialTitle = () => {
-        if (fallbackUrl) openExternal(fallbackUrl);
-    };
 
     if (!IS_WEB) {
         return (
@@ -247,20 +250,10 @@ export function EmbedPlayer({
                 <Text style={styles.nativeHint}>
                     Embedded player is available in the web preview. Tap below to open in your browser.
                 </Text>
-                <Pressable
-                    style={styles.nativeButton}
-                    onPress={fallbackUrl ? openOfficialTitle : openInNewTab}
-                >
+                <Pressable style={styles.nativeButton} onPress={openInNewTab}>
                     <Ionicons name="open-outline" size={18} color="#000" />
-                    <Text style={styles.nativeButtonText}>
-                        {fallbackUrl ? 'Watch on Netflix' : 'Open Player'}
-                    </Text>
+                    <Text style={styles.nativeButtonText}>Open Player</Text>
                 </Pressable>
-                {fallbackUrl ? (
-                    <Pressable onPress={openInNewTab} style={styles.nativeGhostButton}>
-                        <Text style={styles.nativeGhostText}>Open embed player</Text>
-                    </Pressable>
-                ) : null}
                 {onClose ? (
                     <Pressable onPress={handleClose} style={styles.nativeGhostButton}>
                         <Text style={styles.nativeGhostText}>Close</Text>
@@ -334,23 +327,10 @@ export function EmbedPlayer({
                             ? 'Preview URL browser se load nahi ho saka. Naya tab me khol ke dekho.'
                             : 'Ad-block ya popup blocker ne embed roka hoga. Naya tab me khol ke dekho, ya dusra player try karo.'}
                     </Text>
-                    {fallbackUrl ? (
-                        <Pressable style={styles.openButton} onPress={openOfficialTitle}>
-                            <Ionicons name="open-outline" size={16} color="#000" />
-                            <Text style={styles.openButtonText}>Watch on Netflix</Text>
-                        </Pressable>
-                    ) : (
-                        <Pressable style={styles.openButton} onPress={openInNewTab}>
-                            <Ionicons name="open-outline" size={16} color="#000" />
-                            <Text style={styles.openButtonText}>Open in new tab</Text>
-                        </Pressable>
-                    )}
-                    {fallbackUrl ? (
-                        <Pressable style={styles.ghostButton} onPress={openInNewTab}>
-                            <Ionicons name="open-outline" size={16} color="#fff" />
-                            <Text style={styles.ghostButtonText}>Open embed in new tab</Text>
-                        </Pressable>
-                    ) : null}
+                    <Pressable style={styles.openButton} onPress={openInNewTab}>
+                        <Ionicons name="open-outline" size={16} color="#000" />
+                        <Text style={styles.openButtonText}>Open player in new tab</Text>
+                    </Pressable>
                     {onSwitchProvider ? (
                         <Pressable style={styles.ghostButton} onPress={onSwitchProvider}>
                             <Ionicons name="swap-horizontal" size={16} color="#fff" />
@@ -378,6 +358,16 @@ export function EmbedPlayer({
                 >
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
+                {nxshaEmbed ? (
+                    <View
+                        style={styles.shieldBadge}
+                        accessibilityLabel="Popup ads blocked"
+                        testID="nxsha-popup-shield"
+                    >
+                        <Ionicons name="shield-checkmark-outline" size={15} color="#b8f5cf" />
+                        <Text style={styles.shieldText}>Pop-ups blocked</Text>
+                    </View>
+                ) : null}
                 <View style={{ flex: 1 }} />
                 {onSwitchProvider ? (
                     <Pressable
@@ -489,6 +479,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.55)',
         alignItems: 'center', justifyContent: 'center', marginLeft: 8,
     },
+    shieldBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        marginLeft: 8,
+        paddingHorizontal: 9,
+        paddingVertical: 7,
+        borderRadius: 14,
+        backgroundColor: 'rgba(11, 61, 36, 0.82)',
+        borderWidth: 1,
+        borderColor: 'rgba(184, 245, 207, 0.45)',
+    },
+    shieldText: { color: '#b8f5cf', fontSize: 11, fontWeight: '700' },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',

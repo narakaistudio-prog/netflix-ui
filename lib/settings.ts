@@ -8,6 +8,8 @@ import {
     DEFAULT_NHD_TV,
     DEFAULT_NXSHA_MOVIE,
     DEFAULT_NXSHA_TV,
+    DEFAULT_VIDSYNC_MOVIE,
+    DEFAULT_VIDSYNC_TV,
     ProviderId,
 } from './embeds';
 
@@ -18,6 +20,8 @@ export interface EmbedSettings {
     strictHindi: boolean;
     nxshaMovieTemplate: string;
     nxshaTvTemplate: string;
+    vidsyncMovieTemplate: string;
+    vidsyncTvTemplate: string;
     nhdMovieTemplate: string;
     nhdTvTemplate: string;
     customMovieTemplate: string;
@@ -26,9 +30,9 @@ export interface EmbedSettings {
     nhdApiKey: string;
 }
 
-// v3 briefly changed Nxsha's default server. Bump once more so browsers
-// that saved that default return to the original template too.
-const SETTINGS_VERSION = 4;
+// v3 briefly changed Nxsha's default server. v5 adds the VidSync templates
+// and persists the Hindi movie / Nxsha series playback policy.
+const SETTINGS_VERSION = 5;
 
 const V3_NXSHA_MOVIE =
     'https://nxsha.space/embed/movie/{id}?server=VidHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true&one_server=true';
@@ -41,6 +45,8 @@ export const DEFAULT_SETTINGS: EmbedSettings = {
     strictHindi: true,
     nxshaMovieTemplate: DEFAULT_NXSHA_MOVIE,
     nxshaTvTemplate: DEFAULT_NXSHA_TV,
+    vidsyncMovieTemplate: DEFAULT_VIDSYNC_MOVIE,
+    vidsyncTvTemplate: DEFAULT_VIDSYNC_TV,
     nhdMovieTemplate: DEFAULT_NHD_MOVIE,
     nhdTvTemplate: DEFAULT_NHD_TV,
     customMovieTemplate: 'https://example.com/embed/{id}',
@@ -131,6 +137,11 @@ export function templateOverridesFor(
             return {
                 movieTemplate: settings.nxshaMovieTemplate,
                 tvTemplate: settings.nxshaTvTemplate,
+            };
+        case 'vidsync':
+            return {
+                movieTemplate: settings.vidsyncMovieTemplate,
+                tvTemplate: settings.vidsyncTvTemplate,
             };
         case 'nhd':
             return {

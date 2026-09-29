@@ -22,6 +22,8 @@ export interface Movie {
     type?: string;
     /** Canonical media type for embed building. */
     mediaType?: 'movie' | 'tv';
+    /** ISO/OMDb language metadata when the catalog source provides it. */
+    language?: string;
     /** Discovery source marker for current/editorial shelves. */
     catalogSource?: 'justwatch' | 'isitinmycountry' | 'netflix-original';
     /** Editorial Netflix collection/shelf name. */

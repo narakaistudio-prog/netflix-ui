@@ -1178,6 +1178,7 @@ async function getOmdbMetadata(item, kind) {
                     ? { rating: detail.Rated }
                     : {}),
             ...(detail.Rated && detail.Rated !== 'N/A' ? { rated: detail.Rated } : {}),
+            ...(detail.Language && detail.Language !== 'N/A' ? { language: detail.Language } : {}),
         };
 
         if (kind === 'tv') {

@@ -45,11 +45,12 @@ interface MovieData {
     ranking_text?: string;
     youtubeId?: string;
     type?: string;
+    language?: string;
     // Embed fields (optional — if present, the Play button launches the iframe embed)
     mediaType?: 'movie' | 'tv';
     tmdb_id?: string | number;
     imdb_id?: string;
-    embed_provider?: 'nxsha' | 'nhd' | 'custom';
+    embed_provider?: 'nxsha' | 'vidsync' | 'nhd' | 'custom';
     embed_url?: string;
     netflixId?: string;
     netflixUrl?: string;
@@ -110,6 +111,7 @@ export function ExpandedPlayer({
     const videoRef = useRef<Video | null>(null);
     const [isMuted, setIsMuted] = useState(true);
     const [trailerStage, setTrailerStage] = useState<'off' | 'thumb' | 'play'>('off');
+    const [playbackNotice, setPlaybackNotice] = useState<string | null>(null);
     const progress = useSharedValue(0);
     const min = useSharedValue(0);
     const max = useSharedValue(100);
@@ -228,20 +230,18 @@ export function ExpandedPlayer({
         && !PLACEHOLDER_VIDEO_URL.test(String(movieData.video_url))
         && !hasProviderEmbed;
     const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || hasDirectPreview));
-    const officialNetflixUrl = movieData.netflixUrl
-        || (movieData.netflixId ? `https://www.netflix.com/in/title/${movieData.netflixId}` : undefined);
+    const playbackProviderLabel = isSeries ? 'Nxsha' : 'VidSync';
     const handlePlay = () => {
+        setPlaybackNotice(null);
         if (hasPlayableSource && onPlayFull) {
             onPlayFull(movieData);
             return;
         }
-        const q = encodeURIComponent(String(movieData.title ?? '').trim());
-        const url = officialNetflixUrl || `https://www.netflix.com/search?q=${q}`;
-        if (IS_WEB) {
-            window.open(url, '_blank', 'noopener');
-        } else {
-            Linking.openURL(url).catch(() => {});
-        }
+        // Do not silently fall back to an official title page. The catalog
+        // policy is explicit: series belong to Nxsha and Hindi movies to
+        // VidSync. If a stale row has no TMDB/IMDb id, explain the missing
+        // metadata instead of changing providers.
+        setPlaybackNotice(`${playbackProviderLabel} playback ID is not available for this title yet.`);
     };
 
     // On the website a frosted-glass backdrop-filter made the whole dialog
@@ -315,7 +315,7 @@ export function ExpandedPlayer({
                                         ? (isSeries
                                             ? `Play ${movieData.title} (S1:E1)`
                                             : `Play ${movieData.title}`)
-                                        : 'Play on Netflix')}
+                                        : `Play on ${playbackProviderLabel}`)}
                             </Text>
                         </Pressable>
                     </View>
@@ -400,7 +400,7 @@ export function ExpandedPlayer({
                                     ? 'Play preview'
                                     : (hasProviderEmbed
                                         ? (isSeries ? 'Play S1:E1' : 'Play')
-                                        : 'Play on Netflix')}
+                                        : `Play on ${playbackProviderLabel}`)}
                             </ThemedText>
                         </Pressable>
 
@@ -415,6 +415,25 @@ export function ExpandedPlayer({
                             <ThemedText style={styles.downloadButtonText}>Download</ThemedText>
                         </Pressable>
                     </View>
+
+                    {playbackNotice ? (
+                        <View
+                            accessibilityRole="alert"
+                            style={{
+                                backgroundColor: '#2a1717',
+                                borderColor: '#6d2c2c',
+                                borderWidth: 1,
+                                borderRadius: 6,
+                                paddingHorizontal: 12,
+                                paddingVertical: 9,
+                                marginBottom: 14,
+                            }}
+                        >
+                            <Text style={{ color: '#ffb3b3', fontSize: 12, lineHeight: 17 }}>
+                                {playbackNotice}
+                            </Text>
+                        </View>
+                    ) : null}
 
                     <ThemedText style={styles.description}>
                         {movieData.description}

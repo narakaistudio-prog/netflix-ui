@@ -9,7 +9,7 @@
  */
 
 const EMBED_SRC_PATTERN =
-    /nxsha|nhdapi|youtube|youtu\.be|piped|invidious|embed/i;
+    /nxsha|vidsync|nhdapi|youtube|youtu\.be|piped|invidious|embed/i;
 
 export function killStrayMedia(): void {
     if (typeof document === 'undefined') return;

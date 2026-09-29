@@ -1,9 +1,10 @@
 /**
- * Embed URL builder for third-party streaming providers (Nxsha & NHD).
+ * Embed URL builder for third-party streaming providers (Nxsha, VidSync & NHD).
  *
- * All endpoints here are verified against the OFFICIAL provider docs:
- *   - Nxsha : https://nxsha.space/embed
- *   - NHD   : https://nhdapi.com/docs
+ * All endpoints here are verified against the provider docs:
+ *   - Nxsha  : https://nxsha.space/embed
+ *   - VidSync: https://vidsync.pro/
+ *   - NHD    : https://nhdapi.com/docs
  *
  * Do NOT invent new endpoints or query params — only the ones documented
  * below are supported by the providers. The defaults match section (2) of
@@ -11,14 +12,14 @@
  */
 
 export type MediaType = 'movie' | 'tv';
-export type ProviderId = 'nxsha' | 'nhd' | 'custom';
+export type ProviderId = 'nxsha' | 'vidsync' | 'nhd' | 'custom';
 
 export interface Provider {
     id: ProviderId;
     name: string;
     /**
      * Template for movie embeds. Placeholders:
-     *   {id}  → imdbId if available, else tmdbId
+     *   {id}  → provider-specific id (VidSync prefers tmdbId; others prefer IMDb)
      *   {tmdb} → always tmdbId (useful when you specifically need the numeric id)
      */
     movieTemplate: string;
@@ -52,6 +53,9 @@ export const DEFAULT_NXSHA_MOVIE =
 export const DEFAULT_NXSHA_TV =
     'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
 
+export const DEFAULT_VIDSYNC_MOVIE = 'https://vidsync.pro/embed/movie/{id}';
+export const DEFAULT_VIDSYNC_TV = 'https://vidsync.pro/embed/tv/{id}/{s}/{e}';
+
 export const DEFAULT_NHD_MOVIE = 'https://nhdapi.com/movie/{id}';
 export const DEFAULT_NHD_TV = 'https://nhdapi.com/tv/{id}/{s}/{e}';
 
@@ -67,6 +71,12 @@ export const PROVIDERS: Provider[] = [
         tvTemplate: DEFAULT_NXSHA_TV,
     },
     {
+        id: 'vidsync',
+        name: 'VidSync',
+        movieTemplate: DEFAULT_VIDSYNC_MOVIE,
+        tvTemplate: DEFAULT_VIDSYNC_TV,
+    },
+    {
         id: 'nhd',
         name: 'NHD',
         movieTemplate: DEFAULT_NHD_MOVIE,
@@ -77,6 +87,17 @@ export const PROVIDERS: Provider[] = [
 export function getProvider(id: ProviderId): Provider | undefined {
     if (id === 'custom') return undefined;
     return PROVIDERS.find(p => p.id === id);
+}
+
+/**
+ * Playback policy for the catalog. Series stay on Nxsha so season/episode
+ * navigation and the Hindi-first server remain consistent. Movies use
+ * VidSync, whose embed is ad-free and does not open popup/redirect windows.
+ * An explicit per-title provider or manual embed URL can still override this
+ * policy in the screen that owns the title.
+ */
+export function preferredProviderForMedia(type: MediaType): ProviderId {
+    return type === 'tv' ? 'nxsha' : 'vidsync';
 }
 
 /* -------------------------------------------------------------------------- */
@@ -100,6 +121,7 @@ export function detectProviderFromUrl(url: string): ProviderId | null {
     try {
         const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
         if (host === 'nxsha.space' || host === 'web.nxsha.app') return 'nxsha';
+        if (host === 'vidsync.pro' || host === 'www.vidsync.pro') return 'vidsync';
         if (host === 'nhdapi.com' || host === 'nhdapi.st') return 'nhd';
         return 'custom';
     } catch {
@@ -186,10 +208,14 @@ export function buildEmbedUrl(
     const v = validateCustomTemplate(template, type);
     if (!v.ok) throw new Error(v.error);
 
-    // Pick the id: IMDb tt-id if we have it, else TMDB numeric id.
+    // Nxsha/NHD accept either identifier and historically prefer IMDb. VidSync's
+    // documented path is TMDB-first, so use the numeric id whenever available
+    // and only fall back to IMDb for older catalog entries.
     const imdbId = params.imdbId ? extractImdbId(params.imdbId) : null;
     const tmdbId = params.tmdbId != null ? String(params.tmdbId) : '';
-    const id = imdbId || tmdbId;
+    const id = (provider === 'vidsync'
+        ? (tmdbId || imdbId)
+        : (imdbId || tmdbId)) || '';
     if (!id) {
         throw new Error('Embed URL banane ke liye ya to tmdbId ya imdbId chahiye');
     }
@@ -229,17 +255,25 @@ export function buildEmbedUrl(
 /* -------------------------------------------------------------------------- */
 
 export function buildDownloadUrl(
-    provider: 'nxsha' | 'nhd',
+    provider: 'nxsha' | 'vidsync' | 'nhd',
     type: MediaType,
     params: { tmdbId?: string | number; imdbId?: string; season?: number; episode?: number },
 ): string {
     const imdbId = params.imdbId ? extractImdbId(params.imdbId) : null;
-    const id = imdbId || (params.tmdbId != null ? String(params.tmdbId) : '');
-    const base = provider === 'nxsha' ? 'https://nxsha.space' : 'https://nhdapi.com';
-    if (type === 'movie') return `${base}/dl/movie/${encodeURIComponent(id)}`;
+    const tmdbId = params.tmdbId != null ? String(params.tmdbId) : '';
+    const id = (provider === 'vidsync'
+        ? (tmdbId || imdbId)
+        : (imdbId || tmdbId)) || '';
+    const base = provider === 'nxsha'
+        ? 'https://nxsha.space'
+        : provider === 'vidsync'
+            ? 'https://vidsync.pro'
+            : 'https://nhdapi.com';
+    const path = provider === 'vidsync' ? '/embed/download' : '/dl';
+    if (type === 'movie') return `${base}${path}/movie/${encodeURIComponent(id)}`;
     const s = params.season ?? 1;
     const e = params.episode ?? 1;
-    return `${base}/dl/tv/${encodeURIComponent(id)}/${s}/${e}`;
+    return `${base}${path}/tv/${encodeURIComponent(id)}/${s}/${e}`;
 }
 
 /* -------------------------------------------------------------------------- */

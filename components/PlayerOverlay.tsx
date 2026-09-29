@@ -14,6 +14,7 @@ import {
     ProviderId,
     buildEmbedUrl,
     BuildEmbedParams,
+    preferredProviderForMedia,
 } from '@/lib/embeds';
 import {
     EmbedSettings,
@@ -94,16 +95,18 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         if (forcedProvider) {
             list.push(forcedProvider);
         } else {
-            list.push(settings.defaultProvider);
-            // Include the other one for quick switching.
+            const policyProvider = preferredProviderForMedia(type);
+            list.push(policyProvider);
+            // Include the other providers for quick switching, but keep the
+            // catalog policy as the first/automatic choice.
             for (const p of PROVIDERS) {
-                if (p.id !== settings.defaultProvider) list.push(p.id);
+                if (p.id !== policyProvider) list.push(p.id);
             }
         }
         if (embedUrl) list.push('custom');
         // De-dupe while preserving order.
         return Array.from(new Set(list));
-    }, [forcedProvider, settings.defaultProvider, embedUrl]);
+    }, [forcedProvider, type, embedUrl]);
 
     // Reset provider index + episode when the overlay (re)opens.
     useEffect(() => {
@@ -140,7 +143,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         return () => window.removeEventListener('keydown', onKey);
     }, [visible, onRequestClose]);
 
-    const currentProvider: ProviderId = cycle[providerIndex] ?? 'nxsha';
+    const currentProvider: ProviderId = cycle[providerIndex] ?? preferredProviderForMedia(type);
 
     const src = useMemo(() => {
         try {
@@ -199,6 +202,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
 
     const providerLabel = useMemo(() => {
         if (currentProvider === 'nxsha') return 'Nxsha';
+        if (currentProvider === 'vidsync') return 'VidSync';
         if (currentProvider === 'nhd') return 'NHD';
         return 'Custom';
     }, [currentProvider]);

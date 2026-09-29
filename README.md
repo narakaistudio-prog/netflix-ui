@@ -117,8 +117,11 @@ locally, run `npm run build:web` and check that these exported files exist:
 After deployment, check `/`, `/browse/movies`, a movie URL such as
 `/movie/jw-catalog-movie-vishwanath-and-sons`, and a local poster URL such as
 `/assets/posters/catalog/billboard-jawan.jpg`. No API key is required for the
-bundled catalog. Video playback runs in third-party iframe providers (Nxsha or
-NHD), so availability of a particular stream cannot be guaranteed by Vercel.
+bundled catalog. Video playback uses VidSync for Hindi movie playback and
+Nxsha for series episodes. Nxsha embeds use a restrictive iframe sandbox that
+blocks popup ad windows and click-out redirects; the player keeps the provider
+iframe cross-origin and never rewrites its contents. Availability of a
+particular stream cannot be guaranteed by Vercel.
 
 ## Smart TV remote mode (Samsung Tizen / LG webOS / Android TV)
 

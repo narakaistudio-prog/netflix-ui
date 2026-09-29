@@ -7,6 +7,8 @@ import {
     buildNhdSubtitlesUrl,
     DEFAULT_NXSHA_MOVIE,
     DEFAULT_NXSHA_TV,
+    DEFAULT_VIDSYNC_MOVIE,
+    DEFAULT_VIDSYNC_TV,
     DEFAULT_NHD_MOVIE,
     DEFAULT_NHD_TV,
 } from './embeds';
@@ -35,6 +37,11 @@ describe('detectProviderFromUrl', () => {
         expect(detectProviderFromUrl('https://nxsha.space/embed/movie/tt1')).toBe('nxsha');
         expect(detectProviderFromUrl('https://web.nxsha.app/embed/tv/1/1/1')).toBe('nxsha');
     });
+    it('detects vidsync', () => {
+        expect(detectProviderFromUrl('https://vidsync.pro/embed/movie/603')).toBe('vidsync');
+        expect(detectProviderFromUrl('https://www.vidsync.pro/embed/tv/1399/1/1')).toBe('vidsync');
+    });
+
     it('detects nhd main & mirror', () => {
         expect(detectProviderFromUrl('https://nhdapi.com/movie/tt1')).toBe('nhd');
         expect(detectProviderFromUrl('https://nhdapi.st/tv/1/1/1')).toBe('nhd');
@@ -82,6 +89,19 @@ describe('buildEmbedUrl', () => {
     it('builds nxsha tv URL with season/episode', () => {
         const url = buildEmbedUrl('nxsha', 'tv', { tmdbId: 123, season: 2, episode: 5 });
         expect(url).toContain('/embed/tv/123/2/5');
+    });
+
+    it('builds VidSync movie URLs with TMDB preferred over IMDb', () => {
+        const url = buildEmbedUrl('vidsync', 'movie', {
+            tmdbId: 603,
+            imdbId: 'tt0137523',
+        });
+        expect(url).toBe(DEFAULT_VIDSYNC_MOVIE.replace('{id}', '603'));
+    });
+
+    it('builds VidSync TV URLs with season/episode', () => {
+        const url = buildEmbedUrl('vidsync', 'tv', { tmdbId: 1399, season: 1, episode: 2 });
+        expect(url).toBe(DEFAULT_VIDSYNC_TV.replace('{id}', '1399').replace('{s}', '1').replace('{e}', '2'));
     });
 
     it('appends one_server=true when strictHindi is on for nxsha', () => {
@@ -148,6 +168,8 @@ describe('buildEmbedUrl', () => {
     it('matches the default templates documented in the brief', () => {
         expect(DEFAULT_NXSHA_MOVIE).toContain('server=GbruHindi');
         expect(DEFAULT_NXSHA_TV).toContain('/embed/tv/{id}/{s}/{e}');
+        expect(DEFAULT_VIDSYNC_MOVIE).toBe('https://vidsync.pro/embed/movie/{id}');
+        expect(DEFAULT_VIDSYNC_TV).toBe('https://vidsync.pro/embed/tv/{id}/{s}/{e}');
         expect(DEFAULT_NHD_MOVIE).toBe('https://nhdapi.com/movie/{id}');
         expect(DEFAULT_NHD_TV).toBe('https://nhdapi.com/tv/{id}/{s}/{e}');
     });

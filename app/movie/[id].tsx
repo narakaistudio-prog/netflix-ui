@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Linking, Platform, Pressable, StyleSheet, Dimensions, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Dimensions, View } from 'react-native';
 import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
@@ -24,6 +24,7 @@ import {
     PROVIDERS,
     ProviderId,
     buildEmbedUrl,
+    preferredProviderForMedia,
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { markWatched } from '@/lib/recentlyWatched';
@@ -313,18 +314,30 @@ export default function MovieScreen() {
             ? 'tv'
             : 'movie');
 
-    // Cycle order: default provider → other built-in providers → custom (if embed_url set)
+    // Cycle order is title override → catalog policy → alternate providers.
+    // Series always begin on Nxsha; movies begin on VidSync (the ad-free
+    // provider requested for the Hindi movie rail). Manual embed URLs remain
+    // available as a final custom slot.
     const settings = loadSettings();
     const cycle: ProviderId[] = useMemo(() => {
         const list: ProviderId[] = [];
-        const def = movie.embed_provider ?? settings.defaultProvider;
+        const configured = movie.embed_provider;
+        const policyProvider = preferredProviderForMedia(mediaType);
+        // Older catalog snapshots marked a few movies as Nxsha. Keep those
+        // records readable, but route movie playback through VidSync now.
+        // Series are always Nxsha on the first/automatic slot, regardless of
+        // an old global provider choice; the switch button can still expose
+        // alternates when a title needs one.
+        const def = mediaType === 'tv'
+            ? policyProvider
+            : (configured === 'nxsha' ? policyProvider : (configured ?? policyProvider));
         list.push(def);
         for (const p of PROVIDERS) if (p.id !== def) list.push(p.id);
         if (movie.embed_url) list.push('custom');
         return Array.from(new Set(list));
-    }, [movie.embed_provider, movie.embed_url, settings.defaultProvider]);
+    }, [movie.embed_provider, movie.embed_url, mediaType]);
 
-    const currentProvider: ProviderId = cycle[providerIndex] ?? 'nxsha';
+    const currentProvider: ProviderId = cycle[providerIndex] ?? preferredProviderForMedia(mediaType);
     const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
         ? movie.videoUrl.replace(/^http:/i, 'https:')
         : undefined;
@@ -362,23 +375,8 @@ export default function MovieScreen() {
             ?? movie.episodeCount;
     }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
 
-    const officialNetflixUrl = movie.netflixUrl
-        || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
-        || `https://www.netflix.com/search?q=${encodeURIComponent(String(movie.title ?? '').trim())}`;
-
-    const openOfficialTitle = useCallback(() => {
-        if (IS_WEB) {
-            window.open(officialNetflixUrl, '_blank', 'noopener');
-        } else {
-            Linking.openURL(officialNetflixUrl).catch(() => {});
-        }
-    }, [officialNetflixUrl]);
-
     const handlePlayFull = useCallback(() => {
-        if (!hasPlayablePlayback) {
-            openOfficialTitle();
-            return;
-        }
+        if (!hasPlayablePlayback) return;
         const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
         setProviderIndex(0);
         setSeason(initialSeason);
@@ -398,7 +396,7 @@ export default function MovieScreen() {
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, getEpisodeCountForSeason]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -408,10 +406,7 @@ export default function MovieScreen() {
     }, [mediaType, getEpisodeCountForSeason]);
 
     const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
-        if (!hasPlayablePlayback) {
-            openOfficialTitle();
-            return;
-        }
+        if (!hasPlayablePlayback) return;
         if (mediaType !== 'tv') {
             handlePlayFull();
             return;
@@ -421,7 +416,7 @@ export default function MovieScreen() {
         setEpisode(selectedEpisode);
         setTotalEps(getEpisodeCountForSeason(selectedSeason));
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [mediaType, handlePlayFull, hasPlayablePlayback, getEpisodeCountForSeason]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
@@ -500,7 +495,6 @@ export default function MovieScreen() {
                                         onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
                                         onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
                                         isTv={mediaType === 'tv'}
-                                        fallbackUrl={officialNetflixUrl}
                                     />
                                 </View>
                             </View>
@@ -537,7 +531,6 @@ export default function MovieScreen() {
                                 onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
                                 onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
                                 isTv={mediaType === 'tv'}
-                                fallbackUrl={officialNetflixUrl}
                             />
                         </View>
                     </View>
