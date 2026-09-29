@@ -7,10 +7,14 @@ import {
     buildNhdSubtitlesUrl,
     DEFAULT_NXSHA_MOVIE,
     DEFAULT_NXSHA_TV,
+    DEFAULT_AUTOEMBED_MOVIE,
+    DEFAULT_AUTOEMBED_TV,
     DEFAULT_VIDSYNC_MOVIE,
     DEFAULT_VIDSYNC_TV,
     DEFAULT_NHD_MOVIE,
     DEFAULT_NHD_TV,
+    isIndianHindiMovie,
+    preferredProviderForMedia,
 } from './embeds';
 
 describe('extractImdbId', () => {
@@ -37,6 +41,11 @@ describe('detectProviderFromUrl', () => {
         expect(detectProviderFromUrl('https://nxsha.space/embed/movie/tt1')).toBe('nxsha');
         expect(detectProviderFromUrl('https://web.nxsha.app/embed/tv/1/1/1')).toBe('nxsha');
     });
+    it('detects autoembed', () => {
+        expect(detectProviderFromUrl('https://player.autoembed.cc/embed/movie/tt3359350')).toBe('autoembed');
+        expect(detectProviderFromUrl('https://autoembed.cc')).toBe('autoembed');
+    });
+
     it('detects vidsync', () => {
         expect(detectProviderFromUrl('https://vidsync.pro/embed/movie/603')).toBe('vidsync');
         expect(detectProviderFromUrl('https://www.vidsync.pro/embed/tv/1399/1/1')).toBe('vidsync');
@@ -89,6 +98,16 @@ describe('buildEmbedUrl', () => {
     it('builds nxsha tv URL with season/episode', () => {
         const url = buildEmbedUrl('nxsha', 'tv', { tmdbId: 123, season: 2, episode: 5 });
         expect(url).toContain('/embed/tv/123/2/5');
+    });
+
+    it('builds AutoEmbed movie URLs with the documented player host', () => {
+        const url = buildEmbedUrl('autoembed', 'movie', { imdbId: 'tt3359350' });
+        expect(url).toBe(DEFAULT_AUTOEMBED_MOVIE.replace('{id}', 'tt3359350'));
+    });
+
+    it('builds AutoEmbed TV URLs with season/episode', () => {
+        const url = buildEmbedUrl('autoembed', 'tv', { tmdbId: 1396, season: 1, episode: 1 });
+        expect(url).toBe(DEFAULT_AUTOEMBED_TV.replace('{id}', '1396').replace('{s}', '1').replace('{e}', '1'));
     });
 
     it('builds VidSync movie URLs with TMDB preferred over IMDb', () => {
@@ -165,9 +184,20 @@ describe('buildEmbedUrl', () => {
         expect(() => buildEmbedUrl('nhd', 'tv', { tmdbId: 1, season: 0, episode: 1 })).toThrow();
     });
 
+    it('routes only Indian Hindi movies to AutoEmbed', () => {
+        expect(isIndianHindiMovie({ title: 'Dangal', language: 'Hindi' })).toBe(true);
+        expect(isIndianHindiMovie({ title: 'Dangal', language: 'English' })).toBe(false);
+        expect(isIndianHindiMovie({ title: 'Dangal' })).toBe(true);
+        expect(preferredProviderForMedia('movie', { title: 'Dangal' })).toBe('autoembed');
+        expect(preferredProviderForMedia('movie', { title: 'The Prestige' })).toBe('vidsync');
+        expect(preferredProviderForMedia('tv', { title: 'The Mentalist' })).toBe('nxsha');
+    });
+
     it('matches the default templates documented in the brief', () => {
         expect(DEFAULT_NXSHA_MOVIE).toContain('server=GbruHindi');
         expect(DEFAULT_NXSHA_TV).toContain('/embed/tv/{id}/{s}/{e}');
+        expect(DEFAULT_AUTOEMBED_MOVIE).toBe('https://player.autoembed.cc/embed/movie/{id}');
+        expect(DEFAULT_AUTOEMBED_TV).toBe('https://player.autoembed.cc/embed/tv/{id}/{s}/{e}');
         expect(DEFAULT_VIDSYNC_MOVIE).toBe('https://vidsync.pro/embed/movie/{id}');
         expect(DEFAULT_VIDSYNC_TV).toBe('https://vidsync.pro/embed/tv/{id}/{s}/{e}');
         expect(DEFAULT_NHD_MOVIE).toBe('https://nhdapi.com/movie/{id}');

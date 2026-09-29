@@ -39,6 +39,8 @@ export interface PlayerOverlayProps {
     visible: boolean;
     onRequestClose: () => void;
     title?: string;
+    /** Optional language metadata used to route Indian Hindi movies. */
+    language?: string;
     type: 'movie' | 'tv';
     tmdbId?: string | number;
     imdbId?: string;
@@ -66,6 +68,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         visible,
         onRequestClose,
         title,
+        language,
         type,
         tmdbId,
         imdbId,
@@ -95,7 +98,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         if (forcedProvider) {
             list.push(forcedProvider);
         } else {
-            const policyProvider = preferredProviderForMedia(type);
+            const policyProvider = preferredProviderForMedia(type, { title, language });
             list.push(policyProvider);
             // Include the other providers for quick switching, but keep the
             // catalog policy as the first/automatic choice.
@@ -106,7 +109,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         if (embedUrl) list.push('custom');
         // De-dupe while preserving order.
         return Array.from(new Set(list));
-    }, [forcedProvider, type, embedUrl]);
+    }, [forcedProvider, type, title, language, embedUrl]);
 
     // Reset provider index + episode when the overlay (re)opens.
     useEffect(() => {
@@ -143,7 +146,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         return () => window.removeEventListener('keydown', onKey);
     }, [visible, onRequestClose]);
 
-    const currentProvider: ProviderId = cycle[providerIndex] ?? preferredProviderForMedia(type);
+    const currentProvider: ProviderId = cycle[providerIndex] ?? preferredProviderForMedia(type, { title, language });
 
     const src = useMemo(() => {
         try {
@@ -202,6 +205,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
 
     const providerLabel = useMemo(() => {
         if (currentProvider === 'nxsha') return 'Nxsha';
+        if (currentProvider === 'autoembed') return 'AutoEmbed';
         if (currentProvider === 'vidsync') return 'VidSync';
         if (currentProvider === 'nhd') return 'NHD';
         return 'Custom';

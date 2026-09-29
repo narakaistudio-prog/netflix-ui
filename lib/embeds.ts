@@ -1,10 +1,12 @@
 /**
- * Embed URL builder for third-party streaming providers (Nxsha, VidSync & NHD).
+ * Embed URL builder for third-party streaming providers (Nxsha, AutoEmbed,
+ * VidSync & NHD).
  *
  * All endpoints here are verified against the provider docs:
- *   - Nxsha  : https://nxsha.space/embed
- *   - VidSync: https://vidsync.pro/
- *   - NHD    : https://nhdapi.com/docs
+ *   - Nxsha    : https://nxsha.space/embed
+ *   - AutoEmbed: https://autoembed.cc/ (player.autoembed.cc)
+ *   - VidSync  : https://vidsync.pro/
+ *   - NHD      : https://nhdapi.com/docs
  *
  * Do NOT invent new endpoints or query params — only the ones documented
  * below are supported by the providers. The defaults match section (2) of
@@ -12,7 +14,7 @@
  */
 
 export type MediaType = 'movie' | 'tv';
-export type ProviderId = 'nxsha' | 'vidsync' | 'nhd' | 'custom';
+export type ProviderId = 'nxsha' | 'autoembed' | 'vidsync' | 'nhd' | 'custom';
 
 export interface Provider {
     id: ProviderId;
@@ -53,6 +55,9 @@ export const DEFAULT_NXSHA_MOVIE =
 export const DEFAULT_NXSHA_TV =
     'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
 
+export const DEFAULT_AUTOEMBED_MOVIE = 'https://player.autoembed.cc/embed/movie/{id}';
+export const DEFAULT_AUTOEMBED_TV = 'https://player.autoembed.cc/embed/tv/{id}/{s}/{e}';
+
 export const DEFAULT_VIDSYNC_MOVIE = 'https://vidsync.pro/embed/movie/{id}';
 export const DEFAULT_VIDSYNC_TV = 'https://vidsync.pro/embed/tv/{id}/{s}/{e}';
 
@@ -69,6 +74,12 @@ export const PROVIDERS: Provider[] = [
         name: 'Nxsha',
         movieTemplate: DEFAULT_NXSHA_MOVIE,
         tvTemplate: DEFAULT_NXSHA_TV,
+    },
+    {
+        id: 'autoembed',
+        name: 'AutoEmbed',
+        movieTemplate: DEFAULT_AUTOEMBED_MOVIE,
+        tvTemplate: DEFAULT_AUTOEMBED_TV,
     },
     {
         id: 'vidsync',
@@ -89,15 +100,52 @@ export function getProvider(id: ProviderId): Provider | undefined {
     return PROVIDERS.find(p => p.id === id);
 }
 
+export interface PlaybackTitleMetadata {
+    title?: string;
+    /** OMDb/TMDB language value, for example "Hindi, English" or "hi". */
+    language?: string;
+    catalogSource?: string;
+}
+
+const normalizeTitle = (value: string | undefined) =>
+    String(value ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+// The bundled Netflix-India refresh does not have a language field for every
+// JustWatch row. Keep a small audited fallback for well-known Hindi titles;
+// new rows should use the language metadata written by refresh-catalog.mjs.
+const KNOWN_INDIAN_HINDI_MOVIES = new Set([
+    'alpha', 'animal', 'bajrangi bhaijaan', 'billu', 'border 2', 'bhooth bangla',
+    'chak de india', 'chhaava', 'chennai express', 'dear zindagi', 'dangal',
+    'dhamaal 4', 'dhamaal', 'dhoom 2', 'dhoom 3', 'dil chahta hai',
+    'dil dhadakne do', 'dilwale', 'dilwale dulhania le jayenge', 'don',
+    'fighter', 'fukrey', 'gangubai kathiawadi', 'gunjan saxena the kargil girl',
+    'happy patel khatarnak jasoos', 'jawan', 'jaat', 'jogi', 'karthik calling karthik',
+    'main vaapas aaunga', 'mirzapur the movie', 'vishwanath sons', 'saiyaara', 'gandhari',
+    'dhurandhar', 'dhurandhar the revenge', 'sikandar', 'laila majnu', 'luck by chance', 'main hoon na', 'mimi', 'mohabbatein', 'oh darling yeh hai india',
+    'patiala house', 'pati patni aur woh do', 'pk', 'rab ne bana di jodi', 'sui dhaaga made in india',
+    'sultan', 'talaash', 'tere ishk mein', 'veer zaara', 'war 2', 'zindagi na milegi dobara',
+].map(normalizeTitle));
+
+export function isIndianHindiMovie(metadata: PlaybackTitleMetadata = {}): boolean {
+    const language = String(metadata.language ?? '').toLowerCase();
+    if (language) {
+        return /(^|[\\s,/_-])(hi|hin|hindi)(?=$|[\\s,/_-])/i.test(language);
+    }
+    return KNOWN_INDIAN_HINDI_MOVIES.has(normalizeTitle(metadata.title));
+}
+
 /**
- * Playback policy for the catalog. Series stay on Nxsha so season/episode
- * navigation and the Hindi-first server remain consistent. Movies use
- * VidSync, whose embed is ad-free and does not open popup/redirect windows.
- * An explicit per-title provider or manual embed URL can still override this
- * policy in the screen that owns the title.
+ * Playback policy for the catalog. Series stay on Nxsha. Only Indian Hindi
+ * movies use AutoEmbed; other movies remain on VidSync. An explicit per-title
+ * provider or manual embed URL can still override this policy in the screen
+ * that owns the title.
  */
-export function preferredProviderForMedia(type: MediaType): ProviderId {
-    return type === 'tv' ? 'nxsha' : 'vidsync';
+export function preferredProviderForMedia(
+    type: MediaType,
+    metadata: PlaybackTitleMetadata = {},
+): ProviderId {
+    if (type === 'tv') return 'nxsha';
+    return isIndianHindiMovie(metadata) ? 'autoembed' : 'vidsync';
 }
 
 /* -------------------------------------------------------------------------- */
@@ -121,6 +169,7 @@ export function detectProviderFromUrl(url: string): ProviderId | null {
     try {
         const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
         if (host === 'nxsha.space' || host === 'web.nxsha.app') return 'nxsha';
+        if (host === 'autoembed.cc' || host === 'player.autoembed.cc' || host === 'watch.autoembed.cc') return 'autoembed';
         if (host === 'vidsync.pro' || host === 'www.vidsync.pro') return 'vidsync';
         if (host === 'nhdapi.com' || host === 'nhdapi.st') return 'nhd';
         return 'custom';
@@ -208,7 +257,7 @@ export function buildEmbedUrl(
     const v = validateCustomTemplate(template, type);
     if (!v.ok) throw new Error(v.error);
 
-    // Nxsha/NHD accept either identifier and historically prefer IMDb. VidSync's
+    // Nxsha/NHD/AutoEmbed accept either identifier and prefer IMDb. VidSync's
     // documented path is TMDB-first, so use the numeric id whenever available
     // and only fall back to IMDb for older catalog entries.
     const imdbId = params.imdbId ? extractImdbId(params.imdbId) : null;

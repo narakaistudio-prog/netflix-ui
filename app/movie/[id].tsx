@@ -322,22 +322,39 @@ export default function MovieScreen() {
     const cycle: ProviderId[] = useMemo(() => {
         const list: ProviderId[] = [];
         const configured = movie.embed_provider;
-        const policyProvider = preferredProviderForMedia(mediaType);
-        // Older catalog snapshots marked a few movies as Nxsha. Keep those
-        // records readable, but route movie playback through VidSync now.
+        const policyProvider = preferredProviderForMedia(mediaType, {
+            title: movie.title,
+            language: movie.language,
+            catalogSource: movie.catalogSource,
+        });
+        // Older catalog snapshots marked movies as Nxsha/VidSync. Keep those
+        // records readable, but apply the Hindi-aware movie policy now.
         // Series are always Nxsha on the first/automatic slot, regardless of
         // an old global provider choice; the switch button can still expose
         // alternates when a title needs one.
         const def = mediaType === 'tv'
             ? policyProvider
-            : (configured === 'nxsha' ? policyProvider : (configured ?? policyProvider));
+            : (configured === 'nxsha' || configured === 'autoembed' || configured === 'vidsync'
+                ? policyProvider
+                : (configured ?? policyProvider));
         list.push(def);
         for (const p of PROVIDERS) if (p.id !== def) list.push(p.id);
         if (movie.embed_url) list.push('custom');
         return Array.from(new Set(list));
-    }, [movie.embed_provider, movie.embed_url, mediaType]);
+    }, [
+        movie.embed_provider,
+        movie.embed_url,
+        movie.title,
+        movie.language,
+        movie.catalogSource,
+        mediaType,
+    ]);
 
-    const currentProvider: ProviderId = cycle[providerIndex] ?? preferredProviderForMedia(mediaType);
+    const currentProvider: ProviderId = cycle[providerIndex] ?? preferredProviderForMedia(mediaType, {
+        title: movie.title,
+        language: movie.language,
+        catalogSource: movie.catalogSource,
+    });
     const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
         ? movie.videoUrl.replace(/^http:/i, 'https:')
         : undefined;
@@ -446,6 +463,7 @@ export default function MovieScreen() {
         seasonEpisodeCounts: movie.seasonEpisodeCounts,
         seasons: movie.seasons,
         type: movie.type,
+        language: movie.language,
         rating: movie.rating || 'PG-13',
         description: movie.description || 'No description available',
         cast: movie.cast || ['Cast not available'],

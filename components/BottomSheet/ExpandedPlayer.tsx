@@ -15,6 +15,7 @@ import { SafeImage } from '@/components/SafeImage';
 import { resolveTrailerMp4 } from '@/services/trailerStream';
 import { selectRelatedTitles } from '@/lib/relatedTitles';
 import type { Episode, Movie } from '@/types/movie';
+import { preferredProviderForMedia } from '@/lib/embeds';
 
 const IS_WEB = Platform.OS === 'web';
 const PLACEHOLDER_VIDEO_URL = /commondatastorage\.googleapis\.com\/gtv-videos-bucket\/sample\//i;
@@ -50,7 +51,7 @@ interface MovieData {
     mediaType?: 'movie' | 'tv';
     tmdb_id?: string | number;
     imdb_id?: string;
-    embed_provider?: 'nxsha' | 'vidsync' | 'nhd' | 'custom';
+    embed_provider?: 'nxsha' | 'autoembed' | 'vidsync' | 'nhd' | 'custom';
     embed_url?: string;
     netflixId?: string;
     netflixUrl?: string;
@@ -230,7 +231,15 @@ export function ExpandedPlayer({
         && !PLACEHOLDER_VIDEO_URL.test(String(movieData.video_url))
         && !hasProviderEmbed;
     const hasPlayableSource = Boolean(onPlayFull && (hasProviderEmbed || hasDirectPreview));
-    const playbackProviderLabel = isSeries ? 'Nxsha' : 'VidSync';
+    const playbackProvider = preferredProviderForMedia(
+        isSeries ? 'tv' : 'movie',
+        { title: movieData.title, language: movieData.language },
+    );
+    const playbackProviderLabel = playbackProvider === 'autoembed'
+        ? 'AutoEmbed'
+        : playbackProvider === 'nxsha'
+            ? 'Nxsha'
+            : 'VidSync';
     const handlePlay = () => {
         setPlaybackNotice(null);
         if (hasPlayableSource && onPlayFull) {
@@ -238,8 +247,8 @@ export function ExpandedPlayer({
             return;
         }
         // Do not silently fall back to an official title page. The catalog
-        // policy is explicit: series belong to Nxsha and Hindi movies to
-        // VidSync. If a stale row has no TMDB/IMDb id, explain the missing
+        // policy is explicit: series belong to Nxsha, Indian Hindi movies to
+        // AutoEmbed, and other movies to VidSync. If a stale row has no TMDB/IMDb id, explain the missing
         // metadata instead of changing providers.
         setPlaybackNotice(`${playbackProviderLabel} playback ID is not available for this title yet.`);
     };

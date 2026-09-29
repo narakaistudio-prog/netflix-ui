@@ -39,8 +39,8 @@ const IS_WEB = Platform.OS === 'web';
  * Admin screen for embed configuration. Accessible via /admin.
  *
  * Features:
- *  - Global embed templates (Nxsha/VidSync/NHD/custom), plus strict Hindi toggle.
- *  - Catalog playback policy: Hindi movies use VidSync; series use Nxsha.
+ *  - Global embed templates (Nxsha/AutoEmbed/VidSync/NHD/custom), plus strict Hindi toggle.
+ *  - Catalog playback policy: Indian Hindi movies use AutoEmbed; other movies use VidSync; series use Nxsha.
  *  - NHD API key field (optional — embeds don't need it).
  *  - Per-title "Test Embed" builder (paste IDs, pick provider, build URL & open in new tab).
  *  - Episode generator: TMDB fetch OR manual "S=N E=1..M" fallback.
@@ -116,6 +116,8 @@ export default function AdminScreen() {
                     movieTemplate:
                         testProvider === 'nxsha'
                             ? settings.nxshaMovieTemplate
+                            : testProvider === 'autoembed'
+                            ? settings.autoembedMovieTemplate
                             : testProvider === 'vidsync'
                             ? settings.vidsyncMovieTemplate
                             : testProvider === 'nhd'
@@ -124,6 +126,8 @@ export default function AdminScreen() {
                     tvTemplate:
                         testProvider === 'nxsha'
                             ? settings.nxshaTvTemplate
+                            : testProvider === 'autoembed'
+                            ? settings.autoembedTvTemplate
                             : testProvider === 'vidsync'
                             ? settings.vidsyncTvTemplate
                             : testProvider === 'nhd'
@@ -234,7 +238,7 @@ export default function AdminScreen() {
                         />
                     </View>
                     <Text style={styles.helperText}>
-                        Automatic catalog routing: all series → Nxsha; Hindi movie rail → VidSync.
+                        Automatic routing: series → Nxsha; Indian Hindi movies → AutoEmbed; other movies → VidSync.
                     </Text>
                     <View style={[styles.row, { marginTop: 10 }]}>
                         <Pressable
@@ -264,6 +268,22 @@ export default function AdminScreen() {
                         placeholder="https://nxsha.space/embed/tv/{id}/{s}/{e}?..."
                     />
                 </Section>
+                <Section title="AutoEmbed movie template">
+                    <TemplateInput
+                        value={settings.autoembedMovieTemplate}
+                        onChange={v => patch({ autoembedMovieTemplate: v })}
+                        placeholder="https://player.autoembed.cc/embed/movie/{id}"
+                    />
+                    <Hint>Sirf Indian Hindi movies ke liye.</Hint>
+                </Section>
+                <Section title="AutoEmbed TV template">
+                    <TemplateInput
+                        value={settings.autoembedTvTemplate}
+                        onChange={v => patch({ autoembedTvTemplate: v })}
+                        placeholder="https://player.autoembed.cc/embed/tv/{id}/{s}/{e}"
+                    />
+                </Section>
+
                 <Section title="VidSync movie template">
                     <TemplateInput
                         value={settings.vidsyncMovieTemplate}
