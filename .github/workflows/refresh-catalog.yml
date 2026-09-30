@@ -5,7 +5,7 @@ on:
   # the hosted runner can reach the public JustWatch reader reliably.
   push:
     branches:
-      - arena/01a0c471-netflix-ui
+      - arena/01a0f2b3-netflix-ui
   schedule:
     # Daily ~02:30 IST
     - cron: '0 21 * * *'
