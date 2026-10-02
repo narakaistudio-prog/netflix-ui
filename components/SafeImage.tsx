@@ -23,6 +23,13 @@ interface SafeImageProps {
     hideOnError?: boolean;
     /** The hero may load immediately; posters elsewhere wait until near the viewport. */
     loading?: 'eager' | 'lazy';
+    /**
+     * A second real image URL (e.g. a live-resolved TVMaze/TMDB poster) to
+     * try when the primary `source` is missing or fails to load, before
+     * falling back to the generic "N" placeholder. Always a plain http(s)
+     * URL — never a `local:`/bundled-asset reference.
+     */
+    fallbackUri?: string;
 }
 
 /**
@@ -42,8 +49,11 @@ export function SafeImage({
     fallbackLabel,
     hideOnError = false,
     loading = 'lazy',
+    fallbackUri,
 }: SafeImageProps) {
-    const [failed, setFailed] = useState(false);
+    // 0 = try the primary source, 1 = try fallbackUri, 2 = give up (placeholder).
+    const [stage, setStage] = useState(0);
+    const failed = stage >= 2;
 
     if (Platform.OS === 'web') {
         const rawUri =
@@ -55,15 +65,24 @@ export function SafeImage({
 
         let imgSrc: string | undefined;
 
-        if (typeof rawUri === 'string' && rawUri.trim()) {
-            if (rawUri.startsWith('http') || rawUri.startsWith('/') || rawUri.startsWith('data:')) {
-                imgSrc = rawUri;
-            } else {
-                const local = getLocalPoster(rawUri) || (fallbackLabel ? getLocalPoster(fallbackLabel) : undefined);
-                imgSrc = local?.uri ?? (LOCAL_POSTER_URIS[rawUri] || LOCAL_POSTER_URIS[rawUri.replace(/^local:/, '')]);
+        if (stage === 0) {
+            if (typeof rawUri === 'string' && rawUri.trim()) {
+                if (rawUri.startsWith('http') || rawUri.startsWith('/') || rawUri.startsWith('data:')) {
+                    imgSrc = rawUri;
+                } else {
+                    const local = getLocalPoster(rawUri) || (fallbackLabel ? getLocalPoster(fallbackLabel) : undefined);
+                    imgSrc = local?.uri ?? (LOCAL_POSTER_URIS[rawUri] || LOCAL_POSTER_URIS[rawUri.replace(/^local:/, '')]);
+                }
+            } else if (source && typeof source === 'object' && typeof source.uri === 'string') {
+                imgSrc = source.uri;
             }
-        } else if (source && typeof source === 'object' && typeof source.uri === 'string') {
-            imgSrc = source.uri;
+            if (!imgSrc && fallbackUri) {
+                // Primary resolved to nothing at all — skip straight to the
+                // live fallback instead of flashing the placeholder first.
+                imgSrc = fallbackUri;
+            }
+        } else if (stage === 1) {
+            imgSrc = fallbackUri;
         }
 
         if (!imgSrc || failed) {
@@ -89,6 +108,7 @@ export function SafeImage({
         return (
             <View style={[style as StyleProp<ViewStyle>, styles.frame]}>
                 <img
+                    key={`${stage}:${imgSrc}`}
                     src={imgSrc}
                     alt={fallbackLabel || 'poster'}
                     loading={loading}
@@ -101,7 +121,7 @@ export function SafeImage({
                         objectFit,
                         display: 'block',
                     } as any}
-                    onError={() => setFailed(true)}
+                    onError={() => setStage(s => (s === 0 && fallbackUri ? 1 : 2))}
                 />
             </View>
         );
@@ -115,9 +135,16 @@ export function SafeImage({
             ? source
             : undefined;
 
-    if (typeof raw === 'string' && (raw.startsWith('local:') || !raw.startsWith('http'))) {
-        const local = getLocalPoster(raw) ?? (fallbackLabel ? getLocalPoster(fallbackLabel) : undefined);
-        if (local) finalSource = local;
+    if (stage === 0) {
+        if (typeof raw === 'string' && (raw.startsWith('local:') || !raw.startsWith('http'))) {
+            const local = getLocalPoster(raw) ?? (fallbackLabel ? getLocalPoster(fallbackLabel) : undefined);
+            if (local) finalSource = local;
+            else if (fallbackUri) finalSource = { uri: fallbackUri };
+        } else if (!raw && fallbackUri) {
+            finalSource = { uri: fallbackUri };
+        }
+    } else if (stage === 1) {
+        finalSource = fallbackUri ? { uri: fallbackUri } : undefined;
     }
 
     if (failed || !finalSource) {
@@ -136,13 +163,14 @@ export function SafeImage({
 
     return (
         <ExpoImage
+            key={stage}
             source={finalSource}
             style={style as StyleProp<ImageStyle>}
             contentFit={contentFit}
             transition={transition}
             cachePolicy={cachePolicy}
             blurRadius={blurRadius}
-            onError={() => setFailed(true)}
+            onError={() => setStage(s => (s === 0 && fallbackUri ? 1 : 2))}
         />
     );
 }

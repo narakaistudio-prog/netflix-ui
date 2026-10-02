@@ -81,7 +81,18 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-shaque-trust-no-one",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#5 in India Today"
+                    "ranking_text": "#5 in India Today",
+                    "imdb_id": "tt35929525",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Desperately searching for her missing child, a mother finds dark secrets in her hillside hometown.",
+                    "cast": [
+                        "Jennifer Winget",
+                        "Sumeet Vyas"
+                    ],
+                    "duration": "1 Season",
+                    "episodeCount": 7,
+                    "runtime": "38 min"
                 },
                 {
                     "id": "jw-catalog-tv-the-mentalist",
@@ -90,7 +101,9 @@
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-mentalist",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#6 in India Today"
+                    "ranking_text": "#6 in India Today",
+                    "imdb_id": "tt1196946",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "fp-indias-got-latent",
@@ -1907,7 +1920,9 @@
                     "type": "SERIES",
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-mentalist",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt1196946",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-the-early-spring",
@@ -2019,7 +2034,18 @@
                     "type": "SERIES",
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-shaque-trust-no-one",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt35929525",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Desperately searching for her missing child, a mother finds dark secrets in her hillside hometown.",
+                    "cast": [
+                        "Jennifer Winget",
+                        "Sumeet Vyas"
+                    ],
+                    "duration": "1 Season",
+                    "episodeCount": 7,
+                    "runtime": "38 min"
                 },
                 {
                     "id": "jw-catalog-tv-mousetrap",
@@ -2907,7 +2933,9 @@
                     "type": "SERIES",
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-the-mentalist",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt1196946",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-the-early-spring",
@@ -72129,7 +72157,9 @@
                     "duration": "7 Seasons",
                     "runtime": "43 min",
                     "episodeCount": 151,
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt1196946",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "iinm-the-minions-of-midas",
@@ -73289,7 +73319,18 @@
                     "type": "SERIES",
                     "mediaType": "tv",
                     "imageUrl": "local:jw-catalog-tv-shaque-trust-no-one",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt35929525",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Desperately searching for her missing child, a mother finds dark secrets in her hillside hometown.",
+                    "cast": [
+                        "Jennifer Winget",
+                        "Sumeet Vyas"
+                    ],
+                    "duration": "1 Season",
+                    "episodeCount": 7,
+                    "runtime": "38 min"
                 },
                 {
                     "id": "jw-catalog-tv-mousetrap",

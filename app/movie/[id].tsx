@@ -28,6 +28,7 @@ import {
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { markWatched } from '@/lib/recentlyWatched';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
+import { useTvMazeFallback } from '@/hooks/useTvMazeFallback';
 
 const IS_WEB = Platform.OS === 'web';
 const SCALE_FACTOR = 0.83;
@@ -313,6 +314,21 @@ export default function MovieScreen() {
             ? 'tv'
             : 'movie');
 
+    // Most of the "JustWatch Current TV Shows" shelf ships with no tmdb_id,
+    // no imdb_id and no season/episode detail (only a title + poster).
+    // Resolve the real season/episode list, poster and IMDb id live from
+    // TVMaze (free, keyless, CORS-enabled) so playback and the episode rail
+    // show the actual show instead of a single generic placeholder row.
+    const tvMazeFallback = useTvMazeFallback(movie, isSeries);
+    const effectiveImdbId = movie.imdb_id || tvMazeFallback.imdbId;
+    const effectiveSeasons = (movie.seasons?.some(s => s.episodes && s.episodes.length > 0))
+        ? movie.seasons
+        : (tvMazeFallback.seasons ?? movie.seasons);
+    const effectiveEpisodeCount = movie.episodeCount
+        ?? effectiveSeasons?.reduce((total, s) => total + (s.episode_count ?? s.episodes?.length ?? 0), 0);
+    const effectiveSeasonEpisodeCounts = movie.seasonEpisodeCounts
+        ?? effectiveSeasons?.map(s => s.episode_count ?? s.episodes?.length ?? 0);
+
     // Cycle order: default provider → other built-in providers → custom (if embed_url set)
     const settings = loadSettings();
     const cycle: ProviderId[] = useMemo(() => {
@@ -328,7 +344,7 @@ export default function MovieScreen() {
     const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
         ? movie.videoUrl.replace(/^http:/i, 'https:')
         : undefined;
-    const hasProviderPlayback = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id);
+    const hasProviderPlayback = Boolean(movie.embed_url || parsedTmdb || effectiveImdbId);
     const directFallback = !hasProviderPlayback && Boolean(directPreviewUrl);
     const hasPlayablePlayback = hasProviderPlayback || directFallback;
 
@@ -340,7 +356,7 @@ export default function MovieScreen() {
                 mediaType,
                 {
                     tmdbId: parsedTmdb,
-                    imdbId: movie.imdb_id,
+                    imdbId: effectiveImdbId,
                     season: mediaType === 'tv' ? season : undefined,
                     episode: mediaType === 'tv' ? episode : undefined,
                     strictHindi: settings.strictHindi && currentProvider === 'nxsha',
@@ -351,16 +367,16 @@ export default function MovieScreen() {
         } catch {
             return '';
         }
-    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, effectiveImdbId, movie.embed_url, season, episode, settings]);
 
     const getEpisodeCountForSeason = useCallback((targetSeason: number) => {
-        return movie.seasonEpisodeCounts?.[targetSeason - 1]
-            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episodes?.length
-            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episode_count
-            ?? movie.seasons?.[targetSeason - 1]?.episodes?.length
-            ?? movie.seasons?.[targetSeason - 1]?.episode_count
-            ?? movie.episodeCount;
-    }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
+        return effectiveSeasonEpisodeCounts?.[targetSeason - 1]
+            ?? effectiveSeasons?.find(s => s.season_number === targetSeason)?.episodes?.length
+            ?? effectiveSeasons?.find(s => s.season_number === targetSeason)?.episode_count
+            ?? effectiveSeasons?.[targetSeason - 1]?.episodes?.length
+            ?? effectiveSeasons?.[targetSeason - 1]?.episode_count
+            ?? effectiveEpisodeCount;
+    }, [effectiveSeasonEpisodeCounts, effectiveSeasons, effectiveEpisodeCount]);
 
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
@@ -379,7 +395,7 @@ export default function MovieScreen() {
             openOfficialTitle();
             return;
         }
-        const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
+        const initialSeason = mediaType === 'tv' ? effectiveSeasons?.[0]?.season_number ?? 1 : 1;
         setProviderIndex(0);
         setSeason(initialSeason);
         setEpisode(1);
@@ -392,13 +408,13 @@ export default function MovieScreen() {
                 title: movie.title,
                 type: mediaType,
                 tmdbId: parsedTmdb,
-                imdbId: movie.imdb_id,
+                imdbId: effectiveImdbId,
                 provider: currentProvider,
                 season: mediaType === 'tv' ? initialSeason : undefined,
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [movie, parsedTmdb, effectiveImdbId, effectiveSeasons, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -443,13 +459,16 @@ export default function MovieScreen() {
         id: movie.id,
         title: movie.title || '',
         imageUrl: movie.imageUrl || '',
+        posterFallbackUrl: tvMazeFallback.posterUrl,
         ...(directPreviewUrl ? { video_url: directPreviewUrl } : {}),
         year: movie.year || '2024',
-        duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
+        duration: movie.duration
+            || (isSeries ? (effectiveSeasons && effectiveSeasons.length > 1 ? `${effectiveSeasons.length} Seasons` : '1 Season') : '2h 30m'),
         runtime: movie.runtime,
-        episodeCount: movie.episodeCount,
-        seasonEpisodeCounts: movie.seasonEpisodeCounts,
-        seasons: movie.seasons,
+        episodeCount: effectiveEpisodeCount,
+        seasonEpisodeCounts: effectiveSeasonEpisodeCounts,
+        seasons: effectiveSeasons,
+        episodesLoading: tvMazeFallback.loading,
         type: movie.type,
         rating: movie.rating || 'PG-13',
         description: movie.description || 'No description available',
@@ -458,7 +477,7 @@ export default function MovieScreen() {
         ranking_text: movie.ranking_text || '#1 in Movies Today',
         youtubeId: movie.youtubeId,
         tmdb_id: parsedTmdb,
-        imdb_id: movie.imdb_id,
+        imdb_id: effectiveImdbId,
         embed_provider: movie.embed_provider,
         embed_url: movie.embed_url,
         netflixId: movie.netflixId,

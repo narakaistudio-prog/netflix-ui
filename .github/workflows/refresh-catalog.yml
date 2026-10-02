@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - arena/01a0c471-netflix-ui
+      - arena/01a0fd32-netflix-ui
   schedule:
     # Daily ~02:30 IST
     - cron: '0 21 * * *'
@@ -56,6 +57,15 @@ jobs:
           CATALOG_DISCOVERY="$mode" node scripts/refresh-catalog.mjs
         env:
           OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+
+      # Keyless follow-up: TVMaze (free, no API key) fills the IMDb id for TV
+      # shows the step above couldn't enrich (most of the JustWatch shelf).
+      # This is what lets Nxsha/NHD play the *correct* show and lets the
+      # detail screen's live episode fallback resolve a tmdb/imdb id. Capped
+      # per run to stay well under TVMaze's rate limit; the daily schedule
+      # steadily backfills the rest.
+      - name: Backfill TV IMDb ids (TVMaze, keyless)
+        run: node scripts/enrich-tvmaze.mjs --limit=250
 
       - name: Commit updated catalog
         run: |

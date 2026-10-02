@@ -34,6 +34,11 @@ interface MovieData {
     id?: string | number;
     title: string;
     imageUrl: string;
+    /** Live-resolved poster (e.g. from TVMaze) used when `imageUrl` is missing
+     *  or fails to load — never a `local:` reference, always a plain URL. */
+    posterFallbackUrl?: string;
+    /** True while a live episode/poster lookup is still running for this title. */
+    episodesLoading?: boolean;
     video_url?: string;
     year?: string;
     duration?: string;
@@ -192,6 +197,13 @@ export function ExpandedPlayer({
             }));
         })()
         : [];
+    // While a live TVMaze lookup is resolving the real episode list (see
+    // hooks/useTvMazeFallback), show a loading row instead of the generic
+    // single "Episode 1" placeholder so it never looks like playback for a
+    // 10-episode show is stuck at one fake entry.
+    const isResolvingEpisodes = isSeries
+        && Boolean(movieData.episodesLoading)
+        && !(selectedSeasonData?.episodes?.length);
 
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.isLoaded) {
@@ -283,9 +295,11 @@ export function ExpandedPlayer({
                     )
                 ) : (
                     <View style={[styles.video, { backgroundColor: '#14141c', justifyContent: 'center', alignItems: 'center' }]}>
-                        {movieData.imageUrl ? (
+                        {movieData.imageUrl || movieData.posterFallbackUrl ? (
                             <SafeImage
                                 source={{ uri: movieData.imageUrl }}
+                                fallbackUri={movieData.posterFallbackUrl}
+                                fallbackLabel={movieData.title}
                                 style={StyleSheet.absoluteFill}
                                 contentFit="cover"
                                 loading="eager"
@@ -460,9 +474,40 @@ export function ExpandedPlayer({
                             )}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
                                 <Text style={{ color: '#fff', fontSize: 17, fontWeight: '800' }}>Episodes</Text>
-                                <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{episodeLabel}</Text>
+                                {isResolvingEpisodes ? (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                                        <ActivityIndicator size="small" color="#aaa" />
+                                        <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>Loading…</Text>
+                                    </View>
+                                ) : (
+                                    <Text style={{ color: '#aaa', fontSize: 13, fontWeight: '600' }}>{episodeLabel}</Text>
+                                )}
                             </View>
-                            {episodeItems.map((episode) => (
+                            {isResolvingEpisodes ? (
+                                [0, 1].map(i => (
+                                    <View
+                                        key={`ep-skeleton-${i}`}
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            backgroundColor: '#1c1c1c',
+                                            borderRadius: 8,
+                                            padding: 12,
+                                            gap: 12,
+                                            borderWidth: 1,
+                                            borderColor: '#2a2a2a',
+                                            marginBottom: 8,
+                                            opacity: 0.6,
+                                        }}
+                                    >
+                                        <View style={{ width: 120, height: 68, borderRadius: 6, backgroundColor: '#2a2a2a' }} />
+                                        <View style={{ flex: 1, gap: 6 }}>
+                                            <View style={{ width: '60%', height: 12, borderRadius: 4, backgroundColor: '#2a2a2a' }} />
+                                            <View style={{ width: '40%', height: 10, borderRadius: 4, backgroundColor: '#2a2a2a' }} />
+                                        </View>
+                                    </View>
+                                ))
+                            ) : episodeItems.map((episode) => (
                                 <Pressable
                                     key={`${episode.season}-${episode.episode}`}
                                     style={({ hovered }: any) => [{
@@ -507,6 +552,7 @@ export function ExpandedPlayer({
                                                         : `https://image.tmdb.org/t/p/w300${episode.still_path}`)
                                                     : movieData.imageUrl,
                                             }}
+                                            fallbackUri={!episode.still_path ? movieData.posterFallbackUrl : undefined}
                                             style={StyleSheet.absoluteFill}
                                             contentFit="cover"
                                             fallbackLabel={`${movieData.title} Episode ${episode.episode}`}
