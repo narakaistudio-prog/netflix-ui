@@ -112,7 +112,7 @@ describe('useTvMazeFallback', () => {
         act(() => root.unmount());
     });
 
-    it('skips the network for a series that already has usable season/episode data', async () => {
+    it('skips the network for a series that already has real episode stills', async () => {
         (globalThis as any).fetch = jest.fn();
         const container = document.createElement('div');
         const root = createRoot(container);
@@ -125,7 +125,12 @@ describe('useTvMazeFallback', () => {
                         title: 'Chumbak',
                         mediaType: 'tv',
                         tmdb_id: '313172',
-                        seasons: [{ season_number: 1, name: 'Season 1', episode_count: 1, episodes: [{ season: 1, episode: 1, name: 'Ep 1' }] }],
+                        seasons: [{
+                            season_number: 1,
+                            name: 'Season 1',
+                            episode_count: 1,
+                            episodes: [{ season: 1, episode: 1, name: 'Ep 1', still_path: 'https://image.tmdb.org/t/p/w300/x.jpg' }],
+                        }],
                     }}
                     isSeries
                     onResult={(r: any) => { last = r; }}
@@ -133,6 +138,40 @@ describe('useTvMazeFallback', () => {
             );
         });
         expect((globalThis as any).fetch).not.toHaveBeenCalled();
+        act(() => root.unmount());
+    });
+
+    it('still fetches when seasons only hold generic numbered placeholders with no still_path', async () => {
+        (globalThis as any).fetch = jest.fn((url: string) => {
+            if (url.includes('/search/shows')) return Promise.resolve({ ok: true, json: async () => [] });
+            return Promise.resolve({ ok: true, json: async () => ({}) });
+        });
+        const container = document.createElement('div');
+        const root = createRoot(container);
+        await act(async () => {
+            root.render(
+                <Harness
+                    movie={{
+                        id: 'tv2',
+                        title: 'Business Proposal',
+                        mediaType: 'tv',
+                        imdb_id: 'tt14819828',
+                        seasons: [{
+                            season_number: 1,
+                            name: 'Season 1',
+                            episode_count: 2,
+                            episodes: [
+                                { season: 1, episode: 1, name: 'Episode 1' },
+                                { season: 1, episode: 2, name: 'Episode 2' },
+                            ],
+                        }],
+                    }}
+                    isSeries
+                    onResult={() => {}}
+                />,
+            );
+        });
+        expect((globalThis as any).fetch).toHaveBeenCalled();
         act(() => root.unmount());
     });
 });

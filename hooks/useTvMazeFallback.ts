@@ -16,7 +16,10 @@ export interface TvMazeFallback {
 }
 
 function hasUsableEpisodes(movie: Pick<Movie, 'seasons'>): boolean {
-    return Boolean(movie.seasons?.some(s => s.episodes && s.episodes.length > 0));
+    // A baked `seasons` array with only generic "Episode 1"/"Episode 2"...
+    // placeholders (no real still_path) is NOT usable — that is exactly the
+    // "no picture, just a guide" case TVMaze should still fill in.
+    return Boolean(movie.seasons?.some(s => s.episodes?.some(e => e.still_path)));
 }
 
 function toSeasons(match: TvMazeMatch): Season[] {
