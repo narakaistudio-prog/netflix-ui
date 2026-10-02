@@ -50,6 +50,8 @@ interface MovieData {
     tmdb_id?: string | number;
     imdb_id?: string;
     embed_provider?: 'nxsha' | 'nhd' | 'custom';
+    /** True while the parent is still resolving an IMDb/TMDB id for this title. */
+    playbackPending?: boolean;
     embed_url?: string;
     netflixId?: string;
     netflixUrl?: string;
@@ -223,7 +225,9 @@ export function ExpandedPlayer({
     // A catalog poster/Netflix id is not itself an embeddable playback source.
     // Only provider ids, a manual embed, or an explicitly supplied direct video
     // may open EmbedPlayer. Never disguise the generic sample clips as content.
-    const hasProviderEmbed = Boolean(movieData.embed_url || movieData.tmdb_id || movieData.imdb_id);
+    const hasProviderEmbed = Boolean(
+        movieData.embed_url || movieData.tmdb_id || movieData.imdb_id || movieData.playbackPending,
+    );
     const hasDirectPreview = Boolean(movieData.video_url)
         && !PLACEHOLDER_VIDEO_URL.test(String(movieData.video_url))
         && !hasProviderEmbed;

@@ -57,6 +57,12 @@ jobs:
         env:
           OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
 
+      # Embeds need an IMDb/TMDB id; scraped rows only carry a Netflix id.
+      # Resolving them here keeps the in-app player working instead of
+      # bouncing viewers to netflix.com.
+      - name: Backfill embed ids
+        run: node scripts/backfill-title-ids.mjs
+
       - name: Commit updated catalog
         run: |
           git config user.name "netflix-catalog-bot"
