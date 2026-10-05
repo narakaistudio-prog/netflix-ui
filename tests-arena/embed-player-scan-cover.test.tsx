@@ -45,6 +45,18 @@ function focusFrame(iframe: HTMLIFrameElement) {
 }
 
 describe('Nxsha scanning screen cover', () => {
+    it('keeps provider playback in-frame and blocks advertising popups', () => {
+        const iframe = mount('https://nxsha.space/embed/movie/550?server=GbruHindi');
+        const sandbox = iframe.getAttribute('sandbox') || '';
+
+        expect(sandbox).toContain('allow-scripts');
+        expect(sandbox).toContain('allow-same-origin');
+        expect(sandbox).toContain('allow-forms');
+        expect(sandbox).toContain('allow-presentation');
+        expect(sandbox).not.toContain('allow-popups');
+        expect(sandbox).not.toContain('allow-top-navigation');
+    });
+
     it('keeps the red Play button available, then covers the scan after the click and auto-reveals', () => {
         const src = 'https://nxsha.space/embed/tv/30984/1/1?server=GbruHindi&one_server=true';
         const iframe = mount(src);

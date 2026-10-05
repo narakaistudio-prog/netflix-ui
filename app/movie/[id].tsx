@@ -40,6 +40,40 @@ const ENABLE_HORIZONTAL_DRAG_CLOSE = true;
 // playback sources.
 const PLACEHOLDER_VIDEO_URL = /commondatastorage\.googleapis\.com\/gtv-videos-bucket\/sample\//i;
 
+/**
+ * A full-screen request has to happen directly within the Play press handler.
+ * The iframe's own controls are cross-origin, so waiting for its click would
+ * lose the browser's user-activation permission. CSS still fills the app if a
+ * browser or embedded preview blocks the native Fullscreen API.
+ */
+function requestPlayerFullscreen() {
+    if (!IS_WEB || typeof document === 'undefined') return;
+    const root = document.documentElement as any;
+    const request = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (!request) return;
+    try {
+        const result = request.call(root);
+        if (result?.catch) result.catch(() => {});
+    } catch {}
+}
+
+function exitPlayerFullscreen() {
+    if (!IS_WEB || typeof document === 'undefined') return;
+    const doc = document as any;
+    const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
+    if (!exit || !doc.fullscreenElement) return;
+    try {
+        const result = exit.call(doc);
+        if (result?.catch) result.catch(() => {});
+    } catch {}
+}
+
+function setPlayerChromeHidden(hidden: boolean) {
+    if (!IS_WEB || typeof document === 'undefined') return;
+    if (hidden) document.documentElement.setAttribute('data-player-active', 'true');
+    else document.documentElement.removeAttribute('data-player-active');
+}
+
 export default function MovieScreen() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
@@ -60,7 +94,8 @@ export default function MovieScreen() {
     const [providerIndex, setProviderIndex] = useState(0);
     const [season, setSeason] = useState(1);
     const [episode, setEpisode] = useState(1);
-    const [totalEps, setTotalEps] = useState<number | undefined>(undefined);
+
+    useEffect(() => () => setPlayerChromeHidden(false), []);
 
     const { rows } = useCatalog();
     const rawId = typeof id === 'string' ? id : Array.isArray(id) ? id[0] : '';
@@ -105,11 +140,11 @@ export default function MovieScreen() {
         if (!related.id || related.id === movie.id) return;
         // Replace rather than stack another transparent detail modal on top.
         // The keyed detail view starts at the top with fresh trailer/episode state.
+        setPlayerChromeHidden(false);
         setPlayerOpen(false);
         setProviderIndex(0);
         setSeason(1);
         setEpisode(1);
-        setTotalEps(undefined);
         scrollOffset.value = 0;
         router.replace({ pathname: '/movie/[id]', params: { id: related.id } });
     }, [movie.id, router, scrollOffset]);
@@ -120,6 +155,8 @@ export default function MovieScreen() {
 
     const goBack = useCallback(() => {
         if (playerOpen) {
+            exitPlayerFullscreen();
+            setPlayerChromeHidden(false);
             setPlayerOpen(false);
             return;
         }
@@ -265,6 +302,8 @@ export default function MovieScreen() {
 
     useTvBackHandler(() => {
         if (playerOpen) {
+            exitPlayerFullscreen();
+            setPlayerChromeHidden(false);
             setPlayerOpen(false);
             return true;
         }
@@ -353,15 +392,6 @@ export default function MovieScreen() {
         }
     }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
 
-    const getEpisodeCountForSeason = useCallback((targetSeason: number) => {
-        return movie.seasonEpisodeCounts?.[targetSeason - 1]
-            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episodes?.length
-            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episode_count
-            ?? movie.seasons?.[targetSeason - 1]?.episodes?.length
-            ?? movie.seasons?.[targetSeason - 1]?.episode_count
-            ?? movie.episodeCount;
-    }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
-
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
         || `https://www.netflix.com/search?q=${encodeURIComponent(String(movie.title ?? '').trim())}`;
@@ -380,10 +410,11 @@ export default function MovieScreen() {
             return;
         }
         const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
+        requestPlayerFullscreen();
+        setPlayerChromeHidden(true);
         setProviderIndex(0);
         setSeason(initialSeason);
         setEpisode(1);
-        setTotalEps(mediaType === 'tv' ? getEpisodeCountForSeason(initialSeason) : undefined);
         setPlayerOpen(true);
         try {
             markWatched({
@@ -398,14 +429,13 @@ export default function MovieScreen() {
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
         setSeason(selectedSeason);
         setEpisode(1);
-        setTotalEps(getEpisodeCountForSeason(selectedSeason));
-    }, [mediaType, getEpisodeCountForSeason]);
+    }, [mediaType]);
 
     const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
         if (!hasPlayablePlayback) {
@@ -416,28 +446,18 @@ export default function MovieScreen() {
             handlePlayFull();
             return;
         }
+        requestPlayerFullscreen();
+        setPlayerChromeHidden(true);
         setProviderIndex(0);
         setSeason(selectedSeason);
         setEpisode(selectedEpisode);
-        setTotalEps(getEpisodeCountForSeason(selectedSeason));
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
         setProviderIndex(i => (i + 1) % cycle.length);
     }, [cycle]);
-
-    const handleNextEpisode = useCallback(() => {
-        if (mediaType !== 'tv') return;
-        if (totalEps && episode + 1 > totalEps) return;
-        setEpisode(e => e + 1);
-    }, [mediaType, episode, totalEps]);
-
-    const handlePrevEpisode = useCallback(() => {
-        if (mediaType !== 'tv' || episode <= 1) return;
-        setEpisode(e => e - 1);
-    }, [mediaType, episode]);
 
     const movieProps = {
         id: movie.id,
@@ -474,7 +494,7 @@ export default function MovieScreen() {
                 <StatusBar animated={true} style="light" />
                 <Pressable style={webStyles.backdrop} onPress={goBack} />
                 <Animated.View
-                    style={[webStyles.modal, animatedStyle]}
+                    style={[webStyles.modal, playerOpen && webStyles.playerFullscreen, animatedStyle]}
                     {...({ dataSet: { tvScope: playerOpen ? 'player' : 'modal' } } as any)}
                 >
                     <View style={{ flex: 1, position: 'relative' }}>
@@ -497,9 +517,6 @@ export default function MovieScreen() {
                                         title={movie.title}
                                         onClose={handleCloseInline}
                                         onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                        onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
-                                        onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
-                                        isTv={mediaType === 'tv'}
                                         fallbackUrl={officialNetflixUrl}
                                     />
                                 </View>
@@ -534,9 +551,6 @@ export default function MovieScreen() {
                                 title={movie.title}
                                 onClose={handleCloseInline}
                                 onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
-                                onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
-                                isTv={mediaType === 'tv'}
                                 fallbackUrl={officialNetflixUrl}
                             />
                         </View>
@@ -547,6 +561,8 @@ export default function MovieScreen() {
     );
 
     function handleCloseInline() {
+        exitPlayerFullscreen();
+        setPlayerChromeHidden(false);
         setPlayerOpen(false);
     }
 }
@@ -587,5 +603,15 @@ const webStyles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#000',
         zIndex: 200,
+    },
+    // Visual fallback when requestFullscreen is unavailable in an embedded preview.
+    playerFullscreen: {
+        top: 0,
+        left: 0,
+        alignSelf: 'stretch',
+        width: '100%',
+        maxWidth: undefined,
+        height: '100%',
+        borderRadius: 0,
     },
 });

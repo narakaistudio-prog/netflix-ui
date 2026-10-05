@@ -50,7 +50,7 @@ export function TvModeHint() {
         <View
             style={styles.wrap}
             pointerEvents="none"
-            {...({ dataSet: { tvIgnore: 'true' } } as any)}
+            {...({ dataSet: { tvIgnore: 'true', playerChrome: 'true' } } as any)}
         >
             <View style={styles.pill}>
                 <Ionicons name="tv-outline" size={16} color="#fff" />

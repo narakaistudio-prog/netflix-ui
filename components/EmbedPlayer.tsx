@@ -15,8 +15,9 @@ import { useTvBackHandler } from '@/hooks/useTvNavigation';
 /**
  * Third-party iframe embed player.
  *
- * HARD RULES:
- *   - NO `sandbox` attribute (Nxsha refuses sandboxed frames).
+ * EMBED SAFETY:
+ *   - The iframe sandbox blocks ad popups and top-level redirects while keeping
+ *     the capabilities a video provider needs to play in-frame.
  *   - NO contentWindow/document access (cross-origin → SecurityError).
  *   - NO postMessage listeners — providers don't emit them.
  *   - Player MUST open after a user click — never auto-open.
@@ -27,9 +28,6 @@ export interface EmbedPlayerProps {
     title?: string;
     onClose?: () => void;
     onSwitchProvider?: () => void;
-    onNextEpisode?: () => void;
-    onPrevEpisode?: () => void;
-    isTv?: boolean;
     /** Official title page to offer if the third-party player cannot load. */
     fallbackUrl?: string;
     timeoutMs?: number;
@@ -42,31 +40,23 @@ const isDirectVideoSource = (url: string) => /\.(?:mp4|webm|ogg)(?:[?#]|$)/i.tes
 const SCAN_COVER_DELAY_MS = 350;
 // Bound the visual cover so a stream that loads quickly is not hidden too long.
 const SCAN_COVER_MS = 12000;
-const EPISODE_NAV_IDLE_MS = 2500;
 
 export function EmbedPlayer({
     src,
     title,
     onClose,
     onSwitchProvider,
-    onNextEpisode,
-    onPrevEpisode,
-    isTv,
     fallbackUrl,
     timeoutMs = 12000,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
     const [scanCovered, setScanCovered] = useState(false);
-    const [episodeNavVisible, setEpisodeNavVisible] = useState(true);
-    const episodeNavHidden = IS_WEB && !episodeNavVisible;
     const directVideo = isDirectVideoSource(src);
     const nxshaEmbed = !directVideo && detectProviderFromUrl(src) === 'nxsha';
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const iframeRef = useRef<HTMLIFrameElement | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const episodeHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const episodeNavHoveredRef = useRef(false);
 
     useEffect(() => {
         setLoading(true);
@@ -97,6 +87,9 @@ export function EmbedPlayer({
             'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen',
         );
         iframe.setAttribute('allowfullscreen', 'true');
+        // Do not grant `allow-popups` or top navigation: provider ads cannot
+        // open tabs/windows or replace the Netflix app while the video plays.
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
         iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
         iframe.style.position = 'absolute';
         iframe.style.top = '0';
@@ -154,49 +147,6 @@ export function EmbedPlayer({
             if (revealTimer) clearTimeout(revealTimer);
         };
     }, [src, title, nxshaEmbed]);
-
-    // Nxsha's controls fade when the cursor is idle, but our episode buttons
-    // live *outside* its iframe. Hide them separately after a short idle period.
-    // Cross-origin iframe mousemove does not reach us, so the small button-sized
-    // hover areas remain available to bring the controls back without covering
-    // the video or preventing clicks inside the provider player.
-    const scheduleEpisodeHide = useCallback(() => {
-        if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
-        episodeHideTimerRef.current = setTimeout(() => {
-            episodeHideTimerRef.current = null;
-            if (!episodeNavHoveredRef.current) setEpisodeNavVisible(false);
-        }, EPISODE_NAV_IDLE_MS);
-    }, []);
-
-    useEffect(() => {
-        if (!IS_WEB || !isTv || !onNextEpisode) return;
-        setEpisodeNavVisible(true);
-        scheduleEpisodeHide();
-        return () => {
-            if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
-            episodeHideTimerRef.current = null;
-        };
-    }, [src, isTv, onNextEpisode, scheduleEpisodeHide]);
-
-    const showEpisodeNavTemporarily = () => {
-        if (!IS_WEB || !isTv || !onNextEpisode) return;
-        setEpisodeNavVisible(true);
-        scheduleEpisodeHide();
-    };
-    const showEpisodeNav = () => {
-        if (!IS_WEB) return;
-        episodeNavHoveredRef.current = true;
-        if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
-        episodeHideTimerRef.current = null;
-        setEpisodeNavVisible(true);
-    };
-    const hideEpisodeNav = () => {
-        if (!IS_WEB) return;
-        episodeNavHoveredRef.current = false;
-        if (episodeHideTimerRef.current) clearTimeout(episodeHideTimerRef.current);
-        episodeHideTimerRef.current = null;
-        setEpisodeNavVisible(false);
-    };
 
     /**
      * Kill the playing iframe HARD: navigating it to about:blank tears down
@@ -273,9 +223,6 @@ export function EmbedPlayer({
     return (
         <View
             style={styles.container}
-            onPointerEnter={showEpisodeNavTemporarily}
-            onPointerMove={showEpisodeNavTemporarily}
-            onPointerLeave={hideEpisodeNav}
             testID="embed-player"
             {...({ dataSet: { tvScope: 'player' } } as any)}
         >
@@ -378,100 +325,9 @@ export function EmbedPlayer({
                 >
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
-                <View style={{ flex: 1 }} />
-                {onSwitchProvider ? (
-                    <Pressable
-                        style={styles.iconButton}
-                        onPress={onSwitchProvider}
-                        accessibilityLabel="Switch player provider"
-                        tabIndex={0}
-                        accessibilityRole="button"
-                        {...({
-                            dataSet: {
-                                tvFocusable: 'true',
-                                tvRow: 'player-top',
-                                tvId: 'player-switch',
-                            },
-                        } as any)}
-                    >
-                        <Ionicons name="swap-horizontal" size={20} color="#fff" />
-                    </Pressable>
-                ) : null}
-                <Pressable
-                    style={styles.iconButton}
-                    onPress={openInNewTab}
-                    accessibilityLabel="Open in new tab"
-                    tabIndex={0}
-                    accessibilityRole="button"
-                    {...({
-                        dataSet: {
-                            tvFocusable: 'true',
-                            tvRow: 'player-top',
-                            tvId: 'player-tab',
-                        },
-                    } as any)}
-                >
-                    <Ionicons name="open-outline" size={20} color="#fff" />
-                </Pressable>
+
             </View>
 
-            {isTv && onNextEpisode ? (
-                <View style={styles.episodeBar} pointerEvents="box-none" testID="episode-navigation">
-                    <View
-                        testID="prev-episode-hotspot"
-                        onPointerEnter={showEpisodeNav}
-                        onPointerLeave={hideEpisodeNav}
-                    >
-                        <Pressable
-                            style={[styles.epButton, !onPrevEpisode && styles.epButtonDisabled, episodeNavHidden && styles.epButtonHidden]}
-                            pointerEvents={episodeNavHidden ? 'none' : undefined}
-                            disabled={!onPrevEpisode}
-                            onPress={onPrevEpisode}
-                            onFocus={showEpisodeNav}
-                            onBlur={hideEpisodeNav}
-                            accessibilityLabel="Previous episode"
-                            tabIndex={0}
-                            accessibilityRole="button"
-                            {...({
-                                dataSet: {
-                                    tvFocusable: 'true',
-                                    tvRow: 'player-episodes',
-                                    tvId: 'player-prev',
-                                },
-                            } as any)}
-                        >
-                            <Ionicons name="play-skip-back" size={18} color={onPrevEpisode ? '#fff' : '#666'} />
-                            <Text style={[styles.epButtonText, !onPrevEpisode && { color: '#666' }]}>Prev</Text>
-                        </Pressable>
-                    </View>
-                    <View
-                        testID="next-episode-hotspot"
-                        onPointerEnter={showEpisodeNav}
-                        onPointerLeave={hideEpisodeNav}
-                    >
-                        <Pressable
-                            style={[styles.epButton, episodeNavHidden && styles.epButtonHidden]}
-                            pointerEvents={episodeNavHidden ? 'none' : undefined}
-                            onPress={onNextEpisode}
-                            onFocus={showEpisodeNav}
-                            onBlur={hideEpisodeNav}
-                            accessibilityLabel="Next episode"
-                            tabIndex={0}
-                            accessibilityRole="button"
-                            {...({
-                                dataSet: {
-                                    tvFocusable: 'true',
-                                    tvRow: 'player-episodes',
-                                    tvId: 'player-next',
-                                },
-                            } as any)}
-                        >
-                            <Text style={styles.epButtonText}>Next Episode</Text>
-                            <Ionicons name="play-skip-forward" size={18} color="#fff" />
-                        </Pressable>
-                    </View>
-                </View>
-            ) : null}
         </View>
     );
 }
@@ -520,25 +376,6 @@ const styles = StyleSheet.create({
         borderWidth: 1, borderColor: 'rgba(255,255,255,0.4)', marginTop: 6,
     },
     ghostButtonText: { color: '#fff', fontSize: 13, fontWeight: '600' },
-    episodeBar: {
-        // Sit well above the embed's Audio/Quality strip. 82 still overlapped
-        // those controls, so the Next Episode action is shifted further up.
-        position: 'absolute', bottom: IS_WEB ? 168 : 72, left: 16, right: 16,
-        flexDirection: 'row', justifyContent: 'space-between', zIndex: 2,
-    },
-    epButton: {
-        flexDirection: 'row', alignItems: 'center', gap: 8,
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        paddingHorizontal: 14, paddingVertical: 10, borderRadius: 6,
-        borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)',
-        ...(IS_WEB ? {
-            transitionProperty: 'opacity', transitionDuration: '180ms',
-            transitionTimingFunction: 'ease-out',
-        } : {}),
-    },
-    epButtonDisabled: { opacity: 0.6 },
-    epButtonHidden: { opacity: 0 },
-    epButtonText: { color: '#fff', fontSize: 13, fontWeight: '600' },
     nativeFallback: {
         flex: 1, backgroundColor: '#000',
         alignItems: 'center', justifyContent: 'center', padding: 32, gap: 14,
