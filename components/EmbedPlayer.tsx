@@ -321,41 +321,7 @@ export function EmbedPlayer({
                 >
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
-                <View style={{ flex: 1 }} />
-                {onSwitchProvider ? (
-                    <Pressable
-                        style={styles.iconButton}
-                        onPress={onSwitchProvider}
-                        accessibilityLabel="Switch player provider"
-                        tabIndex={0}
-                        accessibilityRole="button"
-                        {...({
-                            dataSet: {
-                                tvFocusable: 'true',
-                                tvRow: 'player-top',
-                                tvId: 'player-switch',
-                            },
-                        } as any)}
-                    >
-                        <Ionicons name="swap-horizontal" size={20} color="#fff" />
-                    </Pressable>
-                ) : null}
-                <Pressable
-                    style={styles.iconButton}
-                    onPress={openInNewTab}
-                    accessibilityLabel="Open in new tab"
-                    tabIndex={0}
-                    accessibilityRole="button"
-                    {...({
-                        dataSet: {
-                            tvFocusable: 'true',
-                            tvRow: 'player-top',
-                            tvId: 'player-tab',
-                        },
-                    } as any)}
-                >
-                    <Ionicons name="open-outline" size={20} color="#fff" />
-                </Pressable>
+
             </View>
 
         </View>

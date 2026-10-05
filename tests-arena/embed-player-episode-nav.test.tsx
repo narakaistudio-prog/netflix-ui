@@ -34,6 +34,8 @@ describe('EmbedPlayer episode controls', () => {
         expect(container.querySelector('[data-testid="episode-navigation"]')).toBeNull();
         expect(container.querySelector('[aria-label="Previous episode"]')).toBeNull();
         expect(container.querySelector('[aria-label="Next episode"]')).toBeNull();
+        expect(container.querySelector('[aria-label="Switch player provider"]')).toBeNull();
+        expect(container.querySelector('[aria-label="Open in new tab"]')).toBeNull();
     });
 
     it('keeps the provider player unobstructed after pointer movement', () => {
@@ -45,5 +47,7 @@ describe('EmbedPlayer episode controls', () => {
         expect(container.querySelector('[data-testid="episode-navigation"]')).toBeNull();
         expect(container.querySelector('[aria-label="Previous episode"]')).toBeNull();
         expect(container.querySelector('[aria-label="Next episode"]')).toBeNull();
+        expect(container.querySelector('[aria-label="Switch player provider"]')).toBeNull();
+        expect(container.querySelector('[aria-label="Open in new tab"]')).toBeNull();
     });
 });
