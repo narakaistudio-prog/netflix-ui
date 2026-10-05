@@ -40,6 +40,34 @@ const ENABLE_HORIZONTAL_DRAG_CLOSE = true;
 // playback sources.
 const PLACEHOLDER_VIDEO_URL = /commondatastorage\.googleapis\.com\/gtv-videos-bucket\/sample\//i;
 
+/**
+ * A full-screen request has to happen directly within the Play press handler.
+ * The iframe's own controls are cross-origin, so waiting for its click would
+ * lose the browser's user-activation permission. CSS still fills the app if a
+ * browser or embedded preview blocks the native Fullscreen API.
+ */
+function requestPlayerFullscreen() {
+    if (!IS_WEB || typeof document === 'undefined') return;
+    const root = document.documentElement as any;
+    const request = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (!request) return;
+    try {
+        const result = request.call(root);
+        if (result?.catch) result.catch(() => {});
+    } catch {}
+}
+
+function exitPlayerFullscreen() {
+    if (!IS_WEB || typeof document === 'undefined') return;
+    const doc = document as any;
+    const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
+    if (!exit || !doc.fullscreenElement) return;
+    try {
+        const result = exit.call(doc);
+        if (result?.catch) result.catch(() => {});
+    } catch {}
+}
+
 export default function MovieScreen() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
@@ -118,6 +146,7 @@ export default function MovieScreen() {
 
     const goBack = useCallback(() => {
         if (playerOpen) {
+            exitPlayerFullscreen();
             setPlayerOpen(false);
             return;
         }
@@ -263,6 +292,7 @@ export default function MovieScreen() {
 
     useTvBackHandler(() => {
         if (playerOpen) {
+            exitPlayerFullscreen();
             setPlayerOpen(false);
             return true;
         }
@@ -369,6 +399,7 @@ export default function MovieScreen() {
             return;
         }
         const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
+        requestPlayerFullscreen();
         setProviderIndex(0);
         setSeason(initialSeason);
         setEpisode(1);
@@ -403,6 +434,7 @@ export default function MovieScreen() {
             handlePlayFull();
             return;
         }
+        requestPlayerFullscreen();
         setProviderIndex(0);
         setSeason(selectedSeason);
         setEpisode(selectedEpisode);
@@ -449,7 +481,7 @@ export default function MovieScreen() {
                 <StatusBar animated={true} style="light" />
                 <Pressable style={webStyles.backdrop} onPress={goBack} />
                 <Animated.View
-                    style={[webStyles.modal, animatedStyle]}
+                    style={[webStyles.modal, playerOpen && webStyles.playerFullscreen, animatedStyle]}
                     {...({ dataSet: { tvScope: playerOpen ? 'player' : 'modal' } } as any)}
                 >
                     <View style={{ flex: 1, position: 'relative' }}>
@@ -516,6 +548,7 @@ export default function MovieScreen() {
     );
 
     function handleCloseInline() {
+        exitPlayerFullscreen();
         setPlayerOpen(false);
     }
 }
@@ -556,5 +589,15 @@ const webStyles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#000',
         zIndex: 200,
+    },
+    // Visual fallback when requestFullscreen is unavailable in an embedded preview.
+    playerFullscreen: {
+        top: 0,
+        left: 0,
+        alignSelf: 'stretch',
+        width: '100%',
+        maxWidth: undefined,
+        height: '100%',
+        borderRadius: 0,
     },
 });
