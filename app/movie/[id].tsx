@@ -27,6 +27,8 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { markWatched } from '@/lib/recentlyWatched';
+import { resolveTitleIds } from '@/lib/titleIds';
+import { resolveTitleMetadata, type TitleMetadata } from '@/lib/titleMetadata';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
@@ -352,6 +354,67 @@ export default function MovieScreen() {
             ? 'tv'
             : 'movie');
 
+    // Most catalog rows only ship a Netflix id, but our own player needs an
+    // IMDb/TMDB id. Resolve it in the background so the title opens in the
+    // Nxsha embed instead of bouncing the viewer to netflix.com.
+    const [lookedUp, setLookedUp] = useState<{ tmdbId?: string; imdbId?: string } | null>(null);
+    const [lookupState, setLookupState] = useState<'idle' | 'pending' | 'done'>('idle');
+    const needsLookup = !movie.embed_url && !parsedTmdb && !movie.imdb_id && Boolean(movie.title);
+
+    useEffect(() => {
+        if (!needsLookup) {
+            setLookupState('done');
+            return;
+        }
+        let cancelled = false;
+        setLookupState('pending');
+        resolveTitleIds({ title: movie.title, year: movie.year, mediaType })
+            .then(ids => {
+                if (cancelled) return;
+                if (ids) setLookedUp(ids);
+            })
+            .catch(() => {})
+            .finally(() => {
+                if (!cancelled) setLookupState('done');
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [needsLookup, movie.title, movie.year, mediaType]);
+
+    const effectiveTmdb = parsedTmdb ?? lookedUp?.tmdbId;
+    const effectiveImdb = movie.imdb_id ?? lookedUp?.imdbId;
+
+    // Banner art + the real episode list come from the same chain Nxsha plays
+    // from (its resolved TMDb id and TMDB artwork), so the S/E we send to the
+    // embed always matches the episode the viewer tapped.
+    const [meta, setMeta] = useState<TitleMetadata | null>(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        resolveTitleMetadata({
+            title: movie.title,
+            year: movie.year,
+            mediaType,
+            imdbId: effectiveImdb,
+            tmdbId: effectiveTmdb,
+        })
+            .then(result => {
+                if (!cancelled && result) setMeta(result);
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [movie.title, movie.year, mediaType, effectiveImdb, effectiveTmdb]);
+
+    const seasonsData = (movie.seasons?.length ? movie.seasons : meta?.seasons) as typeof movie.seasons;
+    const seasonCounts = movie.seasonEpisodeCounts?.length
+        ? movie.seasonEpisodeCounts
+        : meta?.seasonEpisodeCounts;
+    const totalEpisodeCount = movie.episodeCount ?? meta?.episodeCount;
+    const bannerUrl = movie.bannerUrl || meta?.banner;
+
     // Cycle order: default provider → other built-in providers → custom (if embed_url set)
     const settings = loadSettings();
     const cycle: ProviderId[] = useMemo(() => {
@@ -367,7 +430,10 @@ export default function MovieScreen() {
     const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
         ? movie.videoUrl.replace(/^http:/i, 'https:')
         : undefined;
-    const hasProviderPlayback = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id);
+    const hasProviderPlayback = Boolean(movie.embed_url || effectiveTmdb || effectiveImdb);
+    // While the id lookup is still running we keep showing a playable CTA —
+    // pressing it waits for the lookup instead of leaving the site.
+    const playbackPending = !hasProviderPlayback && needsLookup && lookupState !== 'done';
     const directFallback = !hasProviderPlayback && Boolean(directPreviewUrl);
     const hasPlayablePlayback = hasProviderPlayback || directFallback;
 
@@ -378,8 +444,8 @@ export default function MovieScreen() {
                 currentProvider,
                 mediaType,
                 {
-                    tmdbId: parsedTmdb,
-                    imdbId: movie.imdb_id,
+                    tmdbId: effectiveTmdb,
+                    imdbId: effectiveImdb,
                     season: mediaType === 'tv' ? season : undefined,
                     episode: mediaType === 'tv' ? episode : undefined,
                     strictHindi: settings.strictHindi && currentProvider === 'nxsha',
@@ -390,7 +456,7 @@ export default function MovieScreen() {
         } catch {
             return '';
         }
-    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, effectiveTmdb, effectiveImdb, movie.embed_url, season, episode, settings]);
 
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
@@ -404,12 +470,27 @@ export default function MovieScreen() {
         }
     }, [officialNetflixUrl]);
 
-    const handlePlayFull = useCallback(() => {
+    const handlePlayFull = useCallback(async () => {
         if (!hasPlayablePlayback) {
-            openOfficialTitle();
-            return;
+            // The lookup may still be in flight (or never started because the
+            // detail page was opened straight into Play) — try once more and
+            // only fall back to netflix.com when nothing can be resolved.
+            if (needsLookup) {
+                const ids = await resolveTitleIds({ title: movie.title, year: movie.year, mediaType })
+                    .catch(() => null);
+                setLookupState('done');
+                if (ids) {
+                    setLookedUp(ids);
+                } else {
+                    openOfficialTitle();
+                    return;
+                }
+            } else {
+                openOfficialTitle();
+                return;
+            }
         }
-        const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
+        const initialSeason = mediaType === 'tv' ? seasonsData?.[0]?.season_number ?? 1 : 1;
         requestPlayerFullscreen();
         setPlayerChromeHidden(true);
         setProviderIndex(0);
@@ -422,14 +503,14 @@ export default function MovieScreen() {
                 titleId: String(movie.id),
                 title: movie.title,
                 type: mediaType,
-                tmdbId: parsedTmdb,
-                imdbId: movie.imdb_id,
+                tmdbId: effectiveTmdb,
+                imdbId: effectiveImdb,
                 provider: currentProvider,
                 season: mediaType === 'tv' ? initialSeason : undefined,
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle]);
+    }, [movie, effectiveTmdb, effectiveImdb, needsLookup, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -437,10 +518,20 @@ export default function MovieScreen() {
         setEpisode(1);
     }, [mediaType]);
 
-    const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
+    const handlePlayEpisode = useCallback(async (selectedSeason: number, selectedEpisode: number) => {
         if (!hasPlayablePlayback) {
-            openOfficialTitle();
-            return;
+            if (!needsLookup) {
+                openOfficialTitle();
+                return;
+            }
+            const ids = await resolveTitleIds({ title: movie.title, year: movie.year, mediaType })
+                .catch(() => null);
+            setLookupState('done');
+            if (!ids) {
+                openOfficialTitle();
+                return;
+            }
+            setLookedUp(ids);
         }
         if (mediaType !== 'tv') {
             handlePlayFull();
@@ -452,7 +543,7 @@ export default function MovieScreen() {
         setSeason(selectedSeason);
         setEpisode(selectedEpisode);
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle]);
+    }, [mediaType, handlePlayFull, hasPlayablePlayback, needsLookup, movie.title, movie.year, openOfficialTitle]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
@@ -467,18 +558,20 @@ export default function MovieScreen() {
         year: movie.year || '2024',
         duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
         runtime: movie.runtime,
-        episodeCount: movie.episodeCount,
-        seasonEpisodeCounts: movie.seasonEpisodeCounts,
-        seasons: movie.seasons,
+        episodeCount: totalEpisodeCount,
+        seasonEpisodeCounts: seasonCounts,
+        seasons: seasonsData,
+        bannerUrl,
         type: movie.type,
         rating: movie.rating || 'PG-13',
-        description: movie.description || 'No description available',
+        description: movie.description || meta?.description || 'No description available',
         cast: movie.cast || ['Cast not available'],
         director: movie.director || 'Unknown Director',
         ranking_text: movie.ranking_text || '#1 in Movies Today',
         youtubeId: movie.youtubeId,
-        tmdb_id: parsedTmdb,
-        imdb_id: movie.imdb_id,
+        tmdb_id: effectiveTmdb,
+        imdb_id: effectiveImdb,
+        playbackPending,
         embed_provider: movie.embed_provider,
         embed_url: movie.embed_url,
         netflixId: movie.netflixId,

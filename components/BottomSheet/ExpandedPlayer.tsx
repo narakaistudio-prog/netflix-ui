@@ -50,6 +50,10 @@ interface MovieData {
     tmdb_id?: string | number;
     imdb_id?: string;
     embed_provider?: 'nxsha' | 'nhd' | 'custom';
+    /** True while the parent is still resolving an IMDb/TMDB id for this title. */
+    playbackPending?: boolean;
+    /** Wide backdrop (the same TMDB art Nxsha shows) used for the hero. */
+    bannerUrl?: string;
     embed_url?: string;
     netflixId?: string;
     netflixUrl?: string;
@@ -223,7 +227,9 @@ export function ExpandedPlayer({
     // A catalog poster/Netflix id is not itself an embeddable playback source.
     // Only provider ids, a manual embed, or an explicitly supplied direct video
     // may open EmbedPlayer. Never disguise the generic sample clips as content.
-    const hasProviderEmbed = Boolean(movieData.embed_url || movieData.tmdb_id || movieData.imdb_id);
+    const hasProviderEmbed = Boolean(
+        movieData.embed_url || movieData.tmdb_id || movieData.imdb_id || movieData.playbackPending,
+    );
     const hasDirectPreview = Boolean(movieData.video_url)
         && !PLACEHOLDER_VIDEO_URL.test(String(movieData.video_url))
         && !hasProviderEmbed;
@@ -283,9 +289,9 @@ export function ExpandedPlayer({
                     )
                 ) : (
                     <View style={[styles.video, { backgroundColor: '#14141c', justifyContent: 'center', alignItems: 'center' }]}>
-                        {movieData.imageUrl ? (
+                        {movieData.bannerUrl || movieData.imageUrl ? (
                             <SafeImage
-                                source={{ uri: movieData.imageUrl }}
+                                source={{ uri: movieData.bannerUrl || movieData.imageUrl }}
                                 style={StyleSheet.absoluteFill}
                                 contentFit="cover"
                                 loading="eager"
@@ -505,7 +511,7 @@ export function ExpandedPlayer({
                                                     ? (episode.still_path.startsWith('http')
                                                         ? episode.still_path
                                                         : `https://image.tmdb.org/t/p/w300${episode.still_path}`)
-                                                    : movieData.imageUrl,
+                                                    : (movieData.bannerUrl || movieData.imageUrl),
                                             }}
                                             style={StyleSheet.absoluteFill}
                                             contentFit="cover"
@@ -525,11 +531,20 @@ export function ExpandedPlayer({
                                         </View>
                                     </View>
                                     <View style={{ flex: 1 }}>
-                                        <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700' }}>
-                                            Episode {episode.episode}{episode.name && episode.name !== `Episode ${episode.episode}` ? ` • ${episode.name}` : ''}
-                                        </Text>
-                                        <Text style={{ color: '#888', fontSize: 12, marginTop: 2 }}>
-                                            Hindi Dub & Subtitles Available
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                                            <Text style={{ color: '#fff', fontSize: 14, fontWeight: '700', flexShrink: 1 }} numberOfLines={1}>
+                                                {episode.episode}. {episode.name && episode.name !== `Episode ${episode.episode}`
+                                                    ? episode.name
+                                                    : `Episode ${episode.episode}`}
+                                            </Text>
+                                            {episode.runtime ? (
+                                                <Text style={{ color: '#888', fontSize: 12, fontWeight: '600' }}>{episode.runtime}</Text>
+                                            ) : null}
+                                        </View>
+                                        <Text style={{ color: '#9b9b9b', fontSize: 12, marginTop: 3, lineHeight: 16 }} numberOfLines={2}>
+                                            {episode.overview?.trim()
+                                                ? episode.overview
+                                                : 'Hindi Dub & Subtitles Available'}
                                         </Text>
                                     </View>
                                     <Ionicons name="chevron-forward" size={18} color="#888" />

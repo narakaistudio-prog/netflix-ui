@@ -17,6 +17,7 @@
  * Usage: node scripts/refresh-catalog.mjs
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { applyRegionalPolicy } from './regional-catalog-filter.mjs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -1992,7 +1993,7 @@ async function refreshCurrentCatalog() {
     ].map(item => [item.id, item])).values()];
     await Promise.all(posterItems.map(item => savePoster(item)));
     writePosterIndex();
-    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
+    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: applyRegionalPolicy(nextRows) }, null, 4));
     console.log(`Current catalog refreshed: ${movieItems.length} movies and ${showItems.length} TV titles.`);
 }
 
@@ -2034,7 +2035,7 @@ async function enrichExistingCatalog() {
     }));
     await Promise.all(enrichedItems.map(item => savePoster(item)));
     writePosterIndex();
-    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: enrichedRows }, null, 4));
+    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: applyRegionalPolicy(enrichedRows) }, null, 4));
     const playable = enrichedItems.filter(item => item.imdb_id || item.tmdb_id).length;
     console.log(`Existing catalog enriched: ${resolvedIds} new IDs resolved; ${playable}/${enrichedItems.length} titles can use Nxsha/NHD embeds.`);
 }
@@ -2059,7 +2060,7 @@ async function refreshTop10Rows() {
     ]);
     await Promise.all(top10.movieItems.concat(top10.showItems).map(item => savePoster(item)));
     writePosterIndex();
-    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: nextRows }, null, 4));
+    writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: applyRegionalPolicy(nextRows) }, null, 4));
     console.log(`Top 10 rows refreshed: ${top10.movieItems.length} movies and ${top10.showItems.length} shows.`);
 }
 
@@ -2165,5 +2166,5 @@ await Promise.all(allItems.map(item => (
 )));
 writePosterIndex();
 
-writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: rows }, null, 4));
+writeFileSync(join(ROOT, 'data/movies.json'), JSON.stringify({ movies: applyRegionalPolicy(rows) }, null, 4));
 console.log(`Catalog refreshed: ${rows.length} rows (${movieItems.length} movies, ${showItems.length} shows).`);

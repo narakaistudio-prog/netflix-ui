@@ -45,8 +45,6 @@ export function FeaturedContent({
         const billboardSrc =
             movie.title?.toLowerCase().includes('jawan')
                 ? getLocalPoster('billboard-jawan') || { uri: movie.thumbnail }
-                : movie.title?.toLowerCase().includes('extraction')
-                ? getLocalPoster('billboard-extraction') || { uri: movie.thumbnail }
                 : { uri: movie.thumbnail };
 
         return (
