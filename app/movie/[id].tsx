@@ -28,6 +28,7 @@ import {
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { markWatched } from '@/lib/recentlyWatched';
 import { resolveTitleIds } from '@/lib/titleIds';
+import { resolveTitleMetadata, type TitleMetadata } from '@/lib/titleMetadata';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
@@ -384,6 +385,36 @@ export default function MovieScreen() {
     const effectiveTmdb = parsedTmdb ?? lookedUp?.tmdbId;
     const effectiveImdb = movie.imdb_id ?? lookedUp?.imdbId;
 
+    // Banner art + the real episode list come from the same chain Nxsha plays
+    // from (its resolved TMDb id and TMDB artwork), so the S/E we send to the
+    // embed always matches the episode the viewer tapped.
+    const [meta, setMeta] = useState<TitleMetadata | null>(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        resolveTitleMetadata({
+            title: movie.title,
+            year: movie.year,
+            mediaType,
+            imdbId: effectiveImdb,
+            tmdbId: effectiveTmdb,
+        })
+            .then(result => {
+                if (!cancelled && result) setMeta(result);
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [movie.title, movie.year, mediaType, effectiveImdb, effectiveTmdb]);
+
+    const seasonsData = (movie.seasons?.length ? movie.seasons : meta?.seasons) as typeof movie.seasons;
+    const seasonCounts = movie.seasonEpisodeCounts?.length
+        ? movie.seasonEpisodeCounts
+        : meta?.seasonEpisodeCounts;
+    const totalEpisodeCount = movie.episodeCount ?? meta?.episodeCount;
+    const bannerUrl = movie.bannerUrl || meta?.banner;
+
     // Cycle order: default provider → other built-in providers → custom (if embed_url set)
     const settings = loadSettings();
     const cycle: ProviderId[] = useMemo(() => {
@@ -459,7 +490,7 @@ export default function MovieScreen() {
                 return;
             }
         }
-        const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
+        const initialSeason = mediaType === 'tv' ? seasonsData?.[0]?.season_number ?? 1 : 1;
         requestPlayerFullscreen();
         setPlayerChromeHidden(true);
         setProviderIndex(0);
@@ -527,12 +558,13 @@ export default function MovieScreen() {
         year: movie.year || '2024',
         duration: movie.duration || (isSeries ? '1 Season' : '2h 30m'),
         runtime: movie.runtime,
-        episodeCount: movie.episodeCount,
-        seasonEpisodeCounts: movie.seasonEpisodeCounts,
-        seasons: movie.seasons,
+        episodeCount: totalEpisodeCount,
+        seasonEpisodeCounts: seasonCounts,
+        seasons: seasonsData,
+        bannerUrl,
         type: movie.type,
         rating: movie.rating || 'PG-13',
-        description: movie.description || 'No description available',
+        description: movie.description || meta?.description || 'No description available',
         cast: movie.cast || ['Cast not available'],
         director: movie.director || 'Unknown Director',
         ranking_text: movie.ranking_text || '#1 in Movies Today',

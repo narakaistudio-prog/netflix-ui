@@ -1,5 +1,5 @@
 /**
- * Backfill missing IMDb ids in data/movies.json.
+ * Backfill missing IMDb ids, Nxsha TMDb ids and banner art in data/movies.json.
  *
  * Nxsha/NHD embeds are keyed by IMDb (tt…) or TMDB id. Most catalog rows are
  * scraped from JustWatch/Netflix pages and only carry a Netflix id, which made
@@ -71,6 +71,30 @@ async function lookup(title, mediaType, year) {
     }
 }
 
+/**
+ * Ask the Nxsha embed page what it resolved for this id: it exposes the TMDb
+ * id it plays with (`/dl/<type>/<id>`) and the TMDB backdrop it renders, so the
+ * app can show exactly the same artwork as the player.
+ */
+async function readNxsha(mediaType, id) {
+    const path = mediaType === 'tv' ? `tv/${id}/1/1` : `movie/${id}`;
+    try {
+        const res = await fetch(`https://nxsha.space/embed/${path}`, { headers: { 'user-agent': 'netflix-ui/1.0' } });
+        if (!res.ok) return {};
+        const html = await res.text();
+        const dl = html.match(/\/dl\/(?:movie|tv)\/(\d+)/);
+        const images = [...html.matchAll(/https:\/\/image\.tmdb\.org\/t\/p\/(?:w\d+|original)\/[A-Za-z0-9_-]+\.(?:jpg|png|webp)/g)]
+            .map((match) => match[0]);
+        const backdrop = images.length ? images[images.length - 1] : undefined;
+        return {
+            tmdb_id: dl ? dl[1] : undefined,
+            bannerUrl: backdrop ? backdrop.replace(/\/t\/p\/w\d+\//, '/t/p/w1280/') : undefined,
+        };
+    } catch {
+        return {};
+    }
+}
+
 async function mapConcurrent(items, limit, worker) {
     const results = [];
     let index = 0;
@@ -120,5 +144,37 @@ for (const item of allItems) {
     }
 }
 
+// Second pass: artwork + TMDb id straight from Nxsha for everything playable.
+const artworkTargets = new Map();
+for (const item of allItems) {
+    const id = item.imdb_id || item.tmdb_id;
+    if (!id || item.bannerUrl) continue;
+    const mediaType = item.mediaType === 'tv' || item.type === 'SERIES' ? 'tv' : 'movie';
+    const key = `${mediaType}:${id}`;
+    if (!artworkTargets.has(key)) artworkTargets.set(key, { mediaType, id });
+}
+
+console.log(`Fetching Nxsha artwork for ${artworkTargets.size} titles…`);
+const artwork = new Map();
+let artDone = 0;
+await mapConcurrent([...artworkTargets.entries()], CONCURRENCY, async ([key, info]) => {
+    const meta = await readNxsha(info.mediaType, info.id);
+    artDone += 1;
+    if (artDone % 25 === 0) console.log(`  ${artDone}/${artworkTargets.size}`);
+    if (meta.tmdb_id || meta.bannerUrl) artwork.set(key, meta);
+});
+
+let artPatched = 0;
+for (const item of allItems) {
+    const id = item.imdb_id || item.tmdb_id;
+    if (!id || item.bannerUrl) continue;
+    const mediaType = item.mediaType === 'tv' || item.type === 'SERIES' ? 'tv' : 'movie';
+    const meta = artwork.get(`${mediaType}:${id}`);
+    if (!meta) continue;
+    if (meta.bannerUrl) item.bannerUrl = meta.bannerUrl;
+    if (meta.tmdb_id && !item.tmdb_id) item.tmdb_id = meta.tmdb_id;
+    artPatched += 1;
+}
+
 writeFileSync(FILE, JSON.stringify({ movies: data.movies }, null, 4));
-console.log(`Backfilled ${patched} catalog entries (${resolved.size}/${entries.length} titles resolved).`);
+console.log(`Backfilled ${patched} ids and ${artPatched} banners (${resolved.size}/${entries.length} titles resolved).`);

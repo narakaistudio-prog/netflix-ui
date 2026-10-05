@@ -5,6 +5,9 @@ export interface Episode {
     episode: number;
     name: string;
     still_path?: string;
+    overview?: string;
+    runtime?: string;
+    air_date?: string;
 }
 
 export interface Season {
@@ -17,6 +20,8 @@ export interface Season {
 export interface Movie {
     id: string;
     imageUrl: string;
+    /** Wide backdrop (same TMDB art Nxsha renders) used for hero/banner areas. */
+    bannerUrl?: string;
     title?: string;
     /** 'FILM' or 'SERIES' for legacy display; use `mediaType` for embed logic. */
     type?: string;
