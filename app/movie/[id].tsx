@@ -68,6 +68,12 @@ function exitPlayerFullscreen() {
     } catch {}
 }
 
+function setPlayerChromeHidden(hidden: boolean) {
+    if (!IS_WEB || typeof document === 'undefined') return;
+    if (hidden) document.documentElement.setAttribute('data-player-active', 'true');
+    else document.documentElement.removeAttribute('data-player-active');
+}
+
 export default function MovieScreen() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
@@ -88,6 +94,8 @@ export default function MovieScreen() {
     const [providerIndex, setProviderIndex] = useState(0);
     const [season, setSeason] = useState(1);
     const [episode, setEpisode] = useState(1);
+
+    useEffect(() => () => setPlayerChromeHidden(false), []);
 
     const { rows } = useCatalog();
     const rawId = typeof id === 'string' ? id : Array.isArray(id) ? id[0] : '';
@@ -132,6 +140,7 @@ export default function MovieScreen() {
         if (!related.id || related.id === movie.id) return;
         // Replace rather than stack another transparent detail modal on top.
         // The keyed detail view starts at the top with fresh trailer/episode state.
+        setPlayerChromeHidden(false);
         setPlayerOpen(false);
         setProviderIndex(0);
         setSeason(1);
@@ -147,6 +156,7 @@ export default function MovieScreen() {
     const goBack = useCallback(() => {
         if (playerOpen) {
             exitPlayerFullscreen();
+            setPlayerChromeHidden(false);
             setPlayerOpen(false);
             return;
         }
@@ -293,6 +303,7 @@ export default function MovieScreen() {
     useTvBackHandler(() => {
         if (playerOpen) {
             exitPlayerFullscreen();
+            setPlayerChromeHidden(false);
             setPlayerOpen(false);
             return true;
         }
@@ -400,6 +411,7 @@ export default function MovieScreen() {
         }
         const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
         requestPlayerFullscreen();
+        setPlayerChromeHidden(true);
         setProviderIndex(0);
         setSeason(initialSeason);
         setEpisode(1);
@@ -435,6 +447,7 @@ export default function MovieScreen() {
             return;
         }
         requestPlayerFullscreen();
+        setPlayerChromeHidden(true);
         setProviderIndex(0);
         setSeason(selectedSeason);
         setEpisode(selectedEpisode);
@@ -549,6 +562,7 @@ export default function MovieScreen() {
 
     function handleCloseInline() {
         exitPlayerFullscreen();
+        setPlayerChromeHidden(false);
         setPlayerOpen(false);
     }
 }

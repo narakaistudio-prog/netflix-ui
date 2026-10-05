@@ -62,6 +62,12 @@ body {
 #root {
   min-height: 100vh;
 }
+/* Keep playback distraction-free: the global site chrome must never sit over
+   a full-screen player, even when an embedded browser declines the native
+   Fullscreen API and the app uses its full-viewport fallback instead. */
+html[data-player-active='true'] [data-player-chrome='true'] {
+  display: none !important;
+}
 /* Netflix-like dark, slim scrollbars */
 * {
   -webkit-tap-highlight-color: transparent;

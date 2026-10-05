@@ -15,8 +15,9 @@ import { useTvBackHandler } from '@/hooks/useTvNavigation';
 /**
  * Third-party iframe embed player.
  *
- * HARD RULES:
- *   - NO `sandbox` attribute (Nxsha refuses sandboxed frames).
+ * EMBED SAFETY:
+ *   - The iframe sandbox blocks ad popups and top-level redirects while keeping
+ *     the capabilities a video provider needs to play in-frame.
  *   - NO contentWindow/document access (cross-origin → SecurityError).
  *   - NO postMessage listeners — providers don't emit them.
  *   - Player MUST open after a user click — never auto-open.
@@ -86,6 +87,9 @@ export function EmbedPlayer({
             'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen',
         );
         iframe.setAttribute('allowfullscreen', 'true');
+        // Do not grant `allow-popups` or top navigation: provider ads cannot
+        // open tabs/windows or replace the Netflix app while the video plays.
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
         iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
         iframe.style.position = 'absolute';
         iframe.style.top = '0';

@@ -108,6 +108,7 @@ export function WebNavBar() {
                 styles.wrapper,
                 scrolled ? styles.wrapperScrolled : styles.wrapperTransparent,
             ]}
+            {...({ dataSet: { playerChrome: 'true' } } as any)}
         >
             {!scrolled && (
                 <LinearGradient
