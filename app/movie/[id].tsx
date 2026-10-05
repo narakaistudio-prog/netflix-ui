@@ -60,7 +60,6 @@ export default function MovieScreen() {
     const [providerIndex, setProviderIndex] = useState(0);
     const [season, setSeason] = useState(1);
     const [episode, setEpisode] = useState(1);
-    const [totalEps, setTotalEps] = useState<number | undefined>(undefined);
 
     const { rows } = useCatalog();
     const rawId = typeof id === 'string' ? id : Array.isArray(id) ? id[0] : '';
@@ -109,7 +108,6 @@ export default function MovieScreen() {
         setProviderIndex(0);
         setSeason(1);
         setEpisode(1);
-        setTotalEps(undefined);
         scrollOffset.value = 0;
         router.replace({ pathname: '/movie/[id]', params: { id: related.id } });
     }, [movie.id, router, scrollOffset]);
@@ -353,15 +351,6 @@ export default function MovieScreen() {
         }
     }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
 
-    const getEpisodeCountForSeason = useCallback((targetSeason: number) => {
-        return movie.seasonEpisodeCounts?.[targetSeason - 1]
-            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episodes?.length
-            ?? movie.seasons?.find(s => s.season_number === targetSeason)?.episode_count
-            ?? movie.seasons?.[targetSeason - 1]?.episodes?.length
-            ?? movie.seasons?.[targetSeason - 1]?.episode_count
-            ?? movie.episodeCount;
-    }, [movie.seasonEpisodeCounts, movie.seasons, movie.episodeCount]);
-
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
         || `https://www.netflix.com/search?q=${encodeURIComponent(String(movie.title ?? '').trim())}`;
@@ -383,7 +372,6 @@ export default function MovieScreen() {
         setProviderIndex(0);
         setSeason(initialSeason);
         setEpisode(1);
-        setTotalEps(mediaType === 'tv' ? getEpisodeCountForSeason(initialSeason) : undefined);
         setPlayerOpen(true);
         try {
             markWatched({
@@ -398,14 +386,13 @@ export default function MovieScreen() {
                 episode: mediaType === 'tv' ? 1 : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
         setSeason(selectedSeason);
         setEpisode(1);
-        setTotalEps(getEpisodeCountForSeason(selectedSeason));
-    }, [mediaType, getEpisodeCountForSeason]);
+    }, [mediaType]);
 
     const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
         if (!hasPlayablePlayback) {
@@ -419,25 +406,13 @@ export default function MovieScreen() {
         setProviderIndex(0);
         setSeason(selectedSeason);
         setEpisode(selectedEpisode);
-        setTotalEps(getEpisodeCountForSeason(selectedSeason));
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle, getEpisodeCountForSeason]);
+    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
         setProviderIndex(i => (i + 1) % cycle.length);
     }, [cycle]);
-
-    const handleNextEpisode = useCallback(() => {
-        if (mediaType !== 'tv') return;
-        if (totalEps && episode + 1 > totalEps) return;
-        setEpisode(e => e + 1);
-    }, [mediaType, episode, totalEps]);
-
-    const handlePrevEpisode = useCallback(() => {
-        if (mediaType !== 'tv' || episode <= 1) return;
-        setEpisode(e => e - 1);
-    }, [mediaType, episode]);
 
     const movieProps = {
         id: movie.id,
@@ -497,9 +472,6 @@ export default function MovieScreen() {
                                         title={movie.title}
                                         onClose={handleCloseInline}
                                         onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                        onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
-                                        onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
-                                        isTv={mediaType === 'tv'}
                                         fallbackUrl={officialNetflixUrl}
                                     />
                                 </View>
@@ -534,9 +506,6 @@ export default function MovieScreen() {
                                 title={movie.title}
                                 onClose={handleCloseInline}
                                 onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                onNextEpisode={mediaType === 'tv' && (!totalEps || episode < totalEps) ? handleNextEpisode : undefined}
-                                onPrevEpisode={mediaType === 'tv' && episode > 1 ? handlePrevEpisode : undefined}
-                                isTv={mediaType === 'tv'}
                                 fallbackUrl={officialNetflixUrl}
                             />
                         </View>

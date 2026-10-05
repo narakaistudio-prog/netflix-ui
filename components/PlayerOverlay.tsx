@@ -48,8 +48,6 @@ export interface PlayerOverlayProps {
     /** Initial season/episode (TV only). */
     initialSeason?: number;
     initialEpisode?: number;
-    /** Total episodes in the current season, to know when "Next" disables. */
-    totalEpisodesInSeason?: number;
     /** Called when playback starts — UI can record a "recently watched" entry. */
     onPlay?: (info: {
         provider: ProviderId;
@@ -72,7 +70,6 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         provider: forcedProvider,
         initialSeason = 1,
         initialEpisode = 1,
-        totalEpisodesInSeason,
         onPlay,
     } = props;
 
@@ -179,24 +176,6 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
         if (onPlay) onPlay({ provider: cycle[nextIdx], season, episode });
     }, [cycle, providerIndex, season, episode, onPlay]);
 
-    const handleNextEpisode = useCallback(() => {
-        if (type !== 'tv') return;
-        const nextEp = episode + 1;
-        if (totalEpisodesInSeason && nextEp > totalEpisodesInSeason) return;
-        setEpisode(nextEp);
-    }, [type, episode, totalEpisodesInSeason]);
-
-    const handlePrevEpisode = useCallback(() => {
-        if (type !== 'tv') return;
-        if (episode <= 1) return;
-        setEpisode(episode - 1);
-    }, [type, episode]);
-
-    const canGoNext =
-        type === 'tv' &&
-        (!totalEpisodesInSeason || episode < totalEpisodesInSeason);
-    const canGoPrev = type === 'tv' && episode > 1;
-
     const providerLabel = useMemo(() => {
         if (currentProvider === 'nxsha') return 'Nxsha';
         if (currentProvider === 'nhd') return 'NHD';
@@ -218,9 +197,6 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
                             title={title}
                             onClose={onRequestClose}
                             onSwitchProvider={cycle.length > 1 ? handleSwitchProvider : undefined}
-                            onNextEpisode={canGoNext ? handleNextEpisode : undefined}
-                            onPrevEpisode={canGoPrev ? handlePrevEpisode : undefined}
-                            isTv={type === 'tv'}
                         />
                     ) : (
                         <View style={styles.errBox}>
@@ -275,9 +251,6 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
                         title={title}
                         onClose={onRequestClose}
                         onSwitchProvider={cycle.length > 1 ? handleSwitchProvider : undefined}
-                        onNextEpisode={canGoNext ? handleNextEpisode : undefined}
-                        onPrevEpisode={canGoPrev ? handlePrevEpisode : undefined}
-                        isTv={type === 'tv'}
                     />
                 ) : (
                     <View style={styles.errBox}>
