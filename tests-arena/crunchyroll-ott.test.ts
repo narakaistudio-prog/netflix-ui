@@ -92,14 +92,25 @@ test('player servers are Drive (default) + AnimaHD Player', () => {
     expect(html).not.toContain('data-extract=');
 });
 
-test('drive tab sandboxes its iframe and covers the pop-out button', () => {
+test('both server iframes are sandboxed (popups impossible)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
     expect(html).toContain("setAttribute('sandbox','allow-scripts allow-same-origin')");
+    expect(html).not.toContain("removeAttribute('sandbox')");
+    expect(html).not.toContain('allow-popups');
+});
+
+test('drive tab covers the pop-out button', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="drivePopCover"');
     expect(html).toContain('#drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px');
-    // allow-popups is never used on either server.
-    expect(html).not.toContain('allow-popups');
+});
+
+test('animahd tab auto-fullscreens the stage', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain("if(i===1){try{var vst=byId('videoStage')");
+    expect(html).toContain('requestFullscreen');
+    expect(html).toContain('ex.call(document)');
 });
 
 test('player lazy-loads behind a poster + play button', () => {
