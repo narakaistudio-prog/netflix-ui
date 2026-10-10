@@ -26,6 +26,20 @@ test('demo player has a 3-server switcher below the video', () => {
     expect(html).toContain("querySelectorAll('.server-pill')");
 });
 
+test('demo player streams real episodes from servers, no bundled video', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // The bundled reference video is gone — episodes come from servers.
+    expect(html).not.toContain('application/octet-stream');
+    expect(html).not.toContain('referenceVideo');
+    // Server iframe player with loader, heading and helper buttons.
+    expect(html).toContain('<iframe id="serverFrame"');
+    expect(html).toContain('id="frameLoader"');
+    expect(html).toContain('id="serverOpen"');
+    expect(html).toContain('id="serverFs"');
+    expect(html).toContain('id="playerTitle"');
+    expect(html).toContain('loadServer');
+});
+
 test('demo page toast stays fully hidden until triggered', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // The empty toast must not peek above the viewport bottom (fixed sliver).
