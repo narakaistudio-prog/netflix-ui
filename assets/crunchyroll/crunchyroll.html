@@ -600,7 +600,7 @@
             <button id="epNext" aria-label="Next episode" title="Next episode">▶</button>
           </div>
           <button class="server-pill active" data-server="0" title="AnimaHD — animahd.com"><span class="dot"></span>Server 1</button>
-          <button class="server-pill" data-server="1" title="AniDisk — anidisk.org"><span class="dot"></span>Server 2</button>
+          <button class="server-pill" data-server="1" data-newtab="1" title="AniDisk — anidisk.org (naya tab)"><span class="dot"></span>Server 2</button>
           <button class="server-pill" data-server="2" data-newtab="1" title="HindiAnime — hindianime.world"><span class="dot"></span>Server 3</button>
           <span class="server-name" id="serverName">AnimaHD · animahd.com</span>
           <button class="server-ghost" id="serverOpen" title="Active server naye tab me kholo">Naye tab me kholo ↗</button>
@@ -804,7 +804,7 @@
       function stepEp(d){var st=playState;if(isMovieKey(st.key))return;var e=st.ep+d;if(e<1){showToast('Pehla episode hai');return}if(e>EP_COUNT){if(st.season==='1'){st.season='2';st.ep=1;showToast('Season 2 shuru')}else{showToast('Aakhri episode hai');return}}else{st.ep=e}loadServer(activeServer)}
       byId('epPrev').addEventListener('click',function(){stepEp(-1)},false);
       byId('epNext').addEventListener('click',function(){stepEp(1)},false);
-      var SERVERS=[{name:'AnimaHD',host:'animahd.com'},{name:'AniDisk',host:'anidisk.org'},{name:'HindiAnime',host:'hindianime.world',newTab:true}];
+      var SERVERS=[{name:'AnimaHD',host:'animahd.com'},{name:'AniDisk',host:'anidisk.org',newTab:true},{name:'HindiAnime',host:'hindianime.world',newTab:true}];
       var activeServer=0;
       var serverFrame=byId('serverFrame'),frameLoader=byId('frameLoader'),serverBlocked=byId('frameBlocked');
       var serverPills=Array.prototype.slice.call(document.querySelectorAll('.server-pill'));
@@ -817,7 +817,7 @@
       serverPills.forEach(function(pill){pill.addEventListener('click',function(){var i=parseInt(attr(pill,'data-server'),10)||0;loadServer(i);var s=SERVERS[i];if(s){if(s.newTab){var u=serverUrl(i);showToast('Server '+(i+1)+' · '+s.name+' — player me blocked, naye tab me khola');if(u){try{window.open(u,'_blank','noopener')}catch(e){}}}else{showToast('Server '+(i+1)+' · '+s.name+' — load ho raha hai')}}},false)});
       byId('serverOpen').addEventListener('click',function(){var s=SERVERS[activeServer],u=serverUrl(activeServer);if(!s||!u){showToast('Is episode ka link nahi mila — Server 2 dabao');return}showToast('Server '+(activeServer+1)+' · '+s.name+' — naye tab me khola');try{window.open(u,'_blank','noopener')}catch(e){}},false);
       byId('serverFs').addEventListener('click',function(){var request=playerShell.requestFullscreen||playerShell.webkitRequestFullscreen||playerShell.msRequestFullscreen;var exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;if(!(document.fullscreenElement||document.webkitFullscreenElement)){if(request){try{request.call(playerShell)}catch(e){}}}else if(exit){try{exit.call(document)}catch(e){}}},false);
-      byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 · AniDisk — load ho raha hai')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Naye tab me khola')}}},false);
+      byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 · AniDisk — naye tab me kholo ↗')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Naye tab me khola')}}},false);
       byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else loadServer(activeServer)},false);
       byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}

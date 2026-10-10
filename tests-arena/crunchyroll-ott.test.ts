@@ -80,11 +80,27 @@ test('server order matches URL mapping (AnimaHD/AniDisk/HindiAnime)', () => {
     expect(iAnimahd).toBeGreaterThanOrEqual(0);
     expect(iAnidisk).toBeGreaterThan(iAnimahd);
     expect(iHindi).toBeGreaterThan(iAnidisk);
-    // Only HindiAnime is new-tab-only, and its pill carries the marker.
-    expect(def.match(/newTab:true/g)).toHaveLength(1);
-    expect(def.indexOf('newTab:true')).toBeGreaterThan(iHindi);
+    // AniDisk + HindiAnime are new-tab-only (their players refuse third-party
+    // embeds), and both pills carry the marker.
+    expect(def.match(/newTab:true/g)).toHaveLength(2);
+    expect(def.slice(iAnidisk, iHindi)).toContain('newTab:true');
+    expect(def.lastIndexOf('newTab:true')).toBeGreaterThan(iHindi);
+    expect(html).toContain('data-server="1" data-newtab="1"');
     expect(html).toContain('data-server="2" data-newtab="1"');
     expect(html).toContain("content:'↗'");
+});
+
+test('AniDisk plays in new tab (host refuses all embeds)', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const m = html.match(/var SERVERS=\[([^\]]+)\]/);
+    expect(m).not.toBeNull();
+    const def = (m as RegExpMatchArray)[1];
+    const iAnidisk = def.indexOf("name:'AniDisk'");
+    const iHindi = def.indexOf("name:'HindiAnime'");
+    expect(iAnidisk).toBeGreaterThanOrEqual(0);
+    // The AniDisk entry itself carries newTab:true.
+    expect(def.slice(iAnidisk, iHindi)).toContain('newTab:true');
+    expect(html).toContain('data-server="1" data-newtab="1"');
 });
 
 test('blocked servers fall back to new tab with in-player notice', () => {
