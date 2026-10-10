@@ -37,7 +37,7 @@ test('demo player streams real episodes from servers, no bundled video', () => {
     expect(html).toContain('<iframe id="serverFrame"');
     expect(html).toContain('id="frameLoader"');
     expect(html).toContain('id="serverOpen"');
-    expect(html).toContain('id="serverFs"');
+    expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="playerTitle"');
     expect(html).toContain('loadServer');
 });
@@ -65,7 +65,6 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('disarmWatchdog');
     expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="noticeAlt"');
-    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
     expect(html).toContain('allow="autoplay; fullscreen; encrypted-media; picture-in-picture"');
     expect(html).not.toContain('allow-popups');
 });
@@ -94,11 +93,11 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(html).not.toContain('data-extract=');
 });
 
-test('both server iframes are sandboxed (popups impossible)', () => {
+test('drive tab is sandboxed, server 1 runs free for its player', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
-    expect(html).toContain("setAttribute('sandbox','allow-scripts allow-same-origin')");
-    expect(html).not.toContain("removeAttribute('sandbox')");
+    expect(html).toContain("if(i===1){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}");
+    expect(html).toContain("removeAttribute('sandbox')");
+    expect(html).not.toContain('sandbox="allow-scripts');
     expect(html).not.toContain('allow-popups');
 });
 
@@ -123,12 +122,6 @@ test('server 1 hides below-video junk without fullscreen', () => {
     expect(html).toContain('#s1Crop{position:absolute;left:0;right:0;bottom:0;height:3%');
     expect(html).toContain("setHidden(s1Crop,i!==0)");
     expect(html).toContain('var lt=loadToken');
-});
-
-test('fullscreen button targets the video stage', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('var el=videoStage||playerShell');
-    expect(html).toContain("showToast('Fullscreen blocked hai')");
 });
 
 test('player lazy-loads behind a poster + play button', () => {
@@ -171,7 +164,7 @@ test('player shows notice panel when a title has no source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    expect(html).toContain('Solo Leveling S1–S2 uplabdh hai');
+    expect(html).toContain('Solo Leveling S1–S2 is available');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {
