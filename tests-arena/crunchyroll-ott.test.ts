@@ -10,6 +10,22 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
+test('demo player has a 3-server switcher below the video', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // Markup: video wrapped with the server bar right below it.
+    expect(html).toContain('<div class="stage-col">');
+    expect(html).toContain('id="serverBar"');
+    expect(html.match(/class="server-pill/g)).toHaveLength(3);
+    expect(html).toContain('data-server="2"');
+    // The three servers.
+    expect(html).toContain('https://animahd.com/');
+    expect(html).toContain('https://www.hindianime.world/home');
+    expect(html).toContain('https://anidisk.org/');
+    // Styling + switching logic wired up.
+    expect(html).toContain('.server-pill.active');
+    expect(html).toContain("querySelectorAll('.server-pill')");
+});
+
 test('demo page toast stays fully hidden until triggered', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // The empty toast must not peek above the viewport bottom (fixed sliver).
