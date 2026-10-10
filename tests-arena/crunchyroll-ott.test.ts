@@ -93,11 +93,11 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(html).not.toContain('data-extract=');
 });
 
-test('drive tab is sandboxed, server 1 runs free for its player', () => {
+test('both server iframes are sandboxed (popups impossible)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain("if(i===1){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}");
-    expect(html).toContain("removeAttribute('sandbox')");
-    expect(html).not.toContain('sandbox="allow-scripts');
+    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(html).toContain("serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')");
+    expect(html).not.toContain("removeAttribute('sandbox')");
     expect(html).not.toContain('allow-popups');
 });
 
