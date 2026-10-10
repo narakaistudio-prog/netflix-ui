@@ -17,10 +17,13 @@ test('demo player has a 3-server switcher below the video', () => {
     expect(html).toContain('id="serverBar"');
     expect(html.match(/class="server-pill/g)).toHaveLength(3);
     expect(html).toContain('data-server="2"');
-    // The three servers.
-    expect(html).toContain('https://animahd.com/');
-    expect(html).toContain('https://www.hindianime.world/home');
-    expect(html).toContain('https://anidisk.org/');
+    // The three servers (dynamic per-episode URLs now).
+    expect(html).toContain('AnimaHD');
+    expect(html).toContain('AniDisk');
+    expect(html).toContain('HindiAnime');
+    expect(html).toContain('drive.google.com/file/d/');
+    expect(html).toContain('anidisk.org/watch/');
+    expect(html).toContain('hindianime.world/watch/');
     // Styling + switching logic wired up.
     expect(html).toContain('.server-pill.active');
     expect(html).toContain("querySelectorAll('.server-pill')");
@@ -38,6 +41,23 @@ test('demo player streams real episodes from servers, no bundled video', () => {
     expect(html).toContain('id="serverFs"');
     expect(html).toContain('id="playerTitle"');
     expect(html).toContain('loadServer');
+});
+
+test('demo player resolves direct episode URLs per server', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // Real Solo Leveling EP1-3 Google Drive embeds (Server 1).
+    expect(html).toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
+    expect(html).toContain('1nxwxO8MqRIyK8DI3v5DSIyaVcdhpFkwR');
+    expect(html).toContain('1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-');
+    // Episode-aware wiring: state, resolvers, stepper, notice.
+    expect(html).toContain('openEpisode');
+    expect(html).toContain('serverUrl');
+    expect(html).toContain('id="epStepper"');
+    expect(html).toContain('id="noticeTitle"');
+    expect(html).toContain('SLUG_OVERRIDES');
+    // No static homepage embeds anymore — URLs resolve per episode.
+    expect(html).not.toContain("url:'https://animahd.com/'");
+    expect(html).not.toContain("url:'https://anidisk.org/'");
 });
 
 test('blocked servers fall back to new tab with in-player notice', () => {
