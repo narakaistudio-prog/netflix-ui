@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 14,
+        pointerEvents: 'none',
     },
     loaderText: {
         color: '#f47521',

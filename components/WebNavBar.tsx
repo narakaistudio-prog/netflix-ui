@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '@/contexts/UserContext';
 import { SafeImage } from '@/components/SafeImage';
 import { ProfileBadge } from '@/components/ProfileBadge';
+import { CrunchyrollIcon } from '@/icons/Crunchyroll';
 import { TvRemoteHelper } from '@/components/TvRemoteHelper';
 import { useTvMode } from '@/hooks/useTvNavigation';
 
@@ -90,7 +91,9 @@ export function WebNavBar() {
         setSearchQuery('');
     }, [pathname]);
 
-    if (Platform.OS !== 'web' || !selectedProfile) return null;
+    // Full immersion: the Crunchyroll OTT page brings its own chrome, so the
+    // Netflix navbar stays hidden while it is open.
+    if (Platform.OS !== 'web' || !selectedProfile || pathname.startsWith('/crunchyroll')) return null;
 
     const handleSearchSubmit = () => {
         const query = searchQuery.trim();
@@ -176,9 +179,27 @@ export function WebNavBar() {
                                     hovered && !active && { opacity: 0.7 },
                                 ]}
                             >
-                                <Text style={[styles.link, active && styles.linkActive]}>
-                                    {link.label}
-                                </Text>
+                                {isOtt ? (
+                                    <View style={styles.ottLinkRow}>
+                                        <CrunchyrollIcon
+                                            size={16}
+                                            color={active ? '#ff8a3d' : '#f47521'}
+                                        />
+                                        <Text
+                                            style={[
+                                                styles.link,
+                                                styles.linkOtt,
+                                                active && styles.linkOttActive,
+                                            ]}
+                                        >
+                                            {link.label}
+                                        </Text>
+                                    </View>
+                                ) : (
+                                    <Text style={[styles.link, active && styles.linkActive]}>
+                                        {link.label}
+                                    </Text>
+                                )}
                             </Pressable>
                         );
                     })}
@@ -476,6 +497,11 @@ const styles = StyleSheet.create({
     linkOttActive: {
         color: '#ff8a3d',
         fontWeight: '900',
+    },
+    ottLinkRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
     },
     right: {
         flexDirection: 'row',

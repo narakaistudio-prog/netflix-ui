@@ -56,7 +56,7 @@ export function CrunchyrollView(): React.JSX.Element {
                 style={styles.webview}
             />
             {!pageLoaded && (
-                <View style={styles.loaderOverlay} pointerEvents="none">
+                <View style={styles.loaderOverlay}>
                     <ActivityIndicator size="large" color="#f47521" />
                     <Text style={styles.loaderText}>Loading Crunchyroll…</Text>
                 </View>

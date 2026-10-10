@@ -7,6 +7,7 @@ import { useUser } from '@/contexts/UserContext';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
 import { ProfileBadge } from '@/components/ProfileBadge';
 import { Home } from '@/icons/Home';
+import { CrunchyrollIcon } from '@/icons/Crunchyroll';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
@@ -81,8 +82,7 @@ export const TAB_SCREENS = [
     name: 'crunchyroll',
     title: 'Crunchyroll',
     icon: ({ focused }: { color: string; focused: boolean }) => (
-      <Ionicons
-        name={focused ? 'play-circle' : 'play-circle-outline'}
+      <CrunchyrollIcon
         size={26}
         color={focused ? '#f47521' : 'rgba(244, 117, 33, 0.55)'}
       />

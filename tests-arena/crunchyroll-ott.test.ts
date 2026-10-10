@@ -33,10 +33,35 @@ test('crunchyroll route, tab and navbar entries exist', () => {
     const tabs = readFileSync(join(ROOT, 'app', '(tabs)', '_layout.tsx'), 'utf8');
     expect(tabs).toContain("name: 'crunchyroll'");
 
-    // Navbar: Crunchyroll sits right beside My List and the bar hides itself
-    // on /crunchyroll for full immersion.
+    // Navbar: Crunchyroll sits right beside My List with its logo, and the
+    // bar hides itself on /crunchyroll for full immersion.
     const nav = readFileSync(join(ROOT, 'components', 'WebNavBar.tsx'), 'utf8');
     expect(nav).toContain('/crunchyroll');
-    expect(nav.indexOf('Crunchyroll')).toBeGreaterThan(nav.indexOf('My List'));
-    expect(nav).toContain("pathname.startsWith('/crunchyroll')");
+    expect(nav.indexOf("label: 'Crunchyroll'")).toBeGreaterThan(
+        nav.indexOf("label: 'My List'"),
+    );
+    expect(nav).toContain('CrunchyrollIcon');
+    // The early return must hide the whole navbar on the OTT route — match
+    // the exact line so a lookalike elsewhere can't fake this.
+    expect(nav).toContain(
+        "|| pathname.startsWith('/crunchyroll')) return null;",
+    );
+});
+
+test('crunchyroll logo ships in the app and the demo page', () => {
+    expect(existsSync(join(ROOT, 'icons', 'Crunchyroll.tsx'))).toBe(true);
+    const icon = readFileSync(join(ROOT, 'icons', 'Crunchyroll.tsx'), 'utf8');
+    expect(icon).toContain('M2.909 13.436');
+
+    const tabs = readFileSync(join(ROOT, 'app', '(tabs)', '_layout.tsx'), 'utf8');
+    expect(tabs).toContain('CrunchyrollIcon');
+
+    // Demo page header/footer brand marks + favicon use the real logo.
+    const html = readFileSync(
+        join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'),
+        'utf8',
+    );
+    expect(html.match(/<svg class="brand-mark" viewBox="0 0 24 24"/g)).toHaveLength(2);
+    expect(html).toContain('M2.909 13.436');
+    expect(html).not.toContain('M6 32C16 14 48 14 58 32');
 });
