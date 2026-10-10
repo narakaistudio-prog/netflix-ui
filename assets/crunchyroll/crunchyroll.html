@@ -404,7 +404,7 @@
     .video-stage iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:#000}
     #drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px;z-index:30}
     .video-stage.s16x9{padding-bottom:56.25%}
-    #s1Crop{position:absolute;left:0;right:0;bottom:0;height:7%;background:#000;pointer-events:none}
+    #s1Crop{position:absolute;left:0;right:0;bottom:0;height:3%;background:#000;pointer-events:none}
     .stage-poster{position:absolute;inset:0;z-index:20;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050505;overflow:hidden;cursor:pointer}
     .stage-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
     .stage-poster .poster-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.78))}
@@ -595,7 +595,7 @@
     <div class="player-layout">
       <div class="stage-col">
       <div class="video-stage" id="videoStage">
-        <iframe id="serverFrame" title="Anime server player" sandbox="allow-scripts allow-same-origin" allow="autoplay; fullscreen" allowfullscreen scrolling="no"></iframe>
+        <iframe id="serverFrame" title="Anime server player" sandbox="allow-scripts allow-same-origin" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen scrolling="no"></iframe>
         <div id="drivePopCover" hidden></div>
         <div id="s1Crop" hidden></div>
         <div class="stage-poster" id="stagePoster" hidden><img id="stagePosterImg" alt="Episode poster"><div class="poster-shade"></div><button class="stage-play" id="stagePlay" aria-label="Play episode">▶</button><p id="stagePosterText">S1 · EP1</p></div>

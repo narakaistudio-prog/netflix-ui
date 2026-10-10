@@ -66,7 +66,7 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="noticeAlt"');
     expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
-    expect(html).toContain('allow="autoplay; fullscreen"');
+    expect(html).toContain('allow="autoplay; fullscreen; encrypted-media; picture-in-picture"');
     expect(html).not.toContain('allow-popups');
 });
 
@@ -120,7 +120,7 @@ test('server 1 hides below-video junk without fullscreen', () => {
     expect(html).not.toContain("vst=byId('videoStage')");
     expect(html).toContain('ex.call(document)');
     expect(html).toContain('id="s1Crop"');
-    expect(html).toContain('#s1Crop{position:absolute;left:0;right:0;bottom:0;height:7%');
+    expect(html).toContain('#s1Crop{position:absolute;left:0;right:0;bottom:0;height:3%');
     expect(html).toContain("setHidden(s1Crop,i!==0)");
     expect(html).toContain('var lt=loadToken');
 });
