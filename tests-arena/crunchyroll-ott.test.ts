@@ -69,6 +69,24 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('referrerpolicy="no-referrer"');
 });
 
+test('server order matches URL mapping (AnimaHD/AniDisk/HindiAnime)', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const m = html.match(/var SERVERS=\[([^\]]+)\]/);
+    expect(m).not.toBeNull();
+    const def = (m as RegExpMatchArray)[1];
+    const iAnimahd = def.indexOf("name:'AnimaHD'");
+    const iAnidisk = def.indexOf("name:'AniDisk'");
+    const iHindi = def.indexOf("name:'HindiAnime'");
+    expect(iAnimahd).toBeGreaterThanOrEqual(0);
+    expect(iAnidisk).toBeGreaterThan(iAnimahd);
+    expect(iHindi).toBeGreaterThan(iAnidisk);
+    // Only HindiAnime is new-tab-only, and its pill carries the marker.
+    expect(def.match(/newTab:true/g)).toHaveLength(1);
+    expect(def.indexOf('newTab:true')).toBeGreaterThan(iHindi);
+    expect(html).toContain('data-server="2" data-newtab="1"');
+    expect(html).toContain("content:'↗'");
+});
+
 test('blocked servers fall back to new tab with in-player notice', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('newTab:true');
