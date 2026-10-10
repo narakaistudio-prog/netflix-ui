@@ -29,6 +29,17 @@ function copyPosterDirectory(source, destination) {
 }
 copyPosterDirectory(postersDir, join(outputDir, 'assets', 'posters'));
 
+// Ship the self-contained Crunchyroll OTT demo page at the exact URL the
+// /crunchyroll route loads it from (<iframe src="/assets/crunchyroll/...">).
+const crunchyrollSrc = join(projectRoot, 'assets', 'crunchyroll', 'crunchyroll.html');
+const crunchyrollDest = join(outputDir, 'assets', 'crunchyroll', 'crunchyroll.html');
+if (!existsSync(crunchyrollSrc)) {
+    throw new Error(`Crunchyroll OTT page missing at ${crunchyrollSrc}`);
+}
+mkdirSync(dirname(crunchyrollDest), { recursive: true });
+cpSync(crunchyrollSrc, crunchyrollDest);
+console.log('Copied Crunchyroll OTT page to assets/crunchyroll/crunchyroll.html');
+
 const manifest = readFileSync(join(postersDir, 'index.web.ts'), 'utf8');
 const urls = new Set([...manifest.matchAll(/"(\/assets\/posters\/[^\"]+)"/g)].map(match => match[1]));
 const missing = [...urls].filter(url => !existsSync(join(outputDir, url.slice(1))));

@@ -46,6 +46,7 @@
     "react-native-screens": "3.31.1",
     "react-native-svg": "15.2.0",
     "react-native-web": "~0.19.10",
+    "react-native-webview": "^13.8.6",
     "styled-components": "^6.1.13",
     "use-debounce": "^10.0.4"
   },

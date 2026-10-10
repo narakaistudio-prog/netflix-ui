@@ -16,6 +16,7 @@ const NAV_LINKS = [
     { label: 'TV Shows', href: '/browse/tv' as const, type: 'catalog', catalog: 'tv' as const },
     { label: 'Movies', href: '/browse/movies' as const, type: 'catalog', catalog: 'movies' as const },
     { label: 'My List', href: '/profile' as const, type: 'route' },
+    { label: 'Crunchyroll', href: '/crunchyroll' as const, type: 'route' },
 ];
 
 const NOTIFICATIONS = [
@@ -143,7 +144,9 @@ export function WebNavBar() {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
                         const isCatalog = link.type === 'catalog' && pathname === `/browse/${link.catalog}`;
                         const isMyList = link.label === 'My List' && pathname.startsWith('/profile');
-                        const active = isHome || isCatalog || isMyList;
+                        const isOtt = link.label === 'Crunchyroll';
+                        const isCrunchyroll = isOtt && pathname.startsWith('/crunchyroll');
+                        const active = isHome || isCatalog || isMyList || isCrunchyroll;
 
                         return (
                             <Pressable
@@ -465,6 +468,14 @@ const styles = StyleSheet.create({
     linkActive: {
         color: '#ffffff',
         fontWeight: '800',
+    },
+    linkOtt: {
+        color: '#f47521',
+        fontWeight: '800',
+    },
+    linkOttActive: {
+        color: '#ff8a3d',
+        fontWeight: '900',
     },
     right: {
         flexDirection: 'row',

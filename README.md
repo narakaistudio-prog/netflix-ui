@@ -24,6 +24,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 ### Content Screens
 
 - 🏠 Animated home screen with featured content
+- 🍥 Crunchyroll OTT section (beside My List) — opens a full-screen, self-contained anime experience (`assets/crunchyroll/crunchyroll.html`)
 - 🎬 Separate Netflix-style Movies and TV Shows shelves
 - 🎮 Mobile games showcase
 - 🔍 Dynamic search with instant results

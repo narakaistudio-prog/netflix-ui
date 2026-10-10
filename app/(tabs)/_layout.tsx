@@ -77,6 +77,17 @@ export const TAB_SCREENS = [
       <ProfileImage focused={focused} />
     ),
   },
+  {
+    name: 'crunchyroll',
+    title: 'Crunchyroll',
+    icon: ({ focused }: { color: string; focused: boolean }) => (
+      <Ionicons
+        name={focused ? 'play-circle' : 'play-circle-outline'}
+        size={26}
+        color={focused ? '#f47521' : 'rgba(244, 117, 33, 0.55)'}
+      />
+    ),
+  },
 ];
 
 const TAB_BAR_HEIGHT = Platform.select({ web: 64, default: 84 });
