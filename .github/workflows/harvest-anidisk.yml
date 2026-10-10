@@ -1,0 +1,42 @@
+name: Harvest AniDisk links (DeadToons)
+
+on:
+  schedule:
+    # Weekly Sunday ~01:30 IST
+    - cron: '0 20 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Harvest DeadToons + bake links
+        run: npm run harvest:anidisk
+        env:
+          # Repo Settings → Variables → DEADTOONS_BASE (falls back to default root)
+          DEADTOONS_BASE: ${{ vars.DEADTOONS_BASE }}
+
+      - name: Commit confirmed links
+        run: |
+          git config user.name "anidisk-harvest-bot"
+          git config user.email "anidisk-harvest-bot@users.noreply.github.com"
+          git add data/anidisk-confirmed.json assets/crunchyroll/crunchyroll.html
+          if git diff --cached --quiet; then
+            echo "No link changes."
+          else
+            git commit -m "chore(anidisk): harvest confirmed links from DeadToons"
+            git push origin HEAD:${{ github.ref_name }}
+          fi

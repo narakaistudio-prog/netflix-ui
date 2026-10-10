@@ -11,7 +11,8 @@
     "build": "npm run build:web",
     "build:web": "expo export --platform web && node scripts/prepare-web-dist.mjs",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "harvest:anidisk": "node scripts/harvest-deadtoons.mjs && node scripts/bake-anidisk-links.mjs"
   },
   "jest": {
     "preset": "jest-expo"
