@@ -40,6 +40,14 @@ test('demo player streams real episodes from servers, no bundled video', () => {
     expect(html).toContain('loadServer');
 });
 
+test('blocked servers fall back to new tab with in-player notice', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('newTab:true');
+    expect(html).toContain('id="frameBlocked"');
+    expect(html).toContain('id="blockedOpen"');
+    expect(html).toContain('data-newtab="1"');
+});
+
 test('demo page toast stays fully hidden until triggered', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // The empty toast must not peek above the viewport bottom (fixed sliver).
