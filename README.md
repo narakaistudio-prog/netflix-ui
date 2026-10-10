@@ -25,7 +25,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 
 - 🏠 Animated home screen with featured content
 - 🍥 Crunchyroll OTT section (beside My List) — opens a full-screen, self-contained anime experience (`assets/crunchyroll/crunchyroll.html`)
-- ▶️ Player (FINAL v2): [Drive] + [AnimaHD Player] tabs from one file_id table — Solo Leveling S1+S2 (25 eps); re-harvest with `npm run harvest:animahd`
+- ▶️ Player (FINAL v2): [Server 1: AnimaHD] + [Server 2: Drive] tabs from one file_id table — Solo Leveling S1+S2 (25 eps); re-harvest with `npm run harvest:animahd`
 - 🔗 AniDisk confirmed-links pipeline + extractor API stay warm (`data/`, `server/`) for future use
 - 🎬 Separate Netflix-style Movies and TV Shows shelves
 - 🎮 Mobile games showcase

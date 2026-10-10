@@ -403,6 +403,7 @@
 
     .video-stage iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:#000}
     #drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px;z-index:30}
+    .video-stage.s16x9{padding-bottom:56.25%}
     .stage-poster{position:absolute;inset:0;z-index:20;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050505;overflow:hidden;cursor:pointer}
     .stage-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
     .stage-poster .poster-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.78))}
@@ -588,12 +589,12 @@
   <section class="player-shell" id="playerShell" aria-label="Video player" hidden>
     <header class="player-top">
       <button class="player-close" id="closePlayer" aria-label="Close video player"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
-      <div class="player-heading"><strong id="playerTitle">Now Playing</strong><span id="playerSub">S1 · EP1 · Drive</span></div>
+      <div class="player-heading"><strong id="playerTitle">Now Playing</strong><span id="playerSub">S1 · EP1 · Server 1</span></div>
     </header>
     <div class="player-layout">
       <div class="stage-col">
       <div class="video-stage" id="videoStage">
-        <iframe id="serverFrame" title="Anime server player" sandbox="allow-scripts allow-same-origin" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <iframe id="serverFrame" title="Anime server player" sandbox="allow-scripts allow-same-origin" allow="autoplay; fullscreen" allowfullscreen scrolling="no"></iframe>
         <div id="drivePopCover" hidden></div>
         <div class="stage-poster" id="stagePoster" hidden><img id="stagePosterImg" alt="Episode poster"><div class="poster-shade"></div><button class="stage-play" id="stagePlay" aria-label="Play episode">▶</button><p id="stagePosterText">S1 · EP1</p></div>
         <div class="frame-loader" id="frameLoader" hidden><span class="spinner"></span><p>Server load ho raha hai…</p></div>
@@ -606,9 +607,9 @@
             <span id="epLabel">S1 · EP1</span>
             <button id="epNext" aria-label="Next episode" title="Next episode">▶</button>
           </div>
-          <button class="server-pill active" data-server="0" title="Drive — drive.google.com"><span class="dot"></span>Drive</button>
-          <button class="server-pill" data-server="1" title="AnimaHD Player — animahd.com"><span class="dot"></span>AnimaHD Player</button>
-                    <span class="server-name" id="serverName">Drive · drive.google.com</span>
+          <button class="server-pill active" data-server="0" title="Server 1 — animahd.com"><span class="dot"></span>Server 1</button>
+          <button class="server-pill" data-server="1" title="Server 2 — drive.google.com"><span class="dot"></span>Server 2</button>
+                    <span class="server-name" id="serverName">Server 1 · animahd.com</span>
           <button class="server-ghost" id="serverOpen" title="Active server naye tab me kholo">Naye tab me kholo ↗</button>
           <button class="server-ghost" id="serverFs" title="Fullscreen">⛶ Fullscreen</button>
           <button class="server-ghost" id="serverHelp" title="Server nahi chal raha?">⚠ Nahi chal raha?</button>
@@ -803,7 +804,7 @@
       function epFileIndex(key,season,ep){var d=(typeof EP_DATA!=='undefined')?EP_DATA[key]:null;var e=Math.max(1,parseInt(ep,10)||1);if(!d||!d.seasons)return e-1;var off=0,sns=Object.keys(d.seasons).sort();for(var k=0;k<sns.length;k++){if(sns[k]===String(season))return off+e-1;off+=d.seasons[sns[k]]}return off+e-1}
       function seasonEpCount(key,season){var d=(typeof EP_DATA!=='undefined')?EP_DATA[key]:null;if(d&&d.seasons&&d.seasons[String(season)])return d.seasons[String(season)];return EP_COUNT}
       function serverUrl(i){var st=playState;
-      if(isMovieKey(st.key))return null;var d=(typeof EP_DATA!=='undefined')?EP_DATA[st.key]:null;if(!d||!d.eps)return null;var idx=epFileIndex(st.key,st.season,st.ep);var f=d.eps[idx];if(!f)return null;if(i===0)return 'https://drive.google.com/file/d/'+f+'/preview';return 'https://animahd.com/player/?file_id='+f+'&show_id='+d.showId+'&ep='+idx}
+      if(isMovieKey(st.key))return null;var d=(typeof EP_DATA!=='undefined')?EP_DATA[st.key]:null;if(!d||!d.eps)return null;var idx=epFileIndex(st.key,st.season,st.ep);var f=d.eps[idx];if(!f)return null;if(i===0)return 'https://animahd.com/player/?file_id='+f+'&show_id='+d.showId+'&ep='+idx;return 'https://drive.google.com/file/d/'+f+'/preview'}
       function epText(){var st=playState;return isMovieKey(st.key)?'Movie':('S'+st.season+' EP'+st.ep)}
       function keyForTitle(txt){txt=String(txt||'').toLowerCase();var best=null,bestLen=0;for(var k in shows){if(shows.hasOwnProperty(k)){var tl=String(shows[k].title).toLowerCase();if(tl&&txt.indexOf(tl)!==-1&&tl.length>bestLen){best=k;bestLen=tl.length}}}return best}
       function openEpisode(key,season,ep){if(key&&shows[key])activeKey=key;playState={key:activeKey,season:String(season||'1'),ep:Math.max(1,parseInt(ep,10)||1)};openPlayer()}
@@ -811,10 +812,10 @@
       function stepEp(d){var st=playState;if(isMovieKey(st.key))return;var e=st.ep+d;if(e<1){showToast('Pehla episode hai');return}if(e>seasonEpCount(st.key,st.season)){if(st.season==='1'){st.season='2';st.ep=1;showToast('Season 2 shuru')}else{showToast('Aakhri episode hai');return}}else{st.ep=e}loadServer(activeServer)}
       byId('epPrev').addEventListener('click',function(){stepEp(-1)},false);
       byId('epNext').addEventListener('click',function(){stepEp(1)},false);
-      var SERVERS=[{name:'Drive',host:'drive.google.com'},{name:'AnimaHD Player',host:'animahd.com'}];
+      var SERVERS=[{name:'Server 1',host:'animahd.com'},{name:'Server 2',host:'drive.google.com'}];
       var activeServer=0;
       var serverFrame=byId('serverFrame'),frameLoader=byId('frameLoader'),serverBlocked=byId('frameBlocked');
-      var stagePoster=byId('stagePoster'),stagePosterImg=byId('stagePosterImg'),stagePosterText=byId('stagePosterText'),drivePopCover=byId('drivePopCover'),stageInjected=false;
+      var stagePoster=byId('stagePoster'),stagePosterImg=byId('stagePosterImg'),stagePosterText=byId('stagePosterText'),drivePopCover=byId('drivePopCover'),videoStage=byId('videoStage'),stageInjected=false;
       var serverPills=Array.prototype.slice.call(document.querySelectorAll('.server-pill'));
       var serverName=document.getElementById('serverName');
       var epStepper=byId('epStepper'),epLabel=byId('epLabel'),noticeTitle=byId('noticeTitle'),noticeText=byId('noticeText'),noticeBtn=byId('blockedOpen'),noticeAction='open',noticeAltBtn=byId('noticeAlt'),loadToken=0,loadTimer=null,noticeAltAction='server1';
@@ -822,13 +823,13 @@
       function syncPlayerHeading(){var st=playState,show=shows[st.key];if(show){byId('playerTitle').textContent=show.title}var m=isMovieKey(st.key);if(epLabel){epLabel.textContent=m?'MOVIE':('S'+st.season+' · EP'+st.ep)}if(epStepper){setHidden(epStepper,m)}if(SERVERS[activeServer]){byId('playerSub').textContent=(m?'Movie':('S'+st.season+' · EP'+st.ep))+' · '+SERVERS[activeServer].name}}
       function loadServer(i){disarmWatchdog();activeServer=i;setActiveServer(i);syncPlayerHeading();var s=SERVERS[i];if(!s||!serverFrame)return;if(!stageInjected){showStagePoster(i);return}injectServer(i)}
       function showStagePoster(i){var s=SERVERS[i];if(!serverUrl(i)){stageInjected=true;injectServer(i);return}var st=playState,show=shows[st.key];if(stagePosterImg){stagePosterImg.src=(show&&show.img)||''}if(stagePosterText){stagePosterText.textContent=epText()+(s?' — '+s.name:'')}try{serverFrame.src='about:blank'}catch(e){}setHidden(drivePopCover,true);setHidden(frameLoader,true);setHidden(serverBlocked,true);setHidden(stagePoster,false)}
-      function injectServer(i){var s=SERVERS[i];setHidden(stagePoster,true);var url=serverUrl(i);if(!url){noticeTitle.innerHTML='<span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' ka source abhi nahi hai.<br>Solo Leveling S1–S2 uplabdh hai.';noticeAction='none';setHidden(noticeBtn,true);setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(drivePopCover,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);setHidden(drivePopCover,i!==0);try{serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}catch(e){}if(i===1){try{var vst=byId('videoStage');var rq=vst&&(vst.requestFullscreen||vst.webkitRequestFullscreen||vst.msRequestFullscreen);if(rq&&!document.fullscreenElement){var fpr=rq.call(vst);if(fpr&&fpr.catch)fpr.catch(function(){})}}catch(e){}}try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame,t=++loadToken;if(loadTimer)clearTimeout(loadTimer);setTimeout(function(){if(t!==loadToken)return;f.src=url;loadTimer=setTimeout(function(){if(t===loadToken)onServerTimeout()},12000)},60)}
+      function injectServer(i){var s=SERVERS[i];setHidden(stagePoster,true);var url=serverUrl(i);if(!url){noticeTitle.innerHTML='<span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' ka source abhi nahi hai.<br>Solo Leveling S1–S2 uplabdh hai.';noticeAction='none';setHidden(noticeBtn,true);setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(drivePopCover,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);setHidden(drivePopCover,i!==1);setClass(videoStage,'s16x9',i===0);try{serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}catch(e){}try{serverFrame.setAttribute('scrolling','no')}catch(e){}try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame,t=++loadToken;if(loadTimer)clearTimeout(loadTimer);setTimeout(function(){if(t!==loadToken)return;f.src=url;loadTimer=setTimeout(function(){if(t===loadToken)onServerTimeout()},12000)},60)}
       if(stagePoster){stagePoster.addEventListener('click',function(){if(stageInjected)return;stageInjected=true;injectServer(activeServer)},false)}
       setActiveServer(0);
       serverPills.forEach(function(pill){pill.addEventListener('click',function(){var i=parseInt(attr(pill,'data-server'),10)||0;loadServer(i);var s=SERVERS[i];if(s){showToast(s.name+' — load ho raha hai')}},false)});
       byId('serverOpen').addEventListener('click',function(){var s=SERVERS[activeServer],u=serverUrl(activeServer);if(!s||!u){showToast('Is episode ka link nahi mila');return}showToast(s.name+' — naye tab me khola');try{window.open(u,'_blank','noopener')}catch(e){}},false);
       byId('serverFs').addEventListener('click',function(){var request=playerShell.requestFullscreen||playerShell.webkitRequestFullscreen||playerShell.msRequestFullscreen;var exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;if(!(document.fullscreenElement||document.webkitFullscreenElement)){if(request){try{request.call(playerShell)}catch(e){}}}else if(exit){try{exit.call(document)}catch(e){}}},false);
-      byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('AnimaHD Player — load ho raha hai')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Naye tab me khola')}}},false);
+      byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 — load ho raha hai')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Naye tab me khola')}}},false);
       byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else loadServer(activeServer)},false);
       byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}

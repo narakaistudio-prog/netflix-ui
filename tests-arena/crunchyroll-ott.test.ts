@@ -10,7 +10,7 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
-test('demo player has Drive + AnimaHD Player tabs below the video', () => {
+test('demo player has Server 1 + Server 2 tabs below the video', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
@@ -18,9 +18,9 @@ test('demo player has Drive + AnimaHD Player tabs below the video', () => {
     expect(html.match(/class="server-pill/g)).toHaveLength(2);
     expect(html).toContain('data-server="0"');
     expect(html).toContain('data-server="1"');
-    // The two tabs: Drive (default) + AnimaHD Player.
-    expect(html).toContain('>Drive</button>');
-    expect(html).toContain('>AnimaHD Player</button>');
+    // The two tabs: Server 1 (AnimaHD, default) + Server 2 (Drive).
+    expect(html).toContain('>Server 1</button>');
+    expect(html).toContain('>Server 2</button>');
     expect(html).toContain('drive.google.com/file/d/');
     expect(html).toContain('animahd.com/player/?file_id=');
     // Styling + switching logic wired up.
@@ -70,19 +70,21 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).not.toContain('allow-popups');
 });
 
-test('player servers are Drive (default) + AnimaHD Player', () => {
+test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const m = html.match(/var SERVERS=\[([^\]]+)\]/);
     expect(m).not.toBeNull();
     const def = (m as RegExpMatchArray)[1];
-    const iDrive = def.indexOf("name:'Drive'");
-    const iPlayer = def.indexOf("name:'AnimaHD Player'");
-    expect(iDrive).toBeGreaterThanOrEqual(0);
-    expect(iPlayer).toBeGreaterThan(iDrive);
-    expect(def).toContain("host:'drive.google.com'");
+    const iS1 = def.indexOf("name:'Server 1'");
+    const iS2 = def.indexOf("name:'Server 2'");
+    expect(iS1).toBeGreaterThanOrEqual(0);
+    expect(iS2).toBeGreaterThan(iS1);
     expect(def).toContain("host:'animahd.com'");
-    expect(def).not.toContain('newTab:true');
-    // Two pills, Drive active by default.
+    expect(def).toContain("host:'drive.google.com'");
+    expect(def.indexOf("host:'animahd.com'")).toBeLessThan(def.indexOf("host:'drive.google.com'"));
+    // Server 1 resolves the AnimaHD player URL, Server 2 the Drive preview.
+    expect(html).toContain("if(i===0)return 'https://animahd.com/player/");
+    // Two pills, Server 1 active by default.
     expect(html.match(/<button class="server-pill/g)).toHaveLength(2);
     expect(html).toContain('server-pill active" data-server="0"');
     expect(html).not.toContain('data-server="2"');
@@ -104,12 +106,18 @@ test('drive tab covers the pop-out button', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="drivePopCover"');
     expect(html).toContain('#drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px');
+    expect(html).toContain('setHidden(drivePopCover,i!==1)');
 });
 
-test('animahd tab auto-fullscreens the stage', () => {
+test('server 1 hides below-video junk without fullscreen', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain("if(i===1){try{var vst=byId('videoStage')");
-    expect(html).toContain('requestFullscreen');
+    // No page scrolling inside the frame + 16:9 viewport on Server 1.
+    expect(html).toContain('scrolling="no"');
+    expect(html).toContain("setAttribute('scrolling','no')");
+    expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
+    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
+    // No auto-fullscreen on inject (manual fullscreen button still works).
+    expect(html).not.toContain("vst=byId('videoStage')");
     expect(html).toContain('ex.call(document)');
 });
 
