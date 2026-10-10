@@ -10,15 +10,19 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
-test('demo player has a single-server bar below the video', () => {
+test('demo player has Drive + AnimaHD Player tabs below the video', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
     expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g)).toHaveLength(1);
-    // The one server: AnimaHD direct embeds.
-    expect(html).toContain('AnimaHD');
+    expect(html.match(/class="server-pill/g)).toHaveLength(2);
+    expect(html).toContain('data-server="0"');
+    expect(html).toContain('data-server="1"');
+    // The two tabs: Drive (default) + AnimaHD Player.
+    expect(html).toContain('>Drive</button>');
+    expect(html).toContain('>AnimaHD Player</button>');
     expect(html).toContain('drive.google.com/file/d/');
+    expect(html).toContain('animahd.com/player/?file_id=');
     // Styling + switching logic wired up.
     expect(html).toContain('.server-pill.active');
     expect(html).toContain("querySelectorAll('.server-pill')");
@@ -40,7 +44,7 @@ test('demo player streams real episodes from servers, no bundled video', () => {
 
 test('demo player resolves direct episode URLs per server', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Real Solo Leveling EP1-3 Google Drive embeds (Server 1).
+    // Real Solo Leveling Google Drive file_ids (Drive tab).
     expect(html).toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
     expect(html).toContain('1nxwxO8MqRIyK8DI3v5DSIyaVcdhpFkwR');
     expect(html).toContain('1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-');
@@ -61,34 +65,84 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('disarmWatchdog');
     expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="noticeAlt"');
-    expect(html).toContain('referrerpolicy="no-referrer"');
+    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(html).toContain('allow="autoplay; fullscreen"');
+    expect(html).not.toContain('allow-popups');
 });
 
-test('player keeps a single in-app server (AnimaHD)', () => {
+test('player servers are Drive (default) + AnimaHD Player', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const m = html.match(/var SERVERS=\[([^\]]+)\]/);
     expect(m).not.toBeNull();
     const def = (m as RegExpMatchArray)[1];
-    expect(def).toContain("name:'AnimaHD'");
-    expect(def).not.toContain('AniDisk');
-    expect(def).not.toContain('HindiAnime');
+    const iDrive = def.indexOf("name:'Drive'");
+    const iPlayer = def.indexOf("name:'AnimaHD Player'");
+    expect(iDrive).toBeGreaterThanOrEqual(0);
+    expect(iPlayer).toBeGreaterThan(iDrive);
+    expect(def).toContain("host:'drive.google.com'");
+    expect(def).toContain("host:'animahd.com'");
     expect(def).not.toContain('newTab:true');
-    // Exactly one server pill, no new-tab markers anywhere.
-    expect(html.match(/<button class="server-pill/g)).toHaveLength(1);
-    expect(html).not.toContain('data-newtab=');
-    expect(html).not.toContain('data-server="1"');
+    // Two pills, Drive active by default.
+    expect(html.match(/<button class="server-pill/g)).toHaveLength(2);
+    expect(html).toContain('server-pill active" data-server="0"');
     expect(html).not.toContain('data-server="2"');
-    // Extractor client fully removed from the player.
+    // Extractor client stays out of the player.
     expect(html).not.toContain('xtVideo');
     expect(html).not.toContain('EXTRACTOR_API');
     expect(html).not.toContain('data-extract=');
+});
+
+test('drive tab sandboxes its iframe and covers the pop-out button', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(html).toContain("setAttribute('sandbox','allow-scripts allow-same-origin')");
+    expect(html).toContain('id="drivePopCover"');
+    expect(html).toContain('#drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px');
+    // allow-popups is never used on either server.
+    expect(html).not.toContain('allow-popups');
+});
+
+test('player lazy-loads behind a poster + play button', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('id="stagePoster"');
+    expect(html).toContain('id="stagePlay"');
+    expect(html).toContain('id="stagePosterImg"');
+    expect(html).toContain('id="stagePosterText"');
+    expect(html).toContain('stageInjected');
+    expect(html).toContain('showStagePoster');
+    expect(html).toContain('injectServer');
+});
+
+test('solo leveling ships all 25 episodes from one file_id table', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('/*__ANIMAHDEP__*/');
+    expect(html).toContain('/*__END_ANIMAHDEP__*/');
+    expect(html).toContain('var EP_DATA=');
+    // S1E1, S1E12, S2E1, S2E13 (0-based ep 0/11/12/24).
+    expect(html).toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
+    expect(html).toContain('1udQR-P-EZK65__qcqkJoa4iGGxRj-YvS');
+    expect(html).toContain('1YTospn4BG5B4ZIJc0CDlFRzjh9NiO76F');
+    expect(html).toContain('1HVCzW7WQaIh35zaniBTvhwqz6pLjY7kp');
+    // Both server URLs derive from file_id + show_id + ep.
+    expect(html).toContain('drive.google.com/file/d/');
+    expect(html).toContain('animahd.com/player/?file_id=');
+    expect(html).toContain('show_id=');
+    expect(html).toContain('&ep=');
+    expect(html).toContain('epFileIndex');
+    expect(html).toContain('seasonEpCount');
+});
+
+test('season 2 lists 13 episodes for solo leveling', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('On to the Next Target');
+    expect(html).toContain('source.slice(0,12)');
 });
 
 test('player shows notice panel when a title has no source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    expect(html).toContain('uplabdh hai');
+    expect(html).toContain('Solo Leveling S1–S2 uplabdh hai');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {

@@ -12,7 +12,8 @@
     "build:web": "expo export --platform web && node scripts/prepare-web-dist.mjs",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "harvest:anidisk": "node scripts/harvest-deadtoons.mjs && node scripts/bake-anidisk-links.mjs"
+    "harvest:anidisk": "node scripts/harvest-deadtoons.mjs && node scripts/bake-anidisk-links.mjs",
+    "harvest:animahd": "node scripts/harvest-animahd.mjs solo-leveling --key solo --seasons 12,13 && node scripts/bake-animahd-links.mjs"
   },
   "jest": {
     "preset": "jest-expo"
