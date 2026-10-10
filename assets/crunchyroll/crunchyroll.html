@@ -404,6 +404,7 @@
     .video-stage iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:#000}
     #drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px;z-index:30}
     .video-stage.s16x9{padding-bottom:56.25%}
+    .video-stage:fullscreen,.video-stage:-webkit-full-screen{height:100%;max-height:none;padding-bottom:0;display:-webkit-flex;display:flex;background:#000;box-shadow:none}
     #s1Crop{position:absolute;left:0;right:0;bottom:0;height:3%;background:#000;pointer-events:none}
     .stage-poster{position:absolute;inset:0;z-index:20;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050505;overflow:hidden;cursor:pointer}
     .stage-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
@@ -833,7 +834,7 @@
       byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 — loading')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Opened in new tab')}}},false);
       byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else loadServer(activeServer)},false);
       byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
-      byId('serverFs').addEventListener('click',function(){var rq=playerShell.requestFullscreen||playerShell.webkitRequestFullscreen;if(!rq){showToast('Fullscreen is not supported here');return}try{var pr=rq.call(playerShell);if(pr&&pr.catch)pr.catch(function(){showToast('Fullscreen is blocked by this browser')})}catch(e){showToast('Fullscreen is blocked by this browser')}},false);
+      byId('serverFs').addEventListener('click',function(){var rq=videoStage.requestFullscreen||videoStage.webkitRequestFullscreen;if(!rq){showToast('Fullscreen is not supported here');return}try{var pr=rq.call(videoStage);if(pr&&pr.catch)pr.catch(function(){showToast('Fullscreen is blocked by this browser')})}catch(e){showToast('Fullscreen is blocked by this browser')}},false);
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}
       function onServerTimeout(){var s=SERVERS[activeServer];if(!s)return;var alt=SERVERS[1-activeServer];noticeTitle.innerHTML='<span>'+escapeHtml(s.name)+'</span>';noticeText.innerHTML='This server is not responding (slow or blocked).<br>Retry or try the other tab.';noticeBtn.textContent='Retry';noticeAction='retry';if(alt){noticeAltBtn.textContent='Try '+alt.name;noticeAltAction=activeServer===0?'server2':'server1';setHidden(noticeAltBtn,false)}else{setHidden(noticeAltBtn,true)}try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(drivePopCover,true);setHidden(s1Crop,true);setHidden(serverBlocked,false)}
       if(serverFrame){serverFrame.addEventListener('load',function(){if(serverFrame.src==='about:blank')return;disarmWatchdog();var lt=loadToken;setTimeout(function(){if(lt===loadToken)setHidden(frameLoader,true)},800)},false)}

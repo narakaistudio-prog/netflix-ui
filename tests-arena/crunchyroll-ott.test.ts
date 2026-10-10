@@ -129,7 +129,8 @@ test('fullscreen button targets the video stage', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="serverFs"');
     expect(html).toContain("byId('serverFs')");
-    expect(html).toContain('playerShell.requestFullscreen');
+    expect(html).toContain('videoStage.requestFullscreen');
+    expect(html).toContain('.video-stage:fullscreen');
     expect(html).toContain('Fullscreen is blocked by this browser');
 });
 
