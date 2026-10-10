@@ -119,6 +119,16 @@ test('server 1 hides below-video junk without fullscreen', () => {
     // No auto-fullscreen on inject (manual fullscreen button still works).
     expect(html).not.toContain("vst=byId('videoStage')");
     expect(html).toContain('ex.call(document)');
+    expect(html).toContain('id="s1Crop"');
+    expect(html).toContain('#s1Crop{position:absolute;left:0;right:0;bottom:0;height:7%');
+    expect(html).toContain("setHidden(s1Crop,i!==0)");
+    expect(html).toContain('var lt=loadToken');
+});
+
+test('fullscreen button targets the video stage', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('var el=videoStage||playerShell');
+    expect(html).toContain("showToast('Fullscreen blocked hai')");
 });
 
 test('player lazy-loads behind a poster + play button', () => {
