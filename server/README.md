@@ -1,5 +1,9 @@
 # anidisk-extractor — `/api/extract` + `/api/stream`
 
+> NOTE: Server 2 (player side) is currently removed — the player is single-server
+> AnimaHD. This API stays ready; to reconnect, restore the extractor client block
+> (commit `9c94ab1`) and open the player with `?extractor=<this-service>/api/extract`.
+
 Tiny **zero-dependency** Node server that turns episode/embed pages (AniDisk and the
 video hosts behind it — StreamWish, VidHide/VidMoly, Filemoon, Voe, …) into a direct
 **m3u8/mp4** the demo player's own `<video>` element can play. No iframe, no host JS
