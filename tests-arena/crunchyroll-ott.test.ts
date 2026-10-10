@@ -10,20 +10,15 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
-test('demo player has a 3-server switcher below the video', () => {
+test('demo player has a single-server bar below the video', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
     expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g)).toHaveLength(3);
-    expect(html).toContain('data-server="2"');
-    // The three servers (dynamic per-episode URLs now).
+    expect(html.match(/class="server-pill/g)).toHaveLength(1);
+    // The one server: AnimaHD direct embeds.
     expect(html).toContain('AnimaHD');
-    expect(html).toContain('AniDisk');
-    expect(html).toContain('HindiAnime');
     expect(html).toContain('drive.google.com/file/d/');
-    expect(html).toContain('anidisk.org/watch/');
-    expect(html).toContain('hindianime.world/watch/');
     // Styling + switching logic wired up.
     expect(html).toContain('.server-pill.active');
     expect(html).toContain("querySelectorAll('.server-pill')");
@@ -69,46 +64,27 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('referrerpolicy="no-referrer"');
 });
 
-test('server order matches URL mapping (AnimaHD/AniDisk/HindiAnime)', () => {
+test('player keeps a single in-app server (AnimaHD)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const m = html.match(/var SERVERS=\[([^\]]+)\]/);
     expect(m).not.toBeNull();
     const def = (m as RegExpMatchArray)[1];
-    const iAnimahd = def.indexOf("name:'AnimaHD'");
-    const iAnidisk = def.indexOf("name:'AniDisk'");
-    const iHindi = def.indexOf("name:'HindiAnime'");
-    expect(iAnimahd).toBeGreaterThanOrEqual(0);
-    expect(iAnidisk).toBeGreaterThan(iAnimahd);
-    expect(iHindi).toBeGreaterThan(iAnidisk);
-    // AniDisk + HindiAnime are new-tab-only (their players refuse third-party
-    // embeds), and both pills carry the marker.
-    expect(def.match(/newTab:true/g)).toHaveLength(2);
-    expect(def.slice(iAnidisk, iHindi)).toContain('newTab:true');
-    expect(def.lastIndexOf('newTab:true')).toBeGreaterThan(iHindi);
-    expect(html).toContain('data-server="1" data-newtab="1"');
-    expect(html).toContain('data-server="2" data-newtab="1"');
-    expect(html).toContain("content:'↗'");
+    expect(def).toContain("name:'AnimaHD'");
+    expect(def).not.toContain('AniDisk');
+    expect(def).not.toContain('HindiAnime');
+    expect(def).not.toContain('newTab:true');
+    // Exactly one server pill, no new-tab markers anywhere.
+    expect(html.match(/<button class="server-pill/g)).toHaveLength(1);
+    expect(html).not.toContain('data-newtab=');
+    expect(html).not.toContain('data-server="1"');
+    expect(html).not.toContain('data-server="2"');
 });
 
-test('AniDisk plays in new tab (host refuses all embeds)', () => {
+test('player shows notice panel when a title has no source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    const m = html.match(/var SERVERS=\[([^\]]+)\]/);
-    expect(m).not.toBeNull();
-    const def = (m as RegExpMatchArray)[1];
-    const iAnidisk = def.indexOf("name:'AniDisk'");
-    const iHindi = def.indexOf("name:'HindiAnime'");
-    expect(iAnidisk).toBeGreaterThanOrEqual(0);
-    // The AniDisk entry itself carries newTab:true.
-    expect(def.slice(iAnidisk, iHindi)).toContain('newTab:true');
-    expect(html).toContain('data-server="1" data-newtab="1"');
-});
-
-test('blocked servers fall back to new tab with in-player notice', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('newTab:true');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    expect(html).toContain('data-newtab="1"');
+    expect(html).toContain('uplabdh hai');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {

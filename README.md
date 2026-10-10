@@ -25,7 +25,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 
 - 🏠 Animated home screen with featured content
 - 🍥 Crunchyroll OTT section (beside My List) — opens a full-screen, self-contained anime experience (`assets/crunchyroll/crunchyroll.html`)
-- 🔗 AniDisk confirmed-links pipeline — DeadToons harvest (`npm run harvest:anidisk`) + weekly GitHub Action, baked into the player (slug-guess fallback)
+- 🔗 AniDisk confirmed-links pipeline — DeadToons harvest (`npm run harvest:anidisk`) + weekly GitHub Action (data stays warm in the page; player is single-server AnimaHD for now)
 - 🎬 Separate Netflix-style Movies and TV Shows shelves
 - 🎮 Mobile games showcase
 - 🔍 Dynamic search with instant results

@@ -414,7 +414,6 @@
     .frame-blocked strong span{color:#f47521}
     .frame-blocked p{margin:0;font-size:12.5px;color:#a9abb0;line-height:1.6}
     .blocked-open{background:#f47521;border:0;color:#160e08;font-weight:900;font-size:13px;border-radius:10px;padding:10px 18px;cursor:pointer;margin-top:6px}
-    .server-pill[data-newtab="1"]::after{content:'↗';font-size:11px;opacity:.8}
 
     .ep-stepper{display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:6px;background:#1a1d23;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:4px 6px}
     .ep-stepper button{background:#2a2d34;color:#fff;border:0;border-radius:7px;width:26px;height:26px;font-size:11px;font-weight:900;cursor:pointer;line-height:1}
@@ -600,9 +599,7 @@
             <button id="epNext" aria-label="Next episode" title="Next episode">▶</button>
           </div>
           <button class="server-pill active" data-server="0" title="AnimaHD — animahd.com"><span class="dot"></span>Server 1</button>
-          <button class="server-pill" data-server="1" data-newtab="1" title="AniDisk — anidisk.org (naya tab)"><span class="dot"></span>Server 2</button>
-          <button class="server-pill" data-server="2" data-newtab="1" title="HindiAnime — hindianime.world"><span class="dot"></span>Server 3</button>
-          <span class="server-name" id="serverName">AnimaHD · animahd.com</span>
+                    <span class="server-name" id="serverName">AnimaHD · animahd.com</span>
           <button class="server-ghost" id="serverOpen" title="Active server naye tab me kholo">Naye tab me kholo ↗</button>
           <button class="server-ghost" id="serverFs" title="Fullscreen">⛶ Fullscreen</button>
           <button class="server-ghost" id="serverHelp" title="Server nahi chal raha?">⚠ Nahi chal raha?</button>
@@ -804,7 +801,7 @@
       function stepEp(d){var st=playState;if(isMovieKey(st.key))return;var e=st.ep+d;if(e<1){showToast('Pehla episode hai');return}if(e>EP_COUNT){if(st.season==='1'){st.season='2';st.ep=1;showToast('Season 2 shuru')}else{showToast('Aakhri episode hai');return}}else{st.ep=e}loadServer(activeServer)}
       byId('epPrev').addEventListener('click',function(){stepEp(-1)},false);
       byId('epNext').addEventListener('click',function(){stepEp(1)},false);
-      var SERVERS=[{name:'AnimaHD',host:'animahd.com'},{name:'AniDisk',host:'anidisk.org',newTab:true},{name:'HindiAnime',host:'hindianime.world',newTab:true}];
+      var SERVERS=[{name:'AnimaHD',host:'animahd.com'}];
       var activeServer=0;
       var serverFrame=byId('serverFrame'),frameLoader=byId('frameLoader'),serverBlocked=byId('frameBlocked');
       var serverPills=Array.prototype.slice.call(document.querySelectorAll('.server-pill'));
@@ -812,7 +809,7 @@
       var epStepper=byId('epStepper'),epLabel=byId('epLabel'),noticeTitle=byId('noticeTitle'),noticeText=byId('noticeText'),noticeBtn=byId('blockedOpen'),noticeAction='open',noticeAltBtn=byId('noticeAlt'),loadToken=0,loadTimer=null,noticeAltAction='server1';
       function setActiveServer(i){for(var k=0;k<serverPills.length;k++){setClass(serverPills[k],'active',k===i)}if(serverName&&SERVERS[i]){serverName.textContent=SERVERS[i].name+' · '+SERVERS[i].host}}
       function syncPlayerHeading(){var st=playState,show=shows[st.key];if(show){byId('playerTitle').textContent=show.title}var m=isMovieKey(st.key);if(epLabel){epLabel.textContent=m?'MOVIE':('S'+st.season+' · EP'+st.ep)}if(epStepper){setHidden(epStepper,m)}if(SERVERS[activeServer]){byId('playerSub').textContent=(m?'Movie':('S'+st.season+' · EP'+st.ep))+' · Server '+(activeServer+1)+' · '+SERVERS[activeServer].name}}
-      function loadServer(i){disarmWatchdog();activeServer=i;setActiveServer(i);if(i===1&&serverName&&anidiskHindi(playState.key)){serverName.textContent+=' · HINDI'}syncPlayerHeading();var s=SERVERS[i];if(!s||!serverFrame)return;if(s.newTab){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' — ye server player ke andar khulne se mana karta hai.<br>Naye tab me kholo aur wahan episode chalao.';noticeBtn.textContent='Naye tab me kholo \u2197';noticeAction='open';setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}var url=serverUrl(i);if(!url){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' ka direct source nahi mila.<br>Dusra server try karo.';noticeBtn.textContent='Server 2 try karo';noticeAction='server2';setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame,t=++loadToken;if(loadTimer)clearTimeout(loadTimer);setTimeout(function(){if(t!==loadToken)return;f.src=url;loadTimer=setTimeout(function(){if(t===loadToken)onServerTimeout()},12000)},60)}
+      function loadServer(i){disarmWatchdog();activeServer=i;setActiveServer(i);if(i===1&&serverName&&anidiskHindi(playState.key)){serverName.textContent+=' · HINDI'}syncPlayerHeading();var s=SERVERS[i];if(!s||!serverFrame)return;if(s.newTab){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' — ye server player ke andar khulne se mana karta hai.<br>Naye tab me kholo aur wahan episode chalao.';noticeBtn.textContent='Naye tab me kholo \u2197';noticeAction='open';setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}var url=serverUrl(i);if(!url){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' ka source abhi nahi hai.<br>Solo Leveling S1 · EP1–3 uplabdh hai.';noticeAction='none';setHidden(noticeBtn,true);setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame,t=++loadToken;if(loadTimer)clearTimeout(loadTimer);setTimeout(function(){if(t!==loadToken)return;f.src=url;loadTimer=setTimeout(function(){if(t===loadToken)onServerTimeout()},12000)},60)}
       setActiveServer(0);
       serverPills.forEach(function(pill){pill.addEventListener('click',function(){var i=parseInt(attr(pill,'data-server'),10)||0;loadServer(i);var s=SERVERS[i];if(s){if(s.newTab){var u=serverUrl(i);showToast('Server '+(i+1)+' · '+s.name+' — player me blocked, naye tab me khola');if(u){try{window.open(u,'_blank','noopener')}catch(e){}}}else{showToast('Server '+(i+1)+' · '+s.name+' — load ho raha hai')}}},false)});
       byId('serverOpen').addEventListener('click',function(){var s=SERVERS[activeServer],u=serverUrl(activeServer);if(!s||!u){showToast('Is episode ka link nahi mila — Server 2 dabao');return}showToast('Server '+(activeServer+1)+' · '+s.name+' — naye tab me khola');try{window.open(u,'_blank','noopener')}catch(e){}},false);
@@ -821,7 +818,7 @@
       byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else loadServer(activeServer)},false);
       byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}
-      function onServerTimeout(){var s=SERVERS[activeServer];if(!s)return;noticeTitle.innerHTML='Server '+(activeServer+1)+' · <span>'+escapeHtml(s.name)+'</span>';noticeText.innerHTML='Ye server jawab nahi de raha (slow ya blocked).<br>Dobara try karo ya dusra server lo — episode link neeche “Naye tab me kholo” se bhi khul jayega.';noticeBtn.textContent='Dobara load karo';noticeAction='retry';noticeAltBtn.textContent=activeServer===0?'Server 2 try karo':'Server 1 try karo';noticeAltAction=activeServer===0?'server2':'server1';setHidden(noticeAltBtn,false);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false)}
+      function onServerTimeout(){var s=SERVERS[activeServer];if(!s)return;noticeTitle.innerHTML='Server '+(activeServer+1)+' · <span>'+escapeHtml(s.name)+'</span>';noticeText.innerHTML='Ye server jawab nahi de raha (slow ya blocked).<br>Dobara try karo.';noticeBtn.textContent='Dobara load karo';noticeAction='retry';setHidden(noticeBtn,false);setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false)}
       if(serverFrame){serverFrame.addEventListener('load',function(){if(serverFrame.src==='about:blank')return;disarmWatchdog();setHidden(frameLoader,true)},false)}
       
     })();
