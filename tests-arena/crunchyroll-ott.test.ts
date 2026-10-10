@@ -10,15 +10,18 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
-test('demo player has a single-server bar below the video', () => {
+test('demo player has a 2-server bar below the video', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
     expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g)).toHaveLength(1);
-    // The one server: AnimaHD direct embeds.
+    expect(html.match(/class="server-pill/g)).toHaveLength(2);
+    expect(html).toContain('data-server="1"');
+    // The two servers: AnimaHD direct embeds + AniDisk extractor.
     expect(html).toContain('AnimaHD');
+    expect(html).toContain('AniDisk');
     expect(html).toContain('drive.google.com/file/d/');
+    expect(html).toContain('anidisk.org/watch/');
     // Styling + switching logic wired up.
     expect(html).toContain('.server-pill.active');
     expect(html).toContain("querySelectorAll('.server-pill')");
@@ -64,27 +67,43 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('referrerpolicy="no-referrer"');
 });
 
-test('player keeps a single in-app server (AnimaHD)', () => {
+test('player has AnimaHD + AniDisk-extractor servers', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const m = html.match(/var SERVERS=\[([^\]]+)\]/);
     expect(m).not.toBeNull();
     const def = (m as RegExpMatchArray)[1];
     expect(def).toContain("name:'AnimaHD'");
-    expect(def).not.toContain('AniDisk');
+    expect(def).toContain("name:'AniDisk'");
     expect(def).not.toContain('HindiAnime');
     expect(def).not.toContain('newTab:true');
-    // Exactly one server pill, no new-tab markers anywhere.
-    expect(html.match(/<button class="server-pill/g)).toHaveLength(1);
+    // AniDisk entry is extractor-backed (own player, no iframe).
+    const iAnidisk = def.indexOf("name:'AniDisk'");
+    expect(def.slice(iAnidisk)).toContain('extract:true');
+    // Two pills, extractor pill marked, no new-tab markers.
+    expect(html.match(/<button class="server-pill/g)).toHaveLength(2);
+    expect(html).toContain('data-server="1" data-extract="1"');
     expect(html).not.toContain('data-newtab=');
-    expect(html).not.toContain('data-server="1"');
     expect(html).not.toContain('data-server="2"');
+});
+
+test('extractor mode plays streams in its own video element', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('id="xtVideo"');
+    expect(html).toContain('EXTRACTOR_API');
+    expect(html).toContain('?extractor=');
+    expect(html).toContain('loadExtract');
+    expect(html).toContain('xtPlay');
+    expect(html).toContain('hls.js');
+    expect(html).toContain('dist/hls.min.js');
+    expect(html).toContain('application/vnd.apple.mpegurl');
+    expect(html).toContain("data-extract=\"1\"");
 });
 
 test('player shows notice panel when a title has no source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    expect(html).toContain('uplabdh hai');
+    expect(html).toContain('Server 2 (extractor) try karo');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {

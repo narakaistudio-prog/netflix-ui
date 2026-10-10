@@ -1,0 +1,13 @@
+{
+  "name": "anidisk-extractor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tiny zero-dependency extractor API: episode/embed pages -> direct m3u8/mp4 (+ header-spoofing stream proxy)",
+  "scripts": {
+    "start": "node extractor.mjs",
+    "self-test": "node extractor.mjs --self-test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
