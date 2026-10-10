@@ -10,6 +10,17 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
+test('demo page toast stays fully hidden until triggered', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // The empty toast must not peek above the viewport bottom (fixed sliver).
+    expect(html).toContain('translate(-50%,250%);opacity:0;visibility:hidden');
+    expect(html).toContain(
+        '.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}',
+    );
+    // Toast feature itself stays wired up.
+    expect(html).toContain('showToast');
+});
+
 test('demo page is Crunchyroll-branded and self-contained', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('<title>Crunchyroll');
