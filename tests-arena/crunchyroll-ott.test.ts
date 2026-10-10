@@ -38,6 +38,7 @@ test('demo player streams real episodes from servers, no bundled video', () => {
     expect(html).toContain('id="frameLoader"');
     expect(html).toContain('id="serverOpen"');
     expect(html).toContain('id="serverHelp"');
+    expect(html).toContain('id="serverFs"');
     expect(html).toContain('id="playerTitle"');
     expect(html).toContain('loadServer');
 });
@@ -122,6 +123,14 @@ test('server 1 hides below-video junk without fullscreen', () => {
     expect(html).toContain('#s1Crop{position:absolute;left:0;right:0;bottom:0;height:3%');
     expect(html).toContain("setHidden(s1Crop,i!==0)");
     expect(html).toContain('var lt=loadToken');
+});
+
+test('fullscreen button targets the video stage', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('id="serverFs"');
+    expect(html).toContain("byId('serverFs')");
+    expect(html).toContain('playerShell.requestFullscreen');
+    expect(html).toContain('Fullscreen is blocked by this browser');
 });
 
 test('player lazy-loads behind a poster + play button', () => {
