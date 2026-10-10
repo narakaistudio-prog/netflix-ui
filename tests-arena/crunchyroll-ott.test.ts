@@ -60,6 +60,15 @@ test('demo player resolves direct episode URLs per server', () => {
     expect(html).not.toContain("url:'https://anidisk.org/'");
 });
 
+test('player has server failure handling (watchdog + troubleshoot)', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('onServerTimeout');
+    expect(html).toContain('disarmWatchdog');
+    expect(html).toContain('id="serverHelp"');
+    expect(html).toContain('id="noticeAlt"');
+    expect(html).toContain('referrerpolicy="no-referrer"');
+});
+
 test('blocked servers fall back to new tab with in-player notice', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('newTab:true');

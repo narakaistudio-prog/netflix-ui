@@ -420,6 +420,9 @@
     .ep-stepper button{background:#2a2d34;color:#fff;border:0;border-radius:7px;width:26px;height:26px;font-size:11px;font-weight:900;cursor:pointer;line-height:1}
     .ep-stepper button:hover{background:#f47521;color:#160e08}
     #epLabel{font-size:12px;font-weight:900;color:#f47521;min-width:66px;text-align:center;white-space:nowrap}
+
+    .blocked-alt{background:transparent;border:1px solid rgba(255,255,255,.25);color:#f7f7f7;font-weight:800;font-size:12.5px;border-radius:10px;padding:9px 16px;cursor:pointer}
+    .blocked-alt:hover{border-color:#f47521;color:#f47521}
 </style>
 </head>
 <body>
@@ -585,9 +588,9 @@
     <div class="player-layout">
       <div class="stage-col">
       <div class="video-stage" id="videoStage">
-        <iframe id="serverFrame" title="Anime server player" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="serverFrame" title="Anime server player" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe>
         <div class="frame-loader" id="frameLoader" hidden><span class="spinner"></span><p>Server load ho raha hai…</p></div>
-        <div class="frame-blocked" id="frameBlocked" hidden><strong id="noticeTitle">Server · <span>Info</span></strong><p id="noticeText"></p><button class="blocked-open" id="blockedOpen">Naye tab me kholo ↗</button></div>
+        <div class="frame-blocked" id="frameBlocked" hidden><strong id="noticeTitle">Server · <span>Info</span></strong><p id="noticeText"></p><button class="blocked-open" id="blockedOpen">Naye tab me kholo ↗</button><button class="blocked-alt" id="noticeAlt" hidden>Server 1 try karo</button></div>
       </div>
       <div class="server-bar" id="serverBar">
         <div class="server-row">
@@ -602,6 +605,7 @@
           <span class="server-name" id="serverName">AnimaHD · animahd.com</span>
           <button class="server-ghost" id="serverOpen" title="Active server naye tab me kholo">Naye tab me kholo ↗</button>
           <button class="server-ghost" id="serverFs" title="Fullscreen">⛶ Fullscreen</button>
+          <button class="server-ghost" id="serverHelp" title="Server nahi chal raha?">⚠ Nahi chal raha?</button>
         </div>
         <p class="server-hint">◀ ▶ se episode badlo · Na chale to dusra server dabao</p>
       </div>
@@ -779,7 +783,7 @@
         if(key===13||key==='Enter'||key===32||key===' '){card=closest(target,'.show-card,.rail-card');if(card&&!closest(target,'button')){event.preventDefault();openDetail(attr(card,'data-open'))}}
       },false);
       setHidden(dialog,true);setHidden(playerShell,true);setHidden(notificationPanel,true);showView('top');loadLazyImages();
-      function openPlayer(){dialogClose();setHidden(playerShell,false);document.body.style.overflow='hidden';syncPlayerHeading();loadServer(activeServer);byId('closePlayer').focus()}function closePlayer(){try{serverFrame.src='about:blank'}catch(e){}setHidden(playerShell,true);document.body.style.overflow=''}var GDRIVE={solo:{1:'144U5FdhfBjG-nTnQ72xiljp8syd_qoMS',2:'1nxwxO8MqRIyK8DI3v5DSIyaVcdhpFkwR',3:'1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-'}};
+      function openPlayer(){dialogClose();setHidden(playerShell,false);document.body.style.overflow='hidden';syncPlayerHeading();loadServer(activeServer);byId('closePlayer').focus()}function closePlayer(){disarmWatchdog();try{serverFrame.src='about:blank'}catch(e){}setHidden(playerShell,true);document.body.style.overflow=''}var GDRIVE={solo:{1:'144U5FdhfBjG-nTnQ72xiljp8syd_qoMS',2:'1nxwxO8MqRIyK8DI3v5DSIyaVcdhpFkwR',3:'1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-'}};
       var SLUG_OVERRIDES={};
       /*__ANIDISK_CONFIRMED__*/var ANIDISK_CONFIRMED={"solo":{"slug":"solo-leveling","hindi":true,"tags":["hindi","multi-audio"],"source":"manual-research","verified":"2026-10-10"}};/*__END_ANIDISK__*/
       var EP_COUNT=12;
@@ -805,16 +809,20 @@
       var serverFrame=byId('serverFrame'),frameLoader=byId('frameLoader'),serverBlocked=byId('frameBlocked');
       var serverPills=Array.prototype.slice.call(document.querySelectorAll('.server-pill'));
       var serverName=document.getElementById('serverName');
-      var epStepper=byId('epStepper'),epLabel=byId('epLabel'),noticeTitle=byId('noticeTitle'),noticeText=byId('noticeText'),noticeBtn=byId('blockedOpen'),noticeAction='open';
+      var epStepper=byId('epStepper'),epLabel=byId('epLabel'),noticeTitle=byId('noticeTitle'),noticeText=byId('noticeText'),noticeBtn=byId('blockedOpen'),noticeAction='open',noticeAltBtn=byId('noticeAlt'),loadToken=0,loadTimer=null,noticeAltAction='server1';
       function setActiveServer(i){for(var k=0;k<serverPills.length;k++){setClass(serverPills[k],'active',k===i)}if(serverName&&SERVERS[i]){serverName.textContent=SERVERS[i].name+' · '+SERVERS[i].host}}
       function syncPlayerHeading(){var st=playState,show=shows[st.key];if(show){byId('playerTitle').textContent=show.title}var m=isMovieKey(st.key);if(epLabel){epLabel.textContent=m?'MOVIE':('S'+st.season+' · EP'+st.ep)}if(epStepper){setHidden(epStepper,m)}if(SERVERS[activeServer]){byId('playerSub').textContent=(m?'Movie':('S'+st.season+' · EP'+st.ep))+' · Server '+(activeServer+1)+' · '+SERVERS[activeServer].name}}
-      function loadServer(i){activeServer=i;setActiveServer(i);if(i===1&&serverName&&anidiskHindi(playState.key)){serverName.textContent+=' · HINDI'}syncPlayerHeading();var s=SERVERS[i];if(!s||!serverFrame)return;if(s.newTab){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' — ye server player ke andar khulne se mana karta hai.<br>Naye tab me kholo aur wahan episode chalao.';noticeBtn.textContent='Naye tab me kholo \u2197';noticeAction='open';try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}var url=serverUrl(i);if(!url){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' ka direct source nahi mila.<br>Dusra server try karo.';noticeBtn.textContent='Server 2 try karo';noticeAction='server2';try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame;setTimeout(function(){f.src=url},60)}
+      function loadServer(i){disarmWatchdog();activeServer=i;setActiveServer(i);if(i===1&&serverName&&anidiskHindi(playState.key)){serverName.textContent+=' · HINDI'}syncPlayerHeading();var s=SERVERS[i];if(!s||!serverFrame)return;if(s.newTab){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' — ye server player ke andar khulne se mana karta hai.<br>Naye tab me kholo aur wahan episode chalao.';noticeBtn.textContent='Naye tab me kholo \u2197';noticeAction='open';setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}var url=serverUrl(i);if(!url){noticeTitle.innerHTML='Server '+(i+1)+' · <span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' ka direct source nahi mila.<br>Dusra server try karo.';noticeBtn.textContent='Server 2 try karo';noticeAction='server2';setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame,t=++loadToken;if(loadTimer)clearTimeout(loadTimer);setTimeout(function(){if(t!==loadToken)return;f.src=url;loadTimer=setTimeout(function(){if(t===loadToken)onServerTimeout()},12000)},60)}
       setActiveServer(0);
       serverPills.forEach(function(pill){pill.addEventListener('click',function(){var i=parseInt(attr(pill,'data-server'),10)||0;loadServer(i);var s=SERVERS[i];if(s){if(s.newTab){var u=serverUrl(i);showToast('Server '+(i+1)+' · '+s.name+' — player me blocked, naye tab me khola');if(u){try{window.open(u,'_blank','noopener')}catch(e){}}}else{showToast('Server '+(i+1)+' · '+s.name+' — load ho raha hai')}}},false)});
       byId('serverOpen').addEventListener('click',function(){var s=SERVERS[activeServer],u=serverUrl(activeServer);if(!s||!u){showToast('Is episode ka link nahi mila — Server 2 dabao');return}showToast('Server '+(activeServer+1)+' · '+s.name+' — naye tab me khola');try{window.open(u,'_blank','noopener')}catch(e){}},false);
       byId('serverFs').addEventListener('click',function(){var request=playerShell.requestFullscreen||playerShell.webkitRequestFullscreen||playerShell.msRequestFullscreen;var exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;if(!(document.fullscreenElement||document.webkitFullscreenElement)){if(request){try{request.call(playerShell)}catch(e){}}}else if(exit){try{exit.call(document)}catch(e){}}},false);
-      byId('blockedOpen').addEventListener('click',function(){if(noticeAction==='server2'){loadServer(1);showToast('Server 2 · AniDisk — load ho raha hai')}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Naye tab me khola')}}},false);
-      if(serverFrame){serverFrame.addEventListener('load',function(){setHidden(frameLoader,true)},false)}
+      byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 · AniDisk — load ho raha hai')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Naye tab me khola')}}},false);
+      byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else loadServer(activeServer)},false);
+      byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
+      function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}
+      function onServerTimeout(){var s=SERVERS[activeServer];if(!s)return;noticeTitle.innerHTML='Server '+(activeServer+1)+' · <span>'+escapeHtml(s.name)+'</span>';noticeText.innerHTML='Ye server jawab nahi de raha (slow ya blocked).<br>Dobara try karo ya dusra server lo — episode link neeche “Naye tab me kholo” se bhi khul jayega.';noticeBtn.textContent='Dobara load karo';noticeAction='retry';noticeAltBtn.textContent=activeServer===0?'Server 2 try karo':'Server 1 try karo';noticeAltAction=activeServer===0?'server2':'server1';setHidden(noticeAltBtn,false);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false)}
+      if(serverFrame){serverFrame.addEventListener('load',function(){if(serverFrame.src==='about:blank')return;disarmWatchdog();setHidden(frameLoader,true)},false)}
       
     })();
   </script>
