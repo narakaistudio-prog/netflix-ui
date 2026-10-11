@@ -92,17 +92,17 @@ test('animahd tab plays unsandboxed (its own fullscreen control works)', async (
     await wait(200);
     await play(dom.window, 'solo');
     const frame = dom.window.document.getElementById('serverFrame')!;
-    // Reference play system (byte-exact): no sandbox on the AnimaHD tab,
-    // allow='autoplay', and the fullscreen permission kept on the element.
+    // Reference play system (byte-exact): no sandbox on the AnimaHD tab, no
+    // scrolling lock (the page keeps its own scrollbar) and no permissions list.
     expect(frame.hasAttribute('sandbox')).toBe(false);
-    expect(frame.getAttribute('allow')).toBe('autoplay');
+    expect(frame.hasAttribute('scrolling')).toBe(false);
+    expect(frame.hasAttribute('allow')).toBe(false);
     expect(frame.hasAttribute('allowfullscreen')).toBe(true);
     expect(frame.hasAttribute('webkitallowfullscreen')).toBe(true);
     expect(frame.hasAttribute('mozallowfullscreen')).toBe(true);
-    expect(frame.getAttribute('scrolling')).toBe('no');
     expect(frame.getAttribute('src')).toContain('https://animahd.com/player/?file_id=');
-    // The junk cover strip is only for the AnimaHD tab.
-    expect(dom.window.document.getElementById('s1cover')!.hasAttribute('hidden')).toBe(false);
+    // Stage is the reference 16:9 viewport.
+    expect(dom.window.document.getElementById('videoStage')!.classList.contains('s16x9')).toBe(true);
     dom.window.close();
 });
 
@@ -143,7 +143,7 @@ test('nxsha tab stays sandboxed (popup shield) but plays the same way', async ()
     const frame = dom.window.document.getElementById('serverFrame')!;
     expect(frame.getAttribute('sandbox')).toBe('allow-scripts allow-same-origin');
     expect(frame.getAttribute('src')).toContain('https://nxsha.space/embed/tv/tt2560140/1/1');
-    expect(dom.window.document.getElementById('s1cover')!.hasAttribute('hidden')).toBe(true);
+    expect(frame.getAttribute('scrolling')).toBe('no');
     dom.window.close();
 });
 

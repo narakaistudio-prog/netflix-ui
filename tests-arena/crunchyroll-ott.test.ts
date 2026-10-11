@@ -99,9 +99,10 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
 
 test('server tabs sandbox policy matches the reference play system', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1 (AnimaHD) must be unsandboxed — that is what lets the player's
-    // own fullscreen work, and why exiting fullscreen never shows white.
-    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay')}");
+    // Server 1 (AnimaHD) runs exactly like the deployment whose fullscreen was
+    // perfect: no sandbox, scrolling LEFT ON (the player page keeps its own
+    // scrollbar and its whole content), and no permissions list at all.
+    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.removeAttribute('scrolling');serverFrame.removeAttribute('allow')}");
     // Servers 2 (Drive) + 3 (Nxsha) keep the sandbox: no allow-popups, so the
     // embeds cannot open popups.
     expect(html).not.toContain('allow-popups');
@@ -230,7 +231,7 @@ test('player-driven fullscreen: AnimaHD tab unsandboxed, no separate control', (
     // fullscreens its own document, our layout never changes — which is why
     // coming back never leaves a white frame.
     expect(html).toContain(
-        "if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay')}",
+        "if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.removeAttribute('scrolling');serverFrame.removeAttribute('allow')}",
     );
     expect(html).toContain('<iframe id="serverFrame" title="Anime server player" allowfullscreen webkitallowfullscreen mozallowfullscreen>');
     expect(html).toContain("serverFrame.setAttribute('allowfullscreen','')");
@@ -264,13 +265,16 @@ test('fullscreen support is unchanged for the driver shell', () => {
 });
 
 
-test('junk cover strip is back but plain black (no blur)', () => {
+test('reference embed: full 16:9 stage, no cover strip, page keeps scrolling', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The reference build covered the player page's lower junk with this strip.
-    expect(html).toContain('id="s1cover"');
-    expect(html).toContain('#s1cover{position:absolute;left:0;right:0;bottom:0;height:4%;background:#000;pointer-events:none}');
-    expect(html).toContain("setHidden(s1cover,i!==0)");
-    // ...but the blur the user disliked stays gone.
+    // The perfect deployment showed the whole AnimaHD page: plain 16:9 stage,
+    // nothing cropped or covered, and the frame kept its own scrollbar.
+    expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
+    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
+    expect(html).not.toContain('s1cover');
+    expect(html).not.toContain('s1fit');
+    expect(html).not.toContain('max-width:1000px');
+    // No blur anywhere.
     expect(html).not.toContain('backdrop-filter:blur');
     expect(html).not.toContain('blur(7px)');
 });
