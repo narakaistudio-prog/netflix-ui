@@ -1,0 +1,221 @@
+{
+  "_comment": "Titles animahd.com does not carry -> played through nxsha (the app's original embed provider). `id` is the TMDB or IMDb id accepted by https://nxsha.space/embed/{movie|tv}/{id}; seasons = curated per-season episode counts used for the guide.",
+  "titles": [
+    {
+      "key": "aot",
+      "title": "Attack on Titan",
+      "kind": "tv",
+      "id": "tt2560140",
+      "seasons": [
+        25,
+        12,
+        22,
+        28
+      ]
+    },
+    {
+      "key": "tokyo",
+      "title": "Tokyo Revengers",
+      "kind": "tv",
+      "id": "105009",
+      "seasons": [
+        24,
+        13,
+        12
+      ]
+    },
+    {
+      "key": "vinland",
+      "title": "Vinland Saga",
+      "kind": "tv",
+      "id": "tt10233448",
+      "seasons": [
+        24,
+        24
+      ]
+    },
+    {
+      "key": "sao",
+      "title": "Sword Art Online",
+      "kind": "tv",
+      "id": "tt2250192",
+      "seasons": [
+        25,
+        24,
+        24,
+        23
+      ]
+    },
+    {
+      "key": "drstone",
+      "title": "Dr. STONE",
+      "kind": "tv",
+      "id": "tt9679542",
+      "seasons": [
+        24,
+        11,
+        22,
+        12
+      ]
+    },
+    {
+      "key": "boruto",
+      "title": "Boruto: Naruto Next Generations",
+      "kind": "tv",
+      "id": "tt6342474",
+      "seasons": [
+        293
+      ]
+    },
+    {
+      "key": "yourname",
+      "title": "Your Name",
+      "kind": "movie",
+      "id": "tt5311514",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "suzume",
+      "title": "Suzume",
+      "kind": "movie",
+      "id": "tt16428256",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "silentvoice",
+      "title": "A Silent Voice",
+      "kind": "movie",
+      "id": "tt5323662",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "spirited",
+      "title": "Spirited Away",
+      "kind": "movie",
+      "id": "tt0245429",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "mononoke",
+      "title": "Princess Mononoke",
+      "kind": "movie",
+      "id": "tt0119698",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "howl",
+      "title": "Howl's Moving Castle",
+      "kind": "movie",
+      "id": "tt0347149",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "akira",
+      "title": "Akira",
+      "kind": "movie",
+      "id": "tt0094625",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "weathering",
+      "title": "Weathering With You",
+      "kind": "movie",
+      "id": "tt9426210",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "jjk0",
+      "title": "Jujutsu Kaisen 0",
+      "kind": "movie",
+      "id": "tt14331144",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "demonMovie",
+      "title": "Demon Slayer: Mugen Train",
+      "kind": "movie",
+      "id": "tt11032374",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "mhaMovie",
+      "title": "My Hero Academia: Two Heroes",
+      "kind": "movie",
+      "id": "505262",
+      "seasons": [
+        1
+      ]
+    },
+    {
+      "key": "saoMovie",
+      "title": "Sword Art Online: Ordinal Scale",
+      "kind": "movie",
+      "id": "",
+      "seasons": [
+        1
+      ]
+    }
+  ],
+  "saoMovieCandidates": [
+    "413594",
+    "392535",
+    "400157",
+    "366553",
+    "287606",
+    "415089",
+    "tt5595168",
+    "tt5588288",
+    "tt5940112",
+    "tt6133586"
+  ],
+  "siteProbes": [
+    [
+      "robots",
+      "https://nxsha.space/robots.txt"
+    ],
+    [
+      "sitemap",
+      "https://nxsha.space/sitemap.xml"
+    ],
+    [
+      "sitemap-index",
+      "https://nxsha.space/sitemap_index.xml"
+    ],
+    [
+      "sitemap-movies",
+      "https://nxsha.space/movie/sitemap.xml"
+    ],
+    [
+      "detail-tmdb-movie",
+      "https://nxsha.space/movie/1441228"
+    ],
+    [
+      "detail-watch-movie",
+      "https://nxsha.space/watch/1441228"
+    ],
+    [
+      "detail-movies-id",
+      "https://nxsha.space/movies/1441228"
+    ]
+  ]
+}

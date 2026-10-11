@@ -67,7 +67,7 @@ describe('buildEmbedUrl', () => {
         expect(url).toContain('server=GbruHindi');
         expect(url).toContain('lang=hi');
         expect(url).toContain('sub=hi');
-        expect(url).toContain('color=netflix');
+        expect(url).toContain('color=orange');
         expect(url).toContain('disable_app_ad=true');
         expect(url).toContain('disable_dl_button=true');
         // NOT strict by default

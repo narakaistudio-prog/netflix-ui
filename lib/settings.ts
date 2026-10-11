@@ -26,9 +26,16 @@ export interface EmbedSettings {
     nhdApiKey: string;
 }
 
-// v3 briefly changed Nxsha's default server. Bump once more so browsers
-// that saved that default return to the original template too.
-const SETTINGS_VERSION = 4;
+// v3 briefly changed Nxsha's default server, v5 switches the player theme
+// from Netflix red to orange. Bump per change so browsers that saved the old
+// default pick up the new one (custom templates are never touched).
+const SETTINGS_VERSION = 5;
+
+/** The Netflix-red template shipped before v5 — migrated to orange. */
+const V4_NXSHA_MOVIE =
+    'https://nxsha.space/embed/movie/{id}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
+const V4_NXSHA_TV =
+    'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
 
 const V3_NXSHA_MOVIE =
     'https://nxsha.space/embed/movie/{id}?server=VidHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true&one_server=true';
@@ -70,6 +77,16 @@ function safeParse(raw: string | null): EmbedSettings | null {
                     merged.nxshaMovieTemplate = DEFAULT_NXSHA_MOVIE;
                 }
                 if (merged.nxshaTvTemplate === V3_NXSHA_TV) {
+                    merged.nxshaTvTemplate = DEFAULT_NXSHA_TV;
+                }
+            }
+            // v5: the player theme moved from Netflix red to orange — only the
+            // untouched old default is rewritten, custom templates stay put.
+            if (typeof parsed.settingsVersion === 'number' && parsed.settingsVersion < 5) {
+                if (merged.nxshaMovieTemplate === V4_NXSHA_MOVIE) {
+                    merged.nxshaMovieTemplate = DEFAULT_NXSHA_MOVIE;
+                }
+                if (merged.nxshaTvTemplate === V4_NXSHA_TV) {
                     merged.nxshaTvTemplate = DEFAULT_NXSHA_TV;
                 }
             }

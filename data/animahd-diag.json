@@ -1,0 +1,938 @@
+{
+  "generatedAt": "2026-10-11T10:28:44.878Z",
+  "probes": [
+    {
+      "name": "home",
+      "url": "https://animahd.com/",
+      "status": 200,
+      "finalUrl": "https://animahd.com/",
+      "bytes": 254660,
+      "title": "AnimaHD - A Universe Of Anime",
+      "snippet": "<!doctype html> <html lang=\"en-US\"> <head> <meta name=\"monetag\" content=\"02066e7effcd786e2eb2f4bea13e3219\"> <meta name=\"ppck-ver\" content=\"bdaba0dda63b899f31e9be44a1c08507\" /> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no\"> <link rel=\"profile\" href=\"https://gmpg.org/xfn/11\"> <link rel=\"pingback\" href=\"https://animahd.",
+      "ptokens": 0,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [
+        [
+          "/?sec_route",
+          66
+        ],
+        [
+          "/",
+          7
+        ],
+        [
+          "/wp-content/uploads/N/N/cropped-imageedit_N_N-NxN.png",
+          3
+        ],
+        [
+          "/wp-json/oembed/N.N/embed?url",
+          2
+        ],
+        [
+          "/filter/",
+          2
+        ],
+        [
+          "/xfn/N",
+          1
+        ],
+        [
+          "/xmlrpc.php",
+          1
+        ],
+        [
+          "/feed/",
+          1
+        ],
+        [
+          "/comments/feed/",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/gutenberg-blocks.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/style.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/fontawesome.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/jquery.fancybox.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/theme.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/animate.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/colors/blue.css?ver",
+          1
+        ],
+        [
+          "/wp-json/",
+          1
+        ],
+        [
+          "/wp-json/wp/vN/pages/N",
+          1
+        ],
+        [
+          "/xmlrpc.php?rsd",
+          1
+        ],
+        [
+          "/css?family",
+          1
+        ],
+        [
+          "/css?display&family",
+          1
+        ],
+        [
+          "/anime-schedule/",
+          1
+        ],
+        [
+          "/$%NBpost.link%ND",
+          1
+        ],
+        [
+          "/category/ongoing/",
+          1
+        ],
+        [
+          "/category/hindi-dub/",
+          1
+        ],
+        [
+          "/category/english-dub/",
+          1
+        ],
+        [
+          "/category/anime-movies/",
+          1
+        ],
+        [
+          "/dmca",
+          1
+        ],
+        [
+          "/terms",
+          1
+        ],
+        [
+          "/about",
+          1
+        ],
+        [
+          "void(N)",
+          1
+        ]
+      ],
+      "tokenContexts": [],
+      "hooks": {
+        "adminAjax": 2,
+        "wpJson": 6,
+        "restRoute": 3,
+        "episodeWord": 51,
+        "seasonWord": 114,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [
+        "https://animahd.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+        "https://animahd.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/bootstrap.bundle.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.waypoints.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/waypoints-sticky.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.easing.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/scrollup.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.fancybox.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/readmore.min.js?ver=3.0.0",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/simplebar.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi-slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi.min.js?ver=7.1.3",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "inlineScriptSizes": [
+        7347,
+        5886,
+        4509,
+        3051,
+        1727,
+        1611,
+        1543,
+        1292,
+        899,
+        885
+      ],
+      "blobSamples": [
+        " (()=>{var e=window.koko_analytics,s=[\"utm_source\",\"utm_medium\",\"utm_campaign\"],d=/bot|crawl|spider|seo|lighthouse|facebookexternalhit|preview|prerender|headless|phantom|scrapy|python|curl|wget|go-http|okhttp|node-fetch|axios|java\\/|libwww|http[-_]?client|monitor|uptime|pingdom|statuscake|validator|scanner/i;function u(){let t={},n=new URLSearchParams(window.location.search),c=new URLSearchParams(window.location.hash.substring(1));return s.forEach(a=>{let o=n.get(a)||c.get(a);o&&(t[a]=o)}),t}function h(t,n){if(typeof navigator.sendBeacon==\"function\"){navigator.sendBeacon(t,n);return}fetch(t,{method:\"POST\",body:n,keepalive:!0,credentials:\"same-origin\"}).catch(()=>{})}e.trackPageview=function(t,n){if(d.test(navigator.userAgent)||window._phantom||window.__nightmare||window.navigator.webdriver||window.Cypress){console.debug(\"Koko Analytics: Ignoring call to trackPageview because user agent i",
+        "</script> <script id=\"vodi-scripts-js-extra\"> var vodi_options = {\"rtl\":\"0\",\"enable_live_search\":\"\",\"enable_sticky_header\":\"1\",\"enable_hh_sticky_header\":\"\",\"ajax_url\":\"https://animahd.com/wp-admin/admin-ajax.php\",\"deal_countdown_text\":{\"days_text\":\"Days\",\"hours_text\":\"Hours\",\"mins_text\":\"Mins\",\"secs_text\":\"Secs\"},\"wp_local_time_offset\":\"0\",\"enable_vodi_readmore\":\"1\",\"vodi_readmore_data\":[{\"selectors\":\".single-episode-v1 .episode__description \\u003E div, .single-episode-v2 .episode__description \\u003E div, .single-episode-v2 .episode__description \\u003E div, .single-episode-v4 .episode__short-description \\u003E p\",\"options\":{\"moreLink\":\"\\u003Ca class=\\\"maxlist-more\\\" href=\\\"#\\\"\\u003ERead More\\u003C/a\\u003E\",\"lessLink\":\"\\u003Ca class=\\\"maxlist-less\\\" href=\\\"#\\\"\\u003EShow Less\\u003C/a\\u003E\",\"collapsedHeight\":47,\"speed\":600}},{\"selectors\":\".single-movie-v1 .movie__description \\u003E div, .s",
+        " document.addEventListener('DOMContentLoaded', function() { // Set cooldown state let adOnCooldown = false; const adUrl = \"https://omg10.com/4/11373280\"; // Listen for clicks anywhere on the body document.body.addEventListener('click', function(e) { // Check if the user clicked an episode link in the grid/list const epLink = e.target.closest('.app-ep-row-item, .ff-ep-row'); if (epLink) { // If the ad is NOT on cooldown, hijack the click if (!adOnCooldown) { e.preventDefault(); // Stop the episode from opening // Open the OMG10 ad in a new tab window.open(adUrl, '_blank'); // Turn on the 5-second cooldown shield adOnCooldown = true; // Reset the shield after 5 seconds setTimeout(function() { adOnCooldown = false; }, 5000); // 5000 milliseconds = 5 seconds } // If adOnCooldown IS true, the script does nothing and the episode opens easily! } }); }); "
+      ]
+    },
+    {
+      "name": "search-solo",
+      "url": "https://animahd.com/?s=Solo+Leveling",
+      "status": 200,
+      "finalUrl": "https://animahd.com/?s=Solo+Leveling",
+      "bytes": 85561,
+      "title": "You searched for Solo Leveling - A Universe Of Anime",
+      "snippet": "<!doctype html> <html lang=\"en-US\"> <head> <meta name=\"monetag\" content=\"02066e7effcd786e2eb2f4bea13e3219\"> <meta name=\"ppck-ver\" content=\"bdaba0dda63b899f31e9be44a1c08507\" /> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no\"> <link rel=\"profile\" href=\"https://gmpg.org/xfn/11\"> <link rel=\"pingback\" href=\"https://animahd.",
+      "ptokens": 0,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [
+        [
+          "/",
+          5
+        ],
+        [
+          "/wp-content/uploads/N/N/cropped-imageedit_N_N-NxN.png",
+          3
+        ],
+        [
+          "/solo-leveling-season-episodes-hindi-multi-audio/",
+          3
+        ],
+        [
+          "/filter/",
+          2
+        ],
+        [
+          "/xfn/N",
+          1
+        ],
+        [
+          "/xmlrpc.php",
+          1
+        ],
+        [
+          "/feed/",
+          1
+        ],
+        [
+          "/comments/feed/",
+          1
+        ],
+        [
+          "/search/Solo+Leveling/feed/rssN/",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/gutenberg-blocks.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/style.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/fontawesome.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/jquery.fancybox.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/theme.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/animate.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/colors/blue.css?ver",
+          1
+        ],
+        [
+          "/wp-json/",
+          1
+        ],
+        [
+          "/xmlrpc.php?rsd",
+          1
+        ],
+        [
+          "/css?family",
+          1
+        ],
+        [
+          "/css?display&family",
+          1
+        ],
+        [
+          "/anime-schedule/",
+          1
+        ],
+        [
+          "/$%NBpost.link%ND",
+          1
+        ],
+        [
+          "/category/action/",
+          1
+        ],
+        [
+          "/category/adventure/",
+          1
+        ],
+        [
+          "/category/fantasy/",
+          1
+        ],
+        [
+          "/category/hindi-dub/",
+          1
+        ],
+        [
+          "/chainsmoker-cat/",
+          1
+        ],
+        [
+          "/black-torch/",
+          1
+        ],
+        [
+          "/trapped-in-a-dating-sim-the-world-of-otome-games-is-tough-for-mobs/",
+          1
+        ],
+        [
+          "/hanaori-san-still-wants-to-fight-in-the-next-life/",
+          1
+        ],
+        [
+          "/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life/",
+          1
+        ],
+        [
+          "/dmca",
+          1
+        ],
+        [
+          "/terms",
+          1
+        ],
+        [
+          "/about",
+          1
+        ],
+        [
+          "void(N)",
+          1
+        ]
+      ],
+      "tokenContexts": [],
+      "hooks": {
+        "adminAjax": 2,
+        "wpJson": 3,
+        "restRoute": 2,
+        "episodeWord": 22,
+        "seasonWord": 15,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [
+        "https://animahd.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+        "https://animahd.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/bootstrap.bundle.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.waypoints.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/waypoints-sticky.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.easing.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/scrollup.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.fancybox.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/readmore.min.js?ver=3.0.0",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/simplebar.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi-slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi.min.js?ver=7.1.3",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "inlineScriptSizes": [
+        7347,
+        5886,
+        3051,
+        1654,
+        1611,
+        1543,
+        1292,
+        899,
+        885,
+        527
+      ],
+      "blobSamples": [
+        " (()=>{var e=window.koko_analytics,s=[\"utm_source\",\"utm_medium\",\"utm_campaign\"],d=/bot|crawl|spider|seo|lighthouse|facebookexternalhit|preview|prerender|headless|phantom|scrapy|python|curl|wget|go-http|okhttp|node-fetch|axios|java\\/|libwww|http[-_]?client|monitor|uptime|pingdom|statuscake|validator|scanner/i;function u(){let t={},n=new URLSearchParams(window.location.search),c=new URLSearchParams(window.location.hash.substring(1));return s.forEach(a=>{let o=n.get(a)||c.get(a);o&&(t[a]=o)}),t}function h(t,n){if(typeof navigator.sendBeacon==\"function\"){navigator.sendBeacon(t,n);return}fetch(t,{method:\"POST\",body:n,keepalive:!0,credentials:\"same-origin\"}).catch(()=>{})}e.trackPageview=function(t,n){if(d.test(navigator.userAgent)||window._phantom||window.__nightmare||window.navigator.webdriver||window.Cypress){console.debug(\"Koko Analytics: Ignoring call to trackPageview because user agent i",
+        "</script> <script id=\"vodi-scripts-js-extra\"> var vodi_options = {\"rtl\":\"0\",\"enable_live_search\":\"\",\"enable_sticky_header\":\"1\",\"enable_hh_sticky_header\":\"\",\"ajax_url\":\"https://animahd.com/wp-admin/admin-ajax.php\",\"deal_countdown_text\":{\"days_text\":\"Days\",\"hours_text\":\"Hours\",\"mins_text\":\"Mins\",\"secs_text\":\"Secs\"},\"wp_local_time_offset\":\"0\",\"enable_vodi_readmore\":\"1\",\"vodi_readmore_data\":[{\"selectors\":\".single-episode-v1 .episode__description \\u003E div, .single-episode-v2 .episode__description \\u003E div, .single-episode-v2 .episode__description \\u003E div, .single-episode-v4 .episode__short-description \\u003E p\",\"options\":{\"moreLink\":\"\\u003Ca class=\\\"maxlist-more\\\" href=\\\"#\\\"\\u003ERead More\\u003C/a\\u003E\",\"lessLink\":\"\\u003Ca class=\\\"maxlist-less\\\" href=\\\"#\\\"\\u003EShow Less\\u003C/a\\u003E\",\"collapsedHeight\":47,\"speed\":600}},{\"selectors\":\".single-movie-v1 .movie__description \\u003E div, .s",
+        " document.addEventListener('DOMContentLoaded', function() { // Set cooldown state let adOnCooldown = false; const adUrl = \"https://omg10.com/4/11373280\"; // Listen for clicks anywhere on the body document.body.addEventListener('click', function(e) { // Check if the user clicked an episode link in the grid/list const epLink = e.target.closest('.app-ep-row-item, .ff-ep-row'); if (epLink) { // If the ad is NOT on cooldown, hijack the click if (!adOnCooldown) { e.preventDefault(); // Stop the episode from opening // Open the OMG10 ad in a new tab window.open(adUrl, '_blank'); // Turn on the 5-second cooldown shield adOnCooldown = true; // Reset the shield after 5 seconds setTimeout(function() { adOnCooldown = false; }, 5000); // 5000 milliseconds = 5 seconds } // If adOnCooldown IS true, the script does nothing and the episode opens easily! } }); }); "
+      ]
+    },
+    {
+      "name": "show-solo",
+      "url": "https://animahd.com/solo-leveling/",
+      "status": 200,
+      "finalUrl": "https://animahd.com/solo-leveling-season-episodes-hindi-multi-audio/",
+      "bytes": 182298,
+      "title": "Solo Leveling Watch Online All Episodes HD",
+      "snippet": "<!doctype html> <html lang=\"en-US\"> <head> <meta name=\"monetag\" content=\"02066e7effcd786e2eb2f4bea13e3219\"> <meta name=\"ppck-ver\" content=\"bdaba0dda63b899f31e9be44a1c08507\" /> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no\"> <link rel=\"profile\" href=\"https://gmpg.org/xfn/11\"> <link rel=\"pingback\" href=\"https://animahd.",
+      "ptokens": 1,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [
+        [
+          "/?sec_route",
+          25
+        ],
+        [
+          "/",
+          5
+        ],
+        [
+          "/wp-content/uploads/N/N/cropped-imageedit_N_N-NxN.png",
+          3
+        ],
+        [
+          "/wp-json/oembed/N.N/embed?url",
+          2
+        ],
+        [
+          "/filter/",
+          2
+        ],
+        [
+          "/xfn/N",
+          1
+        ],
+        [
+          "/xmlrpc.php",
+          1
+        ],
+        [
+          "/solo-leveling-season-episodes-hindi-multi-audio/",
+          1
+        ],
+        [
+          "/feed/",
+          1
+        ],
+        [
+          "/comments/feed/",
+          1
+        ],
+        [
+          "/solo-leveling-season-episodes-hindi-multi-audio/feed/",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/gutenberg-blocks.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/style.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/fontawesome.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/jquery.fancybox.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/theme.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/animate.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/colors/blue.css?ver",
+          1
+        ],
+        [
+          "/wp-json/",
+          1
+        ],
+        [
+          "/wp-json/wp/vN/posts/N",
+          1
+        ],
+        [
+          "/xmlrpc.php?rsd",
+          1
+        ],
+        [
+          "/?p",
+          1
+        ],
+        [
+          "/css?family",
+          1
+        ],
+        [
+          "/css?display&family",
+          1
+        ],
+        [
+          "/anime-schedule/",
+          1
+        ],
+        [
+          "/$%NBpost.link%ND",
+          1
+        ],
+        [
+          "/clevatess-N/",
+          1
+        ],
+        [
+          "/the-beginning-after-the-end-N/",
+          1
+        ],
+        [
+          "/skeleton-knight-in-another-world/",
+          1
+        ],
+        [
+          "/im-standing-on-a-million-lives/",
+          1
+        ],
+        [
+          "/kaiju-no-N/",
+          1
+        ],
+        [
+          "/may-i-ask-for-one-final-thing/",
+          1
+        ],
+        [
+          "/summer-time-rendering-season-N-dual-audio/",
+          1
+        ],
+        [
+          "/radiant/",
+          1
+        ],
+        [
+          "/trigun-stargaze/",
+          1
+        ],
+        [
+          "/farming-life-in-another-world/",
+          1
+        ],
+        [
+          "/sakamoto-days-seasonN-dual-audio-complete/",
+          1
+        ],
+        [
+          "/my-one-hit-kill-sister-season-N-bluray-hindi-dual-audio/",
+          1
+        ],
+        [
+          "/wind-breaker/",
+          1
+        ],
+        [
+          "/rezero-starting-life-in-another-world-N/",
+          1
+        ]
+      ],
+      "tokenContexts": [
+        ".1\"></script> <link rel=\"https://api.w.org/\" href=\"https://animahd.com/wp-json/\" /><link rel=\"alternate\" title=\"JSON\" type=\"application/json\" href=\"https://animahd.com/wp-json/wp/v2/posts/1138\" /><link rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"https://animahd.com/xmlrpc.php?rsd\" /> <meta name=\"generator\" content=\"WordPress 7.1.3\" /> <link rel='shortlink' href='https://animahd.com/?p=1138' /> <link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800|Open%20"
+      ],
+      "hooks": {
+        "adminAjax": 2,
+        "wpJson": 6,
+        "restRoute": 3,
+        "episodeWord": 59,
+        "seasonWord": 144,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [
+        "https://animahd.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+        "https://animahd.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/bootstrap.bundle.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.waypoints.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/waypoints-sticky.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.easing.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/scrollup.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.fancybox.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/readmore.min.js?ver=3.0.0",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/simplebar.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi-slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi.min.js?ver=7.1.3",
+        "https://animahd.com/wp-includes/js/comment-reply.min.js?ver=7.1.3",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "inlineScriptSizes": [
+        7347,
+        5886,
+        3870,
+        3418,
+        3051,
+        1611,
+        1543,
+        1292,
+        899,
+        885
+      ],
+      "blobSamples": [
+        "{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"Article\",\"@id\":\"https:\\/\\/animahd.com\\/solo-leveling-season-episodes-hindi-multi-audio\\/#article\",\"isPartOf\":{\"@id\":\"https:\\/\\/animahd.com\\/solo-leveling-season-episodes-hindi-multi-audio\\/\"},\"author\":{\"name\":\"AnimaHD\",\"@id\":\"https:\\/\\/animahd.com\\/#\\/schema\\/person\\/f49061243aa9a0fd24364422e3c2aa6d\"},\"headline\":\"Solo Leveling S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]\",\"datePublished\":\"2026-09-08T04:56:13+00:00\",\"dateModified\":\"2026-09-10T14:05:36+00:00\",\"mainEntityOfPage\":{\"@id\":\"https:\\/\\/animahd.com\\/solo-leveling-season-episodes-hindi-multi-audio\\/\"},\"wordCount\":33,\"commentCount\":0,\"publisher\":{\"@id\":\"https:\\/\\/animahd.com\\/#organization\"},\"keywords\":[\"Action\",\"Adventure\",\"Fantasy\"],\"articleSection\":[\"Action\",\"Adventure\",\"Fantasy\",\"Hindi Dub\"],\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"CommentAction\",\"name",
+        " window.koko_analytics = {\"url\":\"https:\\/\\/animahd.com\\/koko-analytics-collect.php\",\"site_url\":\"https:\\/\\/animahd.com\",\"post_id\":1138,\"path\":\"\\/solo-leveling-season-episodes-hindi-multi-audio\\/\",\"method\":\"cookie\",\"use_cookie\":true}; ",
+        " jQuery(document).ready(function($) { var storageKey = \"animahd_season_pref_\" + window.location.pathname; var currentCount = 12; var activeSeasonEps = []; function updateActiveSeason(seasonName) { if (!seasonName) return; var targetSeason = $.trim(seasonName); activeSeasonEps = []; currentCount = 12; var visibleCount = 0; // Loop through all episodes using jQuery to force immediate CSS application $(\".app-ep-row-item\").each(function() { var epSeason = $.trim($(this).attr(\"data-season\")); if (epSeason === targetSeason) { activeSeasonEps.push($(this)); if (visibleCount < currentCount) { // !important forces it to override any theme CSS blocking it this.style.setProperty(\"display\", \"flex\", \"important\"); visibleCount++; } else { this.style.setProperty(\"display\", \"none\", \"important\"); } } else { // Immediately hide episodes that belong to other seasons this.style.setProperty(\"display\", \"none\""
+      ]
+    },
+    {
+      "name": "show-jjk",
+      "url": "https://animahd.com/jujutsu-kaisen/",
+      "status": 200,
+      "finalUrl": "https://animahd.com/jujutsu-kaisen/",
+      "bytes": 221438,
+      "title": "Jujutsu Kaisen Watch Online All Episodes HD",
+      "snippet": "<!doctype html> <html lang=\"en-US\"> <head> <meta name=\"monetag\" content=\"02066e7effcd786e2eb2f4bea13e3219\"> <meta name=\"ppck-ver\" content=\"bdaba0dda63b899f31e9be44a1c08507\" /> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no\"> <link rel=\"profile\" href=\"https://gmpg.org/xfn/11\"> <link rel=\"pingback\" href=\"https://animahd.",
+      "ptokens": 1,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [
+        [
+          "/?sec_route",
+          47
+        ],
+        [
+          "/",
+          5
+        ],
+        [
+          "/wp-content/uploads/N/N/cropped-imageedit_N_N-NxN.png",
+          3
+        ],
+        [
+          "/wp-json/oembed/N.N/embed?url",
+          2
+        ],
+        [
+          "/filter/",
+          2
+        ],
+        [
+          "/xfn/N",
+          1
+        ],
+        [
+          "/xmlrpc.php",
+          1
+        ],
+        [
+          "/jujutsu-kaisen/",
+          1
+        ],
+        [
+          "/feed/",
+          1
+        ],
+        [
+          "/comments/feed/",
+          1
+        ],
+        [
+          "/jujutsu-kaisen/feed/",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/gutenberg-blocks.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/style.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/fontawesome.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/jquery.fancybox.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/theme.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/animate.min.css?ver",
+          1
+        ],
+        [
+          "/wp-content/themes/vodi/assets/css/colors/blue.css?ver",
+          1
+        ],
+        [
+          "/wp-json/",
+          1
+        ],
+        [
+          "/wp-json/wp/vN/posts/N",
+          1
+        ],
+        [
+          "/xmlrpc.php?rsd",
+          1
+        ],
+        [
+          "/?p",
+          1
+        ],
+        [
+          "/css?family",
+          1
+        ],
+        [
+          "/css?display&family",
+          1
+        ],
+        [
+          "/anime-schedule/",
+          1
+        ],
+        [
+          "/$%NBpost.link%ND",
+          1
+        ],
+        [
+          "/overgeared-season-N-multi-audio-hindi/",
+          1
+        ],
+        [
+          "/demon-slayer-kimetsu-no-yaiba-infinity-castle/",
+          1
+        ],
+        [
+          "/fairy-tail-N-years-quest/",
+          1
+        ],
+        [
+          "/kaiju-no-N/",
+          1
+        ],
+        [
+          "/the-first-order-season-N-dual-audio-hindi/",
+          1
+        ],
+        [
+          "/lord-of-mysteries/",
+          1
+        ],
+        [
+          "/that-time-i-got-reincarnated-as-a-slime/",
+          1
+        ],
+        [
+          "/one-punch-man/",
+          1
+        ],
+        [
+          "/magi-the-labyrinth-of-magic/",
+          1
+        ],
+        [
+          "/beyblade-season-N-daul-audio-hindi-dub/",
+          1
+        ],
+        [
+          "/clevatess-N/",
+          1
+        ],
+        [
+          "/yaiba-samurai-legend/",
+          1
+        ],
+        [
+          "/radiant/",
+          1
+        ],
+        [
+          "/i-got-a-cheat-skill-in-another-world-and-became-unrivaled-in-the-real-world-too-season-bluray-hindi-multi-audio/",
+          1
+        ]
+      ],
+      "tokenContexts": [
+        "4.1\"></script> <link rel=\"https://api.w.org/\" href=\"https://animahd.com/wp-json/\" /><link rel=\"alternate\" title=\"JSON\" type=\"application/json\" href=\"https://animahd.com/wp-json/wp/v2/posts/814\" /><link rel=\"EditURI\" type=\"application/rsd+xml\" title=\"RSD\" href=\"https://animahd.com/xmlrpc.php?rsd\" /> <meta name=\"generator\" content=\"WordPress 7.1.3\" /> <link rel='shortlink' href='https://animahd.com/?p=814' /> <link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800|Open%20S"
+      ],
+      "hooks": {
+        "adminAjax": 2,
+        "wpJson": 6,
+        "restRoute": 3,
+        "episodeWord": 45,
+        "seasonWord": 178,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [
+        "https://animahd.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+        "https://animahd.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/bootstrap.bundle.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.waypoints.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/waypoints-sticky.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.easing.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/scrollup.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/jquery.fancybox.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/readmore.min.js?ver=3.0.0",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/simplebar.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi-slick.min.js?ver=7.1.3",
+        "https://animahd.com/wp-content/themes/vodi/assets/js/vodi.min.js?ver=7.1.3",
+        "https://animahd.com/wp-includes/js/comment-reply.min.js?ver=7.1.3",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "inlineScriptSizes": [
+        7347,
+        5886,
+        3870,
+        3142,
+        3051,
+        1611,
+        1543,
+        1292,
+        899,
+        885
+      ],
+      "blobSamples": [
+        "{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"Article\",\"@id\":\"https:\\/\\/animahd.com\\/jujutsu-kaisen\\/#article\",\"isPartOf\":{\"@id\":\"https:\\/\\/animahd.com\\/jujutsu-kaisen\\/\"},\"author\":{\"name\":\"AnimaHD\",\"@id\":\"https:\\/\\/animahd.com\\/#\\/schema\\/person\\/f49061243aa9a0fd24364422e3c2aa6d\"},\"headline\":\"Jujutsu Kaisen S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]\",\"datePublished\":\"2026-06-21T04:27:53+00:00\",\"dateModified\":\"2026-06-21T17:35:02+00:00\",\"mainEntityOfPage\":{\"@id\":\"https:\\/\\/animahd.com\\/jujutsu-kaisen\\/\"},\"wordCount\":33,\"commentCount\":0,\"publisher\":{\"@id\":\"https:\\/\\/animahd.com\\/#organization\"},\"keywords\":[\"Action\",\"Award Winning\",\"Supernatural\"],\"articleSection\":[\"Action\",\"Award Winning\",\"Hindi Dub\",\"Supernatural\"],\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"CommentAction\",\"name\":\"Comment\",\"target\":[\"https:\\/\\/animahd.com\\/jujutsu-kaisen\\/#respond\"]}]},{\"@ty",
+        " jQuery(document).ready(function($) { var storageKey = \"animahd_season_pref_\" + window.location.pathname; var currentCount = 12; var activeSeasonEps = []; function updateActiveSeason(seasonName) { if (!seasonName) return; var targetSeason = $.trim(seasonName); activeSeasonEps = []; currentCount = 12; var visibleCount = 0; // Loop through all episodes using jQuery to force immediate CSS application $(\".app-ep-row-item\").each(function() { var epSeason = $.trim($(this).attr(\"data-season\")); if (epSeason === targetSeason) { activeSeasonEps.push($(this)); if (visibleCount < currentCount) { // !important forces it to override any theme CSS blocking it this.style.setProperty(\"display\", \"flex\", \"important\"); visibleCount++; } else { this.style.setProperty(\"display\", \"none\", \"important\"); } } else { // Immediately hide episodes that belong to other seasons this.style.setProperty(\"display\", \"none\"",
+        " (()=>{var e=window.koko_analytics,s=[\"utm_source\",\"utm_medium\",\"utm_campaign\"],d=/bot|crawl|spider|seo|lighthouse|facebookexternalhit|preview|prerender|headless|phantom|scrapy|python|curl|wget|go-http|okhttp|node-fetch|axios|java\\/|libwww|http[-_]?client|monitor|uptime|pingdom|statuscake|validator|scanner/i;function u(){let t={},n=new URLSearchParams(window.location.search),c=new URLSearchParams(window.location.hash.substring(1));return s.forEach(a=>{let o=n.get(a)||c.get(a);o&&(t[a]=o)}),t}function h(t,n){if(typeof navigator.sendBeacon==\"function\"){navigator.sendBeacon(t,n);return}fetch(t,{method:\"POST\",body:n,keepalive:!0,credentials:\"same-origin\"}).catch(()=>{})}e.trackPageview=function(t,n){if(d.test(navigator.userAgent)||window._phantom||window.__nightmare||window.navigator.webdriver||window.Cypress){console.debug(\"Koko Analytics: Ignoring call to trackPageview because user agent i"
+      ]
+    },
+    {
+      "name": "wp-search-posts",
+      "url": "https://animahd.com/wp-json/wp/v2/posts?search=solo%20leveling&per_page=3",
+      "status": 200,
+      "finalUrl": "https://animahd.com/wp-json/wp/v2/posts?search=solo%20leveling&per_page=3",
+      "bytes": 13084,
+      "title": "",
+      "snippet": "[{\"id\":1138,\"date\":\"2026-09-08T04:56:13\",\"date_gmt\":\"2026-09-08T04:56:13\",\"guid\":{\"rendered\":\"https:\\/\\/animahd.com\\/?p=1138\"},\"modified\":\"2026-09-10T14:05:36\",\"modified_gmt\":\"2026-09-10T14:05:36\",\"slug\":\"solo-leveling-season-episodes-hindi-multi-audio\",\"status\":\"publish\",\"type\":\"post\",\"link\":\"https:\\/\\/animahd.com\\/solo-leveling-season-episodes-hindi-multi-audio\\/\",\"title\":{\"rendered\":\"Solo Level",
+      "ptokens": 1,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [],
+      "tokenContexts": [
+        "[{\"id\":1138,\"date\":\"2026-09-08T04:56:13\",\"date_gmt\":\"2026-09-08T04:56:13\",\"guid\":{\"rendered\":\"https:\\/\\/animahd.com\\/?p=1138\"},\"modified\":\"2026-09-10T14:05:36\",\"modified_gmt\":\"2026-09-10T14:05:36\",\"slug\":\"solo-leveling-season-episodes-hi"
+      ],
+      "hooks": {
+        "adminAjax": 0,
+        "wpJson": 0,
+        "restRoute": 0,
+        "episodeWord": 40,
+        "seasonWord": 31,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [],
+      "inlineScriptSizes": [],
+      "blobSamples": []
+    },
+    {
+      "name": "wp-search-api",
+      "url": "https://animahd.com/wp-json/wp/v2/search?search=solo%20leveling&per_page=5",
+      "status": 200,
+      "finalUrl": "https://animahd.com/wp-json/wp/v2/search?search=solo%20leveling&per_page=5",
+      "bytes": 487,
+      "title": "",
+      "snippet": "[{\"id\":1138,\"title\":\"Solo Leveling S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]\",\"url\":\"https:\\/\\/animahd.com\\/solo-leveling-season-episodes-hindi-multi-audio\\/\",\"type\":\"post\",\"subtype\":\"post\",\"_links\":{\"self\":[{\"embeddable\":true,\"href\":\"https:\\/\\/animahd.com\\/wp-json\\/wp\\/v2\\/posts\\/1138\",\"targetHints\":{\"allow\":[\"GET\"]}}],\"about\":[{\"href\":\"https:\\/\\/animahd.com\\/wp-json\\/wp\\/v2\\/typ",
+      "ptokens": 0,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [],
+      "tokenContexts": [],
+      "hooks": {
+        "adminAjax": 0,
+        "wpJson": 0,
+        "restRoute": 0,
+        "episodeWord": 1,
+        "seasonWord": 1,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [],
+      "inlineScriptSizes": [],
+      "blobSamples": []
+    },
+    {
+      "name": "wp-types",
+      "url": "https://animahd.com/wp-json/wp/v2/types",
+      "status": 200,
+      "finalUrl": "https://animahd.com/wp-json/wp/v2/types",
+      "bytes": 11342,
+      "title": "",
+      "snippet": "{\"post\":{\"description\":\"\",\"hierarchical\":false,\"has_archive\":false,\"name\":\"Posts\",\"slug\":\"post\",\"icon\":\"dashicons-admin-post\",\"taxonomies\":[\"category\",\"post_tag\"],\"rest_base\":\"posts\",\"rest_namespace\":\"wp\\/v2\",\"template\":[],\"template_lock\":false,\"yoast_head\":\"<!-- This site is optimized with the Yoast SEO plugin v28.2 - https:\\/\\/yoast.com\\/product\\/yoast-seo-wordpress\\/ -->\\n<title>A Universe Of A",
+      "ptokens": 0,
+      "fileIdRefs": 0,
+      "driveRefs": 0,
+      "iframes": 0,
+      "watchLinks": 0,
+      "hrefShapes": [],
+      "tokenContexts": [],
+      "hooks": {
+        "adminAjax": 0,
+        "wpJson": 0,
+        "restRoute": 0,
+        "episodeWord": 0,
+        "seasonWord": 0,
+        "dataEp": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "base64Blobs": 0,
+        "inlineJsonVars": 0
+      },
+      "scriptSrcs": [],
+      "inlineScriptSizes": [],
+      "blobSamples": []
+    }
+  ]
+}

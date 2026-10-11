@@ -1,0 +1,165 @@
+{
+  "_comment": "Titles animahd.com does not carry. Played through nxsha (the app's original embed provider): https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}]. Ids verified against the live embed page by scripts/probe-nxsha.mjs (data/nxsha-verify.json). seasons = per-season episode counts for the guide.",
+  "aot": {
+    "id": "tt2560140",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 12,
+      "3": 22,
+      "4": 28
+    },
+    "title": "Attack on Titan",
+    "verified": "2026-10-11"
+  },
+  "tokyo": {
+    "id": "105009",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 13,
+      "3": 12
+    },
+    "title": "Tokyo Revengers",
+    "verified": "2026-10-11"
+  },
+  "vinland": {
+    "id": "tt10233448",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 24
+    },
+    "title": "Vinland Saga",
+    "verified": "2026-10-11"
+  },
+  "sao": {
+    "id": "tt2250192",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 24,
+      "3": 24,
+      "4": 23
+    },
+    "title": "Sword Art Online",
+    "verified": "2026-10-11"
+  },
+  "drstone": {
+    "id": "tt9679542",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 11,
+      "3": 22,
+      "4": 12
+    },
+    "title": "Dr. STONE",
+    "verified": "2026-10-11"
+  },
+  "boruto": {
+    "id": "tt6342474",
+    "kind": "tv",
+    "seasons": {
+      "1": 293
+    },
+    "title": "Boruto: Naruto Next Generations",
+    "verified": "2026-10-11"
+  },
+  "yourname": {
+    "id": "tt5311514",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Your Name"
+  },
+  "suzume": {
+    "id": "tt16428256",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Suzume"
+  },
+  "silentvoice": {
+    "id": "tt5323662",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "A Silent Voice"
+  },
+  "spirited": {
+    "id": "tt0245429",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Spirited Away"
+  },
+  "mononoke": {
+    "id": "tt0119698",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Princess Mononoke"
+  },
+  "howl": {
+    "id": "tt0347149",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Howl's Moving Castle"
+  },
+  "akira": {
+    "id": "tt0094625",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Akira"
+  },
+  "weathering": {
+    "id": "tt9426210",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Weathering With You"
+  },
+  "jjk0": {
+    "id": "tt14331144",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Jujutsu Kaisen 0"
+  },
+  "demonMovie": {
+    "id": "tt11032374",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Demon Slayer: Mugen Train"
+  },
+  "mhaMovie": {
+    "id": "505262",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "My Hero Academia: Two Heroes"
+  },
+  "saoMovie": {
+    "id": "413594",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Sword Art Online: Ordinal Scale"
+  }
+}

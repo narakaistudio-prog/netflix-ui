@@ -1,0 +1,1302 @@
+{
+  "generatedAt": "2026-10-11T07:36:44.880Z",
+  "embeds": [
+    {
+      "label": "control-movie-tmdb",
+      "kind": "movie",
+      "id": "1441228",
+      "url": "https://nxsha.space/embed/movie/1441228?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/1441228?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Irumudi",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": null,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15454
+    },
+    {
+      "label": "control-tv-imdb-demon",
+      "kind": "tv",
+      "id": "tt9335498",
+      "url": "https://nxsha.space/embed/tv/tt9335498/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt9335498/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Demon Slayer: Kimetsu no Yaiba - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": null,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt9335498"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 20102
+    },
+    {
+      "label": "control-tv-imdb-vinland",
+      "kind": "tv",
+      "id": "tt10233448",
+      "url": "https://nxsha.space/embed/tv/tt10233448/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt10233448/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Vinland Saga - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": null,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt10233448"
+        ],
+        "episodeLinks": 0,
+        "seasons": [
+          1,
+          2
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 17625
+    },
+    {
+      "label": "control-tv-imdb-drstone",
+      "kind": "tv",
+      "id": "tt9679542",
+      "url": "https://nxsha.space/embed/tv/tt9679542/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt9679542/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Dr. STONE - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": null,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt9679542"
+        ],
+        "episodeLinks": 0,
+        "seasons": [
+          1
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 21461
+    },
+    {
+      "label": "aot-tmdb",
+      "kind": "tv",
+      "id": "1429",
+      "url": "https://nxsha.space/embed/tv/1429/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/1429/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Attack on Titan - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "attack",
+        "titan"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": [
+          1,
+          2,
+          3
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 18612
+    },
+    {
+      "label": "aot-imdb",
+      "kind": "tv",
+      "id": "tt2560140",
+      "url": "https://nxsha.space/embed/tv/tt2560140/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt2560140/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Attack on Titan - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "attack",
+        "titan"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt2560140"
+        ],
+        "episodeLinks": 0,
+        "seasons": [
+          1,
+          2,
+          3
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 19707
+    },
+    {
+      "label": "tokyo-tmdb",
+      "kind": "tv",
+      "id": "105009",
+      "url": "https://nxsha.space/embed/tv/105009/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/105009/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Tokyo Revengers - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "tokyo",
+        "revengers"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": [
+          1
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16067
+    },
+    {
+      "label": "tokyo-imdb",
+      "kind": "tv",
+      "id": "tt13103174",
+      "url": "https://nxsha.space/embed/tv/tt13103174/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "finalUrl": "https://nxsha.space/embed/tv/tt13103174/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Nxsha",
+      "h1": [],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt13103174"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tkyiqk.js\" async=\"\"></script><meta name=\"robots\" content=\"noindex\"/><meta name=\"theme",
+      "bytes": 10656
+    },
+    {
+      "label": "vinland-tv",
+      "kind": "tv",
+      "id": "tt10233448",
+      "url": "https://nxsha.space/embed/tv/tt10233448/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt10233448/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Vinland Saga - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "vinland",
+        "saga"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt10233448"
+        ],
+        "episodeLinks": 0,
+        "seasons": [
+          1,
+          2
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16540
+    },
+    {
+      "label": "drstone-tv",
+      "kind": "tv",
+      "id": "tt9679542",
+      "url": "https://nxsha.space/embed/tv/tt9679542/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt9679542/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Dr. STONE - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "stone"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt9679542"
+        ],
+        "episodeLinks": 0,
+        "seasons": [
+          1
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 20376
+    },
+    {
+      "label": "boruto-tmdb",
+      "kind": "tv",
+      "id": "80564",
+      "url": "https://nxsha.space/embed/tv/80564/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/80564/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Banana Fish - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": [
+          1
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 17055
+    },
+    {
+      "label": "boruto-imdb",
+      "kind": "tv",
+      "id": "tt6342474",
+      "url": "https://nxsha.space/embed/tv/tt6342474/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt6342474/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Boruto: Naruto Next Generations - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "boruto"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt6342474"
+        ],
+        "episodeLinks": 0,
+        "seasons": [
+          1
+        ]
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 17374
+    },
+    {
+      "label": "sao-tmdb",
+      "kind": "tv",
+      "id": "45782",
+      "url": "https://nxsha.space/embed/tv/45782/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/45782/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Sword Art Online - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "sword",
+        "art",
+        "online"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 18738
+    },
+    {
+      "label": "sao-imdb",
+      "kind": "tv",
+      "id": "tt2250192",
+      "url": "https://nxsha.space/embed/tv/tt2250192/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/tv/tt2250192/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Sword Art Online - S1:E1",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "sword",
+        "art",
+        "online"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt2250192"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 19831
+    },
+    {
+      "label": "saoMovie-tmdb",
+      "kind": "movie",
+      "id": "374205",
+      "url": "https://nxsha.space/embed/movie/374205?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/374205?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch One Piece Film: GOLD",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15646
+    },
+    {
+      "label": "saoMovie-imdb",
+      "kind": "movie",
+      "id": "tt5923136",
+      "url": "https://nxsha.space/embed/movie/tt5923136?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt5923136?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch COLOR? - THE Jailbreak Survival",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt5923136"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16793
+    },
+    {
+      "label": "mhaMovie-tmdb",
+      "kind": "movie",
+      "id": "505262",
+      "url": "https://nxsha.space/embed/movie/505262?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/505262?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch My Hero Academia: Two Heroes",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "hero",
+        "academia",
+        "two"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15759
+    },
+    {
+      "label": "mhaMovie-imdb",
+      "kind": "movie",
+      "id": "tt7147616",
+      "url": "https://nxsha.space/embed/movie/tt7147616?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "finalUrl": "https://nxsha.space/embed/movie/tt7147616?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Nxsha",
+      "h1": [],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt7147616"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tkyiqk.js\" async=\"\"></script><meta name=\"robots\" content=\"noindex\"/><meta name=\"theme",
+      "bytes": 10644
+    },
+    {
+      "label": "yourname-tmdb",
+      "kind": "movie",
+      "id": "372058",
+      "url": "https://nxsha.space/embed/movie/372058?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/372058?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Your Name.",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "your",
+        "name"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15495
+    },
+    {
+      "label": "yourname-imdb",
+      "kind": "movie",
+      "id": "tt5311514",
+      "url": "https://nxsha.space/embed/movie/tt5311514?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt5311514?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Your Name.",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "your",
+        "name"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt5311514"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16586
+    },
+    {
+      "label": "suzume-tmdb",
+      "kind": "movie",
+      "id": "818647",
+      "url": "https://nxsha.space/embed/movie/818647?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/818647?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Through My Window",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15590
+    },
+    {
+      "label": "suzume-imdb",
+      "kind": "movie",
+      "id": "tt16428256",
+      "url": "https://nxsha.space/embed/movie/tt16428256?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt16428256?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Suzume",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "suzume"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt16428256"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16543
+    },
+    {
+      "label": "silentvoice-tmdb",
+      "kind": "movie",
+      "id": "378064",
+      "url": "https://nxsha.space/embed/movie/378064?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/378064?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch A Silent Voice: The Movie",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "silent",
+        "voice"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15705
+    },
+    {
+      "label": "silentvoice-imdb",
+      "kind": "movie",
+      "id": "tt5323662",
+      "url": "https://nxsha.space/embed/movie/tt5323662?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt5323662?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch A Silent Voice: The Movie",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "silent",
+        "voice"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt5323662"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16796
+    },
+    {
+      "label": "spirited-tmdb",
+      "kind": "movie",
+      "id": "129",
+      "url": "https://nxsha.space/embed/movie/129?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/129?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Spirited Away",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "spirited",
+        "away"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15529
+    },
+    {
+      "label": "spirited-imdb",
+      "kind": "movie",
+      "id": "tt0245429",
+      "url": "https://nxsha.space/embed/movie/tt0245429?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt0245429?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Spirited Away",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "spirited",
+        "away"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt0245429"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16669
+    },
+    {
+      "label": "weathering-tmdb",
+      "kind": "movie",
+      "id": "568160",
+      "url": "https://nxsha.space/embed/movie/568160?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/568160?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Weathering with You",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "weathering"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15630
+    },
+    {
+      "label": "weathering-imdb",
+      "kind": "movie",
+      "id": "tt9426210",
+      "url": "https://nxsha.space/embed/movie/tt9426210?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt9426210?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Weathering with You",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "weathering"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt9426210"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16764
+    },
+    {
+      "label": "howl-tmdb",
+      "kind": "movie",
+      "id": "4935",
+      "url": "https://nxsha.space/embed/movie/4935?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/4935?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Howl&#x27;s Moving Castle",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "howl"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16748
+    },
+    {
+      "label": "howl-imdb",
+      "kind": "movie",
+      "id": "tt0347149",
+      "url": "https://nxsha.space/embed/movie/tt0347149?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt0347149?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Howl&#x27;s Moving Castle",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "howl"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt0347149"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16758
+    },
+    {
+      "label": "mononoke-tmdb",
+      "kind": "movie",
+      "id": "128",
+      "url": "https://nxsha.space/embed/movie/128?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/128?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Princess Mononoke",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "mononoke"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15588
+    },
+    {
+      "label": "mononoke-imdb",
+      "kind": "movie",
+      "id": "tt0119698",
+      "url": "https://nxsha.space/embed/movie/tt0119698?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt0119698?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Princess Mononoke",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "mononoke"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt0119698"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16685
+    },
+    {
+      "label": "akira-tmdb",
+      "kind": "movie",
+      "id": "149",
+      "url": "https://nxsha.space/embed/movie/149?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/149?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Akira",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "akira"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15425
+    },
+    {
+      "label": "akira-imdb",
+      "kind": "movie",
+      "id": "tt0094625",
+      "url": "https://nxsha.space/embed/movie/tt0094625?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt0094625?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Akira",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "akira"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt0094625"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16522
+    },
+    {
+      "label": "jjk0-tmdb",
+      "kind": "movie",
+      "id": "810693",
+      "url": "https://nxsha.space/embed/movie/810693?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/810693?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Jujutsu Kaisen 0",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "jujutsu",
+        "kaisen",
+        "0"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 15580
+    },
+    {
+      "label": "jjk0-imdb",
+      "kind": "movie",
+      "id": "tt14331144",
+      "url": "https://nxsha.space/embed/movie/tt14331144?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt14331144?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Jujutsu Kaisen 0",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "jujutsu",
+        "kaisen"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt14331144"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16673
+    },
+    {
+      "label": "demonMovie-tmdb",
+      "kind": "movie",
+      "id": "635302",
+      "url": "https://nxsha.space/embed/movie/635302?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/635302?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "demon",
+        "slayer"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 16112
+    },
+    {
+      "label": "demonMovie-imdb",
+      "kind": "movie",
+      "id": "tt11032374",
+      "url": "https://nxsha.space/embed/movie/tt11032374?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/embed/movie/tt11032374?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "docTitle": "Watch Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
+      "h1": [
+        "Almost Ready"
+      ],
+      "wantHits": [
+        "demon",
+        "slayer"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [
+          "tt11032374"
+        ],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk",
+      "bytes": 17205
+    }
+  ],
+  "search": [
+    {
+      "label": "home",
+      "url": "https://nxsha.space/",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/",
+      "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "h1": [],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri",
+      "bytes": 39021
+    },
+    {
+      "label": "search-page",
+      "url": "https://nxsha.space/search?q=attack%20on%20titan",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/search?q=attack%20on%20titan",
+      "docTitle": "Search | Nxsha",
+      "h1": [
+        "Movies",
+        "TV Shows"
+      ],
+      "wantHits": [
+        "attack",
+        "titan"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri",
+      "bytes": 64805
+    },
+    {
+      "label": "search-api",
+      "url": "https://nxsha.space/api/search?q=attack+on+titan",
+      "status": 404,
+      "finalUrl": "https://nxsha.space/api/search?q=attack+on+titan",
+      "docTitle": "",
+      "h1": [
+        "404",
+        "PAGE NOT FOUND"
+      ],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": true,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tkyiqk.js\" async=\"\"></script><script src=\"/_next/static/chunks/42onvq6nokjl2.js\" async=\"\"></script><script src=\"/_next/sta",
+      "bytes": 9139
+    },
+    {
+      "label": "search-json-api",
+      "url": "https://nxsha.space/api/search?keyword=attack+on+titan",
+      "status": 404,
+      "finalUrl": "https://nxsha.space/api/search?keyword=attack+on+titan",
+      "docTitle": "",
+      "h1": [
+        "404",
+        "PAGE NOT FOUND"
+      ],
+      "wantHits": [],
+      "wantHitRatio": 0,
+      "notFound": true,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tkyiqk.js\" async=\"\"></script><script src=\"/_next/static/chunks/42onvq6nokjl2.js\" async=\"\"></script><script src=\"/_next/sta",
+      "bytes": 9139
+    },
+    {
+      "label": "search-wp",
+      "url": "https://nxsha.space/?s=attack+on+titan",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/?s=attack+on+titan",
+      "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "h1": [],
+      "wantHits": [
+        "attack",
+        "titan"
+      ],
+      "wantHitRatio": 1,
+      "notFound": false,
+      "markers": {
+        "video": 0,
+        "iframes": 0,
+        "m3u8": 0,
+        "mp4": 0,
+        "tmdbIds": [],
+        "imdbIds": [],
+        "episodeLinks": 0,
+        "seasons": []
+      },
+      "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri",
+      "bytes": 39061
+    }
+  ]
+}

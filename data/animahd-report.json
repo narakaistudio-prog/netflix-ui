@@ -1,0 +1,2380 @@
+{
+  "generatedAt": "2026-10-11T10:29:16.829Z",
+  "base": "https://animahd.com",
+  "shows": {
+    "solo": {
+      "attempts": [
+        {
+          "slug": "solo-leveling",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 25,
+          "seasonHist": {
+            "1": 12,
+            "2": 13
+          },
+          "firstLast": [
+            "S01E01 Solo Leveling",
+            "S02E13 Solo Leveling"
+          ],
+          "pageTitle": "Solo Leveling S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "solo-leveling-season-episodes-hindi-multi-audio",
+          "source": "index",
+          "note": "accepted",
+          "rows": 25,
+          "seasonHist": {
+            "1": 12,
+            "2": 13
+          },
+          "firstLast": [
+            "S01E01 Solo Leveling",
+            "S02E13 Solo Leveling"
+          ],
+          "pageTitle": "Solo Leveling S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "sololeveling",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "solo-leveling-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "solo",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 25,
+          "seasonHist": {
+            "1": 12,
+            "2": 13
+          },
+          "firstLast": [
+            "S01E01 Solo Leveling",
+            "S02E13 Solo Leveling"
+          ],
+          "pageTitle": "Solo Leveling S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        }
+      ],
+      "status": "ok",
+      "slug": "solo-leveling",
+      "source": "pin",
+      "url": "https://animahd.com/solo-leveling-season-episodes-hindi-multi-audio/",
+      "pages": [
+        "solo-leveling",
+        "solo-leveling-season-episodes-hindi-multi-audio",
+        "solo"
+      ],
+      "showId": 1138,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 12,
+        "2": 13
+      },
+      "episodes": 25,
+      "labelSample": [
+        "S01E01 Solo Leveling",
+        "S02E13 Solo Leveling"
+      ],
+      "seasons": {
+        "1": 12,
+        "2": 13
+      },
+      "seasonsSource": "site"
+    },
+    "demon": {
+      "attempts": [
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 26,
+          "seasonHist": {
+            "1": 26
+          },
+          "firstLast": [
+            "S01E01 Demon Slayer (Kimetsu no Yaiba)",
+            "S01E26 Demon Slayer (Kimetsu no Yaiba)"
+          ],
+          "pageTitle": "Demon Slayer Kimetsu no Yaiba Season 1 [Hindi-English-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "source": "index",
+          "note": "accepted but unlabeled (weak)",
+          "rows": 3,
+          "pageTitle": "Demon Slayer Infinity Castle 2025 [Hindi-Tamil-Telugu-English-Japanese] Multi Audio"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-2",
+          "source": "index",
+          "note": "accepted",
+          "rows": 26,
+          "seasonHist": {
+            "1": 26
+          },
+          "firstLast": [
+            "S01E01 Demon Slayer (Kimetsu no Yaiba)",
+            "S01E26 Demon Slayer (Kimetsu no Yaiba)"
+          ],
+          "pageTitle": "Demon Slayer Kimetsu no Yaiba Season 1 [Hindi-English-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "demonslayerkimetsunoyaiba",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "kimetsu-no-yaiba",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 26,
+          "seasonHist": {
+            "1": 26
+          },
+          "firstLast": [
+            "S01E01 Demon Slayer (Kimetsu no Yaiba)",
+            "S01E26 Demon Slayer (Kimetsu no Yaiba)"
+          ],
+          "pageTitle": "Demon Slayer Kimetsu no Yaiba Season 1 [Hindi-English-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "demon",
+          "source": "candidate",
+          "note": "title mismatch",
+          "pageTitle": "Demon Lord, Retry! Season 1 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        }
+      ],
+      "status": "ok",
+      "slug": "demon-slayer-kimetsu-no-yaiba",
+      "source": "pin",
+      "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-2/",
+      "pages": [
+        "demon-slayer-kimetsu-no-yaiba",
+        "demon-slayer-kimetsu-no-yaiba-2",
+        "demon-slayer"
+      ],
+      "showId": 983,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 26
+      },
+      "episodes": 26,
+      "labelSample": [
+        "S01E01 Demon Slayer (Kimetsu no Yaiba)",
+        "S01E26 Demon Slayer (Kimetsu no Yaiba)"
+      ],
+      "seasons": {
+        "1": 26
+      },
+      "seasonsSource": "existing"
+    },
+    "jjk": {
+      "attempts": [
+        {
+          "slug": "jujutsu-kaisen",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 47,
+          "seasonHist": {
+            "1": 24,
+            "2": 23
+          },
+          "firstLast": [
+            "S01E01 Jujutsu Kaisen",
+            "S02E23 Jujutsu Kaisen"
+          ],
+          "pageTitle": "Jujutsu Kaisen S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "jujutsukaisen",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsu-kaisen-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jjk",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "jujutsu-kaisen",
+      "source": "pin",
+      "url": "https://animahd.com/jujutsu-kaisen/",
+      "pages": [
+        "jujutsu-kaisen"
+      ],
+      "showId": 814,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 24,
+        "2": 23
+      },
+      "episodes": 47,
+      "labelSample": [
+        "S01E01 Jujutsu Kaisen",
+        "S02E23 Jujutsu Kaisen"
+      ],
+      "seasons": {
+        "1": 24,
+        "2": 23
+      },
+      "seasonsSource": "site"
+    },
+    "onepiece": {
+      "attempts": [
+        {
+          "slug": "one-piece",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 10,
+          "seasonHist": {
+            "20": 10
+          },
+          "firstLast": [
+            "S20E41(E932) One Piece",
+            "S20E50(E941) One Piece"
+          ],
+          "pageTitle": "One Piece Season 20 Wanno Arc [Hindi-Tamil-Telugu-Mal-Kan-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "one-piece-2",
+          "source": "index",
+          "note": "accepted",
+          "rows": 31,
+          "seasonHist": {
+            "1": 31
+          },
+          "firstLast": [
+            "S01E001 One Piece Remastered",
+            "S01E31 One Piece Remastered"
+          ],
+          "pageTitle": "One Piece Remastered S1 [Hindi-Japanese] Dual Audio [Complete]"
+        },
+        {
+          "slug": "onepiece",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-piece-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-piece-english-subbed",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "one-piece",
+      "source": "pin",
+      "url": "https://animahd.com/one-piece/",
+      "pages": [
+        "one-piece",
+        "one-piece-2"
+      ],
+      "showId": 358,
+      "mixed": true,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 31,
+        "20": 10
+      },
+      "episodes": 41,
+      "labelSample": [
+        "S01E001 One Piece Remastered",
+        "S20E50(E941) One Piece"
+      ],
+      "seasons": {
+        "1": 31,
+        "20": 10
+      },
+      "seasonsSource": "site"
+    },
+    "frieren": {
+      "attempts": [
+        {
+          "slug": "frieren-beyond-journeys-end",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 28,
+          "seasonHist": {
+            "1": 28
+          },
+          "firstLast": [
+            "E01 Frieren Beyond Journeys End",
+            "E28 Frieren Beyond Journey"
+          ],
+          "pageTitle": "Frieren: Beyond Journey&#039;s End Season 1 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "frierenbeyondjourneysend",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "frieren-beyond-journeys-end-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "frieren",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 28,
+          "seasonHist": {
+            "1": 28
+          },
+          "firstLast": [
+            "E01 Frieren Beyond Journeys End",
+            "E28 Frieren Beyond Journey"
+          ],
+          "pageTitle": "Frieren: Beyond Journey&#039;s End Season 1 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        }
+      ],
+      "status": "ok",
+      "slug": "frieren-beyond-journeys-end",
+      "source": "pin",
+      "url": "https://animahd.com/frieren-beyond-journeys-end/",
+      "pages": [
+        "frieren-beyond-journeys-end",
+        "frieren"
+      ],
+      "showId": 969,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 28
+      },
+      "episodes": 28,
+      "labelSample": [
+        "E01 Frieren Beyond Journeys End",
+        "E28 Frieren Beyond Journey"
+      ],
+      "seasons": {
+        "1": 28
+      },
+      "seasonsSource": "existing"
+    },
+    "chainsaw": {
+      "attempts": [
+        {
+          "slug": "chainsaw-man",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 12,
+          "seasonHist": {
+            "1": 12
+          },
+          "firstLast": [
+            "EP01 Chainsaw Man",
+            "EP12 Chainsaw Man"
+          ],
+          "pageTitle": "Chainsaw Man Season 1 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "chainsawman",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "chainsaw-man-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "chainsaw",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 12,
+          "seasonHist": {
+            "1": 12
+          },
+          "firstLast": [
+            "EP01 Chainsaw Man",
+            "EP12 Chainsaw Man"
+          ],
+          "pageTitle": "Chainsaw Man Season 1 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        }
+      ],
+      "status": "ok",
+      "slug": "chainsaw-man",
+      "source": "pin",
+      "url": "https://animahd.com/chainsaw-man/",
+      "pages": [
+        "chainsaw-man",
+        "chainsaw"
+      ],
+      "showId": 606,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "labelSample": [
+        "EP01 Chainsaw Man",
+        "EP12 Chainsaw Man"
+      ],
+      "seasons": {
+        "1": 12
+      },
+      "seasonsSource": "existing"
+    },
+    "spy": {
+      "attempts": [
+        {
+          "slug": "spy-x-family",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 50,
+          "seasonHist": {
+            "1": 25,
+            "2": 12,
+            "3": 13
+          },
+          "firstLast": [
+            "EP-01 SPY x FAMILY S01E01 {Hindi-English-Japanese} 1080p",
+            "S03E13 Spy x Family"
+          ],
+          "pageTitle": "Spy x Family S1-S3 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "spy-family",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spyxfamily",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spy-x-family-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spy",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 50,
+          "seasonHist": {
+            "1": 25,
+            "2": 12,
+            "3": 13
+          },
+          "firstLast": [
+            "EP-01 SPY x FAMILY S01E01 {Hindi-English-Japanese} 1080p",
+            "S03E13 Spy x Family"
+          ],
+          "pageTitle": "Spy x Family S1-S3 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        }
+      ],
+      "status": "ok",
+      "slug": "spy-x-family",
+      "source": "pin",
+      "url": "https://animahd.com/spy-x-family/",
+      "pages": [
+        "spy-x-family",
+        "spy"
+      ],
+      "showId": 1206,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 25,
+        "2": 12,
+        "3": 13
+      },
+      "episodes": 50,
+      "labelSample": [
+        "EP-01 SPY x FAMILY S01E01 {Hindi-English-Japanese} 1080p",
+        "S03E13 Spy x Family"
+      ],
+      "seasons": {
+        "1": 25,
+        "2": 12,
+        "3": 13
+      },
+      "seasonsSource": "site"
+    },
+    "kaiju": {
+      "attempts": [
+        {
+          "slug": "kaiju-no-8",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 14,
+          "seasonHist": {
+            "1": 2,
+            "2": 12
+          },
+          "firstLast": [
+            "S02E00 Kaiju No. 8 [Promo] [English Only]",
+            "E02 Kaiju No. 8: Narumi’s Week at Work"
+          ],
+          "pageTitle": "Kaiju No. 8 S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Narumi’s Week at Work Added Episode 1-2]"
+        },
+        {
+          "slug": "kaijuno8",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "kaiju-no",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 14,
+          "seasonHist": {
+            "1": 2,
+            "2": 12
+          },
+          "firstLast": [
+            "S02E00 Kaiju No. 8 [Promo] [English Only]",
+            "E02 Kaiju No. 8: Narumi’s Week at Work"
+          ],
+          "pageTitle": "Kaiju No. 8 S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Narumi’s Week at Work Added Episode 1-2]"
+        },
+        {
+          "slug": "kaiju-no-8-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "kaiju",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 14,
+          "seasonHist": {
+            "1": 2,
+            "2": 12
+          },
+          "firstLast": [
+            "S02E00 Kaiju No. 8 [Promo] [English Only]",
+            "E02 Kaiju No. 8: Narumi’s Week at Work"
+          ],
+          "pageTitle": "Kaiju No. 8 S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Narumi’s Week at Work Added Episode 1-2]"
+        }
+      ],
+      "status": "ok",
+      "slug": "kaiju-no-8",
+      "source": "pin",
+      "url": "https://animahd.com/kaiju-no-8/",
+      "pages": [
+        "kaiju-no-8",
+        "kaiju-no",
+        "kaiju"
+      ],
+      "showId": 664,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 2,
+        "2": 12
+      },
+      "episodes": 14,
+      "labelSample": [
+        "E01 Kaiju No. 8: Narumi’s Week at Work",
+        "S02E11 Kaiju No. 8"
+      ],
+      "seasons": {
+        "1": 2,
+        "2": 12
+      },
+      "seasonsSource": "site"
+    },
+    "aot": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "attack-on-titan",
+        "attackontitan",
+        "attack-on-titan-hindi",
+        "shingeki-no-kyojin",
+        "aot"
+      ],
+      "attempts": [
+        {
+          "slug": "attack-on-titan",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "attackontitan",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "attack-on-titan-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "shingeki-no-kyojin",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "aot",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "naruto": {
+      "attempts": [
+        {
+          "slug": "naruto-shippuden",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 271,
+          "seasonHist": {
+            "1": 37,
+            "2": 21,
+            "3": 18,
+            "4": 17,
+            "5": 24,
+            "6": 31,
+            "7": 8,
+            "8": 3,
+            "9": 21,
+            "10": 25,
+            "11": 21,
+            "13": 20,
+            "14": 25
+          },
+          "firstLast": [
+            "S01E01 Naruto Shippuden",
+            "S14E320 Naruto Shippuden"
+          ],
+          "pageTitle": "Naruto Shippuden Seasons [Hindi-Tamil-Tel-Mal-Ben-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "narutoshippuden",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "naruto-shippuden-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "naruto",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 271,
+          "seasonHist": {
+            "1": 37,
+            "2": 21,
+            "3": 18,
+            "4": 17,
+            "5": 24,
+            "6": 31,
+            "7": 8,
+            "8": 3,
+            "9": 21,
+            "10": 25,
+            "11": 21,
+            "13": 20,
+            "14": 25
+          },
+          "firstLast": [
+            "S01E01 Naruto Shippuden",
+            "S14E320 Naruto Shippuden"
+          ],
+          "pageTitle": "Naruto Shippuden Seasons [Hindi-Tamil-Tel-Mal-Ben-Eng-Jap] Multi Audio [Completed]"
+        }
+      ],
+      "status": "ok",
+      "slug": "naruto-shippuden",
+      "source": "pin",
+      "url": "https://animahd.com/naruto-shippuden/",
+      "pages": [
+        "naruto-shippuden",
+        "naruto"
+      ],
+      "showId": 194,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 32,
+        "2": 21,
+        "3": 18,
+        "4": 17,
+        "5": 24,
+        "6": 31,
+        "7": 8,
+        "8": 7,
+        "9": 21,
+        "10": 25,
+        "11": 21,
+        "13": 20,
+        "14": 25
+      },
+      "episodes": 270,
+      "labelSample": [
+        "S01E01 Naruto Shippuden",
+        "S14E320 Naruto Shippuden"
+      ],
+      "seasons": {
+        "1": 32,
+        "2": 21,
+        "3": 18,
+        "4": 17,
+        "5": 24,
+        "6": 31,
+        "7": 8,
+        "8": 7,
+        "9": 21,
+        "10": 25,
+        "11": 21,
+        "13": 20,
+        "14": 25
+      },
+      "seasonsSource": "site"
+    },
+    "deathnote": {
+      "attempts": [
+        {
+          "slug": "death-note",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 37,
+          "seasonHist": {
+            "1": 37
+          },
+          "firstLast": [
+            "S01E01 Death Note",
+            "S01E37 Death Note"
+          ],
+          "pageTitle": "Death Note"
+        },
+        {
+          "slug": "death-note-relight-movie-hindi-dub-dual-audio",
+          "source": "index",
+          "note": "accepted but unlabeled (weak)",
+          "rows": 5,
+          "pageTitle": "Death Note Relight 1-2 [Hindi-English-Jap] Triple Audio (2007) (AnimeTimes Dub)"
+        },
+        {
+          "slug": "deathnote",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "death-note-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "death-note",
+      "source": "pin",
+      "url": "https://animahd.com/death-note/",
+      "pages": [
+        "death-note"
+      ],
+      "showId": 1053,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 37
+      },
+      "episodes": 37,
+      "labelSample": [
+        "S01E01 Death Note",
+        "S01E37 Death Note"
+      ],
+      "seasons": {
+        "1": 37
+      },
+      "seasonsSource": "existing"
+    },
+    "mha": {
+      "attempts": [
+        {
+          "slug": "my-hero-academia",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 59,
+          "seasonHist": {
+            "6": 26,
+            "7": 21,
+            "8": 12
+          },
+          "firstLast": [
+            "OVA My Hero Academia",
+            "OVA S08E12 My Hero Academia"
+          ],
+          "pageTitle": "My Hero Academia S6-S8 [Hindi-Tamil-Telugu-Mal-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio",
+          "source": "index",
+          "note": "foreign marker: vigilantes",
+          "pageTitle": "My Hero Academia Vigilantes S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "my-hero-academia-final-season",
+          "source": "index",
+          "note": "accepted",
+          "rows": 59,
+          "seasonHist": {
+            "6": 26,
+            "7": 21,
+            "8": 12
+          },
+          "firstLast": [
+            "OVA My Hero Academia",
+            "OVA S08E12 My Hero Academia"
+          ],
+          "pageTitle": "My Hero Academia S6-S8 [Hindi-Tamil-Telugu-Mal-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "myheroacademia",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "my-hero-academia-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "boku-no-hero-academia",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mha",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "my-hero-academia",
+      "source": "pin",
+      "url": "https://animahd.com/my-hero-academia-final-season/",
+      "pages": [
+        "my-hero-academia",
+        "my-hero-academia-final-season"
+      ],
+      "showId": 97,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "6": 25,
+        "7": 21,
+        "8": 12
+      },
+      "episodes": 58,
+      "labelSample": [
+        "OVA My Hero Academia",
+        "OVA S08E12 My Hero Academia"
+      ],
+      "seasons": {
+        "6": 25,
+        "7": 21,
+        "8": 12
+      },
+      "seasonsSource": "site"
+    },
+    "tokyo": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "tokyo",
+        "tokyo-revengers",
+        "tokyorevengers",
+        "tokyo-revengers-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "tokyo",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Tokyo Ghoul S1-S3 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "tokyo-revengers",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyorevengers",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyo-revengers-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "opm": {
+      "attempts": [
+        {
+          "slug": "one-punch-man",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 12,
+          "seasonHist": {
+            "1": 12
+          },
+          "firstLast": [
+            "S01E01 One Punch Man",
+            "S01E12 One Punch Man"
+          ],
+          "pageTitle": "One-Punch Man Season 1 [Hindi-Urdu-Tam-Tel-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "onepunchman",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-punch-man-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "opm",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "one-punch-man",
+      "source": "pin",
+      "url": "https://animahd.com/one-punch-man/",
+      "pages": [
+        "one-punch-man"
+      ],
+      "showId": 753,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "labelSample": [
+        "S01E01 One Punch Man",
+        "S01E12 One Punch Man"
+      ],
+      "seasons": {
+        "1": 12
+      },
+      "seasonsSource": "existing"
+    },
+    "bleach": {
+      "attempts": [
+        {
+          "slug": "bleach",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 40,
+          "seasonHist": {
+            "1": 13,
+            "2": 13,
+            "3": 14
+          },
+          "firstLast": [
+            "S01E01 Bleach Thousand-Year Blood War",
+            "S03E40 Bleach Thousand-Year Blood War"
+          ],
+          "pageTitle": "Bleach: Thousand-Year Blood War S1-S3 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "bleach-thousand-year-blood-war-the-separation",
+          "source": "index",
+          "note": "accepted",
+          "rows": 40,
+          "seasonHist": {
+            "1": 13,
+            "2": 13,
+            "3": 14
+          },
+          "firstLast": [
+            "S01E01 Bleach Thousand-Year Blood War",
+            "S03E40 Bleach Thousand-Year Blood War"
+          ],
+          "pageTitle": "Bleach: Thousand-Year Blood War S1-S3 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "bleach-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "bleach",
+      "source": "pin",
+      "url": "https://animahd.com/bleach-thousand-year-blood-war-the-separation/",
+      "pages": [
+        "bleach",
+        "bleach-thousand-year-blood-war-the-separation"
+      ],
+      "showId": 365,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 13,
+        "2": 13,
+        "3": 14
+      },
+      "episodes": 40,
+      "labelSample": [
+        "S01E01 Bleach Thousand-Year Blood War",
+        "S03E40 Bleach Thousand-Year Blood War"
+      ],
+      "seasons": {
+        "1": 13,
+        "2": 13,
+        "3": 14
+      },
+      "seasonsSource": "site"
+    },
+    "hxh": {
+      "attempts": [
+        {
+          "slug": "hunter-x-hunter",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 96,
+          "seasonHist": {
+            "1": 26,
+            "2": 12,
+            "3": 20,
+            "4": 17,
+            "5": 21
+          },
+          "firstLast": [
+            "S01E01 Hunter x Hunter",
+            "S05E96 Hunter x Hunter"
+          ],
+          "pageTitle": "Hunter x Hunter S1-S5 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "sword-of-the-demon-hunter-kijin-gentosho",
+          "source": "index",
+          "note": "accepted",
+          "rows": 24,
+          "seasonHist": {
+            "1": 24
+          },
+          "firstLast": [
+            "S01E01 Sword of the Demon Hunter",
+            "S01E24 Sword of the Demon Hunter"
+          ],
+          "pageTitle": "Sword of the Demon Hunter: Kijin Gentosho Season 1 [Hindi-Jap] Dual Audio [Completed]"
+        },
+        {
+          "slug": "hunter-hunter",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hunterxhunter",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hunter-x-hunter-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hxh",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "hunter-x-hunter",
+      "source": "pin",
+      "url": "https://animahd.com/hunter-x-hunter/",
+      "pages": [
+        "hunter-x-hunter",
+        "sword-of-the-demon-hunter-kijin-gentosho"
+      ],
+      "showId": 582,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 26,
+        "2": 12,
+        "3": 20,
+        "4": 17,
+        "5": 21
+      },
+      "episodes": 96,
+      "labelSample": [
+        "S01E01 Hunter x Hunter",
+        "S05E96 Hunter x Hunter"
+      ],
+      "seasons": {
+        "1": 26,
+        "2": 12,
+        "3": 20,
+        "4": 17,
+        "5": 21
+      },
+      "seasonsSource": "site"
+    },
+    "vinland": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "vinland-saga",
+        "vinlandsaga",
+        "vinland-saga-hindi",
+        "vinland"
+      ],
+      "attempts": [
+        {
+          "slug": "vinland-saga",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "vinlandsaga",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "vinland-saga-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "vinland",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "mob": {
+      "attempts": [
+        {
+          "slug": "mob-psycho-100",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 38,
+          "seasonHist": {
+            "1": 12,
+            "2": 14,
+            "3": 12
+          },
+          "firstLast": [
+            "S01E01 Mob Psycho 100",
+            "S03E12 Mob Psycho 100"
+          ],
+          "pageTitle": "Mob Psycho 100 S1-S3 [Hindi-English-Japanese] Triple Audio [Completed]"
+        },
+        {
+          "slug": "mob-psycho-100-2",
+          "source": "index",
+          "note": "accepted",
+          "rows": 38,
+          "seasonHist": {
+            "1": 12,
+            "2": 14,
+            "3": 12
+          },
+          "firstLast": [
+            "S01E01 Mob Psycho 100",
+            "S03E12 Mob Psycho 100"
+          ],
+          "pageTitle": "Mob Psycho 100 S1-S3 [Hindi-English-Japanese] Triple Audio [Completed]"
+        },
+        {
+          "slug": "mobpsycho100",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mob-psycho",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 38,
+          "seasonHist": {
+            "1": 12,
+            "2": 14,
+            "3": 12
+          },
+          "firstLast": [
+            "S01E01 Mob Psycho 100",
+            "S03E12 Mob Psycho 100"
+          ],
+          "pageTitle": "Mob Psycho 100 S1-S3 [Hindi-English-Japanese] Triple Audio [Completed]"
+        },
+        {
+          "slug": "mob-psycho-100-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mob",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 38,
+          "seasonHist": {
+            "1": 12,
+            "2": 14,
+            "3": 12
+          },
+          "firstLast": [
+            "S01E01 Mob Psycho 100",
+            "S03E12 Mob Psycho 100"
+          ],
+          "pageTitle": "Mob Psycho 100 S1-S3 [Hindi-English-Japanese] Triple Audio [Completed]"
+        }
+      ],
+      "status": "ok",
+      "slug": "mob-psycho-100",
+      "source": "pin",
+      "url": "https://animahd.com/mob-psycho-100-2/",
+      "pages": [
+        "mob-psycho-100",
+        "mob-psycho-100-2",
+        "mob-psycho",
+        "mob"
+      ],
+      "showId": 998,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 12,
+        "2": 14,
+        "3": 12
+      },
+      "episodes": 38,
+      "labelSample": [
+        "S01E01 Mob Psycho 100",
+        "S03E12 Mob Psycho 100"
+      ],
+      "seasons": {
+        "1": 12,
+        "2": 14,
+        "3": 12
+      },
+      "seasonsSource": "site"
+    },
+    "rezero": {
+      "attempts": [
+        {
+          "slug": "rezero",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 56,
+          "seasonHist": {
+            "1": 13,
+            "2": 15,
+            "3": 16,
+            "4": 12
+          },
+          "firstLast": [
+            "S01E01 Re.Zero-Starting Life in Another World",
+            "S04E11 Re Zero Starting Life in Another World"
+          ],
+          "pageTitle": "Re ZERO Starting Life in Another World S1-S4 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Episode 01-11 Added]"
+        },
+        {
+          "slug": "rezero-starting-life-in-another-world-2",
+          "source": "index",
+          "note": "accepted",
+          "rows": 56,
+          "seasonHist": {
+            "1": 13,
+            "2": 15,
+            "3": 16,
+            "4": 12
+          },
+          "firstLast": [
+            "S01E01 Re.Zero-Starting Life in Another World",
+            "S04E11 Re Zero Starting Life in Another World"
+          ],
+          "pageTitle": "Re ZERO Starting Life in Another World S1-S4 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Episode 01-11 Added]"
+        },
+        {
+          "slug": "re-zero",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "re-zero-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "rezero",
+      "source": "pin",
+      "url": "https://animahd.com/rezero-starting-life-in-another-world-2/",
+      "pages": [
+        "rezero",
+        "rezero-starting-life-in-another-world-2"
+      ],
+      "showId": 736,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 13,
+        "2": 15,
+        "3": 16,
+        "4": 11
+      },
+      "episodes": 55,
+      "labelSample": [
+        "S01E01 Re.Zero-Starting Life in Another World",
+        "S04E11 Re Zero Starting Life in Another World"
+      ],
+      "seasons": {
+        "1": 13,
+        "2": 15,
+        "3": 16,
+        "4": 11
+      },
+      "seasonsSource": "site"
+    },
+    "sao": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "sword-art-online",
+        "sword-art-online-alternative-gun-gale-online",
+        "swordartonline",
+        "sword-art-online-hindi",
+        "sao"
+      ],
+      "attempts": [
+        {
+          "slug": "sword-art-online",
+          "source": "pin",
+          "note": "foreign marker: alternative",
+          "pageTitle": "Sword Art Online Alternative Gun Gale Season 2 [Hindi-English-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "sword-art-online-alternative-gun-gale-online",
+          "source": "index",
+          "note": "foreign marker: alternative",
+          "pageTitle": "Sword Art Online Alternative Gun Gale Season 2 [Hindi-English-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "swordartonline",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sword-art-online-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sao",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [
+        {
+          "slug": "sword-art-online-alternative-gun-gale-online",
+          "id": 204,
+          "postTitle": "Sword Art Online Alternative Gun Gale Season 2 [Hindi-English-Jap] Triple Audio [Complete]",
+          "score": 1
+        },
+        {
+          "slug": "sword-art-online-alternative-gun-gale-online",
+          "id": 204,
+          "postTitle": "Sword Art Online Alternative Gun Gale Season 2 [Hindi-English-Jap] Triple Audio [Complete]",
+          "score": 1
+        }
+      ],
+      "searchRaw": [
+        "Sword Art Online Alternative Gun Gale Season 2 [Hindi-English-Jap] Triple Audio [Complete]",
+        "Sword Art Online Alternative Gun Gale Season 2 [Hindi-English-Jap] Triple Audio [Complete]"
+      ],
+      "episodes": 0
+    },
+    "blackclover": {
+      "attempts": [
+        {
+          "slug": "black-clover",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 27,
+          "seasonHist": {
+            "1": 26,
+            "2": 1
+          },
+          "firstLast": [
+            "S01E01 Black Clover",
+            "S02E52 Black Clover"
+          ],
+          "pageTitle": "Black Clover S1-S2 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "blackclover",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "black-clover-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "black-clover",
+      "source": "pin",
+      "url": "https://animahd.com/black-clover/",
+      "pages": [
+        "black-clover"
+      ],
+      "showId": 528,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 26,
+        "2": 1
+      },
+      "episodes": 27,
+      "labelSample": [
+        "S01E01 Black Clover",
+        "S02E52 Black Clover"
+      ],
+      "seasons": {
+        "1": 26,
+        "2": 1
+      },
+      "seasonsSource": "site"
+    },
+    "drstone": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "dr-stone",
+        "drstone",
+        "dr-stone-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "dr-stone",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "drstone",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "dr-stone-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "haikyuu": {
+      "attempts": [
+        {
+          "slug": "haikyu",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 52,
+          "seasonHist": {
+            "2": 25,
+            "4": 27
+          },
+          "firstLast": [
+            "S02E01 Haikyuu!!",
+            "OVA S04E27 Haikyu!!"
+          ],
+          "pageTitle": "Haikyu!! S1-S4 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "haikyu-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "haikyuu",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "haikyu",
+      "source": "pin",
+      "url": "https://animahd.com/haikyu/",
+      "pages": [
+        "haikyu"
+      ],
+      "showId": 261,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "2": 25,
+        "4": 27
+      },
+      "episodes": 52,
+      "labelSample": [
+        "S02E01 Haikyuu!!",
+        "OVA S04E27 Haikyu!!"
+      ],
+      "seasons": {
+        "2": 25,
+        "4": 27
+      },
+      "seasonsSource": "site"
+    },
+    "bluelock": {
+      "attempts": [
+        {
+          "slug": "blue-lock",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 14,
+          "seasonHist": {
+            "1": 14
+          },
+          "firstLast": [
+            "S02E01 Blue Lock",
+            "S02E14 Blue Lock"
+          ],
+          "pageTitle": "Blue Lock Season 2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "bluelock",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "blue-lock-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "blue-lock",
+      "source": "pin",
+      "url": "https://animahd.com/blue-lock/",
+      "pages": [
+        "blue-lock"
+      ],
+      "showId": 237,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "2": 14
+      },
+      "episodes": 14,
+      "labelSample": [
+        "S02E01 Blue Lock",
+        "S02E14 Blue Lock"
+      ],
+      "seasons": {
+        "2": 14
+      },
+      "seasonsSource": "existing"
+    },
+    "oshi": {
+      "attempts": [
+        {
+          "slug": "oshi-no-ko",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 35,
+          "seasonHist": {
+            "1": 11,
+            "2": 13,
+            "3": 11
+          },
+          "firstLast": [
+            "S01E01 Oshi no Ko",
+            "S03E11 Oshi no Ko"
+          ],
+          "pageTitle": "Oshi No KoOshi No Ko S1-S3 [Hindi-Eng-Jap] Triple Audio [Completed]"
+        },
+        {
+          "slug": "oshinoko",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "oshi-no-ko-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "oshi",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 35,
+          "seasonHist": {
+            "1": 11,
+            "2": 13,
+            "3": 11
+          },
+          "firstLast": [
+            "S01E01 Oshi no Ko",
+            "S03E11 Oshi no Ko"
+          ],
+          "pageTitle": "Oshi No KoOshi No Ko S1-S3 [Hindi-Eng-Jap] Triple Audio [Completed]"
+        }
+      ],
+      "status": "ok",
+      "slug": "oshi-no-ko",
+      "source": "pin",
+      "url": "https://animahd.com/oshi-no-ko/",
+      "pages": [
+        "oshi-no-ko",
+        "oshi"
+      ],
+      "showId": 1092,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 11,
+        "2": 13,
+        "3": 11
+      },
+      "episodes": 35,
+      "labelSample": [
+        "S01E01 Oshi no Ko",
+        "S03E11 Oshi no Ko"
+      ],
+      "seasons": {
+        "1": 11,
+        "2": 13,
+        "3": 11
+      },
+      "seasonsSource": "site"
+    },
+    "dandadan": {
+      "attempts": [
+        {
+          "slug": "dan-da-dan",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 12,
+          "seasonHist": {
+            "1": 12
+          },
+          "firstLast": [
+            "S01E01 DAN DA DAN",
+            "S01E12 DAN DA DAN"
+          ],
+          "pageTitle": "Dandadan Season 1 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "dandadan",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "dan-da-dan-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "dan-da-dan",
+      "source": "pin",
+      "url": "https://animahd.com/dan-da-dan/",
+      "pages": [
+        "dan-da-dan"
+      ],
+      "showId": 257,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "labelSample": [
+        "S01E01 DAN DA DAN",
+        "S01E12 DAN DA DAN"
+      ],
+      "seasons": {
+        "1": 12
+      },
+      "seasonsSource": "existing"
+    },
+    "tower": {
+      "attempts": [
+        {
+          "slug": "tower-of-god",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 13,
+          "seasonHist": {
+            "1": 13
+          },
+          "firstLast": [
+            "EP01",
+            "EP13"
+          ],
+          "pageTitle": "Tower of God Season 1 [Hindi-Eng-jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "tower-of-god-2",
+          "source": "index",
+          "note": "accepted",
+          "rows": 13,
+          "seasonHist": {
+            "1": 13
+          },
+          "firstLast": [
+            "EP01",
+            "EP13"
+          ],
+          "pageTitle": "Tower of God Season 1 [Hindi-Eng-jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "towerofgod",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tower-of-god-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tower",
+          "source": "candidate",
+          "note": "accepted",
+          "rows": 13,
+          "seasonHist": {
+            "1": 13
+          },
+          "firstLast": [
+            "EP01",
+            "EP13"
+          ],
+          "pageTitle": "Tower of God Season 1 [Hindi-Eng-jap] Triple Audio [Complete]"
+        }
+      ],
+      "status": "ok",
+      "slug": "tower-of-god",
+      "source": "pin",
+      "url": "https://animahd.com/tower-of-god-2/",
+      "pages": [
+        "tower-of-god",
+        "tower-of-god-2",
+        "tower"
+      ],
+      "showId": 945,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "labelSample": [
+        "EP01",
+        "EP13"
+      ],
+      "seasons": {
+        "1": 13
+      },
+      "seasonsSource": "existing"
+    },
+    "goh": {
+      "attempts": [
+        {
+          "slug": "the-god-of-high-school",
+          "source": "pin",
+          "note": "accepted",
+          "rows": 13,
+          "seasonHist": {
+            "1": 13
+          },
+          "firstLast": [
+            "S01E01 The God of High School",
+            "S01E13 The God of High School"
+          ],
+          "pageTitle": "The God of High School Season 1 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "the-god-of-high-school-season-1-multi-audio-hindi",
+          "source": "index",
+          "note": "accepted",
+          "rows": 13,
+          "seasonHist": {
+            "1": 13
+          },
+          "firstLast": [
+            "S01E01 The God of High School",
+            "S01E13 The God of High School"
+          ],
+          "pageTitle": "The God of High School Season 1 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "god-of-high-school",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "thegodofhighschool",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "the-god-of-high-school-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "goh",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "status": "ok",
+      "slug": "the-god-of-high-school",
+      "source": "pin",
+      "url": "https://animahd.com/the-god-of-high-school-season-1-multi-audio-hindi/",
+      "pages": [
+        "the-god-of-high-school",
+        "the-god-of-high-school-season-1-multi-audio-hindi"
+      ],
+      "showId": 2292,
+      "mixed": false,
+      "epContiguous": true,
+      "siteSeasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "labelSample": [
+        "S01E01 The God of High School",
+        "S01E13 The God of High School"
+      ],
+      "seasons": {
+        "1": 13
+      },
+      "seasonsSource": "existing"
+    },
+    "boruto": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "boruto-naruto-next-generations",
+        "borutonarutonextgenerations",
+        "boruto-naruto-next-generations-hindi",
+        "boruto"
+      ],
+      "attempts": [
+        {
+          "slug": "boruto-naruto-next-generations",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "borutonarutonextgenerations",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "boruto-naruto-next-generations-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "boruto",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "yourname": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "your-name",
+        "yourname",
+        "your-name-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "your-name",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "yourname",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "your-name-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [
+        "Fire Force S1-S2 [Hindi-English-Japanese] Triple Audio [Completed]",
+        "Hana-Kimi Season 1 &#8211; 2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]",
+        "Fire Force S1-S2 [Hindi-English-Japanese] Triple Audio [Completed]"
+      ],
+      "episodes": 0
+    },
+    "suzume": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "suzume",
+        "suzume-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "suzume",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "suzume-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "silentvoice": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "a-silent-voice",
+        "asilentvoice",
+        "a-silent-voice-hindi",
+        "silentvoice"
+      ],
+      "attempts": [
+        {
+          "slug": "a-silent-voice",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "asilentvoice",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "a-silent-voice-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "silentvoice",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "spirited": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "spirited-away",
+        "spiritedaway",
+        "spirited-away-hindi",
+        "spirited"
+      ],
+      "attempts": [
+        {
+          "slug": "spirited-away",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spiritedaway",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spirited-away-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spirited",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "jjk0": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "jujutsu-kaisen",
+        "jujutsu-kaisen-0",
+        "jujutsukaisen0",
+        "jujutsu-kaisen-0-hindi",
+        "jjk0"
+      ],
+      "attempts": [
+        {
+          "slug": "jujutsu-kaisen",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Jujutsu Kaisen S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "jujutsu-kaisen-0",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsukaisen0",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsu-kaisen-0-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jjk0",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [
+        {
+          "slug": "jujutsu-kaisen",
+          "id": 814,
+          "postTitle": "Jujutsu Kaisen S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]",
+          "score": 0.6666666666666666
+        }
+      ],
+      "searchRaw": [
+        "Jujutsu Kaisen S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Complete]"
+      ],
+      "episodes": 0
+    },
+    "weathering": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "weathering-with-you",
+        "weatheringwithyou",
+        "weathering-with-you-hindi",
+        "weathering"
+      ],
+      "attempts": [
+        {
+          "slug": "weathering-with-you",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "weatheringwithyou",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "weathering-with-you-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "weathering",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "howl": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "howls-moving-castle",
+        "howlsmovingcastle",
+        "howls-moving-castle-hindi",
+        "howl"
+      ],
+      "attempts": [
+        {
+          "slug": "howls-moving-castle",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "howlsmovingcastle",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "howls-moving-castle-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "howl",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "mononoke": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "mononoke",
+        "princess-mononoke",
+        "princessmononoke",
+        "princess-mononoke-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "mononoke",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Mononoke The Movie: Chapter II - The Ashes of Rage Movie [Hindi-Eng] [Complete]"
+        },
+        {
+          "slug": "princess-mononoke",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "princessmononoke",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "princess-mononoke-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "akira": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "akira",
+        "akira-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "akira",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "akira-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "mhaMovie": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "my-hero-academia-final-season",
+        "my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio",
+        "my-hero-academia-two-heroes",
+        "myheroacademiatwoheroes",
+        "my-hero-academia-two-heroes-hindi",
+        "mhamovie"
+      ],
+      "attempts": [
+        {
+          "slug": "my-hero-academia-final-season",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "My Hero Academia S6-S8 [Hindi-Tamil-Telugu-Mal-Eng-Jap] Multi Audio [Complete]"
+        },
+        {
+          "slug": "my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio",
+          "source": "index",
+          "note": "title mismatch",
+          "pageTitle": "My Hero Academia Vigilantes S1-S2 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio [Completed]"
+        },
+        {
+          "slug": "my-hero-academia-two-heroes",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "myheroacademiatwoheroes",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "my-hero-academia-two-heroes-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mhamovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "saoMovie": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "sword-art-online-ordinal-scale",
+        "swordartonlineordinalscale",
+        "sword-art-online-ordinal-scale-hindi",
+        "saomovie"
+      ],
+      "attempts": [
+        {
+          "slug": "sword-art-online-ordinal-scale",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "swordartonlineordinalscale",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sword-art-online-ordinal-scale-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "saomovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    },
+    "demonMovie": {
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+        "demon-slayer-kimetsu-no-yaiba-2",
+        "demon-slayer-mugen-train",
+        "demonslayermugentrain",
+        "demon-slayer-mugen-train-hindi",
+        "demonmovie"
+      ],
+      "attempts": [
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Demon Slayer Infinity Castle 2025 [Hindi-Tamil-Telugu-English-Japanese] Multi Audio"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-2",
+          "source": "index",
+          "note": "title mismatch",
+          "pageTitle": "Demon Slayer Kimetsu no Yaiba Season 1 [Hindi-English-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "demon-slayer-mugen-train",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demonslayermugentrain",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer-mugen-train-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demonmovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
+      "searchCandidates": [],
+      "searchRaw": [],
+      "episodes": 0
+    }
+  },
+  "summary": {
+    "titles": 41,
+    "ok": 23,
+    "failed": 18,
+    "review": 0,
+    "episodes": 0
+  }
+}

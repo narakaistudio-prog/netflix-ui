@@ -1,0 +1,14 @@
+# Render blueprint — one-click deploy of the extractor API.
+# Dashboard -> New -> Blueprint -> point at this repo; Render reads this file.
+services:
+  - type: web
+    name: anidisk-extractor
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: ALLOW_ORIGIN
+        value: "*"
