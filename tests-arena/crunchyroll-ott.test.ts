@@ -112,10 +112,10 @@ test('drive tab covers the pop-out button', () => {
 
 test('server 1 fits original player in capped viewport with junk cover', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1: plain w3schools-style embed, capped 1000px viewport + black junk cover; Server 2 stays locked down.
+    // Server 1: plain embed (no sandbox/allow for fullscreen) + scroll locked + capped viewport + black junk cover.
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
-    expect(html).toContain("removeAttribute('scrolling')");
+    expect(html).toContain("}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.removeAttribute('allow')}");
     expect(html).toContain('.video-stage.s1fit{width:100%;max-width:1000px;margin:0 auto;align-self:center;padding-bottom:62%}');
     expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
     expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
