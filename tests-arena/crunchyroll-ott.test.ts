@@ -135,6 +135,7 @@ test('fullscreen button targets the video stage', () => {
     expect(html).toContain('fsMask');
     expect(html).toContain('fsExit');
     expect(html).toContain('exitFullscreen');
+    expect(html).toContain('fsExit.style.width');
     expect(html).toContain('fullscreenchange');
     expect(html).toContain('transformOrigin');
 });
