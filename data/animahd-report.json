@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:18:41.477Z",
+  "generatedAt": "2026-10-11T07:21:35.210Z",
   "base": "https://animahd.com",
   "shows": {
     "solo": {
@@ -884,7 +884,7 @@
     "mhaMovie": {
       "status": "ok",
       "slug": "my-hero-academia-final-season",
-      "source": "index",
+      "source": "pin",
       "url": "https://animahd.com/my-hero-academia-final-season/",
       "pages": [
         "my-hero-academia-final-season"

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:18:41.171Z",
+  "generatedAt": "2026-10-11T07:21:35.101Z",
   "base": "https://animahd.com",
   "count": 212,
   "posts": [
@@ -1063,5 +1063,67 @@
       "slug": "gods-game-we-play",
       "title": "Gods&#8217; Game We Play Season 1 [Hindi-Tam-Tel-Eng] Multi Audio [2025] [Complete]"
     }
+  ],
+  "pages": [
+    {
+      "id": 2124,
+      "slug": "japanese-anime-countdown",
+      "title": "Jap Countdown"
+    },
+    {
+      "id": 1945,
+      "slug": "filter",
+      "title": "Filter &amp; Genres"
+    },
+    {
+      "id": 1943,
+      "slug": "anime-schedule",
+      "title": "Anime Schedule"
+    },
+    {
+      "id": 28,
+      "slug": "about",
+      "title": "About"
+    },
+    {
+      "id": 22,
+      "slug": "terms",
+      "title": "terms"
+    },
+    {
+      "id": 20,
+      "slug": "dmca",
+      "title": "DMCA"
+    },
+    {
+      "id": 13,
+      "slug": "player",
+      "title": "Player"
+    },
+    {
+      "id": 10,
+      "slug": "homepage",
+      "title": "AnimaHD"
+    },
+    {
+      "id": 2,
+      "slug": "sample-page",
+      "title": "Sample Page"
+    }
+  ],
+  "sitemap": [
+    "https://animahd.com/post-sitemap.xml",
+    "https://animahd.com/page-sitemap.xml",
+    "https://animahd.com/category-sitemap.xml",
+    "https://animahd.com/post_tag-sitemap.xml",
+    "https://animahd.com/author-sitemap.xml",
+    "https://animahd.com/post-sitemap.xml",
+    "https://animahd.com/page-sitemap.xml",
+    "https://animahd.com/category-sitemap.xml",
+    "https://animahd.com/post_tag-sitemap.xml",
+    "https://animahd.com/author-sitemap.xml",
+    "https://animahd.com/sitemap-misc.xml",
+    "https://animahd.com/post-sitemap.xml",
+    "https://animahd.com/page-sitemap.xml"
   ]
 }
