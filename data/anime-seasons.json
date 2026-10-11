@@ -1,45 +1,169 @@
 {
   "_comment": "Curated per-season episode counts for the Crunchyroll catalog. Order = season order. The harvester only applies a row when the sum matches the episodes AnimaHD actually exposes; otherwise the entry is flagged for review (seasons {\"1\": N}).",
   "series": {
-    "solo": [12, 13],
-    "jjk": [24, 23],
-    "frieren": [28],
-    "chainsaw": [12],
-    "kaiju": [12, 12],
-    "deathnote": [37],
-    "tokyo": [24, 13, 12],
-    "vinland": [24, 24],
-    "mob": [12, 13, 12],
-    "rezero": [25, 25, 16],
-    "sao": [25, 24, 24, 23],
-    "dandadan": [12, 12],
-    "tower": [13, 26],
-    "goh": [13],
-    "bluelock": [24, 14],
-    "drstone": [24, 11, 22, 12],
-    "haikyuu": [25, 25, 10, 25],
-    "blackclover": [170],
-    "bleach": [366],
-    "hxh": [148],
-    "naruto": [500],
-    "boruto": [293],
-    "mha": [13, 25, 25, 25, 25, 25, 21],
-    "aot": [25, 12, 22, 28],
-    "demon": [26, 18, 11, 8],
-    "onepiece": [1122]
+    "solo": [
+      12,
+      13
+    ],
+    "jjk": [
+      24,
+      23
+    ],
+    "frieren": [
+      28
+    ],
+    "chainsaw": [
+      12
+    ],
+    "spy": [
+      25,
+      12,
+      12
+    ],
+    "kaiju": [
+      12,
+      12
+    ],
+    "deathnote": [
+      37
+    ],
+    "tokyo": [
+      24,
+      13,
+      12
+    ],
+    "vinland": [
+      24,
+      24
+    ],
+    "mob": [
+      12,
+      13,
+      12
+    ],
+    "rezero": [
+      25,
+      25,
+      16
+    ],
+    "sao": [
+      25,
+      24,
+      24,
+      23
+    ],
+    "dandadan": [
+      12,
+      12
+    ],
+    "tower": [
+      13,
+      26
+    ],
+    "goh": [
+      13
+    ],
+    "bluelock": [
+      24,
+      14
+    ],
+    "drstone": [
+      24,
+      11,
+      22,
+      12
+    ],
+    "haikyuu": [
+      25,
+      25,
+      10,
+      25
+    ],
+    "blackclover": [
+      170
+    ],
+    "bleach": [
+      366
+    ],
+    "hxh": [
+      148
+    ],
+    "naruto": [
+      500
+    ],
+    "boruto": [
+      293
+    ],
+    "mha": [
+      13,
+      25,
+      25,
+      25,
+      25,
+      25,
+      21
+    ],
+    "aot": [
+      25,
+      12,
+      22,
+      28
+    ],
+    "demon": [
+      26,
+      18,
+      11,
+      8
+    ],
+    "opm": [
+      12,
+      12,
+      12
+    ],
+    "oshi": [
+      11,
+      13
+    ],
+    "onepiece": [
+      1122
+    ]
   },
   "movies": {
-    "yourname": [1],
-    "suzume": [1],
-    "silentvoice": [1],
-    "spirited": [1],
-    "demonMovie": [1],
-    "jjk0": [1],
-    "weathering": [1],
-    "howl": [1],
-    "mononoke": [1],
-    "akira": [1],
-    "mhaMovie": [1],
-    "saoMovie": [1]
+    "yourname": [
+      1
+    ],
+    "suzume": [
+      1
+    ],
+    "silentvoice": [
+      1
+    ],
+    "spirited": [
+      1
+    ],
+    "demonMovie": [
+      1
+    ],
+    "jjk0": [
+      1
+    ],
+    "weathering": [
+      1
+    ],
+    "howl": [
+      1
+    ],
+    "mononoke": [
+      1
+    ],
+    "akira": [
+      1
+    ],
+    "mhaMovie": [
+      1
+    ],
+    "saoMovie": [
+      1
+    ]
   }
 }

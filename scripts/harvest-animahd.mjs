@@ -94,6 +94,83 @@ export function collectEpisodes(html) {
     return { showId, eps, mixed };
 }
 
+/**
+ * Decode the HTML entities WordPress' Vodi theme puts in hrefs
+ * (`&#038;` = `&`), so the same regexes work on old and new markup.
+ */
+export function decodeEntities(text) {
+    return String(text || '')
+        .replace(/&#0*38;/g, '&')
+        .replace(/&#x0*26;/gi, '&')
+        .replace(/&amp;/g, '&')
+        .replace(/&#8217;|&#039;|&apos;/g, "'");
+}
+
+/**
+ * Parse the current Vodi-theme episode rows. Each row looks like:
+ *   <a href='https://animahd.com/?sec_route=1&#038;p=<base64>&#038;s=<sig>'
+ *      class='app-ep-row-item' data-season='Season 2'>
+ *     <div class='gdrive-ep-meta' data-fileid='<fileId>'>
+ *       <div>[ANIMAHD.COM] S02E01 Show Name.mkv</div>
+ * The base64 `p` param decodes to the animahd player URL
+ * (`player/?file_id=…&show_id=…&ep=…`).
+ *
+ * Returns rows in document order:
+ *   [{ season: 1, ep: 0, fileId, showId, label: 'S01E01 Show Name' }]
+ */
+export function collectShowRows(html) {
+    const text = decodeEntities(html);
+    const rows = [];
+    const re = /<a\s[^>]*href='([^']*?)'[^>]*class='app-ep-row-item'[^>]*data-season='([^']*)'[^>]*>([\s\S]*?)<\/a>/g;
+    let m;
+    while ((m = re.exec(text))) {
+        const href = m[1];
+        const seasonLabel = m[2];
+        const inner = m[3];
+        const tok = /[?&]p=([A-Za-z0-9+/=]+)/.exec(href);
+        if (!tok) continue;
+        let decoded = '';
+        try {
+            decoded = Buffer.from(tok[1], 'base64').toString('utf8');
+        } catch {
+            continue;
+        }
+        const player = /file_id=([A-Za-z0-9_-]{10,})/.exec(decoded);
+        const metaFile = /data-fileid='([^']+)'/.exec(inner);
+        const fileId = (player && player[1]) || (metaFile && metaFile[1]) || '';
+        if (!fileId) continue;
+        const showId = Number.parseInt(/[?&]show_id=(\d+)/.exec(decoded)?.[1] || '', 10) || 0;
+        const ep = Number.parseInt(/[?&]ep=(\d+)/.exec(decoded)?.[1] || '', 10);
+        const season = Number.parseInt(/season\D*(\d+)/i.exec(seasonLabel)?.[1] || '', 10) || 1;
+        const label = /\[ANIMAHD[^\]]*\]\s*([^<]*?)\s*(?:<|\.mkv)/i.exec(inner)?.[1] || '';
+        rows.push({
+            season,
+            seasonLabel: seasonLabel.trim(),
+            ep: Number.isInteger(ep) ? ep : rows.length,
+            fileId,
+            showId,
+            label: label.replace(/\s+/g, ' ').trim().slice(0, 140),
+        });
+    }
+    return rows;
+}
+
+/** Rows -> { showId, seasons: {1: n, …}, eps: [fileId…], labels: [..], mixed } */
+export function rowsToEpisodes(rows) {
+    if (!rows.length) return null;
+    const sorted = [...rows].sort((a, b) => (a.season - b.season) || (a.ep - b.ep));
+    const seasons = {};
+    for (const r of sorted) seasons[String(r.season)] = (seasons[String(r.season)] || 0) + 1;
+    const votes = new Map();
+    for (const r of sorted) votes.set(r.showId, (votes.get(r.showId) || 0) + 1);
+    let showId = 0;
+    let best = -1;
+    for (const [id, n] of votes) if (n > best) { best = n; showId = id; }
+    const eps = sorted.map((r) => r.fileId);
+    const labels = sorted.map((r) => r.label);
+    return { showId, seasons, eps, labels, mixed: votes.size > 1 };
+}
+
 export function parseSeasonsOpt(value, epCount) {
     if (!value) return { 1: epCount };
     const counts = String(value).split(',').map((x) => Number.parseInt(x.trim(), 10));
@@ -195,6 +272,20 @@ function runSelfTest() {
     let noneErr = '';
     try { collectEpisodes('<p>nothing here</p>'); } catch (e) { noneErr = String(e && e.message || e); }
     check('empty page errors', noneErr.includes('no player/'));
+    // Vodi-theme rows (the live markup as of 2026-10): base64 player URL inside
+    // an HTML-encoded href + data-season labels on the anchor.
+    const row = (f, sid, ep, season) => {
+        const url = `https://animahd.com/player/?file_id=${f}&show_id=${sid}&ep=${ep}`;
+        const tok = Buffer.from(url).toString('base64');
+        return `<a href='https://animahd.com/?sec_route=1&#038;p=${tok}&#038;s=deadbeef' class='app-ep-row-item' data-season='Season ${season}'><div><img src='https://animahd.com/?sec_route=1&#038;p=x'></div><div class='gdrive-ep-meta' data-fileid='${f}'><div>[ANIMAHD.COM] S0${season}E0${ep + 1} Test Show.mkv</div></div></a>`;
+    };
+    const rowsHtml = `<div class='ff-episodes-list'>${row('AAA111AAA111', 814, 0, 1)}${row('BBB222BBB222', 814, 1, 1)}${row('CCC333CCC333', 814, 2, 2)}</div>`;
+    const rows = collectShowRows(rowsHtml);
+    check('site rows parsed (season + ep)', rows.length === 3 && rows[0].season === 1 && rows[2].season === 2 && rows[1].fileId === 'BBB222BBB222');
+    check('row labels keep SxxEyy', rows[0].label.includes('S01E01') && rows[2].label.includes('S02E03'));
+    const conv = rowsToEpisodes(rows);
+    check('rows -> seasons {1:2,2:1}', JSON.stringify(conv.seasons) === '{"1":2,"2":1}' && conv.eps.length === 3 && conv.showId === 814);
+
     check('default seasons all S1', JSON.stringify(parseSeasonsOpt('', 25)) === '{"1":25}');
     check('explicit seasons split', JSON.stringify(parseSeasonsOpt('12,13', 25)) === '{"1":12,"2":13}');
     let seasErr = '';

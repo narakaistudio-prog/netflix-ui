@@ -28,8 +28,10 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
     collectEpisodes,
+    collectShowRows,
     decodePlayerToken,
     extractPTokens,
+    rowsToEpisodes,
 } from './harvest-animahd.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -286,10 +288,15 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
     }
 
     const attempt = (cand, info) => attempts.push({ slug: cand.slug, source: cand.source, ...info });
-    const hit = (cand, finalUrl, col, rich) => {
-        attempt(cand, { url: finalUrl, episodes: col.eps.length, showId: col.showId });
-        const labels = [];
-        for (let i = 0; i < col.eps.length; i += 1) labels.push((rich.get(i) || {}).label || '');
+    const hit = (cand, finalUrl, col, rich, rows) => {
+        const seq = rows ? rows.map((r) => r.ep) : null;
+        const contiguous = !seq || seq.every((e, i) => e === i);
+        attempt(cand, { url: finalUrl, episodes: col.eps.length, showId: col.showId, epContiguous: contiguous });
+        let labels = col.labels;
+        if (!labels) {
+            labels = [];
+            for (let i = 0; i < col.eps.length; i += 1) labels.push((rich.get(i) || {}).label || '');
+        }
         return {
             status: 'ok',
             kind,
@@ -301,6 +308,8 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
             mixed: col.mixed,
             eps: col.eps,
             labels,
+            epContiguous: contiguous,
+            siteSeasons: col.seasons || null,
         };
     };
 
@@ -309,6 +318,9 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
         tried.push(cand.slug);
         try {
             const { text, url: finalUrl } = await fetchText(url, { timeout: 15000 });
+            const rows = collectShowRows(text);
+            const site = rowsToEpisodes(rows);
+            if (site) return hit(cand, finalUrl, site, null, rows);
             const rich = collectRich(text);
             if (!rich.size) {
                 attempt(cand, {
@@ -342,6 +354,9 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
             tried.push(`search:${cand.slug}`);
             try {
                 const { text: page, url: finalUrl } = await fetchText(`${args.base}/${cand.slug}/`, { timeout: 15000 });
+                const rows = collectShowRows(page);
+                const site = rowsToEpisodes(rows);
+                if (site) return hit({ slug: cand.slug, source: 'search' }, finalUrl, site, null, rows);
                 const rich = collectRich(page);
                 if (!rich.size) {
                     attempt({ slug: cand.slug, source: 'search' }, {
@@ -444,18 +459,30 @@ async function main() {
         const entry = { ...result };
         delete entry.kind;
         delete entry.title;
+        if (Array.isArray(entry.labels)) {
+            entry.labelSample = [entry.labels[0] || '', entry.labels[entry.labels.length - 1] || ''];
+            delete entry.labels;
+        }
         if (result.status === 'ok') {
             const count = result.eps.length;
-            const picked = pickSeasons(key, count, existing && existing.seasons, kind === 'movie' ? movieTable : table);
+            const siteSum = result.siteSeasons
+                ? Object.values(result.siteSeasons).reduce((a, b) => a + b, 0)
+                : 0;
+            const siteSeasons = result.siteSeasons && siteSum === count ? result.siteSeasons : null;
+            const picked =
+                siteSeasons && Object.keys(siteSeasons).length > 1
+                    ? { seasons: siteSeasons, source: 'site' }
+                    : pickSeasons(key, count, (siteSeasons || (existing && existing.seasons)), kind === 'movie' ? movieTable : table);
             episodes[key] = {
                 slug: result.slug,
                 showId: result.showId,
                 seasons: picked.seasons,
                 seasonsSource: picked.source,
                 ...(picked.review ? { review: true } : {}),
+                ...(result.labels && result.labels.some(Boolean) ? { labels: result.labels } : {}),
                 eps: result.eps,
             };
-            slugs[key] = { slug: result.slug, source: result.source, verified: result.source !== 'search' };
+            slugs[key] = { slug: result.slug, source: result.source, verified: true, titleAtHarvest: title };
             entry.seasons = picked.seasons;
             entry.seasonsSource = picked.source;
             if (picked.review) entry.review = true;
