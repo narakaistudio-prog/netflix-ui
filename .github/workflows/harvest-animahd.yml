@@ -21,6 +21,8 @@ concurrency:
 
 jobs:
   harvest:
+    # Never re-run on the bot's own commit (would loop forever).
+    if: github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -33,6 +35,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Diagnose AnimaHD markup (artifact only)
+        if: always()
+        run: node scripts/diag-animahd.mjs
 
       - name: Harvest every anime in the Crunchyroll page
         run: node scripts/harvest-animahd-all.mjs
@@ -55,6 +61,8 @@ jobs:
             data/animahd-episodes.json
             data/animahd-slugs.json
             data/animahd-report.json
+            data/animahd-diag.json
+            data/diag/
           if-no-files-found: warn
 
       - name: Commit harvested episodes

@@ -277,6 +277,7 @@ async function discover(base) {
 async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
     const pins = { ...slugs, ...args.pins };
     const tried = [];
+    const attempts = [];
     // 1. pinned slug wins.
     const candidates = [];
     if (pins[key]) candidates.push({ slug: pins[key], source: 'pin' });
@@ -284,35 +285,50 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
         if (!candidates.some((c) => c.slug === slug)) candidates.push({ slug, source: 'candidate' });
     }
 
+    const attempt = (cand, info) => attempts.push({ slug: cand.slug, source: cand.source, ...info });
+    const hit = (cand, finalUrl, col, rich) => {
+        attempt(cand, { url: finalUrl, episodes: col.eps.length, showId: col.showId });
+        const labels = [];
+        for (let i = 0; i < col.eps.length; i += 1) labels.push((rich.get(i) || {}).label || '');
+        return {
+            status: 'ok',
+            kind,
+            title,
+            slug: cand.slug,
+            source: cand.source,
+            url: finalUrl,
+            showId: col.showId,
+            mixed: col.mixed,
+            eps: col.eps,
+            labels,
+        };
+    };
+
     for (const cand of candidates) {
         const url = `${args.base}/${cand.slug}/`;
         tried.push(cand.slug);
         try {
             const { text, url: finalUrl } = await fetchText(url, { timeout: 15000 });
             const rich = collectRich(text);
-            if (!rich.size) continue;
-            const col = collectEpisodes(text);
-            const labels = [];
-            for (let i = 0; i < col.eps.length; i += 1) labels.push((rich.get(i) || {}).label || '');
-            return {
-                status: 'ok',
-                kind,
-                title,
-                slug: cand.slug,
-                source: cand.source,
-                url: finalUrl,
-                showId: col.showId,
-                mixed: col.mixed,
-                eps: col.eps,
-                labels,
-            };
+            if (!rich.size) {
+                attempt(cand, {
+                    url: finalUrl,
+                    bytes: text.length,
+                    pTokens: extractPTokens(text).length,
+                    note: 'no p-tokens',
+                });
+                continue;
+            }
+            return hit(cand, finalUrl, collectEpisodes(text), rich);
         } catch (e) {
+            attempt(cand, { error: String((e && e.message) || e) });
             if (args.verbose) console.log(`  miss ${url} — ${e.message}`);
         }
         await sleep(150);
     }
 
-    // 2. Fall back to the site search.
+    // 2. Fall back to the site search (try the ranked hits even when the
+    //    title overlap is weak — AnimaHD slugs carry long suffixes).
     const searchUrl = `${args.base}/?s=${encodeURIComponent(title)}`;
     try {
         const { text } = await fetchText(searchUrl);
@@ -322,28 +338,23 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
             .sort((a, b) => b.score - a.score)
             .slice(0, 5);
         for (const cand of ranked) {
-            if (cand.score < 0.5) break;
+            if (cand.score < 0.2) break;
             tried.push(`search:${cand.slug}`);
             try {
                 const { text: page, url: finalUrl } = await fetchText(`${args.base}/${cand.slug}/`, { timeout: 15000 });
                 const rich = collectRich(page);
-                if (!rich.size) continue;
-                const col = collectEpisodes(page);
-                const labels = [];
-                for (let i = 0; i < col.eps.length; i += 1) labels.push((rich.get(i) || {}).label || '');
-                return {
-                    status: 'ok',
-                    kind,
-                    title,
-                    slug: cand.slug,
-                    source: 'search',
-                    url: finalUrl,
-                    showId: col.showId,
-                    mixed: col.mixed,
-                    eps: col.eps,
-                    labels,
-                };
+                if (!rich.size) {
+                    attempt({ slug: cand.slug, source: 'search' }, {
+                        url: finalUrl,
+                        bytes: page.length,
+                        pTokens: extractPTokens(page).length,
+                        note: 'no p-tokens',
+                    });
+                    continue;
+                }
+                return hit({ slug: cand.slug, source: 'search' }, finalUrl, collectEpisodes(page), rich);
             } catch (e) {
+                attempt({ slug: cand.slug, source: 'search' }, { error: String((e && e.message) || e) });
                 if (args.verbose) console.log(`  search miss ${cand.slug} — ${e.message}`);
             }
             await sleep(150);
@@ -354,11 +365,12 @@ async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
             title,
             error: 'no show page found',
             tried,
+            attempts,
             searchUrl,
             searchCandidates: ranked,
         };
     } catch (e) {
-        return { status: 'failed', kind, title, error: `search failed: ${e.message}`, tried, searchUrl };
+        return { status: 'failed', kind, title, error: `search failed: ${e.message}`, tried, attempts, searchUrl };
     }
 }
 

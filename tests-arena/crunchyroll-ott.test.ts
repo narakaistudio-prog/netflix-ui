@@ -164,17 +164,20 @@ test('solo leveling ships all 25 episodes from one file_id table', () => {
     expect(html).toContain('seasonEpCount');
 });
 
-test('season 2 lists 13 episodes for solo leveling', () => {
+test('season 2 lists 13 episodes for solo leveling from the seasons map', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('On to the Next Target');
-    expect(html).toContain('source.slice(0,12)');
+    // S1=12, S2=13 straight from EP_DATA; the guide renders one card per episode.
+    expect(html).toContain('"seasons":{"1":12,"2":13}');
+    expect(html).toContain('episodeData(activeKey,season)');
+    expect(html).toContain('seasonEpCount');
 });
 
 test('player shows notice panel when a title has no source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    expect(html).toContain('Solo Leveling S1–S2 is available');
+    // Generic no-source notice covers every title without a file_id for that ep.
+    expect(html).toContain('has no source available yet.<br>Pick another episode or title.');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {
