@@ -1,9 +1,10 @@
 const https = require('node:https');
 const http = require('node:http');
-const moviebox = require('../../server/moviebox-lib.cjs');
-const lib = require('../../server/extract-lib.cjs');
-const animahdEps = require('../../data/animahd-episodes.json');
-const nxshaTitles = require('../../data/nxsha-titles.json');
+const path = require('node:path');
+const moviebox = require(path.join(__dirname, '..', '..', 'server', 'moviebox-lib.cjs'));
+const lib = require(path.join(__dirname, '..', '..', 'server', 'extract-lib.cjs'));
+const animahdEps = require(path.join(__dirname, '..', '..', 'data', 'animahd-episodes.json'));
+const nxshaTitles = require(path.join(__dirname, '..', '..', 'data', 'nxsha-titles.json'));
 
 const TITLE_TO_KEY = {
   'solo leveling': 'solo',
@@ -86,6 +87,7 @@ function resolveRealEpisode(key, title, season = 1, ep = 1, queryFileId, querySh
       kind: 'nxsha',
       playerUrl: url,
       embedUrl: url,
+      driveUrl: url,
       nxId: queryNxId,
     };
   }
@@ -124,6 +126,7 @@ function resolveRealEpisode(key, title, season = 1, ep = 1, queryFileId, querySh
       kind: 'nxsha',
       playerUrl: url,
       embedUrl: url,
+      driveUrl: url,
       nxId: nx.id,
     };
   }
@@ -210,7 +213,7 @@ module.exports = async (req, res) => {
             method: 'POST',
             headers,
             body: payload,
-            timeoutMs: 3500,
+            timeoutMs: 2500,
           });
           const parsed = moviebox.parseSearchResults(data);
           if (parsed.ok && parsed.count > 0) {
@@ -237,12 +240,14 @@ module.exports = async (req, res) => {
           for (const playUrl of playUrls) {
             try {
               const headers = moviebox.buildHeaders({ referer: `${host}/spa/videoPlayPage/movies/${detailPath}?id=${subjectId}` });
-              const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 4000 });
+              const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 3000 });
               const streamInfo = moviebox.parsePlayResponse(playData, lang);
               if (streamInfo.ok && streamInfo.stream) {
-                const hostHeader = (req.headers && req.headers.host) || 'localhost:3000';
+                const hostHeader = (req.headers && req.headers.host) || '';
                 const proto = (req.headers && req.headers['x-forwarded-proto']) || 'https';
-                const proxied = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(streamInfo.stream)}&r=${lib.b64uEncode(host + '/')}`;
+                const proxied = hostHeader
+                  ? `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(streamInfo.stream)}&r=${lib.b64uEncode(host + '/')}`
+                  : `/api/stream?u=${lib.b64uEncode(streamInfo.stream)}&r=${lib.b64uEncode(host + '/')}`;
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 return res.end(JSON.stringify({
@@ -276,21 +281,8 @@ module.exports = async (req, res) => {
     console.warn('MovieBox stream resolution error:', err);
   }
 
-  // Direct video stream for confirmed anime episode (NO external web page redirect!)
+  // Confirmed real Hindi anime episode
   const realEp = resolveRealEpisode(key, title, se, ep, queryFileId, queryShowId, queryEpIdx, queryNxId, queryNxKind);
-  const hostHeader = (req.headers && req.headers.host) || 'localhost:3000';
-  const proto = (req.headers && req.headers['x-forwarded-proto']) || 'https';
-
-  let directStream = '';
-  if (realEp.fileId) {
-    const rawDrive = `https://drive.google.com/uc?export=download&id=${realEp.fileId}`;
-    directStream = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(rawDrive)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
-  } else if (realEp.driveUrl) {
-    directStream = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(realEp.driveUrl)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
-  } else {
-    directStream = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode('https://moviebox.ph/')}&r=${lib.b64uEncode('https://moviebox.ph/')}`;
-  }
-
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
   return res.end(JSON.stringify({
@@ -303,12 +295,14 @@ module.exports = async (req, res) => {
     quality: '1080P',
     isHindi: true,
     fallback: true,
-    isDirect: true,
-    stream: directStream,
-    proxied: directStream,
+    isDirect: false,
     fileId: realEp.fileId,
     showId: realEp.showId,
     nxId: realEp.nxId,
+    driveUrl: realEp.driveUrl,
+    embedUrl: realEp.embedUrl || realEp.driveUrl || realEp.playerUrl,
+    stream: realEp.driveUrl || realEp.embedUrl || realEp.playerUrl,
+    playerUrl: realEp.playerUrl,
     note: 'MovieBox proxy streaming confirmed Hindi anime episode',
   }));
 };

@@ -1,6 +1,7 @@
 const https = require('node:https');
 const http = require('node:http');
-const lib = require('../../server/extract-lib.cjs');
+const path = require('node:path');
+const lib = require(path.join(__dirname, '..', 'server', 'extract-lib.cjs'));
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36';
 

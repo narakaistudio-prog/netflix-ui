@@ -425,18 +425,8 @@ async function handleMovieboxStream(req, res, query) {
     }
   }
 
-  // If MovieBox upstream is offline or title has no direct m3u8, serve direct stream of confirmed real Hindi anime episode
+  // If MovieBox upstream is offline or title has no direct m3u8, serve confirmed real Hindi anime episode
   const realEp = resolveRealEpisode(key, title, se, ep, queryFileId, queryShowId, queryEpIdx, queryNxId, queryNxKind);
-  const base = selfBase(req);
-  let directStream = '';
-  if (realEp.fileId) {
-    const rawDrive = `https://drive.google.com/uc?export=download&id=${realEp.fileId}`;
-    directStream = `${base}/api/stream?u=${lib.b64uEncode(rawDrive)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
-  } else if (realEp.driveUrl) {
-    directStream = `${base}/api/stream?u=${lib.b64uEncode(realEp.driveUrl)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
-  } else {
-    directStream = `${base}/api/stream?u=${lib.b64uEncode('https://moviebox.ph/')}&r=${lib.b64uEncode('https://moviebox.ph/')}`;
-  }
 
   sendJson(res, 200, {
     ok: true,
@@ -450,12 +440,14 @@ async function handleMovieboxStream(req, res, query) {
     quality: '1080P',
     isHindi: true,
     fallback: true,
-    isDirect: true,
-    stream: directStream,
-    proxied: directStream,
+    isDirect: false,
     fileId: realEp.fileId,
     showId: realEp.showId,
     nxId: realEp.nxId,
+    driveUrl: realEp.driveUrl,
+    embedUrl: realEp.embedUrl || realEp.driveUrl || realEp.playerUrl,
+    stream: realEp.driveUrl || realEp.embedUrl || realEp.playerUrl,
+    playerUrl: realEp.playerUrl,
     note: 'MovieBox proxy streaming confirmed Hindi anime episode'
   }, req);
 }
