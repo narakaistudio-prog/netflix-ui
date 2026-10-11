@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T06:58:11.655Z",
+  "generatedAt": "2026-10-11T07:04:18.716Z",
   "base": "https://animahd.com",
   "shows": {
     "solo": {
@@ -9,7 +9,44 @@
         "solo-leveling",
         "sololeveling",
         "solo-leveling-hindi",
-        "solo"
+        "solo",
+        "search:solo-leveling-season-episodes-hindi-multi-audio"
+      ],
+      "attempts": [
+        {
+          "slug": "solo-leveling",
+          "source": "candidate",
+          "url": "https://animahd.com/solo-leveling-season-episodes-hindi-multi-audio/",
+          "bytes": 182298,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "sololeveling",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "solo-leveling-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "solo",
+          "source": "candidate",
+          "url": "https://animahd.com/solo-leveling-season-episodes-hindi-multi-audio/",
+          "bytes": 182298,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "solo-leveling-season-episodes-hindi-multi-audio",
+          "source": "search",
+          "url": "https://animahd.com/solo-leveling-season-episodes-hindi-multi-audio/",
+          "bytes": 182298,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Solo%20Leveling",
       "searchCandidates": [
@@ -48,6 +85,63 @@
         "search:demon-slayer-kimetsu-no-yaiba-2",
         "search:demon-slayer-kimetsu-no-yaiba-infinity-castle"
       ],
+      "attempts": [
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba",
+          "source": "candidate",
+          "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-2/",
+          "bytes": 183674,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "demonslayerkimetsunoyaiba",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "kimetsu-no-yaiba",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer",
+          "source": "candidate",
+          "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-2/",
+          "bytes": 183674,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "demon",
+          "source": "candidate",
+          "url": "https://animahd.com/demon-lord-retry-2/",
+          "bytes": 157071,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-2",
+          "source": "search",
+          "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-2/",
+          "bytes": 183674,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "source": "search",
+          "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-infinity-castle/",
+          "bytes": 141511,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba",
       "searchCandidates": [
         {
@@ -81,6 +175,39 @@
         "jujutsu-kaisen-hindi",
         "jjk",
         "search:jujutsu-kaisen"
+      ],
+      "attempts": [
+        {
+          "slug": "jujutsu-kaisen",
+          "source": "candidate",
+          "url": "https://animahd.com/jujutsu-kaisen/",
+          "bytes": 221438,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "jujutsukaisen",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsu-kaisen-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jjk",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsu-kaisen",
+          "source": "search",
+          "url": "https://animahd.com/jujutsu-kaisen/",
+          "bytes": 221438,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=JUJUTSU%20KAISEN",
       "searchCandidates": [
@@ -117,6 +244,47 @@
         "search:one-piece",
         "search:one-piece-2"
       ],
+      "attempts": [
+        {
+          "slug": "one-piece",
+          "source": "candidate",
+          "url": "https://animahd.com/one-piece/",
+          "bytes": 140868,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "onepiece",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-piece-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-piece-english-subbed",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-piece",
+          "source": "search",
+          "url": "https://animahd.com/one-piece/",
+          "bytes": 140868,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "one-piece-2",
+          "source": "search",
+          "url": "https://animahd.com/one-piece-2/",
+          "bytes": 193437,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=One%20Piece",
       "searchCandidates": [
         {
@@ -149,6 +317,34 @@
         "frierenbeyondjourneysend",
         "frieren-beyond-journeys-end-hindi",
         "frieren"
+      ],
+      "attempts": [
+        {
+          "slug": "frieren-beyond-journeys-end",
+          "source": "candidate",
+          "url": "https://animahd.com/frieren-beyond-journeys-end/",
+          "bytes": 187606,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "frierenbeyondjourneysend",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "frieren-beyond-journeys-end-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "frieren",
+          "source": "candidate",
+          "url": "https://animahd.com/frieren-beyond-journeys-end/",
+          "bytes": 187606,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Frieren%3A%20Beyond%20Journey%E2%80%99s%20End",
       "searchCandidates": [
@@ -183,6 +379,42 @@
         "chainsaw-man-hindi",
         "chainsaw",
         "search:chainsaw-man"
+      ],
+      "attempts": [
+        {
+          "slug": "chainsaw-man",
+          "source": "candidate",
+          "url": "https://animahd.com/chainsaw-man/",
+          "bytes": 157002,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "chainsawman",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "chainsaw-man-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "chainsaw",
+          "source": "candidate",
+          "url": "https://animahd.com/chainsaw-man/",
+          "bytes": 157002,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "chainsaw-man",
+          "source": "search",
+          "url": "https://animahd.com/chainsaw-man/",
+          "bytes": 157002,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Chainsaw%20Man",
       "searchCandidates": [
@@ -219,6 +451,47 @@
         "spy",
         "search:spy-x-family"
       ],
+      "attempts": [
+        {
+          "slug": "spy-x-family",
+          "source": "candidate",
+          "url": "https://animahd.com/spy-x-family/",
+          "bytes": 230709,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "spy-family",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spyxfamily",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spy-x-family-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spy",
+          "source": "candidate",
+          "url": "https://animahd.com/spy-x-family/",
+          "bytes": 230709,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "spy-x-family",
+          "source": "search",
+          "url": "https://animahd.com/spy-x-family/",
+          "bytes": 230709,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=SPY%20x%20FAMILY",
       "searchCandidates": [
         {
@@ -254,6 +527,50 @@
         "kaiju",
         "search:kaiju-no-8"
       ],
+      "attempts": [
+        {
+          "slug": "kaiju-no-8",
+          "source": "candidate",
+          "url": "https://animahd.com/kaiju-no-8/",
+          "bytes": 161414,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "kaijuno8",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "kaiju-no",
+          "source": "candidate",
+          "url": "https://animahd.com/kaiju-no-8/",
+          "bytes": 161414,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "kaiju-no-8-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "kaiju",
+          "source": "candidate",
+          "url": "https://animahd.com/kaiju-no-8/",
+          "bytes": 161414,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "kaiju-no-8",
+          "source": "search",
+          "url": "https://animahd.com/kaiju-no-8/",
+          "bytes": 161414,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Kaiju%20No.%208",
       "searchCandidates": [
         {
@@ -287,6 +604,33 @@
         "attack-on-titan-hindi",
         "shingeki-no-kyojin",
         "aot"
+      ],
+      "attempts": [
+        {
+          "slug": "attack-on-titan",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "attackontitan",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "attack-on-titan-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "shingeki-no-kyojin",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "aot",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Attack%20on%20Titan",
       "searchCandidates": [
@@ -322,6 +666,42 @@
         "naruto",
         "search:naruto-shippuden"
       ],
+      "attempts": [
+        {
+          "slug": "naruto-shippuden",
+          "source": "candidate",
+          "url": "https://animahd.com/naruto-shippuden/",
+          "bytes": 638141,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "narutoshippuden",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "naruto-shippuden-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "naruto",
+          "source": "candidate",
+          "url": "https://animahd.com/naruto-shippuden/",
+          "bytes": 638141,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "naruto-shippuden",
+          "source": "search",
+          "url": "https://animahd.com/naruto-shippuden/",
+          "bytes": 638141,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Naruto%20Shippuden",
       "searchCandidates": [
         {
@@ -353,7 +733,44 @@
         "death-note",
         "deathnote",
         "death-note-hindi",
-        "search:death-note"
+        "search:death-note",
+        "search:death-note-relight-movie-hindi-dub-dual-audio"
+      ],
+      "attempts": [
+        {
+          "slug": "death-note",
+          "source": "candidate",
+          "url": "https://animahd.com/death-note/",
+          "bytes": 202804,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "deathnote",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "death-note-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "death-note",
+          "source": "search",
+          "url": "https://animahd.com/death-note/",
+          "bytes": 202804,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "death-note-relight-movie-hindi-dub-dual-audio",
+          "source": "search",
+          "url": "https://animahd.com/death-note-relight-movie-hindi-dub-dual-audio/",
+          "bytes": 144151,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Death%20Note",
       "searchCandidates": [
@@ -388,7 +805,54 @@
         "my-hero-academia-hindi",
         "boku-no-hero-academia",
         "mha",
-        "search:my-hero-academia-final-season"
+        "search:my-hero-academia-final-season",
+        "search:my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio"
+      ],
+      "attempts": [
+        {
+          "slug": "my-hero-academia",
+          "source": "candidate",
+          "url": "https://animahd.com/my-hero-academia-final-season/",
+          "bytes": 245998,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "myheroacademia",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "my-hero-academia-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "boku-no-hero-academia",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mha",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "my-hero-academia-final-season",
+          "source": "search",
+          "url": "https://animahd.com/my-hero-academia-final-season/",
+          "bytes": 245998,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio",
+          "source": "search",
+          "url": "https://animahd.com/my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio/",
+          "bytes": 181721,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=My%20Hero%20Academia",
       "searchCandidates": [
@@ -422,6 +886,31 @@
         "tokyorevengers",
         "tokyo-revengers-hindi",
         "tokyo"
+      ],
+      "attempts": [
+        {
+          "slug": "tokyo-revengers",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyorevengers",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyo-revengers-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyo",
+          "source": "candidate",
+          "url": "https://animahd.com/tokyo-ghoul/",
+          "bytes": 223089,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Tokyo%20Revengers",
       "searchCandidates": [
@@ -457,6 +946,39 @@
         "opm",
         "search:one-punch-man"
       ],
+      "attempts": [
+        {
+          "slug": "one-punch-man",
+          "source": "candidate",
+          "url": "https://animahd.com/one-punch-man/",
+          "bytes": 156851,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "onepunchman",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-punch-man-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "opm",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "one-punch-man",
+          "source": "search",
+          "url": "https://animahd.com/one-punch-man/",
+          "bytes": 156851,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=One%20Punch%20Man",
       "searchCandidates": [
         {
@@ -486,7 +1008,31 @@
       "error": "no show page found",
       "tried": [
         "bleach",
-        "bleach-hindi"
+        "bleach-hindi",
+        "search:bleach-thousand-year-blood-war-the-separation"
+      ],
+      "attempts": [
+        {
+          "slug": "bleach",
+          "source": "candidate",
+          "url": "https://animahd.com/bleach-thousand-year-blood-war-the-separation/",
+          "bytes": 212293,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "bleach-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "bleach-thousand-year-blood-war-the-separation",
+          "source": "search",
+          "url": "https://animahd.com/bleach-thousand-year-blood-war-the-separation/",
+          "bytes": 212293,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Bleach",
       "searchCandidates": [
@@ -524,6 +1070,52 @@
         "search:hunter-x-hunter",
         "search:sword-of-the-demon-hunter-kijin-gentosho"
       ],
+      "attempts": [
+        {
+          "slug": "hunter-x-hunter",
+          "source": "candidate",
+          "url": "https://animahd.com/hunter-x-hunter/",
+          "bytes": 315112,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "hunter-hunter",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hunterxhunter",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hunter-x-hunter-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hxh",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "hunter-x-hunter",
+          "source": "search",
+          "url": "https://animahd.com/hunter-x-hunter/",
+          "bytes": 315112,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "sword-of-the-demon-hunter-kijin-gentosho",
+          "source": "search",
+          "url": "https://animahd.com/sword-of-the-demon-hunter-kijin-gentosho/",
+          "bytes": 179870,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Hunter%20x%20Hunter",
       "searchCandidates": [
         {
@@ -556,6 +1148,28 @@
         "vinlandsaga",
         "vinland-saga-hindi",
         "vinland"
+      ],
+      "attempts": [
+        {
+          "slug": "vinland-saga",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "vinlandsaga",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "vinland-saga-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "vinland",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Vinland%20Saga",
       "searchCandidates": [
@@ -592,6 +1206,50 @@
         "mob",
         "search:mob-psycho-100-2"
       ],
+      "attempts": [
+        {
+          "slug": "mob-psycho-100",
+          "source": "candidate",
+          "url": "https://animahd.com/mob-psycho-100-2/",
+          "bytes": 205943,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "mobpsycho100",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mob-psycho",
+          "source": "candidate",
+          "url": "https://animahd.com/mob-psycho-100-2/",
+          "bytes": 205943,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "mob-psycho-100-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mob",
+          "source": "candidate",
+          "url": "https://animahd.com/mob-psycho-100-2/",
+          "bytes": 205943,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "mob-psycho-100-2",
+          "source": "search",
+          "url": "https://animahd.com/mob-psycho-100-2/",
+          "bytes": 205943,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Mob%20Psycho%20100",
       "searchCandidates": [
         {
@@ -623,6 +1281,26 @@
         "re-zero",
         "rezero",
         "re-zero-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "re-zero",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "rezero",
+          "source": "candidate",
+          "url": "https://animahd.com/rezero-starting-life-in-another-world-2/",
+          "bytes": 243949,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "re-zero-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Re%3AZERO",
       "searchCandidates": [
@@ -658,6 +1336,39 @@
         "sao",
         "search:sword-art-online-alternative-gun-gale-online"
       ],
+      "attempts": [
+        {
+          "slug": "sword-art-online",
+          "source": "candidate",
+          "url": "https://animahd.com/sword-art-online-alternative-gun-gale-online/",
+          "bytes": 158101,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "swordartonline",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sword-art-online-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sao",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sword-art-online-alternative-gun-gale-online",
+          "source": "search",
+          "url": "https://animahd.com/sword-art-online-alternative-gun-gale-online/",
+          "bytes": 158101,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Sword%20Art%20Online",
       "searchCandidates": [
         {
@@ -692,6 +1403,42 @@
         "search:black-clover",
         "search:black-torch"
       ],
+      "attempts": [
+        {
+          "slug": "black-clover",
+          "source": "candidate",
+          "url": "https://animahd.com/black-clover/",
+          "bytes": 185265,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "blackclover",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "black-clover-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "black-clover",
+          "source": "search",
+          "url": "https://animahd.com/black-clover/",
+          "bytes": 185265,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "black-torch",
+          "source": "search",
+          "url": "https://animahd.com/black-torch/",
+          "bytes": 146158,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Black%20Clover",
       "searchCandidates": [
         {
@@ -723,6 +1470,23 @@
         "dr-stone",
         "drstone",
         "dr-stone-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "dr-stone",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "drstone",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "dr-stone-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Dr.%20STONE",
       "searchCandidates": [
@@ -757,6 +1521,34 @@
         "haikyuu",
         "search:haikyu"
       ],
+      "attempts": [
+        {
+          "slug": "haikyu",
+          "source": "candidate",
+          "url": "https://animahd.com/haikyu/",
+          "bytes": 222096,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "haikyu-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "haikyuu",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "haikyu",
+          "source": "search",
+          "url": "https://animahd.com/haikyu/",
+          "bytes": 222096,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=HAIKYU!!",
       "searchCandidates": [
         {
@@ -789,7 +1581,52 @@
         "bluelock",
         "blue-lock-hindi",
         "search:blue-lock",
-        "search:blue-box"
+        "search:blue-box",
+        "search:grand-blue-dreaming"
+      ],
+      "attempts": [
+        {
+          "slug": "blue-lock",
+          "source": "candidate",
+          "url": "https://animahd.com/blue-lock/",
+          "bytes": 151511,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "bluelock",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "blue-lock-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "blue-lock",
+          "source": "search",
+          "url": "https://animahd.com/blue-lock/",
+          "bytes": 151511,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "blue-box",
+          "source": "search",
+          "url": "https://animahd.com/blue-box/",
+          "bytes": 183072,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "grand-blue-dreaming",
+          "source": "search",
+          "url": "https://animahd.com/grand-blue-dreaming/",
+          "bytes": 191535,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=BLUE%20LOCK",
       "searchCandidates": [
@@ -825,6 +1662,42 @@
         "oshi",
         "search:oshi-no-ko"
       ],
+      "attempts": [
+        {
+          "slug": "oshi-no-ko",
+          "source": "candidate",
+          "url": "https://animahd.com/oshi-no-ko/",
+          "bytes": 200554,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "oshinoko",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "oshi-no-ko-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "oshi",
+          "source": "candidate",
+          "url": "https://animahd.com/oshi-no-ko/",
+          "bytes": 200554,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "oshi-no-ko",
+          "source": "search",
+          "url": "https://animahd.com/oshi-no-ko/",
+          "bytes": 200554,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=OSHI%20NO%20KO",
       "searchCandidates": [
         {
@@ -856,6 +1729,26 @@
         "dan-da-dan",
         "dandadan",
         "dan-da-dan-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "dan-da-dan",
+          "source": "candidate",
+          "url": "https://animahd.com/dan-da-dan/",
+          "bytes": 157469,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "dandadan",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "dan-da-dan-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=DAN%20DA%20DAN",
       "searchCandidates": [
@@ -891,6 +1784,42 @@
         "tower",
         "search:tower-of-god-2"
       ],
+      "attempts": [
+        {
+          "slug": "tower-of-god",
+          "source": "candidate",
+          "url": "https://animahd.com/tower-of-god-2/",
+          "bytes": 158395,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "towerofgod",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tower-of-god-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tower",
+          "source": "candidate",
+          "url": "https://animahd.com/tower-of-god-2/",
+          "bytes": 158395,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "tower-of-god-2",
+          "source": "search",
+          "url": "https://animahd.com/tower-of-god-2/",
+          "bytes": 158395,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Tower%20of%20God",
       "searchCandidates": [
         {
@@ -923,7 +1852,46 @@
         "god-of-high-school",
         "thegodofhighschool",
         "the-god-of-high-school-hindi",
-        "goh"
+        "goh",
+        "search:the-god-of-high-school-season-1-multi-audio-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "the-god-of-high-school",
+          "source": "candidate",
+          "url": "https://animahd.com/the-god-of-high-school-season-1-multi-audio-hindi/",
+          "bytes": 158441,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "god-of-high-school",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "thegodofhighschool",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "the-god-of-high-school-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "goh",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "the-god-of-high-school-season-1-multi-audio-hindi",
+          "source": "search",
+          "url": "https://animahd.com/the-god-of-high-school-season-1-multi-audio-hindi/",
+          "bytes": 158441,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=The%20God%20of%20High%20School",
       "searchCandidates": [
@@ -958,6 +1926,28 @@
         "boruto-naruto-next-generations-hindi",
         "boruto"
       ],
+      "attempts": [
+        {
+          "slug": "boruto-naruto-next-generations",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "borutonarutonextgenerations",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "boruto-naruto-next-generations-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "boruto",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Boruto%3A%20Naruto%20Next%20Generations",
       "searchCandidates": [
         {
@@ -990,6 +1980,28 @@
         "myheroacademiatwoheroes",
         "my-hero-academia-two-heroes-hindi",
         "mhamovie"
+      ],
+      "attempts": [
+        {
+          "slug": "my-hero-academia-two-heroes",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "myheroacademiatwoheroes",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "my-hero-academia-two-heroes-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mhamovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=My%20Hero%20Academia%3A%20Two%20Heroes",
       "searchCandidates": [
@@ -1024,6 +2036,28 @@
         "sword-art-online-ordinal-scale-hindi",
         "saomovie"
       ],
+      "attempts": [
+        {
+          "slug": "sword-art-online-ordinal-scale",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "swordartonlineordinalscale",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "sword-art-online-ordinal-scale-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "saomovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Sword%20Art%20Online%3A%20Ordinal%20Scale",
       "searchCandidates": [
         {
@@ -1056,6 +2090,23 @@
         "yourname",
         "your-name-hindi"
       ],
+      "attempts": [
+        {
+          "slug": "your-name",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "yourname",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "your-name-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Your%20Name",
       "searchCandidates": [
         {
@@ -1086,6 +2137,18 @@
       "tried": [
         "suzume",
         "suzume-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "suzume",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "suzume-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Suzume",
       "searchCandidates": [
@@ -1120,6 +2183,28 @@
         "a-silent-voice-hindi",
         "silentvoice"
       ],
+      "attempts": [
+        {
+          "slug": "a-silent-voice",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "asilentvoice",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "a-silent-voice-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "silentvoice",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=A%20Silent%20Voice",
       "searchCandidates": [
         {
@@ -1152,6 +2237,28 @@
         "spiritedaway",
         "spirited-away-hindi",
         "spirited"
+      ],
+      "attempts": [
+        {
+          "slug": "spirited-away",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spiritedaway",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spirited-away-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "spirited",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Spirited%20Away",
       "searchCandidates": [
@@ -1188,6 +2295,44 @@
         "jjk0",
         "search:jujutsu-kaisen"
       ],
+      "attempts": [
+        {
+          "slug": "jujutsu-kaisen-0",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsukaisen0",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsu-kaisen",
+          "source": "candidate",
+          "url": "https://animahd.com/jujutsu-kaisen/",
+          "bytes": 221438,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        },
+        {
+          "slug": "jujutsu-kaisen-0-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jjk0",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "jujutsu-kaisen",
+          "source": "search",
+          "url": "https://animahd.com/jujutsu-kaisen/",
+          "bytes": 221438,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Jujutsu%20Kaisen%200",
       "searchCandidates": [
         {
@@ -1220,6 +2365,28 @@
         "weatheringwithyou",
         "weathering-with-you-hindi",
         "weathering"
+      ],
+      "attempts": [
+        {
+          "slug": "weathering-with-you",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "weatheringwithyou",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "weathering-with-you-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "weathering",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Weathering%20With%20You",
       "searchCandidates": [
@@ -1254,6 +2421,28 @@
         "howls-moving-castle-hindi",
         "howl"
       ],
+      "attempts": [
+        {
+          "slug": "howls-moving-castle",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "howlsmovingcastle",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "howls-moving-castle-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "howl",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Howl%E2%80%99s%20Moving%20Castle",
       "searchCandidates": [
         {
@@ -1287,6 +2476,31 @@
         "princess-mononoke-hindi",
         "mononoke"
       ],
+      "attempts": [
+        {
+          "slug": "princess-mononoke",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "princessmononoke",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "princess-mononoke-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "mononoke",
+          "source": "candidate",
+          "url": "https://animahd.com/mononoke-the-movie-chapter-ii-the-ashes-of-rage/",
+          "bytes": 139509,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
+      ],
       "searchUrl": "https://animahd.com/?s=Princess%20Mononoke",
       "searchCandidates": [
         {
@@ -1317,6 +2531,18 @@
       "tried": [
         "akira",
         "akira-hindi"
+      ],
+      "attempts": [
+        {
+          "slug": "akira",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "akira-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Akira",
       "searchCandidates": [
@@ -1349,7 +2575,38 @@
         "demon-slayer-mugen-train",
         "demonslayermugentrain",
         "demon-slayer-mugen-train-hindi",
-        "demonmovie"
+        "demonmovie",
+        "search:demon-slayer-kimetsu-no-yaiba-infinity-castle"
+      ],
+      "attempts": [
+        {
+          "slug": "demon-slayer-mugen-train",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demonslayermugentrain",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer-mugen-train-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demonmovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "source": "search",
+          "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-infinity-castle/",
+          "bytes": 141511,
+          "pTokens": 1,
+          "note": "no p-tokens"
+        }
       ],
       "searchUrl": "https://animahd.com/?s=Demon%20Slayer%3A%20Mugen%20Train",
       "searchCandidates": [
