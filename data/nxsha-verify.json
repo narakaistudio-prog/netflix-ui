@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:40:47.428Z",
+  "generatedAt": "2026-10-11T07:43:55.173Z",
   "titles": [
     {
       "key": "aot",
@@ -718,6 +718,20 @@
       "status": 404,
       "embedTitle": "Nxsha",
       "ok": false
+    }
+  ],
+  "tmdbSearch": [
+    {
+      "url": "https://www.themoviedb.org/search?query=Sword%20Art%20Online%20Ordinal%20Scale",
+      "status": 403,
+      "bytes": 2616,
+      "candidates": []
+    },
+    {
+      "url": "https://www.themoviedb.org/search/movie?query=Sword%20Art%20Online%20Ordinal%20Scale",
+      "status": 403,
+      "bytes": 2616,
+      "candidates": []
     }
   ],
   "site": [
