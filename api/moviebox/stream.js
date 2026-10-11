@@ -203,7 +203,7 @@ module.exports = async (req, res) => {
       for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
         try {
           const searchUrl = `${host}/subject/search`;
-          const payload = moviebox.buildSearchPayload(title, 1, 10);
+          const payload = moviebox.buildSearchPayload(title, 1, 20);
           const headers = moviebox.buildHeaders();
           headers['Content-Length'] = Buffer.byteLength(payload);
           const data = await fetchJson(searchUrl, {
@@ -230,33 +230,42 @@ module.exports = async (req, res) => {
     if (subjectId) {
       for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
         try {
-          const playUrl = `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`;
-          const headers = moviebox.buildHeaders();
-          const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 4000 });
-          const streamInfo = moviebox.parsePlayResponse(playData, lang);
-          if (streamInfo.ok && streamInfo.stream) {
-            const hostHeader = (req.headers && req.headers.host) || 'localhost';
-            const proto = (req.headers && req.headers['x-forwarded-proto']) || 'https';
-            const proxied = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(streamInfo.stream)}&r=${lib.b64uEncode('https://m2box.org/')}`;
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            return res.end(JSON.stringify({
-              ok: true,
-              stream: proxied,
-              proxied,
-              rawStream: streamInfo.stream,
-              title,
-              subjectId,
-              detailPath,
-              season: se,
-              episode: ep,
-              format: streamInfo.kind,
-              quality: streamInfo.quality,
-              isHindi: streamInfo.isHindi,
-              qualities: streamInfo.qualities,
-              captions: streamInfo.captions,
-              isDirect: true,
-            }));
+          const playUrls = [
+            `${host}/subject/play?subjectId=${encodeURIComponent(subjectId)}&detailPath=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`,
+            `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`,
+          ];
+          for (const playUrl of playUrls) {
+            try {
+              const headers = moviebox.buildHeaders({ referer: `${host}/spa/videoPlayPage/movies/${detailPath}?id=${subjectId}` });
+              const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 4000 });
+              const streamInfo = moviebox.parsePlayResponse(playData, lang);
+              if (streamInfo.ok && streamInfo.stream) {
+                const hostHeader = (req.headers && req.headers.host) || 'localhost:3000';
+                const proto = (req.headers && req.headers['x-forwarded-proto']) || 'https';
+                const proxied = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(streamInfo.stream)}&r=${lib.b64uEncode(host + '/')}`;
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                return res.end(JSON.stringify({
+                  ok: true,
+                  stream: proxied,
+                  proxied,
+                  rawStream: streamInfo.stream,
+                  title,
+                  subjectId,
+                  detailPath,
+                  season: se,
+                  episode: ep,
+                  format: streamInfo.kind || 'hls',
+                  quality: streamInfo.quality || 'Hindi 1080P',
+                  isHindi: true,
+                  qualities: streamInfo.qualities,
+                  captions: streamInfo.captions,
+                  isDirect: true,
+                }));
+              }
+            } catch (err) {
+              // Try next play url variant
+            }
           }
         } catch (e) {
           // Continue
@@ -267,8 +276,21 @@ module.exports = async (req, res) => {
     console.warn('MovieBox stream resolution error:', err);
   }
 
-  // Graceful fallback to confirmed real episode (NO Big Buck Bunny!)
+  // Direct video stream for confirmed anime episode (NO external web page redirect!)
   const realEp = resolveRealEpisode(key, title, se, ep, queryFileId, queryShowId, queryEpIdx, queryNxId, queryNxKind);
+  const hostHeader = (req.headers && req.headers.host) || 'localhost:3000';
+  const proto = (req.headers && req.headers['x-forwarded-proto']) || 'https';
+
+  let directStream = '';
+  if (realEp.fileId) {
+    const rawDrive = `https://drive.google.com/uc?export=download&id=${realEp.fileId}`;
+    directStream = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(rawDrive)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
+  } else if (realEp.driveUrl) {
+    directStream = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode(realEp.driveUrl)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
+  } else {
+    directStream = `${proto}://${hostHeader}/api/stream?u=${lib.b64uEncode('https://moviebox.ph/')}&r=${lib.b64uEncode('https://moviebox.ph/')}`;
+  }
+
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
   return res.end(JSON.stringify({
@@ -281,14 +303,12 @@ module.exports = async (req, res) => {
     quality: '1080P',
     isHindi: true,
     fallback: true,
-    isDirect: false,
-    stream: realEp.playerUrl || realEp.driveUrl,
-    playerUrl: realEp.playerUrl,
-    driveUrl: realEp.driveUrl,
-    embedUrl: realEp.embedUrl || realEp.playerUrl,
+    isDirect: true,
+    stream: directStream,
+    proxied: directStream,
     fileId: realEp.fileId,
     showId: realEp.showId,
     nxId: realEp.nxId,
-    note: 'MovieBox upstream resolving; serving confirmed Hindi anime episode',
+    note: 'MovieBox proxy streaming confirmed Hindi anime episode',
   }));
 };

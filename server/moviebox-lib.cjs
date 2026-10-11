@@ -12,6 +12,7 @@
 
 const MOVIEBOX_DEFAULT_HOSTS = [
   'https://h5-api.aoneroom.com/wefeed-h5api-bff',
+  'https://netfilm.world/wefeed-h5api-bff',
   'https://movieboxonline.net/wefeed-h5api-bff',
   'https://m2box.org/wefeed-h5api-bff',
 ];
@@ -22,8 +23,8 @@ function getClientToken() {
   return String(Math.floor(Date.now() / 1000));
 }
 
-function buildHeaders({ referer = 'https://m2box.org/', token = '' } = {}) {
-  let origin = 'https://m2box.org';
+function buildHeaders({ referer = 'https://moviebox.ph/', token = '' } = {}) {
+  let origin = 'https://moviebox.ph';
   try {
     const u = new URL(referer);
     origin = u.origin;
@@ -33,14 +34,19 @@ function buildHeaders({ referer = 'https://m2box.org/', token = '' } = {}) {
 
   const headers = {
     'User-Agent':
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
     Accept: 'application/json, text/plain, */*',
     'Accept-Language': 'en-US,en;q=0.9,hi;q=0.8',
     'Content-Type': 'application/json;charset=UTF-8',
     Origin: origin,
     Referer: referer,
     'X-Client-Token': token || getClientToken(),
+    'X-Client-Info': '{"timezone":"Asia/Dhaka"}',
+    'X-Request-Lang': 'en',
   };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   return headers;
 }
@@ -145,8 +151,9 @@ function parsePlayResponse(raw, preferredLang = 'hi') {
     }
   }
 
-  // Check qualities / video list
+  // Check qualities / video list / streams
   const videoList =
+    data.streams ||
     data.qualities ||
     data.video_list ||
     data.sources ||
@@ -158,11 +165,12 @@ function parsePlayResponse(raw, preferredLang = 'hi') {
       if (!v || typeof v !== 'object') continue;
       if (v.vipLocked || v.is_vip || v.vip_locked) continue; // skip VIP locked tiers
 
-      const u = v.video_url || v.real_url || v.url || v.download_url || v.stream_url;
+      const u = v.url || v.video_url || v.real_url || v.download_url || v.stream_url;
       if (!u || typeof u !== 'string') continue;
 
-      const quality = v.quality || v.resolution || v.name || '720p';
-      const kind = /\.m3u8(\?|#|$)/i.test(u) ? 'hls' : 'mp4';
+      const res = v.resolutions ? `${v.resolutions}p` : '';
+      const quality = v.quality || v.resolution || res || v.name || '720p';
+      const kind = (v.format === 'hls' || /\.m3u8(\?|#|$)/i.test(u)) ? 'hls' : 'mp4';
       const lang = v.lang || v.language || v.audio_lang || '';
 
       streams.push({
@@ -170,7 +178,7 @@ function parsePlayResponse(raw, preferredLang = 'hi') {
         quality: String(quality).toUpperCase(),
         kind,
         lang: String(lang),
-        isHindi: HINDI_RE.test(String(lang)),
+        isHindi: HINDI_RE.test(String(lang)) || HINDI_RE.test(String(u)),
       });
     }
   }

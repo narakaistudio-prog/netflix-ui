@@ -73,6 +73,7 @@ function resolveFilePath(urlPath) {
 }
 
 function proxyToExtractor(req, res) {
+  const originalHost = req.headers.host || `localhost:${PORT}`;
   const options = {
     hostname: '127.0.0.1',
     port: EXTRACTOR_PORT,
@@ -81,6 +82,8 @@ function proxyToExtractor(req, res) {
     headers: {
       ...req.headers,
       host: `127.0.0.1:${EXTRACTOR_PORT}`,
+      'x-forwarded-host': originalHost,
+      'x-forwarded-proto': req.headers['x-forwarded-proto'] || 'http',
     },
   };
 

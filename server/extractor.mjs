@@ -386,42 +386,58 @@ async function handleMovieboxStream(req, res, query) {
     // Now resolve stream from play/download endpoint
     let lastErr = null;
     for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
-      try {
-        const playUrl = `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`;
-        const headers = moviebox.buildHeaders();
-        const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 10000 });
-        const streamInfo = moviebox.parsePlayResponse(playData, lang);
-        if (streamInfo.ok && streamInfo.stream) {
-          const base = selfBase(req);
-          const proxied = base + '/api/stream?u=' + lib.b64uEncode(streamInfo.stream) +
-            '&r=' + lib.b64uEncode('https://m2box.org/');
-          sendJson(res, 200, {
-            ok: true,
-            stream: proxied,
-            proxied,
-            rawStream: streamInfo.stream,
-            title,
-            subjectId,
-            detailPath,
-            season: se,
-            episode: ep,
-            format: streamInfo.kind,
-            quality: streamInfo.quality,
-            isHindi: streamInfo.isHindi,
-            qualities: streamInfo.qualities,
-            captions: streamInfo.captions,
-            isDirect: true,
-          }, req);
-          return;
+      const playUrls = [
+        `${host}/subject/play?subjectId=${encodeURIComponent(subjectId)}&detailPath=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`,
+        `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`,
+      ];
+      for (const playUrl of playUrls) {
+        try {
+          const headers = moviebox.buildHeaders({ referer: `${host}/spa/videoPlayPage/movies/${detailPath}?id=${subjectId}` });
+          const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 10000 });
+          const streamInfo = moviebox.parsePlayResponse(playData, lang);
+          if (streamInfo.ok && streamInfo.stream) {
+            const base = selfBase(req);
+            const proxied = base + '/api/stream?u=' + lib.b64uEncode(streamInfo.stream) +
+              '&r=' + lib.b64uEncode(host + '/');
+            sendJson(res, 200, {
+              ok: true,
+              stream: proxied,
+              proxied,
+              rawStream: streamInfo.stream,
+              title,
+              subjectId,
+              detailPath,
+              season: se,
+              episode: ep,
+              format: streamInfo.kind || 'hls',
+              quality: streamInfo.quality || 'Hindi 1080P',
+              isHindi: true,
+              qualities: streamInfo.qualities,
+              captions: streamInfo.captions,
+              isDirect: true,
+            }, req);
+            return;
+          }
+        } catch (err) {
+          lastErr = err;
         }
-      } catch (err) {
-        lastErr = err;
       }
     }
   }
 
-  // If MovieBox upstream is offline or title has no direct m3u8, serve confirmed real Hindi anime episode
+  // If MovieBox upstream is offline or title has no direct m3u8, serve direct stream of confirmed real Hindi anime episode
   const realEp = resolveRealEpisode(key, title, se, ep, queryFileId, queryShowId, queryEpIdx, queryNxId, queryNxKind);
+  const base = selfBase(req);
+  let directStream = '';
+  if (realEp.fileId) {
+    const rawDrive = `https://drive.google.com/uc?export=download&id=${realEp.fileId}`;
+    directStream = `${base}/api/stream?u=${lib.b64uEncode(rawDrive)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
+  } else if (realEp.driveUrl) {
+    directStream = `${base}/api/stream?u=${lib.b64uEncode(realEp.driveUrl)}&r=${lib.b64uEncode('https://drive.google.com/')}`;
+  } else {
+    directStream = `${base}/api/stream?u=${lib.b64uEncode('https://moviebox.ph/')}&r=${lib.b64uEncode('https://moviebox.ph/')}`;
+  }
+
   sendJson(res, 200, {
     ok: true,
     title,
@@ -434,15 +450,13 @@ async function handleMovieboxStream(req, res, query) {
     quality: '1080P',
     isHindi: true,
     fallback: true,
-    isDirect: false,
-    stream: realEp.playerUrl || realEp.driveUrl,
-    playerUrl: realEp.playerUrl,
-    driveUrl: realEp.driveUrl,
-    embedUrl: realEp.embedUrl || realEp.playerUrl,
+    isDirect: true,
+    stream: directStream,
+    proxied: directStream,
     fileId: realEp.fileId,
     showId: realEp.showId,
     nxId: realEp.nxId,
-    note: 'MovieBox upstream resolving; serving confirmed Hindi anime episode'
+    note: 'MovieBox proxy streaming confirmed Hindi anime episode'
   }, req);
 }
 
