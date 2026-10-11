@@ -15,12 +15,14 @@ test('demo player has Server 1 + Server 2 tabs below the video', () => {
     // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
     expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g)).toHaveLength(2);
+    expect(html.match(/class="server-pill/g)).toHaveLength(3);
     expect(html).toContain('data-server="0"');
     expect(html).toContain('data-server="1"');
-    // The two tabs: Server 1 (AnimaHD, default) + Server 2 (Drive).
+    expect(html).toContain('data-server="2"');
+    // Server 1 (AnimaHD, default) + Server 2 (Drive) + Server 3 (Nxsha fallback).
     expect(html).toContain('>Server 1</button>');
     expect(html).toContain('>Server 2</button>');
+    expect(html).toContain('>Server 3</button>');
     expect(html).toContain('drive.google.com/file/d/');
     expect(html).toContain('animahd.com/player/?file_id=');
     // Styling + switching logic wired up.
@@ -80,13 +82,14 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(iS2).toBeGreaterThan(iS1);
     expect(def).toContain("host:'animahd.com'");
     expect(def).toContain("host:'drive.google.com'");
+    expect(def).toContain("host:'nxsha.space'");
     expect(def.indexOf("host:'animahd.com'")).toBeLessThan(def.indexOf("host:'drive.google.com'"));
     // Server 1 resolves the AnimaHD player URL, Server 2 the Drive preview.
     expect(html).toContain("if(i===0)return 'https://animahd.com/player/");
-    // Two pills, Server 1 active by default.
-    expect(html.match(/<button class="server-pill/g)).toHaveLength(2);
+    // Three pills, Server 1 active by default, Server 3 hidden until a title has no other source.
+    expect(html.match(/<button class="server-pill/g)).toHaveLength(3);
     expect(html).toContain('server-pill active" data-server="0"');
-    expect(html).not.toContain('data-server="2"');
+    expect(html).toContain('data-server="2" title="Server 3 (Nxsha) — nxsha.space" hidden');
     // Extractor client stays out of the player.
     expect(html).not.toContain('xtVideo');
     expect(html).not.toContain('EXTRACTOR_API');
@@ -170,6 +173,25 @@ test('season 2 lists 13 episodes for solo leveling from the seasons map', () => 
     expect(html).toContain('"seasons":{"1":12,"2":13}');
     expect(html).toContain('episodeData(activeKey,season)');
     expect(html).toContain('seasonEpCount');
+});
+
+test('titles animahd lacks fall back to the nxsha embed (verified ids)', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // Baked table + markers.
+    expect(html).toContain('/*__NXSHA__*/');
+    expect(html).toContain('/*__END_NXSHA__*/');
+    expect(html).toContain('var NX_DATA=');
+    // Server 3 builds the provider URL used by the rest of the app (lib/embeds.ts).
+    expect(html).toContain('https://nxsha.space/embed/');
+    expect(html).toContain("?server=GbruHindi&lang=hi&sub=hi&color=netflix");
+    expect(html).toContain('if(i===2){var nx=nxFor(st.key)');
+    // Verified ids: AoT, Tokyo Revengers, Ordinal Scale (movie).
+    expect(html).toContain('"aot":{"id":"tt2560140","kind":"tv"');
+    expect(html).toContain('"tokyo":{"id":"105009","kind":"tv"');
+    expect(html).toContain('"saoMovie":{"id":"413594","kind":"movie"');
+    // Season/episode numbering comes from the same table the guide renders.
+    expect(html).toContain("function serverAvailable(i)");
+    expect(html).toContain("function nextServer(from)");
 });
 
 test('player shows notice panel when a title has no source', () => {

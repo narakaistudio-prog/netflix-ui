@@ -39,7 +39,15 @@ async function get(url) {
             redirect: 'follow',
             headers: { 'User-Agent': UA, Accept: 'text/html,application/json,*/*', 'Accept-Language': 'en-US,en;q=0.9' },
         });
-        return { status: res.status, finalUrl: res.url, text: await res.text() };
+        return {
+            status: res.status,
+            finalUrl: res.url,
+            text: await res.text(),
+            framing: {
+                xFrameOptions: res.headers.get('x-frame-options') || '',
+                csp: (res.headers.get('content-security-policy') || '').slice(0, 200),
+            },
+        };
     } finally {
         clearTimeout(to);
     }
@@ -78,11 +86,12 @@ async function checkMovie(t, report) {
     const url = `https://nxsha.space/embed/movie/${t.id}?${PARAMS}`;
     const row = { key: t.key, kind: 'movie', id: t.id, url };
     try {
-        const { status, text } = await get(url);
+        const { status, text, framing } = await get(url);
         const title = docTitle(text);
         const parsed = parseEmbedTitle(title);
         row.status = status;
         row.embedTitle = title;
+        row.framing = framing;
         row.ok = status === 200 && nameMatches(parsed.name, t.title);
         row.seasonList = extractSeasonInfo(text);
         if (!row.ok) row.hint = `expected "${t.title}"`;
@@ -246,6 +255,10 @@ async function main() {
     await huntSaoMovie(plan, report);
     await siteProbes(plan, report);
     const bad = report.titles.filter((r) => !r.ok);
+    report.framing = report.titles
+        .filter((r) => r.framing)
+        .map((r) => ({ key: r.key, ...r.framing }))
+        .slice(0, 6);
     report.summary = {
         titles: report.titles.length,
         ok: report.titles.length - bad.length,

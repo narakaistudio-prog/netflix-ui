@@ -21,9 +21,12 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const JSON_PATH = resolve(ROOT, 'data', 'animahd-episodes.json');
+const NX_PATH = resolve(ROOT, 'data', 'nxsha-titles.json');
 const HTML_PATH = resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const START = '/*__ANIMAHDEP__*/';
 const END = '/*__END_ANIMAHDEP__*/';
+const NX_START = '/*__NXSHA__*/';
+const NX_END = '/*__END_NXSHA__*/';
 
 const FILEID_RE = /^[A-Za-z0-9_-]{10,}$/;
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -66,30 +69,79 @@ export function validateEpisodes(data) {
     return data;
 }
 
+/**
+ * Titles animahd.com does not carry are played through nxsha
+ * (https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}] — the app's original
+ * provider). Ids live in data/nxsha-titles.json and are verified against the
+ * live embed page before they get baked (scripts/probe-nxsha.mjs).
+ */
+export function validateNxsha(data) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+        throw new Error('nxsha titles must be a JSON object keyed by anime key');
+    }
+    const ID_RE = /^(tt\d{6,10}|\d{1,9})$/;
+    for (const [key, entry] of Object.entries(data)) {
+        if (key.startsWith('_')) continue;
+        if (!entry || typeof entry !== 'object') throw new Error(`nxsha "${key}": entry must be an object`);
+        if (!ID_RE.test(String(entry.id || ''))) throw new Error(`nxsha "${key}": bad id "${entry.id}"`);
+        if (entry.kind !== 'tv' && entry.kind !== 'movie') throw new Error(`nxsha "${key}": kind must be tv|movie`);
+        if (!entry.seasons || typeof entry.seasons !== 'object' || Array.isArray(entry.seasons)) {
+            throw new Error(`nxsha "${key}": seasons must be an object like {"1": 24}`);
+        }
+        for (const [sn, count] of Object.entries(entry.seasons)) {
+            if (!/^\d+$/.test(sn)) throw new Error(`nxsha "${key}": bad season "${sn}"`);
+            if (!Number.isInteger(count) || count <= 0) throw new Error(`nxsha "${key}": season ${sn} count must be positive`);
+        }
+        if (entry.kind === 'movie' && Object.keys(entry.seasons).length !== 1) {
+            throw new Error(`nxsha "${key}": a movie needs exactly one season entry`);
+        }
+    }
+    return data;
+}
+
 function main() {
     const checkOnly = process.argv.includes('--check');
     const data = validateEpisodes(JSON.parse(readFileSync(JSON_PATH, 'utf8')));
+    const nx = validateNxsha(JSON.parse(readFileSync(NX_PATH, 'utf8')));
     const html = readFileSync(HTML_PATH, 'utf8');
     const si = html.indexOf(START);
     const ei = html.indexOf(END);
     if (si === -1 || ei === -1 || ei < si) {
         throw new Error('ANIMAHDEP markers not found in demo HTML');
     }
+    const nxData = Object.fromEntries(Object.entries(nx).filter(([k]) => !k.startsWith('_')));
+    const nxStart = html.indexOf(NX_START);
+    const nxEnd = html.indexOf(NX_END);
+    if (nxStart === -1 || nxEnd === -1 || nxEnd < nxStart) {
+        throw new Error('NXSHA markers not found in demo HTML');
+    }
     const baked = `${START}var EP_DATA=${JSON.stringify(data)};${END}`;
-    const next = html.slice(0, si) + baked + html.slice(ei + END.length);
+    const bakedNx = `${NX_START}var NX_DATA=${JSON.stringify(nxData)};${NX_END}`;
+    const next =
+        html.slice(0, si) +
+        baked +
+        html.slice(ei + END.length, nxStart) +
+        bakedNx +
+        html.slice(nxEnd + NX_END.length);
     const keys = Object.keys(data).length;
     const eps = Object.values(data).reduce((n, e) => n + e.eps.length, 0);
+    const nxKeys = Object.keys(nxData).length;
+    const nxEps = Object.values(nxData).reduce(
+        (n, e) => n + Object.values(e.seasons).reduce((a, b) => a + b, 0),
+        0,
+    );
+    const summary = `animahd ${keys} titles/${eps} episodes + nxsha ${nxKeys} titles/${nxEps} episodes`;
     if (next === html) {
-        console.log(`animahd episodes already in sync (${keys} titles, ${eps} episodes).`);
+        console.log(`already in sync (${summary}).`);
         return;
     }
     if (checkOnly) {
-        console.error(`animahd episodes OUT OF SYNC (${keys} titles, ${eps} episodes) — run the bake.`);
+        console.error(`OUT OF SYNC (${summary}) — run the bake.`);
         process.exitCode = 1;
         return;
     }
     writeFileSync(HTML_PATH, next);
-    console.log(`Baked animahd episodes (${keys} titles, ${eps} episodes) into demo HTML.`);
+    console.log(`Baked ${summary} into demo HTML.`);
 }
 
 main();
