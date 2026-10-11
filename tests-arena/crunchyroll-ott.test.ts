@@ -97,7 +97,7 @@ test('server 1 is a plain embed, server 2 stays locked down', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain("if(i===1){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}");
     expect(html).toContain("removeAttribute('sandbox')");
-    expect(html).toContain("removeAttribute('allow')");
+    expect(html).toContain("setAttribute('allow','autoplay')");
     expect(html).not.toContain('allow="autoplay');
     expect(html).not.toContain('sandbox="allow-scripts');
     expect(html).not.toContain('allow-popups');
@@ -115,7 +115,7 @@ test('server 1 fits original player in capped viewport with junk cover', () => {
     // Server 1: plain embed (no sandbox/allow for fullscreen) + scroll locked + capped viewport + black junk cover.
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
-    expect(html).toContain("}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.removeAttribute('allow')}");
+    expect(html).toContain("}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay')}");
     expect(html).toContain('.video-stage.s1fit{width:100%;max-width:1000px;margin:0 auto;align-self:center;padding-bottom:62%}');
     expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
     expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
