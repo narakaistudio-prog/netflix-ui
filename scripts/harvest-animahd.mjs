@@ -171,6 +171,140 @@ export function rowsToEpisodes(rows) {
     return { showId, seasons, eps, labels, mixed: votes.size > 1 };
 }
 
+/* ------------------------------------------------------------------ */
+/*  Title matching (guards against wrong-slug matches)                 */
+/* ------------------------------------------------------------------ */
+
+export function slugify(text) {
+    return String(text || '')
+        .toLowerCase()
+        .replace(/['’`]/g, '')
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+const TITLE_BOILER = new Set([
+    'watch', 'watching', 'online', 'all', 'episode', 'episodes', 'hd', 'full', 'movie', 'movies',
+    'series', 'season', 'seasons', 'download', 'free', 'hindi', 'dubbed', 'dub', 'dual', 'audio',
+    'multi', 'sub', 'subbed', 'eng', 'english', 'jap', 'japanese', 'tamil', 'telugu', 'korean',
+    'malayalam', 'complete', 'completed', 'quality', 'web', 'bluray', 'rip', 'anime', 'animahd',
+    'the', 'of', 'and', 'in', 'at', 'to', 'a', 'an',
+]);
+
+export function titleTokens(text) {
+    const cleaned = String(text || '')
+        .replace(/\[[^\]]*\]/g, ' ')
+        .replace(/\([^)]*\)/g, ' ')
+        .split('|')[0]
+        .replace(/[’'`]/g, '');
+    return slugify(cleaned)
+        .split('-')
+        .filter((t) => t && !TITLE_BOILER.has(t));
+}
+
+const tokenEq = (a, b) => a === b || (a.length >= 5 && b.length >= 5 && (a.startsWith(b) || b.startsWith(a)));
+
+/** Does a page/post title really name this catalog title? */
+export function matchTitle(pageTitle, titles) {
+    const want = titleTokens(Array.isArray(titles) ? titles[0] : titles);
+    const altlist = (Array.isArray(titles) ? titles.slice(1) : []).map(titleTokens);
+    if (!want.length) return { ok: false, score: 0 };
+    for (const [i, tokens] of [want, ...altlist].entries()) {
+        const got = new Set(titleTokens(pageTitle));
+        const hit = tokens.filter((w) => [...got].some((g) => tokenEq(w, g))).length;
+        const score = hit / tokens.length;
+        const firstOk = tokens.length > 0 && [...got].some((g) => tokenEq(tokens[0], g));
+        const alt = i > 0;
+        if (hit === tokens.length || (firstOk && score >= (alt ? 0.6 : 0.7))) {
+            return { ok: true, score, tokens, alt };
+        }
+    }
+    return { ok: false, score: 0 };
+}
+
+/** Page <h1> (cleanest show name) falling back to <title>. */
+export function extractPageTitle(html) {
+    const h1 = [...String(html || '').matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/gi)]
+        .map((m) => m[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+    if (h1.length) return h1[0];
+    const title = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(html);
+    return title ? title[1].trim() : '';
+}
+
+/** 'S02E13 Solo Leveling', 'EP-01 Show', 'E01 Show', 'S20E41(E932) One Piece' -> {season, ep} */
+export function parseLabelEpisode(label) {
+    const text = String(label || '');
+    let m = /S(\d{1,2})\s*E(\d{1,4})/i.exec(text);
+    if (m) return { season: Number.parseInt(m[1], 10), ep: Number.parseInt(m[2], 10) };
+    m = /(?:EP|E)[\s._-]*(\d{1,4})/i.exec(text);
+    if (m) return { season: null, ep: Number.parseInt(m[1], 10) };
+    return null;
+}
+
+/** Rank WP REST search hits for a title (title match + slug hint). */
+export function rankPosts(posts, titles) {
+    const out = [];
+    for (const p of posts || []) {
+        const pt = (p && p.title && (p.title.rendered || p.title)) || '';
+        const m = matchTitle(pt, titles);
+        if (m.ok) out.push({ slug: p.slug, id: p.id, postTitle: pt, score: m.score });
+    }
+    return out.sort((a, b) => b.score - a.score);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Merging episode rows across pages                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Merge parsed rows from one or more pages into EP_DATA shape.
+ * Rows are keyed by (season from label or data-season) + episode number
+ * from the label, falling back to document order.
+ */
+export function mergeEpisodeRows(pages) {
+    const seasonRows = new Map(); // season -> Map<epKey, {fileId, label, showId}>
+    const fileSeen = new Set();
+    for (const page of pages) {
+        const counters = new Map();
+        for (const r of page.rows || []) {
+            const labelEp = parseLabelEpisode(r.label);
+            const season = (labelEp && labelEp.season) || r.season || 1;
+            let epNum = (labelEp && Number.isInteger(labelEp.ep)) ? labelEp.ep : null;
+            if (epNum === null) {
+                epNum = (counters.get(season) || 0) + 1;
+            }
+            counters.set(season, Math.max(counters.get(season) || 0, epNum));
+            if (fileSeen.has(r.fileId)) continue;
+            if (!seasonRows.has(season)) seasonRows.set(season, new Map());
+            const bucket = seasonRows.get(season);
+            const key = String(epNum);
+            if (bucket.has(key)) continue;
+            fileSeen.add(r.fileId);
+            bucket.set(key, { fileId: r.fileId, label: r.label || '', showId: r.showId || 0 });
+        }
+    }
+    if (!seasonRows.size) return null;
+    const seasons = [...seasonRows.keys()].sort((a, b) => a - b);
+    const out = { showId: 0, seasons: {}, eps: [], labels: [] };
+    const votes = new Map();
+    for (const season of seasons) {
+        const bucket = seasonRows.get(season);
+        const eps = [...bucket.entries()].sort((a, b) => Number(a[0]) - Number(b[0]));
+        out.seasons[String(season)] = eps.length;
+        for (const [, item] of eps) {
+            out.eps.push(item.fileId);
+            out.labels.push(item.label);
+            if (item.showId) votes.set(item.showId, (votes.get(item.showId) || 0) + 1);
+        }
+    }
+    let best = -1;
+    for (const [id, n] of votes) if (n > best) { best = n; out.showId = id; }
+    out.mixed = votes.size > 1;
+    return out;
+}
+
 export function parseSeasonsOpt(value, epCount) {
     if (!value) return { 1: epCount };
     const counts = String(value).split(',').map((x) => Number.parseInt(x.trim(), 10));

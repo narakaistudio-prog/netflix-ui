@@ -30,7 +30,11 @@ import {
     collectEpisodes,
     collectShowRows,
     decodePlayerToken,
+    extractPageTitle,
     extractPTokens,
+    matchTitle,
+    mergeEpisodeRows,
+    rankPosts,
     rowsToEpisodes,
 } from './harvest-animahd.mjs';
 
@@ -95,6 +99,50 @@ const ALT_SLUGS = {
     bluelock: ['bluelock'],
     blackclover: ['blackclover'],
     onepunch: ['one-punch-man'],
+};
+
+/** Secondary names for the site search + title validation. */
+const ALT_TITLES = {
+    aot: ['Shingeki no Kyojin'],
+    mha: ['Boku no Hero Academia'],
+    mhaMovie: ['Boku no Hero Academia Two Heroes', 'My Hero Academia Movie 1'],
+    demon: ['Kimetsu no Yaiba', 'Demon Slayer'],
+    demonMovie: ['Kimetsu no Yaiba Mugen Train', 'Demon Slayer Mugen Train'],
+    hxh: ['Hunter x Hunter'],
+    rezero: ['Re Zero', 'Re:ZERO'],
+    sao: ['Sword Art Online'],
+    saoMovie: ['Sword Art Online The Movie Ordinal Scale', 'Ordinal Scale'],
+    jjk0: ['Jujutsu Kaisen 0 The Movie', 'Jujutsu Kaisen Zero'],
+    onepiece: ['One Piece'],
+    naruto: ['Naruto Shippuden'],
+    boruto: ['Boruto Naruto Next Generations'],
+    drstone: ['Dr. Stone', 'Dr Stone'],
+    blackclover: ['Black Clover'],
+    bluelock: ['Blue Lock'],
+    haikyuu: ['Haikyu', 'Haikyuu'],
+    yourname: ['Kimi no Na wa', 'Your Name'],
+    suzume: ['Suzume no Tojimari', 'Suzume'],
+    silentvoice: ['Koe no Katachi', 'A Silent Voice'],
+    spirited: ['Sen to Chihiro no Kamikakushi', 'Spirited Away'],
+    weathering: ['Tenki no Ko', 'Weathering With You'],
+    howl: ['Howl no Ugoku Shiro', "Howl's Moving Castle"],
+    mononoke: ['Mononoke Hime', 'Princess Mononoke'],
+    akira: ['Akira'],
+    oshi: ['Oshi no Ko'],
+    dandadan: ['Dan Da Dan', 'Dandadan'],
+    kaiju: ['Kaiju No 8'],
+    chainsaw: ['Chainsaw Man'],
+    spy: ['Spy x Family', 'SPY×FAMILY'],
+    frieren: ['Frieren Beyond Journeys End', 'Sousou no Frieren'],
+    goh: ['The God of High School'],
+    tower: ['Tower of God'],
+    mob: ['Mob Psycho 100'],
+    vinland: ['Vinland Saga'],
+    deathnote: ['Death Note'],
+    jjk: ['Jujutsu Kaisen'],
+    opm: ['One Punch Man', 'One Punch Man'],
+    bleach: ['Bleach'],
+    onepunch: ['One Punch Man'],
 };
 
 export function slugCandidates(title, key) {
@@ -276,117 +324,152 @@ async function discover(base) {
     return { url, forms, links };
 }
 
-async function harvestShow({ key, title, kind, args, existing, table, slugs }) {
-    const pins = { ...slugs, ...args.pins };
-    const tried = [];
-    const attempts = [];
-    // 1. pinned slug wins.
-    const candidates = [];
-    if (pins[key]) candidates.push({ slug: pins[key], source: 'pin' });
-    for (const slug of slugCandidates(title, key)) {
-        if (!candidates.some((c) => c.slug === slug)) candidates.push({ slug, source: 'candidate' });
+/** WordPress REST search for show posts (returns [] when the site blocks it). */
+async function wpSearchPosts(base, query) {
+    const url = `${base}/wp-json/wp/v2/posts?search=${encodeURIComponent(query)}&per_page=100&orderby=relevance&_fields=id,slug,title,link`;
+    const ctl = new AbortController();
+    const to = setTimeout(() => ctl.abort(), 15000);
+    try {
+        const res = await fetch(url, { signal: ctl.signal, headers: { 'User-Agent': UA, Accept: 'application/json' } });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    } finally {
+        clearTimeout(to);
     }
+}
 
-    const attempt = (cand, info) => attempts.push({ slug: cand.slug, source: cand.source, ...info });
-    const hit = (cand, finalUrl, col, rich, rows) => {
-        const seq = rows ? rows.map((r) => r.ep) : null;
-        const contiguous = !seq || seq.every((e, i) => e === i);
-        attempt(cand, { url: finalUrl, episodes: col.eps.length, showId: col.showId, epContiguous: contiguous });
-        let labels = col.labels;
-        if (!labels) {
-            labels = [];
-            for (let i = 0; i < col.eps.length; i += 1) labels.push((rich.get(i) || {}).label || '');
-        }
-        return {
-            status: 'ok',
-            kind,
-            title,
-            slug: cand.slug,
-            source: cand.source,
-            url: finalUrl,
-            showId: col.showId,
-            mixed: col.mixed,
-            eps: col.eps,
-            labels,
-            epContiguous: contiguous,
-            siteSeasons: col.seasons || null,
-        };
-    };
+function rowToFallback(page) {
+    // Old markup path: p-tokens give a flat, ep-indexed file list for one page.
+    const col = collectEpisodes(page);
+    const rows = col.eps.map((fileId, i) => ({
+        season: 1,
+        ep: i,
+        fileId,
+        showId: col.showId,
+        label: '',
+    }));
+    return { rows, showId: col.showId, mixed: col.mixed };
+}
 
-    for (const cand of candidates) {
-        const url = `${args.base}/${cand.slug}/`;
+async function harvestShow({ key, title, kind, args, slugs }) {
+    const titles = [title, ...(ALT_TITLES[key] || [])];
+    const attempts = [];
+    const tried = [];
+
+    // 1. candidate list: pinned slug -> WP search hits -> generated slugs.
+    const cands = [];
+    if (args.pins[key]) cands.push({ slug: args.pins[key], source: 'cli-pin' });
+    if (slugs[key] && slugs[key].slug) cands.push({ slug: slugs[key].slug, source: 'pin' });
+    const wpPosts = [];
+    for (const q of titles) {
+        const posts = await wpSearchPosts(args.base, q);
+        wpPosts.push(...posts);
+        await sleep(120);
+    }
+    const ranked = rankPosts(wpPosts, titles);
+    for (const r of ranked) cands.push({ slug: r.slug, source: 'wpsearch', postTitle: r.postTitle });
+    for (const slug of slugCandidates(title, key)) cands.push({ slug, source: 'candidate' });
+
+    const seen = new Set();
+    const queue = cands.filter((c) => {
+        const k = String(c.slug || '').toLowerCase();
+        if (!k || seen.has(k)) return false;
+        seen.add(k);
+        return true;
+    });
+
+    // 2. fetch pages until maxPages accepted (title must match the catalog name).
+    const pages = [];
+    const maxPages = Math.min(args.maxPages || 8, 12);
+    for (const cand of queue) {
+        if (pages.length >= maxPages) break;
         tried.push(cand.slug);
+        let text;
+        let finalUrl = `${args.base}/${cand.slug}/`;
         try {
-            const { text, url: finalUrl } = await fetchText(url, { timeout: 15000 });
-            const rows = collectShowRows(text);
-            const site = rowsToEpisodes(rows);
-            if (site) return hit(cand, finalUrl, site, null, rows);
-            const rich = collectRich(text);
-            if (!rich.size) {
-                attempt(cand, {
-                    url: finalUrl,
-                    bytes: text.length,
-                    pTokens: extractPTokens(text).length,
-                    note: 'no p-tokens',
-                });
-                continue;
-            }
-            return hit(cand, finalUrl, collectEpisodes(text), rich);
+            const res = await fetchText(finalUrl, { timeout: 15000 });
+            text = res.text;
+            finalUrl = res.url;
         } catch (e) {
-            attempt(cand, { error: String((e && e.message) || e) });
-            if (args.verbose) console.log(`  miss ${url} — ${e.message}`);
+            attempts.push({ slug: cand.slug, source: cand.source, error: String((e && e.message) || e) });
+            continue;
+        }
+        const pageTitle = extractPageTitle(text) || cand.postTitle || '';
+        const m = matchTitle(pageTitle, titles);
+        if (!m.ok) {
+            attempts.push({
+                slug: cand.slug,
+                source: cand.source,
+                note: 'title mismatch',
+                pageTitle: String(pageTitle).slice(0, 120),
+            });
+            await sleep(120);
+            continue;
+        }
+        const rows = collectShowRows(text);
+        if (rows.length) {
+            const conv = rowsToEpisodes(rows);
+            pages.push({ slug: cand.slug, source: cand.source, url: finalUrl, pageTitle, rows, showId: conv.showId });
+            attempts.push({ slug: cand.slug, source: cand.source, note: 'accepted', rows: rows.length, pageTitle: String(pageTitle).slice(0, 120) });
+        } else {
+            const rich = collectRich(text);
+            if (rich.size) {
+                const fb = rowToFallback(text);
+                pages.push({ slug: cand.slug, source: cand.source, url: finalUrl, pageTitle, rows: fb.rows, showId: fb.showId });
+                attempts.push({ slug: cand.slug, source: cand.source, note: 'accepted (legacy tokens)', rows: fb.rows.length });
+            } else {
+                attempts.push({
+                    slug: cand.slug,
+                    source: cand.source,
+                    note: 'no episode rows',
+                    pageTitle: String(pageTitle).slice(0, 120),
+                });
+            }
         }
         await sleep(150);
     }
 
-    // 2. Fall back to the site search (try the ranked hits even when the
-    //    title overlap is weak — AnimaHD slugs carry long suffixes).
-    const searchUrl = `${args.base}/?s=${encodeURIComponent(title)}`;
-    try {
-        const { text } = await fetchText(searchUrl);
-        const links = extractShowLinks(text, args.base);
-        const ranked = links
-            .map((slug) => ({ slug, score: scoreSlug(slug, title) }))
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 5);
-        for (const cand of ranked) {
-            if (cand.score < 0.2) break;
-            tried.push(`search:${cand.slug}`);
-            try {
-                const { text: page, url: finalUrl } = await fetchText(`${args.base}/${cand.slug}/`, { timeout: 15000 });
-                const rows = collectShowRows(page);
-                const site = rowsToEpisodes(rows);
-                if (site) return hit({ slug: cand.slug, source: 'search' }, finalUrl, site, null, rows);
-                const rich = collectRich(page);
-                if (!rich.size) {
-                    attempt({ slug: cand.slug, source: 'search' }, {
-                        url: finalUrl,
-                        bytes: page.length,
-                        pTokens: extractPTokens(page).length,
-                        note: 'no p-tokens',
-                    });
-                    continue;
-                }
-                return hit({ slug: cand.slug, source: 'search' }, finalUrl, collectEpisodes(page), rich);
-            } catch (e) {
-                attempt({ slug: cand.slug, source: 'search' }, { error: String((e && e.message) || e) });
-                if (args.verbose) console.log(`  search miss ${cand.slug} — ${e.message}`);
-            }
-            await sleep(150);
-        }
+    if (!pages.length) {
         return {
             status: 'failed',
             kind,
             title,
-            error: 'no show page found',
+            error: 'no matching show page found',
             tried,
             attempts,
-            searchUrl,
-            searchCandidates: ranked,
+            searchCandidates: ranked.slice(0, 6),
         };
-    } catch (e) {
-        return { status: 'failed', kind, title, error: `search failed: ${e.message}`, tried, attempts, searchUrl };
     }
+
+    // 3. movies: one film, several quality rows -> keep the first row only.
+    if (kind === 'movie') {
+        pages[0].rows = pages[0].rows.slice(0, 1);
+        pages.length = 1;
+    }
+
+    const merged = mergeEpisodeRows(pages);
+    if (!merged || !merged.eps.length) {
+        return { status: 'failed', kind, title, error: 'no episodes found', tried, attempts };
+    }
+    const labels = merged.labels.some(Boolean) ? merged.labels : null;
+    return {
+        status: 'ok',
+        kind,
+        title,
+        slug: pages[0].slug,
+        source: pages[0].source,
+        url: pages[0].url,
+        pages: pages.map((p) => p.slug),
+        showId: merged.showId,
+        mixed: merged.mixed,
+        eps: merged.eps,
+        labels,
+        epContiguous: true,
+        siteSeasons: merged.seasons,
+    };
 }
 
 function runSelfTest() {
@@ -446,16 +529,7 @@ async function main() {
     for (const { key, title } of wanted) {
         const kind = catalog.movieKeys.includes(key) ? 'movie' : 'tv';
         const existing = episodes[key] || null;
-        const pinned = slugs[key] && slugs[key].verified ? slugs[key].slug : '';
-        const result = await harvestShow({
-            key,
-            title,
-            kind,
-            args,
-            existing,
-            table: kind === 'movie' ? movieTable : table,
-            slugs: pinned ? { [key]: pinned } : {},
-        });
+        const result = await harvestShow({ key, title, kind, args, slugs });
         const entry = { ...result };
         delete entry.kind;
         delete entry.title;
@@ -469,10 +543,11 @@ async function main() {
                 ? Object.values(result.siteSeasons).reduce((a, b) => a + b, 0)
                 : 0;
             const siteSeasons = result.siteSeasons && siteSum === count ? result.siteSeasons : null;
+            const existingSeasons = existing && existing.seasons ? existing.seasons : null;
             const picked =
                 siteSeasons && Object.keys(siteSeasons).length > 1
                     ? { seasons: siteSeasons, source: 'site' }
-                    : pickSeasons(key, count, (siteSeasons || (existing && existing.seasons)), kind === 'movie' ? movieTable : table);
+                    : pickSeasons(key, count, siteSeasons || existingSeasons, kind === 'movie' ? movieTable : table);
             episodes[key] = {
                 slug: result.slug,
                 showId: result.showId,
