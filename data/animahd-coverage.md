@@ -1,8 +1,13 @@
 # Crunchyroll page — episode coverage
 
-Harvested from **animahd.com** by the CI workflow. Refreshed automatically on every push to `arena/7fb63c42-netflix-ui`.
+Do server, dono source — sab kuch automatically harvest + verify hota hai:
 
-- Linked titles: **23**  |  total episodes: **1015**
+- **Server 1 (AnimaHD)** + **Server 2 (Drive)** — `animahd.com` show pages se per-episode `file_id` (script: `scripts/harvest-animahd-all.mjs`).
+- **Server 3 (Nxsha)** — jin titles ke episodes AnimaHD par nahi hain, woh `nxsha.space/embed/...` se chalte hain (script: `scripts/probe-nxsha.mjs` + `data/nxsha-titles.json`).
+
+**23 titles / 1015 episodes** (AnimaHD+Drive) + **18 titles / 654 episodes** (Nxsha) = **41/41 titles playable**.
+
+## Server 1 + Server 2 (AnimaHD → Drive)
 
 | Title | Seasons (eps each) | Episodes |
 |---|---|---|
@@ -30,24 +35,26 @@ Harvested from **animahd.com** by the CI workflow. Refreshed automatically on ev
 | Tower of God | S1:13 | 13 |
 | The God of High School | S1:13 | 13 |
 
-## Not on animahd.com yet (player shows the no-source notice)
+## Server 3 (Nxsha) — AnimaHD par available nahi
 
-- Attack on Titan (Series)
-- Tokyo Revengers (Series)
-- Vinland Saga (Series)
-- Sword Art Online (Series)
-- Dr. STONE (Series)
-- Your Name (Movie)
-- Suzume (Movie)
-- A Silent Voice (Movie)
-- Spirited Away (Movie)
-- Jujutsu Kaisen 0 (Movie)
-- Weathering With You (Movie)
-- Howl’s Moving Castle (Movie)
-- Princess Mononoke (Movie)
-- Akira (Movie)
-- Boruto: Naruto Next Generations (Series)
-- My Hero Academia: Two Heroes (Movie)
-- Sword Art Online: Ordinal Scale (Movie)
-- Demon Slayer: Mugen Train (Movie)
+| Title | Type | Seasons (eps each) | Episodes | Id (verified) |
+|---|---|---|---|---|
+| Attack on Titan | Series | S1:25 + S2:12 + S3:22 + S4:28 | 87 | `tt2560140` ✓ |
+| Tokyo Revengers | Series | S1:24 + S2:13 + S3:12 | 49 | `105009` ✓ |
+| Vinland Saga | Series | S1:24 + S2:24 | 48 | `tt10233448` ✓ |
+| Sword Art Online | Series | S1:25 + S2:24 + S3:24 + S4:23 | 96 | `tt2250192` ✓ |
+| Dr. STONE | Series | S1:24 + S2:11 + S3:22 + S4:12 | 69 | `tt9679542` ✓ |
+| Boruto: Naruto Next Generations | Series | S1:293 | 293 | `tt6342474` ✓ |
+| Your Name | Movie | S1:1 | 1 | `tt5311514` ✓ |
+| Suzume | Movie | S1:1 | 1 | `tt16428256` ✓ |
+| A Silent Voice | Movie | S1:1 | 1 | `tt5323662` ✓ |
+| Spirited Away | Movie | S1:1 | 1 | `tt0245429` ✓ |
+| Princess Mononoke | Movie | S1:1 | 1 | `tt0119698` ✓ |
+| Howl’s Moving Castle | Movie | S1:1 | 1 | `tt0347149` ✓ |
+| Akira | Movie | S1:1 | 1 | `tt0094625` ✓ |
+| Weathering With You | Movie | S1:1 | 1 | `tt9426210` ✓ |
+| Jujutsu Kaisen 0 | Movie | S1:1 | 1 | `tt14331144` ✓ |
+| Demon Slayer: Mugen Train | Movie | S1:1 | 1 | `tt11032374` ✓ |
+| My Hero Academia: Two Heroes | Movie | S1:1 | 1 | `505262` ✓ |
+| Sword Art Online: Ordinal Scale | Movie | S1:1 | 1 | `413594` ✓ |
 
