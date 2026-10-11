@@ -446,6 +446,9 @@ async function harvestShow({ key, title, kind, args, slugs, postIndex }) {
         const rows = collectShowRows(text);
         if (rows.length) {
             const conv = rowsToEpisodes(rows);
+            const hist = {};
+            for (const r of rows) hist[r.season] = (hist[r.season] || 0) + 1;
+            const firstLast = [rows[0] && rows[0].label, rows[rows.length - 1] && rows[rows.length - 1].label];
             const labeled = rows.filter((r) => parseLabelEpisode(r.label)).length;
             if (kind !== 'movie' && labeled < Math.max(1, Math.floor(rows.length * 0.5))) {
                 // No episode numbers in the labels: keep as weak fallback only.
@@ -455,7 +458,7 @@ async function harvestShow({ key, title, kind, args, slugs, postIndex }) {
                 continue;
             }
             pages.push({ slug: cand.slug, source: cand.source, url: finalUrl, pageTitle, rows, showId: conv.showId });
-            attempts.push({ slug: cand.slug, source: cand.source, note: 'accepted', rows: rows.length, pageTitle: String(pageTitle).slice(0, 120) });
+            attempts.push({ slug: cand.slug, source: cand.source, note: 'accepted', rows: rows.length, seasonHist: hist, firstLast, pageTitle: String(pageTitle).slice(0, 120) });
         } else {
             const rich = collectRich(text);
             if (rich.size) {

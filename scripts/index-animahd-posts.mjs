@@ -97,7 +97,19 @@ async function main() {
             if (urls.length) {
                 sitemap.push(...urls);
                 console.log(`sitemap ${path}: ${urls.length} urls`);
-                if (sitemap.length > 20000) break;
+                // Follow one level of child sitemaps.
+                for (const child of urls.filter((u) => /sitemap.*\.xml$/.test(u)).slice(0, 20)) {
+                    if (child.includes(path.replace(/^\//, ''))) continue;
+                    try {
+                        const childXml = await fetchText(child);
+                        const childUrls = [...String(childXml).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+                        sitemap.push(...childUrls);
+                        console.log(`  child sitemap ${child.split('/').pop()}: ${childUrls.length} urls`);
+                    } catch {
+                        /* ignore */
+                    }
+                    await sleep(150);
+                }
             }
         } catch {
             /* sitemap optional */
