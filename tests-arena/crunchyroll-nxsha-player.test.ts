@@ -92,9 +92,13 @@ test('animahd tab plays unsandboxed (its own fullscreen control works)', async (
     await wait(200);
     await play(dom.window, 'solo');
     const frame = dom.window.document.getElementById('serverFrame')!;
-    // Reference play system: no sandbox on the AnimaHD tab, full allow list.
+    // Reference play system (byte-exact): no sandbox on the AnimaHD tab,
+    // allow='autoplay', and the fullscreen permission kept on the element.
     expect(frame.hasAttribute('sandbox')).toBe(false);
-    expect(frame.getAttribute('allow')).toBe('autoplay; fullscreen; encrypted-media; picture-in-picture');
+    expect(frame.getAttribute('allow')).toBe('autoplay');
+    expect(frame.hasAttribute('allowfullscreen')).toBe(true);
+    expect(frame.hasAttribute('webkitallowfullscreen')).toBe(true);
+    expect(frame.hasAttribute('mozallowfullscreen')).toBe(true);
     expect(frame.getAttribute('scrolling')).toBe('no');
     expect(frame.getAttribute('src')).toContain('https://animahd.com/player/?file_id=');
     // The junk cover strip is only for the AnimaHD tab.

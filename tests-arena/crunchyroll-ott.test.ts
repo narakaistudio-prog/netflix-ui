@@ -101,7 +101,7 @@ test('server tabs sandbox policy matches the reference play system', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     // Server 1 (AnimaHD) must be unsandboxed — that is what lets the player's
     // own fullscreen work, and why exiting fullscreen never shows white.
-    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}else{serverFrame.removeAttribute('sandbox')}");
+    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay')}");
     // Servers 2 (Drive) + 3 (Nxsha) keep the sandbox: no allow-popups, so the
     // embeds cannot open popups.
     expect(html).not.toContain('allow-popups');
@@ -205,11 +205,16 @@ test('the wordmark posts the exit message to the shell', async () => {
 
 test('player-driven fullscreen: AnimaHD tab unsandboxed, no separate control', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The reference behaviour: Server 1 runs unsandboxed with the full allow
-    // list, so the player's own fullscreen control works — the page layout
-    // never changes, so leaving fullscreen can't leave a white frame.
-    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}else{serverFrame.removeAttribute('sandbox')}");
-    expect(html).toContain("serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
+    // Byte-exact reference play system: the AnimaHD tab is unsandboxed and
+    // carries exactly the attributes the working build used, plus the legacy
+    // fullscreen aliases old Safari/Firefox need. Because the player page
+    // fullscreens its own document, our layout never changes — which is why
+    // coming back never leaves a white frame.
+    expect(html).toContain(
+        "if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay')}",
+    );
+    expect(html).toContain('<iframe id="serverFrame" title="Anime server player" allowfullscreen webkitallowfullscreen mozallowfullscreen>');
+    expect(html).toContain("serverFrame.setAttribute('allowfullscreen','')");
     // No separate fullscreen entry point anywhere.
     expect(html).not.toContain('serverFs');
     expect(html).not.toContain('enterFs');
