@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { EXIT_CHIP_HEIGHT, exitChipPosition } from '../components/Crunchyroll/exitChip';
+import { JSDOM, VirtualConsole } from 'jsdom';
 
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
@@ -118,9 +118,9 @@ test('drive tab covers the pop-out button', () => {
     expect(html).toContain('setHidden(drivePopCover,i!==1)');
 });
 
-test('server 1 fits original player in capped viewport with junk cover', () => {
+test('server 1 fits original player in a capped viewport, no blur cover', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1: plain embed (no sandbox/allow for fullscreen) + scroll locked + capped viewport + black junk cover.
+    // Server 1: sandboxed embed + scroll locked + capped viewport (no cover overlay).
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
     expect(html).toContain("serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')");
@@ -128,10 +128,9 @@ test('server 1 fits original player in capped viewport with junk cover', () => {
     expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
     expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
     expect(html).toContain("setClass(videoStage,'s1fit',i===0)");
-    expect(html).toContain('id="s1cover"');
-    expect(html).toContain('#s1cover{position:absolute;left:0;right:0;bottom:0;height:4%');
-    expect(html).toContain('backdrop-filter:blur(7px)');
-    expect(html).toContain("setHidden(s1cover,i!==0)");
+    // The old blur strip over the player controls is gone (it broke fullscreen).
+    expect(html).not.toContain('s1cover');
+    expect(html).not.toContain('backdrop-filter:blur(7px)');
     expect(html).toContain('Stuck on white? Tap here to reload');
     expect(html).toContain('fsExitWatch');
     expect(html).toContain('fsExitArmed');
@@ -218,59 +217,90 @@ test('demo page toast stays fully hidden until triggered', () => {
     expect(html).toContain('showToast');
 });
 
-test('the Netflix wordmark anchors to the page\'s Request nav item', () => {
+test('the Netflix wordmark lives in the page nav and the nav is sticky', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The page exposes the nav item the wordmark measures.
-    expect(html).toContain('data-scroll="requestAnime"');
-    expect(html.indexOf('data-scroll="requestAnime"')).toBeGreaterThan(html.indexOf('data-scroll="myList"'));
+    // Wordmark sits inside the page's own nav, right after Request.
+    expect(html).toContain('>Request</button>\n      <button class="nav-exit" id="navExit" title="Back to Netflix" aria-label="Back to Netflix">NETFLIX</button>');
+    // Sticky bar: the wordmark can never drift down with the content.
+    expect(html).toContain('.topbar{position:sticky;top:0;z-index:40;');
+    // Red wordmark, no arrow, no pill chrome.
+    expect(html).toContain('.nav-exit{border:0;border-bottom:3px solid transparent;background:transparent;color:#E50914;');
+    expect(html).not.toContain('arrow-back');
+    expect(html).not.toContain('nav-exit-dot');
+    // Clicking it asks the shell to leave (same-origin postMessage).
+    expect(html).toContain("postMessage({type:'crunchyroll:exit'},'*')");
 
     const view = readFileSync(
         join(ROOT, 'components', 'Crunchyroll', 'CrunchyrollView.web.tsx'),
         'utf8',
     );
-    // It follows that item instead of sitting in the corner.
-    expect(view).toContain("querySelector('[data-scroll=\"requestAnime\"]')");
-    expect(view).toContain("from './exitChip'");
-    expect(view).toContain('exitChipPosition');
-    expect(view).toContain('getBoundingClientRect');
-    // Plain NETFLIX text — no arrow icon, no pill chrome.
-    expect(view).toContain('>NETFLIX<');
+    expect(view).toContain("data.type === 'crunchyroll:exit'");
+    expect(view).toContain('router.back()');
+    // No app-level overlay anymore — the page owns the control.
+    expect(view).not.toContain('exitChipPosition');
     expect(view).not.toContain('Ionicons');
-    expect(view).not.toContain('arrow-back');
-    // Same look as the app navbar logo.
-    expect(view).toContain("color: '#E50914'");
-    expect(view).toContain("fontWeight: '900'");
-    expect(view).toContain('letterSpacing: 1.2');
-    // Stable: fixed positioning, document-space maths, never re-measured on scroll.
-    expect(view).toContain("position: 'fixed'");
-    expect(view).toContain('scrollY');
-    expect(view).toContain("window.addEventListener('resize', measure)");
-    expect(view).not.toContain("addEventListener('scroll'");
-    // Hidden until measured (no jump), and never unreachable.
-    expect(view).toContain('exitReady');
-    expect(view).toContain('EXIT_READY_TIMEOUT');
-    // On narrow layouts it falls back to the corner instead of going off-screen.
-    expect(view).toContain('EXIT_CHIP_FALLBACK_SPAN');
-    expect(view).toContain('setExitPos(null)');
-    // Still the only app-level way back (TV remote focus + a11y label).
-    expect(view).toContain("tvRow: 'crunchyroll-top'");
-    expect(view).toContain('accessibilityLabel="Back to Netflix"');
-    // The page itself has no second exit entry.
-    expect(html).not.toContain('nav-exit');
 });
 
-test('exit wordmark placement is centred right of the nav item (scroll-proof)', () => {
-    const frame = { left: 0, right: 1280, top: 0, height: 720 };
-    const nav = { left: 0, right: 600, top: 0, height: 60 };
-    // Unscrolled page.
-    expect(exitChipPosition(frame, nav)).toEqual({ left: 612, top: 13 });
-    expect(EXIT_CHIP_HEIGHT).toBe(34);
-    // Page scrolled down 800px: the nav item's viewport rect is now -800px, and
-    // the document-space maths still pins the wordmark to the same spot.
-    expect(exitChipPosition(frame, { ...nav, top: -800 }, { x: 0, y: 800 })).toEqual({ left: 612, top: 13 });
-    expect(exitChipPosition(frame, { ...nav, top: -1600 }, { x: 0, y: 1600 })).toEqual({ left: 612, top: 13 });
-    // An iframe that does not start at the viewport origin shifts it too.
-    expect(exitChipPosition({ left: 8, right: 0, top: 4, height: 0 }, nav)).toEqual({ left: 620, top: 17 });
+test('wordmark + fullscreen buttons post the right messages to the shell', async () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const virtualConsole = new VirtualConsole();
+    virtualConsole.on('jsdomError', () => {});
+    const posted: Array<{ message: unknown; target: string }> = [];
+    const dom = new JSDOM(html, {
+        runScripts: 'dangerously',
+        pretendToBeVisual: true,
+        url: 'https://app.local/crunchyroll',
+        virtualConsole,
+    });
+    const win = dom.window as unknown as Window & { parent: unknown };
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    // jsdom gives a top-level window itself as `parent`; fake a host frame.
+    const fakeParent = {
+        postMessage: (message: unknown, target: string) => posted.push({ message, target }),
+    };
+    Object.defineProperty(win, 'parent', { value: fakeParent, configurable: true });
+
+    const click = (id: string) => {
+        const el = dom.window.document.getElementById(id);
+        expect(el).toBeTruthy();
+        el!.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    };
+    click('navExit');
+    click('serverFs');
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(posted.map((p) => p.message)).toEqual([
+        { type: 'crunchyroll:exit' },
+        { type: 'crunchyroll:fullscreen' },
+    ]);
+    dom.window.close();
+}, 30000);
+
+test('fullscreen works: page asks, shell expands (sandbox-safe)', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // The page offers its own fullscreen control next to the server tabs.
+    expect(html).toContain('id="serverFs"');
+    expect(html).toContain('⛶ Fullscreen');
+    // It tries the real API on the stage first...
+    expect(html).toContain('el.requestFullscreen||el.webkitRequestFullscreen');
+    // ...and falls back to the shell when the sandbox refuses.
+    expect(html).toContain("postMessage({type:'crunchyroll:fullscreen'},'*')");
+    // Fullscreen must actually fill the frame (no letterbox padding).
+    expect(html).toContain('#videoStage:fullscreen{padding:0!important;height:100%!important;');
+
+    const view = readFileSync(
+        join(ROOT, 'components', 'Crunchyroll', 'CrunchyrollView.web.tsx'),
+        'utf8',
+    );
+    expect(view).toContain("data.type === 'crunchyroll:fullscreen'");
+    expect(view).toContain('requestFullscreen');
+    expect(view).toContain('exitFullscreen');
+});
+
+test('the Server 1 blur strip is gone (it covered the player controls)', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).not.toContain('s1cover');
+    expect(html).not.toContain('backdrop-filter:blur');
+    expect(html).not.toContain('blur(7px)');
 });
 
 
