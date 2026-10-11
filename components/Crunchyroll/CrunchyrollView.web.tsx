@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
@@ -31,45 +31,24 @@ export const CRUNCHYROLL_HTML_URL = '/assets/crunchyroll/crunchyroll.html';
  * can never drift with the content — no overlay, no measuring.
  *
  * The page cannot reach the router itself, so it talks to this view over
- * postMessage (same-origin): "exit" goes back, "fullscreen" makes the shell
- * fullscreen (the shell owns that API, the sandboxed player frames do not).
+ * postMessage (same-origin): "exit" goes back to Netflix.
+ *
+ * Fullscreen needs no help from here: the AnimaHD tab runs unsandboxed, so the
+ * player's own fullscreen control works and the page's layout never changes —
+ * which is why coming back from fullscreen never leaves a white video.
  */
 export function CrunchyrollView(): React.JSX.Element {
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
-    const containerRef = useRef<any>(null);
 
-    // The page asks the shell for things it cannot do itself (same-origin
-    // postMessage): leave to Netflix, or go fullscreen — the sandboxed player
-    // frames cannot use the Fullscreen API, the shell can.
+    // The page cannot reach the router itself, so it asks us (same-origin
+    // postMessage) to leave to Netflix.
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
         const onMessage = (event: MessageEvent) => {
             const data = event?.data;
-            if (!data || typeof data !== 'object') return;
-            if (data.type === 'crunchyroll:exit') {
+            if (data && typeof data === 'object' && data.type === 'crunchyroll:exit') {
                 router.back();
-                return;
-            }
-            if (data.type === 'crunchyroll:fullscreen') {
-                const doc = document as any;
-                const element = (containerRef.current as HTMLElement) || doc.documentElement;
-                const current = doc.fullscreenElement || doc.webkitFullscreenElement;
-                try {
-                    if (current) {
-                        const exit = doc.exitFullscreen || doc.webkitExitFullscreen;
-                        if (exit) exit.call(doc);
-                    } else {
-                        const request =
-                            element.requestFullscreen || (element as any).webkitRequestFullscreen;
-                        if (request) {
-                            const result = request.call(element);
-                            if (result && typeof result.catch === 'function') result.catch(() => {});
-                        }
-                    }
-                } catch {
-                    // Browser refused (no user gesture / policy): nothing to do.
-                }
             }
         };
         window.addEventListener('message', onMessage);
@@ -77,7 +56,7 @@ export function CrunchyrollView(): React.JSX.Element {
     }, [router]);
 
     return (
-        <View style={styles.container} ref={containerRef}>
+        <View style={styles.container}>
             {React.createElement('iframe', {
                 src: CRUNCHYROLL_HTML_URL,
                 title: 'Crunchyroll',

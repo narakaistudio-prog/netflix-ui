@@ -87,48 +87,29 @@ test('nxsha movie title: movie embed URL, no season/episode path', async () => {
     dom.window.close();
 });
 
-test('starting an episode expands the stage by itself (no separate control)', async () => {
+test('animahd tab plays unsandboxed (its own fullscreen control works)', async () => {
     const dom = boot();
     await wait(200);
-    const win = dom.window as unknown as Window & { Element: typeof Element };
-    const fullscreened: string[] = [];
-    // jsdom has no Fullscreen API — mimic a browser that supports it.
-    (win.Element.prototype as unknown as { requestFullscreen: () => Promise<void> }).requestFullscreen = function (
-        this: Element,
-    ) {
-        fullscreened.push(this.id || this.tagName);
-        return Promise.resolve();
-    };
     await play(dom.window, 'solo');
-    expect(fullscreened).toEqual(['videoStage']);
-    expect(dom.window.document.getElementById('serverFs')!.hasAttribute('hidden')).toBe(true);
+    const frame = dom.window.document.getElementById('serverFrame')!;
+    // Reference play system: no sandbox on the AnimaHD tab, full allow list.
+    expect(frame.hasAttribute('sandbox')).toBe(false);
+    expect(frame.getAttribute('allow')).toBe('autoplay; fullscreen; encrypted-media; picture-in-picture');
+    expect(frame.getAttribute('scrolling')).toBe('no');
+    expect(frame.getAttribute('src')).toContain('https://animahd.com/player/?file_id=');
+    // The junk cover strip is only for the AnimaHD tab.
+    expect(dom.window.document.getElementById('s1cover')!.hasAttribute('hidden')).toBe(false);
     dom.window.close();
 });
 
-test('leaving fullscreen leaves a quiet way back in (fallback button)', async () => {
+test('nxsha tab stays sandboxed (popup shield) but plays the same way', async () => {
     const dom = boot();
     await wait(200);
-    const win = dom.window as unknown as Window & { Element: typeof Element };
-    (win.Element.prototype as unknown as { requestFullscreen: () => Promise<void> }).requestFullscreen =
-        function () {
-            return Promise.resolve();
-        };
-    await play(dom.window, 'solo');
-    // Auto-fullscreen succeeded, so nothing extra is on screen...
-    expect(dom.window.document.getElementById('serverFs')!.hasAttribute('hidden')).toBe(true);
-    // ...until the viewer exits fullscreen.
-    dom.window.document.dispatchEvent(new dom.window.Event('fullscreenchange'));
-    expect(dom.window.document.getElementById('serverFs')!.hasAttribute('hidden')).toBe(false);
-    dom.window.close();
-});
-
-test('when fullscreen is unavailable, the small fallback button shows up', async () => {
-    const dom = boot();
-    await wait(200);
-    await play(dom.window, 'solo');
-    const button = dom.window.document.getElementById('serverFs')!;
-    expect(button.hasAttribute('hidden')).toBe(false);
-    expect(button.textContent).toContain('Fullscreen');
+    await play(dom.window, 'aot');
+    const frame = dom.window.document.getElementById('serverFrame')!;
+    expect(frame.getAttribute('sandbox')).toBe('allow-scripts allow-same-origin');
+    expect(frame.getAttribute('src')).toContain('https://nxsha.space/embed/tv/tt2560140/1/1');
+    expect(dom.window.document.getElementById('s1cover')!.hasAttribute('hidden')).toBe(true);
     dom.window.close();
 });
 

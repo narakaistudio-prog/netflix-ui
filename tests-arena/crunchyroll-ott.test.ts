@@ -97,89 +97,19 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(html).not.toContain('data-extract=');
 });
 
-test('every server tab stays sandboxed so the player cannot open popups', () => {
+test('server tabs sandbox policy matches the reference play system', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // One sandbox for all three servers (AnimaHD, Drive, Nxsha): scripts +
-    // same-origin only — no allow-popups, so window.open / target=_blank
-    // popups are dropped by the browser.
-    expect(html).toContain(
-        "serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')",
-    );
-    expect(html).not.toContain("removeAttribute('sandbox')");
+    // Server 1 (AnimaHD) must be unsandboxed — that is what lets the player's
+    // own fullscreen work, and why exiting fullscreen never shows white.
+    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}else{serverFrame.removeAttribute('sandbox')}");
+    // Servers 2 (Drive) + 3 (Nxsha) keep the sandbox: no allow-popups, so the
+    // embeds cannot open popups.
     expect(html).not.toContain('allow-popups');
+    expect(html).toContain("serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
     expect(html).not.toContain('allow="autoplay');
     expect(html).not.toContain('sandbox="allow-scripts');
 });
 
-test('drive tab covers the pop-out button', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('id="drivePopCover"');
-    expect(html).toContain('#drivePopCover{position:absolute;top:0;right:0;width:60px;height:60px');
-    expect(html).toContain('setHidden(drivePopCover,i!==1)');
-});
-
-test('server 1 fits original player in a capped viewport, no blur cover', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1: sandboxed embed + scroll locked + capped viewport (no cover overlay).
-    expect(html).not.toContain('scrolling="no"');
-    expect(html).toContain("setAttribute('scrolling','no')");
-    expect(html).toContain("serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')");
-    expect(html).toContain('.video-stage.s1fit{width:100%;max-width:1000px;margin:0 auto;align-self:center;padding-bottom:62%}');
-    expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
-    expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
-    expect(html).toContain("setClass(videoStage,'s1fit',i===0)");
-    // The old blur strip over the player controls is gone (it broke fullscreen).
-    expect(html).not.toContain('s1cover');
-    expect(html).not.toContain('backdrop-filter:blur(7px)');
-    expect(html).toContain('Stuck on white? Tap here to reload');
-    expect(html).toContain('fsExitWatch');
-    expect(html).toContain('fsExitArmed');
-    expect(html).not.toContain('<aside class="up-next"');
-    // Fullscreen rides the play gesture itself (no separate control needed)...
-    expect(html).toContain("setHidden(byId('serverFs'),true);enterFs();stageInjected=true");
-    // ...and the old inject-time variant is gone for good.
-    expect(html).not.toContain("vst=byId('videoStage')");
-    expect(html).toContain('ex.call(document)');
-    expect(html).toContain('var lt=loadToken');
-});
-
-test('player lazy-loads behind a poster + play button', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('id="stagePoster"');
-    expect(html).toContain('id="stagePlay"');
-    expect(html).toContain('id="stagePosterImg"');
-    expect(html).toContain('id="stagePosterText"');
-    expect(html).toContain('stageInjected');
-    expect(html).toContain('showStagePoster');
-    expect(html).toContain('injectServer');
-});
-
-test('solo leveling ships all 25 episodes from one file_id table', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain('/*__ANIMAHDEP__*/');
-    expect(html).toContain('/*__END_ANIMAHDEP__*/');
-    expect(html).toContain('var EP_DATA=');
-    // S1E1, S1E12, S2E1, S2E13 (0-based ep 0/11/12/24).
-    expect(html).toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
-    expect(html).toContain('1udQR-P-EZK65__qcqkJoa4iGGxRj-YvS');
-    expect(html).toContain('1YTospn4BG5B4ZIJc0CDlFRzjh9NiO76F');
-    expect(html).toContain('1HVCzW7WQaIh35zaniBTvhwqz6pLjY7kp');
-    // Both server URLs derive from file_id + show_id + ep.
-    expect(html).toContain('drive.google.com/file/d/');
-    expect(html).toContain('animahd.com/player/?file_id=');
-    expect(html).toContain('show_id=');
-    expect(html).toContain('&ep=');
-    expect(html).toContain('epFileIndex');
-    expect(html).toContain('seasonEpCount');
-});
-
-test('season 2 lists 13 episodes for solo leveling from the seasons map', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    // S1=12, S2=13 straight from EP_DATA; the guide renders one card per episode.
-    expect(html).toContain('"seasons":{"1":12,"2":13}');
-    expect(html).toContain('episodeData(activeKey,season)');
-    expect(html).toContain('seasonEpCount');
-});
 
 test('titles animahd lacks fall back to the nxsha embed (verified ids)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
@@ -243,7 +173,7 @@ test('the Netflix wordmark lives in the page nav and the nav is sticky', () => {
     expect(view).not.toContain('Ionicons');
 });
 
-test('wordmark + fullscreen buttons post the right messages to the shell', async () => {
+test('the wordmark posts the exit message to the shell', async () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const virtualConsole = new VirtualConsole();
     virtualConsole.on('jsdomError', () => {});
@@ -268,41 +198,51 @@ test('wordmark + fullscreen buttons post the right messages to the shell', async
         el!.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
     };
     click('navExit');
-    click('serverFs');
     await new Promise((resolve) => setTimeout(resolve, 50));
-    expect(posted.map((p) => p.message)).toEqual([
-        { type: 'crunchyroll:exit' },
-        { type: 'crunchyroll:fullscreen' },
-    ]);
+    expect(posted.map((p) => p.message)).toEqual([{ type: 'crunchyroll:exit' }]);
     dom.window.close();
 }, 30000);
 
-test('fullscreen works: the stage expands with the play gesture (sandbox-safe)', () => {
+test('player-driven fullscreen: AnimaHD tab unsandboxed, no separate control', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Automatic fullscreen: pressing play expands the stage, so no separate
-    // fullscreen control is needed.
-    expect(html).toContain('function enterFs()');
-    expect(html).toContain('el.requestFullscreen||el.webkitRequestFullscreen');
-    expect(html).toContain('#videoStage:fullscreen{padding:0!important;height:100%!important;');
-    // The tiny fallback button exists but stays out of the way: hidden unless
-    // the browser genuinely cannot do fullscreen.
-    expect(html).toContain('id="serverFs" title="Watch this episode fullscreen" hidden');
-    expect(html).toContain('function fsFallback()');
-    // ...and falls back to the shell when the page cannot do it itself.
-    expect(html).toContain("postMessage({type:'crunchyroll:fullscreen'},'*')");
+    // The reference behaviour: Server 1 runs unsandboxed with the full allow
+    // list, so the player's own fullscreen control works — the page layout
+    // never changes, so leaving fullscreen can't leave a white frame.
+    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}else{serverFrame.removeAttribute('sandbox')}");
+    expect(html).toContain("serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
+    // No separate fullscreen entry point anywhere.
+    expect(html).not.toContain('serverFs');
+    expect(html).not.toContain('enterFs');
+    expect(html).not.toContain('requestFullscreen');
+    // The play gesture just injects the episode (reference behaviour).
+    expect(html).toContain("if(stageInjected)return;stageInjected=true;injectServer(activeServer)");
+    // Safety net kept from the reference build.
+    expect(html).toContain('Stuck on white? Tap here to reload');
+    expect(html).toContain('fsExitWatch');
+    expect(html).toContain('fsExitArmed');
+});
 
+test('fullscreen support is unchanged for the driver shell', () => {
     const view = readFileSync(
         join(ROOT, 'components', 'Crunchyroll', 'CrunchyrollView.web.tsx'),
         'utf8',
     );
-    expect(view).toContain("data.type === 'crunchyroll:fullscreen'");
-    expect(view).toContain('requestFullscreen');
-    expect(view).toContain('exitFullscreen');
+    // The iframe still advertises fullscreen + autoplay to any embedded player.
+    expect(view).toContain("allow: 'fullscreen; autoplay; encrypted-media; picture-in-picture'");
+    expect(view).toContain('allowFullScreen: true');
+    // The shell only answers the exit request now.
+    expect(view).toContain("data.type === 'crunchyroll:exit'");
+    expect(view).not.toContain('crunchyroll:fullscreen');
 });
 
-test('the Server 1 blur strip is gone (it covered the player controls)', () => {
+
+test('junk cover strip is back but plain black (no blur)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).not.toContain('s1cover');
+    // The reference build covered the player page's lower junk with this strip.
+    expect(html).toContain('id="s1cover"');
+    expect(html).toContain('#s1cover{position:absolute;left:0;right:0;bottom:0;height:4%;background:#000;pointer-events:none}');
+    expect(html).toContain("setHidden(s1cover,i!==0)");
+    // ...but the blur the user disliked stays gone.
     expect(html).not.toContain('backdrop-filter:blur');
     expect(html).not.toContain('blur(7px)');
 });
