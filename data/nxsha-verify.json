@@ -1,0 +1,813 @@
+{
+  "generatedAt": "2026-10-11T07:40:47.428Z",
+  "titles": [
+    {
+      "key": "aot",
+      "kind": "tv",
+      "id": "tt2560140",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2560140/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S1:E1",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 25,
+          "url": "https://nxsha.space/embed/tv/tt2560140/1/25?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S1:E25",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 1,
+          "foundEpisode": 25
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2560140/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S2:E1",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 12,
+          "url": "https://nxsha.space/embed/tv/tt2560140/2/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S2:E12",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 2,
+          "foundEpisode": 12
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2560140/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S3:E1",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 22,
+          "url": "https://nxsha.space/embed/tv/tt2560140/3/22?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S3:E22",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 3,
+          "foundEpisode": 22
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2560140/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S4:E1",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 28,
+          "url": "https://nxsha.space/embed/tv/tt2560140/4/28?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Attack on Titan - S4:E28",
+          "ok": true,
+          "foundName": "Attack on Titan",
+          "foundSeason": 4,
+          "foundEpisode": 28
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1,
+          2,
+          3
+        ],
+        "epPairs": [
+          "4:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "tokyo",
+      "kind": "tv",
+      "id": "105009",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/105009/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Tokyo Revengers - S1:E1",
+          "ok": true,
+          "foundName": "Tokyo Revengers",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/105009/1/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Tokyo Revengers - S1:E24",
+          "ok": true,
+          "foundName": "Tokyo Revengers",
+          "foundSeason": 1,
+          "foundEpisode": 24
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/105009/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Tokyo Revengers - S2:E1",
+          "ok": true,
+          "foundName": "Tokyo Revengers",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 13,
+          "url": "https://nxsha.space/embed/tv/105009/2/13?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Tokyo Revengers - S2:E13",
+          "ok": true,
+          "foundName": "Tokyo Revengers",
+          "foundSeason": 2,
+          "foundEpisode": 13
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/105009/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Tokyo Revengers - S3:E1",
+          "ok": true,
+          "foundName": "Tokyo Revengers",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 12,
+          "url": "https://nxsha.space/embed/tv/105009/3/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Tokyo Revengers - S3:E12",
+          "ok": true,
+          "foundName": "Tokyo Revengers",
+          "foundSeason": 3,
+          "foundEpisode": 12
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1
+        ],
+        "epPairs": [
+          "3:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "vinland",
+      "kind": "tv",
+      "id": "tt10233448",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt10233448/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Vinland Saga - S1:E1",
+          "ok": true,
+          "foundName": "Vinland Saga",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/tt10233448/1/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Vinland Saga - S1:E24",
+          "ok": true,
+          "foundName": "Vinland Saga",
+          "foundSeason": 1,
+          "foundEpisode": 24
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt10233448/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Vinland Saga - S2:E1",
+          "ok": true,
+          "foundName": "Vinland Saga",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/tt10233448/2/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Vinland Saga - S2:E24",
+          "ok": true,
+          "foundName": "Vinland Saga",
+          "foundSeason": 2,
+          "foundEpisode": 24
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1,
+          2
+        ],
+        "epPairs": [
+          "2:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "sao",
+      "kind": "tv",
+      "id": "tt2250192",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2250192/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S1:E1",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 25,
+          "url": "https://nxsha.space/embed/tv/tt2250192/1/25?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S1:E25",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 1,
+          "foundEpisode": 25
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2250192/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S2:E1",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/tt2250192/2/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S2:E24",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 2,
+          "foundEpisode": 24
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2250192/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S3:E1",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/tt2250192/3/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S3:E24",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 3,
+          "foundEpisode": 24
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt2250192/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S4:E1",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 23,
+          "url": "https://nxsha.space/embed/tv/tt2250192/4/23?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Sword Art Online - S4:E23",
+          "ok": true,
+          "foundName": "Sword Art Online",
+          "foundSeason": 4,
+          "foundEpisode": 23
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [
+          "4:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "drstone",
+      "kind": "tv",
+      "id": "tt9679542",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt9679542/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S1:E1",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/tt9679542/1/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S1:E24",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 1,
+          "foundEpisode": 24
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt9679542/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S2:E1",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 11,
+          "url": "https://nxsha.space/embed/tv/tt9679542/2/11?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S2:E11",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 2,
+          "foundEpisode": 11
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt9679542/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S3:E1",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 22,
+          "url": "https://nxsha.space/embed/tv/tt9679542/3/22?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S3:E22",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 3,
+          "foundEpisode": 22
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt9679542/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S4:E1",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 12,
+          "url": "https://nxsha.space/embed/tv/tt9679542/4/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Dr. STONE - S4:E12",
+          "ok": true,
+          "foundName": "Dr. STONE",
+          "foundSeason": 4,
+          "foundEpisode": 12
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1
+        ],
+        "epPairs": [
+          "4:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "boruto",
+      "kind": "tv",
+      "id": "tt6342474",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/tt6342474/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Boruto: Naruto Next Generations - S1:E1",
+          "ok": true,
+          "foundName": "Boruto: Naruto Next Generations",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 293,
+          "url": "https://nxsha.space/embed/tv/tt6342474/1/293?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Boruto: Naruto Next Generations - S1:E293",
+          "ok": true,
+          "foundName": "Boruto: Naruto Next Generations",
+          "foundSeason": 1,
+          "foundEpisode": 293
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1
+        ],
+        "epPairs": [
+          "1:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "yourname",
+      "kind": "movie",
+      "id": "tt5311514",
+      "url": "https://nxsha.space/embed/movie/tt5311514?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Your Name.",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "suzume",
+      "kind": "movie",
+      "id": "tt16428256",
+      "url": "https://nxsha.space/embed/movie/tt16428256?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Suzume",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "silentvoice",
+      "kind": "movie",
+      "id": "tt5323662",
+      "url": "https://nxsha.space/embed/movie/tt5323662?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch A Silent Voice: The Movie",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "spirited",
+      "kind": "movie",
+      "id": "tt0245429",
+      "url": "https://nxsha.space/embed/movie/tt0245429?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Spirited Away",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "mononoke",
+      "kind": "movie",
+      "id": "tt0119698",
+      "url": "https://nxsha.space/embed/movie/tt0119698?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Princess Mononoke",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "howl",
+      "kind": "movie",
+      "id": "tt0347149",
+      "url": "https://nxsha.space/embed/movie/tt0347149?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Howl&#x27;s Moving Castle",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "akira",
+      "kind": "movie",
+      "id": "tt0094625",
+      "url": "https://nxsha.space/embed/movie/tt0094625?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Akira",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "weathering",
+      "kind": "movie",
+      "id": "tt9426210",
+      "url": "https://nxsha.space/embed/movie/tt9426210?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Weathering with You",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "jjk0",
+      "kind": "movie",
+      "id": "tt14331144",
+      "url": "https://nxsha.space/embed/movie/tt14331144?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Jujutsu Kaisen 0",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "demonMovie",
+      "kind": "movie",
+      "id": "tt11032374",
+      "url": "https://nxsha.space/embed/movie/tt11032374?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "mhaMovie",
+      "kind": "movie",
+      "id": "505262",
+      "url": "https://nxsha.space/embed/movie/505262?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch My Hero Academia: Two Heroes",
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    }
+  ],
+  "saoMovie": [
+    {
+      "id": "392535",
+      "url": "https://nxsha.space/embed/movie/392535?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch The Third Clue",
+      "ok": false
+    },
+    {
+      "id": "400157",
+      "url": "https://nxsha.space/embed/movie/400157?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Wonder Park",
+      "ok": false
+    },
+    {
+      "id": "366553",
+      "url": "https://nxsha.space/embed/movie/366553?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "embedTitle": "Nxsha",
+      "ok": false
+    },
+    {
+      "id": "287606",
+      "url": "https://nxsha.space/embed/movie/287606?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "embedTitle": "Nxsha",
+      "ok": false
+    },
+    {
+      "id": "415089",
+      "url": "https://nxsha.space/embed/movie/415089?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "embedTitle": "Nxsha",
+      "ok": false
+    },
+    {
+      "id": "tt5595168",
+      "url": "https://nxsha.space/embed/movie/tt5595168?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Kingsglaive: Final Fantasy XV",
+      "ok": false
+    },
+    {
+      "id": "tt5588288",
+      "url": "https://nxsha.space/embed/movie/tt5588288?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "embedTitle": "Nxsha",
+      "ok": false
+    },
+    {
+      "id": "tt5940112",
+      "url": "https://nxsha.space/embed/movie/tt5940112?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "embedTitle": "Nxsha",
+      "ok": false
+    },
+    {
+      "id": "tt6133586",
+      "url": "https://nxsha.space/embed/movie/tt6133586?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 404,
+      "embedTitle": "Nxsha",
+      "ok": false
+    }
+  ],
+  "site": [
+    {
+      "label": "robots",
+      "url": "https://nxsha.space/robots.txt",
+      "status": 200,
+      "bytes": 1248,
+      "docTitle": "",
+      "sample": [],
+      "ordinals": [],
+      "snippet": "# As a condition of accessing this website, you agree to abide by the following # content signals: # (a) If a content-signal = yes, you may collect content for the corresponding # use. # (b) If a content-signal = no, you may not collect content for the # corresponding use. # (c) If the website opera"
+    },
+    {
+      "label": "sitemap",
+      "url": "https://nxsha.space/sitemap.xml",
+      "status": 200,
+      "bytes": 1199,
+      "docTitle": "",
+      "sample": [
+        "https://web.nxsha.app/movies",
+        "https://web.nxsha.app/tv-shows",
+        "https://web.nxsha.app/browse/movies",
+        "https://web.nxsha.app/browse/tv-shows"
+      ],
+      "ordinals": [],
+      "snippet": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> <url> <loc>https://web.nxsha.app</loc> <lastmod>2026-10-09T21:02:52.784Z</lastmod> <changefreq>daily</changefreq> <priority>1</priority> </url> <url> <loc>https://web.nxsha.app/movies</loc> <lastmod>2"
+    },
+    {
+      "label": "sitemap-index",
+      "url": "https://nxsha.space/sitemap_index.xml",
+      "status": 404,
+      "bytes": 9139,
+      "docTitle": "",
+      "sample": [],
+      "ordinals": [],
+      "snippet": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\""
+    },
+    {
+      "label": "sitemap-movies",
+      "url": "https://nxsha.space/movie/sitemap.xml",
+      "status": 404,
+      "bytes": 13552,
+      "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "sample": [],
+      "ordinals": [],
+      "snippet": "<!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static"
+    },
+    {
+      "label": "detail-tmdb-movie",
+      "url": "https://nxsha.space/movie/1441228",
+      "status": 200,
+      "bytes": 87953,
+      "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
+      "sample": [
+        "https://web.nxsha.app/movie/1441228",
+        "https://web.nxsha.app/movie/1441228",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY",
+        "https://web.nxsha.app/movie/1441228\\",
+        "https://web.nxsha.app/movie/1441228\\",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\"
+      ],
+      "ordinals": [],
+      "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href="
+    },
+    {
+      "label": "detail-watch-movie",
+      "url": "https://nxsha.space/watch/1441228",
+      "status": 404,
+      "bytes": 15394,
+      "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "sample": [],
+      "ordinals": [],
+      "snippet": "<!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static"
+    },
+    {
+      "label": "detail-movies-id",
+      "url": "https://nxsha.space/movies/1441228",
+      "status": 404,
+      "bytes": 9139,
+      "docTitle": "",
+      "sample": [],
+      "ordinals": [],
+      "snippet": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\""
+    }
+  ],
+  "summary": {
+    "titles": 17,
+    "ok": 17,
+    "bad": [],
+    "saoMovieMatch": []
+  }
+}
