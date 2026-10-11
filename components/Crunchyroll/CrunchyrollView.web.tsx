@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import { EXIT_CHIP_HEIGHT, exitChipPosition } from './exitChip';
 
-/** Rough chip width + gap: used only to detect an off-screen placement. */
+/** Rough wordmark width + gap: used only to detect an off-screen placement. */
 const EXIT_CHIP_FALLBACK_SPAN = 150;
+
+/** Never leave the exit unreachable: show it after this long, measured or not. */
+const EXIT_READY_TIMEOUT = 700;
 
 /**
  * Static URL of the self-contained Crunchyroll OTT demo page.
@@ -34,32 +36,43 @@ export function CrunchyrollView(): React.JSX.Element {
     const [loaded, setLoaded] = useState(false);
     const frameRef = useRef<any>(null);
     const [exitPos, setExitPos] = useState<{ left: number; top: number } | null>(null);
+    const [exitReady, setExitReady] = useState(false);
 
     // Place the exit chip right after the demo page's "Request" nav item.
     // Falls back to the old top-left corner whenever the page is not readable.
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
         const measure = () => {
+            setExitReady(true);
             const frame = frameRef.current as HTMLIFrameElement | null;
             try {
                 const doc = frame && frame.contentDocument;
+                const win = frame && (frame.contentWindow as (Window & typeof globalThis) | null);
                 const anchor = doc && (doc.querySelector('[data-scroll="requestAnime"]') as HTMLElement | null);
                 if (!frame || !anchor) return;
                 const frameRect = frame.getBoundingClientRect();
                 const navRect = anchor.getBoundingClientRect();
-                // Small screens can push "Request" past the right edge; the chip
-                // must stay reachable, so keep the corner fallback then.
+                // Small screens can push "Request" past the right edge; the
+                // wordmark must stay reachable, so keep the corner then.
                 if (frameRect.left + navRect.right + EXIT_CHIP_FALLBACK_SPAN > frameRect.right) {
                     setExitPos(null);
                     return;
                 }
-                setExitPos(exitChipPosition(frameRect, navRect));
+                // Document space: the control is drawn fixed, so measuring with
+                // the page's scroll offset means it never moves afterwards.
+                setExitPos(
+                    exitChipPosition(frameRect, navRect, {
+                        x: win ? win.scrollX : 0,
+                        y: win ? win.scrollY : 0,
+                    }),
+                );
             } catch {
-                // Cross-origin or not ready yet: keep the default corner.
+                // Cross-origin or not ready yet: the corner fallback stays.
             }
         };
         measure();
-        const timers = [120, 480, 1200].map((ms) => window.setTimeout(measure, ms));
+        const timers = [120, 480, EXIT_READY_TIMEOUT].map((ms) => window.setTimeout(measure, ms));
+        // Only layout changes re-measure — never scroll, so the wordmark is stable.
         window.addEventListener('resize', measure);
         const fonts = (document as any).fonts;
         if (fonts && fonts.ready && typeof fonts.ready.then === 'function') {
@@ -105,29 +118,31 @@ export function CrunchyrollView(): React.JSX.Element {
                 </View>
             )}
 
-            {/* Exit chip: sits in the page's nav row, right after "Request" */}
-            <Pressable
-                onPress={() => router.back()}
-                tabIndex={0}
-                accessibilityRole="button"
-                accessibilityLabel="Back to Netflix"
-                {...({
-                    dataSet: {
-                        tvFocusable: 'true',
-                        tvRow: 'crunchyroll-top',
-                        tvId: 'crunchyroll-back',
-                    },
-                } as any)}
-                style={({ hovered }: any) => [
-                    styles.backPill,
-                    exitPos,
-                    hovered && styles.backPillHover,
-                ]}
-            >
-                <Ionicons name="arrow-back" size={16} color="#fff" />
-                <Text style={styles.backPillText}>Netflix</Text>
-                <View style={styles.backPillDot} />
-            </Pressable>
+            {/* Exit wordmark: sits in the page's nav row, right after "Request",
+                and stays put while the page scrolls. */}
+            {exitReady && (
+                <Pressable
+                    onPress={() => router.back()}
+                    tabIndex={0}
+                    accessibilityRole="button"
+                    accessibilityLabel="Back to Netflix"
+                    title="Back to Netflix"
+                    {...({
+                        dataSet: {
+                            tvFocusable: 'true',
+                            tvRow: 'crunchyroll-top',
+                            tvId: 'crunchyroll-back',
+                        },
+                    } as any)}
+                    style={({ hovered }: any) => [
+                        styles.backPill,
+                        exitPos,
+                        hovered && styles.backPillHover,
+                    ]}
+                >
+                    <Text style={styles.backPillText}>NETFLIX</Text>
+                </Pressable>
+            )}
         </View>
     );
 }
@@ -153,44 +168,30 @@ const styles = StyleSheet.create({
         letterSpacing: 0.4,
     },
     backPill: {
-        position: 'absolute',
-        // Default spot until the Request item has been measured.
+        // Fixed: neither the page's own scrolling nor the shell can move it.
+        position: 'fixed',
+        // Corner fallback until the Request item has been measured.
         top: 14,
         left: 14,
         height: EXIT_CHIP_HEIGHT,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 7,
-        backgroundColor: 'rgba(0, 0, 0, 0.72)',
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: 'rgba(244, 117, 33, 0.65)',
+        justifyContent: 'center',
         opacity: 0.92,
         zIndex: 10,
         ...(Platform.select({
-            web: { cursor: 'pointer', transition: 'opacity 0.2s ease, transform 0.2s ease' },
+            web: { cursor: 'pointer', transition: 'opacity 0.2s ease' },
             default: {},
         }) as any),
     },
     backPillHover: {
         opacity: 1,
-        ...(Platform.select({
-            web: { transform: 'translateY(-1px)' },
-            default: {},
-        }) as any),
     },
+    // Same wordmark as the app navbar logo (components/WebNavBar.tsx).
     backPillText: {
-        color: '#fff',
-        fontSize: 13,
-        fontWeight: '800',
-        letterSpacing: 0.3,
-    },
-    backPillDot: {
-        width: 7,
-        height: 7,
-        borderRadius: 4,
-        backgroundColor: '#f47521',
+        color: '#E50914',
+        fontSize: 22,
+        fontWeight: '900',
+        letterSpacing: 1.2,
     },
 });
