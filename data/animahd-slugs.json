@@ -1,1 +1,170 @@
-{}
+{
+  "solo": {
+    "slug": "solo-leveling",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Solo Leveling"
+  },
+  "demon": {
+    "slug": "demon-slayer-kimetsu-no-yaiba",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Demon Slayer: Kimetsu no Yaiba"
+  },
+  "jjk": {
+    "slug": "jujutsu-kaisen",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "JUJUTSU KAISEN"
+  },
+  "onepiece": {
+    "slug": "one-piece",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "One Piece"
+  },
+  "frieren": {
+    "slug": "frieren-beyond-journeys-end",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Frieren: Beyond Journey’s End"
+  },
+  "chainsaw": {
+    "slug": "chainsaw-man",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Chainsaw Man"
+  },
+  "spy": {
+    "slug": "spy-x-family",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "SPY x FAMILY"
+  },
+  "kaiju": {
+    "slug": "kaiju-no-8",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Kaiju No. 8"
+  },
+  "naruto": {
+    "slug": "naruto-shippuden",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Naruto Shippuden"
+  },
+  "deathnote": {
+    "slug": "death-note",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Death Note"
+  },
+  "mha": {
+    "slug": "my-hero-academia",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "My Hero Academia"
+  },
+  "tokyo": {
+    "slug": "tokyo",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Tokyo Revengers"
+  },
+  "opm": {
+    "slug": "one-punch-man",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "One Punch Man"
+  },
+  "bleach": {
+    "slug": "bleach",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Bleach"
+  },
+  "hxh": {
+    "slug": "hunter-x-hunter",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Hunter x Hunter"
+  },
+  "mob": {
+    "slug": "mob-psycho-100",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Mob Psycho 100"
+  },
+  "rezero": {
+    "slug": "rezero",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Re:ZERO"
+  },
+  "sao": {
+    "slug": "sword-art-online",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Sword Art Online"
+  },
+  "blackclover": {
+    "slug": "black-clover",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Black Clover"
+  },
+  "haikyuu": {
+    "slug": "haikyu",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "HAIKYU!!"
+  },
+  "bluelock": {
+    "slug": "blue-lock",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "BLUE LOCK"
+  },
+  "oshi": {
+    "slug": "oshi-no-ko",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "OSHI NO KO"
+  },
+  "dandadan": {
+    "slug": "dan-da-dan",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "DAN DA DAN"
+  },
+  "tower": {
+    "slug": "tower-of-god",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Tower of God"
+  },
+  "goh": {
+    "slug": "the-god-of-high-school",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "The God of High School"
+  },
+  "jjk0": {
+    "slug": "jujutsu-kaisen",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Jujutsu Kaisen 0"
+  },
+  "mononoke": {
+    "slug": "mononoke",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Princess Mononoke"
+  },
+  "demonMovie": {
+    "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+    "source": "search",
+    "verified": true,
+    "titleAtHarvest": "Demon Slayer: Mugen Train"
+  }
+}
