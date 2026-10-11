@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:50:07.838Z",
+  "generatedAt": "2026-10-11T07:52:49.331Z",
   "titles": [
     {
       "key": "aot",
@@ -701,6 +701,13 @@
   ],
   "saoMovie": [
     {
+      "id": "413594",
+      "url": "https://nxsha.space/embed/movie/413594?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Sword Art Online the Movie: Ordinal Scale",
+      "ok": true
+    },
+    {
       "id": "392535",
       "url": "https://nxsha.space/embed/movie/392535?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
@@ -818,7 +825,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13638,
+      "bytes": 13552,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -828,15 +835,15 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 87953,
+      "bytes": 89228,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
-        "https://web.nxsha.app/movie/1441228",
-        "https://web.nxsha.app/movie/1441228",
         "https://www.youtube.com/watch?v=lqlYx4MdsAY",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\",
         "https://web.nxsha.app/movie/1441228\\",
         "https://web.nxsha.app/movie/1441228\\",
-        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\"
+        "https://web.nxsha.app/movie/1441228",
+        "https://web.nxsha.app/movie/1441228"
       ],
       "ordinals": [],
       "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href="
@@ -898,6 +905,8 @@
     "titles": 17,
     "ok": 17,
     "bad": [],
-    "saoMovieMatch": []
+    "saoMovieMatch": [
+      "413594"
+    ]
   }
 }
