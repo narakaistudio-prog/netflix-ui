@@ -132,6 +132,9 @@ test('fullscreen button targets the video stage', () => {
     expect(html).toContain('videoStage.requestFullscreen');
     expect(html).toContain('.video-stage:fullscreen');
     expect(html).toContain('Fullscreen is blocked by this browser');
+    expect(html).toContain('fsMask');
+    expect(html).toContain('fullscreenchange');
+    expect(html).toContain('transformOrigin');
 });
 
 test('player lazy-loads behind a poster + play button', () => {
