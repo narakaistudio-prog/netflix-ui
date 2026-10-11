@@ -108,19 +108,17 @@ test('drive tab covers the pop-out button', () => {
     expect(html).toContain('setHidden(drivePopCover,i!==1)');
 });
 
-test('server 1 hides below-video junk without fullscreen', () => {
+test('server 1 restores original player behavior (no crop)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // No page scrolling inside the frame + 16:9 viewport on Server 1.
-    expect(html).toContain('scrolling="no"');
+    // Server 1: original page (scroll restored, no crop/aspect forcing); Server 2 stays locked down.
+    expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
-    expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
-    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
-    // No auto-fullscreen on inject (manual fullscreen button still works).
+    expect(html).toContain("removeAttribute('scrolling')");
+    expect(html).not.toContain('s16x9');
+    expect(html).not.toContain('s1Crop');
+    // No auto-fullscreen on inject.
     expect(html).not.toContain("vst=byId('videoStage')");
     expect(html).toContain('ex.call(document)');
-    expect(html).toContain('id="s1Crop"');
-    expect(html).toContain('#s1Crop{position:absolute;left:0;right:0;bottom:0;height:3%');
-    expect(html).toContain("setHidden(s1Crop,i!==0)");
     expect(html).toContain('var lt=loadToken');
 });
 
