@@ -366,9 +366,20 @@ async function harvestShow({ key, title, kind, args, slugs, postIndex }) {
     const cands = [];
     if (args.pins[key]) cands.push({ slug: args.pins[key], source: 'cli-pin' });
     if (slugs[key] && slugs[key].slug) cands.push({ slug: slugs[key].slug, source: 'pin' });
-    if (postIndex && Array.isArray(postIndex.posts)) {
-        for (const r of rankPosts(postIndex.posts, titles)) {
+    if (postIndex) {
+        const pool = [...(postIndex.posts || []), ...(postIndex.pages || [])];
+        for (const r of rankPosts(pool, titles)) {
             cands.push({ slug: r.slug, source: 'index', postTitle: r.postTitle });
+        }
+        // Sitemap URLs have no title: use the slug text for the match instead.
+        const seenSlugs = new Set(cands.map((c) => c.slug));
+        for (const url of postIndex.sitemap || []) {
+            const slug = (url.replace(/\/$/, '').split('/').pop() || '').trim();
+            if (!slug || seenSlugs.has(slug)) continue;
+            const m = matchTitle(slug.replace(/-/g, ' '), titles, { strict: kind === 'movie' });
+            if (!m.ok) continue;
+            seenSlugs.add(slug);
+            cands.push({ slug, source: 'sitemap' });
         }
     }
     const wpPosts = [];

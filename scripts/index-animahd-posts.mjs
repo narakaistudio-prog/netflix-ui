@@ -23,6 +23,18 @@ const UA =
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+async function fetchText(url) {
+    const ctl = new AbortController();
+    const to = setTimeout(() => ctl.abort(), 20000);
+    try {
+        const res = await fetch(url, { signal: ctl.signal, headers: { 'User-Agent': UA, Accept: 'text/xml,*/*' } });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.text();
+    } finally {
+        clearTimeout(to);
+    }
+}
+
 async function fetchJson(url) {
     const ctl = new AbortController();
     const to = setTimeout(() => ctl.abort(), 20000);
@@ -64,8 +76,38 @@ async function main() {
         if (data.length < 100 || page >= totalPages) break;
         await sleep(200);
     }
-    writeFileSync(OUT, `${JSON.stringify({ generatedAt: new Date().toISOString(), base, count: posts.length, posts }, null, 2)}\n`);
-    console.log(`wrote ${OUT} (${posts.length} posts)`);
+    // Also index pages + sitemap URLs: some titles only show up there.
+    const pages = [];
+    try {
+        for (let page = 1; page <= 10; page += 1) {
+            const { json } = await fetchJson(`${base}/wp-json/wp/v2/pages?per_page=100&page=${page}&_fields=id,slug,title,link`);
+            if (!Array.isArray(json) || !json.length) break;
+            for (const p of json) if (p && p.slug) pages.push({ id: p.id, slug: p.slug, title: (p.title && p.title.rendered) || '' });
+            if (json.length < 100) break;
+            await sleep(200);
+        }
+    } catch (e) {
+        console.log(`pages index skipped: ${(e && e.message) || e}`);
+    }
+    const sitemap = [];
+    for (const path of ['/wp-sitemap.xml', '/sitemap_index.xml', '/sitemap.xml']) {
+        try {
+            const xml = await fetchText(`${base}${path}`);
+            const urls = [...String(xml).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+            if (urls.length) {
+                sitemap.push(...urls);
+                console.log(`sitemap ${path}: ${urls.length} urls`);
+                if (sitemap.length > 20000) break;
+            }
+        } catch {
+            /* sitemap optional */
+        }
+    }
+    writeFileSync(
+        OUT,
+        `${JSON.stringify({ generatedAt: new Date().toISOString(), base, count: posts.length, posts, pages, sitemap }, null, 2)}\n`,
+    );
+    console.log(`wrote ${OUT} (${posts.length} posts, ${pages.length} pages, ${sitemap.length} sitemap urls)`);
 }
 
 main().catch((e) => {
