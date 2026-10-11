@@ -147,9 +147,45 @@ export function extractSeasonInfo(html) {
     return { seasonNumbers: seasons.slice(0, 20), epPairs, totalEpisodes: total ? Number.parseInt(total[1], 10) : null };
 }
 
+/** TMDB's own site is a keyless way to turn a title into candidate ids. */
+export function extractTmdbCandidates(html) {
+    const out = new Map();
+    for (const m of String(html).matchAll(/href="\/(movie|tv)\/(\d+)(?:-([a-z0-9-]+))?"/g)) {
+        const id = m[2];
+        if (out.has(id)) continue;
+        out.set(id, { id, kind: m[1], slug: m[3] || '' });
+        if (out.size >= 12) break;
+    }
+    return [...out.values()];
+}
+
+async function tmdbSearch(title, report) {
+    const rows = [];
+    for (const url of [
+        `https://www.themoviedb.org/search?query=${encodeURIComponent(title)}`,
+        `https://www.themoviedb.org/search/movie?query=${encodeURIComponent(title)}`,
+    ]) {
+        let row = { url };
+        try {
+            const { status, text } = await get(url);
+            row = { ...row, status, bytes: text.length, candidates: extractTmdbCandidates(text) };
+        } catch (e) {
+            row.error = String((e && e.message) || e);
+        }
+        rows.push(row);
+        console.log(`tmdb search ${row.status ?? 'ERR'} ${row.bytes ?? ''}B candidates=${(row.candidates || []).length}`);
+        await sleep(150);
+    }
+    report.tmdbSearch = rows;
+    return rows.flatMap((r) => r.candidates || []);
+}
+
 async function huntSaoMovie(plan, report) {
     report.saoMovie = [];
-    for (const cand of plan.saoMovieCandidates || []) {
+    const fromTmdb = await tmdbSearch('Sword Art Online Ordinal Scale', report).catch(() => []);
+    const extra = fromTmdb.filter((c) => c.kind === 'movie').map((c) => c.id);
+    const all = [...new Set([...(plan.saoMovieCandidates || []), ...extra])];
+    for (const cand of all) {
         const url = `https://nxsha.space/embed/movie/${cand}?${PARAMS}`;
         let row = { id: cand, url };
         try {
