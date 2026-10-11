@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { EXIT_CHIP_HEIGHT, exitChipPosition } from '../components/Crunchyroll/exitChip';
 
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
@@ -215,6 +216,47 @@ test('demo page toast stays fully hidden until triggered', () => {
     );
     // Toast feature itself stays wired up.
     expect(html).toContain('showToast');
+});
+
+test('the Netflix exit chip anchors to the page\'s Request nav item', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // The page exposes the nav item the chip measures.
+    expect(html).toContain('data-scroll="requestAnime"');
+    expect(html.indexOf('data-scroll="requestAnime"')).toBeGreaterThan(html.indexOf('data-scroll="myList"'));
+
+    const view = readFileSync(
+        join(ROOT, 'components', 'Crunchyroll', 'CrunchyrollView.web.tsx'),
+        'utf8',
+    );
+    // The chip follows that item instead of sitting in the corner.
+    expect(view).toContain("querySelector('[data-scroll=\"requestAnime\"]')");
+    expect(view).toContain("from './exitChip'");
+    expect(view).toContain('exitChipPosition');
+    expect(view).toContain('getBoundingClientRect');
+    expect(view).toContain("window.addEventListener('resize', measure)");
+    // On narrow layouts the chip falls back to the corner instead of going off-screen.
+    expect(view).toContain('EXIT_CHIP_FALLBACK_SPAN');
+    expect(view).toContain('setExitPos(null)');
+    // Still the only app-level way back (TV remote focus + a11y label).
+    expect(view).toContain("tvRow: 'crunchyroll-top'");
+    expect(view).toContain('accessibilityLabel="Back to Netflix"');
+    // The page has no second exit entry.
+    expect(html).not.toContain('nav-exit');
+});
+
+test('exit chip placement is centred right of the nav item', () => {
+    // frame at the app origin, nav item 520..600px wide row at y=0..60
+    const pos = exitChipPosition(
+        { left: 0, right: 0, top: 0, height: 0 },
+        { left: 0, right: 600, top: 0, height: 60 },
+    );
+    expect(pos).toEqual({ left: 612, top: 13 });
+    expect(EXIT_CHIP_HEIGHT).toBe(34);
+    // An iframe that does not start at the viewport origin shifts the chip too.
+    expect(exitChipPosition({ left: 8, right: 0, top: 4, height: 0 }, { left: 0, right: 600, top: 0, height: 60 })).toEqual({
+        left: 620,
+        top: 17,
+    });
 });
 
 test('demo page is Crunchyroll-branded and self-contained', () => {

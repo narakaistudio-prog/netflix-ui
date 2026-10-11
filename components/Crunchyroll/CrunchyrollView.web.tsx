@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { EXIT_CHIP_HEIGHT, exitChipPosition } from './exitChip';
+
+/** Rough chip width + gap: used only to detect an off-screen placement. */
+const EXIT_CHIP_FALLBACK_SPAN = 150;
 
 /**
  * Static URL of the self-contained Crunchyroll OTT demo page.
@@ -18,11 +22,54 @@ export const CRUNCHYROLL_HTML_URL = '/assets/crunchyroll/crunchyroll.html';
  * Same-origin, scripts enabled, no sandbox — the demo page needs JS +
  * localStorage (My List / continue-watching state). The Netflix chrome
  * (WebNavBar) hides itself on /crunchyroll so it genuinely feels like
- * Crunchyroll opened; the floating pill is the way back.
+ * Crunchyroll opened; the exit chip is the way back.
+ *
+ * The chip sits *inside* the page's own nav row, right after "Request" —
+ * mirroring the Crunchyroll entry that sits beside My List in the app's
+ * navbar. The iframe is same-origin, so the page's Request button is measured
+ * and the chip follows it (and follows resizes).
  */
 export function CrunchyrollView(): React.JSX.Element {
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
+    const frameRef = useRef<any>(null);
+    const [exitPos, setExitPos] = useState<{ left: number; top: number } | null>(null);
+
+    // Place the exit chip right after the demo page's "Request" nav item.
+    // Falls back to the old top-left corner whenever the page is not readable.
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+        const measure = () => {
+            const frame = frameRef.current as HTMLIFrameElement | null;
+            try {
+                const doc = frame && frame.contentDocument;
+                const anchor = doc && (doc.querySelector('[data-scroll="requestAnime"]') as HTMLElement | null);
+                if (!frame || !anchor) return;
+                const frameRect = frame.getBoundingClientRect();
+                const navRect = anchor.getBoundingClientRect();
+                // Small screens can push "Request" past the right edge; the chip
+                // must stay reachable, so keep the corner fallback then.
+                if (frameRect.left + navRect.right + EXIT_CHIP_FALLBACK_SPAN > frameRect.right) {
+                    setExitPos(null);
+                    return;
+                }
+                setExitPos(exitChipPosition(frameRect, navRect));
+            } catch {
+                // Cross-origin or not ready yet: keep the default corner.
+            }
+        };
+        measure();
+        const timers = [120, 480, 1200].map((ms) => window.setTimeout(measure, ms));
+        window.addEventListener('resize', measure);
+        const fonts = (document as any).fonts;
+        if (fonts && fonts.ready && typeof fonts.ready.then === 'function') {
+            fonts.ready.then(measure).catch(() => {});
+        }
+        return () => {
+            timers.forEach((id) => window.clearTimeout(id));
+            window.removeEventListener('resize', measure);
+        };
+    }, [loaded]);
 
     // Immersion: the browser tab itself reads "Crunchyroll" while mounted.
     useEffect(() => {
@@ -37,6 +84,7 @@ export function CrunchyrollView(): React.JSX.Element {
     return (
         <View style={styles.container}>
             {React.createElement('iframe', {
+                ref: frameRef,
                 src: CRUNCHYROLL_HTML_URL,
                 title: 'Crunchyroll',
                 onLoad: () => setLoaded(true),
@@ -57,7 +105,7 @@ export function CrunchyrollView(): React.JSX.Element {
                 </View>
             )}
 
-            {/* Floating exit back to Netflix */}
+            {/* Exit chip: sits in the page's nav row, right after "Request" */}
             <Pressable
                 onPress={() => router.back()}
                 tabIndex={0}
@@ -72,6 +120,7 @@ export function CrunchyrollView(): React.JSX.Element {
                 } as any)}
                 style={({ hovered }: any) => [
                     styles.backPill,
+                    exitPos,
                     hovered && styles.backPillHover,
                 ]}
             >
@@ -105,8 +154,10 @@ const styles = StyleSheet.create({
     },
     backPill: {
         position: 'absolute',
+        // Default spot until the Request item has been measured.
         top: 14,
         left: 14,
+        height: EXIT_CHIP_HEIGHT,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 7,
