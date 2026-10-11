@@ -135,7 +135,9 @@ test('server 1 fits original player in a capped viewport, no blur cover', () => 
     expect(html).toContain('fsExitWatch');
     expect(html).toContain('fsExitArmed');
     expect(html).not.toContain('<aside class="up-next"');
-    // No auto-fullscreen on inject.
+    // Fullscreen rides the play gesture itself (no separate control needed)...
+    expect(html).toContain("setHidden(byId('serverFs'),true);enterFs();stageInjected=true");
+    // ...and the old inject-time variant is gone for good.
     expect(html).not.toContain("vst=byId('videoStage')");
     expect(html).toContain('ex.call(document)');
     expect(html).toContain('var lt=loadToken');
@@ -275,17 +277,19 @@ test('wordmark + fullscreen buttons post the right messages to the shell', async
     dom.window.close();
 }, 30000);
 
-test('fullscreen works: page asks, shell expands (sandbox-safe)', () => {
+test('fullscreen works: the stage expands with the play gesture (sandbox-safe)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The page offers its own fullscreen control next to the server tabs.
-    expect(html).toContain('id="serverFs"');
-    expect(html).toContain('⛶ Fullscreen');
-    // It tries the real API on the stage first...
+    // Automatic fullscreen: pressing play expands the stage, so no separate
+    // fullscreen control is needed.
+    expect(html).toContain('function enterFs()');
     expect(html).toContain('el.requestFullscreen||el.webkitRequestFullscreen');
-    // ...and falls back to the shell when the sandbox refuses.
-    expect(html).toContain("postMessage({type:'crunchyroll:fullscreen'},'*')");
-    // Fullscreen must actually fill the frame (no letterbox padding).
     expect(html).toContain('#videoStage:fullscreen{padding:0!important;height:100%!important;');
+    // The tiny fallback button exists but stays out of the way: hidden unless
+    // the browser genuinely cannot do fullscreen.
+    expect(html).toContain('id="serverFs" title="Watch this episode fullscreen" hidden');
+    expect(html).toContain('function fsFallback()');
+    // ...and falls back to the shell when the page cannot do it itself.
+    expect(html).toContain("postMessage({type:'crunchyroll:fullscreen'},'*')");
 
     const view = readFileSync(
         join(ROOT, 'components', 'Crunchyroll', 'CrunchyrollView.web.tsx'),

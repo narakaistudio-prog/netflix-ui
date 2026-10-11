@@ -87,6 +87,51 @@ test('nxsha movie title: movie embed URL, no season/episode path', async () => {
     dom.window.close();
 });
 
+test('starting an episode expands the stage by itself (no separate control)', async () => {
+    const dom = boot();
+    await wait(200);
+    const win = dom.window as unknown as Window & { Element: typeof Element };
+    const fullscreened: string[] = [];
+    // jsdom has no Fullscreen API — mimic a browser that supports it.
+    (win.Element.prototype as unknown as { requestFullscreen: () => Promise<void> }).requestFullscreen = function (
+        this: Element,
+    ) {
+        fullscreened.push(this.id || this.tagName);
+        return Promise.resolve();
+    };
+    await play(dom.window, 'solo');
+    expect(fullscreened).toEqual(['videoStage']);
+    expect(dom.window.document.getElementById('serverFs')!.hasAttribute('hidden')).toBe(true);
+    dom.window.close();
+});
+
+test('leaving fullscreen leaves a quiet way back in (fallback button)', async () => {
+    const dom = boot();
+    await wait(200);
+    const win = dom.window as unknown as Window & { Element: typeof Element };
+    (win.Element.prototype as unknown as { requestFullscreen: () => Promise<void> }).requestFullscreen =
+        function () {
+            return Promise.resolve();
+        };
+    await play(dom.window, 'solo');
+    // Auto-fullscreen succeeded, so nothing extra is on screen...
+    expect(dom.window.document.getElementById('serverFs')!.hasAttribute('hidden')).toBe(true);
+    // ...until the viewer exits fullscreen.
+    dom.window.document.dispatchEvent(new dom.window.Event('fullscreenchange'));
+    expect(dom.window.document.getElementById('serverFs')!.hasAttribute('hidden')).toBe(false);
+    dom.window.close();
+});
+
+test('when fullscreen is unavailable, the small fallback button shows up', async () => {
+    const dom = boot();
+    await wait(200);
+    await play(dom.window, 'solo');
+    const button = dom.window.document.getElementById('serverFs')!;
+    expect(button.hasAttribute('hidden')).toBe(false);
+    expect(button.textContent).toContain('Fullscreen');
+    dom.window.close();
+});
+
 test('animahd title keeps Server 1 + Server 2 and hides the fallback pill', async () => {
     const dom = boot();
     await wait(200);

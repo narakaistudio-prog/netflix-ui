@@ -620,7 +620,7 @@
           <button class="server-pill" data-server="1" title="Server 2 — drive.google.com"><span class="dot"></span>Server 2</button>
           <button class="server-pill" data-server="2" title="Server 3 (Nxsha) — nxsha.space" hidden><span class="dot"></span>Server 3</button>
                     <span class="server-name" id="serverName">Server 1 · animahd.com</span>
-          <button class="server-ghost" id="serverFs" title="Watch this episode fullscreen">⛶ Fullscreen</button>
+          <button class="server-ghost" id="serverFs" title="Watch this episode fullscreen" hidden>⛶ Fullscreen</button>
           <button class="server-ghost" id="serverOpen" title="Open active server in new tab">Open in new tab ↗</button>
           <button class="server-ghost" id="serverHelp" title="Server not playing?">⚠ Not playing?</button>
         </div>
@@ -838,14 +838,31 @@
       function loadServer(i){if(i!==2&&!serverAvailable(i)){var alt=serverAvailable(2)?2:nextServer(i);if(alt>=0&&alt!==i)i=alt}disarmWatchdog();activeServer=i;setActiveServer(i);syncPlayerHeading();var s=SERVERS[i];if(!s||!serverFrame)return;if(!stageInjected){showStagePoster(i);return}injectServer(i)}
       function showStagePoster(i){var s=SERVERS[i];if(!serverUrl(i)){stageInjected=true;injectServer(i);return}var st=playState,show=shows[st.key];if(stagePosterImg){stagePosterImg.src=(show&&show.img)||''}if(stagePosterText){stagePosterText.textContent=epText()+(s?' — '+s.name:'')}try{serverFrame.src='about:blank'}catch(e){}setHidden(drivePopCover,true);setHidden(frameLoader,true);setHidden(serverBlocked,true);setHidden(stagePoster,false)}
       function injectServer(i){var s=SERVERS[i];setHidden(stagePoster,true);var url=serverUrl(i);if(!url){noticeTitle.innerHTML='<span>'+s.name+'</span>';noticeText.innerHTML=escapeHtml(epText())+' has no source available yet.<br>Pick another episode or title.';noticeAction='none';setHidden(noticeBtn,true);setHidden(noticeAltBtn,true);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(drivePopCover,true);setHidden(serverBlocked,false);return}setHidden(serverBlocked,true);setHidden(frameLoader,false);setHidden(drivePopCover,i!==1);setClass(videoStage,'s1fit',i===0);try{serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}catch(e){}try{serverFrame.src='about:blank'}catch(e){}var f=serverFrame,t=++loadToken;if(loadTimer)clearTimeout(loadTimer);setTimeout(function(){if(t!==loadToken)return;f.src=url;loadTimer=setTimeout(function(){if(t===loadToken)onServerTimeout()},12000)},60)}
-      if(stagePoster){stagePoster.addEventListener('click',function(){if(stageInjected)return;stageInjected=true;injectServer(activeServer)},false)}
+      if(stagePoster){stagePoster.addEventListener('click',function(){if(stageInjected)return;setHidden(byId('serverFs'),true);enterFs();stageInjected=true;injectServer(activeServer)},false)}
       setActiveServer(0);
       serverPills.forEach(function(pill){pill.addEventListener('click',function(){var i=parseInt(attr(pill,'data-server'),10)||0;loadServer(i);var s=SERVERS[i];if(s){showToast(s.name+' — loading')}},false)});
       byId('serverOpen').addEventListener('click',function(){var s=SERVERS[activeServer],u=serverUrl(activeServer);if(!s||!u){showToast('No link found for this episode');return}showToast(s.name+' — opened in new tab');try{window.open(u,'_blank','noopener')}catch(e){}},false);
       byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 — loading')}else if(a==='server3'){loadServer(2);showToast('Server 3 (Nxsha) — loading')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Opened in new tab')}}},false);
       byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else if(a==='server3')loadServer(2);else loadServer(activeServer)},false);
       byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
+      function fsOn(){return !!(document.fullscreenElement||document.webkitFullscreenElement)}
       function askParentFullscreen(){try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'crunchyroll:fullscreen'},'*')}}catch(e){}}
+      function fsFallback(){var b=byId('serverFs');if(b)setHidden(b,false)}
+      // Fullscreen technique: the stage goes fullscreen together with the play
+      // gesture, so no separate fullscreen control is ever needed. The player
+      // frames stay sandboxed (popup-free), and if the browser refuses we fall
+      // back to the shell and finally to the small button.
+      function enterFs(){
+        if(fsOn())return true;
+        var el=videoStage;if(!el)return false;
+        var req=el.requestFullscreen||el.webkitRequestFullscreen;
+        if(!req){askParentFullscreen();fsFallback();return false}
+        try{
+          var p=req.call(el);
+          if(p&&p.catch){p.catch(function(){askParentFullscreen();fsFallback()})}
+          return true;
+        }catch(e){askParentFullscreen();fsFallback();return false}
+      }
       var fsBtn=byId('serverFs');
       if(fsBtn){fsBtn.addEventListener('click',function(){
         var isFs=!!(document.fullscreenElement||document.webkitFullscreenElement);
@@ -862,6 +879,11 @@
       var fsExitArmed=false,fsExitTimer=null,fsWasFull=false;
       document.addEventListener('fullscreenchange',fsExitWatch,false);
       document.addEventListener('webkitfullscreenchange',fsExitWatch,false);
+      document.addEventListener('fullscreenchange',fsButtonWatch,false);
+      document.addEventListener('webkitfullscreenchange',fsButtonWatch,false);
+      // While an episode is up: no control needed in fullscreen, and a quiet way
+      // back in once the viewer drops out of it (Esc).
+      function fsButtonWatch(){var b=byId('serverFs');if(!b)return;if(fsOn()){setHidden(b,true)}else if(stageInjected){setHidden(b,false)}}
       function fsExitWatch(){var fsNow=!!(document.fullscreenElement||document.webkitFullscreenElement);var was=fsWasFull;fsWasFull=fsNow;if(was&&!fsNow&&activeServer===0){fsExitArmed=true;if(fsExitTimer)clearTimeout(fsExitTimer);showToast('Stuck on white? Tap here to reload',8000);fsExitTimer=setTimeout(function(){fsExitArmed=false},8000)}}
       toast.addEventListener('click',function(){if(!fsExitArmed)return;fsExitArmed=false;if(fsExitTimer){clearTimeout(fsExitTimer);fsExitTimer=null}loadServer(activeServer);showToast('Reloading server')},false);
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}
