@@ -234,6 +234,15 @@ function parsePlayResponse(raw, preferredLang = 'hi') {
   };
 }
 
+function selectBestItem(results, title, preferredLang = 'hi') {
+  if (!Array.isArray(results) || !results.length) return null;
+  if (preferredLang === 'hi' || preferredLang === 'hindi') {
+    const hindiMatch = results.find((r) => r.isHindi);
+    if (hindiMatch) return hindiMatch;
+  }
+  return results[0];
+}
+
 module.exports = {
   MOVIEBOX_DEFAULT_HOSTS,
   getClientToken,
@@ -242,4 +251,5 @@ module.exports = {
   hasHindi,
   parseSearchResults,
   parsePlayResponse,
+  selectBestItem,
 };

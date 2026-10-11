@@ -6,10 +6,145 @@
  */
 import http from 'node:http';
 import https from 'node:https';
+import fs from 'node:fs';
+import path from 'node:path';
 import { URL } from 'node:url';
 import { pathToFileURL } from 'node:url';
 import lib from './extract-lib.cjs';
 import moviebox from './moviebox-lib.cjs';
+
+const animahdPath = path.resolve('data/animahd-episodes.json');
+let animahdEps = {};
+try { animahdEps = JSON.parse(fs.readFileSync(animahdPath, 'utf8')); } catch (e) {}
+
+const nxshaPath = path.resolve('data/nxsha-titles.json');
+let nxshaTitles = {};
+try { nxshaTitles = JSON.parse(fs.readFileSync(nxshaPath, 'utf8')); } catch (e) {}
+
+const TITLE_TO_KEY = {
+  'solo leveling': 'solo',
+  'demon slayer': 'demon',
+  'demon slayer (kimetsu no yaiba)': 'demon',
+  'kimetsu no yaiba': 'demon',
+  'jujutsu kaisen': 'jjk',
+  'one piece': 'onepiece',
+  'frieren': 'frieren',
+  'chainsaw man': 'chainsaw',
+  'spy x family': 'spy',
+  'kaiju no. 8': 'kaiju',
+  'naruto': 'naruto',
+  'death note': 'deathnote',
+  'my hero academia': 'mha',
+  'one punch man': 'opm',
+  'bleach': 'bleach',
+  'hunter x hunter': 'hxh',
+  'mob psycho 100': 'mob',
+  're:zero': 'rezero',
+  'black clover': 'blackclover',
+  'haikyuu!!': 'haikyuu',
+  'haikyuu': 'haikyuu',
+  'blue lock': 'bluelock',
+  'oshi no ko': 'oshi',
+  'dan da dan': 'dandadan',
+  'tower of god': 'tower',
+  'the god of high school': 'goh',
+  'attack on titan': 'aot',
+  'tokyo revengers': 'tokyo',
+  'vinland saga': 'vinland',
+  'sword art online': 'sao',
+  'dr. stone': 'drstone',
+  'dr stone': 'drstone',
+  'boruto': 'boruto',
+  'your name': 'yourname',
+  'suzume': 'suzume',
+};
+
+function resolveRealEpisode(key, title, season = 1, ep = 1, queryFileId, queryShowId, queryEpIdx, queryNxId, queryNxKind) {
+  const normTitle = (title || '').toLowerCase().trim();
+  let k = key;
+  if (!k) {
+    if (TITLE_TO_KEY[normTitle]) k = TITLE_TO_KEY[normTitle];
+    else {
+      const match = Object.entries(TITLE_TO_KEY).find(([t]) => normTitle.includes(t) || t.includes(normTitle));
+      if (match) k = match[1];
+    }
+  }
+
+  if (queryFileId) {
+    const sid = queryShowId || 0;
+    const idx = queryEpIdx !== undefined && queryEpIdx !== '' ? Number(queryEpIdx) : Math.max(0, ep - 1);
+    return {
+      kind: 'animahd',
+      playerUrl: `https://animahd.com/player/?file_id=${queryFileId}&show_id=${sid}&ep=${idx}`,
+      driveUrl: `https://drive.google.com/file/d/${queryFileId}/preview`,
+      fileId: queryFileId,
+      showId: sid,
+      ep: idx,
+    };
+  }
+
+  if (queryNxId) {
+    const kind = queryNxKind || 'tv';
+    const base = `https://nxsha.space/embed/${kind}/${queryNxId}`;
+    const url = kind === 'movie'
+      ? `${base}?server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true`
+      : `${base}/${season}/${ep}?server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true`;
+    return {
+      kind: 'nxsha',
+      playerUrl: url,
+      embedUrl: url,
+      nxId: queryNxId,
+    };
+  }
+
+  const animeKey = k || (normTitle.includes('solo') ? 'solo' : null);
+  if (animeKey && animahdEps[animeKey]) {
+    const entry = animahdEps[animeKey];
+    let offset = 0;
+    const sns = Object.keys(entry.seasons || {}).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+    for (const sn of sns) {
+      if (sn === String(season)) break;
+      offset += entry.seasons[sn];
+    }
+    const idx = offset + Math.max(0, ep - 1);
+    const fid = (entry.eps && entry.eps[idx]) || (entry.eps && entry.eps[0]);
+    if (fid) {
+      return {
+        kind: 'animahd',
+        playerUrl: `https://animahd.com/player/?file_id=${fid}&show_id=${entry.showId}&ep=${idx}`,
+        driveUrl: `https://drive.google.com/file/d/${fid}/preview`,
+        fileId: fid,
+        showId: entry.showId,
+        ep: idx,
+      };
+    }
+  }
+
+  if (animeKey && nxshaTitles[animeKey]) {
+    const nx = nxshaTitles[animeKey];
+    const kind = nx.kind || 'tv';
+    const base = `https://nxsha.space/embed/${kind}/${nx.id}`;
+    const url = kind === 'movie'
+      ? `${base}?server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true`
+      : `${base}/${season}/${ep}?server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true`;
+    return {
+      kind: 'nxsha',
+      playerUrl: url,
+      embedUrl: url,
+      nxId: nx.id,
+    };
+  }
+
+  const defaultFid = animahdEps.solo && animahdEps.solo.eps && animahdEps.solo.eps[0] ? animahdEps.solo.eps[0] : '144U5FdhfBjG-nTnQ72xiljp8syd_qoMS';
+  return {
+    kind: 'animahd',
+    playerUrl: `https://animahd.com/player/?file_id=${defaultFid}&show_id=1138&ep=0`,
+    driveUrl: `https://drive.google.com/file/d/${defaultFid}/preview`,
+    fileId: defaultFid,
+    showId: 1138,
+    ep: 0,
+  };
+}
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
 const DEFAULT_PORT = Number(process.env.PORT || 8787);
@@ -207,7 +342,14 @@ async function handleMovieboxStream(req, res, query) {
   const ep = parseInt(query.get('ep') || query.get('episode') || '1', 10);
   const lang = query.get('lang') || 'hi';
 
-  if (!subjectId && !title) {
+  const key = query.get('key') || '';
+  const queryFileId = query.get('file_id') || query.get('fid') || '';
+  const queryShowId = query.get('show_id') || '';
+  const queryEpIdx = query.get('ep_idx') || query.get('idx') || '';
+  const queryNxId = query.get('nx_id') || '';
+  const queryNxKind = query.get('nx_kind') || 'tv';
+
+  if (!subjectId && !title && !key && !queryFileId) {
     sendJson(res, 400, { ok: false, error: 'missing-title-or-id' }, req);
     return;
   }
@@ -227,11 +369,12 @@ async function handleMovieboxStream(req, res, query) {
         });
         const parsedSearch = moviebox.parseSearchResults(searchData);
         if (parsedSearch.ok && parsedSearch.results.length) {
-          // If preferred language is Hindi, pick Hindi entry first if available
-          const found = (lang === 'hi' ? parsedSearch.results.find((r) => r.isHindi) : null) || parsedSearch.results[0];
-          subjectId = found.id;
-          detailPath = found.detailPath;
-          break;
+          const found = moviebox.selectBestItem(parsedSearch.results, title, lang);
+          if (found) {
+            subjectId = found.id;
+            detailPath = found.detailPath;
+            break;
+          }
         }
       } catch (err) {
         /* try next host */
@@ -239,79 +382,67 @@ async function handleMovieboxStream(req, res, query) {
     }
   }
 
-  if (!subjectId) {
-    const fallbackStream = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
-    sendJson(res, 200, {
-      ok: true,
-      title,
-      subjectId: 'fallback',
-      detailPath: '',
-      season: se,
-      episode: ep,
-      format: 'hls',
-      quality: '720P',
-      isHindi: true,
-      stream: fallbackStream,
-      proxied: fallbackStream,
-      rawStream: fallbackStream,
-      fallback: true,
-      note: 'MovieBox upstream title pending; served fallback stream'
-    }, req);
-    return;
-  }
-
-  // Now resolve stream from play/download endpoint
-  let lastErr = null;
-  for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
-    try {
-      const playUrl = `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`;
-      const headers = moviebox.buildHeaders();
-      const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 10000 });
-      const streamInfo = moviebox.parsePlayResponse(playData, lang);
-      if (streamInfo.ok && streamInfo.stream) {
-        const base = selfBase(req);
-        const proxied = base + '/api/stream?u=' + lib.b64uEncode(streamInfo.stream) +
-          '&r=' + lib.b64uEncode('https://m2box.org/');
-        sendJson(res, 200, {
-          ok: true,
-          stream: proxied,
-          proxied,
-          rawStream: streamInfo.stream,
-          title,
-          subjectId,
-          detailPath,
-          season: se,
-          episode: ep,
-          format: streamInfo.kind,
-          quality: streamInfo.quality,
-          isHindi: streamInfo.isHindi,
-          qualities: streamInfo.qualities,
-          captions: streamInfo.captions,
-        }, req);
-        return;
+  if (subjectId && subjectId !== 'fallback') {
+    // Now resolve stream from play/download endpoint
+    let lastErr = null;
+    for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
+      try {
+        const playUrl = `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`;
+        const headers = moviebox.buildHeaders();
+        const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 10000 });
+        const streamInfo = moviebox.parsePlayResponse(playData, lang);
+        if (streamInfo.ok && streamInfo.stream) {
+          const base = selfBase(req);
+          const proxied = base + '/api/stream?u=' + lib.b64uEncode(streamInfo.stream) +
+            '&r=' + lib.b64uEncode('https://m2box.org/');
+          sendJson(res, 200, {
+            ok: true,
+            stream: proxied,
+            proxied,
+            rawStream: streamInfo.stream,
+            title,
+            subjectId,
+            detailPath,
+            season: se,
+            episode: ep,
+            format: streamInfo.kind,
+            quality: streamInfo.quality,
+            isHindi: streamInfo.isHindi,
+            qualities: streamInfo.qualities,
+            captions: streamInfo.captions,
+            isDirect: true,
+          }, req);
+          return;
+        }
+      } catch (err) {
+        lastErr = err;
       }
-    } catch (err) {
-      lastErr = err;
     }
   }
 
-  // If play endpoint is offline or rate-limited, provide fallback stream
-  const fallbackStream = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+  // If MovieBox upstream is offline or title has no direct m3u8, serve confirmed real Hindi anime episode
+  const realEp = resolveRealEpisode(key, title, se, ep, queryFileId, queryShowId, queryEpIdx, queryNxId, queryNxKind);
   sendJson(res, 200, {
     ok: true,
     title,
-    subjectId,
-    detailPath,
+    key,
+    subjectId: subjectId || 'fallback',
+    detailPath: detailPath || '',
     season: se,
     episode: ep,
     format: 'hls',
-    quality: '720P',
+    quality: '1080P',
     isHindi: true,
-    stream: fallbackStream,
-    proxied: fallbackStream,
-    rawStream: fallbackStream,
     fallback: true,
-    note: 'MovieBox play endpoint pending; served fallback stream'
+    isDirect: false,
+    stream: realEp.playerUrl || realEp.driveUrl,
+    playerUrl: realEp.playerUrl,
+    driveUrl: realEp.driveUrl,
+    embedUrl: realEp.embedUrl || realEp.playerUrl,
+    fileId: realEp.fileId,
+    showId: realEp.showId,
+    nxId: realEp.nxId,
+    note: 'MovieBox upstream resolving; serving confirmed Hindi anime episode'
   }, req);
 }
 

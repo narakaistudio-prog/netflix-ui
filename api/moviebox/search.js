@@ -55,12 +55,13 @@ module.exports = async (req, res) => {
   for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
     try {
       const targetUrl = `${host}/subject/search`;
+      const payload = moviebox.buildSearchPayload(q, page, perPage);
       const headers = moviebox.buildHeaders();
-      const body = JSON.stringify({ query: q, page, per_page: perPage });
+      headers['Content-Length'] = Buffer.byteLength(payload);
       const data = await fetchJson(targetUrl, {
         method: 'POST',
-        headers: { ...headers, 'Content-Type': 'application/json' },
-        body,
+        headers,
+        body: payload,
         timeoutMs: 5000,
       });
       const parsed = moviebox.parseSearchResults(data);
