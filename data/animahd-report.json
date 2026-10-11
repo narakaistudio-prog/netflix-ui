@@ -1,12 +1,17 @@
 {
-  "generatedAt": "2026-10-11T07:10:47.889Z",
+  "generatedAt": "2026-10-11T07:14:58.160Z",
   "base": "https://animahd.com",
   "shows": {
     "solo": {
       "status": "ok",
       "slug": "solo-leveling",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/solo-leveling-season-episodes-hindi-multi-audio/",
+      "pages": [
+        "solo-leveling",
+        "solo-leveling-season-episodes-hindi-multi-audio",
+        "solo"
+      ],
       "showId": 1138,
       "mixed": false,
       "eps": [
@@ -54,8 +59,14 @@
     "demon": {
       "status": "ok",
       "slug": "demon-slayer-kimetsu-no-yaiba",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-2/",
+      "pages": [
+        "demon-slayer-kimetsu-no-yaiba",
+        "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+        "demon-slayer-kimetsu-no-yaiba-2",
+        "demon-slayer"
+      ],
       "showId": 983,
       "mixed": false,
       "eps": [
@@ -102,8 +113,11 @@
     "jjk": {
       "status": "ok",
       "slug": "jujutsu-kaisen",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/jujutsu-kaisen/",
+      "pages": [
+        "jujutsu-kaisen"
+      ],
       "showId": 814,
       "mixed": false,
       "eps": [
@@ -173,11 +187,46 @@
     "onepiece": {
       "status": "ok",
       "slug": "one-piece",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/one-piece/",
-      "showId": 85,
-      "mixed": false,
+      "pages": [
+        "one-piece",
+        "one-piece-2"
+      ],
+      "showId": 358,
+      "mixed": true,
       "eps": [
+        "1SaJT7Mey304sFmpnuvhkQ9MzN7Rx265U",
+        "1msiVwY0kGer-teuVohWS4Hz1D9ONw9a9",
+        "1KVyJmJs7ZmHrcugy0o64S3-VZCLAxjD7",
+        "1QgKepuYXj_F20KFnXBVls2S8JzBHiugi",
+        "1c9ukIxefS63D6Sc7wINsWogVGHw3GVz7",
+        "1EMIPmdZRjIpK9w66O1ryl9Y2MoDav7fa",
+        "1UHGOJqM9FlvDAf14-Zw3VC8e2I5RDvb4",
+        "1S2qC3as7sLNdyZGHAGtKAQMJ5-53YIb5",
+        "1KRzCcqZi0qI6rx5nilCTPyxZavp-qpAO",
+        "12H1tZouOVLAmFZ_-uaM2sSsdkr0sJZFB",
+        "1UZNb906MR8-_uw4xxH75h3ojn80q1hIp",
+        "19tf-vwzc6NtLx0_NQrlSnLA14j_EWvs3",
+        "1shZx9KPmxlHPYoQfX6dEQox71CR1hMki",
+        "1iBSvBwhj-YN5F2w-EH6IEewVW9bC0YvO",
+        "1XVhl0qT5ERUSm9Nps3ScTDXxXTjSgDEQ",
+        "1XUl9HQ5UI9DH3eKtbkhV9clhjtDscDTV",
+        "1XRQWOXvRpL0Tj7a5dSSxhp_HN1XemQdB",
+        "1XJNd3YORX3-JKCBz7GD5w-ZcmR2rexHH",
+        "1kkctfLk7RALripOysBC3q3JM7TQsR-e_",
+        "1kn36sRpNhnw1DkX4rY0wEhzOiCMkhwQQ",
+        "1kxTZdF4EVYy_bX7AppuKL78Xj9tgA0CW",
+        "1-qFNtD8iLhet-MCynsSD_ryvnXsazf0l",
+        "1-zdqi1-oaQLza_bwg4GjjWkZiBvN7_HA",
+        "107umRu9sezPkA3yD0xDk-WtHkqSxhChq",
+        "1BIlLYksuQq_HSRaNnu3k5b43gvNu1La0",
+        "1B7fCtRNlMOpga71_a4RlixTTjsjfbFRS",
+        "1B6-ncw6ubaZ4UMYy91r7ZPm13dNnIxw4",
+        "1B0wrHuIk88fMUwZTxRvkb3HQFUiDh6en",
+        "1PRtpdfP0_ruW33XtvY8JY7AmqnLiKmrQ",
+        "1VC5dRtUFrWCwi_KeQUAA1KZw1R0SN0ca",
+        "1Bv1V3CBztFKhWaj22XBMlUH3GS1UgzIt",
         "1-GCWTzGuWtvr_mdd0CGh6ZoXbns5D32V",
         "1-wDFK-1KMcAcl8mJA9MFaQ809fIFbQB3",
         "13VZp_sOiAZ96QG_ti92NEQHfi7Sj99cs",
@@ -191,22 +240,28 @@
       ],
       "epContiguous": true,
       "siteSeasons": {
+        "1": 31,
         "20": 10
       },
       "labelSample": [
-        "S20E41(E932) One Piece",
+        "S01E001 One Piece Remastered",
         "S20E50(E941) One Piece"
       ],
       "seasons": {
+        "1": 31,
         "20": 10
       },
-      "seasonsSource": "existing"
+      "seasonsSource": "site"
     },
     "frieren": {
       "status": "ok",
       "slug": "frieren-beyond-journeys-end",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/frieren-beyond-journeys-end/",
+      "pages": [
+        "frieren-beyond-journeys-end",
+        "frieren"
+      ],
       "showId": 969,
       "mixed": false,
       "eps": [
@@ -255,8 +310,12 @@
     "chainsaw": {
       "status": "ok",
       "slug": "chainsaw-man",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/chainsaw-man/",
+      "pages": [
+        "chainsaw-man",
+        "chainsaw"
+      ],
       "showId": 606,
       "mixed": false,
       "eps": [
@@ -289,8 +348,12 @@
     "spy": {
       "status": "ok",
       "slug": "spy-x-family",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/spy-x-family/",
+      "pages": [
+        "spy-x-family",
+        "spy"
+      ],
       "showId": 1206,
       "mixed": false,
       "eps": [
@@ -365,8 +428,13 @@
     "kaiju": {
       "status": "ok",
       "slug": "kaiju-no-8",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/kaiju-no-8/",
+      "pages": [
+        "kaiju-no-8",
+        "kaiju-no",
+        "kaiju"
+      ],
       "showId": 664,
       "mixed": false,
       "eps": [
@@ -402,7 +470,7 @@
     },
     "aot": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "attack-on-titan",
         "attackontitan",
@@ -437,35 +505,17 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Attack%20on%20Titan",
-      "searchCandidates": [
-        {
-          "slug": "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life",
-          "score": 0.09090909090909091
-        },
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "naruto": {
       "status": "ok",
       "slug": "naruto-shippuden",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/naruto-shippuden/",
+      "pages": [
+        "naruto-shippuden",
+        "naruto"
+      ],
       "showId": 194,
       "mixed": false,
       "eps": [
@@ -502,10 +552,6 @@
         "10TB1VIJ8uvtLwDZ6UuryOZ-FqAu3Dw5S",
         "10YSyx1Zk7-mb1agNT_Fm7WxQEsZMx9R7",
         "1BdADJgS1ZwM_j5Psjio4TbNFJ3C_w_t1",
-        "1bPsuZVs81i1N_Ad4NNLcUyv2YDdmNvdi",
-        "1bsWiMWQBZmMMSfx3tIGJITtVzldvdESW",
-        "1BnVMBwiGoKJSrHP4UnNCSerthbRSHe20",
-        "1wgNCV3niDknmdz4N9-IdlyVPwmi5PPBG",
         "13DPw4WVyr_1TrH6-8VoaCgqHca0jwGYJ",
         "13G5sEdKzRDP7BLioLYzqk_LpXrGC6IOC",
         "1390bLTuAhZ5JJlLHHEx2Aq2lSAhHONI3",
@@ -526,7 +572,6 @@
         "1237ODpxh0q_p-_H8A2ZgByXgRFEARUrZ",
         "122quBzgqDjebGef75rOmTSnBmVoEOZ2_",
         "11zJG6dkdEIphr7alepBghCbeHMwYb0Lm",
-        "11tNuc9S7irzIEgJDHFIGCwuiUxMLW6eg",
         "1OKVUwxMros-8l4QhJNJkHC9yw6Qgddvr",
         "1XP7BA86_EFSA-9ZE2Q2tXH-tXlP2q0P1",
         "1zI4CTy9qXzxtNYDZXv_D3QYJ08GfsNMg",
@@ -628,6 +673,10 @@
         "1gTtNIk0pAaHZvjmuLzax_Q9UzvsNHcDo",
         "1LTaeAyHNsQgdc1paIbtepdSr5oPnhOtX",
         "1QDQcR-Ty-SpijSktPVEq94OJRdjYel3Z",
+        "1wgNCV3niDknmdz4N9-IdlyVPwmi5PPBG",
+        "1BnVMBwiGoKJSrHP4UnNCSerthbRSHe20",
+        "1bsWiMWQBZmMMSfx3tIGJITtVzldvdESW",
+        "1bPsuZVs81i1N_Ad4NNLcUyv2YDdmNvdi",
         "1Vzig9GNhFj7X9cOY9W9tpuGYwZKz8vi8",
         "1Zw74btmq2MRGYiMRp8bEf1OIJJNv7608",
         "1zQJNSY58pb2fe3SWn0CT13vVwtJmH7xw",
@@ -743,14 +792,14 @@
       ],
       "epContiguous": true,
       "siteSeasons": {
-        "1": 37,
+        "1": 32,
         "2": 21,
         "3": 18,
         "4": 17,
         "5": 24,
         "6": 31,
         "7": 8,
-        "8": 3,
+        "8": 7,
         "9": 21,
         "10": 25,
         "11": 21,
@@ -762,14 +811,14 @@
         "S14E320 Naruto Shippuden"
       ],
       "seasons": {
-        "1": 37,
+        "1": 32,
         "2": 21,
         "3": 18,
         "4": 17,
         "5": 24,
         "6": 31,
         "7": 8,
-        "8": 3,
+        "8": 7,
         "9": 21,
         "10": 25,
         "11": 21,
@@ -781,8 +830,12 @@
     "deathnote": {
       "status": "ok",
       "slug": "death-note",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/death-note/",
+      "pages": [
+        "death-note",
+        "death-note-relight-movie-hindi-dub-dual-audio"
+      ],
       "showId": 1053,
       "mixed": false,
       "eps": [
@@ -840,13 +893,42 @@
     "mha": {
       "status": "ok",
       "slug": "my-hero-academia",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/my-hero-academia-final-season/",
+      "pages": [
+        "my-hero-academia",
+        "my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio",
+        "my-hero-academia-final-season"
+      ],
       "showId": 97,
-      "mixed": false,
+      "mixed": true,
       "eps": [
+        "1Fr1gYe3OzGM7jvABYIKb1EVB4mcbBNKM",
+        "1iw6h-IHDR8ki0fCofhZcvHDDwQP9W4gH",
+        "1fKKRqbMgGCB_DRgcKHZli7wQZM2IXu8T",
+        "1sd53vCQPKWXKzu9gU86SKU1PJMlG6LH9",
+        "1ar1tJ9rFWtw63usUVNpDj0b9C5oK_Nsn",
+        "15PYTM_mlvVeHX-tcdmzA07-6h5uZFfm-",
+        "1Al-j7sFM9KKzQK0a2zw66sasLLNBRzlm",
+        "1znzuAn03zKr0A3ChroNcMjLEvol_c_QG",
+        "1iPrnwayzVKV-Q75alw3PMy6OJFkKlmmR",
+        "1a1fcVf3lFbaBVWWc-USQPVL58H-7Itl5",
+        "1bnNJaWWUInKyjXB24radu4u8d0cgD5Cl",
+        "1M6ue3_ZfFprMeA9RJd_lyV-kC_-SiZvj",
+        "1TT_Fa2pGsKmxgdPizhdhtddQCMiqp9Wi",
+        "1BRwGCNdktjuHSGQ7GY6694LIVi0dFME8",
+        "1his9F6fCex9_ttAS6FQixnK_cO9EPRm-",
+        "1Ceq3Cqz_YH4beHHHD-uGczr_c6DPQq6n",
+        "1hovxSJhjwAmx1utDs6flkCw1uvDXGnYO",
+        "1usI7HeHCdNEvzuv_8Ae0xbocsNcFuhw1",
+        "1_xDmKe5q-RIMq3roXDrFVBiXHwDq6xtW",
+        "1WoVgby_5Bfi3rcShgCDvuqOfyXTcbX4t",
+        "1ATqqC2daht1ZdDCu7DFMcfFtx8zJ4nhf",
+        "17-mDAuodOXtNzQ8G-ovUG9vFCArP0Hxl",
+        "1JXV4HLitqdHCfkiaFFIZhLC9MTlNK_DG",
+        "1D8juhpraj6Yip0MF7IqM2AItDRA9RetU",
+        "10gREuDwZB1XVPMoDU2PB3MsjmJOZNjN1",
         "1jV38-vb7zkLAlEL60pIqrqMtvEoi5r43",
-        "1-3xmHrgOE_ZsipuYSWTNGWfImOZtaJ_r",
         "1-48p2uJWGxQ3XxEW7am9k_R1KRlSmtEU",
         "1-4pGBbAybr2ooUzIbDk_wd0D14iXC7Jy",
         "1-9Mt5R0lcGmJsAPyVubv9eeqUnXdDcSI",
@@ -907,100 +989,67 @@
       ],
       "epContiguous": true,
       "siteSeasons": {
-        "6": 26,
+        "1": 13,
+        "2": 12,
+        "6": 25,
         "7": 21,
         "8": 12
       },
       "labelSample": [
-        "OVA My Hero Academia",
+        "S01E01 My Hero Academia Vigilantes",
         "OVA S08E12 My Hero Academia"
       ],
       "seasons": {
-        "6": 26,
+        "1": 13,
+        "2": 12,
+        "6": 25,
         "7": 21,
         "8": 12
       },
       "seasonsSource": "site"
     },
     "tokyo": {
-      "status": "ok",
-      "slug": "tokyo",
-      "source": "candidate",
-      "url": "https://animahd.com/tokyo-ghoul/",
-      "showId": 1376,
-      "mixed": false,
-      "eps": [
-        "1el4MQHhOhXww31P_56GNTeN2nBQUcSP7",
-        "1pijti85bJMCpH_vV4ldH83SU96Okg2CT",
-        "1wClp_tdDWFjJbwDw4um3TrwhIChqKfI0",
-        "1cQ2DdJq0hCarj2lrJSTeqaYH9Kd58JsJ",
-        "1DriVWg5gOkaypMqBt48ynsNPnovZRJQY",
-        "1qSeu17ILUKFE9nKH9xats68YQYPDjfBj",
-        "1Uc0IZThhUQtAVvmrqPvWryG8thwRIv5o",
-        "1QWkh99rIdVJEAYgwVKdHhu2dqaLiHAyd",
-        "1f8nh10510J1508jqv20YtdWvr3Vd3_6K",
-        "1pQkyXXOM-xreePTIEAQpqHuo6R9uCRxP",
-        "18e9yU4uBEEVQTf_MxLwZIyvMRamTT0FV",
-        "1UtAPRoCwxsOpqOoidy_GFmH9Afy3ndwZ",
-        "1lIAsZofZe2HtQsIS3Y6Cz-og6VWl3Y64",
-        "1tK9W3FD9Y7J4BI96qCknat176JjiohTB",
-        "1D7Om0klJVQC94Gv-JYlVvqiXb4F3U3RS",
-        "1CqNlpN5jGpzY-CGfJl-ddXxlp37ZV23w",
-        "1xL19--8GfLHyQ4yzhVrt1ng3ZQw5OiXL",
-        "1PcrtegiFr_5ubbm_EsmFDQODbHgb_oMA",
-        "1s6I9dy_VIX83dngtTVPZQ3gisaUETNm0",
-        "1GtAIMOdbjNTEqsVLlUUMdfoO2wALB9iw",
-        "1j19dpEXK1C2k1Kcof0H1CkQdW2YpHXeo",
-        "1GdrpCGO1GPz3cSFfeJrQBEMJh6lPPh17",
-        "1_SjmW3PhRojkC9JR6SeQoXzaK-89uVF3",
-        "1mT-efmVQOOaCIfL3BfLD7LIhF2AerMXT",
-        "1nX3yZVrn7P89gkju048F8iaiN-Tk_Ong",
-        "1hG7dPuD4LpLPxZ1vd0Zn0o-Ix9-zF11O",
-        "1M2uL5EDi8Zvzkk0GlIahyhD9XmkRb79S",
-        "1FM5Oq1XhQoYDNXGvGs0KfC8WUJpsJbhA",
-        "1XBiXUAxIBooY2-LtR2gelaw0YSn2oPZk",
-        "1m9sAQbZ8t-BincZPEUzImbtr5UWptbs_",
-        "1lCOyyszbQkSoF4Gg5f9e8YW-qTrRA_v8",
-        "1aZ5LyzS2owQYb4PsC30-KdtIE8u_6dt4",
-        "1RI9CU6zWswJizxAaWmJYcd7BqsNXvxvA",
-        "14RMmHGhiMMUHPAOUK-Od-ir4FahkvPrN",
-        "1Lf2wR8UIVN3xwG_akrpmkvpxpKO0MLpp",
-        "1SLY-5KA6gvqQflCV-RJHpF25S3Z5l-4Y",
-        "1VwvtseJKahDpIrwVZwzAfx2KNTIYbLqa",
-        "16WqTzA41ISM4KIsbZu4uhNnaJ0k2gG85",
-        "1-7sDhJHYuJosUNWxOMCMKOycGVVt-4ef",
-        "1bOAEV7xmlgrBeAwPY7GOnfeClVYYyYuR",
-        "1UDFkWHWb0TQf9C_NeeroGtxMCLnBeB-G",
-        "1fZrZi7i0tqGLZAMC0l47xDiz0tzdY3yd",
-        "1UbrOW1bI3ol4qegHIGqL803EYfYAURNF",
-        "1wWJBCzbtYmkvB3cjemoluYJjwAGQUu3k",
-        "1ZO8F96wx6MAEnFTgtDVjRWF5yAcxjt4b",
-        "1ltMQJxS3fv2WF5agdSnVr36VPWtj4Tff",
-        "1uddN-IPJVwj330g02Xwb6WtD1eh0rP9S",
-        "1Ef8n78GSwovzpegltCbHOZIZ0p8H3DnV"
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "tokyo",
+        "tokyo-revengers",
+        "tokyorevengers",
+        "tokyo-revengers-hindi"
       ],
-      "epContiguous": true,
-      "siteSeasons": {
-        "1": 12,
-        "2": 12,
-        "3": 24
-      },
-      "labelSample": [
-        "S01E01 Tokyo Ghoul",
-        "S03E24 Tokyo Ghoul"
+      "attempts": [
+        {
+          "slug": "tokyo",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Tokyo Ghoul S1-S3 [Hindi-Eng-Jap] Triple Audio [Complete]"
+        },
+        {
+          "slug": "tokyo-revengers",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyorevengers",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "tokyo-revengers-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
-      "seasons": {
-        "1": 12,
-        "2": 12,
-        "3": 24
-      },
-      "seasonsSource": "site"
+      "searchCandidates": []
     },
     "opm": {
       "status": "ok",
       "slug": "one-punch-man",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/one-punch-man/",
+      "pages": [
+        "one-punch-man"
+      ],
       "showId": 753,
       "mixed": false,
       "eps": [
@@ -1033,8 +1082,12 @@
     "bleach": {
       "status": "ok",
       "slug": "bleach",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/bleach-thousand-year-blood-war-the-separation/",
+      "pages": [
+        "bleach",
+        "bleach-thousand-year-blood-war-the-separation"
+      ],
       "showId": 365,
       "mixed": false,
       "eps": [
@@ -1099,8 +1152,12 @@
     "hxh": {
       "status": "ok",
       "slug": "hunter-x-hunter",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/hunter-x-hunter/",
+      "pages": [
+        "hunter-x-hunter",
+        "sword-of-the-demon-hunter-kijin-gentosho"
+      ],
       "showId": 582,
       "mixed": false,
       "eps": [
@@ -1224,7 +1281,7 @@
     },
     "vinland": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "vinland-saga",
         "vinlandsaga",
@@ -1253,35 +1310,19 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Vinland%20Saga",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "mob": {
       "status": "ok",
       "slug": "mob-psycho-100",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/mob-psycho-100-2/",
+      "pages": [
+        "mob-psycho-100",
+        "mob-psycho-100-2",
+        "mob-psycho",
+        "mob"
+      ],
       "showId": 998,
       "mixed": false,
       "eps": [
@@ -1344,8 +1385,12 @@
     "rezero": {
       "status": "ok",
       "slug": "rezero",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/rezero-starting-life-in-another-world-2/",
+      "pages": [
+        "rezero",
+        "rezero-starting-life-in-another-world-2"
+      ],
       "showId": 736,
       "mixed": false,
       "eps": [
@@ -1399,7 +1444,6 @@
         "17C1TPVcj4eA8l1UUq5Ss2F6HXB2K8g8a",
         "1gxUTR-uJfg5ifRMtsIRJrX0esUcUVvIN",
         "1lG8jYrjupmX5GGTTBagaYTMHNq1Wc4Sc",
-        "1lkm5-x30XoXoD5BVBCzU-itJzqCNHIjQ",
         "1jk0vE8fFud_n4t1wqOh0I7Hg3eaRjVcg",
         "1eenvHLSGs826D9Z6LNHbpeXDIIunIgwo",
         "1IkdYkytfQ2ZHb6BvL2rQhKSHyAiSUoJV",
@@ -1411,7 +1455,7 @@
         "1": 13,
         "2": 15,
         "3": 16,
-        "4": 12
+        "4": 11
       },
       "labelSample": [
         "S01E01 Re.Zero-Starting Life in Another World",
@@ -1421,15 +1465,19 @@
         "1": 13,
         "2": 15,
         "3": 16,
-        "4": 12
+        "4": 11
       },
       "seasonsSource": "site"
     },
     "sao": {
       "status": "ok",
       "slug": "sword-art-online",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/sword-art-online-alternative-gun-gale-online/",
+      "pages": [
+        "sword-art-online",
+        "sword-art-online-alternative-gun-gale-online"
+      ],
       "showId": 204,
       "mixed": false,
       "eps": [
@@ -1462,8 +1510,11 @@
     "blackclover": {
       "status": "ok",
       "slug": "black-clover",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/black-clover/",
+      "pages": [
+        "black-clover"
+      ],
       "showId": 528,
       "mixed": false,
       "eps": [
@@ -1512,7 +1563,7 @@
     },
     "drstone": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "dr-stone",
         "drstone",
@@ -1535,35 +1586,16 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Dr.%20STONE",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "haikyuu": {
       "status": "ok",
       "slug": "haikyu",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/haikyu/",
+      "pages": [
+        "haikyu"
+      ],
       "showId": 261,
       "mixed": false,
       "eps": [
@@ -1638,8 +1670,11 @@
     "bluelock": {
       "status": "ok",
       "slug": "blue-lock",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/blue-lock/",
+      "pages": [
+        "blue-lock"
+      ],
       "showId": 237,
       "mixed": false,
       "eps": [
@@ -1660,22 +1695,26 @@
       ],
       "epContiguous": true,
       "siteSeasons": {
-        "1": 14
+        "2": 14
       },
       "labelSample": [
         "S02E01 Blue Lock",
         "S02E14 Blue Lock"
       ],
       "seasons": {
-        "1": 14
+        "2": 14
       },
       "seasonsSource": "existing"
     },
     "oshi": {
       "status": "ok",
       "slug": "oshi-no-ko",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/oshi-no-ko/",
+      "pages": [
+        "oshi-no-ko",
+        "oshi"
+      ],
       "showId": 1092,
       "mixed": false,
       "eps": [
@@ -1735,8 +1774,11 @@
     "dandadan": {
       "status": "ok",
       "slug": "dan-da-dan",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/dan-da-dan/",
+      "pages": [
+        "dan-da-dan"
+      ],
       "showId": 257,
       "mixed": false,
       "eps": [
@@ -1769,8 +1811,13 @@
     "tower": {
       "status": "ok",
       "slug": "tower-of-god",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/tower-of-god-2/",
+      "pages": [
+        "tower-of-god",
+        "tower-of-god-2",
+        "tower"
+      ],
       "showId": 945,
       "mixed": false,
       "eps": [
@@ -1804,8 +1851,12 @@
     "goh": {
       "status": "ok",
       "slug": "the-god-of-high-school",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/the-god-of-high-school-season-1-multi-audio-hindi/",
+      "pages": [
+        "the-god-of-high-school",
+        "the-god-of-high-school-season-1-multi-audio-hindi"
+      ],
       "showId": 2292,
       "mixed": false,
       "eps": [
@@ -1838,7 +1889,7 @@
     },
     "boruto": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "boruto-naruto-next-generations",
         "borutonarutonextgenerations",
@@ -1867,33 +1918,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Boruto%3A%20Naruto%20Next%20Generations",
-      "searchCandidates": [
-        {
-          "slug": "hanaori-san-still-wants-to-fight-in-the-next-life",
-          "score": 0.14444444444444446
-        },
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "mhaMovie": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "my-hero-academia-two-heroes",
         "myheroacademiatwoheroes",
@@ -1922,33 +1951,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=My%20Hero%20Academia%3A%20Two%20Heroes",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "saoMovie": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "sword-art-online-ordinal-scale",
         "swordartonlineordinalscale",
@@ -1977,33 +1984,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Sword%20Art%20Online%3A%20Ordinal%20Scale",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "yourname": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "your-name",
         "yourname",
@@ -2026,33 +2011,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Your%20Name",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "guin-saga",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "suzume": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "suzume",
         "suzume-hindi"
@@ -2069,33 +2032,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Suzume",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "silentvoice": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "a-silent-voice",
         "asilentvoice",
@@ -2124,33 +2065,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=A%20Silent%20Voice",
-      "searchCandidates": [
-        {
-          "slug": "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life",
-          "score": 0.09090909090909091
-        },
-        {
-          "slug": "trapped-in-a-dating-sim-the-world-of-otome-games-is-tough-for-mobs",
-          "score": 0.08333333333333333
-        },
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "spirited": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "spirited-away",
         "spiritedaway",
@@ -2179,104 +2098,37 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Spirited%20Away",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "jjk0": {
       "status": "ok",
       "slug": "jujutsu-kaisen",
-      "source": "candidate",
+      "source": "pin",
       "url": "https://animahd.com/jujutsu-kaisen/",
+      "pages": [
+        "jujutsu-kaisen"
+      ],
       "showId": 814,
       "mixed": false,
       "eps": [
-        "1-2-GpMCf9m9FUq0LxGozoKG3Du3wzHTy",
-        "1-Ac09sJGOldgs6tuwf6yzL4SKmGP-3ys",
-        "1xpqQkhm_TSBxCJmsPG9ipQe0kQcev8do",
-        "1-FNlX7JnfBHbTHS1xNobf19hsOP8hM1l",
-        "1-IZV3w_IlgKLkoy1xAhhIBl_y1z-X8Sb",
-        "1-UeljoFcP7pkP9Nj_McO3gUAT8RnfvnZ",
-        "1-YsUL3Z2fJvyVBmZPJW7j2AOJFdHYM8F",
-        "1-ZYEes7ZwD_mRMxaCByFgEltPGZZLd8R",
-        "1-_h-CgoPc5pAges_PY767arTjDWGL64U",
-        "1-_vK1XGP4MvvQDY4zXQKu4jaGVdl-Ox1",
-        "1-hnnxFYRUJen-NQ00TLIFnda8DveaSaQ",
-        "1-lq9aTWPOyt9fVWr5Y71KsdPY2DqIicq",
-        "1-whm2_B7qPnXnoKenx8H3ZlbB1nOrvSa",
-        "1yWGMieP1uSTgiU3fDLd5097fmrkDQXmP",
-        "10EjCM-JWSHcky1UKWJhD1GtqekFl5cIY",
-        "10HNQgJlbHDbP9Ubj2Ow0CjU0G5zRjrYh",
-        "10Heh9B9-HdkfyOzw2ZpjpL5X-63MtTVR",
-        "10IgqmkibSPaKDqutbmePXwSDP0glM-99",
-        "10JZaXLBQR3LctrJlCou8mUK_6BL_Fxdk",
-        "10U9ZYNDqg8sZE2i6-L9NnXipJJP6JisH",
-        "10V6zXK8VHNK5doHTTcKH4CDW8M1xOTY4",
-        "10ZCP5cu1Mviqh2LXQCW2sTza5AYubG-m",
-        "15t-rmTT80bmqiR_TYu-y7iubA1Gxl5V5",
-        "10oSMBZPeHAuI3HdB1GPY89-XGbQSQSXz",
-        "1-eQXiS_pJwIlFd2oLh1IEhss-SjgO_qS",
-        "1-iVZ8Wf86hthe504qkAM6dDGQat-CiGw",
-        "1-isbdFUcuoRk4tBwLoPkh48bxBSCeMJw",
-        "1-kRn2P9Xp220KBMXYvilYABDt1lPW8wR",
-        "1-mm6ykozRaHNBEzfaaFNxMttCIfitWQ9",
-        "1-q5YJgzyGcyGR59T1GjE8T2z6YYdwliv",
-        "1-qU5QdmvqWgfYHit5xvOUFg_0aHsLTGS",
-        "1-vGMfSimwbuvhnNuJ12k4FXcOKRW7uJf",
-        "109VgxsGx5rfZSYSj5kxAGpySJArKMnPz",
-        "10FYUPoqsJqysCaeoRvohSEZiC7nsJlOs",
-        "1-37FQLzOc_Khp_Cjvc6f5xAxPUgHs1nd",
-        "1-3D4JHIsbjc4EfkS7w8cGUoPLjrKrg5o",
-        "1-3N4IBnbUt4JdgKYZnQ0Ee3oLTTrexKK",
-        "1-EO5Hrv75mpk2eph1MiTcBebUX8im91f",
-        "1-F3rl5uES6zQnSkGzWhdqtoxR3TJ7y1B",
-        "1-HE3Q4M1tTyd1TPcy4UTUCsJSrR5eYJi",
-        "1-N-J4Oo9PX041NJWft1qt4tmDD2Z4VJK",
-        "1-RH3jR_z3AZD3YP4L1c4AroBeniR6qkU",
-        "1-RtlQJsxb3Fad-SEeb6LC9cYabeI-2bG",
-        "1-TSEOHZqGSs1fVy3zKHkY2TC736LkRc-",
-        "1-TiBQ9PdNq2yKFWoB5U-7JplND_B05km",
-        "1-TrjXgLSi8cAI5b9ARx6c4LKRUiSOt1L",
-        "1-docdlDNEPsVGUnLFrUJkxHTXSo77sjN"
+        "1-2-GpMCf9m9FUq0LxGozoKG3Du3wzHTy"
       ],
       "epContiguous": true,
       "siteSeasons": {
-        "1": 24,
-        "2": 23
+        "1": 1
       },
       "labelSample": [
         "S01E01 Jujutsu Kaisen",
-        "S02E23 Jujutsu Kaisen"
+        "S01E01 Jujutsu Kaisen"
       ],
       "seasons": {
-        "1": 24,
-        "2": 23
+        "1": 1
       },
-      "seasonsSource": "site"
+      "seasonsSource": "existing"
     },
     "weathering": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "weathering-with-you",
         "weatheringwithyou",
@@ -2305,33 +2157,11 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Weathering%20With%20You",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "howl": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "howls-moving-castle",
         "howlsmovingcastle",
@@ -2360,57 +2190,45 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Howl%E2%80%99s%20Moving%20Castle",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "chainsmoker-cat",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "mononoke": {
-      "status": "ok",
-      "slug": "mononoke",
-      "source": "candidate",
-      "url": "https://animahd.com/mononoke-the-movie-chapter-ii-the-ashes-of-rage/",
-      "showId": 715,
-      "mixed": false,
-      "eps": [
-        "1N0WHdWtVoAq08mQeIOvgCxu1tQZ3HL4z",
-        "1x7rAZpiHS16x4NVtVJOFtcdb-ic11_r7"
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "mononoke",
+        "princess-mononoke",
+        "princessmononoke",
+        "princess-mononoke-hindi"
       ],
-      "epContiguous": true,
-      "siteSeasons": {
-        "1": 2
-      },
-      "labelSample": [
-        "{1080P} Mononoke the Movie Chapter II - The Ashes of Rage (2025)",
-        "{720P} Mononoke the Movie Chapter II - The Ashes of Rage (2025)"
+      "attempts": [
+        {
+          "slug": "mononoke",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Mononoke The Movie: Chapter II - The Ashes of Rage Movie [Hindi-Eng] [Complete]"
+        },
+        {
+          "slug": "princess-mononoke",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "princessmononoke",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "princess-mononoke-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
-      "seasons": {
-        "1": 2
-      },
-      "seasonsSource": "existing"
+      "searchCandidates": []
     },
     "akira": {
       "status": "failed",
-      "error": "no show page found",
+      "error": "no matching show page found",
       "tried": [
         "akira",
         "akira-hindi"
@@ -2427,61 +2245,54 @@
           "error": "HTTP 404"
         }
       ],
-      "searchUrl": "https://animahd.com/?s=Akira",
-      "searchCandidates": [
-        {
-          "slug": "feed",
-          "score": 0
-        },
-        {
-          "slug": "wp-json",
-          "score": 0
-        },
-        {
-          "slug": "anime-schedule",
-          "score": 0
-        },
-        {
-          "slug": "filter",
-          "score": 0
-        },
-        {
-          "slug": "demon-lord-retry-2",
-          "score": 0
-        }
-      ]
+      "searchCandidates": []
     },
     "demonMovie": {
-      "status": "ok",
-      "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
-      "source": "search",
-      "url": "https://animahd.com/demon-slayer-kimetsu-no-yaiba-infinity-castle/",
-      "showId": 1627,
-      "mixed": false,
-      "eps": [
-        "1P1q44iWQtfvlARGr0yMEWiHexeKLbgHC",
-        "1vBq0ygHkbeBJirnunZnEFLGK_3FSG-NP",
-        "1Qh5Qluzs-z7EX18Y9HosSFtVtSaamE3x"
+      "status": "failed",
+      "error": "no matching show page found",
+      "tried": [
+        "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+        "demon-slayer-mugen-train",
+        "demonslayermugentrain",
+        "demon-slayer-mugen-train-hindi",
+        "demonmovie"
       ],
-      "epContiguous": true,
-      "siteSeasons": {
-        "1": 3
-      },
-      "labelSample": [
-        "{1080P} Demon Slayer Kimetsu no Yaiba Infinity Castle (2025)",
-        "{480P} Demon Slayer Kimetsu no Yaiba Infinity Castle (2025)"
+      "attempts": [
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "source": "pin",
+          "note": "title mismatch",
+          "pageTitle": "Demon Slayer Infinity Castle 2025 [Hindi-Tamil-Telugu-English-Japanese] Multi Audio"
+        },
+        {
+          "slug": "demon-slayer-mugen-train",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demonslayermugentrain",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demon-slayer-mugen-train-hindi",
+          "source": "candidate",
+          "error": "HTTP 404"
+        },
+        {
+          "slug": "demonmovie",
+          "source": "candidate",
+          "error": "HTTP 404"
+        }
       ],
-      "seasons": {
-        "1": 3
-      },
-      "seasonsSource": "existing"
+      "searchCandidates": []
     }
   },
   "summary": {
     "titles": 41,
-    "ok": 28,
-    "failed": 13,
+    "ok": 25,
+    "failed": 16,
     "review": 0,
-    "episodes": 1099
+    "episodes": 1053
   }
 }
