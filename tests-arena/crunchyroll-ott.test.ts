@@ -116,7 +116,7 @@ test('server 1 fits original player in capped viewport with junk cover', () => {
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
     expect(html).toContain("removeAttribute('scrolling')");
-    expect(html).toContain('.video-stage.s1fit{max-width:1000px;margin:0 auto;padding-bottom:62%}');
+    expect(html).toContain('.video-stage.s1fit{width:100%;max-width:1000px;margin:0 auto;align-self:center;padding-bottom:62%}');
     expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
     expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
     expect(html).toContain("setClass(videoStage,'s1fit',i===0)");
