@@ -173,6 +173,25 @@ test('the Netflix wordmark lives in the page nav and the nav is sticky', () => {
     expect(view).not.toContain('Ionicons');
 });
 
+test('no white frame after fullscreen: plain-flow nav + repaint nudge', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // While the player shell is open the sticky nav drops back to plain flow,
+    // so nothing composited sits over the player frames (reference behaviour —
+    // that combination is what leaves a white video on exit).
+    expect(html).toContain('body.playing .topbar{position:relative}');
+    expect(html).toContain("addClass(document.body,'playing')");
+    expect(html).toContain("removeClass(document.body,'playing')");
+    // Leaving fullscreen forces the frame to re-raster, then twice more.
+    expect(html).toContain('function repaintStage()');
+    expect(html).toContain('repaintStage();setTimeout(repaintStage,160);setTimeout(repaintStage,420)');
+    // The repaint is a blink + 1px re-layout — never a reload (playback keeps
+    // its position).
+    expect(html).toContain("f.style.width='calc(100% - 1px)'");
+    expect(html).toContain("f.style.visibility='hidden'");
+    // The 1-tap recovery toast stays as the last resort.
+    expect(html).toContain('Stuck on white? Tap here to reload');
+});
+
 test('the wordmark posts the exit message to the shell', async () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const virtualConsole = new VirtualConsole();
@@ -238,6 +257,10 @@ test('fullscreen support is unchanged for the driver shell', () => {
     // The shell only answers the exit request now.
     expect(view).toContain("data.type === 'crunchyroll:exit'");
     expect(view).not.toContain('crunchyroll:fullscreen');
+    // ...and repaints its own iframe when fullscreen ends (white-frame guard).
+    expect(view).toContain("document.addEventListener('fullscreenchange', onChange)");
+    expect(view).toContain("frame.style.width = 'calc(100% - 1px)'");
+    expect(view).toContain('window.setTimeout(nudge, 160)');
 });
 
 

@@ -106,6 +106,36 @@ test('animahd tab plays unsandboxed (its own fullscreen control works)', async (
     dom.window.close();
 });
 
+test('opening the player unsticks the nav, closing it restores the logo', async () => {
+    const dom = boot();
+    await wait(200);
+    const doc = dom.window.document;
+    expect(doc.body.classList.contains('playing')).toBe(false);
+    await play(dom.window, 'solo');
+    // No sticky layer over the frames while playing...
+    expect(doc.body.classList.contains('playing')).toBe(true);
+    // ...and it comes back for browsing.
+    doc.getElementById('closePlayer')!.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    await wait(60);
+    expect(doc.body.classList.contains('playing')).toBe(false);
+    dom.window.close();
+});
+
+test('leaving fullscreen triggers the repaint nudge', async () => {
+    const dom = boot();
+    await wait(200);
+    await play(dom.window, 'solo');
+    const frame = dom.window.document.getElementById('serverFrame')!;
+    const srcBefore = frame.getAttribute('src');
+    dom.window.document.dispatchEvent(new dom.window.Event('fullscreenchange'));
+    await wait(500);
+    // The nudge is a blink + 1px re-layout, never a reload: the episode keeps
+    // playing from the same URL and no style leftovers remain.
+    expect(frame.getAttribute('src')).toBe(srcBefore);
+    expect((frame.getAttribute('style') || '').trim()).toBe('');
+    dom.window.close();
+});
+
 test('nxsha tab stays sandboxed (popup shield) but plays the same way', async () => {
     const dom = boot();
     await wait(200);

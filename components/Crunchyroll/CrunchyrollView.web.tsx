@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
@@ -40,6 +40,37 @@ export const CRUNCHYROLL_HTML_URL = '/assets/crunchyroll/crunchyroll.html';
 export function CrunchyrollView(): React.JSX.Element {
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
+    const frameRef = useRef<any>(null);
+
+    // Leaving fullscreen can leave a browser holding on to the frame's old
+    // raster, which shows up as a white video. The page nudges its own frames;
+    // this nudges the app's iframe as well, so every layer repaints.
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const nudge = () => {
+            const frame = frameRef.current as HTMLElement | null;
+            if (!frame) return;
+            try {
+                const width = frame.style.width;
+                frame.style.width = 'calc(100% - 1px)';
+                void frame.offsetWidth;
+                frame.style.width = width;
+            } catch {
+                // Nothing to repaint if the element is gone.
+            }
+        };
+        const onChange = () => {
+            nudge();
+            window.setTimeout(nudge, 160);
+            window.setTimeout(nudge, 420);
+        };
+        document.addEventListener('fullscreenchange', onChange);
+        document.addEventListener('webkitfullscreenchange', onChange);
+        return () => {
+            document.removeEventListener('fullscreenchange', onChange);
+            document.removeEventListener('webkitfullscreenchange', onChange);
+        };
+    }, []);
 
     // The page cannot reach the router itself, so it asks us (same-origin
     // postMessage) to leave to Netflix.
@@ -58,6 +89,7 @@ export function CrunchyrollView(): React.JSX.Element {
     return (
         <View style={styles.container}>
             {React.createElement('iframe', {
+                ref: frameRef,
                 src: CRUNCHYROLL_HTML_URL,
                 title: 'Crunchyroll',
                 onLoad: () => setLoaded(true),
