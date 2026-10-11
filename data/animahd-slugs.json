@@ -70,7 +70,7 @@
     "source": "candidate",
     "verified": true,
     "titleAtHarvest": "Tokyo Revengers",
-    "failedAt": "2026-10-11T07:24:52.272Z"
+    "failedAt": "2026-10-11T07:27:27.603Z"
   },
   "opm": {
     "slug": "one-punch-man",
@@ -107,7 +107,7 @@
     "source": "pin",
     "verified": true,
     "titleAtHarvest": "Sword Art Online",
-    "failedAt": "2026-10-11T07:25:05.383Z"
+    "failedAt": "2026-10-11T07:27:42.676Z"
   },
   "blackclover": {
     "slug": "black-clover",
@@ -156,26 +156,27 @@
     "source": "pin",
     "verified": true,
     "titleAtHarvest": "Jujutsu Kaisen 0",
-    "failedAt": "2026-10-11T07:25:34.670Z"
+    "failedAt": "2026-10-11T07:28:09.710Z"
   },
   "mononoke": {
     "slug": "mononoke",
     "source": "candidate",
     "verified": true,
     "titleAtHarvest": "Princess Mononoke",
-    "failedAt": "2026-10-11T07:25:41.215Z"
+    "failedAt": "2026-10-11T07:28:16.033Z"
   },
   "demonMovie": {
     "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
     "source": "search",
     "verified": true,
     "titleAtHarvest": "Demon Slayer: Mugen Train",
-    "failedAt": "2026-10-11T07:25:44.823Z"
+    "failedAt": "2026-10-11T07:28:23.981Z"
   },
   "mhaMovie": {
     "slug": "my-hero-academia-final-season",
     "source": "pin",
     "verified": true,
-    "titleAtHarvest": "My Hero Academia: Two Heroes"
+    "titleAtHarvest": "My Hero Academia: Two Heroes",
+    "failedAt": "2026-10-11T07:28:19.593Z"
   }
 }
