@@ -110,16 +110,20 @@ test('drive tab covers the pop-out button', () => {
     expect(html).toContain('setHidden(drivePopCover,i!==1)');
 });
 
-test('server 1 restores original player behavior (no crop)', () => {
+test('server 1 fits original player in capped viewport with junk cover', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1: plain w3schools-style embed + 16:9 viewport; Server 2 stays locked down.
+    // Server 1: plain w3schools-style embed, capped 1000px viewport + black junk cover; Server 2 stays locked down.
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
     expect(html).toContain("removeAttribute('scrolling')");
-    expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
-    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
+    expect(html).toContain('.video-stage.s1fit{max-width:1000px;margin:0 auto;padding-bottom:62%}');
+    expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
+    expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
+    expect(html).toContain("setClass(videoStage,'s1fit',i===0)");
+    expect(html).toContain('id="s1cover"');
+    expect(html).toContain('#s1cover{position:absolute;left:0;right:0;bottom:0;height:4%');
+    expect(html).toContain("setHidden(s1cover,i!==0)");
     expect(html).not.toContain('<aside class="up-next"');
-    expect(html).not.toContain('s1Crop');
     // No auto-fullscreen on inject.
     expect(html).not.toContain("vst=byId('videoStage')");
     expect(html).toContain('ex.call(document)');
