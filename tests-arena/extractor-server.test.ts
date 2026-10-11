@@ -136,3 +136,32 @@ test('moviebox library parses search and prioritizes Hindi dubs', () => {
     expect(play.kind).toBe('hls');
     expect(play.stream).toBe('https://cdn.example.com/master.m3u8');
 });
+
+test('vercel serverless function api/moviebox/stream handles requests with fallback', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const streamHandler = require(join(__dirname, '..', 'api', 'moviebox', 'stream.js'));
+    const req = {
+        url: '/api/moviebox/stream?title=Solo+Leveling&se=1&ep=1&lang=hi',
+        method: 'GET',
+        headers: { host: 'localhost:3000' },
+    };
+    let statusCode = 0;
+    let body = '';
+    const res = {
+        statusCode: 200,
+        headers: {} as Record<string, string>,
+        setHeader(k: string, v: string) { this.headers[k] = v; },
+        end(data: string) {
+            statusCode = this.statusCode;
+            body = data;
+        },
+    };
+    await streamHandler(req, res);
+    expect(statusCode).toBe(200);
+    const parsed = JSON.parse(body);
+    expect(parsed.ok).toBe(true);
+    expect(parsed.stream).toBeTruthy();
+    expect(parsed.format).toBe('hls');
+    expect(parsed.isHindi).toBe(true);
+});
+

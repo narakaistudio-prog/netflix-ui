@@ -53,6 +53,19 @@ if (existsSync(playerSrc)) {
     console.log('Copied Server 4 player to assets/crunchyroll/player.html, crunchyroll/player.html, and player.html');
 }
 
+const hlsSrc = join(projectRoot, 'assets', 'crunchyroll', 'hls.min.js');
+if (existsSync(hlsSrc)) {
+    const hlsDest1 = join(outputDir, 'assets', 'crunchyroll', 'hls.min.js');
+    const hlsDest2 = join(outputDir, 'crunchyroll', 'hls.min.js');
+    const hlsDest3 = join(outputDir, 'hls.min.js');
+    mkdirSync(dirname(hlsDest1), { recursive: true });
+    mkdirSync(dirname(hlsDest2), { recursive: true });
+    cpSync(hlsSrc, hlsDest1);
+    cpSync(hlsSrc, hlsDest2);
+    cpSync(hlsSrc, hlsDest3);
+    console.log('Copied hls.min.js to assets/crunchyroll/hls.min.js, crunchyroll/hls.min.js, and hls.min.js');
+}
+
 const manifest = readFileSync(join(postersDir, 'index.web.ts'), 'utf8');
 const urls = new Set([...manifest.matchAll(/"(\/assets\/posters\/[^\"]+)"/g)].map(match => match[1]));
 const missing = [...urls].filter(url => !existsSync(join(outputDir, url.slice(1))));
