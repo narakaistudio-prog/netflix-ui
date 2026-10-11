@@ -718,7 +718,7 @@
       renderHomeRows();renderCatalog();renderMovies('all');
       var saved={};var favorites={solo:true,jjk:true,demon:true};var activeKey='solo';
       var dialog=byId('detailDialog'),toast=document.querySelector('.toast'),toastTimer,playerShell=byId('playerShell'),videoStage=byId('videoStage');
-      function showToast(message){clearTimeout(toastTimer);toast.innerHTML=escapeHtml(message);addClass(toast,'show');toastTimer=setTimeout(function(){removeClass(toast,'show')},2200)}
+      function showToast(message,ms){clearTimeout(toastTimer);toast.innerHTML=escapeHtml(message);addClass(toast,'show');toastTimer=setTimeout(function(){removeClass(toast,'show')},ms||2200)}
       
       
       
@@ -830,6 +830,11 @@
       byId('blockedOpen').addEventListener('click',function(){var a=noticeAction;if(a==='server1'){loadServer(0)}else if(a==='server2'){loadServer(1);showToast('Server 2 — loading')}else if(a==='retry'){loadServer(activeServer)}else{var u=serverUrl(activeServer);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Opened in new tab')}}},false);
       byId('noticeAlt').addEventListener('click',function(){var a=noticeAltAction;if(a==='server1')loadServer(0);else if(a==='server2')loadServer(1);else loadServer(activeServer)},false);
       byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
+      var fsExitArmed=false,fsExitTimer=null,fsWasFull=false;
+      document.addEventListener('fullscreenchange',fsExitWatch,false);
+      document.addEventListener('webkitfullscreenchange',fsExitWatch,false);
+      function fsExitWatch(){var fsNow=!!(document.fullscreenElement||document.webkitFullscreenElement);var was=fsWasFull;fsWasFull=fsNow;if(was&&!fsNow&&activeServer===0){fsExitArmed=true;if(fsExitTimer)clearTimeout(fsExitTimer);showToast('Stuck on white? Tap here to reload',8000);fsExitTimer=setTimeout(function(){fsExitArmed=false},8000)}}
+      toast.addEventListener('click',function(){if(!fsExitArmed)return;fsExitArmed=false;if(fsExitTimer){clearTimeout(fsExitTimer);fsExitTimer=null}loadServer(activeServer);showToast('Reloading server')},false);
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}
       function onServerTimeout(){var s=SERVERS[activeServer];if(!s)return;var alt=SERVERS[1-activeServer];noticeTitle.innerHTML='<span>'+escapeHtml(s.name)+'</span>';noticeText.innerHTML='This server is not responding (slow or blocked).<br>Retry or try the other tab.';noticeBtn.textContent='Retry';noticeAction='retry';if(alt){noticeAltBtn.textContent='Try '+alt.name;noticeAltAction=activeServer===0?'server2':'server1';setHidden(noticeAltBtn,false)}else{setHidden(noticeAltBtn,true)}try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(drivePopCover,true);setHidden(serverBlocked,false)}
       if(serverFrame){serverFrame.addEventListener('load',function(){if(serverFrame.src==='about:blank')return;disarmWatchdog();setHidden(frameLoader,false);var lt=loadToken;setTimeout(function(){if(lt===loadToken)setHidden(frameLoader,true)},800)},false)}

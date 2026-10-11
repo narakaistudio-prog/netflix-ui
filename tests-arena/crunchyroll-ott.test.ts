@@ -124,6 +124,9 @@ test('server 1 fits original player in capped viewport with junk cover', () => {
     expect(html).toContain('#s1cover{position:absolute;left:0;right:0;bottom:0;height:4%');
     expect(html).toContain('backdrop-filter:blur(7px)');
     expect(html).toContain("setHidden(s1cover,i!==0)");
+    expect(html).toContain('Stuck on white? Tap here to reload');
+    expect(html).toContain('fsExitWatch');
+    expect(html).toContain('fsExitArmed');
     expect(html).not.toContain('<aside class="up-next"');
     // No auto-fullscreen on inject.
     expect(html).not.toContain("vst=byId('videoStage')");
