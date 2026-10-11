@@ -40,6 +40,19 @@ mkdirSync(dirname(crunchyrollDest), { recursive: true });
 cpSync(crunchyrollSrc, crunchyrollDest);
 console.log('Copied Crunchyroll OTT page to assets/crunchyroll/crunchyroll.html');
 
+const playerSrc = join(projectRoot, 'assets', 'crunchyroll', 'player.html');
+if (existsSync(playerSrc)) {
+    const playerDest1 = join(outputDir, 'assets', 'crunchyroll', 'player.html');
+    const playerDest2 = join(outputDir, 'crunchyroll', 'player.html');
+    const playerDest3 = join(outputDir, 'player.html');
+    mkdirSync(dirname(playerDest1), { recursive: true });
+    mkdirSync(dirname(playerDest2), { recursive: true });
+    cpSync(playerSrc, playerDest1);
+    cpSync(playerSrc, playerDest2);
+    cpSync(playerSrc, playerDest3);
+    console.log('Copied Server 4 player to assets/crunchyroll/player.html, crunchyroll/player.html, and player.html');
+}
+
 const manifest = readFileSync(join(postersDir, 'index.web.ts'), 'utf8');
 const urls = new Set([...manifest.matchAll(/"(\/assets\/posters\/[^\"]+)"/g)].map(match => match[1]));
 const missing = [...urls].filter(url => !existsSync(join(outputDir, url.slice(1))));

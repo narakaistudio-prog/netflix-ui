@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Server 4 — MovieBox Hindi Anime Player</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #f7f7f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+    .player-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      outline: none;
+    }
+    .top-badge-bar {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .badge-server {
+      background: #f47521;
+      color: #111;
+    }
+    .badge-hindi {
+      background: rgba(30, 144, 255, 0.85);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .badge-format {
+      background: rgba(20, 24, 33, 0.85);
+      color: #46d369;
+      border: 1px solid rgba(70, 211, 105, 0.4);
+    }
+    .title-label {
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: #e5e7eb;
+      background: rgba(10, 12, 18, 0.75);
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 45%;
+    }
+    .player-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(5, 7, 13, 0.92);
+      z-index: 20;
+      padding: 24px;
+      text-align: center;
+      gap: 16px;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255,255,255,0.15);
+      border-top-color: #f47521;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .overlay-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .overlay-sub {
+      font-size: 13px;
+      color: #9ca3af;
+      max-width: 420px;
+      line-height: 1.5;
+    }
+    .btn-action {
+      appearance: none;
+      border: 0;
+      background: #f47521;
+      color: #111;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 10px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn-action:hover {
+      background: #ff8c3b;
+      transform: scale(1.04);
+    }
+    .btn-secondary {
+      background: #1f2430;
+      color: #f3f4f6;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .btn-secondary:hover {
+      background: #2b3140;
+    }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="player-container" id="playerContainer">
+    <div class="top-badge-bar" id="badgeBar">
+      <span class="badge badge-server">Server 4</span>
+      <span class="badge badge-hindi">Hindi Dub</span>
+      <span class="badge badge-format" id="formatBadge">HLS .m3u8</span>
+      <span class="title-label" id="titleLabel">Anime</span>
+    </div>
+
+    <video id="videoElement" controls playsinline preload="auto"></video>
+
+    <div class="player-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+      <h2 class="overlay-title" id="loadingTitle">Resolving MovieBox Stream…</h2>
+      <p class="overlay-sub" id="loadingSub">Extracting direct Hindi audio stream via MovieBox proxy.</p>
+    </div>
+
+    <div class="player-overlay" id="errorOverlay" hidden>
+      <h2 class="overlay-title" id="errorTitle">Stream Unavailable</h2>
+      <p class="overlay-sub" id="errorSub">MovieBox is currently resolving or buffering this title. You can retry or switch back to Server 1.</p>
+      <div class="btn-row">
+        <button class="btn-action" id="retryBtn">↻ Retry Extraction</button>
+        <button class="btn-action btn-secondary" id="demoStreamBtn">▶ Play Demo HLS Stream</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var title = params.get('title') || 'Solo Leveling';
+      var season = params.get('season') || params.get('se') || '1';
+      var ep = params.get('ep') || '1';
+      var lang = params.get('lang') || 'hi';
+      var directSrc = params.get('src') || '';
+      var subjectId = params.get('id') || '';
+
+      var video = document.getElementById('videoElement');
+      var titleLabel = document.getElementById('titleLabel');
+      var formatBadge = document.getElementById('formatBadge');
+      var loadingOverlay = document.getElementById('loadingOverlay');
+      var errorOverlay = document.getElementById('errorOverlay');
+      var retryBtn = document.getElementById('retryBtn');
+      var demoStreamBtn = document.getElementById('demoStreamBtn');
+
+      titleLabel.textContent = title + ' · S' + season + ' E' + ep;
+
+      function hideOverlays() {
+        loadingOverlay.hidden = true;
+        errorOverlay.hidden = true;
+      }
+
+      function showError(titleMsg, descMsg) {
+        loadingOverlay.hidden = true;
+        errorOverlay.hidden = false;
+        if (titleMsg) document.getElementById('errorTitle').textContent = titleMsg;
+        if (descMsg) document.getElementById('errorSub').textContent = descMsg;
+      }
+
+      function attachStream(streamUrl, kind, quality) {
+        if (quality) formatBadge.textContent = (kind === 'hls' ? 'HLS ' : '') + quality;
+
+        // Clean up existing source
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+
+        video.onerror = function() {
+          showError('Playback Notice', 'Direct stream buffering or format not natively playable in this browser.');
+        };
+
+        // Native HLS support (Safari, iOS, Mac Safari, Android Chrome)
+        var canNativeHls = video.canPlayType('application/vnd.apple.mpegurl') ||
+                           video.canPlayType('application/x-mpegURL');
+
+        video.src = streamUrl;
+        hideOverlays();
+
+        var playPromise = video.play();
+        if (playPromise && playPromise.catch) {
+          playPromise.catch(function(err) {
+            // Autoplay with sound might need user interaction in some browsers
+            console.log('Autoplay deferred until user interaction:', err);
+          });
+        }
+      }
+
+      function fetchMovieboxStream() {
+        loadingOverlay.hidden = false;
+        errorOverlay.hidden = true;
+
+        if (directSrc) {
+          attachStream(directSrc, 'hls', '1080P');
+          return;
+        }
+
+        var apiUrl = '/api/moviebox/stream?title=' + encodeURIComponent(title) +
+                     '&se=' + encodeURIComponent(season) +
+                     '&ep=' + encodeURIComponent(ep) +
+                     '&lang=' + encodeURIComponent(lang);
+        if (subjectId) apiUrl += '&id=' + encodeURIComponent(subjectId);
+
+        var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        var timeoutId = controller ? setTimeout(function() { controller.abort(); }, 12000) : null;
+
+        fetch(apiUrl, { signal: controller ? controller.signal : undefined })
+          .then(function(res) {
+            if (timeoutId) clearTimeout(timeoutId);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function(data) {
+            if (data && data.ok && data.stream) {
+              attachStream(data.stream, data.kind || 'hls', data.quality || '1080P');
+            } else {
+              throw new Error((data && data.error) || 'Stream not found');
+            }
+          })
+          .catch(function(err) {
+            if (timeoutId) clearTimeout(timeoutId);
+            console.warn('MovieBox stream fetch error:', err);
+            showError('MovieBox Hindi Stream', 'Stream resolution is processing or upstream is offline in this environment.');
+          });
+      }
+
+      retryBtn.addEventListener('click', function() {
+        fetchMovieboxStream();
+      });
+
+      demoStreamBtn.addEventListener('click', function() {
+        // Fallback sample HLS stream for instant preview testing
+        attachStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', 'hls', 'Demo 720p');
+      });
+
+      // Start initial extraction
+      fetchMovieboxStream();
+    })();
+  </script>
+</body>
+</html>

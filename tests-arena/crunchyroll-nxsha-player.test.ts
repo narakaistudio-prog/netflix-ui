@@ -69,6 +69,7 @@ test('nxsha-only title: Server 3 is the only tab and builds the provider URL', a
         { server: '0', hidden: true, active: false },
         { server: '1', hidden: true, active: false },
         { server: '2', hidden: false, active: true },
+        { server: '3', hidden: true, active: false },
     ]);
     expect(doc.getElementById('serverName')!.textContent).toBe('Server 3 · nxsha.space');
     expect(doc.getElementById('serverFrame')!.getAttribute('src')).toBe(
@@ -155,9 +156,24 @@ test('animahd title keeps Server 1 + Server 2 and hides the fallback pill', asyn
         { server: '0', hidden: false, active: true },
         { server: '1', hidden: false, active: false },
         { server: '2', hidden: true, active: false },
+        { server: '3', hidden: false, active: false },
     ]);
     const src = dom.window.document.getElementById('serverFrame')!.getAttribute('src') || '';
     expect(src).toContain('https://animahd.com/player/?file_id=144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
     expect(src).toContain('ep=0');
+    dom.window.close();
+});
+
+test('Server 4 (MovieBox Hindi): direct m3u8 stream player for Hindi anime content', async () => {
+    const dom = boot();
+    await wait(200);
+    await play(dom.window, 'solo');
+    const doc = dom.window.document;
+    const s4Pill = doc.querySelector<HTMLButtonElement>('[data-server="3"]')!;
+    expect(s4Pill.hasAttribute('hidden')).toBe(false);
+    s4Pill.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    await wait(120);
+    expect(doc.getElementById('serverName')!.textContent).toContain('Server 4');
+    expect(doc.getElementById('serverFrame')!.getAttribute('src')).toContain('player.html?title=Solo%20Leveling');
     dom.window.close();
 });

@@ -16,14 +16,16 @@ test('demo player has Server 1 + Server 2 tabs below the video', () => {
     // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
     expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g)).toHaveLength(3);
+    expect(html.match(/class="server-pill/g)).toHaveLength(4);
     expect(html).toContain('data-server="0"');
     expect(html).toContain('data-server="1"');
     expect(html).toContain('data-server="2"');
-    // Server 1 (AnimaHD, default) + Server 2 (Drive) + Server 3 (Nxsha fallback).
+    expect(html).toContain('data-server="3"');
+    // Server 1 (AnimaHD, default) + Server 2 (Drive) + Server 3 (Nxsha fallback) + Server 4 (MovieBox Hindi).
     expect(html).toContain('>Server 1</button>');
     expect(html).toContain('>Server 2</button>');
     expect(html).toContain('>Server 3</button>');
+    expect(html).toContain('>Server 4</button>');
     expect(html).toContain('drive.google.com/file/d/');
     expect(html).toContain('animahd.com/player/?file_id=');
     // Styling + switching logic wired up.
@@ -87,10 +89,11 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(def.indexOf("host:'animahd.com'")).toBeLessThan(def.indexOf("host:'drive.google.com'"));
     // Server 1 resolves the AnimaHD player URL, Server 2 the Drive preview.
     expect(html).toContain("if(i===0)return 'https://animahd.com/player/");
-    // Three pills, Server 1 active by default, Server 3 hidden until a title has no other source.
-    expect(html.match(/<button class="server-pill/g)).toHaveLength(3);
+    // Four pills, Server 1 active by default, Server 3 hidden until a title has no other source, Server 4 for Hindi anime.
+    expect(html.match(/<button class="server-pill/g)).toHaveLength(4);
     expect(html).toContain('server-pill active" data-server="0"');
     expect(html).toContain('data-server="2" title="Server 3 (Nxsha) — nxsha.space" hidden');
+    expect(html).toContain('data-server="3" title="Server 4 (MovieBox Hindi) — direct stream" hidden');
     // Extractor client stays out of the player.
     expect(html).not.toContain('xtVideo');
     expect(html).not.toContain('EXTRACTOR_API');
