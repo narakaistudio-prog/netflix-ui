@@ -15,13 +15,14 @@
  * Usage: node scripts/bake-animahd-links.mjs [--check]
  *   --check   verify the HTML is already in sync (CI-friendly, no write)
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const JSON_PATH = resolve(ROOT, 'data', 'animahd-episodes.json');
 const NX_PATH = resolve(ROOT, 'data', 'nxsha-titles.json');
+const NX_VERIFY_PATH = resolve(ROOT, 'data', 'nxsha-verify.json');
 const HTML_PATH = resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const START = '/*__ANIMAHDEP__*/';
 const END = '/*__END_ANIMAHDEP__*/';
@@ -110,6 +111,24 @@ function main() {
         throw new Error('ANIMAHDEP markers not found in demo HTML');
     }
     const nxData = Object.fromEntries(Object.entries(nx).filter(([k]) => !k.startsWith('_')));
+
+    // Every id must be confirmed against the live embed page. The probe runs
+    // before the bake in CI, so anything unverified is worth shouting about.
+    let unverified = [];
+    if (existsSync(NX_VERIFY_PATH)) {
+        const verify = JSON.parse(readFileSync(NX_VERIFY_PATH, 'utf8'));
+        const okIds = new Set();
+        for (const row of verify.titles || []) if (row.ok) okIds.add(String(row.id));
+        for (const row of verify.saoMovie || []) if (row.ok) okIds.add(String(row.id));
+        unverified = Object.entries(nxData)
+            .filter(([, e]) => !okIds.has(String(e.id)))
+            .map(([k, e]) => `${k}=${e.id}`);
+    } else {
+        console.warn('nxsha-verify.json missing — ids are not verified against the live site.');
+    }
+    if (unverified.length) {
+        console.warn(`WARNING: unverified nxsha ids: ${unverified.join(', ')}`);
+    }
     const nxStart = html.indexOf(NX_START);
     const nxEnd = html.indexOf(NX_END);
     if (nxStart === -1 || nxEnd === -1 || nxEnd < nxStart) {
@@ -130,7 +149,9 @@ function main() {
         (n, e) => n + Object.values(e.seasons).reduce((a, b) => a + b, 0),
         0,
     );
-    const summary = `animahd ${keys} titles/${eps} episodes + nxsha ${nxKeys} titles/${nxEps} episodes`;
+    const summary =
+        `animahd ${keys} titles/${eps} episodes + nxsha ${nxKeys} titles/${nxEps} episodes` +
+        (unverified.length ? ` (${unverified.length} unverified id(s)!)` : ' (all nxsha ids verified)');
     if (next === html) {
         console.log(`already in sync (${summary}).`);
         return;
