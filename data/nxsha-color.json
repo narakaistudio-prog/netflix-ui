@@ -1,0 +1,337 @@
+{
+  "generatedAt": "2026-10-11T08:05:23.759Z",
+  "target": "#f47521",
+  "probes": [
+    {
+      "value": "netflix",
+      "status": 200,
+      "bytes": 15454,
+      "newHex": [
+        "#e50914"
+      ],
+      "vars": [
+        "#e50914"
+      ],
+      "bestOrange": {
+        "hex": "#ffa751",
+        "score": 0.6107727797001153
+      },
+      "changed": true
+    },
+    {
+      "value": "orange",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [
+        "#fb923c"
+      ],
+      "vars": [
+        "#fb923c"
+      ],
+      "bestOrange": {
+        "hex": "#fb923c",
+        "score": 0.7408650519031141
+      },
+      "changed": true
+    },
+    {
+      "value": "crunchyroll",
+      "status": 200,
+      "bytes": 15466,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "orange-500",
+      "status": 200,
+      "bytes": 15463,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "amber",
+      "status": 200,
+      "bytes": 15448,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "yellow",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "gold",
+      "status": 200,
+      "bytes": 15445,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "f47521",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "F47521",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "ff7a1a",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "ff8a3d",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "red",
+      "status": 200,
+      "bytes": 15442,
+      "newHex": [
+        "#e50914"
+      ],
+      "vars": [
+        "#e50914"
+      ],
+      "bestOrange": {
+        "hex": "#ffa751",
+        "score": 0.6107727797001153
+      },
+      "changed": true
+    },
+    {
+      "value": "netflix-red",
+      "status": 200,
+      "bytes": 15466,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "hotstar",
+      "status": 200,
+      "bytes": 15454,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "prime",
+      "status": 200,
+      "bytes": 15448,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "hulu",
+      "status": 200,
+      "bytes": 15445,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "disney",
+      "status": 200,
+      "bytes": 15451,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "crunchy",
+      "status": 200,
+      "bytes": 15454,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    },
+    {
+      "value": "aniroll",
+      "status": 200,
+      "bytes": 15454,
+      "newHex": [],
+      "vars": [
+        "#facc15"
+      ],
+      "bestOrange": {
+        "hex": "#facc15",
+        "score": 0.6783391003460207
+      },
+      "changed": false
+    }
+  ],
+  "baseline": {
+    "url": "https://nxsha.space/embed/movie/1441228?server=GbruHindi&lang=hi&sub=hi&disable_app_ad=true&disable_dl_button=true",
+    "status": 200,
+    "bytes": 15419,
+    "colors": {
+      "hex": [
+        "#000000",
+        "#facc15",
+        "#050505",
+        "#ffffff",
+        "#ffe259",
+        "#ffa751",
+        "#e5e5e5",
+        "#8e8e93"
+      ],
+      "rgb": [
+        "rgba(255,204,0,0.08)",
+        "rgba(0,0,0,0)"
+      ],
+      "vars": [
+        "#facc15"
+      ]
+    }
+  },
+  "summary": {
+    "anyChange": 3,
+    "best": [
+      {
+        "value": "orange",
+        "best": {
+          "hex": "#fb923c",
+          "score": 0.7408650519031141
+        },
+        "newHex": [
+          "#fb923c"
+        ]
+      },
+      {
+        "value": "netflix",
+        "best": {
+          "hex": "#ffa751",
+          "score": 0.6107727797001153
+        },
+        "newHex": [
+          "#e50914"
+        ]
+      },
+      {
+        "value": "red",
+        "best": {
+          "hex": "#ffa751",
+          "score": 0.6107727797001153
+        },
+        "newHex": [
+          "#e50914"
+        ]
+      }
+    ]
+  }
+}
