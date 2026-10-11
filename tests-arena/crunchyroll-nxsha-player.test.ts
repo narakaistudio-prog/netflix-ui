@@ -11,7 +11,7 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
-const NXSHA_PARAMS = 'server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
+const NXSHA_PARAMS = 'server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

@@ -96,14 +96,18 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(html).not.toContain('data-extract=');
 });
 
-test('server 1 is a plain embed, server 2 stays locked down', () => {
+test('every server tab stays sandboxed so the player cannot open popups', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain("if(i===1){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}");
-    expect(html).toContain("removeAttribute('sandbox')");
-    expect(html).toContain("setAttribute('allow','autoplay')");
+    // One sandbox for all three servers (AnimaHD, Drive, Nxsha): scripts +
+    // same-origin only — no allow-popups, so window.open / target=_blank
+    // popups are dropped by the browser.
+    expect(html).toContain(
+        "serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')",
+    );
+    expect(html).not.toContain("removeAttribute('sandbox')");
+    expect(html).not.toContain('allow-popups');
     expect(html).not.toContain('allow="autoplay');
     expect(html).not.toContain('sandbox="allow-scripts');
-    expect(html).not.toContain('allow-popups');
 });
 
 test('drive tab covers the pop-out button', () => {
@@ -118,7 +122,7 @@ test('server 1 fits original player in capped viewport with junk cover', () => {
     // Server 1: plain embed (no sandbox/allow for fullscreen) + scroll locked + capped viewport + black junk cover.
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
-    expect(html).toContain("}else{serverFrame.removeAttribute('sandbox');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay')}");
+    expect(html).toContain("serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')");
     expect(html).toContain('.video-stage.s1fit{width:100%;max-width:1000px;margin:0 auto;align-self:center;padding-bottom:62%}');
     expect(html).toContain('@media(max-width:700px){.video-stage.s1fit{padding-bottom:65%}}');
     expect(html).toContain('@media(max-width:500px){.video-stage.s1fit{padding-bottom:68%}}');
@@ -183,7 +187,7 @@ test('titles animahd lacks fall back to the nxsha embed (verified ids)', () => {
     expect(html).toContain('var NX_DATA=');
     // Server 3 builds the provider URL used by the rest of the app (lib/embeds.ts).
     expect(html).toContain('https://nxsha.space/embed/');
-    expect(html).toContain("?server=GbruHindi&lang=hi&sub=hi&color=netflix");
+    expect(html).toContain("?server=GbruHindi&lang=hi&sub=hi&color=orange");
     expect(html).toContain('if(i===2){var nx=nxFor(st.key)');
     // Verified ids: AoT, Tokyo Revengers, Ordinal Scale (movie).
     expect(html).toContain('"aot":{"id":"tt2560140","kind":"tv"');
