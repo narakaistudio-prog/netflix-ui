@@ -205,8 +205,26 @@ export function titleTokens(text) {
 
 const tokenEq = (a, b) => a === b || (a.length >= 5 && b.length >= 5 && (a.startsWith(b) || b.startsWith(a)));
 
+const FOREIGN_MARKERS = [
+    'vigilantes', 'ova', 'special', 'recap', 'abridged', 'alternative', 'spin-off', 'spinoff',
+    'side-story', 'junior', 'chibi', 'live-action', 'picture-drama', 'movie', 'film', 'movies',
+];
+
+/**
+ * Markers that say a page is a spin-off / side story / film (not the series).
+ * Catalog titles that themselves contain the marker are exempt.
+ */
+export function foreignMarker(pageTitle, titles) {
+    const want = new Set(titleTokens(Array.isArray(titles) ? titles[0] : titles));
+    const got = new Set(titleTokens(pageTitle));
+    for (const marker of FOREIGN_MARKERS) {
+        if (got.has(marker) && !want.has(marker)) return marker;
+    }
+    return '';
+}
+
 /** Does a page/post title really name this catalog title? */
-export function matchTitle(pageTitle, titles) {
+export function matchTitle(pageTitle, titles, { strict = false } = {}) {
     const want = titleTokens(Array.isArray(titles) ? titles[0] : titles);
     const altlist = (Array.isArray(titles) ? titles.slice(1) : []).map(titleTokens);
     if (!want.length) return { ok: false, score: 0 };
@@ -216,9 +234,8 @@ export function matchTitle(pageTitle, titles) {
         const score = hit / tokens.length;
         const firstOk = tokens.length > 0 && [...got].some((g) => tokenEq(tokens[0], g));
         const alt = i > 0;
-        if (hit === tokens.length || (firstOk && score >= (alt ? 0.6 : 0.7))) {
-            return { ok: true, score, tokens, alt };
-        }
+        if (hit === tokens.length) return { ok: true, score, tokens, alt };
+        if (!strict && firstOk && score >= (alt ? 0.6 : 0.7)) return { ok: true, score, tokens, alt };
     }
     return { ok: false, score: 0 };
 }

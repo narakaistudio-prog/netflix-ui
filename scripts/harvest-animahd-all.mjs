@@ -32,8 +32,10 @@ import {
     decodePlayerToken,
     extractPageTitle,
     extractPTokens,
+    foreignMarker,
     matchTitle,
     mergeEpisodeRows,
+    parseLabelEpisode,
     rankPosts,
     rowsToEpisodes,
 } from './harvest-animahd.mjs';
@@ -44,6 +46,7 @@ const EPISODES_PATH = resolve(ROOT, 'data', 'animahd-episodes.json');
 const SLUGS_PATH = resolve(ROOT, 'data', 'animahd-slugs.json');
 const REPORT_PATH = resolve(ROOT, 'data', 'animahd-report.json');
 const SEASONS_PATH = resolve(ROOT, 'data', 'anime-seasons.json');
+const POSTS_PATH = resolve(ROOT, 'data', 'animahd-posts.json');
 const DEFAULT_BASE = 'https://animahd.com';
 
 const UA =
@@ -354,15 +357,20 @@ function rowToFallback(page) {
     return { rows, showId: col.showId, mixed: col.mixed };
 }
 
-async function harvestShow({ key, title, kind, args, slugs }) {
+async function harvestShow({ key, title, kind, args, slugs, postIndex }) {
     const titles = [title, ...(ALT_TITLES[key] || [])];
     const attempts = [];
     const tried = [];
 
-    // 1. candidate list: pinned slug -> WP search hits -> generated slugs.
+    // 1. candidate list: pinned slug -> site post index -> live WP search -> generated slugs.
     const cands = [];
     if (args.pins[key]) cands.push({ slug: args.pins[key], source: 'cli-pin' });
     if (slugs[key] && slugs[key].slug) cands.push({ slug: slugs[key].slug, source: 'pin' });
+    if (postIndex && Array.isArray(postIndex.posts)) {
+        for (const r of rankPosts(postIndex.posts, titles)) {
+            cands.push({ slug: r.slug, source: 'index', postTitle: r.postTitle });
+        }
+    }
     const wpPosts = [];
     for (const q of titles) {
         const posts = await wpSearchPosts(args.base, q);
@@ -371,6 +379,7 @@ async function harvestShow({ key, title, kind, args, slugs }) {
     }
     const ranked = rankPosts(wpPosts, titles);
     for (const r of ranked) cands.push({ slug: r.slug, source: 'wpsearch', postTitle: r.postTitle });
+    const searchRaw = wpPosts.map((p) => ((p.title && p.title.rendered) || '')).slice(0, 12);
     for (const slug of slugCandidates(title, key)) cands.push({ slug, source: 'candidate' });
 
     const seen = new Set();
@@ -383,6 +392,7 @@ async function harvestShow({ key, title, kind, args, slugs }) {
 
     // 2. fetch pages until maxPages accepted (title must match the catalog name).
     const pages = [];
+    const weakPages = [];
     const maxPages = Math.min(args.maxPages || 8, 12);
     for (const cand of queue) {
         if (pages.length >= maxPages) break;
@@ -398,7 +408,7 @@ async function harvestShow({ key, title, kind, args, slugs }) {
             continue;
         }
         const pageTitle = extractPageTitle(text) || cand.postTitle || '';
-        const m = matchTitle(pageTitle, titles);
+        const m = matchTitle(pageTitle, titles, { strict: kind === 'movie' });
         if (!m.ok) {
             attempts.push({
                 slug: cand.slug,
@@ -409,9 +419,30 @@ async function harvestShow({ key, title, kind, args, slugs }) {
             await sleep(120);
             continue;
         }
+        if (kind !== 'movie') {
+            const marker = foreignMarker(pageTitle, titles);
+            if (marker) {
+                attempts.push({
+                    slug: cand.slug,
+                    source: cand.source,
+                    note: `foreign marker: ${marker}`,
+                    pageTitle: String(pageTitle).slice(0, 120),
+                });
+                await sleep(120);
+                continue;
+            }
+        }
         const rows = collectShowRows(text);
         if (rows.length) {
             const conv = rowsToEpisodes(rows);
+            const labeled = rows.filter((r) => parseLabelEpisode(r.label)).length;
+            if (kind !== 'movie' && labeled < Math.max(1, Math.floor(rows.length * 0.5))) {
+                // No episode numbers in the labels: keep as weak fallback only.
+                weakPages.push({ slug: cand.slug, source: cand.source, url: finalUrl, pageTitle, rows, showId: conv.showId });
+                attempts.push({ slug: cand.slug, source: cand.source, note: 'accepted but unlabeled (weak)', rows: rows.length, pageTitle: String(pageTitle).slice(0, 120) });
+                await sleep(150);
+                continue;
+            }
             pages.push({ slug: cand.slug, source: cand.source, url: finalUrl, pageTitle, rows, showId: conv.showId });
             attempts.push({ slug: cand.slug, source: cand.source, note: 'accepted', rows: rows.length, pageTitle: String(pageTitle).slice(0, 120) });
         } else {
@@ -432,6 +463,7 @@ async function harvestShow({ key, title, kind, args, slugs }) {
         await sleep(150);
     }
 
+    if (!pages.length && weakPages.length) pages.push(...weakPages.slice(0, 2));
     if (!pages.length) {
         return {
             status: 'failed',
@@ -441,6 +473,7 @@ async function harvestShow({ key, title, kind, args, slugs }) {
             tried,
             attempts,
             searchCandidates: ranked.slice(0, 6),
+            searchRaw,
         };
     }
 
@@ -518,6 +551,12 @@ async function main() {
     const movieTable = (readJson(SEASONS_PATH, {}) || {}).movies || {};
     const episodes = readJson(EPISODES_PATH, {}) || {};
     const slugs = readJson(SLUGS_PATH, {}) || {};
+    const postIndex = readJson(POSTS_PATH, null);
+    if (postIndex && Array.isArray(postIndex.posts)) {
+        console.log(`post index: ${postIndex.posts.length} posts from ${postIndex.generatedAt}`);
+    } else {
+        console.log('post index missing — falling back to the live WP search');
+    }
     const report = { generatedAt: new Date().toISOString(), base: args.base, shows: {}, summary: {} };
 
     const wanted = args.only.length
@@ -529,10 +568,12 @@ async function main() {
     for (const { key, title } of wanted) {
         const kind = catalog.movieKeys.includes(key) ? 'movie' : 'tv';
         const existing = episodes[key] || null;
-        const result = await harvestShow({ key, title, kind, args, slugs });
+        const result = await harvestShow({ key, title, kind, args, slugs, postIndex });
         const entry = { ...result };
         delete entry.kind;
         delete entry.title;
+        entry.episodes = Array.isArray(result.eps) ? result.eps.length : 0;
+        delete entry.eps;
         if (Array.isArray(entry.labels)) {
             entry.labelSample = [entry.labels[0] || '', entry.labels[entry.labels.length - 1] || ''];
             delete entry.labels;
