@@ -1,0 +1,1386 @@
+{
+  "generatedAt": "2026-10-11T06:58:11.655Z",
+  "base": "https://animahd.com",
+  "shows": {
+    "solo": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "solo-leveling",
+        "sololeveling",
+        "solo-leveling-hindi",
+        "solo"
+      ],
+      "searchUrl": "https://animahd.com/?s=Solo%20Leveling",
+      "searchCandidates": [
+        {
+          "slug": "solo-leveling-season-episodes-hindi-multi-audio",
+          "score": 0.37142857142857144
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "demon": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "demon-slayer-kimetsu-no-yaiba",
+        "demonslayerkimetsunoyaiba",
+        "demon-slayer-kimetsu-no-yaiba-hindi",
+        "kimetsu-no-yaiba",
+        "demon-slayer",
+        "demon",
+        "search:demon-slayer-kimetsu-no-yaiba-2",
+        "search:demon-slayer-kimetsu-no-yaiba-infinity-castle"
+      ],
+      "searchUrl": "https://animahd.com/?s=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba",
+      "searchCandidates": [
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-2",
+          "score": 1.04
+        },
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "score": 0.8666666666666667
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "jjk": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "jujutsu-kaisen",
+        "jujutsukaisen",
+        "jujutsu-kaisen-hindi",
+        "jjk",
+        "search:jujutsu-kaisen"
+      ],
+      "searchUrl": "https://animahd.com/?s=JUJUTSU%20KAISEN",
+      "searchCandidates": [
+        {
+          "slug": "jujutsu-kaisen",
+          "score": 1.3
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "onepiece": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "one-piece",
+        "onepiece",
+        "one-piece-hindi",
+        "one-piece-english-subbed",
+        "search:one-piece",
+        "search:one-piece-2"
+      ],
+      "searchUrl": "https://animahd.com/?s=One%20Piece",
+      "searchCandidates": [
+        {
+          "slug": "one-piece",
+          "score": 1.15
+        },
+        {
+          "slug": "one-piece-2",
+          "score": 0.7666666666666666
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "frieren": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "frieren-beyond-journeys-end",
+        "frierenbeyondjourneysend",
+        "frieren-beyond-journeys-end-hindi",
+        "frieren"
+      ],
+      "searchUrl": "https://animahd.com/?s=Frieren%3A%20Beyond%20Journey%E2%80%99s%20End",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "chainsaw": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "chainsaw-man",
+        "chainsawman",
+        "chainsaw-man-hindi",
+        "chainsaw",
+        "search:chainsaw-man"
+      ],
+      "searchUrl": "https://animahd.com/?s=Chainsaw%20Man",
+      "searchCandidates": [
+        {
+          "slug": "chainsaw-man",
+          "score": 1.15
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "spy": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "spy-x-family",
+        "spy-family",
+        "spyxfamily",
+        "spy-x-family-hindi",
+        "spy",
+        "search:spy-x-family"
+      ],
+      "searchUrl": "https://animahd.com/?s=SPY%20x%20FAMILY",
+      "searchCandidates": [
+        {
+          "slug": "spy-x-family",
+          "score": 1.15
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "kaiju": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "kaiju-no-8",
+        "kaijuno8",
+        "kaiju-no",
+        "kaiju-no-8-hindi",
+        "kaiju",
+        "search:kaiju-no-8"
+      ],
+      "searchUrl": "https://animahd.com/?s=Kaiju%20No.%208",
+      "searchCandidates": [
+        {
+          "slug": "kaiju-no-8",
+          "score": 1.15
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "aot": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "attack-on-titan",
+        "attackontitan",
+        "attack-on-titan-hindi",
+        "shingeki-no-kyojin",
+        "aot"
+      ],
+      "searchUrl": "https://animahd.com/?s=Attack%20on%20Titan",
+      "searchCandidates": [
+        {
+          "slug": "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life",
+          "score": 0.09090909090909091
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "naruto": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "naruto-shippuden",
+        "narutoshippuden",
+        "naruto-shippuden-hindi",
+        "naruto",
+        "search:naruto-shippuden"
+      ],
+      "searchUrl": "https://animahd.com/?s=Naruto%20Shippuden",
+      "searchCandidates": [
+        {
+          "slug": "naruto-shippuden",
+          "score": 1.3
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "deathnote": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "death-note",
+        "deathnote",
+        "death-note-hindi",
+        "search:death-note"
+      ],
+      "searchUrl": "https://animahd.com/?s=Death%20Note",
+      "searchCandidates": [
+        {
+          "slug": "death-note",
+          "score": 1.3
+        },
+        {
+          "slug": "death-note-relight-movie-hindi-dub-dual-audio",
+          "score": 0.325
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "mha": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "my-hero-academia",
+        "myheroacademia",
+        "my-hero-academia-hindi",
+        "boku-no-hero-academia",
+        "mha",
+        "search:my-hero-academia-final-season"
+      ],
+      "searchUrl": "https://animahd.com/?s=My%20Hero%20Academia",
+      "searchCandidates": [
+        {
+          "slug": "my-hero-academia-final-season",
+          "score": 0.72
+        },
+        {
+          "slug": "my-hero-academia-vigilantes-seasons-bluray-hindi-multi-audio",
+          "score": 0.39999999999999997
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "tokyo": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "tokyo-revengers",
+        "tokyorevengers",
+        "tokyo-revengers-hindi",
+        "tokyo"
+      ],
+      "searchUrl": "https://animahd.com/?s=Tokyo%20Revengers",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "opm": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "one-punch-man",
+        "onepunchman",
+        "one-punch-man-hindi",
+        "opm",
+        "search:one-punch-man"
+      ],
+      "searchUrl": "https://animahd.com/?s=One%20Punch%20Man",
+      "searchCandidates": [
+        {
+          "slug": "one-punch-man",
+          "score": 1.0999999999999999
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "bleach": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "bleach",
+        "bleach-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=Bleach",
+      "searchCandidates": [
+        {
+          "slug": "bleach-thousand-year-blood-war-the-separation",
+          "score": 0.21666666666666667
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "hxh": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "hunter-x-hunter",
+        "hunter-hunter",
+        "hunterxhunter",
+        "hunter-x-hunter-hindi",
+        "hxh",
+        "search:hunter-x-hunter",
+        "search:sword-of-the-demon-hunter-kijin-gentosho"
+      ],
+      "searchUrl": "https://animahd.com/?s=Hunter%20x%20Hunter",
+      "searchCandidates": [
+        {
+          "slug": "hunter-x-hunter",
+          "score": 1.3
+        },
+        {
+          "slug": "sword-of-the-demon-hunter-kijin-gentosho",
+          "score": 0.52
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "vinland": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "vinland-saga",
+        "vinlandsaga",
+        "vinland-saga-hindi",
+        "vinland"
+      ],
+      "searchUrl": "https://animahd.com/?s=Vinland%20Saga",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "mob": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "mob-psycho-100",
+        "mobpsycho100",
+        "mob-psycho",
+        "mob-psycho-100-hindi",
+        "mob",
+        "search:mob-psycho-100-2"
+      ],
+      "searchUrl": "https://animahd.com/?s=Mob%20Psycho%20100",
+      "searchCandidates": [
+        {
+          "slug": "mob-psycho-100-2",
+          "score": 0.825
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "rezero": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "re-zero",
+        "rezero",
+        "re-zero-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=Re%3AZERO",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "rezero-starting-life-in-another-world-2",
+          "score": 0
+        }
+      ]
+    },
+    "sao": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "sword-art-online",
+        "swordartonline",
+        "sword-art-online-hindi",
+        "sao",
+        "search:sword-art-online-alternative-gun-gale-online"
+      ],
+      "searchUrl": "https://animahd.com/?s=Sword%20Art%20Online",
+      "searchCandidates": [
+        {
+          "slug": "sword-art-online-alternative-gun-gale-online",
+          "score": 0.6
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "blackclover": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "black-clover",
+        "blackclover",
+        "black-clover-hindi",
+        "search:black-clover",
+        "search:black-torch"
+      ],
+      "searchUrl": "https://animahd.com/?s=Black%20Clover",
+      "searchCandidates": [
+        {
+          "slug": "black-clover",
+          "score": 1.3
+        },
+        {
+          "slug": "black-torch",
+          "score": 0.65
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "drstone": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "dr-stone",
+        "drstone",
+        "dr-stone-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=Dr.%20STONE",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "haikyuu": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "haikyu",
+        "haikyu-hindi",
+        "haikyuu",
+        "search:haikyu"
+      ],
+      "searchUrl": "https://animahd.com/?s=HAIKYU!!",
+      "searchCandidates": [
+        {
+          "slug": "haikyu",
+          "score": 1.3
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "bluelock": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "blue-lock",
+        "bluelock",
+        "blue-lock-hindi",
+        "search:blue-lock",
+        "search:blue-box"
+      ],
+      "searchUrl": "https://animahd.com/?s=BLUE%20LOCK",
+      "searchCandidates": [
+        {
+          "slug": "blue-lock",
+          "score": 1.3
+        },
+        {
+          "slug": "blue-box",
+          "score": 0.65
+        },
+        {
+          "slug": "grand-blue-dreaming",
+          "score": 0.43333333333333335
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        }
+      ]
+    },
+    "oshi": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "oshi-no-ko",
+        "oshinoko",
+        "oshi-no-ko-hindi",
+        "oshi",
+        "search:oshi-no-ko"
+      ],
+      "searchUrl": "https://animahd.com/?s=OSHI%20NO%20KO",
+      "searchCandidates": [
+        {
+          "slug": "oshi-no-ko",
+          "score": 1.15
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "dandadan": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "dan-da-dan",
+        "dandadan",
+        "dan-da-dan-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=DAN%20DA%20DAN",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "black-torch",
+          "score": 0
+        }
+      ]
+    },
+    "tower": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "tower-of-god",
+        "towerofgod",
+        "tower-of-god-hindi",
+        "tower",
+        "search:tower-of-god-2"
+      ],
+      "searchUrl": "https://animahd.com/?s=Tower%20of%20God",
+      "searchCandidates": [
+        {
+          "slug": "tower-of-god-2",
+          "score": 0.7666666666666666
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "goh": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "the-god-of-high-school",
+        "god-of-high-school",
+        "thegodofhighschool",
+        "the-god-of-high-school-hindi",
+        "goh"
+      ],
+      "searchUrl": "https://animahd.com/?s=The%20God%20of%20High%20School",
+      "searchCandidates": [
+        {
+          "slug": "the-god-of-high-school-season-1-multi-audio-hindi",
+          "score": 0.44999999999999996
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "boruto": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "boruto-naruto-next-generations",
+        "borutonarutonextgenerations",
+        "boruto-naruto-next-generations-hindi",
+        "boruto"
+      ],
+      "searchUrl": "https://animahd.com/?s=Boruto%3A%20Naruto%20Next%20Generations",
+      "searchCandidates": [
+        {
+          "slug": "hanaori-san-still-wants-to-fight-in-the-next-life",
+          "score": 0.14444444444444446
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "mhaMovie": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "my-hero-academia-two-heroes",
+        "myheroacademiatwoheroes",
+        "my-hero-academia-two-heroes-hindi",
+        "mhamovie"
+      ],
+      "searchUrl": "https://animahd.com/?s=My%20Hero%20Academia%3A%20Two%20Heroes",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "saoMovie": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "sword-art-online-ordinal-scale",
+        "swordartonlineordinalscale",
+        "sword-art-online-ordinal-scale-hindi",
+        "saomovie"
+      ],
+      "searchUrl": "https://animahd.com/?s=Sword%20Art%20Online%3A%20Ordinal%20Scale",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "yourname": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "your-name",
+        "yourname",
+        "your-name-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=Your%20Name",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "guin-saga",
+          "score": 0
+        }
+      ]
+    },
+    "suzume": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "suzume",
+        "suzume-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=Suzume",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "silentvoice": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "a-silent-voice",
+        "asilentvoice",
+        "a-silent-voice-hindi",
+        "silentvoice"
+      ],
+      "searchUrl": "https://animahd.com/?s=A%20Silent%20Voice",
+      "searchCandidates": [
+        {
+          "slug": "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life",
+          "score": 0.09090909090909091
+        },
+        {
+          "slug": "trapped-in-a-dating-sim-the-world-of-otome-games-is-tough-for-mobs",
+          "score": 0.08333333333333333
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        }
+      ]
+    },
+    "spirited": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "spirited-away",
+        "spiritedaway",
+        "spirited-away-hindi",
+        "spirited"
+      ],
+      "searchUrl": "https://animahd.com/?s=Spirited%20Away",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "jjk0": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "jujutsu-kaisen-0",
+        "jujutsukaisen0",
+        "jujutsu-kaisen",
+        "jujutsu-kaisen-0-hindi",
+        "jjk0",
+        "search:jujutsu-kaisen"
+      ],
+      "searchUrl": "https://animahd.com/?s=Jujutsu%20Kaisen%200",
+      "searchCandidates": [
+        {
+          "slug": "jujutsu-kaisen",
+          "score": 0.8666666666666667
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    },
+    "weathering": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "weathering-with-you",
+        "weatheringwithyou",
+        "weathering-with-you-hindi",
+        "weathering"
+      ],
+      "searchUrl": "https://animahd.com/?s=Weathering%20With%20You",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "howl": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "howls-moving-castle",
+        "howlsmovingcastle",
+        "howls-moving-castle-hindi",
+        "howl"
+      ],
+      "searchUrl": "https://animahd.com/?s=Howl%E2%80%99s%20Moving%20Castle",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "mononoke": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "princess-mononoke",
+        "princessmononoke",
+        "princess-mononoke-hindi",
+        "mononoke"
+      ],
+      "searchUrl": "https://animahd.com/?s=Princess%20Mononoke",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "chainsmoker-cat",
+          "score": 0
+        }
+      ]
+    },
+    "akira": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "akira",
+        "akira-hindi"
+      ],
+      "searchUrl": "https://animahd.com/?s=Akira",
+      "searchCandidates": [
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        },
+        {
+          "slug": "demon-lord-retry-2",
+          "score": 0
+        }
+      ]
+    },
+    "demonMovie": {
+      "status": "failed",
+      "error": "no show page found",
+      "tried": [
+        "demon-slayer-mugen-train",
+        "demonslayermugentrain",
+        "demon-slayer-mugen-train-hindi",
+        "demonmovie"
+      ],
+      "searchUrl": "https://animahd.com/?s=Demon%20Slayer%3A%20Mugen%20Train",
+      "searchCandidates": [
+        {
+          "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+          "score": 0.43333333333333335
+        },
+        {
+          "slug": "feed",
+          "score": 0
+        },
+        {
+          "slug": "wp-json",
+          "score": 0
+        },
+        {
+          "slug": "anime-schedule",
+          "score": 0
+        },
+        {
+          "slug": "filter",
+          "score": 0
+        }
+      ]
+    }
+  },
+  "summary": {
+    "titles": 41,
+    "ok": 0,
+    "failed": 41,
+    "review": 0,
+    "episodes": 0
+  }
+}
