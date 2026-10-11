@@ -9,6 +9,7 @@ import https from 'node:https';
 import { URL } from 'node:url';
 import { pathToFileURL } from 'node:url';
 import lib from './extract-lib.cjs';
+import moviebox from './moviebox-lib.cjs';
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
 const DEFAULT_PORT = Number(process.env.PORT || 8787);
@@ -50,13 +51,37 @@ async function guardHost(u) {
   if (!ok) throw httpErr(403, 'target-blocked');
 }
 
-function doRequest(u, { method = 'GET', headers = {}, timeoutMs = FETCH_TIMEOUT_MS }) {
+function doRequest(u, { method = 'GET', headers = {}, timeoutMs = FETCH_TIMEOUT_MS, body = null } = {}) {
   return new Promise((resolve, reject) => {
     const mod = u.protocol === 'https:' ? https : http;
     const req = mod.request(u, { method, headers, timeout: timeoutMs }, (res) => resolve({ res, req }));
     req.on('timeout', () => { req.destroy(new Error('upstream-timeout')); });
     req.on('error', reject);
+    if (body) req.write(body);
     req.end();
+  });
+}
+
+async function fetchJson(target, { method = 'GET', headers = {}, body = null, timeoutMs = FETCH_TIMEOUT_MS } = {}) {
+  const u = checkTarget(target);
+  await guardHost(u);
+  const { res } = await doRequest(u, { method, headers, timeoutMs, body });
+  const st = res.statusCode || 0;
+  if (st < 200 || st >= 300) {
+    res.resume();
+    throw httpErr(502, 'upstream-http-' + st);
+  }
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    res.on('data', (c) => { raw += c; });
+    res.on('end', () => {
+      try {
+        resolve(JSON.parse(raw));
+      } catch (e) {
+        reject(httpErr(502, 'invalid-upstream-json'));
+      }
+    });
+    res.on('error', reject);
   });
 }
 
@@ -146,6 +171,114 @@ async function handleExtract(req, res, query) {
       host: streamHost, page: first.url, embed, proxied,
     }, req);
   } catch (e) { sendErr(res, req, e); }
+}
+
+async function handleMovieboxSearch(req, res, query) {
+  const q = query.get('q') || query.get('keyword') || '';
+  if (!q) { sendJson(res, 400, { ok: false, error: 'missing-query' }, req); return; }
+  const page = query.get('page') || 1;
+  const perPage = query.get('perPage') || 20;
+
+  let lastErr = null;
+  for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
+    try {
+      const searchUrl = host + '/subject/search';
+      const headers = moviebox.buildHeaders();
+      const payload = moviebox.buildSearchPayload(q, page, perPage);
+      headers['Content-Length'] = Buffer.byteLength(payload);
+      const data = await fetchJson(searchUrl, { method: 'POST', headers, body: payload, timeoutMs: 10000 });
+      const parsed = moviebox.parseSearchResults(data);
+      if (parsed.ok) {
+        sendJson(res, 200, parsed, req);
+        return;
+      }
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  sendErr(res, req, lastErr || httpErr(502, 'moviebox-search-failed'));
+}
+
+async function handleMovieboxStream(req, res, query) {
+  let subjectId = query.get('id') || query.get('subject_id') || '';
+  let detailPath = query.get('slug') || query.get('detail_path') || '';
+  const title = query.get('title') || '';
+  const se = parseInt(query.get('se') || query.get('season') || '1', 10);
+  const ep = parseInt(query.get('ep') || query.get('episode') || '1', 10);
+  const lang = query.get('lang') || 'hi';
+
+  if (!subjectId && !title) {
+    sendJson(res, 400, { ok: false, error: 'missing-title-or-id' }, req);
+    return;
+  }
+
+  // If subjectId is missing, perform search first to find the best match
+  if (!subjectId && title) {
+    for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
+      try {
+        const payload = moviebox.buildSearchPayload(title, 1, 5);
+        const headers = moviebox.buildHeaders();
+        headers['Content-Length'] = Buffer.byteLength(payload);
+        const searchData = await fetchJson(host + '/subject/search', {
+          method: 'POST',
+          headers,
+          body: payload,
+          timeoutMs: 8000,
+        });
+        const parsedSearch = moviebox.parseSearchResults(searchData);
+        if (parsedSearch.ok && parsedSearch.results.length) {
+          // If preferred language is Hindi, pick Hindi entry first if available
+          const found = (lang === 'hi' ? parsedSearch.results.find((r) => r.isHindi) : null) || parsedSearch.results[0];
+          subjectId = found.id;
+          detailPath = found.detailPath;
+          break;
+        }
+      } catch (err) {
+        /* try next host */
+      }
+    }
+  }
+
+  if (!subjectId) {
+    sendJson(res, 404, { ok: false, error: 'moviebox-title-not-found' }, req);
+    return;
+  }
+
+  // Now resolve stream from play/download endpoint
+  let lastErr = null;
+  for (const host of moviebox.MOVIEBOX_DEFAULT_HOSTS) {
+    try {
+      const playUrl = `${host}/subject/play?subject_id=${encodeURIComponent(subjectId)}&detail_path=${encodeURIComponent(detailPath)}&se=${se}&ep=${ep}`;
+      const headers = moviebox.buildHeaders();
+      const playData = await fetchJson(playUrl, { method: 'GET', headers, timeoutMs: 10000 });
+      const streamInfo = moviebox.parsePlayResponse(playData, lang);
+      if (streamInfo.ok && streamInfo.stream) {
+        const base = selfBase(req);
+        const proxied = base + '/api/stream?u=' + lib.b64uEncode(streamInfo.stream) +
+          '&r=' + lib.b64uEncode('https://m2box.org/');
+        sendJson(res, 200, {
+          ok: true,
+          title,
+          subjectId,
+          detailPath,
+          season: se,
+          episode: ep,
+          format: streamInfo.kind,
+          quality: streamInfo.quality,
+          isHindi: streamInfo.isHindi,
+          rawStream: streamInfo.stream,
+          proxied,
+          qualities: streamInfo.qualities,
+          captions: streamInfo.captions,
+        }, req);
+        return;
+      }
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+
+  sendErr(res, req, lastErr || httpErr(502, 'moviebox-stream-failed'));
 }
 
 async function handleStream(req, res, query) {
@@ -251,6 +384,16 @@ function createServer() {
         handleStream(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
         return;
       }
+      if (full.pathname === '/api/moviebox/search') {
+        if (!rateOk(ip, 'moviebox-search', 60, 60000)) { sendJson(res, 429, { ok: false, error: 'rate-limited' }, req); return; }
+        handleMovieboxSearch(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
+        return;
+      }
+      if (full.pathname === '/api/moviebox/stream') {
+        if (!rateOk(ip, 'moviebox-stream', 60, 60000)) { sendJson(res, 429, { ok: false, error: 'rate-limited' }, req); return; }
+        handleMovieboxStream(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
+        return;
+      }
       sendJson(res, 404, { ok: false, error: 'not-found' }, req);
     } catch (e) { if (!res.writableEnded) sendErr(res, req, e); }
   });
@@ -325,6 +468,28 @@ async function runSelfTest() {
     check('extract bad-scheme 400', badScheme.status === 400);
     const noU = await getJson(port, '/api/stream');
     check('stream missing-u 400', noU.status === 400 && noU.body.includes('missing-u'));
+
+    // MovieBox tests
+    const mbNoQ = await getJson(port, '/api/moviebox/search');
+    check('moviebox search missing-q 400', mbNoQ.status === 400 && mbNoQ.body.includes('missing-query'));
+    const mbNoTitle = await getJson(port, '/api/moviebox/stream');
+    check('moviebox stream missing-params 400', mbNoTitle.status === 400 && mbNoTitle.body.includes('missing-title-or-id'));
+
+    // MovieBox pure parser tests (offline)
+    const sampleMb = moviebox.parseSearchResults({
+      data: { items: [{ id: '101', title: 'Solo Leveling [Hindi Dub]', detail_path: 'solo-hindi' }] },
+    });
+    check('moviebox search parser works', sampleMb.ok && sampleMb.count === 1 && sampleMb.results[0].isHindi);
+
+    const samplePlay = moviebox.parsePlayResponse({
+      data: {
+        qualities: [
+          { quality: '1080P', video_url: 'https://cdn.example.com/movie.m3u8', vipLocked: false },
+          { quality: '720P', video_url: 'https://cdn.example.com/720.mp4' },
+        ],
+      },
+    });
+    check('moviebox play parser prefers m3u8', samplePlay.ok && samplePlay.kind === 'hls' && samplePlay.stream.includes('movie.m3u8'));
   } finally {
     await new Promise((r) => srv.close(r));
   }

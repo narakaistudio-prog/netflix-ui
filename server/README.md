@@ -15,6 +15,13 @@ happen because nothing is embedded.
 - `GET /api/extract?url=<episode-or-embed-page-url>`
   → `{ ok, stream, kind ("hls"|"mp4"), host, page, embed, proxied }`
   or `{ ok:false, error }` (`no-player-found`, `no-stream-found`, `target-blocked`, …).
+- `GET /api/moviebox/search?q=<title>`
+  → `{ ok, count, results: [{ id, title, detailPath, year, rating, poster, isHindi, type }] }`
+  Searches MovieBox/m2box catalogs and detects Hindi-dubbed content.
+- `GET /api/moviebox/stream?title=<title>&se=<season>&ep=<episode>&lang=hi` (or `id=<subjectId>`)
+  → Resolves direct playable `.m3u8` / `.mp4` stream from MovieBox (FebBox CDN), prioritizing Hindi audio.
+  Returns `{ ok: true, title, season, episode, format, quality, isHindi, rawStream, proxied, qualities, captions }`.
+  `proxied` routes through `/api/stream` so browser video players can play it without CORS or 403 errors.
 - `GET /api/stream?u=<b64u media URL>&r=<b64u referer>` — proxies bytes with a proper
   `Referer`/UA; m3u8 playlists are rewritten so segments + keys keep flowing through
   the proxy. Forwards `Range` (seeking works).

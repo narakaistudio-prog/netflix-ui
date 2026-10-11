@@ -108,3 +108,31 @@ test('extractor server self-test passes offline', () => {
     expect(out).toContain('self-tests passed');
     expect(out).not.toContain('FAIL -');
 });
+
+test('moviebox library parses search and prioritizes Hindi dubs', () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const mb = require(join(__dirname, '..', 'server', 'moviebox-lib.cjs'));
+    const parsed = mb.parseSearchResults({
+        data: {
+            items: [
+                { id: 1, title: 'Attack on Titan [English]', detail_path: 'aot-en' },
+                { id: 2, title: 'Attack on Titan [Hindi Dub]', detail_path: 'aot-hi', languages: ['Hindi'] },
+            ],
+        },
+    });
+    expect(parsed.ok).toBe(true);
+    expect(parsed.count).toBe(2);
+    expect(parsed.results[1].isHindi).toBe(true);
+
+    const play = mb.parsePlayResponse({
+        data: {
+            qualities: [
+                { quality: '1080P', video_url: 'https://cdn.example.com/master.m3u8' },
+                { quality: '720P', video_url: 'https://cdn.example.com/720.mp4' },
+            ],
+        },
+    });
+    expect(play.ok).toBe(true);
+    expect(play.kind).toBe('hls');
+    expect(play.stream).toBe('https://cdn.example.com/master.m3u8');
+});
