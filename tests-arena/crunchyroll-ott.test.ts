@@ -65,7 +65,7 @@ test('player has server failure handling (watchdog + troubleshoot)', () => {
     expect(html).toContain('disarmWatchdog');
     expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="noticeAlt"');
-    expect(html).toContain('allow="autoplay; fullscreen; encrypted-media; picture-in-picture"');
+    expect(html).toContain("setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
     expect(html).not.toContain('allow-popups');
 });
 
@@ -93,10 +93,12 @@ test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => 
     expect(html).not.toContain('data-extract=');
 });
 
-test('drive tab is sandboxed, server 1 runs free for its player', () => {
+test('server 1 is a plain embed, server 2 stays locked down', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    expect(html).toContain("if(i===1){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')}");
+    expect(html).toContain("if(i===1){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}");
     expect(html).toContain("removeAttribute('sandbox')");
+    expect(html).toContain("removeAttribute('allow')");
+    expect(html).not.toContain('allow="autoplay');
     expect(html).not.toContain('sandbox="allow-scripts');
     expect(html).not.toContain('allow-popups');
 });
@@ -110,11 +112,13 @@ test('drive tab covers the pop-out button', () => {
 
 test('server 1 restores original player behavior (no crop)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1: original page (scroll restored, no crop/aspect forcing); Server 2 stays locked down.
+    // Server 1: plain w3schools-style embed + 16:9 viewport; Server 2 stays locked down.
     expect(html).not.toContain('scrolling="no"');
     expect(html).toContain("setAttribute('scrolling','no')");
     expect(html).toContain("removeAttribute('scrolling')");
-    expect(html).not.toContain('s16x9');
+    expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
+    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
+    expect(html).not.toContain('<aside class="up-next"');
     expect(html).not.toContain('s1Crop');
     // No auto-fullscreen on inject.
     expect(html).not.toContain("vst=byId('videoStage')");
