@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:43:55.173Z",
+  "generatedAt": "2026-10-11T07:50:07.838Z",
   "titles": [
     {
       "key": "aot",
@@ -507,6 +507,10 @@
       "url": "https://nxsha.space/embed/movie/tt5311514?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Your Name.",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -521,6 +525,10 @@
       "url": "https://nxsha.space/embed/movie/tt16428256?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Suzume",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -535,6 +543,10 @@
       "url": "https://nxsha.space/embed/movie/tt5323662?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch A Silent Voice: The Movie",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -549,6 +561,10 @@
       "url": "https://nxsha.space/embed/movie/tt0245429?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Spirited Away",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -563,6 +579,10 @@
       "url": "https://nxsha.space/embed/movie/tt0119698?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Princess Mononoke",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -577,6 +597,10 @@
       "url": "https://nxsha.space/embed/movie/tt0347149?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Howl&#x27;s Moving Castle",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -591,6 +615,10 @@
       "url": "https://nxsha.space/embed/movie/tt0094625?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Akira",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -605,6 +633,10 @@
       "url": "https://nxsha.space/embed/movie/tt9426210?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Weathering with You",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -619,6 +651,10 @@
       "url": "https://nxsha.space/embed/movie/tt14331144?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Jujutsu Kaisen 0",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -633,6 +669,10 @@
       "url": "https://nxsha.space/embed/movie/tt11032374?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -647,6 +687,10 @@
       "url": "https://nxsha.space/embed/movie/505262?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
       "embedTitle": "Watch My Hero Academia: Two Heroes",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
       "seasonList": {
         "seasonNumbers": [],
@@ -774,7 +818,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13552,
+      "bytes": 13638,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -816,6 +860,38 @@
       "sample": [],
       "ordinals": [],
       "snippet": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\""
+    }
+  ],
+  "framing": [
+    {
+      "key": "yourname",
+      "xFrameOptions": "",
+      "csp": ""
+    },
+    {
+      "key": "suzume",
+      "xFrameOptions": "",
+      "csp": ""
+    },
+    {
+      "key": "silentvoice",
+      "xFrameOptions": "",
+      "csp": ""
+    },
+    {
+      "key": "spirited",
+      "xFrameOptions": "",
+      "csp": ""
+    },
+    {
+      "key": "mononoke",
+      "xFrameOptions": "",
+      "csp": ""
+    },
+    {
+      "key": "howl",
+      "xFrameOptions": "",
+      "csp": ""
     }
   ],
   "summary": {
