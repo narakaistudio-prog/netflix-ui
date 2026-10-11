@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:52:49.331Z",
+  "generatedAt": "2026-10-11T07:56:12.394Z",
   "titles": [
     {
       "key": "aot",
@@ -825,7 +825,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13552,
+      "bytes": 13638,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -835,15 +835,15 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 89228,
+      "bytes": 87953,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
-        "https://www.youtube.com/watch?v=lqlYx4MdsAY",
-        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\",
-        "https://web.nxsha.app/movie/1441228\\",
-        "https://web.nxsha.app/movie/1441228\\",
         "https://web.nxsha.app/movie/1441228",
-        "https://web.nxsha.app/movie/1441228"
+        "https://web.nxsha.app/movie/1441228",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY",
+        "https://web.nxsha.app/movie/1441228\\",
+        "https://web.nxsha.app/movie/1441228\\",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\"
       ],
       "ordinals": [],
       "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href="
