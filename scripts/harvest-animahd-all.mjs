@@ -503,6 +503,7 @@ async function harvestShow({ key, title, kind, args, slugs, postIndex }) {
     }
     const labels = merged.labels.some(Boolean) ? merged.labels : null;
     return {
+        attempts,
         status: 'ok',
         kind,
         title,
