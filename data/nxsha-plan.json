@@ -618,6 +618,66 @@
         "3": 12,
         "4": 12
       }
+    },
+    {
+      "key": "fairytail",
+      "title": "Fairy Tail",
+      "kind": "tv",
+      "id": "46261",
+      "seasons": {
+        "1": 48,
+        "2": 48,
+        "3": 54,
+        "4": 25,
+        "5": 51,
+        "6": 39,
+        "7": 12,
+        "8": 51
+      }
+    },
+    {
+      "key": "yourlie",
+      "title": "Your Lie in April",
+      "kind": "tv",
+      "id": "61663",
+      "seasons": {
+        "1": 22
+      }
+    },
+    {
+      "key": "jojo",
+      "title": "JoJo's Bizarre Adventure",
+      "kind": "tv",
+      "id": "45790",
+      "seasons": {
+        "1": 26,
+        "2": 48,
+        "3": 39,
+        "4": 39,
+        "5": 38,
+        "6": 12
+      }
+    },
+    {
+      "key": "shangri",
+      "title": "Shangri-La Frontier",
+      "kind": "tv",
+      "id": "205050",
+      "seasons": {
+        "1": 51
+      }
+    },
+    {
+      "key": "iruma",
+      "title": "Welcome to Demon School! Iruma-kun",
+      "kind": "tv",
+      "id": "91801",
+      "seasons": {
+        "1": 23,
+        "2": 21,
+        "3": 21,
+        "4": 24
+      }
     }
   ],
   "saoMovieCandidates": [

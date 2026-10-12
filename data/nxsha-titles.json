@@ -569,7 +569,14 @@
     "id": "46261",
     "kind": "tv",
     "seasons": {
-      "1": 1
+      "1": 48,
+      "2": 48,
+      "3": 54,
+      "4": 25,
+      "5": 51,
+      "6": 39,
+      "7": 12,
+      "8": 51
     },
     "title": "Fairy Tail"
   },
@@ -577,7 +584,7 @@
     "id": "61663",
     "kind": "tv",
     "seasons": {
-      "1": 1
+      "1": 22
     },
     "title": "Your Lie in April"
   },
@@ -585,7 +592,12 @@
     "id": "45790",
     "kind": "tv",
     "seasons": {
-      "1": 1
+      "1": 26,
+      "2": 48,
+      "3": 39,
+      "4": 39,
+      "5": 38,
+      "6": 12
     },
     "title": "JoJo's Bizarre Adventure"
   },
@@ -593,7 +605,7 @@
     "id": "205050",
     "kind": "tv",
     "seasons": {
-      "1": 1
+      "1": 51
     },
     "title": "Shangri-La Frontier"
   },
@@ -601,7 +613,10 @@
     "id": "91801",
     "kind": "tv",
     "seasons": {
-      "1": 1
+      "1": 23,
+      "2": 21,
+      "3": 21,
+      "4": 24
     },
     "title": "Welcome to Demon School! Iruma-kun"
   }

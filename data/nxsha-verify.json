@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T18:13:59.518Z",
+  "generatedAt": "2026-10-12T18:19:02.387Z",
   "titles": [
     {
       "key": "aot",
@@ -3975,6 +3975,537 @@
         ],
         "totalEpisodes": null
       }
+    },
+    {
+      "key": "fairytail",
+      "kind": "tv",
+      "id": "46261",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S1:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 48,
+          "url": "https://nxsha.space/embed/tv/46261/1/48?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S1:E48",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 1,
+          "foundEpisode": 48
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S2:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 48,
+          "url": "https://nxsha.space/embed/tv/46261/2/48?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S2:E48",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 2,
+          "foundEpisode": 48
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S3:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 54,
+          "url": "https://nxsha.space/embed/tv/46261/3/54?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S3:E54",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 3,
+          "foundEpisode": 54
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S4:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 25,
+          "url": "https://nxsha.space/embed/tv/46261/4/25?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S4:E25",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 4,
+          "foundEpisode": 25
+        },
+        {
+          "season": 5,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/5/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S5:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 5,
+          "foundEpisode": 1
+        },
+        {
+          "season": 5,
+          "episode": 51,
+          "url": "https://nxsha.space/embed/tv/46261/5/51?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S5:E51",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 5,
+          "foundEpisode": 51
+        },
+        {
+          "season": 6,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/6/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S6:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 6,
+          "foundEpisode": 1
+        },
+        {
+          "season": 6,
+          "episode": 39,
+          "url": "https://nxsha.space/embed/tv/46261/6/39?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S6:E39",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 6,
+          "foundEpisode": 39
+        },
+        {
+          "season": 7,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/7/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S7:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 7,
+          "foundEpisode": 1
+        },
+        {
+          "season": 7,
+          "episode": 12,
+          "url": "https://nxsha.space/embed/tv/46261/7/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S7:E12",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 7,
+          "foundEpisode": 12
+        },
+        {
+          "season": 8,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/46261/8/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S8:E1",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 8,
+          "foundEpisode": 1
+        },
+        {
+          "season": 8,
+          "episode": 51,
+          "url": "https://nxsha.space/embed/tv/46261/8/51?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Fairy Tail - S8:E51",
+          "ok": true,
+          "foundName": "Fairy Tail",
+          "foundSeason": 8,
+          "foundEpisode": 51
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "epPairs": [
+          "8:1"
+        ],
+        "totalEpisodes": 20
+      }
+    },
+    {
+      "key": "yourlie",
+      "kind": "tv",
+      "id": "61663",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/61663/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Your Lie in April - S1:E1",
+          "ok": true,
+          "foundName": "Your Lie in April",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "url": "https://nxsha.space/embed/tv/61663/1/22?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Your Lie in April - S1:E22",
+          "ok": true,
+          "foundName": "Your Lie in April",
+          "foundSeason": 1,
+          "foundEpisode": 22
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1
+        ],
+        "epPairs": [
+          "1:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "jojo",
+      "kind": "tv",
+      "id": "45790",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/45790/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S1:E1",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 26,
+          "url": "https://nxsha.space/embed/tv/45790/1/26?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S1:E26",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 1,
+          "foundEpisode": 26
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/45790/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S2:E1",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 48,
+          "url": "https://nxsha.space/embed/tv/45790/2/48?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S2:E48",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 2,
+          "foundEpisode": 48
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/45790/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S3:E1",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 39,
+          "url": "https://nxsha.space/embed/tv/45790/3/39?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S3:E39",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 3,
+          "foundEpisode": 39
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/45790/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S4:E1",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 39,
+          "url": "https://nxsha.space/embed/tv/45790/4/39?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S4:E39",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 4,
+          "foundEpisode": 39
+        },
+        {
+          "season": 5,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/45790/5/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S5:E1",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 5,
+          "foundEpisode": 1
+        },
+        {
+          "season": 5,
+          "episode": 38,
+          "url": "https://nxsha.space/embed/tv/45790/5/38?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S5:E38",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 5,
+          "foundEpisode": 38
+        },
+        {
+          "season": 6,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/45790/6/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S6:E1",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 6,
+          "foundEpisode": 1
+        },
+        {
+          "season": 6,
+          "episode": 12,
+          "url": "https://nxsha.space/embed/tv/45790/6/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch JoJo&#x27;s Bizarre Adventure - S6:E12",
+          "ok": true,
+          "foundName": "JoJo&#x27;s Bizarre Adventure",
+          "foundSeason": 6,
+          "foundEpisode": 12
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [
+          "6:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "shangri",
+      "kind": "tv",
+      "id": "205050",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/205050/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Shangri-La Frontier - S1:E1",
+          "ok": true,
+          "foundName": "Shangri-La Frontier",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 51,
+          "url": "https://nxsha.space/embed/tv/205050/1/51?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Shangri-La Frontier - S1:E51",
+          "ok": true,
+          "foundName": "Shangri-La Frontier",
+          "foundSeason": 1,
+          "foundEpisode": 51
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1
+        ],
+        "epPairs": [
+          "1:1"
+        ],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "iruma",
+      "kind": "tv",
+      "id": "91801",
+      "ok": true,
+      "checks": [
+        {
+          "season": 1,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/91801/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S1:E1",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 1,
+          "foundEpisode": 1
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "url": "https://nxsha.space/embed/tv/91801/1/23?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S1:E23",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 1,
+          "foundEpisode": 23
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/91801/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S2:E1",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 21,
+          "url": "https://nxsha.space/embed/tv/91801/2/21?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S2:E21",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 2,
+          "foundEpisode": 21
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/91801/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S3:E1",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 21,
+          "url": "https://nxsha.space/embed/tv/91801/3/21?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S3:E21",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 3,
+          "foundEpisode": 21
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/91801/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S4:E1",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 24,
+          "url": "https://nxsha.space/embed/tv/91801/4/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch Welcome to Demon School! Iruma-kun - S4:E24",
+          "ok": true,
+          "foundName": "Welcome to Demon School! Iruma-kun",
+          "foundSeason": 4,
+          "foundEpisode": 24
+        }
+      ],
+      "seasonList": {
+        "seasonNumbers": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "epPairs": [
+          "4:1"
+        ],
+        "totalEpisodes": null
+      }
     }
   ],
   "saoMovie": [
@@ -4103,7 +4634,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13638,
+      "bytes": 13552,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -4113,15 +4644,15 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 88539,
+      "bytes": 87264,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
-        "https://www.youtube.com/watch?v=lqlYx4MdsAY",
-        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\",
-        "https://web.nxsha.app/movie/1441228\\",
-        "https://web.nxsha.app/movie/1441228\\",
         "https://web.nxsha.app/movie/1441228",
-        "https://web.nxsha.app/movie/1441228"
+        "https://web.nxsha.app/movie/1441228",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY",
+        "https://web.nxsha.app/movie/1441228\\",
+        "https://web.nxsha.app/movie/1441228\\",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\"
       ],
       "ordinals": [],
       "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href="
@@ -4180,8 +4711,8 @@
     }
   ],
   "summary": {
-    "titles": 59,
-    "ok": 59,
+    "titles": 64,
+    "ok": 64,
     "bad": [],
     "saoMovieMatch": [
       "413594"

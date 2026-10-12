@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-12T18:13:59.451Z",
+  "generatedAt": "2026-10-12T18:19:02.306Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [
     "onepiece"
   ],
   "summary": {
-    "requested": 46,
-    "harvested": 46,
+    "requested": 51,
+    "harvested": 51,
     "failed": [],
-    "episodes": 3858,
-    "stills": 3818,
-    "overviews": 3817
+    "episodes": 4550,
+    "stills": 4501,
+    "overviews": 4500
   },
   "titles": [
     {
@@ -658,6 +658,81 @@
       "episodes": 62,
       "stills": 62,
       "overviews": 62,
+      "ok": true
+    },
+    {
+      "key": "fairytail",
+      "title": "Fairy Tail",
+      "id": "46261",
+      "seasons": {
+        "1": 48,
+        "2": 48,
+        "3": 54,
+        "4": 25,
+        "5": 51,
+        "6": 39,
+        "7": 12,
+        "8": 51
+      },
+      "episodes": 328,
+      "stills": 328,
+      "overviews": 328,
+      "ok": true
+    },
+    {
+      "key": "yourlie",
+      "title": "Your Lie in April",
+      "id": "61663",
+      "seasons": {
+        "1": 22
+      },
+      "episodes": 22,
+      "stills": 22,
+      "overviews": 22,
+      "ok": true
+    },
+    {
+      "key": "jojo",
+      "title": "JoJo's Bizarre Adventure",
+      "id": "45790",
+      "seasons": {
+        "1": 26,
+        "2": 48,
+        "3": 39,
+        "4": 39,
+        "5": 38,
+        "6": 12
+      },
+      "episodes": 202,
+      "stills": 194,
+      "overviews": 194,
+      "ok": true
+    },
+    {
+      "key": "shangri",
+      "title": "Shangri-La Frontier",
+      "id": "205050",
+      "seasons": {
+        "1": 51
+      },
+      "episodes": 51,
+      "stills": 50,
+      "overviews": 50,
+      "ok": true
+    },
+    {
+      "key": "iruma",
+      "title": "Welcome to Demon School! Iruma-kun",
+      "id": "91801",
+      "seasons": {
+        "1": 23,
+        "2": 21,
+        "3": 21,
+        "4": 24
+      },
+      "episodes": 89,
+      "stills": 89,
+      "overviews": 89,
       "ok": true
     }
   ]
