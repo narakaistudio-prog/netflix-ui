@@ -77,6 +77,19 @@ jobs:
           fi
           node -e "const r=require('./data/nxsha-harvest-report.json'); console.log(JSON.stringify(r.summary, null, 2)); if (r.summary.failed.length || r.summary.harvested !== r.summary.requested) process.exit(1)"
 
+      - name: Preserve the Nxsha report when some routes fail
+        if: failure() && steps.harvest.outcome == 'success'
+        run: |
+          git config user.name "nxsha-guide-bot"
+          git config user.email "nxsha-guide-bot@users.noreply.github.com"
+          git add data/nxsha-harvest-report.json
+          if git diff --cached --quiet; then
+            echo "The failure report is already saved."
+          else
+            git commit -m "chore(nxsha): record incomplete harvest report"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
       - name: Commit refreshed Nxsha snapshot and Crunchyroll guide
         if: steps.harvest.outcome == 'success'
         run: |
