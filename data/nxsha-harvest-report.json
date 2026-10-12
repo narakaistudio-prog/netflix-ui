@@ -1,0 +1,407 @@
+{
+  "generatedAt": "2026-10-12T10:18:44.647Z",
+  "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
+  "excludedKeys": [
+    "onepiece"
+  ],
+  "summary": {
+    "requested": 28,
+    "harvested": 28,
+    "failed": [],
+    "episodes": 2802,
+    "stills": 2773,
+    "overviews": 2773
+  },
+  "titles": [
+    {
+      "key": "aot",
+      "title": "Attack on Titan",
+      "id": "1429",
+      "seasons": {
+        "1": 25,
+        "2": 12,
+        "3": 22,
+        "4": 28
+      },
+      "episodes": 87,
+      "stills": 87,
+      "overviews": 87,
+      "ok": true
+    },
+    {
+      "key": "tokyo",
+      "title": "Tokyo Revengers",
+      "id": "105009",
+      "seasons": {
+        "1": 55
+      },
+      "episodes": 55,
+      "stills": 52,
+      "overviews": 52,
+      "ok": true
+    },
+    {
+      "key": "vinland",
+      "title": "Vinland Saga",
+      "id": "88803",
+      "seasons": {
+        "1": 24,
+        "2": 24
+      },
+      "episodes": 48,
+      "stills": 48,
+      "overviews": 48,
+      "ok": true
+    },
+    {
+      "key": "sao",
+      "title": "Sword Art Online",
+      "id": "45782",
+      "seasons": {
+        "1": 25,
+        "2": 24,
+        "3": 24,
+        "4": 23
+      },
+      "episodes": 96,
+      "stills": 96,
+      "overviews": 96,
+      "ok": true
+    },
+    {
+      "key": "drstone",
+      "title": "Dr. STONE",
+      "id": "86031",
+      "seasons": {
+        "1": 24,
+        "2": 11,
+        "3": 22,
+        "4": 37
+      },
+      "episodes": 94,
+      "stills": 94,
+      "overviews": 94,
+      "ok": true
+    },
+    {
+      "key": "boruto",
+      "title": "Boruto: Naruto Next Generations",
+      "id": "70881",
+      "seasons": {
+        "1": 293
+      },
+      "episodes": 293,
+      "stills": 293,
+      "overviews": 293,
+      "ok": true
+    },
+    {
+      "key": "solo",
+      "title": "Solo Leveling",
+      "id": "127532",
+      "seasons": {
+        "1": 25
+      },
+      "episodes": 25,
+      "stills": 25,
+      "overviews": 25,
+      "ok": true
+    },
+    {
+      "key": "demon",
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "id": "85937",
+      "seasons": {
+        "1": 26,
+        "2": 7,
+        "3": 11,
+        "4": 11,
+        "5": 8
+      },
+      "episodes": 63,
+      "stills": 63,
+      "overviews": 63,
+      "ok": true
+    },
+    {
+      "key": "jjk",
+      "title": "JUJUTSU KAISEN",
+      "id": "95479",
+      "seasons": {
+        "1": 59
+      },
+      "episodes": 59,
+      "stills": 59,
+      "overviews": 59,
+      "ok": true
+    },
+    {
+      "key": "frieren",
+      "title": "Frieren: Beyond Journey's End",
+      "id": "209867",
+      "seasons": {
+        "1": 38
+      },
+      "episodes": 38,
+      "stills": 38,
+      "overviews": 38,
+      "ok": true
+    },
+    {
+      "key": "chainsaw",
+      "title": "Chainsaw Man",
+      "id": "114410",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "spy",
+      "title": "SPY x FAMILY",
+      "id": "120089",
+      "seasons": {
+        "1": 25,
+        "2": 12,
+        "3": 13
+      },
+      "episodes": 50,
+      "stills": 50,
+      "overviews": 50,
+      "ok": true
+    },
+    {
+      "key": "kaiju",
+      "title": "Kaiju No. 8",
+      "id": "207468",
+      "seasons": {
+        "1": 23
+      },
+      "episodes": 23,
+      "stills": 23,
+      "overviews": 23,
+      "ok": true
+    },
+    {
+      "key": "naruto",
+      "title": "Naruto Shippūden",
+      "id": "31910",
+      "seasons": {
+        "1": 32,
+        "2": 21,
+        "3": 18,
+        "4": 17,
+        "5": 24,
+        "6": 31,
+        "7": 8,
+        "8": 24,
+        "9": 21,
+        "10": 25,
+        "11": 21,
+        "12": 33,
+        "13": 20,
+        "14": 25,
+        "15": 28,
+        "16": 13,
+        "17": 11,
+        "18": 21,
+        "19": 20,
+        "20": 87
+      },
+      "episodes": 500,
+      "stills": 500,
+      "overviews": 500,
+      "ok": true
+    },
+    {
+      "key": "deathnote",
+      "title": "Death Note",
+      "id": "13916",
+      "seasons": {
+        "1": 37
+      },
+      "episodes": 37,
+      "stills": 37,
+      "overviews": 37,
+      "ok": true
+    },
+    {
+      "key": "mha",
+      "title": "My Hero Academia",
+      "id": "65930",
+      "seasons": {
+        "1": 13,
+        "2": 25,
+        "3": 25,
+        "4": 25,
+        "5": 25,
+        "6": 25,
+        "7": 21,
+        "8": 11
+      },
+      "episodes": 170,
+      "stills": 170,
+      "overviews": 170,
+      "ok": true
+    },
+    {
+      "key": "opm",
+      "title": "One-Punch Man",
+      "id": "63926",
+      "seasons": {
+        "1": 12,
+        "2": 12,
+        "3": 12
+      },
+      "episodes": 36,
+      "stills": 36,
+      "overviews": 36,
+      "ok": true
+    },
+    {
+      "key": "bleach",
+      "title": "Bleach",
+      "id": "30984",
+      "seasons": {
+        "1": 366,
+        "2": 50
+      },
+      "episodes": 416,
+      "stills": 414,
+      "overviews": 414,
+      "ok": true
+    },
+    {
+      "key": "hxh",
+      "title": "Hunter x Hunter",
+      "id": "46298",
+      "seasons": {
+        "1": 62,
+        "2": 74,
+        "3": 12
+      },
+      "episodes": 148,
+      "stills": 148,
+      "overviews": 148,
+      "ok": true
+    },
+    {
+      "key": "mob",
+      "title": "Mob Psycho 100",
+      "id": "67075",
+      "seasons": {
+        "1": 12,
+        "2": 13,
+        "3": 12
+      },
+      "episodes": 37,
+      "stills": 37,
+      "overviews": 37,
+      "ok": true
+    },
+    {
+      "key": "rezero",
+      "title": "Re:ZERO -Starting Life in Another World-",
+      "id": "65942",
+      "seasons": {
+        "1": 85
+      },
+      "episodes": 85,
+      "stills": 85,
+      "overviews": 85,
+      "ok": true
+    },
+    {
+      "key": "blackclover",
+      "title": "Black Clover",
+      "id": "73223",
+      "seasons": {
+        "1": 170,
+        "2": 26
+      },
+      "episodes": 196,
+      "stills": 172,
+      "overviews": 172,
+      "ok": true
+    },
+    {
+      "key": "haikyuu",
+      "title": "Haikyu!!",
+      "id": "60863",
+      "seasons": {
+        "1": 25,
+        "2": 25,
+        "3": 10,
+        "4": 25
+      },
+      "episodes": 85,
+      "stills": 85,
+      "overviews": 85,
+      "ok": true
+    },
+    {
+      "key": "bluelock",
+      "title": "BLUE LOCK",
+      "id": "131041",
+      "seasons": {
+        "1": 38
+      },
+      "episodes": 38,
+      "stills": 38,
+      "overviews": 38,
+      "ok": true
+    },
+    {
+      "key": "oshi",
+      "title": "【OSHI NO KO】",
+      "id": "203737",
+      "seasons": {
+        "1": 35
+      },
+      "episodes": 35,
+      "stills": 35,
+      "overviews": 35,
+      "ok": true
+    },
+    {
+      "key": "dandadan",
+      "title": "Dan Da Dan",
+      "id": "240411",
+      "seasons": {
+        "1": 24
+      },
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "tower",
+      "title": "Tower of God",
+      "id": "97860",
+      "seasons": {
+        "1": 13,
+        "2": 26
+      },
+      "episodes": 39,
+      "stills": 39,
+      "overviews": 39,
+      "ok": true
+    },
+    {
+      "key": "goh",
+      "title": "The God of High School",
+      "id": "99778",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    }
+  ]
+}
