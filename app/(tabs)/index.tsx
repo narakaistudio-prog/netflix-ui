@@ -15,6 +15,7 @@ import { styles } from '@/styles';
 import { AnimatedHeader } from '@/components/Header/AnimatedHeader';
 import { FeaturedContent } from '@/components/FeaturedContent/FeaturedContent';
 import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
+import { ContinueWatchingRow } from '@/components/ContinueWatchingRow';
 import { useDeviceMotion } from '@/hooks/useDeviceMotion';
 import { MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -190,6 +191,8 @@ export default function HomeScreen() {
             }
           />
           )}
+
+          <ContinueWatchingRow />
 
           {orderedMovies.map((row, index) => (
             <DeferredMovieList key={row.rowTitle} eager={index < 5} {...row} />

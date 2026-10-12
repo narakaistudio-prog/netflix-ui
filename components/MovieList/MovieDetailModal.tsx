@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE } from '@/lib/embeds';
+import { markWatched } from '@/lib/recentlyWatched';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -75,6 +76,20 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
 
     const handlePlay = () => {
         if (src) {
+            try {
+                markWatched({
+                    id: movie.id,
+                    titleId: movie.id,
+                    title: movie.title,
+                    type: 'movie',
+                    tmdbId: movie.tmdb_id,
+                    imdbId: movie.imdb_id,
+                    provider: movie.embed_provider || 'nxsha',
+                    imageUrl: movie.imageUrl,
+                    backdropUrl: movie.backdropUrl,
+                    year: movie.year,
+                });
+            } catch {}
             setPlaying(true);
             return;
         }
