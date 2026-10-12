@@ -6,7 +6,15 @@ on:
       - arena/1b9772fc-netflix-ui
     paths:
       - '.github/workflows/harvest-nxsha-guide.yml'
+  # GitHub runs scheduled workflows from the repository's default branch.
+  # 00:17 UTC is 05:47 in Asia/Kolkata and avoids the top-of-hour rush.
+  schedule:
+    - cron: '17 0 * * *'
   workflow_dispatch:
+
+concurrency:
+  group: nxsha-guide-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -36,6 +44,12 @@ jobs:
         continue-on-error: true
         run: node scripts/probe-nxsha.mjs
 
+      - name: Bake refreshed Nxsha season and episode data into Crunchyroll
+        if: steps.harvest.outcome == 'success'
+        run: |
+          node scripts/bake-animahd-links.mjs
+          node scripts/bake-animahd-links.mjs --check
+
       - name: Upload the Nxsha guide snapshot
         if: always()
         uses: actions/upload-artifact@v4
@@ -59,12 +73,12 @@ jobs:
           fi
           node -e "const r=require('./data/nxsha-harvest-report.json'); console.log(JSON.stringify(r.summary, null, 2)); if (r.summary.failed.length || r.summary.harvested !== r.summary.requested) process.exit(1)"
 
-      - name: Commit reviewed Nxsha snapshot to the requested branch
+      - name: Commit refreshed Nxsha snapshot and Crunchyroll guide
         if: steps.harvest.outcome == 'success'
         run: |
           git config user.name "nxsha-guide-bot"
           git config user.email "nxsha-guide-bot@users.noreply.github.com"
-          git add data/nxsha-titles.json data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json data/nxsha-verify.json
+          git add assets/crunchyroll/crunchyroll.html data/nxsha-titles.json data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json data/nxsha-verify.json
           if git diff --cached --quiet; then
             echo "Nxsha snapshot is already up to date."
           else
