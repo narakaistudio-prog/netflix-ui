@@ -74,6 +74,8 @@ test('Play starts the player inside the modal, and closing the player returns to
     act(() => { (play as HTMLElement).click(); });
     const player = document.querySelector('[data-testid="embed-player"]') as HTMLElement;
     expect(player.getAttribute('data-src')).toContain('/embed/movie/1441228');
+    expect(player.getAttribute('data-src')).toContain('color=netflix');
+    expect(player.getAttribute('data-src')).not.toContain('color=orange');
     expect(document.body.textContent).toContain('Irumudi');
     // Closing the player (its onClose) keeps the modal open on the same title.
     act(() => { player.click(); });

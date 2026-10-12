@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
-import { buildEmbedUrl } from '@/lib/embeds';
+import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE } from '@/lib/embeds';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -45,10 +45,13 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
     const src = useMemo(() => {
         if (!movie) return '';
         try {
+            const provider = movie.embed_provider || 'nxsha';
+            // Netflix titles play in the Netflix-accent nxsha player.
             return buildEmbedUrl(
-                movie.embed_provider || 'nxsha',
+                provider,
                 'movie',
                 { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url },
+                provider === 'nxsha' ? { movieTemplate: NETFLIX_NXSHA_MOVIE } : {},
             );
         } catch {
             return '';
