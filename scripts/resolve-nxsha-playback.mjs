@@ -181,9 +181,17 @@ async function verifyNxsha(kind, id, title) {
 
 /* --------------------------------- Main ---------------------------------- */
 
+/** Catalog year: the `year` field, else the trailing year in ids like `...-maharaja-2024`. */
+function catalogYearOf(item) {
+    const fromField = Number.parseInt(String(item.year ?? ''), 10);
+    if (fromField > 1900) return fromField;
+    const fromId = String(item.id ?? '').match(/-((?:19|20)\d{2})(?:-\d+)?$/);
+    return fromId ? Number.parseInt(fromId[1], 10) : null;
+}
+
 async function resolveOne(item) {
     const mediaType = item.mediaType === 'tv' || item.type === 'SERIES' ? 'tv' : 'movie';
-    const base = { id: item.id, title: item.title, mediaType, catalogYear: item.year ? Number(item.year) : null };
+    const base = { id: item.id, title: item.title, mediaType, catalogYear: catalogYearOf(item) };
     let wd;
     try {
         wd = await findWikidataIds(item.title, mediaType, base.catalogYear);
@@ -273,13 +281,15 @@ async function main() {
             const result = resultById.get(item?.id);
             if (!result) continue;
             const prev = previousOk.get(item.id);
-            const ours = prev && item.imdb_id === prev.imdb_id;
-            if (result.ok) {
-                if (!item.embed_url && !item.tmdb_id && !item.imdb_id) added += 1;
+            const ours = Boolean(prev) && item.imdb_id === prev.imdb_id;
+            // Never overwrite a playback id that came from the catalog itself.
+            const missingHere = !item.embed_url && !item.tmdb_id && !item.imdb_id;
+            if (result.ok && (missingHere || ours)) {
+                if (missingHere) added += 1;
                 if (result.imdb_id) item.imdb_id = result.imdb_id;
                 if (result.tmdb_id) item.tmdb_id = result.tmdb_id;
                 item.embed_provider = 'nxsha';
-            } else if (ours) {
+            } else if (!result.ok && ours) {
                 // Re-check failed: undo only the fields this script wrote.
                 delete item.imdb_id;
                 if (prev.tmdb_id && item.tmdb_id === prev.tmdb_id) delete item.tmdb_id;
