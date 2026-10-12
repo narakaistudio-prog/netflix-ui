@@ -1,3 +1,135 @@
 {
-    "movies": []
+    "movies": [
+        {
+            "rowTitle": "Trending Now in India",
+            "type": "top_10",
+            "movies": [
+                {
+                    "id": "tudum-top10-india-vishwanath-and-sons",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABcRBlvOhmFSXlv0EUDgiPbZ-FEsh_mUvG5fiDp4SyiEeV7YtCwC3gEKvOqArm7wwPY9Wuu1A1OfIT1SbUkViqzV68ASz-0CYfjkp_J3Lq6A.png?r=22c",
+                    "title": "Vishwanath & Sons",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#1 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "82034837",
+                    "netflixUrl": "https://www.netflix.com/in/title/82034837",
+                    "tmdb_id": "1408162",
+                    "embed_provider": "nxsha"
+                },
+                {
+                    "id": "tudum-top10-india-irumudi",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABTRr-2lGyfeidREZ6VHeOv5KNigbvDfWfJkQQLLuCJnnSMMbHG1EUPB5p-C7iwwucKdwNycrKEADOZrIUPxrOMYtuzH5AQIEmRlhZ89m7Bo.png?r=e05",
+                    "title": "Irumudi",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#2 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "83001420",
+                    "netflixUrl": "https://www.netflix.com/in/title/83001420",
+                    "year": "2026",
+                    "tmdb_id": "1441228",
+                    "embed_provider": "nxsha"
+                },
+                {
+                    "id": "tudum-top10-india-modha-rathri",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABW_wFTfN40_G9BU-aQfgUtCpRuluTDg88fQRFQVUbiA63BftUiWt5YWn5JJsPpPwY919vmoHCLTVESgILQ1rs5QdE_fY4y4rWgk0i6O_PBE.png?r=e1d",
+                    "title": "Modha Rathri",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#3 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "82811466",
+                    "netflixUrl": "https://www.netflix.com/in/title/82811466",
+                    "tmdb_id": "1685882",
+                    "imdb_id": "tt42262473",
+                    "embed_provider": "nxsha"
+                },
+                {
+                    "id": "tudum-top10-india-baby-do-die-do",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABV_UXtVDC3C5euIL6waj20qhZQTokyfWdE7w-8azkXBmvSVGhRsrKCqA5HC2PoW-nLOfuKePDfq4qaI55z-LigJs9uTJh4hxxGQYJfJbCUw.png?r=8da",
+                    "title": "Baby Do Die Do",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#4 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "83195142",
+                    "netflixUrl": "https://www.netflix.com/in/title/83195142",
+                    "tmdb_id": "1512084",
+                    "imdb_id": "tt37544992",
+                    "embed_provider": "nxsha"
+                },
+                {
+                    "id": "tudum-top10-india-romanchakam",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABbX0bCu45WuD2cU8M8zBt2TaLJvBVPxgUJVjaYAL584S4uD1vIsjdtgLdi6U_QQCdtw4TpY1USd4mK9Cro033asy6Y11LsrqLiYky38HSAA.png?r=969",
+                    "title": "Romanchakam",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#5 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "82969780",
+                    "netflixUrl": "https://www.netflix.com/in/title/82969780"
+                },
+                {
+                    "id": "tudum-top10-india-demon-slayer-infinity-castle-1",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABTf_clq2cj5fGg5aUncTjRnFWbb2bcBVewRpuLGOZorPlivT9talP-HN5ZcsPXxCt5pAMKzt2NZbz1fvbzefTR0ghb2yYIGp_P7jDp9gNi0.png?r=434",
+                    "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle I",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#6 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "82723106",
+                    "netflixUrl": "https://www.netflix.com/in/title/82723106"
+                },
+                {
+                    "id": "tudum-top10-india-lust-stories-3",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABV2rCPWlr_fef42rOyRnICZ9O86sOmD3QnmKWPOlzntlajiIFGvRTADFXAk_eE5-J-YMF7QWetIMsOTWVWDYY5SHBDldbjnUmbw2lyiQnm8.png?r=1a2",
+                    "title": "Lust Stories 3",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#7 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "81734814",
+                    "netflixUrl": "https://www.netflix.com/in/title/81734814",
+                    "year": "2026",
+                    "tmdb_id": "1451944",
+                    "embed_provider": "nxsha"
+                },
+                {
+                    "id": "tudum-top10-india-unabomber",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABVarJDrzS43TVAJGCbVvjbrCUfKm1irPWaOO3veM0k4cxAyyvRvJAr3DwKL1KV4IyA5lISY0nKw1LKmLB0hScya1EycTHN83XNOZ8kJ__V4.png?r=c2d",
+                    "title": "UNABOMBER",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#8 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "82010386",
+                    "netflixUrl": "https://www.netflix.com/in/title/82010386"
+                },
+                {
+                    "id": "tudum-top10-india-ohh-my-dog",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABU78sRMK8UNPFxe-TW9_IBgi3bK9cBLC18c8L7beNaQPo3jspZ95krrDeWjnlB8srB_ROpaOVbVWrWpIjD6HLFTzdOgXgdWBmIPIXfGSino.png?r=7eb",
+                    "title": "Ohh My Dog",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#9 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "83197638",
+                    "netflixUrl": "https://www.netflix.com/in/title/83197638"
+                },
+                {
+                    "id": "tudum-top10-india-dhamaal-4",
+                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABTqW_MNOB8l_lnFIycNi1LHkAz988Gl_coYvGRPMen5eZHMwMJcyewdZ2m4dmxh_yEgeN3iWIE3cU2TWn3bCAyX8PlY4yogQj2Mokn0yDVA.png?r=af7",
+                    "title": "Dhamaal 4",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "ranking_text": "#10 in Movies",
+                    "catalogSource": "tudum-top10-india",
+                    "netflixId": "81950460",
+                    "netflixUrl": "https://www.netflix.com/in/title/81950460",
+                    "year": "2025"
+                }
+            ]
+        }
+    ]
 }
