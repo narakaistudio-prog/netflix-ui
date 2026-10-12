@@ -225,6 +225,30 @@ test('episode cards use Nxsha stills, titles, and synopsis, without changing One
         expect(cards[0].querySelector('.episode-desc')).toBeNull();
         expect(cards[0].querySelector('.episode-runtime')).toBeNull();
     }
+    // The episode list scrolls inside .detail-page, not the window. A newly
+    // visible lazy still must be promoted from data-src to src there.
+    await wait(130);
+    const lazyStill = cards[14].querySelector('img') as HTMLImageElement;
+    const lazyStillUrl = lazyStill.getAttribute('data-src');
+    expect(lazyStillUrl).toBeTruthy();
+    Object.defineProperty(lazyStill, 'offsetWidth', { configurable: true, get: () => 100 });
+    Object.defineProperty(lazyStill, 'offsetHeight', { configurable: true, get: () => 56 });
+    let stillTop = 5000;
+    lazyStill.getBoundingClientRect = () => ({
+        x: 0, y: stillTop, top: stillTop, bottom: stillTop + 56,
+        left: 0, right: 100, width: 100, height: 56,
+        toJSON: () => ({}),
+    } as DOMRect);
+    const detailPageScroller = doc.querySelector('.detail-page')!;
+    detailPageScroller.dispatchEvent(new dom.window.Event('scroll'));
+    await wait(130);
+    expect(lazyStill.hasAttribute('data-src')).toBe(true);
+    stillTop = 100;
+    detailPageScroller.dispatchEvent(new dom.window.Event('scroll'));
+    await wait(130);
+    expect(lazyStill.hasAttribute('data-src')).toBe(false);
+    expect(lazyStill.getAttribute('src')).toBe(lazyStillUrl);
+
     if (snapshot) {
         click(dom.window, doc.querySelector('.dialog-close'));
         await wait(60);

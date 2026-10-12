@@ -90,6 +90,7 @@ test('episode guide bakes Nxsha-only images and details separately from playback
     expect(html).toContain("(ep.desc?'<span class=\"episode-desc\">'");
     expect(html).toContain("(ep.runtime?'<span class=\"episode-runtime\">'");
     expect(html).toContain('.episode-copy .episode-air-date');
+    expect(html).toContain("detailPageScroller.addEventListener('scroll',queueLazy,false)");
 });
 
 test('player has Nxsha failure handling with retry and no fallback tab', () => {
