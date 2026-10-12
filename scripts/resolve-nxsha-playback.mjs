@@ -27,7 +27,9 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 // Same query string as lib/embeds.ts DEFAULT_NXSHA_* (verified provider defaults).
 const PARAMS = 'server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true';
 const TIMEOUT_MS = 20_000;
-const CONCURRENCY = 4;
+const CONCURRENCY = 2;
+// Wikidata asks API clients to send a descriptive UA and to stay polite.
+const WIKIDATA_UA = 'netflix-ui-catalog-resolver/1.0 (https://github.com/narakaistudio-prog/netflix-ui)';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -41,16 +43,23 @@ const norm = value => String(value ?? '')
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-async function request(url, { json = false, retries = 2 } = {}) {
+async function request(url, { json = false, userAgent = UA, retries = 2 } = {}) {
     let lastError;
     for (let attempt = 0; attempt <= retries; attempt += 1) {
         try {
             const res = await fetch(url, {
-                headers: { 'user-agent': UA, accept: json ? 'application/json' : 'text/html,*/*' },
+                headers: { 'user-agent': userAgent, accept: json ? 'application/json' : 'text/html,*/*' },
                 signal: AbortSignal.timeout(TIMEOUT_MS),
                 redirect: 'follow',
             });
             const text = await res.text();
+            if (res.status === 429 && attempt < 6) {
+                // Rate limited: back off (Retry-After when given) and try again.
+                const wait = Number.parseInt(res.headers.get('retry-after') ?? '', 10) * 1000 || 8000 * (attempt + 1);
+                await sleep(wait);
+                lastError = new Error('HTTP 429');
+                continue;
+            }
             return { status: res.status, text, finalUrl: res.url };
         } catch (error) {
             lastError = error;
@@ -60,8 +69,8 @@ async function request(url, { json = false, retries = 2 } = {}) {
     throw lastError;
 }
 
-async function getJson(url) {
-    const res = await request(url, { json: true });
+async function getJson(url, { userAgent = UA } = {}) {
+    const res = await request(url, { json: true, userAgent, retries: 2 });
     if (res.status !== 200) throw new Error(`HTTP ${res.status} ${url}`);
     return JSON.parse(res.text);
 }
@@ -86,7 +95,7 @@ async function findWikidataIds(title, mediaType) {
         action: 'wbsearchentities', search: title, language: 'en', uselang: 'en',
         type: 'item', limit: '10', format: 'json', origin: '*',
     }).forEach(([k, v]) => search.searchParams.set(k, v));
-    const hits = (await getJson(search)).search ?? [];
+    const hits = (await getJson(search, { userAgent: WIKIDATA_UA })).search ?? [];
     if (!hits.length) return { reason: 'wikidata: no search hits' };
 
     const ids = hits.map(h => h.id).join('|');
@@ -95,7 +104,7 @@ async function findWikidataIds(title, mediaType) {
         action: 'wbgetentities', ids, props: 'claims|labels|aliases', languages: 'en',
         format: 'json', origin: '*',
     }).forEach(([k, v]) => get.searchParams.set(k, v));
-    const entities = (await getJson(get)).entities ?? {};
+    const entities = (await getJson(get, { userAgent: WIKIDATA_UA })).entities ?? {};
 
     const want = norm(title);
     for (const hit of hits) {
@@ -220,7 +229,7 @@ async function mapConcurrent(items, limit, fn) {
             const index = next;
             next += 1;
             out[index] = await fn(items[index], index);
-            await sleep(200);
+            await sleep(1200);
         }
     });
     await Promise.all(workers);
@@ -238,6 +247,18 @@ async function main() {
         console.log(`[${index + 1}/${targets.length}] ${result.ok ? 'OK  ' : 'miss'} ${item.title} ${result.imdb_id ?? ''} ${result.ok ? '' : result.reason}`);
         return result;
     });
+
+    // Keep verified ids from earlier runs in the report (the catalog keeps them too).
+    const previous = (() => {
+        try {
+            return JSON.parse(readFileSync(REPORT_PATH, 'utf8')).titles ?? [];
+        } catch {
+            return [];
+        }
+    })();
+    const current = new Map(previous.filter(r => r.ok).map(r => [r.id, r]));
+    for (const r of results) current.set(r.id, r);
+    const mergedTitles = [...current.values()];
 
     const verified = new Map(results.filter(r => r.ok).map(r => [r.id, r]));
     let updatedRows = 0;
@@ -260,7 +281,7 @@ async function main() {
         unresolved: results.length - verified.size,
         itemsUpdated: updatedRows,
     };
-    writeFileSync(REPORT_PATH, JSON.stringify({ summary, titles: results }, null, 2) + '\n');
+    writeFileSync(REPORT_PATH, JSON.stringify({ summary, titles: mergedTitles }, null, 2) + '\n');
     console.log(JSON.stringify(summary, null, 2));
 
     if (DRY_RUN) {
