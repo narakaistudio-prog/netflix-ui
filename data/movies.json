@@ -31,7 +31,12 @@
                         "Bhavani Sre",
                         "V.J. Pappu"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg",
+                    "genres": [
+                        "Drama",
+                        "Romance",
+                        "Comedy"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-irumudi",
@@ -60,7 +65,12 @@
                         "Kishore Kumar Polimera",
                         "Laxman Meesala"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg",
+                    "genres": [
+                        "Drama",
+                        "Action",
+                        "Thriller"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-modha-rathri",
@@ -89,7 +99,12 @@
                         "Abdool Lee",
                         "Banupriya"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg",
+                    "genres": [
+                        "Comedy",
+                        "Drama",
+                        "Family"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-baby-do-die-do",
@@ -116,7 +131,13 @@
                         "Vidya Malvade",
                         "Kailash Waghmare"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg",
+                    "genres": [
+                        "Mystery",
+                        "Thriller",
+                        "Crime",
+                        "Action"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-romanchakam",
@@ -139,7 +160,12 @@
                         "Upendra Limaye",
                         "Anudeep"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/z5Lm7BZ6yZ9PY6eHEsFss6pMdhx.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/z5Lm7BZ6yZ9PY6eHEsFss6pMdhx.jpg",
+                    "genres": [
+                        "Romance",
+                        "Comedy",
+                        "Drama"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-demon-slayer-infinity-castle-1",
@@ -168,7 +194,12 @@
                         "Yoshimasa Hosoya",
                         "Saori Hayami"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1RgPyOhN4DRs225BGTlHJqCudII.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1RgPyOhN4DRs225BGTlHJqCudII.jpg",
+                    "genres": [
+                        "Animation",
+                        "Action",
+                        "Fantasy"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-lust-stories-3",
@@ -196,7 +227,11 @@
                         "Siddharth",
                         "Gurfateh Pirzada"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg",
+                    "genres": [
+                        "Romance",
+                        "Drama"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-unabomber",
@@ -225,7 +260,12 @@
                         "David Webster",
                         "Bruce Ramsay"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg",
+                    "genres": [
+                        "Thriller",
+                        "Drama",
+                        "Crime"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-ohh-my-dog",
@@ -249,7 +289,11 @@
                         "Rajesh Kumar",
                         "Jitendra Joshi"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nOQYly08Rv5fepk67i4wy43Oyyf.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nOQYly08Rv5fepk67i4wy43Oyyf.jpg",
+                    "genres": [
+                        "Drama",
+                        "Family"
+                    ]
                 },
                 {
                     "id": "tudum-top10-india-dhamaal-4",
@@ -278,7 +322,10 @@
                         "Sanjeeda Sheikh",
                         "Esha Gupta"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/95sjD0dRajtU6SKD6Gq6PtrGoGY.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/95sjD0dRajtU6SKD6Gq6PtrGoGY.jpg",
+                    "genres": [
+                        "Comedy"
+                    ]
                 }
             ]
         }
