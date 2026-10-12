@@ -22,7 +22,7 @@ test('animahd episodes data is valid (solo: 25 eps, S1+S2)', () => {
     expect(data.solo.eps[24]).toBe('1HVCzW7WQaIh35zaniBTvhwqz6pLjY7kp');
 });
 
-test('animahd bake stays in sync with the demo page', () => {
+test('episode metadata bake stays in sync with the demo page', () => {
     const out = execFileSync(
         process.execPath,
         [join(ROOT, 'scripts', 'bake-animahd-links.mjs'), '--check'],
@@ -33,7 +33,8 @@ test('animahd bake stays in sync with the demo page', () => {
         join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'),
         'utf8',
     );
-    expect(html).toContain('var EP_DATA={"solo":{"slug":"solo-leveling","showId":1138');
+    expect(html).toContain('var EP_DATA={"solo":{"slug":"solo-leveling","seasons":{"1":12,"2":13}');
+    expect(html).not.toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
 });
 
 test('animahd harvester self-test passes offline', () => {

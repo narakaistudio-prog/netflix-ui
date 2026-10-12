@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Verify nxsha.space (the fallback player) ids + season/episode numbering.
+ * Verify the Nxsha-only Crunchyroll player ids + season/episode numbering.
  *
  * Runs on a hosted runner (the workspace sandbox cannot reach nxsha).
  * Reads data/nxsha-plan.json and, for every title:
  *   - movies: fetches /embed/movie/{id} and checks the <title> names it
  *   - tv    : fetches /embed/tv/{id}/{s}/{e} for the first and last episode of
- *             every planned season and checks the <title> says S<s>:E<e>
+ *             every mapped season and checks the <title> says S<s>:E<e>
+ * Season maps accept either the legacy ordered array or explicit season-number
+ * objects, so gaps in the Crunchyroll guide don't shift provider numbering.
  * Also hunts the still-unknown Sword Art Online: Ordinal Scale id through the
  * site's own pages/sitemap (data/nxsha-plan.json -> saoMovieCandidates).
  *
@@ -107,9 +109,11 @@ async function checkMovie(t, report) {
 async function checkTv(t, report) {
     const seasonMap = {};
     const checks = [];
-    let seasonNumber = 0;
-    for (const count of t.seasons) {
-        seasonNumber += 1;
+    const plannedSeasons = Array.isArray(t.seasons)
+        ? t.seasons.map((count, index) => [String(index + 1), count])
+        : Object.entries(t.seasons || {});
+    for (const [seasonKey, count] of plannedSeasons) {
+        const seasonNumber = Number.parseInt(String(seasonKey), 10);
         const eps = [1, count]; // first + last of the season
         for (const ep of [...new Set(eps)]) {
             const url = `https://nxsha.space/embed/tv/${t.id}/${seasonNumber}/${ep}?${PARAMS}`;
