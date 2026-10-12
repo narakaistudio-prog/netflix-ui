@@ -2,9 +2,10 @@
 /**
  * Bake episode-guide metadata and Nxsha provider ids into the Crunchyroll page.
  *
- * The legacy episode harvest remains useful for season counts and display
- * labels, but its external file ids are deliberately not shipped to the page.
- * Every playback URL is built from data/nxsha-titles.json and points to Nxsha.
+ * The legacy episode harvest contributes no non-One-Piece guide metadata;
+ * its external file ids are deliberately not shipped to the page. Only the
+ * separately harvested Nxsha episode snapshot supplies guide details. Every
+ * playback URL is built from data/nxsha-titles.json and points to Nxsha.
  *
  * Usage: node scripts/bake-animahd-links.mjs [--check]
  *   --check   verify the HTML is already in sync (CI-friendly, no write)
@@ -16,10 +17,13 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const JSON_PATH = resolve(ROOT, 'data', 'animahd-episodes.json');
 const NX_PATH = resolve(ROOT, 'data', 'nxsha-titles.json');
+const NX_EPISODES_PATH = resolve(ROOT, 'data', 'nxsha-episodes.json');
 const NX_VERIFY_PATH = resolve(ROOT, 'data', 'nxsha-verify.json');
 const HTML_PATH = resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const START = '/*__ANIMAHDEP__*/';
 const END = '/*__END_ANIMAHDEP__*/';
+const GUIDE_START = '/*__NXSHA_GUIDE__*/';
+const GUIDE_END = '/*__END_NXSHA_GUIDE__*/';
 const NX_START = '/*__NXSHA__*/';
 const NX_END = '/*__END_NXSHA__*/';
 
@@ -94,6 +98,51 @@ export function validateNxsha(data) {
     return data;
 }
 
+/**
+ * Bake only metadata harvested from Nxsha. Local catalogue episode data is not
+ * an Nxsha-confirmed source, so missing fields remain absent for the UI to
+ * represent as an episode-specific placeholder rather than show art/text.
+ * One Piece is deliberately skipped because its guide must stay unchanged.
+ */
+export function buildNxshaEpisodeGuide(nxData, nxshaEpisodes = {}) {
+    const result = {};
+    for (const [key, title] of Object.entries(nxData || {})) {
+        if (key.startsWith('_') || key === 'onepiece' || title.kind !== 'tv') continue;
+        const harvested = nxshaEpisodes?.shows?.[key];
+        if (!Array.isArray(harvested?.episodes)) continue;
+        const bySeason = {};
+        for (const episode of harvested.episodes) {
+            const seasonNumber = Number(episode.season);
+            const episodeNumber = Number(episode.episode);
+            if (!Number.isInteger(seasonNumber) || seasonNumber < 1 || !Number.isInteger(episodeNumber) || episodeNumber < 1) continue;
+            const overview = String(episode.overview || '')
+                .replace(/<[^>]*>/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+            const metadata = {
+                ...(episode.title ? { title: String(episode.title).trim() } : {}),
+                ...(episode.image ? { image: String(episode.image) } : {}),
+                ...(overview ? { overview } : {}),
+                ...(episode.airDate ? { airDate: String(episode.airDate) } : {}),
+                ...(episode.runtime ? { runtime: episode.runtime } : {}),
+            };
+            if (!Object.keys(metadata).length) continue;
+            bySeason[String(seasonNumber)] ||= {};
+            bySeason[String(seasonNumber)][String(episodeNumber)] = metadata;
+        }
+        if (Object.keys(bySeason).length) result[key] = bySeason;
+    }
+    return result;
+}
+
+function inlineJson(value) {
+    const slash = String.fromCharCode(92);
+    return JSON.stringify(value)
+        .replace(/</g, `${slash}u003c`)
+        .split(String.fromCharCode(0x2028)).join(`${slash}u2028`)
+        .split(String.fromCharCode(0x2029)).join(`${slash}u2029`);
+}
+
 function main() {
     const checkOnly = process.argv.includes('--check');
     const data = validateEpisodes(JSON.parse(readFileSync(JSON_PATH, 'utf8')));
@@ -123,11 +172,20 @@ function main() {
     if (unverified.length) {
         console.warn(`WARNING: unverified nxsha ids: ${unverified.join(', ')}`);
     }
+    const guideStart = html.indexOf(GUIDE_START);
+    const guideEnd = html.indexOf(GUIDE_END);
     const nxStart = html.indexOf(NX_START);
     const nxEnd = html.indexOf(NX_END);
+    if (guideStart === -1 || guideEnd === -1 || guideEnd < guideStart) {
+        throw new Error('NXSHA_GUIDE markers not found in demo HTML');
+    }
     if (nxStart === -1 || nxEnd === -1 || nxEnd < nxStart) {
         throw new Error('NXSHA markers not found in demo HTML');
     }
+    const nxshaEpisodes = existsSync(NX_EPISODES_PATH)
+        ? JSON.parse(readFileSync(NX_EPISODES_PATH, 'utf8'))
+        : {};
+    const nxEpisodeGuide = buildNxshaEpisodeGuide(nxData, nxshaEpisodes);
     const episodeMeta = Object.fromEntries(
         Object.entries(data).map(([key, entry]) => [key, {
             slug: entry.slug,
@@ -136,12 +194,15 @@ function main() {
             labels: entry.labels || [],
         }]),
     );
-    const baked = `${START}var EP_DATA=${JSON.stringify(episodeMeta)};${END}`;
-    const bakedNx = `${NX_START}var NX_DATA=${JSON.stringify(nxData)};${NX_END}`;
+    const baked = `${START}var EP_DATA=${inlineJson(episodeMeta)};${END}`;
+    const bakedGuide = `${GUIDE_START}var NX_EPISODE_DATA=${inlineJson(nxEpisodeGuide)};${GUIDE_END}`;
+    const bakedNx = `${NX_START}var NX_DATA=${inlineJson(nxData)};${NX_END}`;
     const next =
         html.slice(0, si) +
         baked +
-        html.slice(ei + END.length, nxStart) +
+        html.slice(ei + END.length, guideStart) +
+        bakedGuide +
+        html.slice(guideEnd + GUIDE_END.length, nxStart) +
         bakedNx +
         html.slice(nxEnd + NX_END.length);
     const keys = Object.keys(data).length;
@@ -151,8 +212,20 @@ function main() {
         (n, e) => n + Object.values(e.seasons).reduce((a, b) => a + b, 0),
         0,
     );
+    const guideTitles = Object.keys(nxEpisodeGuide).length;
+    const guideEpisodes = Object.values(nxEpisodeGuide).reduce(
+        (total, seasons) => total + Object.values(seasons).reduce((sum, episodes) => sum + Object.keys(episodes).length, 0),
+        0,
+    );
+    const episodeStills = Object.values(nxEpisodeGuide).reduce(
+        (total, seasons) => total + Object.values(seasons).reduce(
+            (sum, episodes) => sum + Object.values(episodes).filter((episode) => episode.image).length,
+            0,
+        ),
+        0,
+    );
     const summary =
-        `episode guide ${keys} titles/${eps} labels + Nxsha ${nxKeys} titles/${nxEps} episodes` +
+        `episode guide ${keys} titles/${eps} labels + Nxsha ${nxKeys} titles/${nxEps} episodes + guide metadata ${guideTitles} titles/${guideEpisodes} episodes/${episodeStills} stills` +
         (unverified.length ? ` (${unverified.length} unverified id(s)!)` : ' (all nxsha ids verified)');
     if (next === html) {
         console.log(`already in sync (${summary}).`);

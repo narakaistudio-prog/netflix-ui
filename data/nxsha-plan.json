@@ -1,5 +1,5 @@
 {
-  "_comment": "All Crunchyroll catalog titles are routed through Nxsha. IDs use TMDB numeric IDs or IMDb tt IDs; seasons is a map of actual season number to episode count so sparse season numbering stays intact.",
+  "_comment": "All Crunchyroll catalog titles are routed through Nxsha. Six original series and twelve movies retain successful probe results; remaining series season counts are refreshed from checked-in catalogue metadata but are not live-verified against Nxsha. One Piece is excluded from the season-count update.",
   "titles": [
     {
       "key": "aot",
@@ -19,9 +19,7 @@
       "kind": "tv",
       "id": "105009",
       "seasons": {
-        "1": 24,
-        "2": 13,
-        "3": 12
+        "1": 55
       }
     },
     {

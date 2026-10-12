@@ -1,5 +1,5 @@
 {
-  "_comment": "Single player source for the 41-title Crunchyroll catalog. All entries use nxsha.space/embed/{movie|tv}/{id}[/{season}/{episode}]. Existing mappings retain their probe verification; newly migrated titles are checked by scripts/probe-nxsha.mjs when run from a network-enabled runner.",
+  "_comment": "Single player source for the 41-title Crunchyroll catalog. All entries use nxsha.space/embed/{movie|tv}/{id}[/{season}/{episode}]. Six original series and twelve movies retain successful probe results; the remaining series season maps use the fullest checked-in catalogue metadata available and still need live Nxsha verification. One Piece season counts are intentionally unchanged.",
   "aot": {
     "id": "tt2560140",
     "kind": "tv",
@@ -16,9 +16,7 @@
     "id": "105009",
     "kind": "tv",
     "seasons": {
-      "1": 24,
-      "2": 13,
-      "3": 12
+      "1": 55
     },
     "title": "Tokyo Revengers",
     "verified": "2026-10-11"

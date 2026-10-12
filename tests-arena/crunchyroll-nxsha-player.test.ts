@@ -4,7 +4,7 @@
  * The page is a self-contained document, so it is booted in jsdom and driven
  * like a user would: open a catalog title, hit play, and click the poster.
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { JSDOM, VirtualConsole } from 'jsdom';
 
@@ -26,6 +26,41 @@ function readNxData(): Record<string, NxTitle> {
     const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
     if (!match) throw new Error('Nxsha title table is missing from the Crunchyroll page');
     return JSON.parse(match[1]);
+}
+
+type NxEpisodeMeta = {
+    title?: string;
+    image?: string;
+    overview?: string;
+    airDate?: string;
+    runtime?: number;
+};
+
+type NxEpisodeGuide = Record<string, Record<string, Record<string, NxEpisodeMeta>>>;
+
+function readNxEpisodeGuide(): NxEpisodeGuide {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const match = html.match(/\/\*__NXSHA_GUIDE__\*\/var NX_EPISODE_DATA=(\{.*?\});\/\*__END_NXSHA_GUIDE__\*\//);
+    if (!match) throw new Error('Nxsha episode guide is missing from the Crunchyroll page');
+    return JSON.parse(match[1]);
+}
+
+type NxEpisodeRecord = {
+    season: number;
+    episode: number;
+    title?: string;
+    image?: string;
+    overview?: string;
+    airDate?: string;
+    runtime?: number;
+};
+
+type NxEpisodeSnapshot = {
+    shows: Record<string, { seasons: Record<string, number>; episodes: NxEpisodeRecord[] }>;
+};
+
+function readNxEpisodeSnapshot(): NxEpisodeSnapshot {
+    return JSON.parse(readFileSync(join(ROOT, 'data', 'nxsha-episodes.json'), 'utf8'));
 }
 
 function boot() {
@@ -118,6 +153,77 @@ test('all 41 Crunchyroll catalog titles have one Nxsha mapping', async () => {
         expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
         expect(['tv', 'movie']).toContain(entry.kind);
         expect(Object.keys(entry.seasons).length).toBeGreaterThan(0);
+    }
+    dom.window.close();
+});
+
+test('all non-One-Piece season maps match the harvested Nxsha episode guide when available', () => {
+    const nxData = readNxData();
+    expect(nxData.onepiece.seasons).toEqual({ '1': 31, '20': 10 });
+    expect(nxData.tokyo.seasons).toEqual({ '1': 55 });
+    const snapshotPath = join(ROOT, 'data', 'nxsha-episodes.json');
+    if (!existsSync(snapshotPath)) {
+        // Bootstrap commits must not mistake unchecked-in local counts for Nxsha data.
+        expect(readNxEpisodeGuide()).toEqual({});
+        return;
+    }
+    const snapshot = readNxEpisodeSnapshot();
+    const animeKeys = Object.entries(nxData)
+        .filter(([key, entry]) => entry.kind === 'tv' && key !== 'onepiece')
+        .map(([key]) => key)
+        .sort();
+    expect(Object.keys(snapshot.shows).sort()).toEqual(animeKeys);
+
+    for (const key of animeKeys) {
+        const counts: Record<string, number> = {};
+        for (const episode of snapshot.shows[key].episodes) {
+            counts[String(episode.season)] = (counts[String(episode.season)] || 0) + 1;
+        }
+        expect(nxData[key].seasons).toEqual(counts);
+        expect(Object.values(nxData[key].seasons).reduce((sum, count) => sum + count, 0)).toBe(
+            snapshot.shows[key].episodes.length,
+        );
+    }
+});
+
+test('episode cards use Nxsha stills, titles, and synopsis, without changing One Piece metadata', async () => {
+    const guide = readNxEpisodeGuide();
+    expect(guide.onepiece).toBeUndefined();
+    const snapshotPath = join(ROOT, 'data', 'nxsha-episodes.json');
+    const snapshot = existsSync(snapshotPath) ? readNxEpisodeSnapshot() : null;
+    const firstEpisode = snapshot
+        ? snapshot.shows.vinland.episodes.find((episode) => episode.season === 1 && episode.episode === 1)!
+        : null;
+    if (snapshot) {
+        expect(firstEpisode).toBeTruthy();
+        expect(firstEpisode!.title).toBeTruthy();
+        expect(firstEpisode!.image).toMatch(/^https:\/\/image\.tmdb\.org\//);
+        expect(firstEpisode!.overview).toBeTruthy();
+        expect(guide.vinland['1']['1']).toMatchObject({
+            title: firstEpisode!.title,
+            image: firstEpisode!.image,
+            overview: firstEpisode!.overview,
+        });
+    } else {
+        expect(guide).toEqual({});
+    }
+
+    const dom = boot();
+    await wait(180);
+    const doc = dom.window.document;
+    click(dom.window, await waitForElement(dom.window, '#catalogGrid [data-open="vinland"]'));
+    await wait(80);
+    const cards = Array.from(doc.querySelectorAll('#episodeList .episode-card'));
+    expect(cards).toHaveLength(readNxData().vinland.seasons['1']);
+    if (firstEpisode) {
+        expect(cards[0].querySelector('strong')?.textContent).toBe(firstEpisode.title);
+        expect(cards[0].querySelector('img')?.getAttribute('data-src')).toBe(firstEpisode.image);
+        expect(cards[0].querySelector('.episode-desc')?.textContent).toBe(firstEpisode.overview);
+    } else {
+        expect(cards[0].querySelector('strong')?.textContent).toBe('Episode 1');
+        expect(cards[0].querySelector('img')?.getAttribute('data-src')).toMatch(/^data:image\/svg\+xml/);
+        expect(cards[0].querySelector('.episode-desc')).toBeNull();
+        expect(cards[0].querySelector('.episode-runtime')).toBeNull();
     }
     dom.window.close();
 });

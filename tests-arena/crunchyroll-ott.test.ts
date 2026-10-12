@@ -58,6 +58,40 @@ test('episode metadata is kept separate from playback links', () => {
     expect(html).toContain('var NX_DATA=');
 });
 
+test('episode guide bakes Nxsha-only images and details separately from playback mappings', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const dataStart = html.indexOf('var NX_EPISODE_DATA=');
+    const dataEnd = html.indexOf(';/*__END_NXSHA_GUIDE__*/', dataStart);
+    expect(dataStart).toBeGreaterThan(-1);
+    expect(dataEnd).toBeGreaterThan(dataStart);
+    const guide = JSON.parse(html.slice(dataStart + 'var NX_EPISODE_DATA='.length, dataEnd));
+    expect(guide.onepiece).toBeUndefined();
+    if (existsSync(join(ROOT, 'data', 'nxsha-episodes.json'))) {
+        const snapshot = JSON.parse(readFileSync(join(ROOT, 'data', 'nxsha-episodes.json'), 'utf8'));
+        const firstEpisode = snapshot.shows.vinland.episodes.find(
+            (episode: { season: number; episode: number }) => episode.season === 1 && episode.episode === 1,
+        );
+        expect(firstEpisode).toBeTruthy();
+        expect(guide.vinland['1']['1']).toMatchObject({
+            title: firstEpisode.title,
+            image: firstEpisode.image,
+            overview: firstEpisode.overview,
+        });
+        expect(firstEpisode.image).toMatch(/^https:\/\/image\.tmdb\.org\//);
+        expect(firstEpisode.overview).toBeTruthy();
+    } else {
+        // Never relabel cached catalog/legacy artwork as confirmed Nxsha data.
+        expect(guide).toEqual({});
+    }
+    expect(html).toContain('meta.overview');
+    expect(html).toContain('meta.airDate');
+    expect(html).toContain('episodePlaceholderImage(title,season,i)');
+    expect(html).toContain("meta.image||(key==='onepiece'?show.img:episodePlaceholderImage(title,season,i))");
+    expect(html).toContain("(ep.desc?'<span class=\"episode-desc\">'");
+    expect(html).toContain("(ep.runtime?'<span class=\"episode-runtime\">'");
+    expect(html).toContain('.episode-copy .episode-air-date');
+});
+
 test('player has Nxsha failure handling with retry and no fallback tab', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('onServerTimeout');

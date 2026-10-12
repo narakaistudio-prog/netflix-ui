@@ -1,0 +1,49 @@
+name: Harvest Nxsha episode guide
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch season maps and episode metadata from Nxsha
+        id: harvest
+        continue-on-error: true
+        run: node scripts/harvest-nxsha-guide.mjs
+
+      - name: Upload the Nxsha guide snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nxsha-episode-guide
+          path: |
+            data/nxsha-titles.json
+            data/nxsha-plan.json
+            data/nxsha-episodes.json
+            data/nxsha-harvest-report.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Summarize harvest status
+        if: always()
+        run: |
+          if [ ! -f data/nxsha-harvest-report.json ]; then
+            echo "No Nxsha harvest report was generated."
+            exit 1
+          fi
+          node -e "const r=require('./data/nxsha-harvest-report.json'); console.log(JSON.stringify(r.summary, null, 2)); if (r.summary.failed.length || r.summary.harvested !== r.summary.requested) process.exit(1)"
