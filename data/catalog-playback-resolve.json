@@ -1,12 +1,12 @@
 {
   "summary": {
-    "generatedAt": "2026-10-12T19:30:40.525Z",
+    "generatedAt": "2026-10-12T19:50:38.198Z",
     "source": "wikidata (ids + release year) + nxsha.space/embed (exact title check)",
-    "checked": 240,
-    "verifiedNow": 143,
-    "newlyAdded": 381,
+    "checked": 5,
+    "verifiedNow": 1,
+    "newlyAdded": 1,
     "removedAfterRecheck": 0,
-    "verifiedTotal": 143
+    "verifiedTotal": 144
   },
   "titles": [
     {
@@ -1867,6 +1867,19 @@
       "imdb_id": "tt8439854",
       "tmdb_id": "530154",
       "nxshaDocTitle": "Lust Stories"
+    },
+    {
+      "id": "tudum-top10-india-unabomber",
+      "title": "UNABOMBER",
+      "mediaType": "movie",
+      "catalogYear": null,
+      "ok": true,
+      "qid": "Q139596561",
+      "wikidataYear": 2026,
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6933238",
+      "tmdb_id": "1492640",
+      "nxshaDocTitle": "UNABOMBER"
     }
   ]
 }

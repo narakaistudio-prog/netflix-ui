@@ -104,7 +104,10 @@
                     "ranking_text": "#8 in Movies",
                     "catalogSource": "tudum-top10-india",
                     "netflixId": "82010386",
-                    "netflixUrl": "https://www.netflix.com/in/title/82010386"
+                    "netflixUrl": "https://www.netflix.com/in/title/82010386",
+                    "imdb_id": "tt6933238",
+                    "tmdb_id": "1492640",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "tudum-top10-india-ohh-my-dog",
