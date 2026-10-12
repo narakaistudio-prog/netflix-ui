@@ -1,11 +1,11 @@
 {
   "summary": {
-    "generatedAt": "2026-10-12T19:10:46.385Z",
+    "generatedAt": "2026-10-12T19:15:25.038Z",
     "source": "wikidata (ids) + nxsha.space/embed (verification)",
-    "requested": 260,
-    "verified": 4,
-    "unresolved": 256,
-    "itemsUpdated": 15
+    "requested": 256,
+    "verified": 153,
+    "unresolved": 103,
+    "itemsUpdated": 367
   },
   "titles": [
     {
@@ -42,13 +42,6 @@
       "nxshaDocTitle": "Baby Do Die Do"
     },
     {
-      "id": "jw-catalog-tv-shaque-trust-no-one",
-      "title": "Shaque: Trust No One",
-      "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata: no exact film/series match with an id"
-    },
-    {
       "id": "jw-catalog-movie-hanuman-ansh-2026",
       "title": "Hanuman Ansh",
       "mediaType": "movie",
@@ -60,1789 +53,2423 @@
       "nxshaDocTitle": "Hanuman Ansh"
     },
     {
+      "id": "jw-catalog-tv-shaque-trust-no-one",
+      "title": "Shaque: Trust No One",
+      "mediaType": "tv",
+      "ok": false,
+      "reason": "wikidata: no exact film/series match with an id"
+    },
+    {
       "id": "jw-catalog-movie-mirzapur-the-movie",
       "title": "Mirzapur: The Movie",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mirzapur%3A+The+Movie&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-a-good-lawyers-wife",
       "title": "A Good Lawyer's Wife",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=A+Good+Lawyer%27s+Wife&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q3549462",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0372782",
+      "tmdb_id": "61952",
+      "nxshaDocTitle": "A Good Lawyer's Wife"
     },
     {
       "id": "jw-catalog-movie-irumudi-2026",
       "title": "Irumudi",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Irumudi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140463822",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt39108319",
+      "tmdb_id": "1441228",
+      "nxshaDocTitle": "Irumudi"
     },
     {
       "id": "jw-catalog-movie-dhamaal-4",
       "title": "Dhamaal 4",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dhamaal+4&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-alpha-2025-0",
       "title": "Alpha",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Alpha&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-g-d-n-2026",
       "title": "G.D.N",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=G.D.N&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140577300",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt35712605",
+      "tmdb_id": "1489543",
+      "nxshaDocTitle": "G.D.N"
     },
     {
       "id": "jw-catalog-movie-korean-kanakaraju-2026",
       "title": "Korean Kanakaraju",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Korean+Kanakaraju&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140577306",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt32474264",
+      "tmdb_id": "1423253",
+      "nxshaDocTitle": "Korean Kanakaraju"
     },
     {
       "id": "jw-catalog-movie-main-vaapas-aaunga",
       "title": "Main Vaapas Aaunga",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Main+Vaapas+Aaunga&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140043180",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt37333137",
+      "tmdb_id": "1431068",
+      "nxshaDocTitle": "Main Vaapas Aaunga"
     },
     {
       "id": "jw-catalog-movie-saiyaara",
       "title": "Saiyaara",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Saiyaara&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q135393743",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt28037987",
+      "tmdb_id": "1241634",
+      "nxshaDocTitle": "Saiyaara"
     },
     {
       "id": "jw-catalog-movie-gandhari-2026",
       "title": "Gandhari",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Gandhari&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q5520661",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0353478",
+      "tmdb_id": "729461",
+      "nxshaDocTitle": "Gandhari"
     },
     {
       "id": "jw-catalog-movie-dhurandhar-2025",
       "title": "Dhurandhar",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dhurandhar&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q135230927",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt33014583",
+      "tmdb_id": "1291608",
+      "nxshaDocTitle": "Dhurandhar"
     },
     {
       "id": "jw-catalog-movie-dhurandhar-the-revenge",
       "title": "Dhurandhar: The Revenge",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dhurandhar%3A+The+Revenge&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q137998501",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt39139925",
+      "tmdb_id": "1582770",
+      "nxshaDocTitle": "Dhurandhar: The Revenge"
     },
     {
       "id": "jw-catalog-movie-gatta-kusthi-2",
       "title": "Gatta Kusthi 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Gatta+Kusthi+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140419796",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt37458495",
+      "tmdb_id": "1509599",
+      "nxshaDocTitle": "Gatta Kusthi 2"
     },
     {
       "id": "jw-catalog-movie-peddi",
       "title": "Peddi",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Peddi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-pushpa-the-rule-part-2",
       "title": "Pushpa: The Rule - Part 2",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Pushpa%3A+The+Rule+-+Part+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-movie-hey-sinamika",
       "title": "Hey! Sinamika",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Hey%21+Sinamika&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-movie-sultan",
       "title": "Sultan",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Sultan&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-pyaar-prema-kalyanam",
       "title": "Pyaar Prema Kalyanam",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Pyaar+Prema+Kalyanam&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q141168888",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt39260895",
+      "tmdb_id": "1538273",
+      "nxshaDocTitle": "Pyaar Prema Kalyanam"
     },
     {
       "id": "jw-catalog-movie-idhayam-murali",
       "title": "Idhayam Murali",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Idhayam+Murali&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q132491951",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt35723557",
+      "tmdb_id": "1432631",
+      "nxshaDocTitle": "Idhayam Murali"
     },
     {
       "id": "jw-catalog-movie-main-hoon-na",
       "title": "Main Hoon Na",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Main+Hoon+Na&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1503700",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0347473",
+      "tmdb_id": "14134",
+      "nxshaDocTitle": "Main Hoon Na"
     },
     {
       "id": "jw-catalog-movie-dil-chahta-hai",
       "title": "Dil Chahta Hai",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dil+Chahta+Hai&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q370313",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0292490",
+      "tmdb_id": "14752",
+      "nxshaDocTitle": "Dil Chahta Hai"
     },
     {
       "id": "jw-catalog-movie-animal-2022",
       "title": "Animal",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Animal&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-zindagi-na-milegi-dobara",
       "title": "Zindagi Na Milegi Dobara",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Zindagi+Na+Milegi+Dobara&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q3067642",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1562872",
+      "tmdb_id": "61202",
+      "nxshaDocTitle": "Zindagi Na Milegi Dobara"
     },
     {
       "id": "jw-catalog-movie-raid-2-2025",
       "title": "Mahavatar Narsimha",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mahavatar+Narsimha&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q135319573",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt34365591",
+      "tmdb_id": "1383072",
+      "nxshaDocTitle": "Mahavatar Narsimha"
     },
     {
       "id": "jw-catalog-movie-bhooth-bangla",
       "title": "Bhooth Bangla",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bhooth+Bangla&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q136187174",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt29540862",
+      "tmdb_id": "1239134",
+      "nxshaDocTitle": "Bhooth Bangla"
     },
     {
       "id": "jw-catalog-movie-rao-bahadur",
       "title": "Rao Bahadur",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Rao+Bahadur&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q139386818",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt37895011",
+      "tmdb_id": "1443961",
+      "nxshaDocTitle": "Rao Bahadur"
     },
     {
       "id": "jw-catalog-movie-veer-zaara",
       "title": "Veer-Zaara",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Veer-Zaara&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q106819",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0420332",
+      "tmdb_id": "4251",
+      "nxshaDocTitle": "Veer-Zaara"
     },
     {
       "id": "jw-catalog-movie-roudram-ranam-rudhiram",
       "title": "RRR",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=RRR&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q60424165",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt8178634",
+      "tmdb_id": "579974",
+      "nxshaDocTitle": "RRR"
     },
     {
       "id": "jw-catalog-movie-pati-patni-aur-woh-2",
       "title": "Pati Patni Aur Woh Do",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Pati+Patni+Aur+Woh+Do&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q139209789",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt33054858",
+      "tmdb_id": "1320660",
+      "nxshaDocTitle": "Pati Patni Aur Woh Do"
     },
     {
       "id": "jw-catalog-movie-border-2",
       "title": "Border 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Border+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q126734387",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt30387012",
+      "tmdb_id": "1213898",
+      "nxshaDocTitle": "Border 2"
     },
     {
       "id": "jw-catalog-movie-tere-ishk-mein",
       "title": "Tere Ishk Mein",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tere+Ishk+Mein&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q136408439",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt28142095",
+      "tmdb_id": "1142921",
+      "nxshaDocTitle": "Tere Ishk Mein"
     },
     {
       "id": "jw-catalog-movie-godzilla-minus-one",
       "title": "Godzilla Minus One",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Godzilla+Minus+One&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q115053037",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt23289160",
+      "tmdb_id": "940721",
+      "nxshaDocTitle": "Godzilla Minus One"
     },
     {
       "id": "jw-catalog-movie-maharaja-2024",
       "title": "Maharaja",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Maharaja&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q12937899",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0119596",
+      "tmdb_id": "232808",
+      "nxshaDocTitle": "Maharaja"
     },
     {
       "id": "jw-catalog-movie-ikka",
       "title": "Ikka",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ikka&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140374814",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt39632269",
+      "tmdb_id": "1484913",
+      "nxshaDocTitle": "Ikka"
     },
     {
       "id": "jw-catalog-movie-mimi",
       "title": "Mimi",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mimi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-dilwale-dulhania-le-jayenge",
       "title": "Dilwale Dulhania Le Jayenge",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dilwale+Dulhania+Le+Jayenge&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q849343",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0112870",
+      "tmdb_id": "19404",
+      "nxshaDocTitle": "Dilwale Dulhania Le Jayenge"
     },
     {
       "id": "jw-catalog-movie-fighter-2022",
       "title": "Fighter",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Fighter&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q323472",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0964517",
+      "tmdb_id": "45317",
+      "nxshaDocTitle": "The Fighter"
     },
     {
       "id": "jw-catalog-movie-salaar",
       "title": "Salaar: Part 1 - Ceasefire",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Salaar%3A+Part+1+-+Ceasefire&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-movie-dangal",
       "title": "Dangal",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dangal&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q20762668",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5074352",
+      "tmdb_id": "360814",
+      "nxshaDocTitle": "Dangal"
     },
     {
       "id": "jw-catalog-movie-raakaasa",
       "title": "Raakaasa",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Raakaasa&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q139554470",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt36451817",
+      "tmdb_id": "1451078",
+      "nxshaDocTitle": "Raakaasa"
     },
     {
       "id": "jw-catalog-movie-love-stories",
       "title": "Mohabbatein",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mohabbatein&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1135349",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0213890",
+      "tmdb_id": "11518",
+      "nxshaDocTitle": "Mohabbatein"
     },
     {
       "id": "jw-catalog-movie-radhe-shyam",
       "title": "Radhe Shyam",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Radhe+Shyam&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q97119189",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt8960382",
+      "tmdb_id": "673392",
+      "nxshaDocTitle": "Radhe Shyam"
     },
     {
       "id": "jw-catalog-movie-chennai-express",
       "title": "Chennai Express",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Chennai+Express&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q2962658",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt2112124",
+      "tmdb_id": "205022",
+      "nxshaDocTitle": "Chennai Express"
     },
     {
       "id": "jw-catalog-movie-baahubali-the-beginning",
       "title": "Bāhubali: The Beginning",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=B%C4%81hubali%3A+The+Beginning&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-dude-2025",
       "title": "Dude",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dude&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-jaat-2025",
       "title": "Jaat",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Jaat&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q131395445",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt32223398",
+      "tmdb_id": "1306845",
+      "nxshaDocTitle": "Jaat"
     },
     {
       "id": "jw-catalog-movie-72-hours-2026",
       "title": "72 HOURS",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=72+HOURS&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q136339220",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt36304003",
+      "tmdb_id": "949838",
+      "nxshaDocTitle": "72 HOURS"
     },
     {
       "id": "jw-catalog-movie-best-of-the-best-2026",
       "title": "Best of the Best",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Best+of+the+Best&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1467897",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0096913",
+      "tmdb_id": "238751",
+      "nxshaDocTitle": "Best of the Best"
     },
     {
       "id": "jw-catalog-movie-dragon-2025",
       "title": "Dragon",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dragon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-jawan",
       "title": "Jawan",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Jawan&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q113493289",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt15354916",
+      "tmdb_id": "872906",
+      "nxshaDocTitle": "Jawan"
     },
     {
       "id": "jw-catalog-movie-kalki-2898-ad",
       "title": "Kalki 2898-AD",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kalki+2898-AD&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q112430183",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt12735488",
+      "tmdb_id": "801688",
+      "nxshaDocTitle": "Kalki 2898-AD"
     },
     {
       "id": "jw-catalog-movie-kantara",
       "title": "Kantara",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kantara&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q114322727",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt15327088",
+      "tmdb_id": "858485",
+      "nxshaDocTitle": "Kantara"
     },
     {
       "id": "jw-catalog-movie-war-2",
       "title": "War 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=War+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q124852530",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27425164",
+      "tmdb_id": "1109086",
+      "nxshaDocTitle": "War 2"
     },
     {
       "id": "jw-catalog-movie-gatta-kusthi",
       "title": "Gatta Kusthi",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Gatta+Kusthi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q115467074",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt21617996",
+      "tmdb_id": "959163",
+      "nxshaDocTitle": "Gatta Kusthi"
     },
     {
       "id": "jw-catalog-movie-grave-of-the-fireflies",
       "title": "Grave of the Fireflies",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Grave+of+the+Fireflies&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "nxsha did not confirm the title",
+      "qid": "Q106313934",
+      "tried": [
+        {
+          "source": "imdb",
+          "id": "tt1250968",
+          "status": 200,
+          "docTitle": "Tombstone of the Fireflies"
+        },
+        {
+          "source": "tmdb",
+          "id": "38473",
+          "status": 200,
+          "docTitle": "Tombstone of the Fireflies"
+        }
+      ]
     },
     {
       "id": "jw-catalog-movie-lucky-baskhar",
       "title": "Lucky Baskhar",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Lucky+Baskhar&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q125453590",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27540542",
+      "tmdb_id": "1239511",
+      "nxshaDocTitle": "Lucky Baskhar"
     },
     {
       "id": "jw-catalog-movie-talaash",
       "title": "Talaash",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Talaash&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-chak-de-india",
       "title": "Chak De! India",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Chak+De%21+India&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1029548",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0871510",
+      "tmdb_id": "14163",
+      "nxshaDocTitle": "Chak De! India"
     },
     {
       "id": "jw-catalog-movie-dil-dhadakne-do",
       "title": "Dil Dhadakne Do",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dil+Dhadakne+Do&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q17051888",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt4110568",
+      "tmdb_id": "338065",
+      "nxshaDocTitle": "Dil Dhadakne Do"
     },
     {
       "id": "jw-catalog-movie-forgotten",
       "title": "Forgotten",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Forgotten&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q360243",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0356618",
+      "tmdb_id": "10145",
+      "nxshaDocTitle": "The Forgotten"
     },
     {
       "id": "jw-catalog-movie-fukrey",
       "title": "Fukrey",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Fukrey&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q5507607",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt2806788",
+      "tmdb_id": "199139",
+      "nxshaDocTitle": "Fukrey"
     },
     {
       "id": "jw-catalog-movie-don-2006",
       "title": "Don",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Don&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-rurouni-kenshin-part-i-origins",
       "title": "Rurouni Kenshin Part I: Origins",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Rurouni+Kenshin+Part+I%3A+Origins&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-movie-david-2025",
       "title": "David",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=David&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-beast-2022",
       "title": "Beast",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Beast&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-meiyazhagan",
       "title": "Meiyazhagan",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Meiyazhagan&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q126126903",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt26758372",
+      "tmdb_id": "1136423",
+      "nxshaDocTitle": "Meiyazhagan"
     },
     {
       "id": "jw-catalog-movie-tu-yaa-main",
       "title": "Tu Yaa Main",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tu+Yaa+Main&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q138018477",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt36118360",
+      "tmdb_id": "1446616",
+      "nxshaDocTitle": "Tu Yaa Main"
     },
     {
       "id": "jw-catalog-movie-sui-dhaaga",
       "title": "Sui Dhaaga - Made in India",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Sui+Dhaaga+-+Made+in+India&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-movie-gunjan-saxena",
       "title": "Gunjan Saxena: The Kargil Girl",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Gunjan+Saxena%3A+The+Kargil+Girl&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q65065630",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10350626",
+      "tmdb_id": "645489",
+      "nxshaDocTitle": "Gunjan Saxena: The Kargil Girl"
     },
     {
       "id": "jw-catalog-movie-mohiniyattam-2026",
       "title": "Bharathanyam 2 Mohiniyattam",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bharathanyam+2+Mohiniyattam&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-movie-raja-shivaji",
       "title": "Raja Shivaji",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Raja+Shivaji&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q137708132",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt31390893",
+      "tmdb_id": "1247165",
+      "nxshaDocTitle": "Raja Shivaji"
     },
     {
       "id": "jw-catalog-movie-rab-ne-bana-di-jodi",
       "title": "Rab Ne Bana Di Jodi",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Rab+Ne+Bana+Di+Jodi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1130343",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1182937",
+      "tmdb_id": "14072",
+      "nxshaDocTitle": "Rab Ne Bana Di Jodi"
     },
     {
       "id": "jw-catalog-movie-iratta",
       "title": "Iratta",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Iratta&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q117377268",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt25406500",
+      "tmdb_id": "945167",
+      "nxshaDocTitle": "Iratta"
     },
     {
       "id": "jw-catalog-movie-ssmb-28",
       "title": "Guntur Kaaram",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Guntur+Kaaram&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q109701344",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt14564000",
+      "tmdb_id": "868660",
+      "nxshaDocTitle": "Guntur Kaaram"
     },
     {
       "id": "jw-catalog-movie-bajrangi-bhaijaan",
       "title": "Bajrangi Bhaijaan",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bajrangi+Bhaijaan&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q18603021",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt3863552",
+      "tmdb_id": "348892",
+      "nxshaDocTitle": "Bajrangi Bhaijaan"
     },
     {
       "id": "jw-catalog-movie-dhoom-3",
       "title": "Dhoom 3",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dhoom+3&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q14948561",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1833673",
+      "tmdb_id": "44977",
+      "nxshaDocTitle": "Dhoom 3"
     },
     {
       "id": "jw-catalog-movie-saaho",
       "title": "Saaho",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Saaho&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q30090770",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6836936",
+      "tmdb_id": "454292",
+      "nxshaDocTitle": "Saaho"
     },
     {
       "id": "jw-catalog-movie-andhra-king-taluka",
       "title": "Andhra King Taluka",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Andhra+King+Taluka&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q135336675",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt32553651",
+      "tmdb_id": "1407437",
+      "nxshaDocTitle": "Andhra King Taluka"
     },
     {
       "id": "jw-catalog-movie-along-with-the-gods-the-two-worlds",
       "title": "Along with the Gods: The Two Worlds",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Along+with+the+Gods%3A+The+Two+Worlds&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q26252639",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt7160070",
+      "tmdb_id": "397567",
+      "nxshaDocTitle": "Along with the Gods: The Two Worlds"
     },
     {
       "id": "jw-catalog-movie-gangubai-kathiawadi",
       "title": "Gangubai Kathiawadi",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Gangubai+Kathiawadi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q85762670",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10083340",
+      "tmdb_id": "664332",
+      "nxshaDocTitle": "Gangubai Kathiawadi"
     },
     {
       "id": "jw-catalog-movie-dear-zindagi",
       "title": "Dear Zindagi",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dear+Zindagi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q24807410",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5946128",
+      "tmdb_id": "413543",
+      "nxshaDocTitle": "Dear Zindagi"
     },
     {
       "id": "jw-catalog-movie-sing-geetham-2026",
       "title": "Sing Geetham",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Sing+Geetham&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140234405",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt34547719",
+      "tmdb_id": "1626170",
+      "nxshaDocTitle": "Sing Geetham"
     },
     {
       "id": "jw-catalog-movie-pk",
       "title": "PK",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=PK&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-dilwale",
       "title": "Dilwale",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dilwale&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q19264035",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt4535650",
+      "tmdb_id": "370665",
+      "nxshaDocTitle": "Dilwale"
     },
     {
       "id": "jw-catalog-movie-karthik-calling-karthik",
       "title": "Karthik Calling Karthik",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Karthik+Calling+Karthik&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q6373532",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1373156",
+      "tmdb_id": "34764",
+      "nxshaDocTitle": "Karthik Calling Karthik"
     },
     {
       "id": "jw-catalog-movie-dhoom-2",
       "title": "Dhoom 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dhoom+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q517398",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0441048",
+      "tmdb_id": "14194",
+      "nxshaDocTitle": "Dhoom 2"
     },
     {
       "id": "jw-catalog-movie-spirited-away",
       "title": "Spirited Away",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Spirited+Away&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-movie-laila-majnu",
       "title": "Laila Majnu",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Laila+Majnu&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1139365",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0266712",
+      "tmdb_id": "232706",
+      "nxshaDocTitle": "Laila-Majnu"
     },
     {
       "id": "jw-catalog-movie-chaava",
       "title": "Chhaava",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Chhaava&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q127012906",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27922706",
+      "tmdb_id": "1196943",
+      "nxshaDocTitle": "Chhaava"
     },
     {
       "id": "jw-catalog-movie-luck-by-chance",
       "title": "Luck by Chance",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Luck+by+Chance&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q1873709",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0886539",
+      "tmdb_id": "16344",
+      "nxshaDocTitle": "Luck by Chance"
     },
     {
       "id": "jw-catalog-movie-billu",
       "title": "Billu",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Billu&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q862951",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1230448",
+      "tmdb_id": "16345",
+      "nxshaDocTitle": "Billu"
     },
     {
       "id": "jw-catalog-movie-ok-jaanu",
       "title": "Ok Jaanu",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ok+Jaanu&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q23044946",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5764024",
+      "tmdb_id": "413882",
+      "nxshaDocTitle": "Ok Jaanu"
     },
     {
       "id": "jw-catalog-tv-mirzapur",
       "title": "Mirzapur",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mirzapur&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q58815840",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6473300",
+      "tmdb_id": "84105",
+      "nxshaDocTitle": "Mirzapur"
     },
     {
       "id": "jw-catalog-tv-bigg-boss",
       "title": "Bigg Boss",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bigg+Boss&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q284261",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1281973",
+      "tmdb_id": "11436",
+      "nxshaDocTitle": "Bigg Boss"
     },
     {
       "id": "jw-catalog-tv-indias-got-latent",
       "title": "India's Got Latent",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=India%27s+Got+Latent&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-the-early-spring",
       "title": "The Early Spring",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Early+Spring&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-waiting-hai",
       "title": "Waiting Hai",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Waiting+Hai&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-musafir-cafe",
       "title": "Musafir Cafe",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Musafir+Cafe&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q140762618",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt39665097",
+      "tmdb_id": "313101",
+      "nxshaDocTitle": "Musafir Cafe"
     },
     {
       "id": "jw-catalog-tv-chumbak-2026",
       "title": "Chumbak",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Chumbak&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q98371941",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt15778976",
+      "tmdb_id": "224596",
+      "nxshaDocTitle": "Chumbak"
     },
     {
       "id": "jw-catalog-tv-operation-safed-sagar",
       "title": "Operation Safed Sagar: The Untold Story of the Kargil War",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Operation+Safed+Sagar%3A+The+Untold+Story+of+the+Kargil+War&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-tv-she",
       "title": "She",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=She&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-naruto-shippuden",
       "title": "Naruto: Shippûden",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Naruto%3A+Shipp%C3%BBden&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-jujutsu-kaisen",
       "title": "Jujutsu Kaisen",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Jujutsu+Kaisen&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-agent-kim-reactivated",
       "title": "Agent Kim Reactivated",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Agent+Kim+Reactivated&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q139553270",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt42127457",
+      "tmdb_id": "296206",
+      "nxshaDocTitle": "Agent Kim Reactivated"
     },
     {
       "id": "jw-catalog-tv-naruto",
       "title": "Naruto",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Naruto&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-demon-slayer-kimetsu-no-yaiba",
       "title": "Kimetsu no Yaiba",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kimetsu+no+Yaiba&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-black-clover",
       "title": "Black Clover",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Black+Clover&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-bleach",
       "title": "Bleach",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bleach&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-all-of-us-are-dead",
       "title": "All of Us Are Dead",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=All+of+Us+Are+Dead&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q96414952",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt14169960",
+      "tmdb_id": "99966",
+      "nxshaDocTitle": "All of Us Are Dead"
     },
     {
       "id": "jw-catalog-tv-kurukshetra",
       "title": "Kurukshetra",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kurukshetra&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-death-note",
       "title": "Death Note",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Death+Note&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q19961524",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt4623604",
+      "tmdb_id": "63648",
+      "nxshaDocTitle": "Death Note"
     },
     {
       "id": "jw-catalog-tv-the-uncanny-counter",
       "title": "The Uncanny Counter",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Uncanny+Counter&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q98099408",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt13273826",
+      "tmdb_id": "113268",
+      "nxshaDocTitle": "The Uncanny Counter"
     },
     {
       "id": "jw-catalog-tv-mushoku-tensei-jobless-reincarnation",
       "title": "Mushoku Tensei: Jobless Reincarnation",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mushoku+Tensei%3A+Jobless+Reincarnation&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-taskaree-the-smugglers-web",
       "title": "Taskaree: The Smuggler's Web",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Taskaree%3A+The+Smuggler%27s+Web&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q137783870",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt35335046",
+      "tmdb_id": "308482",
+      "nxshaDocTitle": "Taskaree: The Smuggler's Web"
     },
     {
       "id": "jw-catalog-tv-weak-hero",
       "title": "Weak Hero",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Weak+Hero&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q116007300",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt20234568",
+      "tmdb_id": "200709",
+      "nxshaDocTitle": "Weak Hero"
     },
     {
       "id": "jw-catalog-tv-bleach-thousand-year-blood-war",
       "title": "Bleach: Sennen Kessen-hen",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bleach%3A+Sennen+Kessen-hen&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-our-sticky-love",
       "title": "Our Sticky Love",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Our+Sticky+Love&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q137835829",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt36955608",
+      "tmdb_id": "291496",
+      "nxshaDocTitle": "Our Sticky Love"
     },
     {
       "id": "jw-catalog-tv-alice-in-borderland",
       "title": "Alice in Borderland",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Alice+in+Borderland&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q103967305",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10795658",
+      "tmdb_id": "110316",
+      "nxshaDocTitle": "Alice in Borderland"
     },
     {
       "id": "jw-catalog-tv-classroom-of-the-elite",
       "title": "Classroom of the Elite",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Classroom+of+the+Elite&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-sacred-games",
       "title": "Sacred Games",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Sacred+Games&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q48727094",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6077448",
+      "tmdb_id": "79352",
+      "nxshaDocTitle": "Sacred Games"
     },
     {
       "id": "jw-catalog-tv-when-life-gives-you-tangerines",
       "title": "When Life Gives You Tangerines",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=When+Life+Gives+You+Tangerines&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q117353211",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt26471411",
+      "tmdb_id": "219246",
+      "nxshaDocTitle": "When Life Gives You Tangerines"
     },
     {
       "id": "jw-catalog-tv-squid-game",
       "title": "Squid Game",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Squid+Game&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q106582931",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10919420",
+      "tmdb_id": "93405",
+      "nxshaDocTitle": "Squid Game"
     },
     {
       "id": "jw-catalog-tv-bloodhounds",
       "title": "Bloodhounds",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Bloodhounds&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q109767798",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt26315487",
+      "tmdb_id": "127529",
+      "nxshaDocTitle": "Bloodhounds"
     },
     {
       "id": "jw-catalog-tv-my-demon",
       "title": "My Demon",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=My+Demon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q120721044",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt29569035",
+      "tmdb_id": "218539",
+      "nxshaDocTitle": "My Demon"
     },
     {
       "id": "jw-catalog-tv-trigger",
       "title": "Trigger",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Trigger&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-crew-girl",
       "title": "Crew Girl",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Crew+Girl&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q141155312",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt38218082",
+      "tmdb_id": "300507",
+      "nxshaDocTitle": "Crew Girl"
     },
     {
       "id": "jw-catalog-tv-one-piece-2023",
       "title": "ONE PIECE",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=ONE+PIECE&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-haikyu",
       "title": "Haikyu!!",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Haikyu%21%21&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-that-time-i-got-reincarnated-as-a-slime",
       "title": "Tensei Shitara Suraimu Datta Ken",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tensei+Shitara+Suraimu+Datta+Ken&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-super-no-ura-de-yani-su-futari",
       "title": "Smoking Behind the Supermarket with You",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Smoking+Behind+the+Supermarket+with+You&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-vincenzo",
       "title": "Vincenzo",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Vincenzo&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-the-wonderfools",
       "title": "The WONDERfools",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+WONDERfools&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q130748503",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt34440854",
+      "tmdb_id": "259837",
+      "nxshaDocTitle": "The WONDERfools"
     },
     {
       "id": "jw-catalog-tv-doctor-stranger",
       "title": "Doctor Stranger",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Doctor+Stranger&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q15644612",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt3693414",
+      "tmdb_id": "60956",
+      "nxshaDocTitle": "Doctor Stranger"
     },
     {
       "id": "jw-catalog-tv-its-okay-to-not-be-okay",
       "title": "It's Okay to Not Be Okay",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=It%27s+Okay+to+Not+Be+Okay&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q79997183",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt12451520",
+      "tmdb_id": "96462",
+      "nxshaDocTitle": "It's Okay to Not Be Okay"
     },
     {
       "id": "jw-catalog-tv-re-zero-starting-life-in-another-world",
       "title": "Re:Zero kara Hajimeru Isekai Seikatsu",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Re%3AZero+kara+Hajimeru+Isekai+Seikatsu&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-delhi-crime",
       "title": "Delhi Crime",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Delhi+Crime&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-vinland-saga",
       "title": "Vinland Saga",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Vinland+Saga&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-mismatched",
       "title": "Mismatched",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mismatched&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q102245805",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt12719250",
+      "tmdb_id": "113457",
+      "nxshaDocTitle": "Mismatched"
     },
     {
       "id": "jw-catalog-tv-my-hero-academia",
       "title": "My Hero Academia",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=My+Hero+Academia&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-daemons-of-the-shadow-realm",
       "title": "Daemons of the Shadow Realm",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Daemons+of+the+Shadow+Realm&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-badly-in-love",
       "title": "Badly in Love",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Badly+in+Love&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-maamla-legal-hai",
       "title": "Maamla Legal Hai",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Maamla+Legal+Hai&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q124830291",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt31183656",
+      "tmdb_id": "246483",
+      "nxshaDocTitle": "Maamla Legal Hai"
     },
     {
       "id": "jw-catalog-tv-queen-of-tears",
       "title": "Queen of Tears",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Queen+of+Tears&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q116921048",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27668559",
+      "tmdb_id": "215720",
+      "nxshaDocTitle": "Queen of Tears"
     },
     {
       "id": "jw-catalog-tv-romantic-doctor-teacher-kim",
       "title": "Dr. Romantic",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dr.+Romantic&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q27067918",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6157190",
+      "tmdb_id": "68398",
+      "nxshaDocTitle": "Dr. Romantic"
     },
     {
       "id": "jw-catalog-tv-boruto-naruto-next-generations",
       "title": "Boruto: Naruto Next Generations",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Boruto%3A+Naruto+Next+Generations&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-chainsmoker-cat",
       "title": "Chainsmoker Cat",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Chainsmoker+Cat&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-untitled-kapil-sharma-netflix-project",
       "title": "The Great Indian Kapil Show",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Great+Indian+Kapil+Show&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q125207918",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt30003786",
+      "tmdb_id": "247769",
+      "nxshaDocTitle": "The Great Indian Kapil Show"
     },
     {
       "id": "jw-catalog-tv-guns-and-gulaabs",
       "title": "Guns & Gulaabs",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Guns+%26+Gulaabs&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q113954345",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt17524566",
+      "tmdb_id": "156714",
+      "nxshaDocTitle": "Guns & Gulaabs"
     },
     {
       "id": "jw-catalog-tv-the-ba-ds-of-bollywood",
       "title": "The Ba***ds of Bollywood",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Ba***ds+of+Bollywood&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q135922857",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt34683290",
+      "tmdb_id": "247043",
+      "nxshaDocTitle": "The Ba***ds of Bollywood"
     },
     {
       "id": "jw-catalog-tv-the-apothecary-diaries",
       "title": "Kusuriya no Hitorigoto",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kusuriya+no+Hitorigoto&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-the-king-eternal-monarch",
       "title": "The King: Eternal Monarch",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+King%3A+Eternal+Monarch&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q65050906",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt11228748",
+      "tmdb_id": "93846",
+      "nxshaDocTitle": "The King: Eternal Monarch"
     },
     {
       "id": "jw-catalog-tv-hunter-x-hunter",
       "title": "Hunter x Hunter",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Hunter+x+Hunter&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-khakee-the-bihar-chapter",
       "title": "Khakee: The Bihar Chapter",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Khakee%3A+The+Bihar+Chapter&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-heeramandi",
       "title": "Heeramandi: The Diamond Bazaar",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Heeramandi%3A+The+Diamond+Bazaar&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q124416531",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt15204292",
+      "tmdb_id": "156716",
+      "nxshaDocTitle": "Heeramandi: The Diamond Bazaar"
     },
     {
       "id": "jw-catalog-tv-one-punch-man",
       "title": "One Punch Man: Wanpanman",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=One+Punch+Man%3A+Wanpanman&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-tv-the-railway-men-the-untold-story-of-bhopal-1984",
       "title": "The Railway Men - The Untold Story of Bhopal 1984",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Railway+Men+-+The+Untold+Story+of+Bhopal+1984&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-tv-mob-psycho-100",
       "title": "Mob Psycho 100",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mob+Psycho+100&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q54829045",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt7701694",
+      "tmdb_id": "75867",
+      "nxshaDocTitle": "Mob Psycho 100"
     },
     {
       "id": "jw-catalog-tv-goblin",
       "title": "Guardian: The Lonely and Great God",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Guardian%3A+The+Lonely+and+Great+God&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q24859151",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5994364",
+      "tmdb_id": "67915",
+      "nxshaDocTitle": "Guardian: The Lonely and Great God"
     },
     {
       "id": "jw-catalog-tv-twinkling-watermelon",
       "title": "Banjjagineun Woteomellon",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Banjjagineun+Woteomellon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-tv-doctor-slump",
       "title": "Doctor Slump",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Doctor+Slump&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q117219597",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27135274",
+      "tmdb_id": "222233",
+      "nxshaDocTitle": "Doctor Slump"
     },
     {
       "id": "jw-catalog-tv-super-subbu",
       "title": "Super Subbu",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Super+Subbu&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-mercy-for-none",
       "title": "Mercy for None",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mercy+for+None&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-dragon-ball-z",
       "title": "Dragon Ball Z",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dragon+Ball+Z&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-true-beauty",
       "title": "Yeoshingangrim",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Yeoshingangrim&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "jw-catalog-tv-frieren-beyond-journeys-end",
       "title": "Frieren: Beyond Journey's End",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Frieren%3A+Beyond+Journey%27s+End&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-moms-friends-son",
       "title": "Love Next Door",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Love+Next+Door&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q124326709",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt30446769",
+      "tmdb_id": "241454",
+      "nxshaDocTitle": "Love Next Door"
     },
     {
       "id": "jw-catalog-tv-hello-bachhon",
       "title": "Hello Bachhon",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Hello+Bachhon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-tokyo-ghoul",
       "title": "Tokyo Ghoul",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tokyo+Ghoul&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-the-glory",
       "title": "The Glory",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Glory&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q113197148",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt21344706",
+      "tmdb_id": "136283",
+      "nxshaDocTitle": "The Glory"
     },
     {
       "id": "jw-catalog-tv-kota-factory",
       "title": "Kota Factory",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kota+Factory&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-doctor-x-surgeon-michiko-daimon",
       "title": "Doctor-X: Surgeon Michiko Daimon",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Doctor-X%3A+Surgeon+Michiko+Daimon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q4391062",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt2349912",
+      "tmdb_id": "46052",
+      "nxshaDocTitle": "Doctor-X: Surgeon Michiko Daimon"
     },
     {
       "id": "jw-catalog-tv-overlord",
       "title": "Overlord",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Overlord&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-spy-x-family",
       "title": "SPY x FAMILY",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=SPY+x+FAMILY&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-the-silent-sea",
       "title": "The Silent Sea",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Silent+Sea&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q101083996",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt11570202",
+      "tmdb_id": "96777",
+      "nxshaDocTitle": "The Silent Sea"
     },
     {
       "id": "jw-catalog-tv-destined-with-you",
       "title": "Destined with You",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Destined+with+You&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q116550095",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27974068",
+      "tmdb_id": "215001",
+      "nxshaDocTitle": "Destined with You"
     },
     {
       "id": "jw-catalog-tv-dr-stone",
       "title": "Dr. STONE",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Dr.+STONE&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-catalog-tv-mr-queen",
       "title": "Mr. Queen",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Mr.+Queen&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q100605045",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt13400006",
+      "tmdb_id": "108261",
+      "nxshaDocTitle": "Mr. Queen"
     },
     {
       "id": "iinm-taj-mahal-1989",
       "title": "Taj Mahal 1989",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Taj+Mahal+1989&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q86525304",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt11725706",
+      "tmdb_id": "99387",
+      "nxshaDocTitle": "Taj Mahal 1989"
     },
     {
       "id": "iinm-the-romantics",
       "title": "The Romantics",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Romantics&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q117350584",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt26542635",
+      "tmdb_id": "219819",
+      "nxshaDocTitle": "The Romantics"
     },
     {
       "id": "iinm-typewriter",
       "title": "Typewriter",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Typewriter&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q65053346",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt9310372",
+      "tmdb_id": "91290",
+      "nxshaDocTitle": "Typewriter"
     },
     {
       "id": "jw-original-reply-1988",
       "title": "Reply 1988",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Reply+1988&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q19657395",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5182866",
+      "tmdb_id": "64010",
+      "nxshaDocTitle": "Reply 1988"
     },
     {
       "id": "iinm-be-melodramatic",
       "title": "Be Melodramatic",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Be+Melodramatic&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q63264267",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10559276",
+      "tmdb_id": "90720",
+      "nxshaDocTitle": "Be Melodramatic"
     },
     {
       "id": "iinm-inspector-koo",
       "title": "Inspector Koo",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Inspector+Koo&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q107817259",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt14731794",
+      "tmdb_id": "129475",
+      "nxshaDocTitle": "Inspector Koo"
     },
     {
       "id": "iinm-jjajangmyeon-rhapsody",
       "title": "Jjajangmyeon Rhapsody",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Jjajangmyeon+Rhapsody&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-kpop-demon-hunters-lyric-videos",
       "title": "KPop Demon Hunters Lyric Videos",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=KPop+Demon+Hunters+Lyric+Videos&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-let-39-s-go-pororo-rangers",
       "title": "Let's Go! Pororo Rangers",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Let%27s+Go%21+Pororo+Rangers&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-song-of-the-bandits",
       "title": "Song of the Bandits",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Song+of+the+Bandits&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q113482392",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt21627436",
+      "tmdb_id": "136368",
+      "nxshaDocTitle": "Song of the Bandits"
     },
     {
       "id": "iinm-strong-girl-nam-soon",
       "title": "Strong Girl Nam-soon",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Strong+Girl+Nam-soon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q112307747",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt29225198",
+      "tmdb_id": "203164",
+      "nxshaDocTitle": "Strong Girl Nam-soon"
     },
     {
       "id": "iinm-tale-of-the-nine-tailed",
       "title": "Tale of the Nine Tailed",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tale+of+the+Nine+Tailed&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q97194459",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt12879418",
+      "tmdb_id": "108284",
+      "nxshaDocTitle": "Tale of the Nine Tailed"
     },
     {
       "id": "iinm-tayo-39-s-singalong-show",
       "title": "Tayo's Singalong Show",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tayo%27s+Singalong+Show&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-that-winter-the-wind-blows",
       "title": "That Winter, the Wind Blows",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=That+Winter%2C+the+Wind+Blows&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q3660551",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt2806646",
+      "tmdb_id": "47091",
+      "nxshaDocTitle": "That Winter, the Wind Blows"
     },
     {
       "id": "iinm-the-8-show",
       "title": "The 8 Show",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+8+Show&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-game-you-never-play-alone",
       "title": "The Game: You Never Play Alone",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Game%3A+You+Never+Play+Alone&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q136432885",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt38126232",
+      "tmdb_id": "300741",
+      "nxshaDocTitle": "The Game: You Never Play Alone"
     },
     {
       "id": "iinm-the-good-detective",
       "title": "The Good Detective",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Good+Detective&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-raincoat-killer-chasing-a-predator-in-korea",
       "title": "The Raincoat Killer: Chasing a Predator in Korea",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Raincoat+Killer%3A+Chasing+a+Predator+in+Korea&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q108935276",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt15484900",
+      "tmdb_id": "134902",
+      "nxshaDocTitle": "The Raincoat Killer: Chasing a Predator in Korea"
     },
     {
       "id": "iinm-the-trauma-code-heroes-on-call",
       "title": "The Trauma Code: Heroes on Call",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Trauma+Code%3A+Heroes+on+Call&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q124128670",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt28106730",
+      "tmdb_id": "217553",
+      "nxshaDocTitle": "The Trauma Code: Heroes on Call"
     },
     {
       "id": "iinm-the-winning-try",
       "title": "The Winning Try",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Winning+Try&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q132888605",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt37509384",
+      "tmdb_id": "250463",
+      "nxshaDocTitle": "The Winning Try"
     },
     {
       "id": "jw-catalog-tv-the-fragrant-flower-blooms-with-dignity",
       "title": "The Fragrant Flower Blooms with Dignity",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Fragrant+Flower+Blooms+with+Dignity&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-original-the-rising-of-the-shield-hero",
       "title": "The Rising of the Shield Hero",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Rising+of+the+Shield+Hero&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-original-my-happy-marriage",
       "title": "My Happy Marriage",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=My+Happy+Marriage&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-stand-by-me-doraemon",
       "title": "Stand by Me Doraemon",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Stand+by+Me+Doraemon&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-fable",
       "title": "THE FABLE",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=THE+FABLE&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q83240757",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt8676426",
+      "tmdb_id": "532267",
+      "nxshaDocTitle": "The Fable"
     },
     {
       "id": "iinm-tales-from-earthsea",
       "title": "Tales from Earthsea",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tales+from+Earthsea&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-boy-and-the-heron",
       "title": "The Boy and the Heron",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Boy+and+the+Heron&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-cat-returns",
       "title": "The Cat Returns",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Cat+Returns&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-seven-deadly-sins-the-movie-prisoners-of-the-sky",
       "title": "The Seven Deadly Sins the Movie: Prisoners of the Sky",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Seven+Deadly+Sins+the+Movie%3A+Prisoners+of+the+Sky&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-violence-action",
       "title": "The Violence Action",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Violence+Action&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q131355240",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt17677492",
+      "tmdb_id": "961327",
+      "nxshaDocTitle": "The Violence Action"
     },
     {
       "id": "iinm-usogui",
       "title": "Usogui",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Usogui&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q114702541",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5715464",
+      "tmdb_id": "846967",
+      "nxshaDocTitle": "Usogui"
     },
     {
       "id": "iinm-frieren-beyond-the-journey-39-s-end",
       "title": "Frieren: Beyond the Journey's End",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Frieren%3A+Beyond+the+Journey%27s+End&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-my-housekeeper-nagisa-san",
       "title": "My Housekeeper Nagisa-san",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=My+Housekeeper+Nagisa-san&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q131431375",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt12851574",
+      "tmdb_id": "105748",
+      "nxshaDocTitle": "My Housekeeper Nagisa-san"
     },
     {
       "id": "iinm-saitama-host-club",
       "title": "Saitama Host Club",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Saitama+Host+Club&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-spice-and-wolf-merchant-meets-the-wise-wolf",
       "title": "Spice and Wolf: Merchant Meets The Wise Wolf",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Spice+and+Wolf%3A+Merchant+Meets+The+Wise+Wolf&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-days",
       "title": "THE DAYS",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=THE+DAYS&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q3520530",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0413559",
+      "tmdb_id": "10164",
+      "nxshaDocTitle": "The Days"
     },
     {
       "id": "iinm-tekken-bloodline",
       "title": "Tekken: Bloodline",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tekken%3A+Bloodline&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-the-19th-medical-chart",
       "title": "The 19th Medical Chart",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+19th+Medical+Chart&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q135394276",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt37274927",
+      "tmdb_id": "293432",
+      "nxshaDocTitle": "The 19th Medical Chart"
     },
     {
       "id": "iinm-the-black-swindler",
       "title": "The Black Swindler",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Black+Swindler&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q16029819",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0824021",
+      "tmdb_id": "34818",
+      "nxshaDocTitle": "The Black Swindler"
     },
     {
       "id": "iinm-the-black-swindler-2022",
       "title": "The Black Swindler (2022)",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Black+Swindler+%282022%29&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-the-makanai-cooking-for-the-maiko-house",
       "title": "The Makanai: Cooking for the Maiko House",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Makanai%3A+Cooking+for+the+Maiko+House&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q115664572",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt15964848",
+      "tmdb_id": "154916",
+      "nxshaDocTitle": "The Makanai: Cooking for the Maiko House"
     },
     {
       "id": "iinm-the-naked-director",
       "title": "The Naked Director",
       "mediaType": "tv",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Naked+Director&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q65059862",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10477528",
+      "tmdb_id": "90955",
+      "nxshaDocTitle": "The Naked Director"
     },
     {
       "id": "iinm-the-reason-why-raeliana-ended-up-at-the-duke-39-s-mansion",
       "title": "The Reason Why Raeliana Ended up at the Duke's Mansion",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Reason+Why+Raeliana+Ended+up+at+the+Duke%27s+Mansion&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-ties-of-shooting-stars",
       "title": "Ties of Shooting Stars",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ties+of+Shooting+Stars&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-tis-time-for-torture-princess",
       "title": "Tis Time for \"Torture,\" Princess",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tis+Time+for+%22Torture%2C%22+Princess&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-tokyo-override",
       "title": "Tokyo Override",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tokyo+Override&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-tougen-anki",
       "title": "Tougen Anki",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tougen+Anki&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-ultramarine-magmell",
       "title": "Ultramarine Magmell",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Ultramarine+Magmell&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-witch-hat-atelier",
       "title": "Witch Hat Atelier",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Witch+Hat+Atelier&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-your-turn-to-kill",
       "title": "Your Turn to Kill",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Your+Turn+to+Kill&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-yu-yu-hakusho",
       "title": "Yu Yu Hakusho",
       "mediaType": "tv",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Yu+Yu+Hakusho&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "jw-original-okja",
       "title": "Okja",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Okja&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q23932553",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt3967856",
+      "tmdb_id": "387426",
+      "nxshaDocTitle": "Okja"
     },
     {
       "id": "iinm-space-sweepers",
       "title": "Space Sweepers",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Space+Sweepers&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q65267432",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt12838766",
+      "tmdb_id": "581389",
+      "nxshaDocTitle": "Space Sweepers"
     },
     {
       "id": "iinm-technoboys",
       "title": "Technoboys",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Technoboys&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q131355398",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt31487553",
+      "tmdb_id": "1250786",
+      "nxshaDocTitle": "Technoboys"
     },
     {
       "id": "iinm-the-drug-king",
       "title": "The Drug King",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Drug+King&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q30115167",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6914542",
+      "tmdb_id": "497370",
+      "nxshaDocTitle": "The Drug King"
     },
     {
       "id": "iinm-the-great-flood",
       "title": "The Great Flood",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Great+Flood&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q124436027",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt29927663",
+      "tmdb_id": "982843",
+      "nxshaDocTitle": "The Great Flood"
     },
     {
       "id": "iinm-time-to-hunt",
       "title": "Time to Hunt",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Time+to+Hunt&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q81222925",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt11777040",
+      "tmdb_id": "571785",
+      "nxshaDocTitle": "Time to Hunt"
     },
     {
       "id": "iinm-tune-in-for-love",
       "title": "Tune in for Love",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tune+in+for+Love&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q66866679",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10763618",
+      "tmdb_id": "570503",
+      "nxshaDocTitle": "Tune in for Love"
     },
     {
       "id": "iinm-wonderland-2",
       "title": "Wonderland",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Wonderland&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no exact film/series match with an id"
     },
     {
       "id": "iinm-chatha-pacha-the-ring-of-rowdies",
       "title": "Chatha Pacha: The Ring of Rowdies",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Chatha+Pacha%3A+The+Ring+of+Rowdies&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q136759525",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt36472392",
+      "tmdb_id": "1439594",
+      "nxshaDocTitle": "Chatha Pacha: The Ring of Rowdies"
     },
     {
       "id": "iinm-kalagathalaivan",
       "title": "Kalagathalaivan",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Kalagathalaivan&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-son-of-sardaar-2",
       "title": "Son of Sardaar 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Son+of+Sardaar+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q130460117",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt29429860",
+      "tmdb_id": "1311649",
+      "nxshaDocTitle": "Son of Sardaar 2"
     },
     {
       "id": "iinm-sorga-vaasal",
       "title": "Sorga Vaasal",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Sorga+Vaasal&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-stolen",
       "title": "Stolen",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Stolen&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q2025754",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt1656186",
+      "tmdb_id": "127493",
+      "nxshaDocTitle": "Stolen"
     },
     {
       "id": "iinm-student-of-the-year-2",
       "title": "Student of the Year 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Student+of+the+Year+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q28444714",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt7255568",
+      "tmdb_id": "503129",
+      "nxshaDocTitle": "Student of the Year 2"
     },
     {
       "id": "iinm-thambi",
       "title": "Thambi",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Thambi&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q7709822",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt0458176",
+      "tmdb_id": "69584",
+      "nxshaDocTitle": "Thambi"
     },
     {
       "id": "iinm-thank-you-for-coming",
       "title": "Thank You for Coming",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Thank+You+for+Coming&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q122241003",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt23036080",
+      "tmdb_id": "957999",
+      "nxshaDocTitle": "Thank You For Coming"
     },
     {
       "id": "iinm-the-ghazi-attack",
       "title": "The Ghazi Attack",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Ghazi+Attack&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q25302722",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt6299040",
+      "tmdb_id": "442405",
+      "nxshaDocTitle": "The Ghazi Attack"
     },
     {
       "id": "iinm-the-sky-is-pink",
       "title": "The Sky Is Pink",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=The+Sky+Is+Pink&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q56277682",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt8902990",
+      "tmdb_id": "613446",
+      "nxshaDocTitle": "The Sky Is Pink"
     },
     {
       "id": "iinm-thottappan",
       "title": "Thottappan",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Thottappan&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q101245249",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt9448362",
+      "tmdb_id": "606779",
+      "nxshaDocTitle": "Thottappan"
     },
     {
       "id": "iinm-titli",
       "title": "Titli",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Titli&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-tuesdays-fridays",
       "title": "Tuesdays & Fridays",
       "mediaType": "movie",
       "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tuesdays+%26+Fridays&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "reason": "wikidata: no search hits"
     },
     {
       "id": "iinm-tughlaq-durbar",
       "title": "Tughlaq Durbar",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Tughlaq+Durbar&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q106880939",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt9769668",
+      "tmdb_id": "620637",
+      "nxshaDocTitle": "Tughlaq Durbar"
     },
     {
       "id": "iinm-upstarts",
       "title": "Upstarts",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Upstarts&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q73028295",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt11066130",
+      "tmdb_id": "639411",
+      "nxshaDocTitle": "Upstarts"
     },
     {
       "id": "iinm-uriyadi-2",
       "title": "Uriyadi 2",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Uriyadi+2&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q57448000",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt10121762",
+      "tmdb_id": "592875",
+      "nxshaDocTitle": "Uriyadi 2"
     },
     {
       "id": "iinm-veere-di-wedding",
       "title": "Veere Di Wedding",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Veere+Di+Wedding&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q28841910",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt5842616",
+      "tmdb_id": "483189",
+      "nxshaDocTitle": "Veere Di Wedding"
     },
     {
       "id": "iinm-vijay-69",
       "title": "Vijay 69",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Vijay+69&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q131355417",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt27671792",
+      "tmdb_id": "1252457",
+      "nxshaDocTitle": "Vijay 69"
     },
     {
       "id": "jw-catalog-movie-lust-stories",
       "title": "Lust Stories",
       "mediaType": "movie",
-      "ok": false,
-      "reason": "wikidata error: HTTP 429 https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Lust+Stories&language=en&uselang=en&type=item&limit=10&format=json&origin=*"
+      "ok": true,
+      "qid": "Q54959074",
+      "verifiedBy": "imdb",
+      "imdb_id": "tt8439854",
+      "tmdb_id": "530154",
+      "nxshaDocTitle": "Lust Stories"
     }
   ]
 }
