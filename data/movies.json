@@ -36,7 +36,10 @@
                     "mediaType": "movie",
                     "imageUrl": "local:fp-modha-rathri",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#3 in India Today"
+                    "ranking_text": "#3 in India Today",
+                    "imdb_id": "tt42262473",
+                    "tmdb_id": "1685882",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "fp-alpha",
@@ -57,7 +60,10 @@
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-cocktail-2-2026",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#8 in India Today"
+                    "ranking_text": "#8 in India Today",
+                    "imdb_id": "tt35064672",
+                    "tmdb_id": "1392469",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-baby-do-die-do",
@@ -66,7 +72,10 @@
                     "mediaType": "movie",
                     "imageUrl": "local:jw-baby-do-die-do",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#10 in India Today"
+                    "ranking_text": "#10 in India Today",
+                    "imdb_id": "tt37544992",
+                    "tmdb_id": "1512084",
+                    "embed_provider": "nxsha"
                 }
             ]
         },
@@ -160,7 +169,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-hanuman-ansh-2026",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt39390582",
+                    "tmdb_id": "1709391",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-vishwanath-and-sons",
@@ -212,7 +224,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-modha-rathiri",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt42262473",
+                    "tmdb_id": "1685882",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-alpha-2025-0",
@@ -228,7 +243,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-cocktail-2-2026",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt35064672",
+                    "tmdb_id": "1392469",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-g-d-n-2026",
@@ -292,7 +310,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-baby-do-die-do",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt37544992",
+                    "tmdb_id": "1512084",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-gatta-kusthi-2",
@@ -31941,7 +31962,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-hanuman-ansh-2026",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt39390582",
+                    "tmdb_id": "1709391",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-vishwanath-and-sons",
@@ -31993,7 +32017,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-modha-rathiri",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt42262473",
+                    "tmdb_id": "1685882",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-alpha-2025-0",
@@ -32009,7 +32036,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-cocktail-2-2026",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt35064672",
+                    "tmdb_id": "1392469",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-g-d-n-2026",
@@ -32079,7 +32109,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-baby-do-die-do",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt37544992",
+                    "tmdb_id": "1512084",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-gatta-kusthi-2",
@@ -61080,7 +61113,10 @@
                     "mediaType": "movie",
                     "imageUrl": "local:fp-modha-rathri",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#3 in India Today"
+                    "ranking_text": "#3 in India Today",
+                    "imdb_id": "tt42262473",
+                    "tmdb_id": "1685882",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "fp-alpha",
@@ -61101,7 +61137,10 @@
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-cocktail-2-2026",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#8 in India Today"
+                    "ranking_text": "#8 in India Today",
+                    "imdb_id": "tt35064672",
+                    "tmdb_id": "1392469",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-baby-do-die-do",
@@ -61110,7 +61149,10 @@
                     "mediaType": "movie",
                     "imageUrl": "local:jw-baby-do-die-do",
                     "catalogSource": "justwatch",
-                    "ranking_text": "#10 in India Today"
+                    "ranking_text": "#10 in India Today",
+                    "imdb_id": "tt37544992",
+                    "tmdb_id": "1512084",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-hanuman-ansh-2026",
@@ -61118,7 +61160,10 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-hanuman-ansh-2026",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "imdb_id": "tt39390582",
+                    "tmdb_id": "1709391",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-movie-mirzapur-the-movie",
