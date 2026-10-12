@@ -1,6 +1,11 @@
 name: Harvest Nxsha episode guide
 
 on:
+  push:
+    branches:
+      - arena/1b9772fc-netflix-ui
+    paths:
+      - '.github/workflows/harvest-nxsha-guide.yml'
   workflow_dispatch:
 
 permissions:
