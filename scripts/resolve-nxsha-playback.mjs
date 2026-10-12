@@ -254,11 +254,22 @@ async function main() {
     const catalog = JSON.parse(readFileSync(MOVIES_PATH, 'utf8'));
     const previousOk = new Map(readPreviousReport().filter(r => r.ok).map(r => [r.id, r]));
 
-    // Targets: titles with no playback id, plus earlier resolver ids to re-check.
+    // A title id can appear in several rows. If any row already carries a catalog
+    // playback id, every row of that title reuses it instead of a new lookup.
+    const known = new Map();
+    for (const row of catalog.movies) {
+        for (const item of row.movies ?? []) {
+            if (!item?.id || known.has(item.id)) continue;
+            const ours = previousOk.has(item.id) && item.imdb_id === previousOk.get(item.id).imdb_id;
+            if (!ours && (item.imdb_id || item.tmdb_id)) known.set(item.id, item);
+        }
+    }
+
+    // Targets: titles with no playback id anywhere, plus earlier resolver ids to re-check.
     const byId = new Map();
     for (const row of catalog.movies) {
         for (const item of row.movies ?? []) {
-            if (!item?.id || byId.has(item.id)) continue;
+            if (!item?.id || byId.has(item.id) || known.has(item.id)) continue;
             const ours = previousOk.has(item.id) && item.imdb_id === previousOk.get(item.id).imdb_id;
             const missing = !item.embed_url && !item.tmdb_id && !item.imdb_id;
             if (missing || ours) byId.set(item.id, item);
@@ -278,12 +289,22 @@ async function main() {
     let removed = 0;
     for (const row of catalog.movies) {
         for (const item of row.movies ?? []) {
-            const result = resultById.get(item?.id);
+            if (!item?.id) continue;
+            const missingHere = !item.embed_url && !item.tmdb_id && !item.imdb_id;
+            const sibling = known.get(item.id);
+            if (sibling && missingHere && sibling !== item) {
+                // Same title, another row already has the catalog id: reuse it.
+                if (sibling.imdb_id) item.imdb_id = sibling.imdb_id;
+                if (sibling.tmdb_id) item.tmdb_id = sibling.tmdb_id;
+                if (sibling.embed_provider) item.embed_provider = sibling.embed_provider;
+                added += 1;
+                continue;
+            }
+            const result = resultById.get(item.id);
             if (!result) continue;
             const prev = previousOk.get(item.id);
             const ours = Boolean(prev) && item.imdb_id === prev.imdb_id;
             // Never overwrite a playback id that came from the catalog itself.
-            const missingHere = !item.embed_url && !item.tmdb_id && !item.imdb_id;
             if (result.ok && (missingHere || ours)) {
                 if (missingHere) added += 1;
                 if (result.imdb_id) item.imdb_id = result.imdb_id;
@@ -301,6 +322,7 @@ async function main() {
 
     // Report: current verdicts for every target, plus earlier verified ids not re-checked.
     const merged = new Map(previousOk);
+    for (const id of known.keys()) merged.delete(id);
     for (const r of results) {
         if (r.ok) merged.set(r.id, r);
         else merged.delete(r.id);
