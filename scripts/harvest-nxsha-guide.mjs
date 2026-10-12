@@ -152,6 +152,15 @@ export function parseNxshaSeason(response, requestedSeason) {
         })
         .sort((a, b) => a.episode - b.episode);
     const declaredCount = Number(response.season.episode_count) || episodes.length;
+    if (!episodes.length && Number(response.season.episode_count) === 0) {
+        return {
+            season: seasonNumber,
+            count: 0,
+            name: String(response.season.name || `Season ${seasonNumber}`),
+            overview: stripMarkup(response.season.overview || ''),
+            episodes: [],
+        };
+    }
     if (!episodes.length) throw new Error(`Nxsha season ${seasonNumber} returned no episodes`);
     if (declaredCount !== episodes.length) {
         throw new Error(`Nxsha season ${seasonNumber} declared ${declaredCount} episodes but returned ${episodes.length}`);
@@ -204,12 +213,17 @@ async function harvestTitle(key, entry) {
     const seasons = {};
     const episodes = [];
     const seasonDetails = [];
+    const emptySeasons = [];
     for (let seasonNumber = 1; seasonNumber <= show.seasonCount; seasonNumber += 1) {
         const response = await get(
             `${BASE_URL}/api/tv/${show.tmdbId}/season/${seasonNumber}`,
             true,
         );
         const season = parseNxshaSeason(response, seasonNumber);
+        if (season.count === 0) {
+            emptySeasons.push(seasonNumber);
+            continue;
+        }
         seasons[String(seasonNumber)] = season.count;
         seasonDetails.push({
             season: seasonNumber,
@@ -228,6 +242,7 @@ async function harvestTitle(key, entry) {
             seasonDetails,
             episodes,
         },
+        emptySeasons,
     };
 }
 
@@ -281,6 +296,18 @@ function selfTest() {
         airDate: '2020-10-03',
         runtime: 24,
     });
+    const emptySeason = parseNxshaSeason({
+        success: true,
+        season: { season_number: 2, episode_count: 0, name: 'Season 2', overview: '' },
+        episodes: [],
+    }, 2);
+    assert.deepEqual(emptySeason, {
+        season: 2,
+        count: 0,
+        name: 'Season 2',
+        overview: '',
+        episodes: [],
+    });
 
     const catalog = parseCrunchyrollCatalog(`var shows={\n        future:{title:'Future Anime',year:2030},\n      };`);
     assert.deepEqual(catalog, [{ key: 'future', title: 'Future Anime' }]);
@@ -324,12 +351,14 @@ async function main() {
                 title: result.show.title,
                 id: result.show.id,
                 seasons: result.show.seasons,
+                ...(result.emptySeasons.length ? { emptySeasons: result.emptySeasons } : {}),
                 episodes: result.show.episodes.length,
                 stills: result.show.episodes.filter((episode) => episode.image).length,
                 overviews: result.show.episodes.filter((episode) => episode.overview).length,
                 ok: true,
             });
-            console.log(`OK   ${key.padEnd(12)} ${Object.keys(result.show.seasons).length} seasons / ${result.show.episodes.length} episodes / ${result.show.episodes.filter((episode) => episode.image).length} stills`);
+            const emptyNote = result.emptySeasons.length ? ` / ${result.emptySeasons.length} empty season placeholder(s) skipped` : '';
+            console.log(`OK   ${key.padEnd(12)} ${Object.keys(result.show.seasons).length} seasons / ${result.show.episodes.length} episodes / ${result.show.episodes.filter((episode) => episode.image).length} stills${emptyNote}`);
         } catch (error) {
             const message = String(error?.message || error);
             results.push({ key, title: entry.title, ok: false, error: message });
