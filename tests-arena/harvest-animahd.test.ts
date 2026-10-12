@@ -33,7 +33,13 @@ test('animahd bake stays in sync with the demo page', () => {
         join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'),
         'utf8',
     );
-    expect(html).toContain('var EP_DATA={"solo":{"slug":"solo-leveling","showId":1138');
+    // The demo page is Nxsha-only now: the AnimaHD/Drive table is not baked in
+    // and the harvest data lives only in data/animahd-episodes.json.
+    expect(html).not.toContain('var EP_DATA=');
+    expect(html).not.toContain('animahd.com/player');
+    expect(html).not.toContain('drive.google.com/file/d/');
+    // The nxsha table (the only player source) is what gets baked.
+    expect(html).toContain('var NX_DATA=');
 });
 
 test('animahd harvester self-test passes offline', () => {

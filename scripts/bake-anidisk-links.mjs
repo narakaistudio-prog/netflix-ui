@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 /**
- * Bake confirmed AniDisk links into the Crunchyroll demo page.
+ * AniDisk confirmed-links data check for the Crunchyroll demo page.
  *
- * Reads data/anidisk-confirmed.json (curated by hand or by
- * scripts/harvest-deadtoons.mjs) and rewrites the ANIDISK_CONFIRMED block
- * between the /*__ANIDISK_CONFIRMED__*\/ … /*__END_ANIDISK__*\/ markers in
- * assets/crunchyroll/crunchyroll.html.
- *
- * The player prefers these confirmed links and only falls back to
- * slug-guessing for titles missing here.
+ * The player is Nxsha-only now (every title embeds from https://nxsha.space/embed/…),
+ * so the demo page carries NO AniDisk table anymore. This script still
+ * validates data/anidisk-confirmed.json (curated by hand or by
+ * scripts/harvest-deadtoons.mjs) and makes sure the page never grows the
+ * ANIDISK_CONFIRMED block back.
  *
  * Usage: node scripts/bake-anidisk-links.mjs [--check]
  *   --check   verify the HTML is already in sync (CI-friendly, no write)
@@ -56,26 +54,30 @@ function main() {
     const checkOnly = process.argv.includes('--check');
     const data = validateConfirmed(JSON.parse(readFileSync(JSON_PATH, 'utf8')));
     const html = readFileSync(HTML_PATH, 'utf8');
-    const si = html.indexOf(START);
-    const ei = html.indexOf(END);
-    if (si === -1 || ei === -1 || ei < si) {
-        throw new Error('ANIDISK_CONFIRMED markers not found in demo HTML');
-    }
-    const baked = `${START}var ANIDISK_CONFIRMED=${JSON.stringify(data)};${END}`;
-    const next = html.slice(0, si) + baked + html.slice(ei + END.length);
     const keys = Object.keys(data).length;
     const links = Object.values(data).reduce((n, e) => n + (e.eps ? Object.keys(e.eps).length : 0), 0);
-    if (next === html) {
-        console.log(`anidisk links already in sync (${keys} titles, ${links} episode links).`);
+    const summary = `anidisk links already in sync (${keys} titles, ${links} episode links, none baked — player is Nxsha-only)`;
+
+    // The Nxsha-only player has no AniDisk table: nothing to bake. If an old
+    // bake left one behind, strip it (or fail --check so CI notices).
+    const si = html.indexOf(START);
+    const ei = html.indexOf(END);
+    const hasBlock = si !== -1 && ei !== -1 && ei >= si;
+    const hasTable = html.includes('var ANIDISK_CONFIRMED=');
+    if (!hasBlock && !hasTable) {
+        console.log(summary);
         return;
     }
     if (checkOnly) {
-        console.error(`anidisk links OUT OF SYNC (${keys} titles, ${links} episode links) — run the bake.`);
+        console.error('anidisk table found in demo HTML — player is Nxsha-only, run the bake to strip it.');
         process.exitCode = 1;
         return;
     }
+    let next = html;
+    if (hasBlock) next = next.slice(0, si) + next.slice(ei + END.length);
+    next = next.replace(/\/\*__ANIDISK_CONFIRMED__\*\/[\s\S]*?\/\*__END_ANIDISK__\*\//g, '');
     writeFileSync(HTML_PATH, next);
-    console.log(`Baked anidisk links (${keys} titles, ${links} episode links) into demo HTML.`);
+    console.log(`Stripped leftover anidisk table from demo HTML (${summary}).`);
 }
 
 main();

@@ -1,13 +1,14 @@
 # Crunchyroll page — episode coverage
 
-Do server, dono source — sab kuch automatically harvest + verify hota hai:
+**UPDATE (player ab Nxsha-only hai):** Crunchyroll section ka player ab sirf **Nxsha** hai — Server 1 (AnimaHD) aur Server 2 (Drive) hata diye gaye hain. Har title aur har episode `nxsha.space/embed/...` se embed hota hai (`data/nxsha-titles.json` → `NX_DATA`; bake: `node scripts/bake-animahd-links.mjs`).
 
-- **Server 1 (AnimaHD)** + **Server 2 (Drive)** — `animahd.com` show pages se per-episode `file_id` (script: `scripts/harvest-animahd-all.mjs`).
-- **Server 3 (Nxsha)** — jin titles ke episodes AnimaHD par nahi hain, woh `nxsha.space/embed/...` se chalte hain (script: `scripts/probe-nxsha.mjs` + `data/nxsha-titles.json`).
+- **Nxsha (default + only player)** — `https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}]` (script: `scripts/probe-nxsha.mjs` + `data/nxsha-titles.json`).
 
-**23 titles / 1015 episodes** (AnimaHD+Drive) + **18 titles / 654 episodes** (Nxsha) = **41/41 titles playable**.
+**41 titles / 3519 episodes** (Nxsha) = **41/41 titles playable**.
 
-## Server 1 + Server 2 (AnimaHD → Drive)
+## Historical: Server 1 + Server 2 (AnimaHD → Drive) — removed from the player
+
+Neeche ka table AnimaHD harvest ka record hai (data layer me ab bhi `data/animahd-episodes.json` ke roop me maujood; player me use nahi hota).
 
 | Title | Seasons (eps each) | Episodes |
 |---|---|---|

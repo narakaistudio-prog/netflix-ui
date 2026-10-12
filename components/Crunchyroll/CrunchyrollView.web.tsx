@@ -33,9 +33,10 @@ export const CRUNCHYROLL_HTML_URL = '/assets/crunchyroll/crunchyroll.html';
  * The page cannot reach the router itself, so it talks to this view over
  * postMessage (same-origin): "exit" goes back to Netflix.
  *
- * Fullscreen needs no help from here: the AnimaHD tab runs unsandboxed, so the
- * player's own fullscreen control works and the page's layout never changes —
- * which is why coming back from fullscreen never leaves a white video.
+ * Fullscreen needs no help from here: the Nxsha embed (the one and only
+ * player) takes `allow="… fullscreen …"`, so its own fullscreen control works
+ * and the page's layout never changes — which is why coming back from
+ * fullscreen never leaves a white video.
  */
 export function CrunchyrollView(): React.JSX.Element {
     const router = useRouter();

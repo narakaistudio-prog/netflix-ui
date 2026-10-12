@@ -1,5 +1,6 @@
 /**
- * Live-DOM checks for the Crunchyroll demo player's three servers.
+ * Live-DOM checks for the Crunchyroll demo player — Nxsha is the one and only
+ * server, and every title embeds from it.
  *
  * The page is a self-contained document (not a component), so it is booted in
  * jsdom and driven like a user would: open a title card, press play, tap the
@@ -23,7 +24,7 @@ function boot() {
     return new JSDOM(html, {
         runScripts: 'dangerously',
         pretendToBeVisual: true,
-        url: 'https://animahd.com/crunchyroll.html',
+        url: 'https://app.local/crunchyroll.html',
         virtualConsole,
     });
 }
@@ -53,7 +54,7 @@ const pills = (window: Win) =>
 
 jest.setTimeout(20000);
 
-test('nxsha-only title: Server 3 is the only tab and builds the provider URL', async () => {
+test('nxsha is the only tab for a tv title and builds the provider URL', async () => {
     const dom = boot();
     await wait(200);
     const doc = dom.window.document;
@@ -65,12 +66,8 @@ test('nxsha-only title: Server 3 is the only tab and builds the provider URL', a
     expect(options).toEqual(['1', '2', '3', '4']);
 
     await play(dom.window, 'aot');
-    expect(pills(dom.window)).toEqual([
-        { server: '0', hidden: true, active: false },
-        { server: '1', hidden: true, active: false },
-        { server: '2', hidden: false, active: true },
-    ]);
-    expect(doc.getElementById('serverName')!.textContent).toBe('Server 3 · nxsha.space');
+    expect(pills(dom.window)).toEqual([{ server: '0', hidden: false, active: true }]);
+    expect(doc.getElementById('serverName')!.textContent).toBe('Nxsha · nxsha.space');
     expect(doc.getElementById('serverFrame')!.getAttribute('src')).toBe(
         `https://nxsha.space/embed/tv/tt2560140/1/1?${NXSHA_PARAMS}`,
     );
@@ -87,22 +84,29 @@ test('nxsha movie title: movie embed URL, no season/episode path', async () => {
     dom.window.close();
 });
 
-test('animahd tab plays unsandboxed (its own fullscreen control works)', async () => {
+test('titles the old file-based servers carried now play on nxsha too', async () => {
     const dom = boot();
     await wait(200);
     await play(dom.window, 'solo');
     const frame = dom.window.document.getElementById('serverFrame')!;
-    // Reference play system (byte-exact): no sandbox on the AnimaHD tab, no
-    // scrolling lock (the page keeps its own scrollbar) and no permissions list.
-    expect(frame.hasAttribute('sandbox')).toBe(false);
-    expect(frame.hasAttribute('scrolling')).toBe(false);
-    expect(frame.hasAttribute('allow')).toBe(false);
+    // Solo Leveling's S1E1 resolves to the Nxsha provider URL, not a file_id.
+    expect(frame.getAttribute('src')).toBe(`https://nxsha.space/embed/tv/tt21209876/1/1?${NXSHA_PARAMS}`);
+    expect(frame.getAttribute('src')).not.toContain('file_id');
+    dom.window.close();
+});
+
+test('nxsha embed config: sandboxed (popup shield) with fullscreen grant', async () => {
+    const dom = boot();
+    await wait(200);
+    await play(dom.window, 'aot');
+    const frame = dom.window.document.getElementById('serverFrame')!;
+    expect(frame.getAttribute('sandbox')).toBe('allow-scripts allow-same-origin');
+    expect(frame.getAttribute('src')).toContain('https://nxsha.space/embed/tv/tt2560140/1/1');
+    expect(frame.getAttribute('scrolling')).toBe('no');
+    expect(frame.getAttribute('allow')).toBe('autoplay; fullscreen; encrypted-media; picture-in-picture');
     expect(frame.hasAttribute('allowfullscreen')).toBe(true);
     expect(frame.hasAttribute('webkitallowfullscreen')).toBe(true);
     expect(frame.hasAttribute('mozallowfullscreen')).toBe(true);
-    expect(frame.getAttribute('src')).toContain('https://animahd.com/player/?file_id=');
-    // Stage is the reference 16:9 viewport.
-    expect(dom.window.document.getElementById('videoStage')!.classList.contains('s16x9')).toBe(true);
     dom.window.close();
 });
 
@@ -136,28 +140,20 @@ test('leaving fullscreen triggers the repaint nudge', async () => {
     dom.window.close();
 });
 
-test('nxsha tab stays sandboxed (popup shield) but plays the same way', async () => {
+test('every title lands on the single nxsha pill', async () => {
     const dom = boot();
     await wait(200);
-    await play(dom.window, 'aot');
-    const frame = dom.window.document.getElementById('serverFrame')!;
-    expect(frame.getAttribute('sandbox')).toBe('allow-scripts allow-same-origin');
-    expect(frame.getAttribute('src')).toContain('https://nxsha.space/embed/tv/tt2560140/1/1');
-    expect(frame.getAttribute('scrolling')).toBe('no');
-    dom.window.close();
-});
-
-test('animahd title keeps Server 1 + Server 2 and hides the fallback pill', async () => {
-    const dom = boot();
-    await wait(200);
+    // An old AnimaHD-only title…
     await play(dom.window, 'solo');
-    expect(pills(dom.window)).toEqual([
-        { server: '0', hidden: false, active: true },
-        { server: '1', hidden: false, active: false },
-        { server: '2', hidden: true, active: false },
-    ]);
-    const src = dom.window.document.getElementById('serverFrame')!.getAttribute('src') || '';
-    expect(src).toContain('https://animahd.com/player/?file_id=144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
-    expect(src).toContain('ep=0');
+    expect(pills(dom.window)).toEqual([{ server: '0', hidden: false, active: true }]);
+    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
+        'https://nxsha.space/embed/tv/tt21209876/1/1',
+    );
+    // …and an always-nxsha title come back to the same pill, same player.
+    await play(dom.window, 'aot');
+    expect(pills(dom.window)).toEqual([{ server: '0', hidden: false, active: true }]);
+    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
+        'https://nxsha.space/embed/tv/tt2560140/1/1',
+    );
     dom.window.close();
 });
