@@ -2,10 +2,10 @@
 /**
  * Harvest the Nxsha season/episode guide (names, stills, synopsis, dates, runtimes).
  *
- * Nxsha serves its season data from /api/tv/{tmdbId}/season/{season}. The page
- * URL in data/nxsha-titles.json may be an IMDb or TMDB id, so first resolve the
- * internal TMDB id from the show's Nxsha detail page. One Piece is deliberately
- * skipped and its existing season map is never rewritten.
+ * Add every Crunchyroll catalog key to data/nxsha-titles.json with its Nxsha page
+ * ID and kind. This script discovers TV targets from that registry on every run,
+ * syncs new entries into the verification plan, and updates the baked guide. One
+ * Piece is deliberately skipped and its existing season map is never rewritten.
  *
  * Usage: node scripts/harvest-nxsha-guide.mjs [--check]
  *   --check  verify that all non-One-Piece catalog shows were harvested without
@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const TITLES_PATH = resolve(ROOT, 'data', 'nxsha-titles.json');
 const PLAN_PATH = resolve(ROOT, 'data', 'nxsha-plan.json');
+const CATALOG_PATH = resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const EPISODES_PATH = resolve(ROOT, 'data', 'nxsha-episodes.json');
 const REPORT_PATH = resolve(ROOT, 'data', 'nxsha-harvest-report.json');
 const BASE_URL = 'https://nxsha.space';
@@ -27,8 +28,8 @@ const REQUEST_TIMEOUT_MS = 25_000;
 const REQUEST_DELAY_MS = 120;
 const MAX_RETRIES = 4;
 const SKIP_KEYS = new Set(['onepiece']);
-const MANIFEST_COMMENT = 'Single player source for the 41-title Crunchyroll catalog. All entries use nxsha.space/embed/{movie|tv}/{id}[/{season}/{episode}]. Non-One-Piece TV season maps are refreshed from Nxsha season API responses and their episode metadata is stored separately in data/nxsha-episodes.json; One Piece is intentionally excluded from that refresh.';
-const PLAN_COMMENT = 'All Crunchyroll catalog titles are routed through Nxsha. IDs use configured TMDB numeric IDs or IMDb tt IDs; non-One-Piece TV season maps are sourced from Nxsha season API responses. One Piece is excluded from the season/episode-guide update and its existing map is unchanged.';
+const MANIFEST_COMMENT = 'Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata. One Piece is intentionally excluded from season/episode refresh.';
+const PLAN_COMMENT = 'Nxsha verification plan synchronized from data/nxsha-titles.json. New catalog routes are added automatically; non-One-Piece TV season maps are sourced from Nxsha season API responses. One Piece is excluded from the season/episode-guide update and its existing map is unchanged.';
 
 const sleep = (ms) => new Promise((resolvePromise) => setTimeout(resolvePromise, ms));
 
@@ -69,6 +70,31 @@ function titlesMatch(actual, expected) {
         candidate === token || (token.length > 5 && candidate.startsWith(token.slice(0, 5)))
     )));
     return matches.length / expectedTokens.length >= 0.6;
+}
+
+/** Return all top-level titles in the Crunchyroll page's `shows` catalog. */
+export function parseCrunchyrollCatalog(html) {
+    const source = String(html || '');
+    const start = source.indexOf('var shows={');
+    const end = source.indexOf('\n      };', start);
+    if (start === -1 || end === -1) throw new Error('Could not find the Crunchyroll shows catalog');
+    const body = source.slice(start, end);
+    const matches = [...body.matchAll(/^[ \t]{8}([A-Za-z_$][A-Za-z0-9_$]*):\{title:'((?:\\.|[^'\\])*)'/gm)];
+    if (!matches.length) throw new Error('Could not parse any titles from the Crunchyroll shows catalog');
+    return matches.map((match) => ({
+        key: match[1],
+        title: match[2].replace(/\\(['\\])/g, '$1'),
+    }));
+}
+
+/** Fail instead of silently skipping a new catalog title without an Nxsha ID. */
+export function assertCatalogRoutes(catalog, manifest) {
+    const missing = catalog.filter(({ key }) => !manifest[key]);
+    if (missing.length) {
+        const list = missing.map(({ key, title }) => `${key} (${title})`).join(', ');
+        throw new Error(`Crunchyroll catalog titles missing an Nxsha route in data/nxsha-titles.json: ${list}. Add each new title's Nxsha page id and kind so the daily harvester can refresh it.`);
+    }
+    return true;
 }
 
 /** Resolve title page metadata and the internal TMDB id used by Nxsha's API. */
@@ -206,11 +232,22 @@ async function harvestTitle(key, entry) {
 }
 
 function syncPlan(plan, manifest) {
-    for (const row of plan.titles || []) {
-        if (SKIP_KEYS.has(row.key)) continue;
-        const title = manifest[row.key];
-        if (title?.kind === 'tv') row.seasons = title.seasons;
+    const rows = Array.isArray(plan.titles) ? plan.titles : [];
+    const rowsByKey = new Map(rows.map((row) => [row.key, row]));
+    for (const [key, title] of Object.entries(manifest)) {
+        if (key.startsWith('_') || SKIP_KEYS.has(key) || !title || !['tv', 'movie'].includes(title.kind)) continue;
+        let row = rowsByKey.get(key);
+        if (!row) {
+            row = { key };
+            rows.push(row);
+            rowsByKey.set(key, row);
+        }
+        row.title = title.title;
+        row.kind = title.kind;
+        row.id = title.id;
+        if (title.seasons && Object.keys(title.seasons).length) row.seasons = title.seasons;
     }
+    plan.titles = rows;
     return plan;
 }
 
@@ -244,6 +281,22 @@ function selfTest() {
         airDate: '2020-10-03',
         runtime: 24,
     });
+
+    const catalog = parseCrunchyrollCatalog(`var shows={\n        future:{title:'Future Anime',year:2030},\n      };`);
+    assert.deepEqual(catalog, [{ key: 'future', title: 'Future Anime' }]);
+    assert.throws(() => assertCatalogRoutes(catalog, {}), /missing an Nxsha route.*future/i);
+    assert.equal(assertCatalogRoutes(catalog, { future: { id: '12345' } }), true);
+
+    const futurePlan = syncPlan({ titles: [{ key: 'onepiece', seasons: { '1': 31 } }] }, {
+        future: { id: '12345', kind: 'tv', title: 'Future Anime', seasons: { '1': 4 } },
+        futureMovie: { id: '67890', kind: 'movie', title: 'Future Film', seasons: { '1': 1 } },
+        onepiece: { id: '37854', kind: 'tv', title: 'One Piece', seasons: { '1': 55 } },
+    });
+    assert.deepEqual(futurePlan.titles, [
+        { key: 'onepiece', seasons: { '1': 31 } },
+        { key: 'future', title: 'Future Anime', kind: 'tv', id: '12345', seasons: { '1': 4 } },
+        { key: 'futureMovie', title: 'Future Film', kind: 'movie', id: '67890', seasons: { '1': 1 } },
+    ]);
     console.log('harvest-nxsha-guide self-tests passed');
 }
 
@@ -251,6 +304,8 @@ async function main() {
     const checkOnly = process.argv.includes('--check');
     const manifest = JSON.parse(readFileSync(TITLES_PATH, 'utf8'));
     const plan = JSON.parse(readFileSync(PLAN_PATH, 'utf8'));
+    const catalog = parseCrunchyrollCatalog(readFileSync(CATALOG_PATH, 'utf8'));
+    assertCatalogRoutes(catalog, manifest);
     manifest._comment = MANIFEST_COMMENT;
     plan._comment = PLAN_COMMENT;
     const shows = {};

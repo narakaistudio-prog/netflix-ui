@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - arena/1b9772fc-netflix-ui
+      - main
     paths:
       - '.github/workflows/harvest-nxsha-guide.yml'
+      - 'scripts/harvest-nxsha-guide.mjs'
+      - 'assets/crunchyroll/crunchyroll.html'
+      - 'data/nxsha-titles.json'
   # GitHub runs scheduled workflows from the repository's default branch.
   # 00:17 UTC is 05:47 in Asia/Kolkata and avoids the top-of-hour rush.
   schedule:

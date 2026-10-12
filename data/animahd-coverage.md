@@ -10,6 +10,10 @@ The season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json` now come 
 
 **Tokyo Revengers is 1 season / 55 episodes** on Nxsha, replacing the old local 3-season map. **One Piece was intentionally excluded** from the harvest and its existing route/season map remains unchanged.
 
+## Adding future anime
+
+The daily harvester is not limited to today's 28 series: it reads the current Crunchyroll `shows` catalog and the Nxsha route registry on every run. When adding a TV anime, add its card to `assets/crunchyroll/crunchyroll.html` and add a matching key to `data/nxsha-titles.json` with its Nxsha `/tv/{id}` page ID, title, and `kind: "tv"`. The workflow then harvests its current seasons/episodes, adds it to the verification plan, and bakes its guide data into the page. A catalog card without a matching Nxsha registry entry fails the refresh with the missing key, rather than being silently skipped. One Piece remains excluded from episode-guide refreshes.
+
 | Series | Nxsha API ID | Nxsha season map | Episodes | Stills | Synopses |
 |---|---:|---|---:|---:|---:|
 | Attack on Titan | `1429` | S1: 25 + S2: 12 + S3: 22 + S4: 28 | 87 | 87 | 87 |
