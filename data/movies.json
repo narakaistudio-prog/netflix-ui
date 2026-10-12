@@ -6,7 +6,7 @@
             "movies": [
                 {
                     "id": "tudum-top10-india-vishwanath-and-sons",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABcRBlvOhmFSXlv0EUDgiPbZ-FEsh_mUvG5fiDp4SyiEeV7YtCwC3gEKvOqArm7wwPY9Wuu1A1OfIT1SbUkViqzV68ASz-0CYfjkp_J3Lq6A.png?r=22c",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/mLsvCffzpxxDwC7yVLJSLLjgzoq.jpg",
                     "title": "Vishwanath & Sons",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -15,11 +15,27 @@
                     "netflixId": "82034837",
                     "netflixUrl": "https://www.netflix.com/in/title/82034837",
                     "tmdb_id": "1408162",
-                    "embed_provider": "nxsha"
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search.",
+                    "duration": "2h 41m",
+                    "cast": [
+                        "Suriya",
+                        "Mamitha Baiju",
+                        "Radhika Sarathkumar",
+                        "Raveena Tandon",
+                        "Sunil",
+                        "Harika",
+                        "Nassar",
+                        "Harsha Chemudu",
+                        "Bhavani Sre",
+                        "V.J. Pappu"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
                 },
                 {
                     "id": "tudum-top10-india-irumudi",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABTRr-2lGyfeidREZ6VHeOv5KNigbvDfWfJkQQLLuCJnnSMMbHG1EUPB5p-C7iwwucKdwNycrKEADOZrIUPxrOMYtuzH5AQIEmRlhZ89m7Bo.png?r=e05",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg",
                     "title": "Irumudi",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -29,11 +45,26 @@
                     "netflixUrl": "https://www.netflix.com/in/title/83001420",
                     "year": "2026",
                     "tmdb_id": "1441228",
-                    "embed_provider": "nxsha"
+                    "embed_provider": "nxsha",
+                    "description": "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request.",
+                    "duration": "2h 32m",
+                    "cast": [
+                        "Ravi Teja",
+                        "Nakshathra C M",
+                        "Priya Bhavani Shankar",
+                        "Sai Kumar",
+                        "Ajay Ghosh",
+                        "Swasika",
+                        "Rajkumar Kasireddy",
+                        "Ramesh Indira",
+                        "Kishore Kumar Polimera",
+                        "Laxman Meesala"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
                 },
                 {
                     "id": "tudum-top10-india-modha-rathri",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABW_wFTfN40_G9BU-aQfgUtCpRuluTDg88fQRFQVUbiA63BftUiWt5YWn5JJsPpPwY919vmoHCLTVESgILQ1rs5QdE_fY4y4rWgk0i6O_PBE.png?r=e1d",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg",
                     "title": "Modha Rathri",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -43,11 +74,26 @@
                     "netflixUrl": "https://www.netflix.com/in/title/82811466",
                     "tmdb_id": "1685882",
                     "imdb_id": "tt42262473",
-                    "embed_provider": "nxsha"
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything.",
+                    "duration": "2h 21m",
+                    "cast": [
+                        "Rishikanth",
+                        "Anishma Anilkumar",
+                        "Chetan",
+                        "A. Venkatesh",
+                        "Bagavathi Perumal",
+                        "Sangeetha Balan",
+                        "Shelly Kishore",
+                        "Abdool Lee",
+                        "Banupriya"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
                 },
                 {
                     "id": "tudum-top10-india-baby-do-die-do",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABV_UXtVDC3C5euIL6waj20qhZQTokyfWdE7w-8azkXBmvSVGhRsrKCqA5HC2PoW-nLOfuKePDfq4qaI55z-LigJs9uTJh4hxxGQYJfJbCUw.png?r=8da",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg",
                     "title": "Baby Do Die Do",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -57,33 +103,76 @@
                     "netflixUrl": "https://www.netflix.com/in/title/83195142",
                     "tmdb_id": "1512084",
                     "imdb_id": "tt37544992",
-                    "embed_provider": "nxsha"
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "A deaf and mute serial killer in Mumbai can only hear her dead sister's voice as she commits murders for mysterious reasons.",
+                    "duration": "2h 5m",
+                    "cast": [
+                        "Huma Qureshi",
+                        "Sikandar Kher",
+                        "Chunky Panday",
+                        "Rachit Singh",
+                        "Seema Pahwa",
+                        "Vidya Malvade",
+                        "Kailash Waghmare"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
                 },
                 {
                     "id": "tudum-top10-india-romanchakam",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABbX0bCu45WuD2cU8M8zBt2TaLJvBVPxgUJVjaYAL584S4uD1vIsjdtgLdi6U_QQCdtw4TpY1USd4mK9Cro033asy6Y11LsrqLiYky38HSAA.png?r=969",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/p8NASLkwMuWJMzncvNViscP6hgj.jpg",
                     "title": "Romanchakam",
                     "type": "FILM",
                     "mediaType": "movie",
                     "ranking_text": "#5 in Movies",
                     "catalogSource": "tudum-top10-india",
                     "netflixId": "82969780",
-                    "netflixUrl": "https://www.netflix.com/in/title/82969780"
+                    "netflixUrl": "https://www.netflix.com/in/title/82969780",
+                    "tmdb_id": "1669281",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "An entrepreneur hoping to make money off romance ends up falling in love. But when she blocks him on social media, he tries to reignite their spark.",
+                    "duration": "2h 20m",
+                    "cast": [
+                        "Sumanth Prabhas",
+                        "Ananthika Sanilkumar",
+                        "Upendra Limaye",
+                        "Anudeep"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/z5Lm7BZ6yZ9PY6eHEsFss6pMdhx.jpg"
                 },
                 {
                     "id": "tudum-top10-india-demon-slayer-infinity-castle-1",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABTf_clq2cj5fGg5aUncTjRnFWbb2bcBVewRpuLGOZorPlivT9talP-HN5ZcsPXxCt5pAMKzt2NZbz1fvbzefTR0ghb2yYIGp_P7jDp9gNi0.png?r=434",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg",
                     "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle I",
                     "type": "FILM",
                     "mediaType": "movie",
                     "ranking_text": "#6 in Movies",
                     "catalogSource": "tudum-top10-india",
                     "netflixId": "82723106",
-                    "netflixUrl": "https://www.netflix.com/in/title/82723106"
+                    "netflixUrl": "https://www.netflix.com/in/title/82723106",
+                    "tmdb_id": "1311031",
+                    "embed_provider": "nxsha",
+                    "year": "2025",
+                    "description": "The Demon Slayer Corps are drawn into the Infinity Castle, where Tanjiro, Nezuko, and the Hashira face terrifying Upper Rank demons in a desperate fight as the final battle against Muzan Kibutsuji begins.",
+                    "duration": "2h 36m",
+                    "cast": [
+                        "Amazon Prime Video",
+                        "Crunchyroll",
+                        "Crunchyroll Amazon Channel",
+                        "Amazon Prime Video with Ads",
+                        "Natsuki Hanae",
+                        "Takahiro Sakurai",
+                        "Akira Ishida",
+                        "Hiro Shimono",
+                        "Yoshimasa Hosoya",
+                        "Saori Hayami"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/1RgPyOhN4DRs225BGTlHJqCudII.jpg"
                 },
                 {
                     "id": "tudum-top10-india-lust-stories-3",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABV2rCPWlr_fef42rOyRnICZ9O86sOmD3QnmKWPOlzntlajiIFGvRTADFXAk_eE5-J-YMF7QWetIMsOTWVWDYY5SHBDldbjnUmbw2lyiQnm8.png?r=1a2",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/cLA83DD1qMEBwbRIYXf29RKjMja.jpg",
                     "title": "Lust Stories 3",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -93,11 +182,25 @@
                     "netflixUrl": "https://www.netflix.com/in/title/81734814",
                     "year": "2026",
                     "tmdb_id": "1451944",
-                    "embed_provider": "nxsha"
+                    "embed_provider": "nxsha",
+                    "description": "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity.",
+                    "duration": "2h 45m",
+                    "cast": [
+                        "Radhika Apte",
+                        "Konkona Sen Sharma",
+                        "Vijay Varma",
+                        "Abhishek Banerjee",
+                        "Ali Fazal",
+                        "Radhikka Madan",
+                        "Aditi Rao Hydari",
+                        "Siddharth",
+                        "Gurfateh Pirzada"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
                 },
                 {
                     "id": "tudum-top10-india-unabomber",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABVarJDrzS43TVAJGCbVvjbrCUfKm1irPWaOO3veM0k4cxAyyvRvJAr3DwKL1KV4IyA5lISY0nKw1LKmLB0hScya1EycTHN83XNOZ8kJ__V4.png?r=c2d",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg",
                     "title": "UNABOMBER",
                     "type": "FILM",
                     "mediaType": "movie",
@@ -107,29 +210,75 @@
                     "netflixUrl": "https://www.netflix.com/in/title/82010386",
                     "imdb_id": "tt6933238",
                     "tmdb_id": "1492640",
-                    "embed_provider": "nxsha"
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "Follow Ted Kaczynski's transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski's troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the chilling consequences of ambition and isolation.",
+                    "duration": "1h 41m",
+                    "cast": [
+                        "Russell Crowe",
+                        "Jacob Tremblay",
+                        "Shailene Woodley",
+                        "Annabelle Wallis",
+                        "Alexander Ludwig",
+                        "Marc Menchaca",
+                        "Steven Ogg",
+                        "David Webster",
+                        "Bruce Ramsay"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
                 },
                 {
                     "id": "tudum-top10-india-ohh-my-dog",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABU78sRMK8UNPFxe-TW9_IBgi3bK9cBLC18c8L7beNaQPo3jspZ95krrDeWjnlB8srB_ROpaOVbVWrWpIjD6HLFTzdOgXgdWBmIPIXfGSino.png?r=7eb",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/3zVHaUphvyc3O5dDEkzJe9Faf3P.jpg",
                     "title": "Ohh My Dog",
                     "type": "FILM",
                     "mediaType": "movie",
                     "ranking_text": "#9 in Movies",
                     "catalogSource": "tudum-top10-india",
                     "netflixId": "83197638",
-                    "netflixUrl": "https://www.netflix.com/in/title/83197638"
+                    "netflixUrl": "https://www.netflix.com/in/title/83197638",
+                    "tmdb_id": "1727563",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "In Assam, 14-year-old Apu embarks on a desperate quest to rescue his beloved dog, Momo, after he is kidnapped. Elsewhere, in Bihar, a devoted dog named Oscar sets out on a perilous journey to find his kidnapped owner, a 15-year-old child labourer. As their journeys unfold, it becomes clear that the two kidnappings may be connected to a larger, sinister plan.",
+                    "duration": "2h 30m",
+                    "cast": [
+                        "Pankaj Tripathi",
+                        "Pavan Malhotra",
+                        "Geeta Agrawal Sharma",
+                        "Rajesh Kumar",
+                        "Jitendra Joshi"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nOQYly08Rv5fepk67i4wy43Oyyf.jpg"
                 },
                 {
                     "id": "tudum-top10-india-dhamaal-4",
-                    "imageUrl": "https://dnm.nflximg.net/api/v6/9R7jmI8ri5rJNRlvCsMBDHE5JuQ/AAAABTqW_MNOB8l_lnFIycNi1LHkAz988Gl_coYvGRPMen5eZHMwMJcyewdZ2m4dmxh_yEgeN3iWIE3cU2TWn3bCAyX8PlY4yogQj2Mokn0yDVA.png?r=af7",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/oVij5aEEE6iI4PxB4i0CgKp8h0m.jpg",
                     "title": "Dhamaal 4",
                     "type": "FILM",
                     "mediaType": "movie",
                     "ranking_text": "#10 in Movies",
                     "catalogSource": "tudum-top10-india",
                     "netflixId": "81950460",
-                    "netflixUrl": "https://www.netflix.com/in/title/81950460"
+                    "netflixUrl": "https://www.netflix.com/in/title/81950460",
+                    "tmdb_id": "1303331",
+                    "embed_provider": "nxsha",
+                    "year": "2026",
+                    "description": "The Dhamaal boys are back for another treasure hunt, facing hilarious challenges in their quest for the Treasure of Life.",
+                    "duration": "2h 23m",
+                    "cast": [
+                        "Ajay Devgn",
+                        "Arshad Warsi",
+                        "Riteish Deshmukh",
+                        "Javed Jaffrey",
+                        "Sanjay Mishra",
+                        "Ravi Kishan",
+                        "Upendra Limaye",
+                        "Anjali Anand",
+                        "Sanjeeda Sheikh",
+                        "Esha Gupta"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/95sjD0dRajtU6SKD6Gq6PtrGoGY.jpg"
                 }
             ]
         }
