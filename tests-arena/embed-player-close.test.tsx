@@ -10,6 +10,7 @@ import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 
+jest.mock('expo-linear-gradient', () => ({ LinearGradient: () => null }));
 jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
     return {

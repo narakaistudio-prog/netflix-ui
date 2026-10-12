@@ -9,7 +9,7 @@ jest.mock('@expo/vector-icons', () => {
 });
 jest.mock('@/components/EmbedPlayer', () => {
     const ReactLocal = require('react');
-    return { EmbedPlayer: ({ src, onClose }: any) => ReactLocal.createElement('div', { 'data-testid': 'embed-player', 'data-src': src, onClick: onClose }) };
+    return { EmbedPlayer: ({ src, onClose, variant }: any) => ReactLocal.createElement('div', { 'data-testid': 'embed-player', 'data-src': src, 'data-variant': variant, onClick: onClose }) };
 });
 jest.mock('expo-linear-gradient', () => {
     const ReactLocal = require('react');
@@ -75,6 +75,7 @@ test('Play starts the player inside the modal, and closing the player returns to
     const player = document.querySelector('[data-testid="embed-player"]') as HTMLElement;
     expect(player.getAttribute('data-src')).toContain('/embed/movie/1441228');
     expect(player.getAttribute('data-src')).toContain('color=netflix');
+    expect(player.getAttribute('data-variant')).toBe('netflix');
     expect(player.getAttribute('data-src')).not.toContain('color=orange');
     expect(document.body.textContent).toContain('Irumudi');
     // Closing the player (its onClose) keeps the modal open on the same title.

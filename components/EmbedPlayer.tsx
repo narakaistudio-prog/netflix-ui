@@ -9,6 +9,7 @@ import {
     View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { detectProviderFromUrl } from '@/lib/embeds';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
@@ -31,6 +32,8 @@ export interface EmbedPlayerProps {
     /** Official title page to offer if the third-party player cannot load. */
     fallbackUrl?: string;
     timeoutMs?: number;
+    /** 'netflix' restyles the frame (title bar, Netflix loading screen); the player itself is unchanged. */
+    variant?: 'default' | 'netflix';
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -48,7 +51,9 @@ export function EmbedPlayer({
     onSwitchProvider,
     fallbackUrl,
     timeoutMs = 12000,
+    variant = 'default',
 }: EmbedPlayerProps) {
+    const netflix = variant === 'netflix';
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
     const [scanCovered, setScanCovered] = useState(false);
@@ -259,9 +264,10 @@ export function EmbedPlayer({
             )}
 
             {loading && !timedOut ? (
-                <View style={styles.loadingOverlay} pointerEvents="none">
+                <View style={[styles.loadingOverlay, netflix && styles.netflixLoading]} pointerEvents="none">
+                    {netflix ? <Text style={styles.netflixN}>N</Text> : null}
                     <ActivityIndicator size="large" color="#E50914" />
-                    <Text style={styles.loadingText}>Loading player…</Text>
+                    <Text style={styles.loadingText}>{netflix ? 'Loading…' : 'Loading player…'}</Text>
                 </View>
             ) : null}
 
@@ -307,26 +313,48 @@ export function EmbedPlayer({
                 </View>
             ) : null}
 
-            <View style={styles.topBar} pointerEvents="box-none">
-                <Pressable
-                    style={styles.iconButton}
-                    onPress={handleClose}
-                    accessibilityLabel="Close player"
-                    tabIndex={0}
-                    accessibilityRole="button"
-                    {...({
-                        dataSet: {
-                            tvFocusable: 'true',
-                            tvRow: 'player-top',
-                            tvId: 'player-close',
-                            tvInitial: 'true',
-                        },
-                    } as any)}
-                >
-                    <Ionicons name="close" size={22} color="#fff" />
-                </Pressable>
+            {netflix ? (
+                <View style={styles.netflixTop} pointerEvents="box-none">
+                    <LinearGradient
+                        colors={['rgba(0,0,0,0.85)', 'rgba(0,0,0,0)']}
+                        style={StyleSheet.absoluteFillObject}
+                        pointerEvents="none"
+                    />
+                    <View style={styles.netflixTitleRow} pointerEvents="none">
+                        <Text style={styles.netflixN}>N</Text>
+                        <Text style={styles.netflixTitle} numberOfLines={1}>{title ?? ''}</Text>
+                    </View>
+                    <Pressable
+                        style={styles.netflixClose}
+                        onPress={handleClose}
+                        accessibilityLabel="Close player"
+                        accessibilityRole="button"
+                    >
+                        <Ionicons name="close" size={24} color="#fff" />
+                    </Pressable>
+                </View>
+            ) : (
+                <View style={styles.topBar} pointerEvents="box-none">
+                    <Pressable
+                        style={styles.iconButton}
+                        onPress={handleClose}
+                        accessibilityLabel="Close player"
+                        tabIndex={0}
+                        accessibilityRole="button"
+                        {...({
+                            dataSet: {
+                                tvFocusable: 'true',
+                                tvRow: 'player-top',
+                                tvId: 'player-close',
+                                tvInitial: 'true',
+                            },
+                        } as any)}
+                    >
+                        <Ionicons name="close" size={22} color="#fff" />
+                    </Pressable>
 
-            </View>
+                </View>
+            )}
 
         </View>
     );
@@ -390,4 +418,19 @@ const styles = StyleSheet.create({
     nativeButtonText: { color: '#000', fontWeight: '700', fontSize: 14 },
     nativeGhostButton: { marginTop: 8, paddingHorizontal: 18, paddingVertical: 10 },
     nativeGhostText: { color: '#b3b3b3', fontSize: 13 },
+    netflixTop: {
+        position: 'absolute', top: 0, left: 0, right: 0,
+        height: 88, paddingHorizontal: 20,
+        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+        zIndex: 3,
+    },
+    netflixTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 12, flexShrink: 1 },
+    netflixTitle: { color: '#fff', fontSize: 18, fontWeight: '700', flexShrink: 1 },
+    netflixN: { color: '#E50914', fontSize: 40, fontWeight: '900', lineHeight: 44 },
+    netflixClose: {
+        width: 42, height: 42, borderRadius: 21,
+        backgroundColor: 'rgba(0,0,0,0.55)',
+        alignItems: 'center', justifyContent: 'center',
+    },
+    netflixLoading: { backgroundColor: '#000', gap: 16 },
 });
