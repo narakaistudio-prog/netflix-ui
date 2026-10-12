@@ -63,7 +63,7 @@ test('every catalog key is mapped to Nxsha', async () => {
         dom.window.document.querySelectorAll('#catalogGrid [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
 
-    expect(new Set(catalogKeys).size).toBe(41);
+    expect(new Set(catalogKeys).size).toBe(59);
     expect(Object.keys(nxData).sort()).toEqual([...new Set(catalogKeys)].sort());
     dom.window.close();
 });

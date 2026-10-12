@@ -106,12 +106,12 @@ test('player has Nxsha failure handling with retry and no fallback tab', () => {
     expect(html).not.toContain('function nextServer(');
 });
 
-test('all 41 Crunchyroll titles resolve through the Nxsha table', () => {
+test('all 59 Crunchyroll titles resolve through the Nxsha table', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
     expect(match).not.toBeNull();
     const data = JSON.parse((match as RegExpMatchArray)[1]);
-    expect(Object.keys(data)).toHaveLength(41);
+    expect(Object.keys(data)).toHaveLength(59);
     for (const entry of Object.values<any>(data)) {
         expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
         expect(['tv', 'movie']).toContain(entry.kind);
