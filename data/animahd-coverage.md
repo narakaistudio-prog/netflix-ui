@@ -4,7 +4,7 @@ The Crunchyroll section uses **Nxsha as its only playback provider**. The previo
 
 ## Nxsha episode harvest
 
-Harvested 2026-10-12T10:18:44.647Z from `https://nxsha.space/api/tv/{tmdbId}/season/{season}`: **28/28 non-One-Piece series**, **2,802 episodes**, **2,773 episode stills**, and **2,773 episode synopses**. No series failed; 29 episodes lack a still and 29 lack a synopsis. The full response snapshot is `data/nxsha-episodes.json`; `data/nxsha-harvest-report.json` is the machine-readable audit report.
+Harvested 2026-10-12T10:31:31.869Z from `https://nxsha.space/api/tv/{tmdbId}/season/{season}`: **28/28 non-One-Piece series**, **2,802 episodes**, **2,773 episode stills**, and **2,773 episode synopses**. No series failed; 29 episodes lack a still and 29 lack a synopsis. The full response snapshot is `data/nxsha-episodes.json`; `data/nxsha-harvest-report.json` is the machine-readable audit report.
 
 The season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json` now come from Nxsha season API responses. The browser guide uses only this Nxsha snapshot for non-One-Piece episode titles, stills, synopsis, air date, and runtime. Missing stills use a unique episode placeholder; missing synopsis/date/runtime fields are omitted instead of borrowing show art or generic local-catalog text.
 
@@ -45,6 +45,6 @@ The season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json` now come 
 
 - **41/41 catalog titles** have a configured Nxsha playback route.
 - **12 movies** remain routed through Nxsha; movie metadata is outside the TV season harvest.
-- **23 migrated route IDs** still lack a successful live embed probe in the checked-in `data/nxsha-verify.json`. This does not affect the Nxsha season/episode metadata result above, but it remains a separate playback verification task.
+- All **41/41 Nxsha playback routes** passed a live embed-title probe in `data/nxsha-verify.json`. The probe checked the first and last episode in every configured TV season and matched the Nxsha title for all 12 movies; Sword Art Online: Ordinal Scale resolved to `413594`.
 
 Use `data/nxsha-harvest-report.json` as the source for exact per-title counts and field coverage. Do not infer Nxsha data from the legacy guide or local catalog.
