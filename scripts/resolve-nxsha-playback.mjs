@@ -14,6 +14,9 @@
  * .github/workflows/resolve-nxsha-playback.yml. It never touches the Crunchyroll
  * data (data/nxsha-*, assets/crunchyroll).
  *
+ * Re-run after adding titles to data/movies.json without playback ids (a push
+ * touching this file triggers the workflow).
+ *
  * Usage: node scripts/resolve-nxsha-playback.mjs [--limit N] [--dry-run]
  */
 import { readFileSync, writeFileSync } from 'node:fs';
