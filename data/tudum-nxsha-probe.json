@@ -1,2203 +1,771 @@
 {
-  "generatedAt": "2026-10-12T19:57:23.895Z",
+  "generatedAt": "2026-10-12T19:59:04.294Z",
   "source": "https://nxsha.space",
   "titles": [
     {
       "id": "tudum-top10-india-vishwanath-and-sons",
       "title": "Vishwanath & Sons",
       "tmdb_id": "1408162",
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/movie/1408162",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/1408162",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 82476,
-          "title": "Vishwanath &amp; Sons (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search."
-            ],
-            [
-              "og:title",
-              "Vishwanath &amp; Sons (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1408162"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Vishwanath &amp; Sons (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
-            ]
+      "movie": {
+        "url": "https://nxsha.space/movie/1408162",
+        "status": 200,
+        "finalUrl": "https://nxsha.space/movie/1408162",
+        "bytes": 82476,
+        "h1": [
+          "Vishwanath &amp; Sons"
+        ],
+        "meta": [
+          [
+            "description",
+            "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://image.tmdb.org/t/p/w185/tgHFBhOfaV0Wck48y8BFhAlVvQx.jpg",
-            "https://image.tmdb.org/t/p/w185/9ySiE3j7ep16fhKi3u5iq5rbOk6.jpg",
-            "https://image.tmdb.org/t/p/w185/kEKzT8HAJw8lfFUtWWd0SoQ9kC9.jpg",
-            "https://image.tmdb.org/t/p/w185/4z0X9ZMgyNZRHfJG4G2Z10rhLpu.jpg",
-            "https://image.tmdb.org/t/p/w185/w92Vawfw4DcLYSLtUeFTm46KNIe.jpg",
-            "https://image.tmdb.org/t/p/w185/y7ujuzC4nXWrYcUnHNVDtwOG2JQ.jpg",
-            "https://image.tmdb.org/t/p/w185/p3I0tSQY3C5qZW3NzFfbpjKPNL6.jpg",
-            "https://image.tmdb.org/t/p/w185/be0atwoQTudy7WaVCNwWbQuxjvG.jpg",
-            "https://image.tmdb.org/t/p/w185/jpSwJEKKmCoaQZOOG6ofppNHdGQ.jpg",
-            "https://image.tmdb.org/t/p/w185/sH9wQiBcFCh3wgw97RuyscEYSzP.jpg",
-            "https://image.tmdb.org/t/p/w500/8gmdToawg8gaSe9yWZjQ10v7noL.jpg",
-            "https://image.tmdb.org/t/p/w500/rI1ikNMmbeMDZiDDVATYaOeFEHL.jpg",
-            "https://image.tmdb.org/t/p/w500/b35rv11ebJdqCe5chVmSUZ0RIlX.jpg",
-            "https://image.tmdb.org/t/p/w500/mkE8z7x5Ab94gN3CtormERYIz8B.jpg",
-            "https://image.tmdb.org/t/p/w500/xYM0laKrEqjiRSQNvqRrXPXN3iL.jpg",
-            "https://image.tmdb.org/t/p/w500/xX3396RcIQynrulZHFlE1DqAOfy.jpg",
-            "https://image.tmdb.org/t/p/w500/A0KRoR842OgNByCfw9iFHbWoeR9.jpg",
-            "https://image.tmdb.org/t/p/w500/xyGsnp4Ld5PmJYYWnfuYYoENhHt.jpg",
-            "https://image.tmdb.org/t/p/w500/pBRkO5GHJqDB9D0fbumL5235JfJ.jpg",
-            "https://image.tmdb.org/t/p/w500/uJJYCo87r6qtsaTRENatoYuE9pI.jpg",
-            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg\\",
-            "https://image.tmdb.org/t/p/w500/mLsvCffzpxxDwC7yVLJSLLjgzoq.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\"
+          [
+            "og:title",
+            "Vishwanath &amp; Sons (2026) - Watch Online Free"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/tgHFBhOfaV0Wck48y8BFhAlVvQx.jpg\"/><link rel=\"preload\" as=\"im"
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1408162",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1408162",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1408162/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1408162/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/1408162",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/1408162",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/1408162",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/1408162",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/1408162?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/1408162?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15657,
-          "title": "Watch Vishwanath &amp; Sons",
-          "meta": [
-            [
-              "description",
-              "Watch Vishwanath &amp; Sons online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Vishwanath &amp; Sons Free"
-            ],
-            [
-              "og:description",
-              "Watch Vishwanath &amp; Sons online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Vishwanath &amp; Sons Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Vishwanath &amp; Sons online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
-            ]
+          [
+            "og:description",
+            "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg",
-            "https://image.tmdb.org/t/p/w500/mLsvCffzpxxDwC7yVLJSLLjgzoq.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg\\"
+          [
+            "og:url",
+            "https://web.nxsha.app/movie/1408162"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/search?q=Vishwanath%20%26%20Sons",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Vishwanath%20%26%20Sons",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 33178,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
+          [
+            "og:site_name",
+            "Nxsha"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/mLsvCffzpxxDwC7yVLJSLLjgzoq.jpg",
-            "https://image.tmdb.org/t/p/w500/mLsvCffzpxxDwC7yVLJSLLjgzoq.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg\\"
+          [
+            "og:image",
+            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Vishwanath%20%26%20Sons",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Vishwanath%20%26%20Sons",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+          [
+            "og:type",
+            "video.movie"
+          ],
+          [
+            "twitter:card",
+            "summary_large_image"
+          ],
+          [
+            "twitter:title",
+            "Vishwanath &amp; Sons (2026) - Watch Online Free"
+          ],
+          [
+            "twitter:description",
+            "A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search."
+          ],
+          [
+            "twitter:image",
+            "https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg"
+          ]
+        ],
+        "imgTags": [
+          "<img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w1280/nfNaAiiILjYRc2CKkId1ZfPTtlh.jpg\" alt=\"Vishwanath &amp; Sons\" class=\"absolute inset-0 w-full h-full object-cover object-top md:object-center\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\" alt=\"Netflix\" class=\"h-12 w-12 rounded-xl object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/tgHFBhOfaV0Wck48y8BFhAlVvQx.jpg\" alt=\"Suriya\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/9ySiE3j7ep16fhKi3u5iq5rbOk6.jpg\" alt=\"Mamitha Baiju\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/kEKzT8HAJw8lfFUtWWd0SoQ9kC9.jpg\" alt=\"Radhika Sarathkumar\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/4z0X9ZMgyNZRHfJG4G2Z10rhLpu.jpg\" alt=\"Raveena Tandon\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/w92Vawfw4DcLYSLtUeFTm46KNIe.jpg\" alt=\"Sunil\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/y7ujuzC4nXWrYcUnHNVDtwOG2JQ.jpg\" alt=\"Harika\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/p3I0tSQY3C5qZW3NzFfbpjKPNL6.jpg\" alt=\"Nassar\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/be0atwoQTudy7WaVCNwWbQuxjvG.jpg\" alt=\"Harsha Chemudu\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/jpSwJEKKmCoaQZOOG6ofppNHdGQ.jpg\" alt=\"Bhavani Sre\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/sH9wQiBcFCh3wgw97RuyscEYSzP.jpg\" alt=\"V.J. Pappu\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/8gmdToawg8gaSe9yWZjQ10v7noL.jpg\" alt=\"Not Easily Broken\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/rI1ikNMmbeMDZiDDVATYaOeFEHL.jpg\" alt=\"A California Christmas: City Lights\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/b35rv11ebJdqCe5chVmSUZ0RIlX.jpg\" alt=\"Chéri\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/mkE8z7x5Ab94gN3CtormERYIz8B.jpg\" alt=\"I Met a Girl\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xYM0laKrEqjiRSQNvqRrXPXN3iL.jpg\" alt=\"Coyote Ugly\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xX3396RcIQynrulZHFlE1DqAOfy.jpg\" alt=\"An Unexpected Christmas\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/A0KRoR842OgNByCfw9iFHbWoeR9.jpg\" alt=\"The Wrong Paris\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xyGsnp4Ld5PmJYYWnfuYYoENhHt.jpg\" alt=\"Hello, Goodbye, and Everything in Between\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/pBRkO5GHJqDB9D0fbumL5235JfJ.jpg\" alt=\"Thiruchitrambalam\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/uJJYCo87r6qtsaTRENatoYuE9pI.jpg\" alt=\"What&#x27;s Love Got to Do with It?\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"/LogoTextHigh.png\" alt=\"NXSHA\" class=\"h-6 md:h-11 w-auto object-contain\"/>"
+        ],
+        "visibleText": "Vishwanath &amp; Sons (2026) - Watch Online Free | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Save to Watchlist | Vishwanath &amp; Sons | Movie | 7.2 | Aug 14, 2026 | 2h 41m | A celebrated Olympian shooter travels to America looking for a donor to help his sick child — but unexpected romance complicates his search. | Watch Now | Drama | Romance | Comedy | Where to watch | Netflix | Cast &amp; Crew | Suriya | Sanjay &#x27;Sanju&#x27; Vishwanath | Mamitha Baiju | Madanakameshwari &#x27;Maddy Jay&#x27; Jothilingam | Radhika Sarathkumar | Nirmala Devi | Raveena Tandon | Anjali Devi | Sunil | Ramu | Harika | Sireesha Ramalingam | Nassar | Ramanadhan | Harsha Chemudu | Kishore | Bhavani Sre | Meghana | V.J. Pappu | Prakash | More Like This | Browse all | 6.3 | Not Easily Broken | Jan 9, 2009 | 6.6 | A California Christmas: City Lights | Dec 16, 2021 | 6.1 | Chéri | Apr 8, 2009 | 6.4 | I Met a Girl | Nov 26, 2020 | 6.3 | Coyote Ugly | Jul 30, 2000 | 6.3 | An Unexpected Christmas | Nov 26, 2021 | 6.7 | The Wrong Paris | Sep 11, 2025 | 6.1 | Hello, Goodbye, and Everything in Between | Jul 5, 2022 | 7.4 | Thiruchitrambalam | Aug 18, 2022 | 6.1 | What&#x27;s Love Got to Do with It? | Jan 26, 2023 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      },
+      "search": {
+        "url": "https://nxsha.space/search?q=Vishwanath%20%26%20Sons",
+        "status": 200,
+        "bytes": 33178,
+        "links": [
+          {
+            "href": "/movie/1408162",
+            "text": "7.2 | Vishwanath &amp; Sons | Aug 14, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/mLsvCffzpxxDwC7yVLJSLLjgzoq.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 7.2 | Vishwanath &amp; Sons | Aug 14, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-irumudi",
       "title": "Irumudi",
       "tmdb_id": "1441228",
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/movie/1441228",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/1441228",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 87264,
-          "title": "Irumudi (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request."
-            ],
-            [
-              "og:title",
-              "Irumudi (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1441228"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Irumudi (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
-            ]
+      "movie": {
+        "url": "https://nxsha.space/movie/1441228",
+        "status": 200,
+        "finalUrl": "https://nxsha.space/movie/1441228",
+        "bytes": 87264,
+        "h1": [
+          "Irumudi"
+        ],
+        "meta": [
+          [
+            "description",
+            "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/lqlYx4MdsAY/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/5a9g645O30Qzhe3VFjvkhjnNfm2.jpg",
-            "https://image.tmdb.org/t/p/w185/1PxA7kkWPLpqDE0UpLaqhMapYA2.jpg",
-            "https://image.tmdb.org/t/p/w185/sX5Ue02f5kzOzVCa0R3dV2yPRmO.jpg",
-            "https://image.tmdb.org/t/p/w185/Xq5VNf8rPgQF0tuQLjl5YwHPoc.jpg",
-            "https://image.tmdb.org/t/p/w185/bvexSjSRhZM8ke753Sq1oZf5pxY.jpg",
-            "https://image.tmdb.org/t/p/w185/7LWxyKwGH5S1ZwEEjlbBcDUJKk8.jpg",
-            "https://image.tmdb.org/t/p/w185/u7kPoGR1d3Xuo633V4hIBdhiLdm.jpg",
-            "https://image.tmdb.org/t/p/w185/5Vq2jrYVPviTqe7s7DcLrrq57Rx.jpg",
-            "https://image.tmdb.org/t/p/w185/ssgRFyOYAWBQSOohxvNoAEInxOs.jpg",
-            "https://image.tmdb.org/t/p/w185/yLEZn4c6ytyZT4kMjvWPuxQzQ4c.jpg",
-            "https://image.tmdb.org/t/p/w500/6Y9fl8tD1xtyUrOHV2MkCYTpzgi.jpg",
-            "https://image.tmdb.org/t/p/w500/kQbmqipH7YvmILnB0PF8faOEcUp.jpg",
-            "https://image.tmdb.org/t/p/w500/njU663VbT88zZjsJYizfWcam6sS.jpg",
-            "https://image.tmdb.org/t/p/w500/2qH5K0RDwcTRvXnIkzuO2X7QQwA.jpg",
-            "https://image.tmdb.org/t/p/w500/nlu9WbcetNFRGXXPWITr30ob7W6.jpg",
-            "https://image.tmdb.org/t/p/w500/253Bw5I3Zj3e2thCThjO7byEUCL.jpg",
-            "https://image.tmdb.org/t/p/w500/kn28W24slBLyGr8ZIZnxNE5YZrY.jpg",
-            "https://image.tmdb.org/t/p/w500/zcL30rZ71NfoCQtTwPlJiLI40qr.jpg",
-            "https://image.tmdb.org/t/p/w500/t7dKu2jxjkraa2LwrNrMaYB4TTD.jpg",
-            "https://image.tmdb.org/t/p/w500/cbryTyaWdqrKpQCw6K7zm2jrB5v.jpg",
-            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg\\",
-            "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg\\"
+          [
+            "og:title",
+            "Irumudi (2026) - Watch Online Free"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/lqlYx4MdsAY/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1441228",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1441228",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1441228/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1441228/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/1441228",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/1441228",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/1441228",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/1441228",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/1441228?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/1441228?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15454,
-          "title": "Watch Irumudi",
-          "meta": [
-            [
-              "description",
-              "Watch Irumudi online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Irumudi Free"
-            ],
-            [
-              "og:description",
-              "Watch Irumudi online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Irumudi Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Irumudi online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
-            ]
+          [
+            "og:description",
+            "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg",
-            "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg\\"
+          [
+            "og:url",
+            "https://web.nxsha.app/movie/1441228"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/search?q=Irumudi",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Irumudi",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 33080,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
+          [
+            "og:site_name",
+            "Nxsha"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg",
-            "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg\\"
+          [
+            "og:image",
+            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Irumudi",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Irumudi",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+          [
+            "og:type",
+            "video.movie"
+          ],
+          [
+            "twitter:card",
+            "summary_large_image"
+          ],
+          [
+            "twitter:title",
+            "Irumudi (2026) - Watch Online Free"
+          ],
+          [
+            "twitter:description",
+            "An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at her request."
+          ],
+          [
+            "twitter:image",
+            "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg"
+          ]
+        ],
+        "imgTags": [
+          "<img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg\" alt=\"Irumudi\" class=\"absolute inset-0 w-full h-full object-cover object-top md:object-center\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\" alt=\"Netflix\" class=\"h-12 w-12 rounded-xl object-cover\"/>",
+          "<img src=\"https://img.youtube.com/vi/lqlYx4MdsAY/hqdefault.jpg\" alt=\"Official Trailer [Subtitled]\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/5a9g645O30Qzhe3VFjvkhjnNfm2.jpg\" alt=\"Ravi Teja\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/1PxA7kkWPLpqDE0UpLaqhMapYA2.jpg\" alt=\"Nakshathra C M\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/sX5Ue02f5kzOzVCa0R3dV2yPRmO.jpg\" alt=\"Priya Bhavani Shankar\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/Xq5VNf8rPgQF0tuQLjl5YwHPoc.jpg\" alt=\"Sai Kumar\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/bvexSjSRhZM8ke753Sq1oZf5pxY.jpg\" alt=\"Ajay Ghosh\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/7LWxyKwGH5S1ZwEEjlbBcDUJKk8.jpg\" alt=\"Swasika\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/u7kPoGR1d3Xuo633V4hIBdhiLdm.jpg\" alt=\"Rajkumar Kasireddy\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/5Vq2jrYVPviTqe7s7DcLrrq57Rx.jpg\" alt=\"Ramesh Indira\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/ssgRFyOYAWBQSOohxvNoAEInxOs.jpg\" alt=\"Kishore Kumar Polimera\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/yLEZn4c6ytyZT4kMjvWPuxQzQ4c.jpg\" alt=\"Laxman Meesala\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/6Y9fl8tD1xtyUrOHV2MkCYTpzgi.jpg\" alt=\"SAS: Red Notice\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/kQbmqipH7YvmILnB0PF8faOEcUp.jpg\" alt=\"Mexicali\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/njU663VbT88zZjsJYizfWcam6sS.jpg\" alt=\"Stolen Girl\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/2qH5K0RDwcTRvXnIkzuO2X7QQwA.jpg\" alt=\"Damage\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/nlu9WbcetNFRGXXPWITr30ob7W6.jpg\" alt=\"Salaar: Part 1 - Ceasefire\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/253Bw5I3Zj3e2thCThjO7byEUCL.jpg\" alt=\"Braven\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/kn28W24slBLyGr8ZIZnxNE5YZrY.jpg\" alt=\"The Black Book\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/zcL30rZ71NfoCQtTwPlJiLI40qr.jpg\" alt=\"44 Minutes: The North Hollywood Shoot-Out\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/t7dKu2jxjkraa2LwrNrMaYB4TTD.jpg\" alt=\"The Millionaire Tour\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/cbryTyaWdqrKpQCw6K7zm2jrB5v.jpg\" alt=\"Hunting Season\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"/LogoTextHigh.png\" alt=\"NXSHA\" class=\"h-6 md:h-11 w-auto object-contain\"/>"
+        ],
+        "visibleText": "Irumudi (2026) - Watch Online Free | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Save to Watchlist | Irumudi | Movie | 6.5 | Aug 20, 2026 | 2h 32m | An alcoholic with a violent past—living peacefully with his daughter beside a waterfall—decides to take Ayyappa Deeksha (a 41-day spiritual vow and period of intense austerity) at ... | Read more | Watch Now | Drama | Action | Thriller | Where to watch | Netflix | Trailers &amp; Videos | Official Trailer [Subtitled] | Trailer | Cast &amp; Crew | Ravi Teja | Trinadh Rama Kasu | Nakshathra C M | Manikanta &quot;Manamma&quot; | Priya Bhavani Shankar | Kaveri | Sai Kumar | Goparaju &quot;Guru Swamy&quot; | Ajay Ghosh | Erraji | Swasika | P. Dhana Lakshmi | Rajkumar Kasireddy | Bushan | Ramesh Indira | M.L.A Bujji | Kishore Kumar Polimera | Paradesi | Laxman Meesala | Babu | More Like This | Browse all | 5.8 | SAS: Red Notice | Aug 11, 2021 | 7.8 | Mexicali | Mar 13, 2026 | 6.4 | Stolen Girl | Sep 4, 2025 | 6.6 | Damage | Oct 5, 2009 | 6.8 | Salaar: Part 1 - Ceasefire | Dec 21, 2023 | 6.2 | Braven | Feb 1, 2018 | 6.7 | The Black Book | Sep 22, 2023 | 6.6 | 44 Minutes: The North Hollywood Shoot-Out | Jun 5, 2003 | 6.2 | The Millionaire Tour | Jul 31, 2012 | 7.4 | Hunting Season | Dec 5, 2025 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      },
+      "search": {
+        "url": "https://nxsha.space/search?q=Irumudi",
+        "status": 200,
+        "bytes": 33080,
+        "links": [
+          {
+            "href": "/movie/1441228",
+            "text": "6.5 | Irumudi | Aug 20, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 6.5 | Irumudi | Aug 20, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-modha-rathri",
       "title": "Modha Rathri",
       "tmdb_id": "1685882",
-      "imdb_id": "tt42262473",
-      "probes": [
-        {
-          "url": "https://nxsha.space/movie/1685882",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/1685882",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 88478,
-          "title": "Modha Rathri (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
-            ],
-            [
-              "og:title",
-              "Modha Rathri (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1685882"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Modha Rathri (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ]
+      "movie": {
+        "url": "https://nxsha.space/movie/1685882",
+        "status": 200,
+        "finalUrl": "https://nxsha.space/movie/1685882",
+        "bytes": 87203,
+        "h1": [
+          "Modha Rathri"
+        ],
+        "meta": [
+          [
+            "description",
+            "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/UrWrvwIRnqk/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/io9H89WkkCSeAOhoIB4nThQGTuL.jpg",
-            "https://image.tmdb.org/t/p/w185/4neoaZvYhVFgN4jGmtPGJqmkPxl.jpg",
-            "https://image.tmdb.org/t/p/w185/jE66LoKC6ctmSLitdtIQUOrpTkI.jpg",
-            "https://image.tmdb.org/t/p/w185/la7CFlGa7UA7kaZ0Iu7fYJk9gDb.jpg",
-            "https://image.tmdb.org/t/p/w185/ixK5bTpLOIXc8oJVE1IVMzcJrB2.jpg",
-            "https://image.tmdb.org/t/p/w185/AeTdWlw97g8Sj39oVH8EuPXYOEm.jpg",
-            "https://image.tmdb.org/t/p/w185/AjKLiDQ9ruFJfdGhpB5K5hVFCXv.jpg",
-            "https://image.tmdb.org/t/p/w185/j23g1EIvFNGB3hlbEUbxV2GZwpj.jpg",
-            "https://image.tmdb.org/t/p/w185/gvrP5nhUEBKArTA9fNIp3PDCQnY.jpg",
-            "https://image.tmdb.org/t/p/w500/lStFr3EHTNbnyOdOk2QDCqYGnlR.jpg",
-            "https://image.tmdb.org/t/p/w500/1VzS2bkQHVcIxSeBJifOx65oxHK.jpg",
-            "https://image.tmdb.org/t/p/w500/brQBJQkWTZMuq89qTeFds7X7cqW.jpg",
-            "https://image.tmdb.org/t/p/w500/ohaIkrTd47z43IuLlwwNg7bi96c.jpg",
-            "https://image.tmdb.org/t/p/w500/xmnZQwgNoTuzPr65QwLAEpFu9UP.jpg",
-            "https://image.tmdb.org/t/p/w500/rEffPihtdQXiXfRdfq7pPM5JDqa.jpg",
-            "https://image.tmdb.org/t/p/w500/xPePeB56IdkQOwMz8niiFhePOsq.jpg",
-            "https://image.tmdb.org/t/p/w500/2fpG1PiHPHdLt8X2e7WAct7EVB7.jpg",
-            "https://image.tmdb.org/t/p/w500/kIJ6MwKUKA26O0Ww02ocZEBCCbm.jpg",
-            "https://image.tmdb.org/t/p/w500/k3IHj3utp8m0X1KpNHyfOIsypE1.jpg",
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\\",
-            "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\"
+          [
+            "og:title",
+            "Modha Rathri (2026) - Watch Online Free"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/UrWrvwIRnqk/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1685882",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1685882",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1685882/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1685882/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/1685882",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/1685882",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/1685882",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/1685882",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/1685882?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/1685882?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15522,
-          "title": "Watch Modha Rathri",
-          "meta": [
-            [
-              "description",
-              "Watch Modha Rathri online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Modha Rathri Free"
-            ],
-            [
-              "og:description",
-              "Watch Modha Rathri online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Modha Rathri Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Modha Rathri online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ]
+          [
+            "og:description",
+            "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg",
-            "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\\"
+          [
+            "og:url",
+            "https://web.nxsha.app/movie/1685882"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/movie/tt42262473",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/tt42262473",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 87209,
-          "title": "Modha Rathri (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
-            ],
-            [
-              "og:title",
-              "Modha Rathri (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1685882"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Modha Rathri (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ]
+          [
+            "og:site_name",
+            "Nxsha"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/UrWrvwIRnqk/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/io9H89WkkCSeAOhoIB4nThQGTuL.jpg",
-            "https://image.tmdb.org/t/p/w185/4neoaZvYhVFgN4jGmtPGJqmkPxl.jpg",
-            "https://image.tmdb.org/t/p/w185/jE66LoKC6ctmSLitdtIQUOrpTkI.jpg",
-            "https://image.tmdb.org/t/p/w185/la7CFlGa7UA7kaZ0Iu7fYJk9gDb.jpg",
-            "https://image.tmdb.org/t/p/w185/ixK5bTpLOIXc8oJVE1IVMzcJrB2.jpg",
-            "https://image.tmdb.org/t/p/w185/AeTdWlw97g8Sj39oVH8EuPXYOEm.jpg",
-            "https://image.tmdb.org/t/p/w185/AjKLiDQ9ruFJfdGhpB5K5hVFCXv.jpg",
-            "https://image.tmdb.org/t/p/w185/j23g1EIvFNGB3hlbEUbxV2GZwpj.jpg",
-            "https://image.tmdb.org/t/p/w185/gvrP5nhUEBKArTA9fNIp3PDCQnY.jpg",
-            "https://image.tmdb.org/t/p/w500/lStFr3EHTNbnyOdOk2QDCqYGnlR.jpg",
-            "https://image.tmdb.org/t/p/w500/1VzS2bkQHVcIxSeBJifOx65oxHK.jpg",
-            "https://image.tmdb.org/t/p/w500/brQBJQkWTZMuq89qTeFds7X7cqW.jpg",
-            "https://image.tmdb.org/t/p/w500/ohaIkrTd47z43IuLlwwNg7bi96c.jpg",
-            "https://image.tmdb.org/t/p/w500/xmnZQwgNoTuzPr65QwLAEpFu9UP.jpg",
-            "https://image.tmdb.org/t/p/w500/rEffPihtdQXiXfRdfq7pPM5JDqa.jpg",
-            "https://image.tmdb.org/t/p/w500/xPePeB56IdkQOwMz8niiFhePOsq.jpg",
-            "https://image.tmdb.org/t/p/w500/2fpG1PiHPHdLt8X2e7WAct7EVB7.jpg",
-            "https://image.tmdb.org/t/p/w500/kIJ6MwKUKA26O0Ww02ocZEBCCbm.jpg",
-            "https://image.tmdb.org/t/p/w500/k3IHj3utp8m0X1KpNHyfOIsypE1.jpg",
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\\",
-            "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\"
+          [
+            "og:image",
+            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/UrWrvwIRnqk/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/tt42262473",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/tt42262473",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/tt42262473/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/tt42262473/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/tt42262473",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/tt42262473",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/tt42262473",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/tt42262473",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/tt42262473?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/tt42262473?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15528,
-          "title": "Watch Modha Rathri",
-          "meta": [
-            [
-              "description",
-              "Watch Modha Rathri online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Modha Rathri Free"
-            ],
-            [
-              "og:description",
-              "Watch Modha Rathri online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Modha Rathri Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Modha Rathri online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
-            ]
+          [
+            "og:type",
+            "video.movie"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg",
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\\",
-            "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg\\"
+          [
+            "twitter:card",
+            "summary_large_image"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/search?q=Modha%20Rathri",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Modha%20Rathri",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 33123,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
+          [
+            "twitter:title",
+            "Modha Rathri (2026) - Watch Online Free"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg",
-            "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\\"
+          [
+            "twitter:description",
+            "Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything."
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Modha%20Rathri",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Modha%20Rathri",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+          [
+            "twitter:image",
+            "https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg"
+          ]
+        ],
+        "imgTags": [
+          "<img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w1280/8Lq3f68f4WZpQrihDooNink8xJ7.jpg\" alt=\"Modha Rathri\" class=\"absolute inset-0 w-full h-full object-cover object-top md:object-center\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\" alt=\"Netflix\" class=\"h-12 w-12 rounded-xl object-cover\"/>",
+          "<img src=\"https://img.youtube.com/vi/UrWrvwIRnqk/hqdefault.jpg\" alt=\"Modha Rathri | Official Trailer | Anishma Anilkumar, Rishikanth | Netflix India\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/io9H89WkkCSeAOhoIB4nThQGTuL.jpg\" alt=\"Rishikanth\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/4neoaZvYhVFgN4jGmtPGJqmkPxl.jpg\" alt=\"Anishma Anilkumar\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/jE66LoKC6ctmSLitdtIQUOrpTkI.jpg\" alt=\"Chetan\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/la7CFlGa7UA7kaZ0Iu7fYJk9gDb.jpg\" alt=\"A. Venkatesh\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/ixK5bTpLOIXc8oJVE1IVMzcJrB2.jpg\" alt=\"Bagavathi Perumal\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/AeTdWlw97g8Sj39oVH8EuPXYOEm.jpg\" alt=\"Sangeetha Balan\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/AjKLiDQ9ruFJfdGhpB5K5hVFCXv.jpg\" alt=\"Shelly Kishore\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/j23g1EIvFNGB3hlbEUbxV2GZwpj.jpg\" alt=\"Abdool Lee\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/gvrP5nhUEBKArTA9fNIp3PDCQnY.jpg\" alt=\"Banupriya\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"/poster-placeholder.svg\" alt=\"Sumithra Devi\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/lStFr3EHTNbnyOdOk2QDCqYGnlR.jpg\" alt=\"Roll Bounce\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/1VzS2bkQHVcIxSeBJifOx65oxHK.jpg\" alt=\"Welcome Home Roscoe Jenkins\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/brQBJQkWTZMuq89qTeFds7X7cqW.jpg\" alt=\"Free Rein: The Twelve Neighs of Christmas\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/ohaIkrTd47z43IuLlwwNg7bi96c.jpg\" alt=\"Chang Can Dunk\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xmnZQwgNoTuzPr65QwLAEpFu9UP.jpg\" alt=\"It Runs in the Family\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/rEffPihtdQXiXfRdfq7pPM5JDqa.jpg\" alt=\"Tourist Family\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xPePeB56IdkQOwMz8niiFhePOsq.jpg\" alt=\"The Happiest Millionaire\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/2fpG1PiHPHdLt8X2e7WAct7EVB7.jpg\" alt=\"Mixtape\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/kIJ6MwKUKA26O0Ww02ocZEBCCbm.jpg\" alt=\"Alley Cats Strike\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/k3IHj3utp8m0X1KpNHyfOIsypE1.jpg\" alt=\"Beverly Hills Chihuahua 2\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"/LogoTextHigh.png\" alt=\"NXSHA\" class=\"h-6 md:h-11 w-auto object-contain\"/>"
+        ],
+        "visibleText": "Modha Rathri (2026) - Watch Online Free | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Save to Watchlist | Modha Rathri | Movie | 7.8 | Aug 21, 2026 | 2h 21m | Two strangers are brought together at an unusual wedding where, in one night, too many surprises unfold and several lies are told, spiraling into chaos that changes everything. | Watch Now | Comedy | Drama | Family | Where to watch | Netflix | Trailers &amp; Videos | Modha Rathri | Official Trailer | Anishma Anilkumar, Rishikanth | Netflix India | Trailer | Cast &amp; Crew | Rishikanth | Maruthanayagam &#x27;Maruthu&#x27; | Anishma Anilkumar | Muthuselvi &#x27;Muthu&#x27; | Chetan | Poosari | A. Venkatesh | Velayudham | Bagavathi Perumal | Saravanan | Sangeetha Balan | Gomathi | Shelly Kishore | Selvi | Abdool Lee | Kannan | Banupriya | Devi | Sumithra Devi | Keerthi | More Like This | Browse all | 6.9 | Roll Bounce | Sep 23, 2005 | 6.0 | Welcome Home Roscoe Jenkins | Feb 8, 2008 | 6.7 | Free Rein: The Twelve Neighs of Christmas | Dec 6, 2018 | 6.7 | Chang Can Dunk | Mar 9, 2023 | 6.0 | It Runs in the Family | Apr 25, 2003 | 7.9 | Tourist Family | Apr 30, 2025 | 6.9 | The Happiest Millionaire | Nov 30, 1967 | 6.9 | Mixtape | Dec 3, 2021 | 6.0 | Alley Cats Strike | Mar 18, 2000 | 5.9 | Beverly Hills Chihuahua 2 | Feb 1, 2011 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      },
+      "search": {
+        "url": "https://nxsha.space/search?q=Modha%20Rathri",
+        "status": 200,
+        "bytes": 33123,
+        "links": [
+          {
+            "href": "/movie/1685882",
+            "text": "7.8 | Modha Rathri | Aug 21, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/3VuNFeniljhEe9MDW12MnDbETgH.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 7.8 | Modha Rathri | Aug 21, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-baby-do-die-do",
       "title": "Baby Do Die Do",
       "tmdb_id": "1512084",
-      "imdb_id": "tt37544992",
-      "probes": [
-        {
-          "url": "https://nxsha.space/movie/1512084",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/1512084",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 86306,
-          "title": "Baby Do Die Do (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
-            ],
-            [
-              "og:title",
-              "Baby Do Die Do (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1512084"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Baby Do Die Do (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ]
+      "movie": {
+        "url": "https://nxsha.space/movie/1512084",
+        "status": 200,
+        "finalUrl": "https://nxsha.space/movie/1512084",
+        "bytes": 86306,
+        "h1": [
+          "Baby Do Die Do"
+        ],
+        "meta": [
+          [
+            "description",
+            "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/nJWauZQdRjMJxwY3UP4SXrqh9CM.jpg",
-            "https://image.tmdb.org/t/p/w185/sULXachczStfQLegNVmxcvuUTWZ.jpg",
-            "https://image.tmdb.org/t/p/w185/2dG7abdDNs3MVmrAa6HEBFKhch4.jpg",
-            "https://image.tmdb.org/t/p/w185/dSGJWDhYppewWbgPvPGo1xxFthM.jpg",
-            "https://image.tmdb.org/t/p/w185/jtm1q6oLBzd7C9KIrXlOOcUyzRf.jpg",
-            "https://image.tmdb.org/t/p/w185/dLMRAwaJhNyWWqHwfFwjcz5L4q3.jpg",
-            "https://image.tmdb.org/t/p/w185/p61PwCZ0UCuOLDtvc1ZwU6PP5UD.jpg",
-            "https://image.tmdb.org/t/p/w500/kI6Wpkz5FzkomIDDRtMIsDjMhnh.jpg",
-            "https://image.tmdb.org/t/p/w500/bsPV6pXVDTAGbl4Tg4xWkm3Kkl.jpg",
-            "https://image.tmdb.org/t/p/w500/zLqmFJWiXnkhKFmx1dbsARwNWgu.jpg",
-            "https://image.tmdb.org/t/p/w500/pLmIFQu2fFB6YkYuYzBotKMFGqZ.jpg",
-            "https://image.tmdb.org/t/p/w500/r52hvxb75CL6HCD8Yndxk38ozY8.jpg",
-            "https://image.tmdb.org/t/p/w500/ciqUH7LdNEQ7gektCDVMzbLgwbz.jpg",
-            "https://image.tmdb.org/t/p/w500/xmtLUojTRYTswWEx7U9lWjZeZtx.jpg",
-            "https://image.tmdb.org/t/p/w500/zFYFUfnoXWxeA3n7v4acEqgk2iE.jpg",
-            "https://image.tmdb.org/t/p/w500/5kiLS9nsSJxDdlYUyYGiSUt8Fi8.jpg",
-            "https://image.tmdb.org/t/p/w500/k8lbsM0Nl0c1Qp7NnARWjS6TTRA.jpg",
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\\",
-            "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\",
-            "https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg\\",
-            "https://image.tmdb.org/t/p/w185/nJWauZQdRjMJxwY3UP4SXrqh9CM.jpg\\"
+          [
+            "og:title",
+            "Baby Do Die Do (2026) - Watch Online Free"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1512084",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1512084",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1512084/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1512084/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/1512084",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/1512084",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/1512084",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/1512084",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/1512084?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/1512084?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15561,
-          "title": "Watch Baby Do Die Do",
-          "meta": [
-            [
-              "description",
-              "Watch Baby Do Die Do online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Baby Do Die Do Free"
-            ],
-            [
-              "og:description",
-              "Watch Baby Do Die Do online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Baby Do Die Do Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Baby Do Die Do online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ]
+          [
+            "og:description",
+            "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg",
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\\",
-            "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg\\"
+          [
+            "og:url",
+            "https://web.nxsha.app/movie/1512084"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/movie/tt37544992",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/tt37544992",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 86312,
-          "title": "Baby Do Die Do (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
-            ],
-            [
-              "og:title",
-              "Baby Do Die Do (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1512084"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Baby Do Die Do (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ]
+          [
+            "og:site_name",
+            "Nxsha"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/nJWauZQdRjMJxwY3UP4SXrqh9CM.jpg",
-            "https://image.tmdb.org/t/p/w185/sULXachczStfQLegNVmxcvuUTWZ.jpg",
-            "https://image.tmdb.org/t/p/w185/2dG7abdDNs3MVmrAa6HEBFKhch4.jpg",
-            "https://image.tmdb.org/t/p/w185/dSGJWDhYppewWbgPvPGo1xxFthM.jpg",
-            "https://image.tmdb.org/t/p/w185/jtm1q6oLBzd7C9KIrXlOOcUyzRf.jpg",
-            "https://image.tmdb.org/t/p/w185/dLMRAwaJhNyWWqHwfFwjcz5L4q3.jpg",
-            "https://image.tmdb.org/t/p/w185/p61PwCZ0UCuOLDtvc1ZwU6PP5UD.jpg",
-            "https://image.tmdb.org/t/p/w500/kI6Wpkz5FzkomIDDRtMIsDjMhnh.jpg",
-            "https://image.tmdb.org/t/p/w500/bsPV6pXVDTAGbl4Tg4xWkm3Kkl.jpg",
-            "https://image.tmdb.org/t/p/w500/zLqmFJWiXnkhKFmx1dbsARwNWgu.jpg",
-            "https://image.tmdb.org/t/p/w500/pLmIFQu2fFB6YkYuYzBotKMFGqZ.jpg",
-            "https://image.tmdb.org/t/p/w500/r52hvxb75CL6HCD8Yndxk38ozY8.jpg",
-            "https://image.tmdb.org/t/p/w500/ciqUH7LdNEQ7gektCDVMzbLgwbz.jpg",
-            "https://image.tmdb.org/t/p/w500/xmtLUojTRYTswWEx7U9lWjZeZtx.jpg",
-            "https://image.tmdb.org/t/p/w500/zFYFUfnoXWxeA3n7v4acEqgk2iE.jpg",
-            "https://image.tmdb.org/t/p/w500/5kiLS9nsSJxDdlYUyYGiSUt8Fi8.jpg",
-            "https://image.tmdb.org/t/p/w500/k8lbsM0Nl0c1Qp7NnARWjS6TTRA.jpg",
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\\",
-            "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\",
-            "https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg\\",
-            "https://image.tmdb.org/t/p/w185/nJWauZQdRjMJxwY3UP4SXrqh9CM.jpg\\"
+          [
+            "og:image",
+            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/tt37544992",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/tt37544992",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/tt37544992/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/tt37544992/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/tt37544992",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/tt37544992",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/tt37544992",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/tt37544992",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/tt37544992?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/tt37544992?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15567,
-          "title": "Watch Baby Do Die Do",
-          "meta": [
-            [
-              "description",
-              "Watch Baby Do Die Do online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Baby Do Die Do Free"
-            ],
-            [
-              "og:description",
-              "Watch Baby Do Die Do online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Baby Do Die Do Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Baby Do Die Do online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
-            ]
+          [
+            "og:type",
+            "video.movie"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg",
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\\",
-            "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg\\"
+          [
+            "twitter:card",
+            "summary_large_image"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/search?q=Baby%20Do%20Die%20Do",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Baby%20Do%20Die%20Do",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 42084,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
+          [
+            "twitter:title",
+            "Baby Do Die Do (2026) - Watch Online Free"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg",
-            "https://image.tmdb.org/t/p/w500/7eXr74oyBDVdTrpcL7K64i2cjUj.jpg",
-            "https://image.tmdb.org/t/p/w500/fyGzcMVf8iospgEtBoZkvO9j9Vr.jpg",
-            "https://image.tmdb.org/t/p/w500/AhUaRlyV0WdbNZADY9ITZzhijh6.jpg",
-            "https://image.tmdb.org/t/p/w500/rmi6F3qtYnP0NdLiL0zkABtg1MY.jpg",
-            "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\\",
-            "https://image.tmdb.org/t/p/w500/7eXr74oyBDVdTrpcL7K64i2cjUj.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/a3TQHfoNkM3QX3lwobmAMOBLtsd.jpg\\",
-            "https://image.tmdb.org/t/p/w500/fyGzcMVf8iospgEtBoZkvO9j9Vr.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/dfPMlFEOSG6URAJrKyTF8Zkicgj.jpg\\",
-            "https://image.tmdb.org/t/p/w500/AhUaRlyV0WdbNZADY9ITZzhijh6.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/xjQLbQPAt6plkDa8dBpzUoV1ybo.jpg\\",
-            "https://image.tmdb.org/t/p/w500/rmi6F3qtYnP0NdLiL0zkABtg1MY.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/r4nLjfKc2QvqnOG2nyRJHOEo0s4.jpg\\"
+          [
+            "twitter:description",
+            "A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons."
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Baby%20Do%20Die%20Do",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Baby%20Do%20Die%20Do",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+          [
+            "twitter:image",
+            "https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg"
+          ]
+        ],
+        "imgTags": [
+          "<img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w1280/l2TgHsg445CPwSGtg30I0GmoFtG.jpg\" alt=\"Baby Do Die Do\" class=\"absolute inset-0 w-full h-full object-cover object-top md:object-center\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\" alt=\"Netflix\" class=\"h-12 w-12 rounded-xl object-cover\"/>",
+          "<img src=\"https://img.youtube.com/vi/FkU0Tmf5iGk/hqdefault.jpg\" alt=\"Official Trailer [ENG SUB]\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/nJWauZQdRjMJxwY3UP4SXrqh9CM.jpg\" alt=\"Huma Qureshi\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/sULXachczStfQLegNVmxcvuUTWZ.jpg\" alt=\"Sikandar Kher\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/2dG7abdDNs3MVmrAa6HEBFKhch4.jpg\" alt=\"Chunky Panday\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/dSGJWDhYppewWbgPvPGo1xxFthM.jpg\" alt=\"Rachit Singh\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/jtm1q6oLBzd7C9KIrXlOOcUyzRf.jpg\" alt=\"Seema Pahwa\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/dLMRAwaJhNyWWqHwfFwjcz5L4q3.jpg\" alt=\"Vidya Malvade\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"/poster-placeholder.svg\" alt=\"Himanshu Malik\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"/poster-placeholder.svg\" alt=\"Marudhar Shekhawat\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"/poster-placeholder.svg\" alt=\"Arun Kushwah\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/p61PwCZ0UCuOLDtvc1ZwU6PP5UD.jpg\" alt=\"Kailash Waghmare\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/kI6Wpkz5FzkomIDDRtMIsDjMhnh.jpg\" alt=\"Until Death\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/bsPV6pXVDTAGbl4Tg4xWkm3Kkl.jpg\" alt=\"Savaged\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/zLqmFJWiXnkhKFmx1dbsARwNWgu.jpg\" alt=\"In the Blood\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/pLmIFQu2fFB6YkYuYzBotKMFGqZ.jpg\" alt=\"Stretch\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/r52hvxb75CL6HCD8Yndxk38ozY8.jpg\" alt=\"A Good Woman Is Hard to Find\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/ciqUH7LdNEQ7gektCDVMzbLgwbz.jpg\" alt=\"Walking Tall: Lone Justice\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xmtLUojTRYTswWEx7U9lWjZeZtx.jpg\" alt=\"Al Capone\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/zFYFUfnoXWxeA3n7v4acEqgk2iE.jpg\" alt=\"Raees\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/5kiLS9nsSJxDdlYUyYGiSUt8Fi8.jpg\" alt=\"God Is a Bullet\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/k8lbsM0Nl0c1Qp7NnARWjS6TTRA.jpg\" alt=\"Rise of the Footsoldier\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"/LogoTextHigh.png\" alt=\"NXSHA\" class=\"h-6 md:h-11 w-auto object-contain\"/>"
+        ],
+        "visibleText": "Baby Do Die Do (2026) - Watch Online Free | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Save to Watchlist | Baby Do Die Do | Movie | 7.6 | Jul 3, 2026 | 2h 5m | A deaf and mute serial killer in Mumbai can only hear her dead sister&#x27;s voice as she commits murders for mysterious reasons. | Watch Now | Mystery | Thriller | Crime | Action | Where to watch | Netflix | Trailers &amp; Videos | Official Trailer [ENG SUB] | Trailer | Cast &amp; Crew | Huma Qureshi | Baby KarMarkar | Sikandar Kher | Zafar Katkar | Chunky Panday | PM Jain | Rachit Singh | Amandeep Singh Siddhu | Seema Pahwa | DCP Anjum Khan | Vidya Malvade | Manju Murjhani | Himanshu Malik | Micky Murjhani | Marudhar Shekhawat | Manu | Arun Kushwah | Lucky | Kailash Waghmare | Vitiligo More | More Like This | Browse all | 6.0 | Until Death | Jan 19, 2007 | 6.6 | Savaged | Aug 6, 2014 | 5.8 | In the Blood | Apr 4, 2014 | 6.2 | Stretch | Oct 14, 2014 | 6.1 | A Good Woman Is Hard to Find | Oct 25, 2019 | 5.8 | Walking Tall: Lone Justice | Sep 25, 2007 | 6.6 | Al Capone | Mar 25, 1959 | 6.6 | Raees | Jan 25, 2017 | 6.3 | God Is a Bullet | Jun 22, 2023 | 6.3 | Rise of the Footsoldier | Sep 7, 2007 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      },
+      "search": {
+        "url": "https://nxsha.space/search?q=Baby%20Do%20Die%20Do",
+        "status": 200,
+        "bytes": 42084,
+        "links": [
+          {
+            "href": "/movie/1512084",
+            "text": "7.6 | Baby Do Die Do | Jul 3, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/jvfqp6gMlvHODYnBXoogqRyIs0k.jpg"
+          },
+          {
+            "href": "/movie/17824",
+            "text": "5.7 | Private Resort | May 3, 1985",
+            "img": "https://image.tmdb.org/t/p/w500/7eXr74oyBDVdTrpcL7K64i2cjUj.jpg"
+          },
+          {
+            "href": "/movie/28049",
+            "text": "6.9 | Kill, Baby... Kill! | Jul 8, 1966",
+            "img": "https://image.tmdb.org/t/p/w500/fyGzcMVf8iospgEtBoZkvO9j9Vr.jpg"
+          },
+          {
+            "href": "/movie/95548",
+            "text": "6.1 | Baby the Rain Must Fall | Jan 12, 1965",
+            "img": "https://image.tmdb.org/t/p/w500/AhUaRlyV0WdbNZADY9ITZzhijh6.jpg"
+          },
+          {
+            "href": "/movie/49684",
+            "text": "5.3 | It&#x27;s Alive III: Island of the Alive | May 27, 1987",
+            "img": "https://image.tmdb.org/t/p/w500/rmi6F3qtYnP0NdLiL0zkABtg1MY.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 7.6 | Baby Do Die Do | Jul 3, 2026 | 5.7 | Private Resort | May 3, 1985 | 6.9 | Kill, Baby... Kill! | Jul 8, 1966 | 6.1 | Baby the Rain Must Fall | Jan 12, 1965 | 5.3 | It&#x27;s Alive III: Island of the Alive | May 27, 1987 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-romanchakam",
       "title": "Romanchakam",
       "tmdb_id": null,
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/search?q=Romanchakam",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Romanchakam",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 33075,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
-          ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/p8NASLkwMuWJMzncvNViscP6hgj.jpg",
-            "https://image.tmdb.org/t/p/w500/p8NASLkwMuWJMzncvNViscP6hgj.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/z5Lm7BZ6yZ9PY6eHEsFss6pMdhx.jpg\\"
-          ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Romanchakam",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Romanchakam",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+      "movie": null,
+      "search": {
+        "url": "https://nxsha.space/search?q=Romanchakam",
+        "status": 200,
+        "bytes": 33075,
+        "links": [
+          {
+            "href": "/movie/1669281",
+            "text": "NR | Romanchakam | Sep 2, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/p8NASLkwMuWJMzncvNViscP6hgj.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | NR | Romanchakam | Sep 2, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-demon-slayer-infinity-castle-1",
       "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle I",
       "tmdb_id": null,
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/search?q=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba%20Infinity%20Castle%20I",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba%20Infinity%20Castle%20I",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 40387,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
-          ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg",
-            "https://image.tmdb.org/t/p/w500/8uYxx23KyDnbDkA3eQSNECVeOiS.jpg",
-            "https://image.tmdb.org/t/p/w500/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg",
-            "https://image.tmdb.org/t/p/w500/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/1RgPyOhN4DRs225BGTlHJqCudII.jpg\\",
-            "https://image.tmdb.org/t/p/w500/8uYxx23KyDnbDkA3eQSNECVeOiS.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/uj34SgTkO994yU1KckBHvzNjfHV.jpg\\",
-            "https://image.tmdb.org/t/p/w500/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/qjGrUmKW78MCFG8PTLDBp67S27p.jpg\\"
-          ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba%20Infinity%20Castle%20I",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba%20Infinity%20Castle%20I",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+      "movie": null,
+      "search": {
+        "url": "https://nxsha.space/search?q=Demon%20Slayer%3A%20Kimetsu%20no%20Yaiba%20Infinity%20Castle%20I",
+        "status": 200,
+        "bytes": 40387,
+        "links": [
+          {
+            "href": "/movie/1311031",
+            "text": "8.8 | Demon Slayer: Kimetsu no Yaiba Infinity Castle | Jul 18, 2025",
+            "img": "https://image.tmdb.org/t/p/w500/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg"
+          },
+          {
+            "href": "/movie/1311034",
+            "text": "NR | Demon Slayer: Kimetsu no Yaiba - Infinity Castle 2 | Coming soon",
+            "img": "https://image.tmdb.org/t/p/w500/8uYxx23KyDnbDkA3eQSNECVeOiS.jpg"
+          },
+          {
+            "href": "/movie/1311035",
+            "text": "NR | Demon Slayer: Kimetsu no Yaiba - Infinity Castle 3 | Coming soon",
+            "img": "/poster-placeholder.svg"
+          },
+          {
+            "href": "/movie/635302",
+            "text": "8.2 | Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train | Oct 16, 2020",
+            "img": "https://image.tmdb.org/t/p/w500/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 8.8 | Demon Slayer: Kimetsu no Yaiba Infinity Castle | Jul 18, 2025 | NR | Demon Slayer: Kimetsu no Yaiba - Infinity Castle 2 | Coming soon | NR | Demon Slayer: Kimetsu no Yaiba - Infinity Castle 3 | Coming soon | 8.2 | Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train | Oct 16, 2020 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-lust-stories-3",
       "title": "Lust Stories 3",
       "tmdb_id": "1451944",
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/movie/1451944",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/1451944",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 83355,
-          "title": "Lust Stories 3 (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity."
-            ],
-            [
-              "og:title",
-              "Lust Stories 3 (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity."
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1451944"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Lust Stories 3 (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
-            ]
+      "movie": {
+        "url": "https://nxsha.space/movie/1451944",
+        "status": 200,
+        "finalUrl": "https://nxsha.space/movie/1451944",
+        "bytes": 83355,
+        "h1": [
+          "Lust Stories 3"
+        ],
+        "meta": [
+          [
+            "description",
+            "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://image.tmdb.org/t/p/w185/wKPybRcSYcbgDiJZwELudrRNf0r.jpg",
-            "https://image.tmdb.org/t/p/w185/i538HToMEGR6J2OVmOGX3GfWcQC.jpg",
-            "https://image.tmdb.org/t/p/w185/A46ekiPFC3vA1442FJmiIudpxX1.jpg",
-            "https://image.tmdb.org/t/p/w185/cfyRkFBFfodBbNKbsTc8eG9YtVj.jpg",
-            "https://image.tmdb.org/t/p/w185/lLDmx3RDuMXObASvdFXeUh1GOgd.jpg",
-            "https://image.tmdb.org/t/p/w185/xX6h0GMgJ1jLJdA5lHrFwZcjEIz.jpg",
-            "https://image.tmdb.org/t/p/w185/iVbsdPXzs4CjlG98qIxG2lsQl31.jpg",
-            "https://image.tmdb.org/t/p/w185/9XrTuJp9lnB1rsBPzTaoXdp1ig8.jpg",
-            "https://image.tmdb.org/t/p/w185/gfeOmcTUCPoAJytEjxo5SvkKObb.jpg",
-            "https://image.tmdb.org/t/p/w500/mP5HehSpCaRGd6ej66jxkhdl60B.jpg",
-            "https://image.tmdb.org/t/p/w500/wWRFOMKftC33wv1GAJXaJdhXkEM.jpg",
-            "https://image.tmdb.org/t/p/w500/tPhBftWySbanfEialbsUzOuccgN.jpg",
-            "https://image.tmdb.org/t/p/w500/5KHjF8H2bqvQdmvkmeAlFjKXkmB.jpg",
-            "https://image.tmdb.org/t/p/w500/bjiHEhuiwhIygzjczbTPAA07cGc.jpg",
-            "https://image.tmdb.org/t/p/w500/72ctjjts0j8OFQkIFODT6RnYbBK.jpg",
-            "https://image.tmdb.org/t/p/w500/eO9BG1g7dkJSJzVW3OknNrCzpas.jpg",
-            "https://image.tmdb.org/t/p/w500/jfwHKRHRE2X4NTexdzblaioHH51.jpg",
-            "https://image.tmdb.org/t/p/w500/63kGofUkt1Mx0SIL4XI4Z5AoSgt.jpg",
-            "https://image.tmdb.org/t/p/w500/xgUcUWu7lirlZbMPz21qo8RhK57.jpg",
-            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg\\",
-            "https://image.tmdb.org/t/p/w500/cLA83DD1qMEBwbRIYXf29RKjMja.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\",
-            "https://image.tmdb.org/t/p/w185/wKPybRcSYcbgDiJZwELudrRNf0r.jpg\\"
+          [
+            "og:title",
+            "Lust Stories 3 (2026) - Watch Online Free"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/wKPybRcSYcbgDiJZwELudrRNf0r.jpg\"/><link rel=\"preload\" as=\"im"
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1451944",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1451944",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1451944/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1451944/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/1451944",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/1451944",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/1451944",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/1451944",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/1451944?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/1451944?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15543,
-          "title": "Watch Lust Stories 3",
-          "meta": [
-            [
-              "description",
-              "Watch Lust Stories 3 online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch Lust Stories 3 Free"
-            ],
-            [
-              "og:description",
-              "Watch Lust Stories 3 online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch Lust Stories 3 Free"
-            ],
-            [
-              "twitter:description",
-              "Watch Lust Stories 3 online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
-            ]
+          [
+            "og:description",
+            "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg",
-            "https://image.tmdb.org/t/p/w500/cLA83DD1qMEBwbRIYXf29RKjMja.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg\\"
+          [
+            "og:url",
+            "https://web.nxsha.app/movie/1451944"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/search?q=Lust%20Stories%203",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Lust%20Stories%203",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 33204,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
+          [
+            "og:site_name",
+            "Nxsha"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/cLA83DD1qMEBwbRIYXf29RKjMja.jpg",
-            "https://image.tmdb.org/t/p/w500/cLA83DD1qMEBwbRIYXf29RKjMja.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg\\"
+          [
+            "og:image",
+            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Lust%20Stories%203",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Lust%20Stories%203",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+          [
+            "og:type",
+            "video.movie"
+          ],
+          [
+            "twitter:card",
+            "summary_large_image"
+          ],
+          [
+            "twitter:title",
+            "Lust Stories 3 (2026) - Watch Online Free"
+          ],
+          [
+            "twitter:description",
+            "Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, longing, and human connection in all their complexity."
+          ],
+          [
+            "twitter:image",
+            "https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg"
+          ]
+        ],
+        "imgTags": [
+          "<img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w1280/jRtR4aTq4vmxRg9ah60R5i1kkQ7.jpg\" alt=\"Lust Stories 3\" class=\"absolute inset-0 w-full h-full object-cover object-top md:object-center\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\" alt=\"Netflix\" class=\"h-12 w-12 rounded-xl object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/wKPybRcSYcbgDiJZwELudrRNf0r.jpg\" alt=\"Radhika Apte\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/i538HToMEGR6J2OVmOGX3GfWcQC.jpg\" alt=\"Konkona Sen Sharma\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/A46ekiPFC3vA1442FJmiIudpxX1.jpg\" alt=\"Vijay Varma\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/cfyRkFBFfodBbNKbsTc8eG9YtVj.jpg\" alt=\"Abhishek Banerjee\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/lLDmx3RDuMXObASvdFXeUh1GOgd.jpg\" alt=\"Ali Fazal\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/xX6h0GMgJ1jLJdA5lHrFwZcjEIz.jpg\" alt=\"Radhikka Madan\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/iVbsdPXzs4CjlG98qIxG2lsQl31.jpg\" alt=\"Aditi Rao Hydari\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/9XrTuJp9lnB1rsBPzTaoXdp1ig8.jpg\" alt=\"Siddharth\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/gfeOmcTUCPoAJytEjxo5SvkKObb.jpg\" alt=\"Gurfateh Pirzada\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"/poster-placeholder.svg\" alt=\"Sana Thampi\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/mP5HehSpCaRGd6ej66jxkhdl60B.jpg\" alt=\"Lust Stories\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/wWRFOMKftC33wv1GAJXaJdhXkEM.jpg\" alt=\"Life in a Metro\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/tPhBftWySbanfEialbsUzOuccgN.jpg\" alt=\"Below Her Mouth\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/5KHjF8H2bqvQdmvkmeAlFjKXkmB.jpg\" alt=\"Ajeeb Daastaans\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/bjiHEhuiwhIygzjczbTPAA07cGc.jpg\" alt=\"Unfaithful\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/72ctjjts0j8OFQkIFODT6RnYbBK.jpg\" alt=\"The Duke of Burgundy\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/eO9BG1g7dkJSJzVW3OknNrCzpas.jpg\" alt=\"Madame Bovary\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/jfwHKRHRE2X4NTexdzblaioHH51.jpg\" alt=\"Love Me Love Me\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/63kGofUkt1Mx0SIL4XI4Z5AoSgt.jpg\" alt=\"Fifty Shades of Grey\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/xgUcUWu7lirlZbMPz21qo8RhK57.jpg\" alt=\"The Golden Bowl\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"/LogoTextHigh.png\" alt=\"NXSHA\" class=\"h-6 md:h-11 w-auto object-contain\"/>"
+        ],
+        "visibleText": "Lust Stories 3 (2026) - Watch Online Free | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Save to Watchlist | Lust Stories 3 | Movie | 6.3 | Sep 18, 2026 | 2h 45m | Through four bite-sized yet emotionally resonant films, the anthology once again explores lust, love, relationships, and repressed desire, offering fresh perspectives on intimacy, ... | Read more | Watch Now | Romance | Drama | Where to watch | Netflix | Cast &amp; Crew | Radhika Apte | Padma | Konkona Sen Sharma | Shonali Ghosh | Vijay Varma | Hemant | Abhishek Banerjee | Debendu | Ali Fazal | Varun Apte | Radhikka Madan | Sailee Vaidya | Aditi Rao Hydari | Saira | Siddharth | Badru / Hero Badru | Gurfateh Pirzada | Karan / Arjun | Sana Thampi | Lisa | More Like This | Browse all | 6.3 | Lust Stories | Jun 15, 2018 | 6.5 | Life in a Metro | May 11, 2007 | 6.8 | Below Her Mouth | Feb 10, 2017 | 6.1 | Ajeeb Daastaans | Apr 16, 2021 | 6.7 | Unfaithful | May 10, 2002 | 6.3 | The Duke of Burgundy | Feb 20, 2015 | 6.8 | Madame Bovary | Aug 25, 1949 | 6.1 | Love Me Love Me | Feb 12, 2026 | 5.9 | Fifty Shades of Grey | Feb 11, 2015 | 6.0 | The Golden Bowl | May 14, 2000 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      },
+      "search": {
+        "url": "https://nxsha.space/search?q=Lust%20Stories%203",
+        "status": 200,
+        "bytes": 33204,
+        "links": [
+          {
+            "href": "/movie/1451944",
+            "text": "6.3 | Lust Stories 3 | Sep 18, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/cLA83DD1qMEBwbRIYXf29RKjMja.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 6.3 | Lust Stories 3 | Sep 18, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-unabomber",
       "title": "UNABOMBER",
       "tmdb_id": "1492640",
-      "imdb_id": "tt6933238",
-      "probes": [
-        {
-          "url": "https://nxsha.space/movie/1492640",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/1492640",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 87926,
-          "title": "UNABOMBER (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the c"
-            ],
-            [
-              "og:title",
-              "UNABOMBER (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the c"
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1492640"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "UNABOMBER (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the c"
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ]
+      "movie": {
+        "url": "https://nxsha.space/movie/1492640",
+        "status": 200,
+        "finalUrl": "https://nxsha.space/movie/1492640",
+        "bytes": 87926,
+        "h1": [
+          "UNABOMBER"
+        ],
+        "meta": [
+          [
+            "description",
+            "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the chilling consequences of ambition and isolation."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/B3tR6qQjbgI/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/3IBZF0qCZMZ7zJYlgrH0sQzNZV.jpg",
-            "https://image.tmdb.org/t/p/w185/h8CXDp86Y36CUENF4SXJq5ZRTsf.jpg",
-            "https://image.tmdb.org/t/p/w185/gL2NvHKW9wAH3qkZuJ76ULUiArB.jpg",
-            "https://image.tmdb.org/t/p/w185/2ZmO2Zz9TcR0rmSJHOkivcu0heR.jpg",
-            "https://image.tmdb.org/t/p/w185/3KpzKT4iGhNivSISQMe6EwpAmCi.jpg",
-            "https://image.tmdb.org/t/p/w185/fL0LmdBwau30M4AFPVJrpLRXXsU.jpg",
-            "https://image.tmdb.org/t/p/w185/dorBNAwR8qpB13pe0zd3OkFjqWR.jpg",
-            "https://image.tmdb.org/t/p/w185/gWQ9r3s8fAsmEs0hvKBSgZppWEQ.jpg",
-            "https://image.tmdb.org/t/p/w185/xvVbXMzHqZ0kMs77EScQ76S4gWH.jpg",
-            "https://image.tmdb.org/t/p/w500/wv9VeqVU4FXnG02mHXT2Vz43bQ7.jpg",
-            "https://image.tmdb.org/t/p/w500/hIJ5QNIjQ2oILCNLBtbnS0Cmw9z.jpg",
-            "https://image.tmdb.org/t/p/w500/5szS3NXiycrTL67AunS7TLG0EE0.jpg",
-            "https://image.tmdb.org/t/p/w500/6yQqguytl10FhImngDHV90Aqewa.jpg",
-            "https://image.tmdb.org/t/p/w500/oiKWmtkGVOHR9Z49qZkkDkCeKyO.jpg",
-            "https://image.tmdb.org/t/p/w500/tyV8Bgf2huCIbGUxTdGgnzdIRKZ.jpg",
-            "https://image.tmdb.org/t/p/w500/gbeeWu8rYaIYMyq9ayN1AepjNxP.jpg",
-            "https://image.tmdb.org/t/p/w500/yqYwf0kPK2SaCWM80msl4nYK6U7.jpg",
-            "https://image.tmdb.org/t/p/w500/ooxttcglcMbcCX58jzXibGEybKB.jpg",
-            "https://image.tmdb.org/t/p/w500/oMFdQE5hMJ9JjhNORegwTo0GKmh.jpg",
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\\",
-            "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\"
+          [
+            "og:title",
+            "UNABOMBER (2026) - Watch Online Free"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/B3tR6qQjbgI/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1492640",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1492640",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/1492640/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/1492640/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/1492640",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/1492640",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/1492640",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/1492640",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/1492640?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/1492640?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15481,
-          "title": "Watch UNABOMBER",
-          "meta": [
-            [
-              "description",
-              "Watch UNABOMBER online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch UNABOMBER Free"
-            ],
-            [
-              "og:description",
-              "Watch UNABOMBER online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch UNABOMBER Free"
-            ],
-            [
-              "twitter:description",
-              "Watch UNABOMBER online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ]
+          [
+            "og:description",
+            "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the chilling consequences of ambition and isolation."
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg",
-            "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\\"
+          [
+            "og:url",
+            "https://web.nxsha.app/movie/1492640"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/movie/tt6933238",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/movie/tt6933238",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 87930,
-          "title": "UNABOMBER (2026) - Watch Online Free | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the c"
-            ],
-            [
-              "og:title",
-              "UNABOMBER (2026) - Watch Online Free"
-            ],
-            [
-              "og:description",
-              "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the c"
-            ],
-            [
-              "og:url",
-              "https://web.nxsha.app/movie/1492640"
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ],
-            [
-              "og:type",
-              "video.movie"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "UNABOMBER (2026) - Watch Online Free"
-            ],
-            [
-              "twitter:description",
-              "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the c"
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ]
+          [
+            "og:site_name",
+            "Nxsha"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png",
-            "https://img.youtube.com/vi/B3tR6qQjbgI/hqdefault.jpg",
-            "https://image.tmdb.org/t/p/w185/3IBZF0qCZMZ7zJYlgrH0sQzNZV.jpg",
-            "https://image.tmdb.org/t/p/w185/h8CXDp86Y36CUENF4SXJq5ZRTsf.jpg",
-            "https://image.tmdb.org/t/p/w185/gL2NvHKW9wAH3qkZuJ76ULUiArB.jpg",
-            "https://image.tmdb.org/t/p/w185/2ZmO2Zz9TcR0rmSJHOkivcu0heR.jpg",
-            "https://image.tmdb.org/t/p/w185/3KpzKT4iGhNivSISQMe6EwpAmCi.jpg",
-            "https://image.tmdb.org/t/p/w185/fL0LmdBwau30M4AFPVJrpLRXXsU.jpg",
-            "https://image.tmdb.org/t/p/w185/dorBNAwR8qpB13pe0zd3OkFjqWR.jpg",
-            "https://image.tmdb.org/t/p/w185/gWQ9r3s8fAsmEs0hvKBSgZppWEQ.jpg",
-            "https://image.tmdb.org/t/p/w185/xvVbXMzHqZ0kMs77EScQ76S4gWH.jpg",
-            "https://image.tmdb.org/t/p/w500/wv9VeqVU4FXnG02mHXT2Vz43bQ7.jpg",
-            "https://image.tmdb.org/t/p/w500/hIJ5QNIjQ2oILCNLBtbnS0Cmw9z.jpg",
-            "https://image.tmdb.org/t/p/w500/5szS3NXiycrTL67AunS7TLG0EE0.jpg",
-            "https://image.tmdb.org/t/p/w500/6yQqguytl10FhImngDHV90Aqewa.jpg",
-            "https://image.tmdb.org/t/p/w500/oiKWmtkGVOHR9Z49qZkkDkCeKyO.jpg",
-            "https://image.tmdb.org/t/p/w500/tyV8Bgf2huCIbGUxTdGgnzdIRKZ.jpg",
-            "https://image.tmdb.org/t/p/w500/gbeeWu8rYaIYMyq9ayN1AepjNxP.jpg",
-            "https://image.tmdb.org/t/p/w500/yqYwf0kPK2SaCWM80msl4nYK6U7.jpg",
-            "https://image.tmdb.org/t/p/w500/ooxttcglcMbcCX58jzXibGEybKB.jpg",
-            "https://image.tmdb.org/t/p/w500/oMFdQE5hMJ9JjhNORegwTo0GKmh.jpg",
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\\",
-            "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg\\",
-            "https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\\"
+          [
+            "og:image",
+            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\"/><link rel=\"preload\" as=\"image\" href=\"https://img.youtube.com/vi/B3tR6qQjbgI/hqdefault.jpg\"/><link rel=\"preload\" as=\"image\" href=\""
-        },
-        {
-          "url": "https://nxsha.space/api/movie/tt6933238",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/tt6933238",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movie/tt6933238/details",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movie/tt6933238/details",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/movies/tt6933238",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/movies/tt6933238",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/api/tmdb/movie/tt6933238",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/tmdb/movie/tt6933238",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        },
-        {
-          "url": "https://nxsha.space/embed/movie/tt6933238?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/embed/movie/tt6933238?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 15485,
-          "title": "Watch UNABOMBER",
-          "meta": [
-            [
-              "description",
-              "Watch UNABOMBER online for free in High Quality."
-            ],
-            [
-              "og:title",
-              "Watch UNABOMBER Free"
-            ],
-            [
-              "og:description",
-              "Watch UNABOMBER online for free in High Quality."
-            ],
-            [
-              "og:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Watch UNABOMBER Free"
-            ],
-            [
-              "twitter:description",
-              "Watch UNABOMBER online for free in High Quality."
-            ],
-            [
-              "twitter:image",
-              "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
-            ]
+          [
+            "og:type",
+            "video.movie"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg",
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\\",
-            "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg\\"
+          [
+            "twitter:card",
+            "summary_large_image"
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvplsax4.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-3-ry682tk"
-        },
-        {
-          "url": "https://nxsha.space/search?q=UNABOMBER",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=UNABOMBER",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 61776,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
+          [
+            "twitter:title",
+            "UNABOMBER (2026) - Watch Online Free"
           ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg",
-            "https://image.tmdb.org/t/p/w500/c9uzaiBNNU1FggnfujHR81aChzs.jpg",
-            "https://image.tmdb.org/t/p/w500/i2U3Kx51cnSrFVgCrYTXYPXooaE.jpg",
-            "https://image.tmdb.org/t/p/w500/7XPzmSaTyrAjzt45JxXj2rgYcGN.jpg",
-            "https://image.tmdb.org/t/p/w500/Att9uSj2B5Kw57Bfda1qHj4uZIK.jpg",
-            "https://image.tmdb.org/t/p/w500/wv9VeqVU4FXnG02mHXT2Vz43bQ7.jpg",
-            "https://image.tmdb.org/t/p/w500/AlXu4dUBvzV59e9sI72EJVmMkgS.jpg",
-            "https://image.tmdb.org/t/p/w500/acnCbOVxDVJHtIKDZxIZsCpTIJn.jpg",
-            "https://image.tmdb.org/t/p/w500/dUzrUeru7ZqgsAuWpw48QqDM8SR.jpg",
-            "https://image.tmdb.org/t/p/w500/9ukZcwaqcObmmxxfcIXTgVMvalJ.jpg",
-            "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\\",
-            "https://image.tmdb.org/t/p/w500/c9uzaiBNNU1FggnfujHR81aChzs.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/sfO0iSLZgNNgyW77YENfMFx2a0y.jpg\\",
-            "https://image.tmdb.org/t/p/w500/i2U3Kx51cnSrFVgCrYTXYPXooaE.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/uuGToKH4HDfOGzEist5VItkCqSO.jpg\\",
-            "https://image.tmdb.org/t/p/w500/7XPzmSaTyrAjzt45JxXj2rgYcGN.jpg\\",
-            "https://image.tmdb.org/t/p/w500/Att9uSj2B5Kw57Bfda1qHj4uZIK.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/tjT3MXLCDv01ZukeZMqDBsR78e9.jpg\\",
-            "https://image.tmdb.org/t/p/w500/wv9VeqVU4FXnG02mHXT2Vz43bQ7.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/wArldRKTKmy7rhHe95SzQ6Ale9X.jpg\\",
-            "https://image.tmdb.org/t/p/w500/AlXu4dUBvzV59e9sI72EJVmMkgS.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/4DzZLy8mbTGXjKVec5VspVBGlhz.jpg\\",
-            "https://image.tmdb.org/t/p/w500/acnCbOVxDVJHtIKDZxIZsCpTIJn.jpg\\",
-            "https://image.tmdb.org/t/p/w500/dUzrUeru7ZqgsAuWpw48QqDM8SR.jpg\\"
+          [
+            "twitter:description",
+            "Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s troubled past resurfaces decades later when his manhunt, led by FBI agent Joanne Miller, brings to light the chilling consequences of ambition and isolation."
           ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"/poster-placeholder.svg\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src="
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=UNABOMBER",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=UNABOMBER",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+          [
+            "twitter:image",
+            "https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg"
+          ]
+        ],
+        "imgTags": [
+          "<img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w1280/58D9nalUYW5L5K0guw7hcpsEJBH.jpg\" alt=\"UNABOMBER\" class=\"absolute inset-0 w-full h-full object-cover object-top md:object-center\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/rK1KljqmbvO9HQa1PBFLILWah72.png\" alt=\"Netflix\" class=\"h-12 w-12 rounded-xl object-cover\"/>",
+          "<img src=\"https://img.youtube.com/vi/B3tR6qQjbgI/hqdefault.jpg\" alt=\"Official Trailer\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/3IBZF0qCZMZ7zJYlgrH0sQzNZV.jpg\" alt=\"Russell Crowe\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/h8CXDp86Y36CUENF4SXJq5ZRTsf.jpg\" alt=\"Jacob Tremblay\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/gL2NvHKW9wAH3qkZuJ76ULUiArB.jpg\" alt=\"Shailene Woodley\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/2ZmO2Zz9TcR0rmSJHOkivcu0heR.jpg\" alt=\"Annabelle Wallis\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/3KpzKT4iGhNivSISQMe6EwpAmCi.jpg\" alt=\"Alexander Ludwig\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/fL0LmdBwau30M4AFPVJrpLRXXsU.jpg\" alt=\"Marc Menchaca\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/dorBNAwR8qpB13pe0zd3OkFjqWR.jpg\" alt=\"Steven Ogg\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"/poster-placeholder.svg\" alt=\"Mark Camacho\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/gWQ9r3s8fAsmEs0hvKBSgZppWEQ.jpg\" alt=\"David Webster\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w185/xvVbXMzHqZ0kMs77EScQ76S4gWH.jpg\" alt=\"Bruce Ramsay\" class=\"h-full w-full object-cover\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/wv9VeqVU4FXnG02mHXT2Vz43bQ7.jpg\" alt=\"Ted K\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/hIJ5QNIjQ2oILCNLBtbnS0Cmw9z.jpg\" alt=\"Inside Man\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/5szS3NXiycrTL67AunS7TLG0EE0.jpg\" alt=\"Driven\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/6yQqguytl10FhImngDHV90Aqewa.jpg\" alt=\"Unthinkable\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/oiKWmtkGVOHR9Z49qZkkDkCeKyO.jpg\" alt=\"The Public Eye\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/tyV8Bgf2huCIbGUxTdGgnzdIRKZ.jpg\" alt=\"The Friends of Eddie Coyle\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/gbeeWu8rYaIYMyq9ayN1AepjNxP.jpg\" alt=\"The Siege\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/yqYwf0kPK2SaCWM80msl4nYK6U7.jpg\" alt=\"Suburbicon\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/ooxttcglcMbcCX58jzXibGEybKB.jpg\" alt=\"Across 110th Street\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"https://image.tmdb.org/t/p/w500/oMFdQE5hMJ9JjhNORegwTo0GKmh.jpg\" alt=\"Fuze\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/>",
+          "<img src=\"/LogoTextHigh.png\" alt=\"NXSHA\" class=\"h-6 md:h-11 w-auto object-contain\"/>"
+        ],
+        "visibleText": "UNABOMBER (2026) - Watch Online Free | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Save to Watchlist | UNABOMBER | Movie | 6.6 | Sep 25, 2026 | 1h 41m | Follow Ted Kaczynski&#x27;s transformation from Harvard prodigy into the infamous Unabomber. Subjected to controversial psychological experiments by Professor Henry Murray, Kaczynski&#x27;s ... | Read more | Watch Now | Thriller | Drama | Crime | Where to watch | Netflix | Trailers &amp; Videos | Official Trailer | Trailer | Cast &amp; Crew | Russell Crowe | Henry Murray | Jacob Tremblay | Ted Kaczynski | Shailene Woodley | Joanne Miller | Annabelle Wallis | Christiana Morgan | Alexander Ludwig | Leo Driver | Marc Menchaca | Eddie Turrell | Steven Ogg | Dean Kaplan | Mark Camacho | Bill Ford | David Webster | Roy | Bruce Ramsay | Turk Kaczynski | More Like This | Browse all | 6.1 | Ted K | Oct 29, 2021 | 6.1 | Inside Man | Aug 11, 2023 | 6.2 | Driven | Aug 15, 2019 | 6.8 | Unthinkable | May 26, 2010 | 6.2 | The Public Eye | Oct 16, 1992 | 7.2 | The Friends of Eddie Coyle | Jun 26, 1973 | 6.3 | The Siege | Nov 6, 1998 | 5.9 | Suburbicon | Oct 26, 2017 | 6.7 | Across 110th Street | Dec 19, 1972 | 7.2 | Fuze | Mar 23, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      },
+      "search": {
+        "url": "https://nxsha.space/search?q=UNABOMBER",
+        "status": 200,
+        "bytes": 61776,
+        "links": [
+          {
+            "href": "/movie/1492640",
+            "text": "6.6 | UNABOMBER | Sep 25, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/39aMkR8Y5vhCG9dTkjiqRl8AVqp.jpg"
+          },
+          {
+            "href": "/movie/1043074",
+            "text": "6.5 | Unabomber | Oct 14, 2022",
+            "img": "https://image.tmdb.org/t/p/w500/c9uzaiBNNU1FggnfujHR81aChzs.jpg"
+          },
+          {
+            "href": "/movie/300532",
+            "text": "6.1 | Unabomber: The True Story | Sep 11, 1996",
+            "img": "https://image.tmdb.org/t/p/w500/i2U3Kx51cnSrFVgCrYTXYPXooaE.jpg"
+          },
+          {
+            "href": "/movie/495964",
+            "text": "10.0 | Unabomber: The Secret History | Jan 14, 2008",
+            "img": "https://image.tmdb.org/t/p/w500/7XPzmSaTyrAjzt45JxXj2rgYcGN.jpg"
+          },
+          {
+            "href": "/movie/77786",
+            "text": "6.3 | The Net | Oct 1, 2003",
+            "img": "https://image.tmdb.org/t/p/w500/Att9uSj2B5Kw57Bfda1qHj4uZIK.jpg"
+          },
+          {
+            "href": "/movie/660353",
+            "text": "6.1 | Ted K | Oct 29, 2021",
+            "img": "https://image.tmdb.org/t/p/w500/wv9VeqVU4FXnG02mHXT2Vz43bQ7.jpg"
+          },
+          {
+            "href": "/tv/99954",
+            "text": "7.2 | Unabomber: In His Own Words | Feb 22, 2020",
+            "img": "https://image.tmdb.org/t/p/w500/AlXu4dUBvzV59e9sI72EJVmMkgS.jpg"
+          },
+          {
+            "href": "/tv/279106",
+            "text": "NR | The Lost Unabomber Tapes | Jan 26, 2020",
+            "img": "https://image.tmdb.org/t/p/w500/acnCbOVxDVJHtIKDZxIZsCpTIJn.jpg"
+          },
+          {
+            "href": "/tv/301903",
+            "text": "NR | Fantasma - Il caso Unabomber | Sep 30, 2025",
+            "img": "https://image.tmdb.org/t/p/w500/dUzrUeru7ZqgsAuWpw48QqDM8SR.jpg"
+          },
+          {
+            "href": "/tv/72597",
+            "text": "7.6 | Manhunt | Aug 1, 2017",
+            "img": "https://image.tmdb.org/t/p/w500/9ukZcwaqcObmmxxfcIXTgVMvalJ.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 6.6 | UNABOMBER | Sep 25, 2026 | 6.5 | Unabomber | Oct 14, 2022 | 6.1 | Unabomber: The True Story | Sep 11, 1996 | 10.0 | Unabomber: The Secret History | Jan 14, 2008 | 6.3 | The Net | Oct 1, 2003 | 6.1 | Ted K | Oct 29, 2021 | TV Shows | View All | 7.2 | Unabomber: In His Own Words | Feb 22, 2020 | NR | The Lost Unabomber Tapes | Jan 26, 2020 | NR | Fantasma - Il caso Unabomber | Sep 30, 2025 | 7.6 | Manhunt | Aug 1, 2017 | Person | View All | Ted Kaczynski | Acting | Craig Jones | Acting | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-ohh-my-dog",
       "title": "Ohh My Dog",
       "tmdb_id": null,
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/search?q=Ohh%20My%20Dog",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Ohh%20My%20Dog",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 33288,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
-          ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/3zVHaUphvyc3O5dDEkzJe9Faf3P.jpg",
-            "https://image.tmdb.org/t/p/w500/3zVHaUphvyc3O5dDEkzJe9Faf3P.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/nOQYly08Rv5fepk67i4wy43Oyyf.jpg\\"
-          ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Ohh%20My%20Dog",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Ohh%20My%20Dog",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
+      "movie": null,
+      "search": {
+        "url": "https://nxsha.space/search?q=Ohh%20My%20Dog",
+        "status": 200,
+        "bytes": 33288,
+        "links": [
+          {
+            "href": "/movie/1727563",
+            "text": "8.2 | Ohh My Dog | Aug 7, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/3zVHaUphvyc3O5dDEkzJe9Faf3P.jpg"
+          }
+        ],
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 8.2 | Ohh My Dog | Aug 7, 2026 | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     },
     {
       "id": "tudum-top10-india-dhamaal-4",
       "title": "Dhamaal 4",
       "tmdb_id": null,
-      "imdb_id": null,
-      "probes": [
-        {
-          "url": "https://nxsha.space/search?q=Dhamaal%204",
-          "status": 200,
-          "finalUrl": "https://nxsha.space/search?q=Dhamaal%204",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 35481,
-          "title": "Search | Nxsha",
-          "meta": [
-            [
-              "description",
-              "Search movies, TV shows and anime on Nxsha."
-            ],
-            [
-              "og:title",
-              "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-            ],
-            [
-              "og:description",
-              "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-            ],
-            [
-              "og:site_name",
-              "Nxsha"
-            ],
-            [
-              "og:type",
-              "website"
-            ],
-            [
-              "twitter:card",
-              "summary_large_image"
-            ],
-            [
-              "twitter:title",
-              "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-            ],
-            [
-              "twitter:description",
-              "Stream the latest movies, TV shows, and anime online for free in High Quality."
-            ]
-          ],
-          "imageUrls": [
-            "https://image.tmdb.org/t/p/w500/oVij5aEEE6iI4PxB4i0CgKp8h0m.jpg",
-            "https://image.tmdb.org/t/p/w500/oVij5aEEE6iI4PxB4i0CgKp8h0m.jpg\\",
-            "https://image.tmdb.org/t/p/w1280/95sjD0dRajtU6SKD6Gq6PtrGoGY.jpg\\"
-          ],
-          "dataHits": [],
-          "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-        },
-        {
-          "url": "https://nxsha.space/api/search?query=Dhamaal%204",
-          "status": 404,
-          "finalUrl": "https://nxsha.space/api/search?query=Dhamaal%204",
-          "ctype": "text/html; charset=utf-8",
-          "bytes": 9139
-        }
-      ]
-    }
-  ],
-  "generic": [
-    {
-      "url": "https://nxsha.space/sitemap.xml",
-      "status": 200,
-      "finalUrl": "https://nxsha.space/sitemap.xml",
-      "ctype": "application/xml",
-      "bytes": 1199,
-      "title": "",
-      "meta": [],
-      "imageUrls": [],
-      "dataHits": [],
-      "sample": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<url>\n<loc>https://web.nxsha.app</loc>\n<lastmod>2026-10-09T21:02:52.784Z</lastmod>\n<changefreq>daily</changefreq>\n<priority>1</priority>\n</url>\n<url>\n<loc>https://web.nxsha.app/movies</loc>\n<lastmod>2026-10-09T21:02:52.784Z</lastmod>\n<changefreq>daily</changefreq>\n<priority>0.9</priority>\n</url>\n<url>\n<loc>https://web.nxsha.app/tv-shows</loc>\n<lastmod>2026-10-09T21:02:52.784Z</lastmod>\n<changefreq>daily</changefreq>\n<priority>0.9</priority>\n</url>\n<url>\n<loc>https://web.nxsha.app/anime</loc>\n<la"
-    },
-    {
-      "url": "https://nxsha.space/movie",
-      "status": 404,
-      "finalUrl": "https://nxsha.space/movie",
-      "ctype": "text/html; charset=utf-8",
-      "bytes": 9139
-    },
-    {
-      "url": "https://nxsha.space/search?q=Irumudi",
-      "status": 200,
-      "finalUrl": "https://nxsha.space/search?q=Irumudi",
-      "ctype": "text/html; charset=utf-8",
-      "bytes": 33080,
-      "title": "Search | Nxsha",
-      "meta": [
-        [
-          "description",
-          "Search movies, TV shows and anime on Nxsha."
+      "movie": null,
+      "search": {
+        "url": "https://nxsha.space/search?q=Dhamaal%204",
+        "status": 200,
+        "bytes": 35481,
+        "links": [
+          {
+            "href": "/movie/1303331",
+            "text": "4.1 | Dhamaal 4 | Jul 10, 2026",
+            "img": "https://image.tmdb.org/t/p/w500/oVij5aEEE6iI4PxB4i0CgKp8h0m.jpg"
+          },
+          {
+            "href": "/movie/1784826",
+            "text": "NR | Dhamaal 4 | Coming soon",
+            "img": "/poster-placeholder.svg"
+          }
         ],
-        [
-          "og:title",
-          "Nxsha - Free Movies, TV Shows &amp; Anime Streaming"
-        ],
-        [
-          "og:description",
-          "Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms."
-        ],
-        [
-          "og:site_name",
-          "Nxsha"
-        ],
-        [
-          "og:type",
-          "website"
-        ],
-        [
-          "twitter:card",
-          "summary_large_image"
-        ],
-        [
-          "twitter:title",
-          "Nxsha - Watch Movies, TV Shows &amp; Anime Free"
-        ],
-        [
-          "twitter:description",
-          "Stream the latest movies, TV shows, and anime online for free in High Quality."
-        ]
-      ],
-      "imageUrls": [
-        "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg",
-        "https://image.tmdb.org/t/p/w500/dVFtTKMWW1aq7aWq30wjwOP6W3J.jpg\\",
-        "https://image.tmdb.org/t/p/w1280/578jrGVEN4a5rxJGtkt9sMI2w6c.jpg\\"
-      ],
-      "dataHits": [],
-      "sample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><scri"
-    },
-    {
-      "url": "https://nxsha.space/api/search?query=Irumudi",
-      "status": 404,
-      "finalUrl": "https://nxsha.space/api/search?query=Irumudi",
-      "ctype": "text/html; charset=utf-8",
-      "bytes": 9139
+        "visibleText": "Search | Nxsha | Home | Search | NxBox | WatchList | My Space | Home | Search | NxBox | WatchList | My Space | Movies | View All | 4.1 | Dhamaal 4 | Jul 10, 2026 | NR | Dhamaal 4 | Coming soon | Disclaimer: | Nxsha does not host, store, or distribute any copyrighted content. We provide an indexing service that aggregates links to publicly available content on third-party websites, similar to a search engine. Nxsha does not control or endorse the content accessible through these links. All content is the responsibility of the respective third-party providers. For any copyright concerns, please refer to our DMCA Policy or contact us at | [email&#160;protected] | 2026 | Nxsha. All rights reserved. | Terms of Use | Privacy Policy"
+      }
     }
   ]
 }
