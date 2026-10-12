@@ -17,6 +17,8 @@ export interface Season {
 export interface Movie {
     id: string;
     imageUrl: string;
+    /** Wide backdrop image for detail views (Nxsha, TMDB CDN). */
+    backdropUrl?: string;
     title?: string;
     /** 'FILM' or 'SERIES' for legacy display; use `mediaType` for embed logic. */
     type?: string;
@@ -49,6 +51,7 @@ export interface Movie {
     rating?: string;
     description?: string;
     cast?: string[];
+    genres?: string[];
     director?: string;
     ranking_text?: string;
     /** YouTube video id of the official trailer (embedded on web). */

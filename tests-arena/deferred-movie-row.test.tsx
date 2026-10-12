@@ -6,6 +6,10 @@ import { act } from 'react-dom/test-utils';
 
 const mockPush = jest.fn();
 jest.mock('expo-router', () => ({ useRouter: () => ({ push: mockPush }) }));
+jest.mock('expo-linear-gradient', () => {
+    const ReactLocal = require('react');
+    return { LinearGradient: (props: any) => ReactLocal.createElement('div', null, props.children) };
+});
 jest.mock('@/hooks/useVisionOS', () => ({ useVisionOS: () => ({ isVisionOS: false }) }));
 jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
@@ -50,6 +54,17 @@ const movies = Array.from({ length: 80 }, (_, i) => ({
 }));
 const cards = () => container.querySelectorAll('[data-testid^="movie-card-"]');
 
+/** A card press opens the details modal for that title; Play in it goes to the player page. */
+function expectDetailsOpenedFor(title: string) {
+    expect(mockPush).not.toHaveBeenCalled();
+    expect(document.body.textContent).toContain(title);
+    const play = document.querySelector(`[aria-label="Play ${title}"]`) as HTMLElement;
+    expect(play).toBeTruthy();
+    act(() => play.click());
+    const id = title.replace('Movie ', 'item-');
+    expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id } });
+}
+
 it('hydrates only near-viewport shelves, then opens any visible card immediately', () => {
     act(() => root.render(
         <View style={{ overflowY: 'auto', height: 600 }}>
@@ -68,7 +83,7 @@ it('hydrates only near-viewport shelves, then opens any visible card immediately
     expect(container.querySelector('[data-testid="carousel-spacer-after"]')).toBeTruthy();
 
     act(() => cards()[0].dispatchEvent(new MouseEvent('click', { bubbles: true })));
-    expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id: 'item-0' } });
+    expectDetailsOpenedFor('Movie 0');
 });
 
 it('keeps nearby cards reachable when the horizontal carousel is scrolled', () => {
@@ -85,5 +100,5 @@ it('keeps nearby cards reachable when the horizontal carousel is scrolled', () =
     expect(container.querySelector('[data-testid="movie-card-item-0"]')).toBeNull();
     act(() => (container.querySelector('[data-testid="movie-card-item-67"]') as HTMLElement)
         .dispatchEvent(new MouseEvent('click', { bubbles: true })));
-    expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id: 'item-67' } });
+    expectDetailsOpenedFor('Movie 67');
 });

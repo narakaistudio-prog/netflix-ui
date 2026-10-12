@@ -8,6 +8,7 @@ import { HoverableView } from '@/components/ui/VisionContainer';
 import { SafeImage } from '@/components/SafeImage';
 import { Ionicons } from '@expo/vector-icons';
 import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselWindow';
+import { MovieDetailModal } from './MovieDetailModal';
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
@@ -31,17 +32,14 @@ const NumberBackground = ({ number }: { number: number }) => {
     );
 };
 
-const MovieItem = ({ item, router, index, isTop10 }: {
+const MovieItem = ({ item, onOpen, index, isTop10 }: {
     item: Movie;
-    router: any;
+    onOpen: (item: Movie) => void;
     index: number;
     isTop10: boolean;
 }) => (
     <Pressable
-        onPress={() => router.push({
-            pathname: '/movie/[id]',
-            params: { id: item.id }
-        })}
+        onPress={() => onOpen(item)}
         style={[
             styles.contentItem,
             isTop10 && styles.top10Item
@@ -248,10 +246,14 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
         }
     };
 
-    const openMovie = (item: Movie) => router.push({
-        pathname: '/movie/[id]',
-        params: { id: item.id },
-    });
+    // Pressing a title opens its details over the row (poster/backdrop modal).
+    // Play inside the modal goes to the title's player page.
+    const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+    const openMovie = (item: Movie) => setSelectedMovie(item);
+    const playMovie = (item: Movie) => {
+        setSelectedMovie(null);
+        router.push({ pathname: '/movie/[id]', params: { id: item.id } });
+    };
 
     const renderItem = ({ item, index }: { item: Movie; index: number }) => {
         if (IS_WEB) {
@@ -280,7 +282,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
             <HoverableView key={`${item.id}-${index}`}>
                 <MovieItem
                     item={item}
-                    router={router}
+                    onOpen={openMovie}
                     index={index}
                     isTop10={isTop10}
                 />
@@ -419,6 +421,11 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                     ))}
                 </View>
             ) : null}
+            <MovieDetailModal
+                movie={selectedMovie}
+                onClose={() => setSelectedMovie(null)}
+                onPlay={playMovie}
+            />
         </View>
     );
 }

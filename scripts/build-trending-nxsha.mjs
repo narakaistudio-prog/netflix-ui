@@ -125,6 +125,12 @@ export function parseMoviePage(html) {
         cast.push(name);
         if (cast.length >= 10) break;
     }
+    // Genre chips sit between "Watch Now" and "Where to watch" on the page.
+    const start = lines.indexOf('Watch Now');
+    const end = lines.indexOf('Where to watch');
+    const genres = start >= 0 && end > start
+        ? lines.slice(start + 1, end).filter((g) => g.length <= 30 && !/^(Trailers|Read more)/i.test(g)).slice(0, 5)
+        : [];
     return {
         title,
         year,
@@ -132,6 +138,7 @@ export function parseMoviePage(html) {
         backdrop: ogImage,
         duration: runtimeLine || '',
         cast,
+        genres,
     };
 }
 
@@ -192,6 +199,7 @@ async function main() {
                 ...(info.description ? { description: info.description } : {}),
                 ...(info.duration ? { duration: info.duration } : {}),
                 ...(info.cast.length ? { cast: info.cast } : {}),
+                ...(info.genres.length ? { genres: info.genres } : {}),
                 ...(info.backdrop ? { backdropUrl: info.backdrop } : {}),
                 ...(poster || info.backdrop ? { imageUrl: poster || info.backdrop } : {}),
             };
