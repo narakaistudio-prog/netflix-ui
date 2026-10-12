@@ -4,7 +4,7 @@ The Crunchyroll section uses **Nxsha as its only playback provider**. The previo
 
 ## Nxsha episode harvest
 
-Harvested 2026-10-12T18:02:23.375Z from `https://nxsha.space/api/tv/{tmdbId}/season/{season}`: **46/46 non-One-Piece series**, **3,858 episodes**, **3,818 episode stills**, and **3,817 episode synopses**. No series failed; 40 episodes lack a still and 41 lack a synopsis. The full response snapshot is `data/nxsha-episodes.json`; `data/nxsha-harvest-report.json` is the machine-readable audit report.
+Harvested 2026-10-12T18:19:02.306Z from `https://nxsha.space/api/tv/{tmdbId}/season/{season}`: **51/51 non-One-Piece series**, **4,550 episodes**, **4,501 episode stills**, and **4,500 episode synopses**. No series failed; 49 episodes lack a still and 50 lack a synopsis. The full response snapshot is `data/nxsha-episodes.json`; `data/nxsha-harvest-report.json` is the machine-readable audit report.
 
 The season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json` now come from Nxsha season API responses. The browser guide uses only this Nxsha snapshot for non-One-Piece episode titles, stills, synopsis, air date, and runtime. Missing stills use a unique episode placeholder; missing synopsis/date/runtime fields are omitted instead of borrowing show art or generic local-catalog text.
 
@@ -12,7 +12,7 @@ The season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json` now come 
 
 ## Adding future anime
 
-The daily harvester is not limited to today's 46 non-One-Piece series: it reads the current Crunchyroll `shows` catalog and the Nxsha route registry on every run. When adding a TV anime, add its card to `assets/crunchyroll/crunchyroll.html` and add a matching key to `data/nxsha-titles.json` with its Nxsha `/tv/{id}` page ID, title, and `kind: "tv"`. The workflow then harvests its current seasons/episodes, adds it to the verification plan, and bakes its guide data into the page. A catalog card without a matching Nxsha registry entry fails the refresh with the missing key, rather than being silently skipped. One Piece remains excluded from episode-guide refreshes.
+The daily harvester is not limited to today's 51 non-One-Piece series: it reads the current Crunchyroll `shows` catalog and the Nxsha route registry on every run. When adding a TV anime, add its card to `assets/crunchyroll/crunchyroll.html` and add a matching key to `data/nxsha-titles.json` with its Nxsha `/tv/{id}` page ID, title, and `kind: "tv"`. The workflow then harvests its current seasons/episodes, adds it to the verification plan, and bakes its guide data into the page. A catalog card without a matching Nxsha registry entry fails the refresh with the missing key, rather than being silently skipped. One Piece remains excluded from episode-guide refreshes.
 
 | Series | Nxsha API ID | Nxsha season map | Episodes | Stills | Synopses |
 |---|---:|---|---:|---:|---:|
@@ -62,13 +62,18 @@ The daily harvester is not limited to today's 46 non-One-Piece series: it reads 
 | Mushoku Tensei: Jobless Reincarnation | `94664` | S1: 23 + S2: 24 + S3: 14 | 61 | 61 | 61 |
 | TSUKIMICHI -Moonlit Fantasy- | `111819` | S1: 12 + S2: 25 + S3: 1 | 38 | 37 | 37 |
 | The Rising of the Shield Hero | `83095` | S1: 25 + S2: 13 + S3: 12 + S4: 12 | 62 | 62 | 62 |
+| Fairy Tail | `46261` | S1: 48 + S2: 48 + S3: 54 + S4: 25 + S5: 51 + S6: 39 + S7: 12 + S8: 51 | 328 | 328 | 328 |
+| Your Lie in April | `61663` | S1: 22 | 22 | 22 | 22 |
+| JoJo's Bizarre Adventure | `45790` | S1: 26 + S2: 48 + S3: 39 + S4: 39 + S5: 38 + S6: 12 | 202 | 194 | 194 |
+| Shangri-La Frontier | `205050` | S1: 51 | 51 | 50 | 50 |
+| Welcome to Demon School! Iruma-kun | `91801` | S1: 23 + S2: 21 + S3: 21 + S4: 24 | 89 | 89 | 89 |
 
 Zero-episode season placeholders are omitted from the playable maps and checked again by the daily harvester: Cheat Skill Season 2, Classroom of the Elite Season 5, and The Rising of the Shield Hero Season 5.
 
 ## Playback route status
 
-- **59/59 catalog titles** have a configured Nxsha playback route.
+- **64/64 catalog titles** have a configured Nxsha playback route.
 - **12 movies** remain routed through Nxsha; movie metadata is outside the TV season harvest.
-- All **59/59 Nxsha playback routes** passed a live embed-title probe in `data/nxsha-verify.json`. The probe checked the first and last episode in every configured TV season and matched the Nxsha title for all 12 movies; Sword Art Online: Ordinal Scale resolved to `413594`.
+- All **64/64 Nxsha playback routes** passed a live embed-title probe in `data/nxsha-verify.json`. The probe checked the first and last episode in every configured TV season and matched the Nxsha title for all 12 movies; Sword Art Online: Ordinal Scale resolved to `413594`.
 
 Use `data/nxsha-harvest-report.json` as the source for exact per-title counts and field coverage. Do not infer Nxsha data from the legacy guide or local catalog.
