@@ -564,5 +564,45 @@
       "4": 12
     },
     "title": "The Rising of the Shield Hero"
+  },
+  "fairytail": {
+    "id": "46261",
+    "kind": "tv",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Fairy Tail"
+  },
+  "yourlie": {
+    "id": "61663",
+    "kind": "tv",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Your Lie in April"
+  },
+  "jojo": {
+    "id": "45790",
+    "kind": "tv",
+    "seasons": {
+      "1": 1
+    },
+    "title": "JoJo's Bizarre Adventure"
+  },
+  "shangri": {
+    "id": "205050",
+    "kind": "tv",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Shangri-La Frontier"
+  },
+  "iruma": {
+    "id": "91801",
+    "kind": "tv",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Welcome to Demon School! Iruma-kun"
   }
 }
