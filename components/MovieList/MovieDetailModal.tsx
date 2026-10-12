@@ -28,6 +28,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelec
     const { width, height } = useWindowDimensions();
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
+    const fiveUp = panelWidth > 880;
     const heroHeight = Math.min(panelWidth * 0.56, height * (IS_WEB ? 0.62 : 0.4));
 
     if (!movie) {
@@ -50,7 +51,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelec
                             {image ? (
                                 <SafeImage
                                     source={{ uri: image }}
-                                    style={StyleSheet.absoluteFillObject as any}
+                                    style={{ width: '100%', height: '100%' } as any}
                                     fallbackLabel={movie.title}
                                     loading="eager"
                                 />
@@ -123,7 +124,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelec
                                         <Pressable
                                             key={item.id}
                                             onPress={() => onSelect?.(item)}
-                                            style={[styles.moreItem, wide ? styles.moreItemWide : styles.moreItemNarrow]}
+                                            style={[styles.moreItem, fiveUp ? styles.moreItemFive : wide ? styles.moreItemWide : styles.moreItemNarrow]}
                                             accessibilityLabel={`Open ${item.title || ''}`}
                                         >
                                             <SafeImage
@@ -280,6 +281,9 @@ const styles = StyleSheet.create({
     },
     moreItem: {
         gap: 6,
+    },
+    moreItemFive: {
+        width: '18.5%',
     },
     moreItemWide: {
         width: '31.5%',

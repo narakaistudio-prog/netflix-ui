@@ -253,7 +253,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     const openMovie = (item: Movie) => setSelectedMovie(item);
     const playMovie = (item: Movie) => {
         setSelectedMovie(null);
-        router.push({ pathname: '/movie/[id]', params: { id: item.id } });
+        router.push({ pathname: '/movie/[id]', params: { id: item.id, play: '1' } });
     };
 
     const renderItem = ({ item, index }: { item: Movie; index: number }) => {

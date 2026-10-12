@@ -62,7 +62,7 @@ function expectDetailsOpenedFor(title: string) {
     expect(play).toBeTruthy();
     act(() => play.click());
     const id = title.replace('Movie ', 'item-');
-    expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id } });
+    expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id, play: '1' } });
 }
 
 it('hydrates only near-viewport shelves, then opens any visible card immediately', () => {
