@@ -192,7 +192,6 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
                 {playing && src ? (
                     <View style={styles.playerLayer}>
                         <EmbedPlayer
-                            variant="netflix"
                             src={src}
                             title={movie.title}
                             onClose={() => setPlaying(false)}
