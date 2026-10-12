@@ -31,6 +31,11 @@ jobs:
         continue-on-error: true
         run: node scripts/harvest-nxsha-guide.mjs
 
+      - name: Probe the configured Nxsha embed routes
+        if: steps.harvest.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/probe-nxsha.mjs
+
       - name: Upload the Nxsha guide snapshot
         if: always()
         uses: actions/upload-artifact@v4
@@ -41,6 +46,7 @@ jobs:
             data/nxsha-plan.json
             data/nxsha-episodes.json
             data/nxsha-harvest-report.json
+            data/nxsha-verify.json
           if-no-files-found: error
           retention-days: 7
 
@@ -58,7 +64,7 @@ jobs:
         run: |
           git config user.name "nxsha-guide-bot"
           git config user.email "nxsha-guide-bot@users.noreply.github.com"
-          git add data/nxsha-titles.json data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json
+          git add data/nxsha-titles.json data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json data/nxsha-verify.json
           if git diff --cached --quiet; then
             echo "Nxsha snapshot is already up to date."
           else

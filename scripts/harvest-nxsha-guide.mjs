@@ -27,6 +27,8 @@ const REQUEST_TIMEOUT_MS = 25_000;
 const REQUEST_DELAY_MS = 120;
 const MAX_RETRIES = 4;
 const SKIP_KEYS = new Set(['onepiece']);
+const MANIFEST_COMMENT = 'Single player source for the 41-title Crunchyroll catalog. All entries use nxsha.space/embed/{movie|tv}/{id}[/{season}/{episode}]. Non-One-Piece TV season maps are refreshed from Nxsha season API responses and their episode metadata is stored separately in data/nxsha-episodes.json; One Piece is intentionally excluded from that refresh.';
+const PLAN_COMMENT = 'All Crunchyroll catalog titles are routed through Nxsha. IDs use configured TMDB numeric IDs or IMDb tt IDs; non-One-Piece TV season maps are sourced from Nxsha season API responses. One Piece is excluded from the season/episode-guide update and its existing map is unchanged.';
 
 const sleep = (ms) => new Promise((resolvePromise) => setTimeout(resolvePromise, ms));
 
@@ -249,6 +251,8 @@ async function main() {
     const checkOnly = process.argv.includes('--check');
     const manifest = JSON.parse(readFileSync(TITLES_PATH, 'utf8'));
     const plan = JSON.parse(readFileSync(PLAN_PATH, 'utf8'));
+    manifest._comment = MANIFEST_COMMENT;
+    plan._comment = PLAN_COMMENT;
     const shows = {};
     const results = [];
     const targetTitles = Object.entries(manifest)

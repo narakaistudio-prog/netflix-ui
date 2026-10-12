@@ -1,5 +1,5 @@
 {
-  "_comment": "Single player source for the 41-title Crunchyroll catalog. All entries use nxsha.space/embed/{movie|tv}/{id}[/{season}/{episode}]. Six original series and twelve movies retain successful probe results; the remaining series season maps use the fullest checked-in catalogue metadata available and still need live Nxsha verification. One Piece season counts are intentionally unchanged.",
+  "_comment": "Single player source for the 41-title Crunchyroll catalog. All entries use nxsha.space/embed/{movie|tv}/{id}[/{season}/{episode}]. Non-One-Piece TV season maps are refreshed from Nxsha season API responses and their episode metadata is stored separately in data/nxsha-episodes.json; One Piece is intentionally excluded from that refresh.",
   "aot": {
     "id": "tt2560140",
     "kind": "tv",

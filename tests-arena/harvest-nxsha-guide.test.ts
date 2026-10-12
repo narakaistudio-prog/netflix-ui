@@ -19,6 +19,8 @@ test('Nxsha harvest workflow is manual, artifacts its guide, and does not touch 
     expect(workflow).toContain('workflow_dispatch:');
     expect(workflow).toContain('name: nxsha-episode-guide');
     expect(workflow).toContain('data/nxsha-episodes.json');
+    expect(workflow).toContain('node scripts/probe-nxsha.mjs');
+    expect(workflow).toContain('data/nxsha-verify.json');
     expect(script).toContain("const SKIP_KEYS = new Set(['onepiece'])");
     expect(script).toContain("source: 'https://nxsha.space/api/tv/{tmdbId}/season/{season}'");
 });

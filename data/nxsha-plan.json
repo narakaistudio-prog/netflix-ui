@@ -1,5 +1,5 @@
 {
-  "_comment": "All Crunchyroll catalog titles are routed through Nxsha. Six original series and twelve movies retain successful probe results; remaining series season counts are refreshed from checked-in catalogue metadata but are not live-verified against Nxsha. One Piece is excluded from the season-count update.",
+  "_comment": "All Crunchyroll catalog titles are routed through Nxsha. IDs use configured TMDB numeric IDs or IMDb tt IDs; non-One-Piece TV season maps are sourced from Nxsha season API responses. One Piece is excluded from the season/episode-guide update and its existing map is unchanged.",
   "titles": [
     {
       "key": "aot",

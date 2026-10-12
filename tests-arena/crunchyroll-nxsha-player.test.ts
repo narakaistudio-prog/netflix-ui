@@ -225,6 +225,20 @@ test('episode cards use Nxsha stills, titles, and synopsis, without changing One
         expect(cards[0].querySelector('.episode-desc')).toBeNull();
         expect(cards[0].querySelector('.episode-runtime')).toBeNull();
     }
+    if (snapshot) {
+        click(dom.window, doc.querySelector('.dialog-close'));
+        await wait(60);
+        click(dom.window, await waitForElement(dom.window, '#catalogGrid [data-open="tokyo"]'));
+        await wait(80);
+        const tokyoCards = Array.from(doc.querySelectorAll('#episodeList .episode-card'));
+        expect(tokyoCards).toHaveLength(55);
+        const episode55 = snapshot.shows.tokyo.episodes.find((episode) => episode.season === 1 && episode.episode === 55)!;
+        expect(tokyoCards[54].querySelector('strong')?.textContent).toBe(episode55.title);
+        expect(tokyoCards[54].querySelector('img')?.getAttribute('data-src')).toMatch(/^data:image\/svg\+xml/);
+        expect(tokyoCards[54].querySelector('.episode-desc')).toBeNull();
+        expect(tokyoCards[54].querySelector('.episode-air-date')?.textContent).toBe(episode55.airDate);
+        expect(tokyoCards[54].querySelector('.episode-runtime')).toBeNull();
+    }
     dom.window.close();
 });
 

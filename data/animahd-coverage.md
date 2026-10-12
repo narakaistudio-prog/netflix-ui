@@ -1,20 +1,50 @@
-# Crunchyroll player — Nxsha source and metadata status
+# Crunchyroll player — Nxsha guide coverage
 
-The Crunchyroll section uses **Nxsha as its only playback provider**. The former AnimaHD/Drive player tabs and fallback switching are removed. This document separates route mappings from episode metadata; a configured player ID does not prove Nxsha season or episode counts.
+The Crunchyroll section uses **Nxsha as its only playback provider**. The previous AnimaHD/Drive player tabs and fallback switching are removed. Route mapping status and episode-guide verification are tracked separately.
 
-## Guide data
+## Nxsha episode harvest
 
-A manual GitHub Action, `Harvest Nxsha episode guide`, fetches each series detail page and its `/api/tv/{tmdbId}/season/{season}` responses. It writes the resulting Nxsha-only episode snapshot to `data/nxsha-episodes.json`, refreshes the series season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json`, and records field coverage in `data/nxsha-harvest-report.json`. The checked-in HTML guide is then rebuilt with `node scripts/bake-animahd-links.mjs`.
+Harvested 2026-10-12T10:18:44.647Z from `https://nxsha.space/api/tv/{tmdbId}/season/{season}`: **28/28 non-One-Piece series**, **2,802 episodes**, **2,773 episode stills**, and **2,773 episode synopses**. No series failed; 29 episodes lack a still and 29 lack a synopsis. The full response snapshot is `data/nxsha-episodes.json`; `data/nxsha-harvest-report.json` is the machine-readable audit report.
 
-**The live harvest has not yet completed.** Until `data/nxsha-harvest-report.json` is present, counts retained in the route manifest are legacy/unverified and must not be cited as confirmed Nxsha episode counts. Local catalogue images and descriptions are not used as Nxsha episode metadata; missing Nxsha stills render an episode-specific placeholder, and absent synopsis/runtime fields are omitted.
+The season maps in `data/nxsha-titles.json` and `data/nxsha-plan.json` now come from Nxsha season API responses. The browser guide uses only this Nxsha snapshot for non-One-Piece episode titles, stills, synopsis, air date, and runtime. Missing stills use a unique episode placeholder; missing synopsis/date/runtime fields are omitted instead of borrowing show art or generic local-catalog text.
 
-Nxsha's Tokyo Revengers detail page confirms **1 season and 55 episodes**. The harvester will replace the old local 3-season map with the API result. **One Piece is intentionally excluded** from the season/episode-guide refresh and remains unchanged.
+**Tokyo Revengers is 1 season / 55 episodes** on Nxsha, replacing the old local 3-season map. **One Piece was intentionally excluded** from the harvest and its existing route/season map remains unchanged.
 
-## Catalog routing
+| Series | Nxsha API ID | Nxsha season map | Episodes | Stills | Synopses |
+|---|---:|---|---:|---:|---:|
+| Attack on Titan | `1429` | S1: 25 + S2: 12 + S3: 22 + S4: 28 | 87 | 87 | 87 |
+| Tokyo Revengers | `105009` | S1: 55 | 55 | 52 | 52 |
+| Vinland Saga | `88803` | S1: 24 + S2: 24 | 48 | 48 | 48 |
+| Sword Art Online | `45782` | S1: 25 + S2: 24 + S3: 24 + S4: 23 | 96 | 96 | 96 |
+| Dr. STONE | `86031` | S1: 24 + S2: 11 + S3: 22 + S4: 37 | 94 | 94 | 94 |
+| Boruto: Naruto Next Generations | `70881` | S1: 293 | 293 | 293 | 293 |
+| Solo Leveling | `127532` | S1: 25 | 25 | 25 | 25 |
+| Demon Slayer: Kimetsu no Yaiba | `85937` | S1: 26 + S2: 7 + S3: 11 + S4: 11 + S5: 8 | 63 | 63 | 63 |
+| JUJUTSU KAISEN | `95479` | S1: 59 | 59 | 59 | 59 |
+| Frieren: Beyond Journey's End | `209867` | S1: 38 | 38 | 38 | 38 |
+| Chainsaw Man | `114410` | S1: 12 | 12 | 12 | 12 |
+| SPY x FAMILY | `120089` | S1: 25 + S2: 12 + S3: 13 | 50 | 50 | 50 |
+| Kaiju No. 8 | `207468` | S1: 23 | 23 | 23 | 23 |
+| Naruto Shippūden | `31910` | S1: 32 + S2: 21 + S3: 18 + S4: 17 + S5: 24 + S6: 31 + S7: 8 + S8: 24 + S9: 21 + S10: 25 + S11: 21 + S12: 33 + S13: 20 + S14: 25 + S15: 28 + S16: 13 + S17: 11 + S18: 21 + S19: 20 + S20: 87 | 500 | 500 | 500 |
+| Death Note | `13916` | S1: 37 | 37 | 37 | 37 |
+| My Hero Academia | `65930` | S1: 13 + S2: 25 + S3: 25 + S4: 25 + S5: 25 + S6: 25 + S7: 21 + S8: 11 | 170 | 170 | 170 |
+| One-Punch Man | `63926` | S1: 12 + S2: 12 + S3: 12 | 36 | 36 | 36 |
+| Bleach | `30984` | S1: 366 + S2: 50 | 416 | 414 | 414 |
+| Hunter x Hunter | `46298` | S1: 62 + S2: 74 + S3: 12 | 148 | 148 | 148 |
+| Mob Psycho 100 | `67075` | S1: 12 + S2: 13 + S3: 12 | 37 | 37 | 37 |
+| Re:ZERO -Starting Life in Another World- | `65942` | S1: 85 | 85 | 85 | 85 |
+| Black Clover | `73223` | S1: 170 + S2: 26 | 196 | 172 | 172 |
+| Haikyu!! | `60863` | S1: 25 + S2: 25 + S3: 10 + S4: 25 | 85 | 85 | 85 |
+| BLUE LOCK | `131041` | S1: 38 | 38 | 38 | 38 |
+| 【OSHI NO KO】 | `203737` | S1: 35 | 35 | 35 | 35 |
+| Dan Da Dan | `240411` | S1: 24 | 24 | 24 | 24 |
+| Tower of God | `97860` | S1: 13 + S2: 26 | 39 | 39 | 39 |
+| The God of High School | `99778` | S1: 13 | 13 | 13 | 13 |
+
+## Playback route status
 
 - **41/41 catalog titles** have a configured Nxsha playback route.
-- **28 non-One-Piece TV series** are included in the episode guide harvest.
-- **12 movies** remain routed through Nxsha and are not part of the series season harvest.
-- **23 migrated route IDs** still lack a successful live embed probe in the checked-in `data/nxsha-verify.json`; that status is separate from season/episode metadata verification.
+- **12 movies** remain routed through Nxsha; movie metadata is outside the TV season harvest.
+- **23 migrated route IDs** still lack a successful live embed probe in the checked-in `data/nxsha-verify.json`. This does not affect the Nxsha season/episode metadata result above, but it remains a separate playback verification task.
 
-After a successful harvest, use `data/nxsha-harvest-report.json` for exact Nxsha counts, still coverage, synopsis coverage, and per-title status. Never infer those results from the old catalogue or route map.
+Use `data/nxsha-harvest-report.json` as the source for exact per-title counts and field coverage. Do not infer Nxsha data from the legacy guide or local catalog.
