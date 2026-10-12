@@ -1,0 +1,50 @@
+name: Probe Nxsha metadata for the Trending row
+
+# The Trending Now in India row needs details and images from nxsha.space.
+# The sandbox cannot reach nxsha, so this job runs on a hosted runner and
+# writes data/tudum-nxsha-probe.json. It does not touch Crunchyroll data.
+on:
+  push:
+    branches:
+      - arena/12789678-netflix-ui
+    paths:
+      - '.github/workflows/tudum-nxsha-probe.yml'
+      - 'scripts/probe-tudum-nxsha.mjs'
+  workflow_dispatch:
+
+concurrency:
+  group: tudum-nxsha-probe-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Probe Nxsha endpoints
+        run: node scripts/probe-tudum-nxsha.mjs
+
+      - name: Commit probe report
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/tudum-nxsha-probe.json
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "chore(trending): nxsha probe report"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
