@@ -1,8 +1,9 @@
 # anidisk-extractor — `/api/extract` + `/api/stream`
 
-> NOTE: Server 2 (player side) is currently removed — the player is single-server
-> AnimaHD. This API stays ready; to reconnect, restore the extractor client block
-> (commit `9c94ab1`) and open the player with `?extractor=<this-service>/api/extract`.
+> NOTE: The Crunchyroll player is **Nxsha-only** now — every title embeds from
+> `https://nxsha.space/embed/…`, and the old AnimaHD / Drive / AniDisk player
+> tabs are removed. This API stays ready for future use; to reconnect, restore
+> the extractor client block (commit `9c94ab1`) and wire it to a player route.
 
 Tiny **zero-dependency** Node server that turns episode/embed pages (AniDisk and the
 video hosts behind it — StreamWish, VidHide/VidMoly, Filemoon, Voe, …) into a direct
@@ -41,9 +42,10 @@ curl 'http://127.0.0.1:8787/api/extract?url=https://anidisk.org/watch/solo-level
    (No Blueprint? **New → Web Service** → root dir `server`, build `npm install`,
    start `npm start`, plan Free.)
 3. Wait for deploy → copy the service URL, e.g. `https://anidisk-extractor.onrender.com`.
-4. Open the demo player with your extractor once:
+4. (Only after reconnecting an extractor client — see the note on top.) Open the
+   player with your extractor once:
    `…/crunchyroll.html?extractor=https://anidisk-extractor.onrender.com/api/extract`
-   The player remembers it (localStorage) — Server 2 (AniDisk ⚡) then plays in-app.
+   The player remembers it (localStorage).
 
 Env: `PORT` (default 8787), `ALLOW_ORIGIN` (default `*`; set your site origin to lock
 the API to your player).

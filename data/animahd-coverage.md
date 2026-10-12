@@ -4,7 +4,7 @@
 
 - **Nxsha (default + only player)** — `https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}]` (script: `scripts/probe-nxsha.mjs` + `data/nxsha-titles.json`).
 
-**41 titles / 3766 episodes** (Nxsha) = **41/41 titles playable**.
+**41 titles / 3519 episodes** (Nxsha) = **41/41 titles playable**.
 
 ## Historical: Server 1 + Server 2 (AnimaHD → Drive) — removed from the player
 
