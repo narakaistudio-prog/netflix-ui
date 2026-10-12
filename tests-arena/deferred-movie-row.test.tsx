@@ -6,6 +6,10 @@ import { act } from 'react-dom/test-utils';
 
 const mockPush = jest.fn();
 jest.mock('expo-router', () => ({ useRouter: () => ({ push: mockPush }) }));
+jest.mock('@/components/EmbedPlayer', () => {
+    const ReactLocal = require('react');
+    return { EmbedPlayer: ({ src }: any) => ReactLocal.createElement('div', { 'data-testid': 'embed-player', 'data-src': src }) };
+});
 jest.mock('expo-linear-gradient', () => {
     const ReactLocal = require('react');
     return { LinearGradient: (props: any) => ReactLocal.createElement('div', null, props.children) };
@@ -50,19 +54,22 @@ afterEach(() => {
 });
 
 const movies = Array.from({ length: 80 }, (_, i) => ({
-    id: `item-${i}`, title: `Movie ${i}`, mediaType: 'movie' as const, imageUrl: `local:item-${i}`,
+    id: `item-${i}`, title: `Movie ${i}`, mediaType: 'movie' as const, imageUrl: `local:item-${i}`, tmdb_id: String(1000 + i), embed_provider: 'nxsha' as const,
 }));
 const cards = () => container.querySelectorAll('[data-testid^="movie-card-"]');
 
-/** A card press opens the details modal for that title; Play in it goes to the player page. */
+/** A card press opens the details modal; Play starts the player inside it, with no navigation. */
 function expectDetailsOpenedFor(title: string) {
     expect(mockPush).not.toHaveBeenCalled();
     expect(document.body.textContent).toContain(title);
     const play = document.querySelector(`[aria-label="Play ${title}"]`) as HTMLElement;
     expect(play).toBeTruthy();
     act(() => play.click());
-    const id = title.replace('Movie ', 'item-');
-    expect(mockPush).toHaveBeenCalledWith({ pathname: '/movie/[id]', params: { id, play: '1' } });
+    expect(mockPush).not.toHaveBeenCalled();
+    const player = document.querySelector('[data-testid="embed-player"]') as HTMLElement;
+    expect(player).toBeTruthy();
+    const tmdb = 1000 + Number(title.replace('Movie ', ''));
+    expect(player.getAttribute('data-src')).toContain(`/embed/movie/${tmdb}`);
 }
 
 it('hydrates only near-viewport shelves, then opens any visible card immediately', () => {

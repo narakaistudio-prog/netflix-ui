@@ -75,7 +75,7 @@ function setPlayerChromeHidden(hidden: boolean) {
 }
 
 export default function MovieScreen() {
-    const { id, play } = useLocalSearchParams();
+    const { id } = useLocalSearchParams();
     const router = useRouter();
     const { setScale } = useRootScale();
     const translateY = useSharedValue(0);
@@ -430,15 +430,6 @@ export default function MovieScreen() {
             });
         } catch {}
     }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle]);
-
-    // A title opened with ?play=1 (from the Trending/row details modal) starts the
-    // player right away instead of stopping on the detail page.
-    const autoPlayHandled = useRef(false);
-    useEffect(() => {
-        if (autoPlayHandled.current || play !== '1' || !hasPlayablePlayback) return;
-        autoPlayHandled.current = true;
-        handlePlayFull();
-    }, [play, hasPlayablePlayback, handlePlayFull]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;

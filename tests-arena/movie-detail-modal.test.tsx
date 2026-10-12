@@ -7,6 +7,10 @@ jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
     return { Ionicons: (props: any) => ReactLocal.createElement('i', props) };
 });
+jest.mock('@/components/EmbedPlayer', () => {
+    const ReactLocal = require('react');
+    return { EmbedPlayer: ({ src, onClose }: any) => ReactLocal.createElement('div', { 'data-testid': 'embed-player', 'data-src': src, onClick: onClose }) };
+});
 jest.mock('expo-linear-gradient', () => {
     const ReactLocal = require('react');
     return { LinearGradient: (props: any) => ReactLocal.createElement('div', null, props.children) };
@@ -30,6 +34,8 @@ afterEach(() => {
 
 const movie = {
     id: 'tudum-top10-india-irumudi',
+    tmdb_id: '1441228',
+    embed_provider: 'nxsha',
     title: 'Irumudi',
     imageUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
     backdropUrl: 'https://image.tmdb.org/t/p/w1280/backdrop.jpg',
@@ -42,12 +48,12 @@ const movie = {
 };
 
 test('renders nothing visible without a movie', () => {
-    act(() => root.render(<MovieDetailModal movie={null} onClose={() => {}} onPlay={() => {}} />));
+    act(() => root.render(<MovieDetailModal movie={null} onClose={() => {}}  />));
     expect(container.textContent).not.toContain('Play');
 });
 
 test('shows backdrop, title, meta, cast and genres for the pressed title', () => {
-    act(() => root.render(<MovieDetailModal movie={movie} onClose={() => {}} onPlay={() => {}} />));
+    act(() => root.render(<MovieDetailModal movie={movie} onClose={() => {}}  />));
     const text = document.body.textContent || '';
     expect(text).toContain('Irumudi');
     expect(text).toContain('2026');
@@ -59,18 +65,25 @@ test('shows backdrop, title, meta, cast and genres for the pressed title', () =>
     expect(img).not.toBeNull();
 });
 
-test('Play hands the title to onPlay', () => {
-    const onPlay = jest.fn();
-    act(() => root.render(<MovieDetailModal movie={movie} onClose={() => {}} onPlay={onPlay} />));
+test('Play starts the player inside the modal, and closing the player returns to details', () => {
+    const onClose = jest.fn();
+    act(() => root.render(<MovieDetailModal movie={movie} onClose={onClose} />));
     const play = Array.from(document.querySelectorAll('[aria-label]')).find((el) =>
         (el.getAttribute('aria-label') || '').startsWith('Play Irumudi') || el.getAttribute('aria-label') === 'Play Irumudi');
     expect(play).toBeDefined();
     act(() => { (play as HTMLElement).click(); });
-    expect(onPlay).toHaveBeenCalledWith(movie);
+    const player = document.querySelector('[data-testid="embed-player"]') as HTMLElement;
+    expect(player.getAttribute('data-src')).toContain('/embed/movie/1441228');
+    expect(document.body.textContent).toContain('Irumudi');
+    // Closing the player (its onClose) keeps the modal open on the same title.
+    act(() => { player.click(); });
+    expect(document.querySelector('[data-testid="embed-player"]')).toBeNull();
+    expect(onClose).not.toHaveBeenCalled();
+    expect(document.body.textContent).toContain('Irumudi');
 });
 
 test('hero image loads eagerly so it is not blank inside the modal', () => {
-    act(() => root.render(<MovieDetailModal movie={movie} onClose={() => {}} onPlay={() => {}} />));
+    act(() => root.render(<MovieDetailModal movie={movie} onClose={() => {}}  />));
     const img = document.querySelector('img[src*="backdrop"]') as HTMLImageElement | null;
     expect(img).not.toBeNull();
     expect(img.getAttribute('loading')).toBe('eager');
@@ -83,7 +96,7 @@ test('More Like This lists related titles and opens the picked one in place', ()
         { id: 'r2', title: 'Lust Stories 3', imageUrl: 'https://image.tmdb.org/t/p/w500/l.jpg', year: '2026' },
     ];
     act(() => root.render(
-        <MovieDetailModal movie={movie} related={related} onClose={() => {}} onPlay={() => {}} onSelect={onSelect} />,
+        <MovieDetailModal movie={movie} related={related} onClose={() => {}} onSelect={onSelect} />,
     ));
     expect(document.body.textContent).toContain('More Like This');
     const pick = document.querySelector('[aria-label="Open Lust Stories 3"]') as HTMLElement;

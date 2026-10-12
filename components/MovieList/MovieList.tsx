@@ -247,14 +247,9 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
         }
     };
 
-    // Pressing a title opens its details over the row (poster/backdrop modal).
-    // Play inside the modal goes to the title's player page.
+    // Pressing a title opens its details over the row (poster/backdrop modal); Play runs inside it.
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
     const openMovie = (item: Movie) => setSelectedMovie(item);
-    const playMovie = (item: Movie) => {
-        setSelectedMovie(null);
-        router.push({ pathname: '/movie/[id]', params: { id: item.id, play: '1' } });
-    };
 
     const renderItem = ({ item, index }: { item: Movie; index: number }) => {
         if (IS_WEB) {
@@ -426,7 +421,6 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                 movie={selectedMovie}
                 related={selectedMovie ? selectRelatedTitles([{ rowTitle, movies, type }], selectedMovie, 12) : []}
                 onClose={() => setSelectedMovie(null)}
-                onPlay={playMovie}
                 onSelect={openMovie}
             />
         </View>

@@ -1,8 +1,10 @@
-import React from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Platform } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Platform, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
+import { EmbedPlayer } from '@/components/EmbedPlayer';
+import { buildEmbedUrl } from '@/lib/embeds';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -14,18 +16,45 @@ type Props = {
     /** Other titles from the same shelf, shown as "More Like This". */
     related?: Movie[];
     onClose: () => void;
-    onPlay: (movie: Movie) => void;
     /** Opens another title's details inside this modal. */
     onSelect?: (movie: Movie) => void;
 };
 
+/** Official Netflix title page, used when no player source can be built. */
+function officialUrlFor(movie: Movie): string {
+    return movie.netflixUrl
+        || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : '')
+        || `https://www.netflix.com/search?q=${encodeURIComponent(String(movie.title ?? '').trim())}`;
+}
+
 /**
  * Title details shown over the row when a card is pressed: full-width backdrop
  * with a fade into the panel, title and Play on the image, then year, runtime,
- * description, cast and genres. Play opens the title's player page.
+ * description, cast and genres. Play starts the player inside this modal, and
+ * closing the player returns to these details.
  */
-export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelect }: Props) {
+export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Props) {
     const { width, height } = useWindowDimensions();
+    const [playing, setPlaying] = useState(false);
+
+    // A different title (or closing the modal) always starts from the details view.
+    useEffect(() => {
+        setPlaying(false);
+    }, [movie?.id]);
+
+    const src = useMemo(() => {
+        if (!movie) return '';
+        try {
+            return buildEmbedUrl(
+                movie.embed_provider || 'nxsha',
+                'movie',
+                { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url },
+            );
+        } catch {
+            return '';
+        }
+    }, [movie]);
+
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
     const fiveUp = panelWidth > 880;
@@ -40,6 +69,20 @@ export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelec
     const meta = [movie.year, movie.duration || (isSeries ? '1 Season' : '')].filter(Boolean);
     const cast = (movie.cast || []).filter((name) => name && name !== 'Cast not available');
     const genres = movie.genres || [];
+
+    const handlePlay = () => {
+        if (src) {
+            setPlaying(true);
+            return;
+        }
+        // No playable id for this title: send the viewer to Netflix instead.
+        const url = officialUrlFor(movie);
+        if (IS_WEB) {
+            window.open(url, '_blank', 'noopener');
+        } else {
+            Linking.openURL(url).catch(() => {});
+        }
+    };
 
     return (
         <Modal visible transparent animationType="fade" onRequestClose={onClose}>
@@ -76,7 +119,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelec
                             <View style={styles.heroContent}>
                                 <Text style={styles.title} numberOfLines={2}>{movie.title || ''}</Text>
                                 <Pressable
-                                    onPress={() => onPlay(movie)}
+                                    onPress={handlePlay}
                                     style={styles.playButton}
                                     accessibilityLabel={`Play ${movie.title || ''}`}
                                 >
@@ -142,6 +185,17 @@ export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelec
                         ) : null}
                     </ScrollView>
                 </View>
+
+                {playing && src ? (
+                    <View style={styles.playerLayer}>
+                        <EmbedPlayer
+                            src={src}
+                            title={movie.title}
+                            onClose={() => setPlaying(false)}
+                            fallbackUrl={officialUrlFor(movie)}
+                        />
+                    </View>
+                ) : null}
             </View>
         </Modal>
     );
@@ -160,6 +214,11 @@ const styles = StyleSheet.create({
         backgroundColor: PANEL_BG,
         borderRadius: 8,
         overflow: 'hidden',
+    },
+    playerLayer: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#000',
+        zIndex: 20,
     },
     hero: {
         width: '100%',
