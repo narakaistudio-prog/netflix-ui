@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '@/contexts/UserContext';
 import { SafeImage } from '@/components/SafeImage';
 import { ProfileBadge } from '@/components/ProfileBadge';
+import { CrunchyrollIcon } from '@/icons/Crunchyroll';
 import { TvRemoteHelper } from '@/components/TvRemoteHelper';
 import { useTvMode } from '@/hooks/useTvNavigation';
 
@@ -16,6 +17,7 @@ const NAV_LINKS = [
     { label: 'TV Shows', href: '/browse/tv' as const, type: 'catalog', catalog: 'tv' as const },
     { label: 'Movies', href: '/browse/movies' as const, type: 'catalog', catalog: 'movies' as const },
     { label: 'My List', href: '/profile' as const, type: 'route' },
+    { label: 'Crunchyroll', href: '/crunchyroll' as const, type: 'route' },
 ];
 
 const NOTIFICATIONS = [
@@ -89,7 +91,9 @@ export function WebNavBar() {
         setSearchQuery('');
     }, [pathname]);
 
-    if (Platform.OS !== 'web' || !selectedProfile) return null;
+    // Full immersion: the Crunchyroll OTT page brings its own chrome, so the
+    // Netflix navbar stays hidden while it is open.
+    if (Platform.OS !== 'web' || !selectedProfile || pathname.startsWith('/crunchyroll')) return null;
 
     const handleSearchSubmit = () => {
         const query = searchQuery.trim();
@@ -143,7 +147,9 @@ export function WebNavBar() {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
                         const isCatalog = link.type === 'catalog' && pathname === `/browse/${link.catalog}`;
                         const isMyList = link.label === 'My List' && pathname.startsWith('/profile');
-                        const active = isHome || isCatalog || isMyList;
+                        const isOtt = link.label === 'Crunchyroll';
+                        const isCrunchyroll = isOtt && pathname.startsWith('/crunchyroll');
+                        const active = isHome || isCatalog || isMyList || isCrunchyroll;
 
                         return (
                             <Pressable
@@ -173,9 +179,27 @@ export function WebNavBar() {
                                     hovered && !active && { opacity: 0.7 },
                                 ]}
                             >
-                                <Text style={[styles.link, active && styles.linkActive]}>
-                                    {link.label}
-                                </Text>
+                                {isOtt ? (
+                                    <View style={styles.ottLinkRow}>
+                                        <CrunchyrollIcon
+                                            size={16}
+                                            color={active ? '#ff8a3d' : '#f47521'}
+                                        />
+                                        <Text
+                                            style={[
+                                                styles.link,
+                                                styles.linkOtt,
+                                                active && styles.linkOttActive,
+                                            ]}
+                                        >
+                                            {link.label}
+                                        </Text>
+                                    </View>
+                                ) : (
+                                    <Text style={[styles.link, active && styles.linkActive]}>
+                                        {link.label}
+                                    </Text>
+                                )}
                             </Pressable>
                         );
                     })}
@@ -465,6 +489,19 @@ const styles = StyleSheet.create({
     linkActive: {
         color: '#ffffff',
         fontWeight: '800',
+    },
+    linkOtt: {
+        color: '#f47521',
+        fontWeight: '800',
+    },
+    linkOttActive: {
+        color: '#ff8a3d',
+        fontWeight: '900',
+    },
+    ottLinkRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
     },
     right: {
         flexDirection: 'row',

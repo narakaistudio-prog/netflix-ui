@@ -1,0 +1,623 @@
+{
+  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata. One Piece is intentionally excluded from season/episode refresh.",
+  "aot": {
+    "id": "tt2560140",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 12,
+      "3": 22,
+      "4": 28
+    },
+    "title": "Attack on Titan",
+    "verified": "2026-10-11"
+  },
+  "tokyo": {
+    "id": "105009",
+    "kind": "tv",
+    "seasons": {
+      "1": 55
+    },
+    "title": "Tokyo Revengers",
+    "verified": "2026-10-11"
+  },
+  "vinland": {
+    "id": "tt10233448",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 24
+    },
+    "title": "Vinland Saga",
+    "verified": "2026-10-11"
+  },
+  "sao": {
+    "id": "tt2250192",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 24,
+      "3": 24,
+      "4": 23
+    },
+    "title": "Sword Art Online",
+    "verified": "2026-10-11"
+  },
+  "drstone": {
+    "id": "tt9679542",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 11,
+      "3": 22,
+      "4": 37
+    },
+    "title": "Dr. STONE",
+    "verified": "2026-10-11"
+  },
+  "boruto": {
+    "id": "tt6342474",
+    "kind": "tv",
+    "seasons": {
+      "1": 293
+    },
+    "title": "Boruto: Naruto Next Generations",
+    "verified": "2026-10-11"
+  },
+  "yourname": {
+    "id": "tt5311514",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Your Name"
+  },
+  "suzume": {
+    "id": "tt16428256",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Suzume"
+  },
+  "silentvoice": {
+    "id": "tt5323662",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "A Silent Voice"
+  },
+  "spirited": {
+    "id": "tt0245429",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Spirited Away"
+  },
+  "mononoke": {
+    "id": "tt0119698",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Princess Mononoke"
+  },
+  "howl": {
+    "id": "tt0347149",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Howl's Moving Castle"
+  },
+  "akira": {
+    "id": "tt0094625",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Akira"
+  },
+  "weathering": {
+    "id": "tt9426210",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Weathering With You"
+  },
+  "jjk0": {
+    "id": "tt14331144",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Jujutsu Kaisen 0"
+  },
+  "demonMovie": {
+    "id": "tt11032374",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Demon Slayer: Mugen Train"
+  },
+  "mhaMovie": {
+    "id": "505262",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "My Hero Academia: Two Heroes"
+  },
+  "saoMovie": {
+    "id": "413594",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Sword Art Online: Ordinal Scale"
+  },
+  "solo": {
+    "id": "127532",
+    "kind": "tv",
+    "seasons": {
+      "1": 25
+    },
+    "title": "Solo Leveling"
+  },
+  "demon": {
+    "id": "tt9335498",
+    "kind": "tv",
+    "seasons": {
+      "1": 26,
+      "2": 7,
+      "3": 11,
+      "4": 11,
+      "5": 8
+    },
+    "title": "Demon Slayer: Kimetsu no Yaiba"
+  },
+  "jjk": {
+    "id": "tt12343534",
+    "kind": "tv",
+    "seasons": {
+      "1": 59
+    },
+    "title": "JUJUTSU KAISEN"
+  },
+  "onepiece": {
+    "id": "37854",
+    "kind": "tv",
+    "seasons": {
+      "1": 31,
+      "20": 10
+    },
+    "title": "One Piece"
+  },
+  "frieren": {
+    "id": "tt22248376",
+    "kind": "tv",
+    "seasons": {
+      "1": 38
+    },
+    "title": "Frieren: Beyond Journey’s End"
+  },
+  "chainsaw": {
+    "id": "114410",
+    "kind": "tv",
+    "seasons": {
+      "1": 12
+    },
+    "title": "Chainsaw Man"
+  },
+  "spy": {
+    "id": "120089",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 12,
+      "3": 13
+    },
+    "title": "SPY x FAMILY"
+  },
+  "kaiju": {
+    "id": "207468",
+    "kind": "tv",
+    "seasons": {
+      "1": 23
+    },
+    "title": "Kaiju No. 8"
+  },
+  "naruto": {
+    "id": "tt0988824",
+    "kind": "tv",
+    "seasons": {
+      "1": 32,
+      "2": 21,
+      "3": 18,
+      "4": 17,
+      "5": 24,
+      "6": 31,
+      "7": 8,
+      "8": 24,
+      "9": 21,
+      "10": 25,
+      "11": 21,
+      "12": 33,
+      "13": 20,
+      "14": 25,
+      "15": 28,
+      "16": 13,
+      "17": 11,
+      "18": 21,
+      "19": 20,
+      "20": 87
+    },
+    "title": "Naruto Shippuden"
+  },
+  "deathnote": {
+    "id": "tt0877057",
+    "kind": "tv",
+    "seasons": {
+      "1": 37
+    },
+    "title": "Death Note"
+  },
+  "mha": {
+    "id": "tt5626028",
+    "kind": "tv",
+    "seasons": {
+      "1": 13,
+      "2": 25,
+      "3": 25,
+      "4": 25,
+      "5": 25,
+      "6": 25,
+      "7": 21,
+      "8": 11
+    },
+    "title": "My Hero Academia"
+  },
+  "opm": {
+    "id": "tt4508902",
+    "kind": "tv",
+    "seasons": {
+      "1": 12,
+      "2": 12,
+      "3": 12
+    },
+    "title": "One Punch Man"
+  },
+  "bleach": {
+    "id": "30984",
+    "kind": "tv",
+    "seasons": {
+      "1": 366,
+      "2": 50
+    },
+    "title": "Bleach"
+  },
+  "hxh": {
+    "id": "tt2098220",
+    "kind": "tv",
+    "seasons": {
+      "1": 62,
+      "2": 74,
+      "3": 12
+    },
+    "title": "Hunter x Hunter"
+  },
+  "mob": {
+    "id": "tt5897304",
+    "kind": "tv",
+    "seasons": {
+      "1": 12,
+      "2": 13,
+      "3": 12
+    },
+    "title": "Mob Psycho 100"
+  },
+  "rezero": {
+    "id": "65942",
+    "kind": "tv",
+    "seasons": {
+      "1": 85
+    },
+    "title": "Re:ZERO"
+  },
+  "blackclover": {
+    "id": "tt7441658",
+    "kind": "tv",
+    "seasons": {
+      "1": 170,
+      "2": 26
+    },
+    "title": "Black Clover"
+  },
+  "haikyuu": {
+    "id": "60863",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 25,
+      "3": 10,
+      "4": 25
+    },
+    "title": "HAIKYU!!"
+  },
+  "bluelock": {
+    "id": "tt15222080",
+    "kind": "tv",
+    "seasons": {
+      "1": 38
+    },
+    "title": "BLUE LOCK"
+  },
+  "oshi": {
+    "id": "203737",
+    "kind": "tv",
+    "seasons": {
+      "1": 35
+    },
+    "title": "OSHI NO KO"
+  },
+  "dandadan": {
+    "id": "240411",
+    "kind": "tv",
+    "seasons": {
+      "1": 24
+    },
+    "title": "DAN DA DAN"
+  },
+  "tower": {
+    "id": "97860",
+    "kind": "tv",
+    "seasons": {
+      "1": 13,
+      "2": 26
+    },
+    "title": "Tower of God"
+  },
+  "goh": {
+    "id": "99778",
+    "kind": "tv",
+    "seasons": {
+      "1": 13
+    },
+    "title": "The God of High School"
+  },
+  "goldenkamuy": {
+    "id": "76757",
+    "kind": "tv",
+    "seasons": {
+      "1": 12,
+      "2": 12,
+      "3": 12,
+      "4": 13,
+      "5": 13
+    },
+    "title": "Golden Kamuy"
+  },
+  "fireforce": {
+    "id": "88046",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 24,
+      "3": 25
+    },
+    "title": "Fire Force"
+  },
+  "fatestrange": {
+    "id": "229858",
+    "kind": "tv",
+    "seasons": {
+      "1": 13
+    },
+    "title": "Fate/strange Fake"
+  },
+  "cheatskill": {
+    "id": "208493",
+    "kind": "tv",
+    "seasons": {
+      "1": 13
+    },
+    "title": "I Got a Cheat Skill in Another World and Became Unrivaled in The Real World, Too"
+  },
+  "mfg": {
+    "id": "154526",
+    "kind": "tv",
+    "seasons": {
+      "1": 37
+    },
+    "title": "MF GHOST"
+  },
+  "trigun": {
+    "id": "204266",
+    "kind": "tv",
+    "seasons": {
+      "1": 11,
+      "2": 12
+    },
+    "title": "TRIGUN STAMPEDE"
+  },
+  "toyour": {
+    "id": "97525",
+    "kind": "tv",
+    "seasons": {
+      "1": 20,
+      "2": 20,
+      "3": 22
+    },
+    "title": "To Your Eternity"
+  },
+  "slime": {
+    "id": "82684",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 24,
+      "3": 24,
+      "4": 24
+    },
+    "title": "That Time I Got Reincarnated as a Slime"
+  },
+  "classroom": {
+    "id": "72517",
+    "kind": "tv",
+    "seasons": {
+      "1": 12,
+      "2": 13,
+      "3": 13,
+      "4": 16
+    },
+    "title": "Classroom of the Elite"
+  },
+  "apothecary": {
+    "id": "220542",
+    "kind": "tv",
+    "seasons": {
+      "1": 60
+    },
+    "title": "The Apothecary Diaries"
+  },
+  "bluemiburo": {
+    "id": "234776",
+    "kind": "tv",
+    "seasons": {
+      "1": 24,
+      "2": 14
+    },
+    "title": "Blue Miburo"
+  },
+  "dbz": {
+    "id": "12971",
+    "kind": "tv",
+    "seasons": {
+      "1": 39,
+      "2": 35,
+      "3": 33,
+      "4": 32,
+      "5": 26,
+      "6": 29,
+      "7": 25,
+      "8": 34,
+      "9": 38
+    },
+    "title": "Dragon Ball Z"
+  },
+  "gachiakuta": {
+    "id": "256721",
+    "kind": "tv",
+    "seasons": {
+      "1": 24
+    },
+    "title": "Gachiakuta"
+  },
+  "hellsparadise": {
+    "id": "117465",
+    "kind": "tv",
+    "seasons": {
+      "1": 25
+    },
+    "title": "Hell's Paradise"
+  },
+  "beginningend": {
+    "id": "274671",
+    "kind": "tv",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    },
+    "title": "The Beginning After the End"
+  },
+  "mushoku": {
+    "id": "94664",
+    "kind": "tv",
+    "seasons": {
+      "1": 23,
+      "2": 24,
+      "3": 14
+    },
+    "title": "Mushoku Tensei: Jobless Reincarnation"
+  },
+  "tsukimichi": {
+    "id": "111819",
+    "kind": "tv",
+    "seasons": {
+      "1": 12,
+      "2": 25,
+      "3": 1
+    },
+    "title": "TSUKIMICHI -Moonlit Fantasy-"
+  },
+  "shieldhero": {
+    "id": "83095",
+    "kind": "tv",
+    "seasons": {
+      "1": 25,
+      "2": 13,
+      "3": 12,
+      "4": 12
+    },
+    "title": "The Rising of the Shield Hero"
+  },
+  "fairytail": {
+    "id": "46261",
+    "kind": "tv",
+    "seasons": {
+      "1": 48,
+      "2": 48,
+      "3": 54,
+      "4": 25,
+      "5": 51,
+      "6": 39,
+      "7": 12,
+      "8": 51
+    },
+    "title": "Fairy Tail"
+  },
+  "yourlie": {
+    "id": "61663",
+    "kind": "tv",
+    "seasons": {
+      "1": 22
+    },
+    "title": "Your Lie in April"
+  },
+  "jojo": {
+    "id": "45790",
+    "kind": "tv",
+    "seasons": {
+      "1": 26,
+      "2": 48,
+      "3": 39,
+      "4": 39,
+      "5": 38,
+      "6": 12
+    },
+    "title": "JoJo's Bizarre Adventure"
+  },
+  "shangri": {
+    "id": "205050",
+    "kind": "tv",
+    "seasons": {
+      "1": 51
+    },
+    "title": "Shangri-La Frontier"
+  },
+  "iruma": {
+    "id": "91801",
+    "kind": "tv",
+    "seasons": {
+      "1": 23,
+      "2": 21,
+      "3": 21,
+      "4": 24
+    },
+    "title": "Welcome to Demon School! Iruma-kun"
+  }
+}

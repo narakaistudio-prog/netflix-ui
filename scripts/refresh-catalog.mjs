@@ -880,6 +880,9 @@ async function getTvMazeEpisodeMetadata(title) {
                     season: episode.season,
                     episode: episode.number,
                     name: episode.name || '',
+                    ...(episode.summary ? { overview: decodeHtml(episode.summary) } : {}),
+                    ...(episode.airdate ? { air_date: episode.airdate } : {}),
+                    ...(episode.runtime ? { runtime: episode.runtime } : {}),
                     ...(episode.image?.original || episode.image?.medium
                         ? { still_path: episode.image.original || episode.image.medium }
                         : {}),
@@ -966,6 +969,8 @@ async function getJikanEpisodeMetadata(title) {
                     season: 1,
                     episode: episode.mal_id,
                     name: episode.title,
+                    ...(episode.synopsis ? { overview: decodeHtml(episode.synopsis) } : {}),
+                    ...(episode.aired?.from ? { air_date: episode.aired.from.slice(0, 10) } : {}),
                     ...(episode.images?.jpg?.image_url ? { still_path: episode.images.jpg.image_url } : {}),
                 });
             }
@@ -1204,6 +1209,9 @@ async function getOmdbMetadata(item, kind) {
                             name: episode.Title && episode.Title !== 'N/A'
                                 ? episode.Title
                                 : `Episode ${episodeIndex + 1}`,
+                            ...(episode.Released && episode.Released !== 'N/A'
+                                ? { air_date: episode.Released }
+                                : {}),
                         }))
                         : [];
                     return {

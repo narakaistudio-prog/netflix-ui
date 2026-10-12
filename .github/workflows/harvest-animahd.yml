@@ -1,0 +1,95 @@
+name: Harvest AnimaHD episodes (Crunchyroll catalog)
+
+# The repository sandboxes cannot reach animahd.com; a hosted runner can.
+# Every push to this session branch re-harvests the full Crunchyroll catalog
+# (episode file_ids per show), bakes them into the demo page and commits the
+# result back. Existing season splits are preserved while the episode count
+# still matches, so a later manual fix is never overwritten by a re-run.
+
+on:
+  push:
+    branches:
+      - arena/7fb63c42-netflix-ui
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: harvest-animahd-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    # Never re-run on the bot's own commit (would loop forever).
+    if: github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Diagnose AnimaHD markup (artifact only)
+        if: always()
+        run: node scripts/diag-animahd.mjs
+
+      - name: Index every post on the site (WP REST)
+        run: node scripts/index-animahd-posts.mjs
+
+      - name: Probe nxsha (fallback player ids)
+        continue-on-error: true
+        run: node scripts/probe-nxsha.mjs
+
+      - name: Probe nxsha theme colour (orange param)
+        continue-on-error: true
+        run: node scripts/probe-nxsha-color.mjs
+
+      - name: Harvest every anime in the Crunchyroll page
+        run: node scripts/harvest-animahd-all.mjs
+
+      - name: Bake EP_DATA into the demo page
+        run: node scripts/bake-animahd-links.mjs
+
+      - name: Offline self-tests
+        run: |
+          node scripts/harvest-animahd.mjs --self-test
+          node scripts/harvest-animahd-all.mjs --self-test
+          node scripts/bake-animahd-links.mjs --check
+
+      - name: Upload harvest report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: animahd-harvest
+          path: |
+            data/animahd-episodes.json
+            data/animahd-slugs.json
+            data/animahd-report.json
+            data/animahd-diag.json
+            data/animahd-posts.json
+            data/nxsha-probe.json
+            data/nxsha-verify.json
+            data/nxsha-color.json
+            data/nxsha-diag/
+            data/diag/
+          if-no-files-found: warn
+
+      - name: Commit harvested episodes
+        run: |
+          git config user.name "animahd-harvest-bot"
+          git config user.email "animahd-harvest-bot@users.noreply.github.com"
+          git add data/animahd-episodes.json data/animahd-slugs.json data/animahd-report.json assets/crunchyroll/crunchyroll.html
+          git add -f data/animahd-diag.json data/animahd-posts.json data/nxsha-probe.json data/nxsha-verify.json data/nxsha-color.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No episode changes."
+          else
+            git commit -m "chore(animahd): harvest episodes for the full Crunchyroll catalog"
+            git push origin HEAD:${{ github.ref_name }}
+          fi

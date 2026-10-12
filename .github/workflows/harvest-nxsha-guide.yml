@@ -1,0 +1,115 @@
+name: Harvest Nxsha episode guide
+
+on:
+  push:
+    branches:
+      - arena/1b9772fc-netflix-ui
+      - main
+    paths:
+      - '.github/workflows/harvest-nxsha-guide.yml'
+      - 'scripts/harvest-nxsha-guide.mjs'
+      - 'assets/crunchyroll/crunchyroll.html'
+      - 'data/nxsha-titles.json'
+  # GitHub runs scheduled workflows from the repository's default branch.
+  # 00:17 UTC is 05:47 in Asia/Kolkata and avoids the top-of-hour rush.
+  schedule:
+    - cron: '17 0 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: nxsha-guide-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch season maps and episode metadata from Nxsha
+        id: harvest
+        continue-on-error: true
+        run: node scripts/harvest-nxsha-guide.mjs
+
+      - name: Probe the configured Nxsha embed routes
+        if: steps.harvest.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/probe-nxsha.mjs
+
+      - name: Bake refreshed Nxsha season and episode data into Crunchyroll
+        if: steps.harvest.outcome == 'success'
+        run: |
+          node scripts/bake-animahd-links.mjs
+          node scripts/bake-animahd-links.mjs --check
+
+      - name: Upload the Nxsha guide snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nxsha-episode-guide
+          path: |
+            data/nxsha-titles.json
+            data/nxsha-plan.json
+            data/nxsha-episodes.json
+            data/nxsha-harvest-report.json
+            data/nxsha-verify.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Summarize harvest status
+        if: always()
+        run: |
+          if [ ! -f data/nxsha-harvest-report.json ]; then
+            echo "No Nxsha harvest report was generated."
+            exit 1
+          fi
+          node -e "const r=require('./data/nxsha-harvest-report.json'); console.log(JSON.stringify(r.summary, null, 2)); if (r.summary.failed.length || r.summary.harvested !== r.summary.requested) process.exit(1)"
+
+      - name: Preserve the Nxsha report when some routes fail
+        if: failure()
+        run: |
+          git config user.name "nxsha-guide-bot"
+          git config user.email "nxsha-guide-bot@users.noreply.github.com"
+          git add data/nxsha-harvest-report.json
+          if git diff --cached --quiet; then
+            echo "The failure report is already saved."
+          else
+            git commit -m "chore(nxsha): record incomplete harvest report"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Commit refreshed Nxsha snapshot and Crunchyroll guide
+        if: steps.harvest.outcome == 'success'
+        run: |
+          git config user.name "nxsha-guide-bot"
+          git config user.email "nxsha-guide-bot@users.noreply.github.com"
+          git add assets/crunchyroll/crunchyroll.html data/nxsha-titles.json data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json data/nxsha-verify.json
+          if git diff --cached --quiet; then
+            echo "Nxsha snapshot is already up to date."
+          else
+            git commit -m "chore(nxsha): refresh verified episode guide"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Trigger the production Vercel deploy hook when configured
+        if: steps.harvest.outcome == 'success' && github.ref_name == 'main'
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL is not configured; relying on Vercel's Git integration."
+            exit 0
+          fi
+          curl --fail --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK_URL"

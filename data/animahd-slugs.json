@@ -1,0 +1,182 @@
+{
+  "solo": {
+    "slug": "solo-leveling",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Solo Leveling"
+  },
+  "demon": {
+    "slug": "demon-slayer-kimetsu-no-yaiba",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Demon Slayer: Kimetsu no Yaiba"
+  },
+  "jjk": {
+    "slug": "jujutsu-kaisen",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "JUJUTSU KAISEN"
+  },
+  "onepiece": {
+    "slug": "one-piece",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "One Piece"
+  },
+  "frieren": {
+    "slug": "frieren-beyond-journeys-end",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Frieren: Beyond Journey’s End"
+  },
+  "chainsaw": {
+    "slug": "chainsaw-man",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Chainsaw Man"
+  },
+  "spy": {
+    "slug": "spy-x-family",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "SPY x FAMILY"
+  },
+  "kaiju": {
+    "slug": "kaiju-no-8",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Kaiju No. 8"
+  },
+  "naruto": {
+    "slug": "naruto-shippuden",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Naruto Shippuden"
+  },
+  "deathnote": {
+    "slug": "death-note",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Death Note"
+  },
+  "mha": {
+    "slug": "my-hero-academia",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "My Hero Academia"
+  },
+  "tokyo": {
+    "slug": "tokyo",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Tokyo Revengers",
+    "failedAt": "2026-10-11T10:29:44.775Z"
+  },
+  "opm": {
+    "slug": "one-punch-man",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "One Punch Man"
+  },
+  "bleach": {
+    "slug": "bleach",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Bleach"
+  },
+  "hxh": {
+    "slug": "hunter-x-hunter",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Hunter x Hunter"
+  },
+  "mob": {
+    "slug": "mob-psycho-100",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Mob Psycho 100"
+  },
+  "rezero": {
+    "slug": "rezero",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Re:ZERO"
+  },
+  "sao": {
+    "slug": "sword-art-online",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Sword Art Online",
+    "failedAt": "2026-10-11T10:29:59.529Z"
+  },
+  "blackclover": {
+    "slug": "black-clover",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Black Clover"
+  },
+  "haikyuu": {
+    "slug": "haikyu",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "HAIKYU!!"
+  },
+  "bluelock": {
+    "slug": "blue-lock",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "BLUE LOCK"
+  },
+  "oshi": {
+    "slug": "oshi-no-ko",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "OSHI NO KO"
+  },
+  "dandadan": {
+    "slug": "dan-da-dan",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "DAN DA DAN"
+  },
+  "tower": {
+    "slug": "tower-of-god",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Tower of God"
+  },
+  "goh": {
+    "slug": "the-god-of-high-school",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "The God of High School"
+  },
+  "jjk0": {
+    "slug": "jujutsu-kaisen",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "Jujutsu Kaisen 0",
+    "failedAt": "2026-10-11T10:30:25.783Z"
+  },
+  "mononoke": {
+    "slug": "mononoke",
+    "source": "candidate",
+    "verified": true,
+    "titleAtHarvest": "Princess Mononoke",
+    "failedAt": "2026-10-11T10:30:32.197Z"
+  },
+  "demonMovie": {
+    "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+    "source": "search",
+    "verified": true,
+    "titleAtHarvest": "Demon Slayer: Mugen Train",
+    "failedAt": "2026-10-11T10:30:40.243Z"
+  },
+  "mhaMovie": {
+    "slug": "my-hero-academia-final-season",
+    "source": "pin",
+    "verified": true,
+    "titleAtHarvest": "My Hero Academia: Two Heroes",
+    "failedAt": "2026-10-11T10:30:35.786Z"
+  }
+}

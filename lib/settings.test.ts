@@ -34,6 +34,32 @@ afterAll(() => {
     }
 });
 
+it('migrates the pre-v5 red player theme to orange', () => {
+    const V4_MOVIE =
+        'https://nxsha.space/embed/movie/{id}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
+    const V4_TV =
+        'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
+    saved.set(STORAGE_KEY, JSON.stringify({
+        ...DEFAULT_SETTINGS,
+        settingsVersion: 4,
+        nxshaMovieTemplate: V4_MOVIE,
+        nxshaTvTemplate: V4_TV,
+    }));
+
+    const migrated = loadSettings();
+    expect(migrated.nxshaMovieTemplate).toBe(DEFAULT_NXSHA_MOVIE);
+    expect(migrated.nxshaTvTemplate).toBe(DEFAULT_NXSHA_TV);
+    expect(migrated.nxshaMovieTemplate).toContain('color=orange');
+
+    // A hand-edited template is never rewritten.
+    saved.set(STORAGE_KEY, JSON.stringify({
+        ...DEFAULT_SETTINGS,
+        settingsVersion: 4,
+        nxshaMovieTemplate: 'https://nxsha.space/embed/movie/{id}?color=red&mine=1',
+    }));
+    expect(loadSettings().nxshaMovieTemplate).toBe('https://nxsha.space/embed/movie/{id}?color=red&mine=1');
+});
+
 it('restores the old Nxsha server for browsers that saved the temporary v3 defaults', () => {
     saved.set(STORAGE_KEY, JSON.stringify({
         ...DEFAULT_SETTINGS,
