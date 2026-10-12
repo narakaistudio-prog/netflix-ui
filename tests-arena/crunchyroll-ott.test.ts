@@ -11,132 +11,99 @@ test('crunchyroll OTT demo page ships with the app', () => {
     expect(statSync(HTML_PATH).size).toBeGreaterThan(1_000_000);
 });
 
-test('demo player has Server 1 + Server 2 tabs below the video', () => {
+test('Crunchyroll player exposes Nxsha as its only playback source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Markup: video wrapped with the server bar right below it.
     expect(html).toContain('<div class="stage-col">');
     expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g)).toHaveLength(3);
-    expect(html).toContain('data-server="0"');
-    expect(html).toContain('data-server="1"');
-    expect(html).toContain('data-server="2"');
-    // Server 1 (AnimaHD, default) + Server 2 (Drive) + Server 3 (Nxsha fallback).
-    expect(html).toContain('>Server 1</button>');
-    expect(html).toContain('>Server 2</button>');
-    expect(html).toContain('>Server 3</button>');
-    expect(html).toContain('drive.google.com/file/d/');
-    expect(html).toContain('animahd.com/player/?file_id=');
-    // Styling + switching logic wired up.
-    expect(html).toContain('.server-pill.active');
-    expect(html).toContain("querySelectorAll('.server-pill')");
+    expect(html.match(/class="server-pill/g) || []).toHaveLength(1);
+    expect(html).toContain('server-pill active" data-server="0"');
+    expect(html).toContain('title="Reload Nxsha player — nxsha.space"');
+    expect(html).toContain("var SERVERS=[{name:'Nxsha',host:'nxsha.space'}];");
+    expect(html).toContain('var PLAYER_DEFAULT_SERVER=0;');
+    expect(html).toContain('Nxsha · nxsha.space');
+    expect(html).not.toContain('Server 1');
+    expect(html).not.toContain('Server 2');
+    expect(html).not.toContain('Server 3');
+    expect(html).not.toContain('animahd.com');
+    expect(html).not.toContain('drive.google.com');
+    expect(html).not.toContain('drivePopCover');
 });
 
-test('demo player streams real episodes from servers, no bundled video', () => {
+test('player embeds episode links from Nxsha only (no bundled files or legacy ids)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The bundled reference video is gone — episodes come from servers.
     expect(html).not.toContain('application/octet-stream');
     expect(html).not.toContain('referenceVideo');
-    // Server iframe player with loader, heading and helper buttons.
+    expect(html).not.toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
+    expect(html).not.toContain('1nxwxO8MqRIyK8DI3v5DSIyaVcdhpFkwR');
+    expect(html).not.toContain('1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-');
     expect(html).toContain('<iframe id="serverFrame"');
     expect(html).toContain('id="frameLoader"');
     expect(html).toContain('id="serverOpen"');
     expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="playerTitle"');
-    expect(html).toContain('loadServer');
-});
-
-test('demo player resolves direct episode URLs per server', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    // Real Solo Leveling Google Drive file_ids (Drive tab).
-    expect(html).toContain('144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
-    expect(html).toContain('1nxwxO8MqRIyK8DI3v5DSIyaVcdhpFkwR');
-    expect(html).toContain('1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-');
-    // Episode-aware wiring: state, resolvers, stepper, notice.
-    expect(html).toContain('openEpisode');
-    expect(html).toContain('serverUrl');
+    expect(html).toContain('https://nxsha.space/embed/');
+    expect(html).toContain("?server=GbruHindi&lang=hi&sub=hi&color=orange");
+    expect(html).toContain('function serverUrl(i)');
     expect(html).toContain('id="epStepper"');
-    expect(html).toContain('id="noticeTitle"');
-    expect(html).toContain('SLUG_OVERRIDES');
-    // No static homepage embeds anymore — URLs resolve per episode.
-    expect(html).not.toContain("url:'https://animahd.com/'");
-    expect(html).not.toContain("url:'https://anidisk.org/'");
 });
 
-test('player has server failure handling (watchdog + troubleshoot)', () => {
+test('episode metadata is kept separate from playback links', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    expect(html).toContain('var EP_DATA=');
+    expect(html).toContain('"solo":{"slug":"solo-leveling","seasons":{"1":12,"2":13}');
+    expect(html).not.toContain('"showId":1138');
+    expect(html).not.toContain('"eps":["144U5FdhfBjG');
+    expect(html).toContain('/*__NXSHA__*/');
+    expect(html).toContain('/*__END_NXSHA__*/');
+    expect(html).toContain('var NX_DATA=');
+});
+
+test('player has Nxsha failure handling with retry and no fallback tab', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('onServerTimeout');
     expect(html).toContain('disarmWatchdog');
     expect(html).toContain('id="serverHelp"');
-    expect(html).toContain('id="noticeAlt"');
+    expect(html).not.toContain('id="noticeAlt"');
+    expect(html).toContain('Retry the player or open it in a new tab.');
     expect(html).toContain("setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
     expect(html).not.toContain('allow-popups');
+    expect(html).toContain("function serverAvailable(i){return i===0&&!!nxFor(playState.key)}");
+    expect(html).not.toContain('function nextServer(');
 });
 
-test('player servers are Server 1 (AnimaHD, default) + Server 2 (Drive)', () => {
+test('all 41 Crunchyroll titles resolve through the Nxsha table', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    const m = html.match(/var SERVERS=\[([^\]]+)\]/);
-    expect(m).not.toBeNull();
-    const def = (m as RegExpMatchArray)[1];
-    const iS1 = def.indexOf("name:'Server 1'");
-    const iS2 = def.indexOf("name:'Server 2'");
-    expect(iS1).toBeGreaterThanOrEqual(0);
-    expect(iS2).toBeGreaterThan(iS1);
-    expect(def).toContain("host:'animahd.com'");
-    expect(def).toContain("host:'drive.google.com'");
-    expect(def).toContain("host:'nxsha.space'");
-    expect(def.indexOf("host:'animahd.com'")).toBeLessThan(def.indexOf("host:'drive.google.com'"));
-    // Server 1 resolves the AnimaHD player URL, Server 2 the Drive preview.
-    expect(html).toContain("if(i===0)return 'https://animahd.com/player/");
-    // Three pills, Server 1 active by default, Server 3 hidden until a title has no other source.
-    expect(html.match(/<button class="server-pill/g)).toHaveLength(3);
-    expect(html).toContain('server-pill active" data-server="0"');
-    expect(html).toContain('data-server="2" title="Server 3 (Nxsha) — nxsha.space" hidden');
-    // Extractor client stays out of the player.
-    expect(html).not.toContain('xtVideo');
-    expect(html).not.toContain('EXTRACTOR_API');
-    expect(html).not.toContain('data-extract=');
+    const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
+    expect(match).not.toBeNull();
+    const data = JSON.parse((match as RegExpMatchArray)[1]);
+    expect(Object.keys(data)).toHaveLength(41);
+    for (const entry of Object.values<any>(data)) {
+        expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
+        expect(['tv', 'movie']).toContain(entry.kind);
+        expect(Object.keys(entry.seasons).length).toBeGreaterThan(0);
+    }
+    expect(data.aot.id).toBe('tt2560140');
+    expect(data.saoMovie.id).toBe('413594');
+    expect(data.solo.id).toBe('127532');
+    expect(data.onepiece.id).toBe('37854');
 });
 
-test('server tabs sandbox policy matches the reference play system', () => {
+test('Nxsha iframe sandbox and fullscreen permissions are consistent', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Server 1 (AnimaHD) runs exactly like the deployment whose fullscreen was
-    // perfect: no sandbox, scrolling LEFT ON (the player page keeps its own
-    // scrollbar and its whole content), and no permissions list at all.
-    expect(html).toContain("if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.removeAttribute('scrolling');serverFrame.removeAttribute('allow')}");
-    // Servers 2 (Drive) + 3 (Nxsha) keep the sandbox: no allow-popups, so the
-    // embeds cannot open popups.
-    expect(html).not.toContain('allow-popups');
+    expect(html).toContain("serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')");
+    expect(html).toContain("serverFrame.setAttribute('scrolling','no')");
     expect(html).toContain("serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
-    expect(html).not.toContain('allow="autoplay');
+    expect(html).toContain("setClass(videoStage,'s16x9',true)");
+    expect(html).toContain('<iframe id="serverFrame" title="Anime server player" allowfullscreen webkitallowfullscreen mozallowfullscreen>');
+    expect(html).not.toContain('allow-popups');
     expect(html).not.toContain('sandbox="allow-scripts');
 });
 
-
-test('titles animahd lacks fall back to the nxsha embed (verified ids)', () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
-    // Baked table + markers.
-    expect(html).toContain('/*__NXSHA__*/');
-    expect(html).toContain('/*__END_NXSHA__*/');
-    expect(html).toContain('var NX_DATA=');
-    // Server 3 builds the provider URL used by the rest of the app (lib/embeds.ts).
-    expect(html).toContain('https://nxsha.space/embed/');
-    expect(html).toContain("?server=GbruHindi&lang=hi&sub=hi&color=orange");
-    expect(html).toContain('if(i===2){var nx=nxFor(st.key)');
-    // Verified ids: AoT, Tokyo Revengers, Ordinal Scale (movie).
-    expect(html).toContain('"aot":{"id":"tt2560140","kind":"tv"');
-    expect(html).toContain('"tokyo":{"id":"105009","kind":"tv"');
-    expect(html).toContain('"saoMovie":{"id":"413594","kind":"movie"');
-    // Season/episode numbering comes from the same table the guide renders.
-    expect(html).toContain("function serverAvailable(i)");
-    expect(html).toContain("function nextServer(from)");
-});
-
-test('player shows notice panel when a title has no source', () => {
+test('player shows a notice when a title has no Nxsha mapping', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    // Generic no-source notice covers every title without a file_id for that ep.
-    expect(html).toContain('has no source available yet.<br>Pick another episode or title.');
+    expect(html).toContain('has no Nxsha source available yet.<br>Pick another episode or title.');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {
@@ -190,7 +157,7 @@ test('no white frame after fullscreen: plain-flow nav + repaint nudge', () => {
     expect(html).toContain("f.style.width='calc(100% - 1px)'");
     expect(html).toContain("f.style.visibility='hidden'");
     // The 1-tap recovery toast stays as the last resort.
-    expect(html).toContain('Stuck on white? Tap here to reload');
+    expect(html).toContain('Player frozen? Tap here to reload');
 });
 
 test('the wordmark posts the exit message to the shell', async () => {
@@ -223,28 +190,22 @@ test('the wordmark posts the exit message to the shell', async () => {
     dom.window.close();
 }, 30000);
 
-test('player-driven fullscreen: AnimaHD tab unsandboxed, no separate control', () => {
+test('Nxsha remains sandboxed, fullscreen-enabled, and has no alternate server controls', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // Byte-exact reference play system: the AnimaHD tab is unsandboxed and
-    // carries exactly the attributes the working build used, plus the legacy
-    // fullscreen aliases old Safari/Firefox need. Because the player page
-    // fullscreens its own document, our layout never changes — which is why
-    // coming back never leaves a white frame.
-    expect(html).toContain(
-        "if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}else{serverFrame.removeAttribute('sandbox');serverFrame.removeAttribute('scrolling');serverFrame.removeAttribute('allow')}",
-    );
+    expect(html).toContain("serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin')");
+    expect(html).toContain("serverFrame.setAttribute('scrolling','no')");
+    expect(html).toContain("serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
     expect(html).toContain('<iframe id="serverFrame" title="Anime server player" allowfullscreen webkitallowfullscreen mozallowfullscreen>');
     expect(html).toContain("serverFrame.setAttribute('allowfullscreen','')");
-    // No separate fullscreen entry point anywhere.
     expect(html).not.toContain('serverFs');
     expect(html).not.toContain('enterFs');
     expect(html).not.toContain('requestFullscreen');
-    // The play gesture just injects the episode (reference behaviour).
-    expect(html).toContain("if(stageInjected)return;stageInjected=true;injectServer(activeServer)");
-    // Safety net kept from the reference build.
-    expect(html).toContain('Stuck on white? Tap here to reload');
+    expect(html).toContain('if(stageInjected)return;stageInjected=true;injectServer(PLAYER_DEFAULT_SERVER)');
+    expect(html).toContain('Player frozen? Tap here to reload');
     expect(html).toContain('fsExitWatch');
     expect(html).toContain('fsExitArmed');
+    expect(html).not.toContain('Server 1');
+    expect(html).not.toContain('Server 2');
 });
 
 test('fullscreen support is unchanged for the driver shell', () => {
@@ -265,16 +226,14 @@ test('fullscreen support is unchanged for the driver shell', () => {
 });
 
 
-test('reference embed: full 16:9 stage, no cover strip, page keeps scrolling', () => {
+test('Nxsha embed uses a full 16:9 stage with no legacy cover strip', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The perfect deployment showed the whole AnimaHD page: plain 16:9 stage,
-    // nothing cropped or covered, and the frame kept its own scrollbar.
     expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
-    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
+    expect(html).toContain("setClass(videoStage,'s16x9',true)");
     expect(html).not.toContain('s1cover');
     expect(html).not.toContain('s1fit');
     expect(html).not.toContain('max-width:1000px');
-    // No blur anywhere.
+    expect(html).not.toContain('drivePopCover');
     expect(html).not.toContain('backdrop-filter:blur');
     expect(html).not.toContain('blur(7px)');
 });

@@ -1,9 +1,8 @@
 /**
- * Live-DOM checks for the Crunchyroll demo player's three servers.
+ * Live-DOM checks for the Crunchyroll page's single Nxsha player.
  *
- * The page is a self-contained document (not a component), so it is booted in
- * jsdom and driven like a user would: open a title card, press play, tap the
- * poster. This catches wiring mistakes that string assertions cannot.
+ * The page is a self-contained document, so it is booted in jsdom and driven
+ * like a user would: open a catalog title, hit play, and click the poster.
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -15,6 +14,20 @@ const NXSHA_PARAMS = 'server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_a
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+type NxTitle = {
+    id: string;
+    kind: 'tv' | 'movie';
+    seasons: Record<string, number>;
+    title: string;
+};
+
+function readNxData(): Record<string, NxTitle> {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
+    if (!match) throw new Error('Nxsha title table is missing from the Crunchyroll page');
+    return JSON.parse(match[1]);
+}
+
 function boot() {
     const html = readFileSync(HTML_PATH, 'utf8');
     const virtualConsole = new VirtualConsole();
@@ -23,61 +36,111 @@ function boot() {
     return new JSDOM(html, {
         runScripts: 'dangerously',
         pretendToBeVisual: true,
-        url: 'https://animahd.com/crunchyroll.html',
+        url: 'https://app.local/crunchyroll',
         virtualConsole,
     });
 }
 
 type Win = JSDOM['window'];
 
-async function play(window: Win, key: string) {
-    const doc = window.document;
-    const click = (el: Element | null) => {
-        if (!el) throw new Error('element missing while driving the player');
-        el.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
-    };
-    click(doc.querySelector(`[data-open="${key}"]`));
-    await wait(60);
-    click(doc.getElementById('demoPlay'));
-    await wait(60);
-    click(doc.getElementById('stagePoster'));
-    await wait(200);
+async function waitForElement(window: Win, selector: string, timeoutMs = 12000) {
+    const deadline = Date.now() + timeoutMs;
+    let element = window.document.querySelector(selector);
+    while (!element && Date.now() < deadline) {
+        await wait(100);
+        element = window.document.querySelector(selector);
+    }
+    return element;
 }
 
-const pills = (window: Win) =>
-    Array.from(window.document.querySelectorAll('.server-pill')).map((p) => ({
-        server: p.getAttribute('data-server'),
-        hidden: p.hasAttribute('hidden'),
-        active: p.classList.contains('active'),
+function click(window: Win, element: Element | null) {
+    if (!element) throw new Error('element missing while driving the player');
+    element.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+}
+
+async function play(window: Win, key: string, season = '1') {
+    const doc = window.document;
+    click(window, await waitForElement(window, `#catalogGrid [data-open="${key}"]`));
+    await wait(70);
+
+    const seasonSelect = doc.getElementById('seasonSelect') as HTMLSelectElement | null;
+    if (seasonSelect && Array.from(seasonSelect.options).some((option) => option.value === season)) {
+        seasonSelect.value = season;
+        seasonSelect.dispatchEvent(new window.Event('change', { bubbles: true }));
+    }
+
+    click(window, doc.getElementById('demoPlay'));
+    await wait(70);
+    click(window, doc.getElementById('stagePoster'));
+    await wait(180);
+}
+
+const activePlayer = (window: Win) =>
+    Array.from(window.document.querySelectorAll('.server-pill')).map((pill) => ({
+        server: pill.getAttribute('data-server'),
+        active: pill.classList.contains('active'),
+        label: pill.textContent?.trim(),
     }));
 
-jest.setTimeout(20000);
+jest.setTimeout(45000);
 
-test('nxsha-only title: Server 3 is the only tab and builds the provider URL', async () => {
+test('Nxsha is the sole player and the default for the Crunchyroll section', async () => {
     const dom = boot();
     await wait(200);
     const doc = dom.window.document;
 
-    // S1..S4 for Attack on Titan, straight from NX_DATA.
-    doc.querySelector('[data-open="aot"]')!.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
-    await wait(80);
-    const options = Array.from(doc.querySelectorAll<HTMLOptionElement>('#seasonSelect option')).map((o) => o.value);
-    expect(options).toEqual(['1', '2', '3', '4']);
+    expect(activePlayer(dom.window)).toEqual([
+        { server: '0', active: true, label: 'Nxsha' },
+    ]);
+    expect(doc.getElementById('serverName')!.textContent).toBe('Nxsha · nxsha.space');
+    expect(doc.body.textContent).not.toContain('Server 1');
+    expect(doc.body.textContent).not.toContain('Server 2');
 
     await play(dom.window, 'aot');
-    expect(pills(dom.window)).toEqual([
-        { server: '0', hidden: true, active: false },
-        { server: '1', hidden: true, active: false },
-        { server: '2', hidden: false, active: true },
-    ]);
-    expect(doc.getElementById('serverName')!.textContent).toBe('Server 3 · nxsha.space');
+    expect(doc.getElementById('playerSub')!.textContent).toBe('S1 · EP1 · Nxsha');
     expect(doc.getElementById('serverFrame')!.getAttribute('src')).toBe(
         `https://nxsha.space/embed/tv/tt2560140/1/1?${NXSHA_PARAMS}`,
     );
     dom.window.close();
 });
 
-test('nxsha movie title: movie embed URL, no season/episode path', async () => {
+test('all 41 Crunchyroll catalog titles have one Nxsha mapping', async () => {
+    const dom = boot();
+    await wait(200);
+
+    const nxData = readNxData();
+    const catalogKeys = Array.from(
+        dom.window.document.querySelectorAll('#catalogGrid [data-open]'),
+    ).map((card) => card.getAttribute('data-open') || '');
+    expect(new Set(catalogKeys).size).toBe(41);
+    expect(Object.keys(nxData).sort()).toEqual([...new Set(catalogKeys)].sort());
+    for (const entry of Object.values(nxData)) {
+        expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
+        expect(['tv', 'movie']).toContain(entry.kind);
+        expect(Object.keys(entry.seasons).length).toBeGreaterThan(0);
+    }
+    dom.window.close();
+});
+
+test('titles formerly using other sources now open directly through Nxsha', async () => {
+    const dom = boot();
+    await wait(200);
+
+    await play(dom.window, 'solo');
+    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toBe(
+        `https://nxsha.space/embed/tv/127532/1/1?${NXSHA_PARAMS}`,
+    );
+    click(dom.window, dom.window.document.getElementById('closePlayer'));
+    await wait(60);
+
+    await play(dom.window, 'onepiece', '20');
+    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toBe(
+        `https://nxsha.space/embed/tv/37854/20/1?${NXSHA_PARAMS}`,
+    );
+    dom.window.close();
+});
+
+test('Nxsha movie embeds omit season and episode path segments', async () => {
     const dom = boot();
     await wait(200);
     await play(dom.window, 'yourname');
@@ -87,56 +150,7 @@ test('nxsha movie title: movie embed URL, no season/episode path', async () => {
     dom.window.close();
 });
 
-test('animahd tab plays unsandboxed (its own fullscreen control works)', async () => {
-    const dom = boot();
-    await wait(200);
-    await play(dom.window, 'solo');
-    const frame = dom.window.document.getElementById('serverFrame')!;
-    // Reference play system (byte-exact): no sandbox on the AnimaHD tab, no
-    // scrolling lock (the page keeps its own scrollbar) and no permissions list.
-    expect(frame.hasAttribute('sandbox')).toBe(false);
-    expect(frame.hasAttribute('scrolling')).toBe(false);
-    expect(frame.hasAttribute('allow')).toBe(false);
-    expect(frame.hasAttribute('allowfullscreen')).toBe(true);
-    expect(frame.hasAttribute('webkitallowfullscreen')).toBe(true);
-    expect(frame.hasAttribute('mozallowfullscreen')).toBe(true);
-    expect(frame.getAttribute('src')).toContain('https://animahd.com/player/?file_id=');
-    // Stage is the reference 16:9 viewport.
-    expect(dom.window.document.getElementById('videoStage')!.classList.contains('s16x9')).toBe(true);
-    dom.window.close();
-});
-
-test('opening the player unsticks the nav, closing it restores the logo', async () => {
-    const dom = boot();
-    await wait(200);
-    const doc = dom.window.document;
-    expect(doc.body.classList.contains('playing')).toBe(false);
-    await play(dom.window, 'solo');
-    // No sticky layer over the frames while playing...
-    expect(doc.body.classList.contains('playing')).toBe(true);
-    // ...and it comes back for browsing.
-    doc.getElementById('closePlayer')!.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
-    await wait(60);
-    expect(doc.body.classList.contains('playing')).toBe(false);
-    dom.window.close();
-});
-
-test('leaving fullscreen triggers the repaint nudge', async () => {
-    const dom = boot();
-    await wait(200);
-    await play(dom.window, 'solo');
-    const frame = dom.window.document.getElementById('serverFrame')!;
-    const srcBefore = frame.getAttribute('src');
-    dom.window.document.dispatchEvent(new dom.window.Event('fullscreenchange'));
-    await wait(500);
-    // The nudge is a blink + 1px re-layout, never a reload: the episode keeps
-    // playing from the same URL and no style leftovers remain.
-    expect(frame.getAttribute('src')).toBe(srcBefore);
-    expect((frame.getAttribute('style') || '').trim()).toBe('');
-    dom.window.close();
-});
-
-test('nxsha tab stays sandboxed (popup shield) but plays the same way', async () => {
+test('Nxsha iframe remains sandboxed and allows fullscreen playback', async () => {
     const dom = boot();
     await wait(200);
     await play(dom.window, 'aot');
@@ -144,20 +158,83 @@ test('nxsha tab stays sandboxed (popup shield) but plays the same way', async ()
     expect(frame.getAttribute('sandbox')).toBe('allow-scripts allow-same-origin');
     expect(frame.getAttribute('src')).toContain('https://nxsha.space/embed/tv/tt2560140/1/1');
     expect(frame.getAttribute('scrolling')).toBe('no');
+    expect(frame.getAttribute('allow')).toBe('autoplay; fullscreen; encrypted-media; picture-in-picture');
+    expect(frame.hasAttribute('allowfullscreen')).toBe(true);
+    expect(dom.window.document.getElementById('videoStage')!.classList.contains('s16x9')).toBe(true);
     dom.window.close();
 });
 
-test('animahd title keeps Server 1 + Server 2 and hides the fallback pill', async () => {
+test('episode next/previous navigation reloads Nxsha with the new episode number', async () => {
+    const dom = boot();
+    await wait(200);
+    await play(dom.window, 'aot');
+
+    click(dom.window, dom.window.document.getElementById('epNext'));
+    await wait(120);
+    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
+        'https://nxsha.space/embed/tv/tt2560140/1/2',
+    );
+    dom.window.close();
+});
+
+test('Nxsha playback failure offers retry but no alternate server', async () => {
     const dom = boot();
     await wait(200);
     await play(dom.window, 'solo');
-    expect(pills(dom.window)).toEqual([
-        { server: '0', hidden: false, active: true },
-        { server: '1', hidden: false, active: false },
-        { server: '2', hidden: true, active: false },
-    ]);
-    const src = dom.window.document.getElementById('serverFrame')!.getAttribute('src') || '';
-    expect(src).toContain('https://animahd.com/player/?file_id=144U5FdhfBjG-nTnQ72xiljp8syd_qoMS');
-    expect(src).toContain('ep=0');
+
+    click(dom.window, dom.window.document.getElementById('serverHelp'));
+    const doc = dom.window.document;
+    expect(doc.getElementById('frameBlocked')!.hasAttribute('hidden')).toBe(false);
+    expect(doc.getElementById('noticeTitle')!.textContent).toContain('Nxsha');
+    expect(doc.getElementById('noticeText')!.textContent).toContain('Nxsha is not responding');
+    expect(doc.getElementById('blockedOpen')!.textContent).toBe('Retry');
+    expect(doc.getElementById('noticeAlt')).toBeNull();
+
+    click(dom.window, doc.getElementById('blockedOpen'));
+    await wait(120);
+    expect(doc.getElementById('serverFrame')!.getAttribute('src')).toContain(
+        'https://nxsha.space/embed/tv/127532/1/1',
+    );
+    dom.window.close();
+});
+
+test('opening and closing the player toggles the immersive nav state', async () => {
+    const dom = boot();
+    await wait(200);
+    const doc = dom.window.document;
+    expect(doc.body.classList.contains('playing')).toBe(false);
+    await play(dom.window, 'solo');
+    expect(doc.body.classList.contains('playing')).toBe(true);
+
+    click(dom.window, doc.getElementById('closePlayer'));
+    await wait(60);
+    expect(doc.body.classList.contains('playing')).toBe(false);
+    expect(doc.getElementById('serverFrame')!.getAttribute('src')).toBe('about:blank');
+    dom.window.close();
+});
+
+test('fullscreen exit keeps the Nxsha URL and enables the one-tap repaint recovery', async () => {
+    const dom = boot();
+    await wait(200);
+    await play(dom.window, 'solo');
+    const frame = dom.window.document.getElementById('serverFrame')!;
+    const srcBefore = frame.getAttribute('src');
+
+    Object.defineProperty(dom.window.document, 'fullscreenElement', {
+        configurable: true,
+        value: dom.window.document.body,
+    });
+    dom.window.document.dispatchEvent(new dom.window.Event('fullscreenchange'));
+    await wait(20);
+    Object.defineProperty(dom.window.document, 'fullscreenElement', {
+        configurable: true,
+        value: null,
+    });
+    dom.window.document.dispatchEvent(new dom.window.Event('fullscreenchange'));
+    await wait(500);
+
+    expect(frame.getAttribute('src')).toBe(srcBefore);
+    expect(dom.window.document.querySelector('.toast')!.textContent).toContain('Player frozen?');
+    expect(dom.window.document.getElementById('serverName')!.textContent).toBe('Nxsha · nxsha.space');
     dom.window.close();
 });

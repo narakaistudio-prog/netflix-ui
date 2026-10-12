@@ -10,7 +10,7 @@
  * episode list per show key.
  *
  * Outputs (all merged, entries are never deleted):
- *   data/animahd-episodes.json  EP_DATA table baked into the demo page
+ *   data/animahd-episodes.json  legacy labels/season counts baked as guide metadata
  *   data/animahd-slugs.json     resolved slug per show key (re-used next run)
  *   data/animahd-report.json    per-show status, counts, episode labels
  *

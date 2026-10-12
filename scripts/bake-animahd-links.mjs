@@ -1,16 +1,10 @@
 #!/usr/bin/env node
 /**
- * Bake AnimaHD episode file_ids into the Crunchyroll demo page.
+ * Bake episode-guide metadata and Nxsha provider ids into the Crunchyroll page.
  *
- * Reads data/animahd-episodes.json (seeded by hand or by
- * scripts/harvest-animahd.mjs) and rewrites the EP_DATA block
- * between the /*__ANIMAHDEP__*\/ … /*__END_ANIMAHDEP__*\/ markers in
- * assets/crunchyroll/crunchyroll.html.
- *
- * The player builds BOTH server URLs from this one table:
- *   Drive:          https://drive.google.com/file/d/{fileId}/preview
- *   AnimaHD Player: https://animahd.com/player/?file_id={fileId}&show_id={showId}&ep={index}
- * (ep index is 0-based and runs continuously across seasons.)
+ * The legacy episode harvest remains useful for season counts and display
+ * labels, but its external file ids are deliberately not shipped to the page.
+ * Every playback URL is built from data/nxsha-titles.json and points to Nxsha.
  *
  * Usage: node scripts/bake-animahd-links.mjs [--check]
  *   --check   verify the HTML is already in sync (CI-friendly, no write)
@@ -71,10 +65,10 @@ export function validateEpisodes(data) {
 }
 
 /**
- * Titles animahd.com does not carry are played through nxsha
- * (https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}] — the app's original
- * provider). Ids live in data/nxsha-titles.json and are verified against the
- * live embed page before they get baked (scripts/probe-nxsha.mjs).
+ * All Crunchyroll titles are played through Nxsha
+ * (https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}]). Ids live in
+ * data/nxsha-titles.json; scripts/probe-nxsha.mjs checks them on a runner with
+ * access to the provider.
  */
 export function validateNxsha(data) {
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
@@ -134,7 +128,15 @@ function main() {
     if (nxStart === -1 || nxEnd === -1 || nxEnd < nxStart) {
         throw new Error('NXSHA markers not found in demo HTML');
     }
-    const baked = `${START}var EP_DATA=${JSON.stringify(data)};${END}`;
+    const episodeMeta = Object.fromEntries(
+        Object.entries(data).map(([key, entry]) => [key, {
+            slug: entry.slug,
+            seasons: entry.seasons,
+            ...(entry.seasonsSource ? { seasonsSource: entry.seasonsSource } : {}),
+            labels: entry.labels || [],
+        }]),
+    );
+    const baked = `${START}var EP_DATA=${JSON.stringify(episodeMeta)};${END}`;
     const bakedNx = `${NX_START}var NX_DATA=${JSON.stringify(nxData)};${NX_END}`;
     const next =
         html.slice(0, si) +
@@ -150,7 +152,7 @@ function main() {
         0,
     );
     const summary =
-        `animahd ${keys} titles/${eps} episodes + nxsha ${nxKeys} titles/${nxEps} episodes` +
+        `episode guide ${keys} titles/${eps} labels + Nxsha ${nxKeys} titles/${nxEps} episodes` +
         (unverified.length ? ` (${unverified.length} unverified id(s)!)` : ' (all nxsha ids verified)');
     if (next === html) {
         console.log(`already in sync (${summary}).`);
