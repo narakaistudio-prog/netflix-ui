@@ -1,5 +1,77 @@
 {
-  "_comment": "Titles animahd.com does not carry. Played through nxsha (the app's original embed provider): https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}]. Ids verified against the live embed page by scripts/probe-nxsha.mjs (data/nxsha-verify.json). seasons = per-season episode counts for the guide.",
+  "_comment": "The one and only playback source for the Crunchyroll section: every title plays through nxsha (https://nxsha.space/embed/{movie|tv}/{id}[/{s}/{e}]). `id` is the TMDB or IMDb id accepted by the embed. seasons = curated per-season episode counts (same map as data/anime-seasons.json) used for the guide and the URL. Ids verified against the live embed page by scripts/probe-nxsha.mjs (data/nxsha-verify.json) where marked \"verified\".",
+  "solo": {
+    "id": "tt21209876",
+    "kind": "tv",
+    "title": "Solo Leveling",
+    "seasons": {
+      "1": 12,
+      "2": 13
+    }
+  },
+  "demon": {
+    "id": "tt9335498",
+    "kind": "tv",
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "seasons": {
+      "1": 26,
+      "2": 18,
+      "3": 11,
+      "4": 8
+    }
+  },
+  "jjk": {
+    "id": "tt12343534",
+    "kind": "tv",
+    "title": "Jujutsu Kaisen",
+    "seasons": {
+      "1": 24,
+      "2": 23
+    }
+  },
+  "onepiece": {
+    "id": "tt0388629",
+    "kind": "tv",
+    "title": "One Piece",
+    "seasons": {
+      "1": 1122
+    }
+  },
+  "frieren": {
+    "id": "tt22248376",
+    "kind": "tv",
+    "title": "Frieren: Beyond Journey’s End",
+    "seasons": {
+      "1": 28
+    }
+  },
+  "chainsaw": {
+    "id": "tt13616990",
+    "kind": "tv",
+    "title": "Chainsaw Man",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "spy": {
+    "id": "tt13706018",
+    "kind": "tv",
+    "title": "Spy x Family",
+    "seasons": {
+      "1": 25,
+      "2": 12,
+      "3": 12
+    }
+  },
+  "kaiju": {
+    "id": "tt21975436",
+    "kind": "tv",
+    "title": "Kaiju No. 8",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
   "aot": {
     "id": "tt2560140",
     "kind": "tv",
@@ -12,6 +84,36 @@
     "title": "Attack on Titan",
     "verified": "2026-10-11"
   },
+  "naruto": {
+    "id": "tt0409591",
+    "kind": "tv",
+    "title": "Naruto",
+    "seasons": {
+      "1": 500
+    }
+  },
+  "deathnote": {
+    "id": "tt0877057",
+    "kind": "tv",
+    "title": "Death Note",
+    "seasons": {
+      "1": 37
+    }
+  },
+  "mha": {
+    "id": "tt5626028",
+    "kind": "tv",
+    "title": "My Hero Academia",
+    "seasons": {
+      "1": 13,
+      "2": 25,
+      "3": 25,
+      "4": 25,
+      "5": 25,
+      "6": 25,
+      "7": 21
+    }
+  },
   "tokyo": {
     "id": "105009",
     "kind": "tv",
@@ -23,6 +125,32 @@
     "title": "Tokyo Revengers",
     "verified": "2026-10-11"
   },
+  "opm": {
+    "id": "tt4508902",
+    "kind": "tv",
+    "title": "One-Punch Man",
+    "seasons": {
+      "1": 12,
+      "2": 12,
+      "3": 12
+    }
+  },
+  "bleach": {
+    "id": "tt0434665",
+    "kind": "tv",
+    "title": "Bleach",
+    "seasons": {
+      "1": 366
+    }
+  },
+  "hxh": {
+    "id": "tt2098220",
+    "kind": "tv",
+    "title": "Hunter x Hunter",
+    "seasons": {
+      "1": 148
+    }
+  },
   "vinland": {
     "id": "tt10233448",
     "kind": "tv",
@@ -32,6 +160,26 @@
     },
     "title": "Vinland Saga",
     "verified": "2026-10-11"
+  },
+  "mob": {
+    "id": "tt5897304",
+    "kind": "tv",
+    "title": "Mob Psycho 100",
+    "seasons": {
+      "1": 12,
+      "2": 13,
+      "3": 12
+    }
+  },
+  "rezero": {
+    "id": "tt5607616",
+    "kind": "tv",
+    "title": "Re:Zero - Starting Life in Another World",
+    "seasons": {
+      "1": 25,
+      "2": 25,
+      "3": 16
+    }
   },
   "sao": {
     "id": "tt2250192",
@@ -45,6 +193,14 @@
     "title": "Sword Art Online",
     "verified": "2026-10-11"
   },
+  "blackclover": {
+    "id": "tt7441658",
+    "kind": "tv",
+    "title": "Black Clover",
+    "seasons": {
+      "1": 170
+    }
+  },
   "drstone": {
     "id": "tt9679542",
     "kind": "tv",
@@ -57,14 +213,60 @@
     "title": "Dr. STONE",
     "verified": "2026-10-11"
   },
-  "boruto": {
-    "id": "tt6342474",
+  "haikyuu": {
+    "id": "tt3398540",
     "kind": "tv",
+    "title": "Haikyu!!",
     "seasons": {
-      "1": 293
-    },
-    "title": "Boruto: Naruto Next Generations",
-    "verified": "2026-10-11"
+      "1": 25,
+      "2": 25,
+      "3": 10,
+      "4": 25
+    }
+  },
+  "bluelock": {
+    "id": "tt15222080",
+    "kind": "tv",
+    "title": "Blue Lock",
+    "seasons": {
+      "1": 24,
+      "2": 14
+    }
+  },
+  "oshi": {
+    "id": "tt21030032",
+    "kind": "tv",
+    "title": "Oshi no Ko",
+    "seasons": {
+      "1": 11,
+      "2": 13
+    }
+  },
+  "dandadan": {
+    "id": "tt30217403",
+    "kind": "tv",
+    "title": "Dandadan",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "tower": {
+    "id": "tt12057106",
+    "kind": "tv",
+    "title": "Tower of God",
+    "seasons": {
+      "1": 13,
+      "2": 26
+    }
+  },
+  "goh": {
+    "id": "tt12227418",
+    "kind": "tv",
+    "title": "The God of High School",
+    "seasons": {
+      "1": 13
+    }
   },
   "yourname": {
     "id": "tt5311514",
@@ -98,29 +300,13 @@
     },
     "title": "Spirited Away"
   },
-  "mononoke": {
-    "id": "tt0119698",
+  "jjk0": {
+    "id": "tt14331144",
     "kind": "movie",
     "seasons": {
       "1": 1
     },
-    "title": "Princess Mononoke"
-  },
-  "howl": {
-    "id": "tt0347149",
-    "kind": "movie",
-    "seasons": {
-      "1": 1
-    },
-    "title": "Howl's Moving Castle"
-  },
-  "akira": {
-    "id": "tt0094625",
-    "kind": "movie",
-    "seasons": {
-      "1": 1
-    },
-    "title": "Akira"
+    "title": "Jujutsu Kaisen 0"
   },
   "weathering": {
     "id": "tt9426210",
@@ -130,21 +316,38 @@
     },
     "title": "Weathering With You"
   },
-  "jjk0": {
-    "id": "tt14331144",
+  "howl": {
+    "id": "tt0347149",
     "kind": "movie",
     "seasons": {
       "1": 1
     },
-    "title": "Jujutsu Kaisen 0"
+    "title": "Howl's Moving Castle"
   },
-  "demonMovie": {
-    "id": "tt11032374",
+  "mononoke": {
+    "id": "tt0119698",
     "kind": "movie",
     "seasons": {
       "1": 1
     },
-    "title": "Demon Slayer: Mugen Train"
+    "title": "Princess Mononoke"
+  },
+  "akira": {
+    "id": "tt0094625",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Akira"
+  },
+  "boruto": {
+    "id": "tt6342474",
+    "kind": "tv",
+    "seasons": {
+      "1": 293
+    },
+    "title": "Boruto: Naruto Next Generations",
+    "verified": "2026-10-11"
   },
   "mhaMovie": {
     "id": "505262",
@@ -161,5 +364,13 @@
       "1": 1
     },
     "title": "Sword Art Online: Ordinal Scale"
+  },
+  "demonMovie": {
+    "id": "tt11032374",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Demon Slayer: Mugen Train"
   }
 }

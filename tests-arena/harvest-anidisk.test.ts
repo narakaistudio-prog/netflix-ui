@@ -23,16 +23,25 @@ test('anidisk confirmed-links data is valid', () => {
     }
 });
 
-test('demo HTML has confirmed links baked + preferring resolver', () => {
+test('demo HTML stays free of the anidisk table (player is Nxsha-only)', () => {
     const html = readFileSync(
         join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'),
         'utf8',
     );
-    expect(html).toContain('/*__ANIDISK_CONFIRMED__*/');
-    expect(html).toContain('var ANIDISK_CONFIRMED=');
-    expect(html).toContain('"solo":{"slug":"solo-leveling"');
-    expect(html).toContain('ANIDISK_CONFIRMED[k]');
-    expect(html).toContain('anidiskHindi');
+    // The Nxsha-only player embeds everything from nxsha.space — no AniDisk
+    // table, resolvers or markers are baked into the page anymore.
+    expect(html).not.toContain('/*__ANIDISK_CONFIRMED__*/');
+    expect(html).not.toContain('var ANIDISK_CONFIRMED=');
+    expect(html).not.toContain('ANIDISK_CONFIRMED[k]');
+    expect(html).not.toContain('anidiskHindi');
+    expect(html).not.toContain('anidisk.org');
+    // And the bake tooling agrees (no-op check).
+    const out = execFileSync(
+        process.execPath,
+        [join(ROOT, 'scripts', 'bake-anidisk-links.mjs'), '--check'],
+        { encoding: 'utf8', timeout: 60000 },
+    );
+    expect(out).toContain('already in sync');
 });
 
 test('harvest pipeline scripts + workflow exist', () => {

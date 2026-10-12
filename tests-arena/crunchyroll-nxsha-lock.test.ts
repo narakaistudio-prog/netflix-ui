@@ -1,10 +1,12 @@
 /**
- * Server 1 (AnimaHD) is THE player — locked in on purpose.
+ * Nxsha (nxsha.space) is THE player — locked in on purpose.
  *
- * The embed config below is the one that plays perfectly: the frame is not
- * sandboxed, keeps its own scrollbar, carries no permissions list, and is
- * shown in a plain 16:9 stage with nothing cropped or covered. Fullscreen is
- * the player page's own control, so leaving it never leaves a white frame.
+ * The Crunchyroll section has exactly one server: every title and every
+ * episode embeds from https://nxsha.space/embed/… (NX_DATA). The embed config
+ * below is the one that plays right: sandboxed with the media permissions
+ * list, popup shield on, and shown in the plain stage with nothing cropped or
+ * covered. Fullscreen is the embed's own control, so leaving it never leaves a
+ * white frame.
  *
  * If one of these assertions fails, a change has broken the locked player —
  * fix the change, not the test.
@@ -16,8 +18,8 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 
-const ANIMAHD_ATTRS =
-    "else{serverFrame.removeAttribute('sandbox');serverFrame.removeAttribute('scrolling');serverFrame.removeAttribute('allow')}";
+const NXSHA_ATTRS =
+    "serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -56,11 +58,13 @@ const activeServer = (window: Win) =>
 
 jest.setTimeout(30000);
 
-test('Server 1 is the named default player', () => {
+test('Nxsha is the named default (and only) player', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // First tab is Server 1 / animahd.com, and it is what every playback
-    // starts on — regardless of the server used last time.
-    expect(html).toContain("var SERVERS=[{name:'Server 1',host:'animahd.com'}");
+    // The server table has one entry — Nxsha — and it is what every playback
+    // starts on, regardless of anything else.
+    expect(html).toContain("var SERVERS=[{name:'Nxsha',host:'nxsha.space'}]");
+    expect(html).not.toContain("name:'Server 1'");
+    expect(html).not.toContain("name:'Server 2'");
     expect(html).toContain('var PLAYER_DEFAULT_SERVER=0;');
     expect(html).toContain('setActiveServer(PLAYER_DEFAULT_SERVER);');
     expect(html).toContain(
@@ -69,44 +73,44 @@ test('Server 1 is the named default player', () => {
     expect(html).toContain('var activeServer=PLAYER_DEFAULT_SERVER;');
 });
 
-test('AnimaHD embed config is the locked reference (no crop, no cover, no sandbox)', () => {
+test('Nxsha embed config is the locked reference (sandboxed, nothing over it)', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
-    // The exact attribute line the working player had.
-    expect(html).toContain(ANIMAHD_ATTRS);
-    expect(html).toContain(
-        "if(i===1||i===2){serverFrame.setAttribute('sandbox','allow-scripts allow-same-origin');serverFrame.setAttribute('scrolling','no');serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')}",
-    );
-    // 16:9 full-width stage; the frame's own scrolling stays available.
-    expect(html).toContain('.video-stage.s16x9{padding-bottom:56.25%}');
-    expect(html).toContain("setClass(videoStage,'s16x9',i===0)");
+    // The exact attribute line the working player uses — sandbox + media
+    // permissions, and no branch anywhere that strips the sandbox again.
+    expect(html).toContain(NXSHA_ATTRS);
+    expect(html).not.toContain("removeAttribute('sandbox')");
     expect(html).toContain('<iframe id="serverFrame" title="Anime server player" allowfullscreen');
     // No cropping, covering or blurring of the player page.
     expect(html).not.toContain('s1cover');
     expect(html).not.toContain('s1fit');
+    expect(html).not.toContain('s16x9');
     expect(html).not.toContain('max-width:1000px');
     expect(html).not.toContain('backdrop-filter:blur');
 });
 
-test('playback always lands on Server 1 when the title has it', async () => {
+test('playback always lands on Nxsha', async () => {
     const dom = boot();
     await wait(200);
 
-    // Start with a title only AnimaHD carries.
+    // A title the old file-based servers used to carry…
     await play(dom.window, 'solo');
     expect(activeServer(dom.window)).toBe(0);
     expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
-        'https://animahd.com/player/?file_id=',
+        'https://nxsha.space/embed/tv/tt21209876/1/1',
     );
 
-    // A title AnimaHD does not have falls back to Nxsha…
+    // …a title that was always nxsha…
     await play(dom.window, 'aot');
-    expect(activeServer(dom.window)).toBe(2);
+    expect(activeServer(dom.window)).toBe(0);
+    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
+        'https://nxsha.space/embed/tv/tt2560140/1/1',
+    );
 
-    // …and the next AnimaHD title comes back to Server 1 by itself.
+    // …and the next title still comes back to the same single player.
     await play(dom.window, 'solo');
     expect(activeServer(dom.window)).toBe(0);
     expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
-        'https://animahd.com/player/?file_id=',
+        'https://nxsha.space/embed/tv/tt21209876/1/1',
     );
     dom.window.close();
 });
