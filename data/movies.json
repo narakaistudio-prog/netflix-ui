@@ -594,10 +594,7 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-fighter-2022",
-                    "catalogSource": "justwatch",
-                    "imdb_id": "tt0964517",
-                    "tmdb_id": "45317",
-                    "embed_provider": "nxsha"
+                    "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-salaar",
@@ -829,10 +826,7 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-forgotten",
-                    "catalogSource": "justwatch",
-                    "imdb_id": "tt0356618",
-                    "tmdb_id": "10145",
-                    "embed_provider": "nxsha"
+                    "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-fukrey",
@@ -5071,7 +5065,9 @@
                     "imageUrl": "local:jw-catalog-tv-the-king-eternal-monarch",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Korean Originals",
-                    "imdb_id": "tt11228748"
+                    "imdb_id": "tt11228748",
+                    "tmdb_id": "93846",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-the-uncanny-counter",
@@ -5081,7 +5077,9 @@
                     "imageUrl": "local:jw-catalog-tv-the-uncanny-counter",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Korean Originals",
-                    "imdb_id": "tt13273826"
+                    "imdb_id": "tt13273826",
+                    "tmdb_id": "113268",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-bloodhounds",
@@ -5203,7 +5201,9 @@
                         7
                     ],
                     "episodeCount": 15,
-                    "imdb_id": "tt26315487"
+                    "imdb_id": "tt26315487",
+                    "tmdb_id": "127529",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-the-early-spring",
@@ -8785,7 +8785,9 @@
                         37
                     ],
                     "episodeCount": 37,
-                    "imdb_id": "tt0877057"
+                    "imdb_id": "tt4623604",
+                    "tmdb_id": "63648",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-my-hero-academia",
@@ -17758,7 +17760,9 @@
                         12
                     ],
                     "episodeCount": 37,
-                    "imdb_id": "tt5897304"
+                    "imdb_id": "tt7701694",
+                    "tmdb_id": "75867",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-overlord",
@@ -30505,10 +30509,7 @@
                     "episodeCount": 8,
                     "seasonEpisodeCounts": [
                         8
-                    ],
-                    "imdb_id": "tt0413559",
-                    "tmdb_id": "10164",
-                    "embed_provider": "nxsha"
+                    ]
                 },
                 {
                     "id": "iinm-tekken-bloodline",
@@ -30769,10 +30770,7 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-forgotten",
-                    "catalogSource": "justwatch",
-                    "imdb_id": "tt0356618",
-                    "tmdb_id": "10145",
-                    "embed_provider": "nxsha"
+                    "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-along-with-the-gods-the-two-worlds",
@@ -31744,7 +31742,9 @@
                     ],
                     "director": "Venky Atluri",
                     "rated": "TV-PG",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "tmdb_id": "1239511",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "iinm-maa",
@@ -31791,14 +31791,16 @@
                     "year": "2024",
                     "rating": "8.6",
                     "duration": "141 min",
-                    "imdb_id": "tt26548265",
+                    "imdb_id": "tt0119596",
                     "cast": [
                         "Vijay Sethupathi",
                         "Anurag Kashyap",
                         "Mamta Mohandas"
                     ],
                     "director": "Nithilan Saminathan",
-                    "catalogSource": "justwatch"
+                    "catalogSource": "justwatch",
+                    "tmdb_id": "232808",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "iinm-mallari",
@@ -32225,10 +32227,7 @@
                     "description": "A young woman from Sweden's Indigenous Sámi community tracks down a killer to settle a personal score in this emotional drama inspired by real events.",
                     "year": "2024",
                     "rating": "5.5",
-                    "duration": "96 min",
-                    "imdb_id": "tt1656186",
-                    "tmdb_id": "127493",
-                    "embed_provider": "nxsha"
+                    "duration": "96 min"
                 },
                 {
                     "id": "iinm-student-of-the-year-2",
@@ -32292,8 +32291,8 @@
                     "year": "2019",
                     "rating": "6.9",
                     "duration": "149 min",
-                    "imdb_id": "tt0458176",
-                    "tmdb_id": "69584",
+                    "imdb_id": "tt10468636",
+                    "tmdb_id": "648698",
                     "embed_provider": "nxsha"
                 },
                 {
@@ -32449,7 +32448,10 @@
                     "description": "Desperate to escape his brothers' criminal world, a young man finds an unlikely ally in the woman he's forced to marry.",
                     "year": "2014",
                     "rating": "7.5",
-                    "duration": "116 min"
+                    "duration": "116 min",
+                    "imdb_id": "tt3019620",
+                    "tmdb_id": "266038",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "iinm-tuesdays-fridays",
@@ -32998,10 +33000,7 @@
                     "type": "FILM",
                     "mediaType": "movie",
                     "imageUrl": "local:jw-catalog-movie-fighter-2022",
-                    "catalogSource": "justwatch",
-                    "imdb_id": "tt0964517",
-                    "tmdb_id": "45317",
-                    "embed_provider": "nxsha"
+                    "catalogSource": "justwatch"
                 },
                 {
                     "id": "jw-catalog-movie-salaar",
@@ -40148,10 +40147,7 @@
                     "episodeCount": 8,
                     "seasonEpisodeCounts": [
                         8
-                    ],
-                    "imdb_id": "tt0413559",
-                    "tmdb_id": "10164",
-                    "embed_provider": "nxsha"
+                    ]
                 },
                 {
                     "id": "iinm-taj-mahal-1989",
@@ -43215,7 +43211,9 @@
                         37
                     ],
                     "episodeCount": 37,
-                    "imdb_id": "tt0877057"
+                    "imdb_id": "tt4623604",
+                    "tmdb_id": "63648",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-the-uncanny-counter",
@@ -43225,7 +43223,9 @@
                     "imageUrl": "local:jw-catalog-tv-the-uncanny-counter",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Korean Originals",
-                    "imdb_id": "tt13273826"
+                    "imdb_id": "tt13273826",
+                    "tmdb_id": "113268",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-mushoku-tensei-jobless-reincarnation",
@@ -43437,7 +43437,9 @@
                         7
                     ],
                     "episodeCount": 15,
-                    "imdb_id": "tt26315487"
+                    "imdb_id": "tt26315487",
+                    "tmdb_id": "127529",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-my-demon",
@@ -45221,7 +45223,9 @@
                     "imageUrl": "local:jw-catalog-tv-the-king-eternal-monarch",
                     "catalogSource": "netflix-original",
                     "catalogCollection": "Netflix Korean Originals",
-                    "imdb_id": "tt11228748"
+                    "imdb_id": "tt11228748",
+                    "tmdb_id": "93846",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-hunter-x-hunter",
@@ -45528,7 +45532,9 @@
                         12
                     ],
                     "episodeCount": 37,
-                    "imdb_id": "tt5897304"
+                    "imdb_id": "tt7701694",
+                    "tmdb_id": "75867",
+                    "embed_provider": "nxsha"
                 },
                 {
                     "id": "jw-catalog-tv-goblin",
