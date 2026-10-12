@@ -424,6 +424,200 @@
       "seasons": {
         "1": 13
       }
+    },
+    {
+      "key": "goldenkamuy",
+      "title": "Golden Kamuy",
+      "kind": "tv",
+      "id": "76757",
+      "seasons": {
+        "1": 12,
+        "2": 12,
+        "3": 12,
+        "4": 13,
+        "5": 13
+      }
+    },
+    {
+      "key": "fireforce",
+      "title": "Fire Force",
+      "kind": "tv",
+      "id": "88046",
+      "seasons": {
+        "1": 24,
+        "2": 24,
+        "3": 25
+      }
+    },
+    {
+      "key": "fatestrange",
+      "title": "Fate/strange Fake",
+      "kind": "tv",
+      "id": "229858",
+      "seasons": {
+        "1": 13
+      }
+    },
+    {
+      "key": "cheatskill",
+      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in The Real World, Too",
+      "kind": "tv",
+      "id": "208493",
+      "seasons": {
+        "1": 13
+      }
+    },
+    {
+      "key": "mfg",
+      "title": "MF GHOST",
+      "kind": "tv",
+      "id": "154526",
+      "seasons": {
+        "1": 37
+      }
+    },
+    {
+      "key": "trigun",
+      "title": "TRIGUN STAMPEDE",
+      "kind": "tv",
+      "id": "204266",
+      "seasons": {
+        "1": 11,
+        "2": 12
+      }
+    },
+    {
+      "key": "toyour",
+      "title": "To Your Eternity",
+      "kind": "tv",
+      "id": "97525",
+      "seasons": {
+        "1": 20,
+        "2": 20,
+        "3": 22
+      }
+    },
+    {
+      "key": "slime",
+      "title": "That Time I Got Reincarnated as a Slime",
+      "kind": "tv",
+      "id": "82684",
+      "seasons": {
+        "1": 24,
+        "2": 24,
+        "3": 24,
+        "4": 24
+      }
+    },
+    {
+      "key": "classroom",
+      "title": "Classroom of the Elite",
+      "kind": "tv",
+      "id": "72517",
+      "seasons": {
+        "1": 12,
+        "2": 13,
+        "3": 13,
+        "4": 16
+      }
+    },
+    {
+      "key": "apothecary",
+      "title": "The Apothecary Diaries",
+      "kind": "tv",
+      "id": "220542",
+      "seasons": {
+        "1": 60
+      }
+    },
+    {
+      "key": "bluemiburo",
+      "title": "Blue Miburo",
+      "kind": "tv",
+      "id": "234776",
+      "seasons": {
+        "1": 24,
+        "2": 14
+      }
+    },
+    {
+      "key": "dbz",
+      "title": "Dragon Ball Z",
+      "kind": "tv",
+      "id": "12971",
+      "seasons": {
+        "1": 39,
+        "2": 35,
+        "3": 33,
+        "4": 32,
+        "5": 26,
+        "6": 29,
+        "7": 25,
+        "8": 34,
+        "9": 38
+      }
+    },
+    {
+      "key": "gachiakuta",
+      "title": "Gachiakuta",
+      "kind": "tv",
+      "id": "256721",
+      "seasons": {
+        "1": 24
+      }
+    },
+    {
+      "key": "hellsparadise",
+      "title": "Hell's Paradise",
+      "kind": "tv",
+      "id": "117465",
+      "seasons": {
+        "1": 25
+      }
+    },
+    {
+      "key": "beginningend",
+      "title": "The Beginning After the End",
+      "kind": "tv",
+      "id": "274671",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      }
+    },
+    {
+      "key": "mushoku",
+      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "kind": "tv",
+      "id": "94664",
+      "seasons": {
+        "1": 23,
+        "2": 24,
+        "3": 14
+      }
+    },
+    {
+      "key": "tsukimichi",
+      "title": "TSUKIMICHI -Moonlit Fantasy-",
+      "kind": "tv",
+      "id": "111819",
+      "seasons": {
+        "1": 12,
+        "2": 25,
+        "3": 1
+      }
+    },
+    {
+      "key": "shieldhero",
+      "title": "The Rising of the Shield Hero",
+      "kind": "tv",
+      "id": "83095",
+      "seasons": {
+        "1": 25,
+        "2": 13,
+        "3": 12,
+        "4": 12
+      }
     }
   ],
   "saoMovieCandidates": [

@@ -1,20 +1,16 @@
 {
-  "generatedAt": "2026-10-12T17:59:17.525Z",
+  "generatedAt": "2026-10-12T18:02:23.375Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [
     "onepiece"
   ],
   "summary": {
     "requested": 46,
-    "harvested": 43,
-    "failed": [
-      "cheatskill",
-      "classroom",
-      "shieldhero"
-    ],
-    "episodes": 3729,
-    "stills": 3689,
-    "overviews": 3688
+    "harvested": 46,
+    "failed": [],
+    "episodes": 3858,
+    "stills": 3818,
+    "overviews": 3817
   },
   "titles": [
     {
@@ -451,9 +447,18 @@
     },
     {
       "key": "cheatskill",
-      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in The Real World, Too",
-      "ok": false,
-      "error": "Nxsha season 2 returned no episodes"
+      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in the Real World, Too",
+      "id": "208493",
+      "seasons": {
+        "1": 13
+      },
+      "emptySeasons": [
+        2
+      ],
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
     },
     {
       "key": "mfg",
@@ -512,8 +517,20 @@
     {
       "key": "classroom",
       "title": "Classroom of the Elite",
-      "ok": false,
-      "error": "Nxsha season 5 returned no episodes"
+      "id": "72517",
+      "seasons": {
+        "1": 12,
+        "2": 13,
+        "3": 13,
+        "4": 16
+      },
+      "emptySeasons": [
+        5
+      ],
+      "episodes": 54,
+      "stills": 54,
+      "overviews": 54,
+      "ok": true
     },
     {
       "key": "apothecary",
@@ -628,8 +645,20 @@
     {
       "key": "shieldhero",
       "title": "The Rising of the Shield Hero",
-      "ok": false,
-      "error": "Nxsha season 5 returned no episodes"
+      "id": "83095",
+      "seasons": {
+        "1": 25,
+        "2": 13,
+        "3": 12,
+        "4": 12
+      },
+      "emptySeasons": [
+        5
+      ],
+      "episodes": 62,
+      "stills": 62,
+      "overviews": 62,
+      "ok": true
     }
   ]
 }
