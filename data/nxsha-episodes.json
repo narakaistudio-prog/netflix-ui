@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-12T10:18:44.647Z",
+    "generatedAt": "2026-10-12T10:31:31.869Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
@@ -570,7 +570,7 @@
           "episode": 22,
           "title": "The Other Side of the Wall",
           "overview": "Though it's met with hope and despair, the truth is made public. The Scouts then venture beyond the walls to see if it's everything they dreamed of.",
-          "image": "https://image.tmdb.org/t/p/w780/wYLKB3UA53EvBb15Uh9vXVoTRY4.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/opSGg7KLG01ja2nfiE715vbsumL.jpg",
           "airDate": "2019-07-01",
           "runtime": 24
         },
