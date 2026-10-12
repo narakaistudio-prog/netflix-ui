@@ -11,8 +11,12 @@ const MUTED = '#a3a3a3';
 
 type Props = {
     movie: Movie | null;
+    /** Other titles from the same shelf, shown as "More Like This". */
+    related?: Movie[];
     onClose: () => void;
     onPlay: (movie: Movie) => void;
+    /** Opens another title's details inside this modal. */
+    onSelect?: (movie: Movie) => void;
 };
 
 /**
@@ -20,11 +24,11 @@ type Props = {
  * with a fade into the panel, title and Play on the image, then year, runtime,
  * description, cast and genres. Play opens the title's player page.
  */
-export function MovieDetailModal({ movie, onClose, onPlay }: Props) {
+export function MovieDetailModal({ movie, related = [], onClose, onPlay, onSelect }: Props) {
     const { width, height } = useWindowDimensions();
-    const panelWidth = Math.min(860, width * 0.92);
-    const heroHeight = IS_WEB ? Math.min(430, height * 0.5) : Math.min(260, height * 0.35);
+    const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
+    const heroHeight = Math.min(panelWidth * 0.56, height * (IS_WEB ? 0.62 : 0.4));
 
     if (!movie) {
         return <Modal visible={false} transparent onRequestClose={onClose} />;
@@ -41,13 +45,14 @@ export function MovieDetailModal({ movie, onClose, onPlay }: Props) {
             <View style={styles.overlay}>
                 <Pressable style={StyleSheet.absoluteFillObject} onPress={onClose} accessibilityLabel="Close details" />
                 <View style={[styles.panel, { width: panelWidth }]}>
-                    <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+                    <ScrollView key={movie.id} bounces={false} showsVerticalScrollIndicator={false}>
                         <View style={[styles.hero, { height: heroHeight }]}>
                             {image ? (
                                 <SafeImage
                                     source={{ uri: image }}
                                     style={StyleSheet.absoluteFillObject as any}
                                     fallbackLabel={movie.title}
+                                    loading="eager"
                                 />
                             ) : (
                                 <View style={[StyleSheet.absoluteFillObject, { backgroundColor: '#222' }]} />
@@ -109,6 +114,31 @@ export function MovieDetailModal({ movie, onClose, onPlay }: Props) {
                                 ) : null}
                             </View>
                         </View>
+
+                        {related.length > 0 ? (
+                            <View style={styles.more}>
+                                <Text style={styles.moreTitle}>More Like This</Text>
+                                <View style={styles.moreGrid}>
+                                    {related.map((item) => (
+                                        <Pressable
+                                            key={item.id}
+                                            onPress={() => onSelect?.(item)}
+                                            style={[styles.moreItem, wide ? styles.moreItemWide : styles.moreItemNarrow]}
+                                            accessibilityLabel={`Open ${item.title || ''}`}
+                                        >
+                                            <SafeImage
+                                                source={{ uri: item.imageUrl }}
+                                                style={styles.morePoster as any}
+                                                fallbackLabel={item.title}
+                                                loading="eager"
+                                            />
+                                            <Text style={styles.moreItemTitle} numberOfLines={2}>{item.title || ''}</Text>
+                                            {item.year ? <Text style={styles.moreItemMeta}>{item.year}</Text> : null}
+                                        </Pressable>
+                                    ))}
+                                </View>
+                            </View>
+                        ) : null}
                     </ScrollView>
                 </View>
             </View>
@@ -232,5 +262,45 @@ const styles = StyleSheet.create({
     },
     sideLabel: {
         color: MUTED,
+    },
+    more: {
+        paddingHorizontal: 24,
+        paddingBottom: 28,
+        gap: 14,
+    },
+    moreTitle: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: '700',
+    },
+    moreGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 12,
+    },
+    moreItem: {
+        gap: 6,
+    },
+    moreItemWide: {
+        width: '31.5%',
+    },
+    moreItemNarrow: {
+        width: '48.5%',
+    },
+    morePoster: {
+        width: '100%',
+        aspectRatio: 2 / 3,
+        borderRadius: 4,
+        overflow: 'hidden',
+        backgroundColor: '#222',
+    },
+    moreItemTitle: {
+        color: '#e5e5e5',
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    moreItemMeta: {
+        color: MUTED,
+        fontSize: 12,
     },
 });

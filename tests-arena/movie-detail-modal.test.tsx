@@ -68,3 +68,26 @@ test('Play hands the title to onPlay', () => {
     act(() => { (play as HTMLElement).click(); });
     expect(onPlay).toHaveBeenCalledWith(movie);
 });
+
+test('hero image loads eagerly so it is not blank inside the modal', () => {
+    act(() => root.render(<MovieDetailModal movie={movie} onClose={() => {}} onPlay={() => {}} />));
+    const img = document.querySelector('img[src*="backdrop"]') as HTMLImageElement | null;
+    expect(img).not.toBeNull();
+    expect(img.getAttribute('loading')).toBe('eager');
+});
+
+test('More Like This lists related titles and opens the picked one in place', () => {
+    const onSelect = jest.fn();
+    const related = [
+        { id: 'r1', title: 'Vishwanath & Sons', imageUrl: 'https://image.tmdb.org/t/p/w500/v.jpg', year: '2026' },
+        { id: 'r2', title: 'Lust Stories 3', imageUrl: 'https://image.tmdb.org/t/p/w500/l.jpg', year: '2026' },
+    ];
+    act(() => root.render(
+        <MovieDetailModal movie={movie} related={related} onClose={() => {}} onPlay={() => {}} onSelect={onSelect} />,
+    ));
+    expect(document.body.textContent).toContain('More Like This');
+    const pick = document.querySelector('[aria-label="Open Lust Stories 3"]') as HTMLElement;
+    expect(pick).toBeTruthy();
+    act(() => { pick.click(); });
+    expect(onSelect).toHaveBeenCalledWith(related[1]);
+});

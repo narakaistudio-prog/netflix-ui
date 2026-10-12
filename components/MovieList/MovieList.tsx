@@ -9,6 +9,7 @@ import { SafeImage } from '@/components/SafeImage';
 import { Ionicons } from '@expo/vector-icons';
 import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselWindow';
 import { MovieDetailModal } from './MovieDetailModal';
+import { selectRelatedTitles } from '@/lib/relatedTitles';
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
@@ -423,8 +424,10 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
             ) : null}
             <MovieDetailModal
                 movie={selectedMovie}
+                related={selectedMovie ? selectRelatedTitles([{ rowTitle, movies, type }], selectedMovie, 12) : []}
                 onClose={() => setSelectedMovie(null)}
                 onPlay={playMovie}
+                onSelect={openMovie}
             />
         </View>
     );
