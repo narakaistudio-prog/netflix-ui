@@ -85,3 +85,14 @@ jobs:
             git commit -m "chore(nxsha): refresh verified episode guide"
             git push origin HEAD:${{ github.ref_name }}
           fi
+
+      - name: Trigger the production Vercel deploy hook when configured
+        if: steps.harvest.outcome == 'success' && github.ref_name == 'main'
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL is not configured; relying on Vercel's Git integration."
+            exit 0
+          fi
+          curl --fail --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK_URL"

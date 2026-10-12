@@ -23,6 +23,8 @@ test('Nxsha guide refresh is scheduled daily, bakes the page, and does not touch
     expect(workflow).toContain('node scripts/probe-nxsha.mjs');
     expect(workflow).toContain('node scripts/bake-animahd-links.mjs --check');
     expect(workflow).toContain('assets/crunchyroll/crunchyroll.html');
+    expect(workflow).toContain('VERCEL_DEPLOY_HOOK_URL');
+    expect(workflow).toContain("github.ref_name == 'main'");
     expect(workflow).toContain('data/nxsha-verify.json');
     expect(script).toContain("const SKIP_KEYS = new Set(['onepiece'])");
     expect(script).toContain("source: 'https://nxsha.space/api/tv/{tmdbId}/season/{season}'");
