@@ -1,5 +1,4 @@
 import { selectRelatedTitles } from './relatedTitles';
-import catalog from '@/data/movies.json';
 import type { Movie, MovieRow } from '@/types/movie';
 
 const title = (id: string, mediaType: 'movie' | 'tv' = 'movie', name = id): Movie => ({
@@ -21,9 +20,14 @@ it('prefers the opened title’s shelf, excludes itself and duplicate titles, an
         .toEqual(['first', 'second']);
 });
 
-it('builds distinct, clickable catalog choices for both a film and a show', () => {
-    const rows = (catalog as unknown as { movies: MovieRow[] }).movies;
-    for (const current of [rows[0].movies[0], rows[1].movies[0]]) {
+it('builds distinct, clickable choices for both a film and a show', () => {
+    const films = Array.from({ length: 12 }, (_, i) => title(`film-${i}`, 'movie', `Film ${i}`));
+    const shows = Array.from({ length: 12 }, (_, i) => title(`show-${i}`, 'tv', `Show ${i}`));
+    const rows: MovieRow[] = [
+        { rowTitle: 'Films', movies: films },
+        { rowTitle: 'Shows', movies: shows },
+    ];
+    for (const current of [films[0], shows[0]]) {
         const related = selectRelatedTitles(rows, current);
         expect(related).toHaveLength(10);
         expect(new Set(related.map(item => item.id)).size).toBe(10);
