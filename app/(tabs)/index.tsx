@@ -169,11 +169,11 @@ export default function HomeScreen() {
             movie={{
               id: featuredMovie.id,
               title: featuredMovie.title ?? '',
-              thumbnail: featuredMovie.imageUrl ?? '',
+              thumbnail: featuredMovie.backdropUrl || featuredMovie.imageUrl || '',
               categories: [],
               typeLabel: featuredMovie.type === 'SERIES' ? 'SERIES' : 'FILM',
               year: featuredMovie.year,
-              durationLabel: featuredMovie.type === 'SERIES' ? '1 Season' : '2h 10m',
+              durationLabel: featuredMovie.type === 'SERIES' ? '1 Season' : featuredMovie.duration || '2h 10m',
               ranking: featuredMovie.ranking_text,
             }}
             imageStyle={imageStyle}
