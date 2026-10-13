@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Movie, MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -174,6 +175,9 @@ function getPageCopy(kind: CatalogKind) {
 export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
     const { rows } = useCatalog();
     const insets = useSafeAreaInsets();
+    const { width: windowWidth } = useWindowDimensions();
+    // Desktop keeps the 48px gutter; phones use 16px.
+    const sidePad = IS_WEB && !isPhoneWidth(windowWidth) ? 48 : 16;
     const sections = useMemo(() => getCatalogSections(rows, kind), [rows, kind]);
     const editorialShelves = useMemo(() => getEditorialShelves(sections, kind), [sections, kind]);
     const displaySections = useMemo(() => {
@@ -202,7 +206,7 @@ export function CatalogBrowseScreen({ kind }: { kind: CatalogKind }) {
                         : { paddingTop: insets.top + 24, paddingBottom: 42 },
                 ]}
             >
-                <View style={page.header}>
+                <View style={[page.header, { paddingHorizontal: sidePad }]}>
                     <Text style={page.title}>{copy.title}</Text>
                     <Text style={page.subtitle}>{copy.subtitle}</Text>
                     <Text style={page.count}>{uniqueTitleCount} titles available in Netflix India</Text>

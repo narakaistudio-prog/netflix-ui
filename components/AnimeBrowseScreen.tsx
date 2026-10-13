@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCatalog } from '@/hooks/useCatalog';
 import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
@@ -16,6 +17,9 @@ const IS_WEB = Platform.OS === 'web';
 export function AnimeBrowseScreen() {
     const { rows } = useCatalog();
     const insets = useSafeAreaInsets();
+    const { width: windowWidth } = useWindowDimensions();
+    // Desktop keeps the 48px gutter; phones use 16px.
+    const sidePad = IS_WEB && !isPhoneWidth(windowWidth) ? 48 : 16;
     // Anime series rows first (Netflix Anime page), then the Anime Movies page rows as a group.
     const { seriesRows, movieRows } = useMemo(() => {
         const animeSource = rows.filter(isAnimeRow);
@@ -42,7 +46,7 @@ export function AnimeBrowseScreen() {
                         : { paddingTop: insets.top + 24, paddingBottom: 42 },
                 ]}
             >
-                <View style={page.header}>
+                <View style={[page.header, { paddingHorizontal: sidePad }]}>
                     <Text style={page.title}>Anime</Text>
                     <Text style={page.subtitle}>Anime series and films from the Netflix India Anime collection</Text>
                     <Text style={page.count}>{uniqueTitleCount} titles available</Text>
@@ -54,7 +58,7 @@ export function AnimeBrowseScreen() {
                     ))}
                     {movieRows.length > 0 && (
                         <View style={page.group}>
-                            <Text style={page.groupTitle}>Anime Movies</Text>
+                            <Text style={[page.groupTitle, { paddingHorizontal: sidePad }]}>Anime Movies</Text>
                             <Text style={page.groupSubtitle}>Anime films from the Netflix India Anime Movies collection</Text>
                         </View>
                     )}

@@ -5,7 +5,7 @@ import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect, useState} from 'react';
-import {Platform, StyleSheet, useColorScheme, View} from 'react-native';
+import {Platform, StyleSheet, useColorScheme, useWindowDimensions, View} from 'react-native';
 import {RootScaleProvider} from '@/contexts/RootScaleContext';
 import {useRootScale} from '@/contexts/RootScaleContext';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
@@ -34,11 +34,17 @@ import useCachedResources from '@/hooks/useCachedResources';
 import { useVisionOS } from '@/hooks/useVisionOS';
 import { WebNavBar } from '@/components/WebNavBar';
 import { TvModeHint } from '@/components/TvModeHint';
+import { PhoneTabBar } from '@/components/PhoneTabBar';
+import { isPhoneWidth, PHONE_TAB_BAR_HEIGHT, showsPhoneTabBar } from '@/lib/layout';
 import { initSpatialNavigation } from '@/lib/spatialNavigation';
 
 function AnimatedStack() {
     const {scale} = useRootScale();
     const router = useRouter();
+    const pathname = usePathname();
+    const {width: windowWidth} = useWindowDimensions();
+    // On phone web the pages leave room above the bottom tab bar.
+    const reserveTabBar = showsPhoneTabBar(pathname, isPhoneWidth(windowWidth), Platform.OS === 'web');
     const [isModalActive, setIsModalActive] = useState(false);
     const [canBlur, setCanBlur] = useState(false);
     const {selectedProfile, selectProfile} = useUser();
@@ -81,7 +87,7 @@ function AnimatedStack() {
                     tint={colorScheme === 'dark' ? 'dark' : 'light'}
                 />
             )}
-            <Animated.View style={[styles.stackContainer, animatedStyle]}>
+            <Animated.View style={[styles.stackContainer, animatedStyle, reserveTabBar && {paddingBottom: PHONE_TAB_BAR_HEIGHT}]}>
                 <Stack>
                     <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
                     <Stack.Screen
@@ -198,6 +204,7 @@ export default function RootLayout() {
                             <WebMediaWatchdog/>
                             <AnimatedStack/>
                             <WebNavBar/>
+                            <PhoneTabBar/>
                             <TvModeHint/>
                         </OverlayProvider>
                     </RootScaleProvider>

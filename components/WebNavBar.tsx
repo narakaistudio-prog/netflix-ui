@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Pressable, StyleSheet, Platform, TextInput } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Platform, TextInput, useWindowDimensions } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
@@ -44,6 +45,9 @@ export function WebNavBar() {
     const { isTvMode, toggleTvMode } = useTvMode();
     const searchBoxRef = useRef<View>(null);
     const submitLock = useRef(false);
+    // Phones: the section links move to the bottom tab bar (PhoneTabBar).
+    const { width: windowWidth } = useWindowDimensions();
+    const isPhone = isPhoneWidth(windowWidth);
 
     const closeSearch = () => {
         setSearchOpen(false);
@@ -123,7 +127,7 @@ export function WebNavBar() {
                 />
             )}
 
-            <View style={styles.bar}>
+            <View style={[styles.bar, isPhone && styles.barPhone]}>
                 {/* Netflix Brand Wordmark */}
                 <Pressable
                     onPress={() => router.push('/')}
@@ -139,12 +143,12 @@ export function WebNavBar() {
                     } as any)}
                     style={({ hovered }: any) => [styles.logoBtn, hovered && { opacity: 0.85 }]}
                 >
-                    <Text style={styles.logo}>NETFLIX</Text>
+                    <Text style={[styles.logo, isPhone && styles.logoPhone]}>NETFLIX</Text>
                 </Pressable>
 
                 {/* Main Desktop Links */}
                 <View style={styles.links}>
-                    {NAV_LINKS.map((link, i) => {
+                    {!isPhone && NAV_LINKS.map((link, i) => {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
                         const isCatalog = link.type === 'catalog' && pathname === `/browse/${link.catalog}`;
                         const isAnime = link.label === 'Anime' && pathname === '/anime';
@@ -208,10 +212,10 @@ export function WebNavBar() {
                 </View>
 
                 {/* Right utility items */}
-                <View style={styles.right}>
+                <View style={[styles.right, isPhone && styles.rightPhone]}>
                     {/* Expandable Search Input */}
                     {searchOpen ? (
-                        <View ref={searchBoxRef} style={styles.searchBox}>
+                        <View ref={searchBoxRef} style={[styles.searchBox, isPhone && styles.searchBoxPhone]}>
                             <Ionicons name="search" size={18} color="#fff" />
                             <TextInput
                                 placeholder="Titles, people, genres"
@@ -249,6 +253,8 @@ export function WebNavBar() {
                         </Pressable>
                     )}
 
+                    {!isPhone && (
+                        <>
                     {/* TV Mode: one press = remote mode ON/OFF, '?' opens the guide */}
                     <Pressable
                         onPress={toggleTvMode}
@@ -291,6 +297,9 @@ export function WebNavBar() {
                     >
                         <Ionicons name="help-circle-outline" size={18} color="#ddd" />
                     </Pressable>
+
+                        </>
+                    )}
 
                     {/* Notifications Bell */}
                     <View style={styles.bellContainer}>
@@ -464,6 +473,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 48,
         gap: 32,
+    },
+    barPhone: {
+        paddingHorizontal: 14,
+        gap: 10,
+    },
+    logoPhone: {
+        fontSize: 20,
+        letterSpacing: 0.8,
+    },
+    rightPhone: {
+        gap: 14,
+    },
+    searchBoxPhone: {
+        width: 190,
     },
     logoBtn: {
         marginRight: 8,

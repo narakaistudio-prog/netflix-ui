@@ -7,6 +7,7 @@ import { styles } from '@/styles';
 import { FeaturedMovie } from '@/types/movie';
 import { SafeImage } from '@/components/SafeImage';
 import { getLocalPoster } from '@/assets/posters';
+import { isPhoneWidth } from '@/lib/layout';
 
 interface FeaturedContentProps {
     movie: FeaturedMovie & {
@@ -40,7 +41,11 @@ export function FeaturedContent({
     const { height: windowHeight, width: windowWidth } = useWindowDimensions();
 
     if (variant === 'billboard') {
-        const billboardHeight = Math.max(540, Math.min(windowHeight * 0.8, 760));
+        // Phones get a shorter hero so the first shelf shows under it.
+        const phone = isPhoneWidth(windowWidth);
+        const billboardHeight = phone
+            ? Math.max(430, Math.min(windowHeight * 0.64, 540))
+            : Math.max(540, Math.min(windowHeight * 0.8, 760));
         // Use high-res billboard image if available, fallback to movie thumbnail
         const billboardSrc =
             movie.title?.toLowerCase().includes('jawan')
@@ -106,18 +111,20 @@ export function FeaturedContent({
                     style={StyleSheet.absoluteFill}
                 />
 
-                {/* Right side poster display */}
-                <View style={[web.posterRight, { pointerEvents: 'none' } as any]}>
-                    <SafeImage
-                        source={{ uri: movie.thumbnail }}
-                        style={web.rightPosterImage}
-                        loading="eager"
-                        fallbackLabel={movie.title}
-                    />
-                </View>
+                {/* Right side poster display (desktop only: it would sit on the text on a phone) */}
+                {!phone && (
+                    <View style={[web.posterRight, { pointerEvents: 'none' } as any]}>
+                        <SafeImage
+                            source={{ uri: movie.thumbnail }}
+                            style={web.rightPosterImage}
+                            loading="eager"
+                            fallbackLabel={movie.title}
+                        />
+                    </View>
+                )}
 
                 {/* Cinematic Left Content Panel */}
-                <View style={web.content}>
+                <View style={[web.content, phone && web.contentPhone]}>
                     {/* Netflix Original N Badge */}
                     <View style={web.brandRow}>
                         <Text style={web.brandN}>N</Text>
@@ -127,7 +134,7 @@ export function FeaturedContent({
                     </View>
 
                     {/* Movie Title */}
-                    <Text style={web.title} numberOfLines={2}>
+                    <Text style={[web.title, phone && web.titlePhone]} numberOfLines={2}>
                         {movie.title}
                     </Text>
 
@@ -137,13 +144,13 @@ export function FeaturedContent({
                             <Text style={web.top10Text}>TOP</Text>
                             <Text style={web.top10Number}>10</Text>
                         </View>
-                        <Text style={web.rankingText}>
+                        <Text style={[web.rankingText, phone && web.rankingTextPhone]}>
                             {movie.ranking || '#1 in Movies Today'}
                         </Text>
                     </View>
 
                     {/* Metadata Row */}
-                    <View style={web.metaRow}>
+                    <View style={[web.metaRow, phone && web.metaRowPhone]}>
                         <Text style={web.match}>98% Match</Text>
                         <Text style={web.metaItem}>{movie.year || '2023'}</Text>
                         <View style={web.ratingBox}>
@@ -159,16 +166,17 @@ export function FeaturedContent({
                     </View>
 
                     {/* Synopsis */}
-                    <Text numberOfLines={3} style={web.description}>
+                    <Text numberOfLines={3} style={[web.description, phone && web.descriptionPhone]}>
                         {description ||
                             'A man driven by a personal vendetta to rectify the evils in society, while keeping a promise made years ago, faces a monstrous outlaw with no fear.'}
                     </Text>
 
                     {/* Action Buttons */}
-                    <View style={web.buttonRow}>
+                    <View style={[web.buttonRow, phone && web.buttonRowPhone]}>
                         <Pressable
                             style={({ pressed, hovered }: any) => [
                                 web.playBtn,
+                                phone && web.actionBtnPhone,
                                 (pressed || hovered) && web.playBtnHover,
                             ]}
                             onPress={() => onPlay?.()}
@@ -192,6 +200,7 @@ export function FeaturedContent({
                         <Pressable
                             style={({ pressed, hovered }: any) => [
                                 web.infoBtn,
+                                phone && web.actionBtnPhone,
                                 (pressed || hovered) && web.infoBtnHover,
                             ]}
                             onPress={() => onPlay?.()}
@@ -213,10 +222,12 @@ export function FeaturedContent({
                     </View>
                 </View>
 
-                {/* Right Edge Maturity Rating Tag */}
-                <View style={web.maturityBadge}>
-                    <Text style={web.maturityText}>U/A 16+</Text>
-                </View>
+                {/* Right Edge Maturity Rating Tag (desktop only) */}
+                {!phone && (
+                    <View style={web.maturityBadge}>
+                        <Text style={web.maturityText}>U/A 16+</Text>
+                    </View>
+                )}
             </View>
         );
     }
@@ -288,6 +299,39 @@ export function FeaturedContent({
 }
 
 const web = StyleSheet.create({
+    contentPhone: {
+        left: 18,
+        right: 18,
+        maxWidth: undefined,
+        paddingTop: 56,
+        gap: 10,
+    },
+    titlePhone: {
+        fontSize: 40,
+        lineHeight: 44,
+        letterSpacing: -0.5,
+    },
+    rankingTextPhone: {
+        fontSize: 15,
+    },
+    metaRowPhone: {
+        flexWrap: 'wrap',
+        gap: 6,
+    },
+    descriptionPhone: {
+        fontSize: 14,
+        lineHeight: 20,
+    },
+    buttonRowPhone: {
+        width: '100%',
+        gap: 10,
+        marginTop: 4,
+    },
+    actionBtnPhone: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingHorizontal: 12,
+    },
     container: {
         width: '100%',
         position: 'relative',

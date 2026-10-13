@@ -7,7 +7,9 @@ import {
     TouchableOpacity,
     ScrollView,
     Text,
+    useWindowDimensions,
 } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -23,6 +25,9 @@ const IS_WEB = Platform.OS === 'web';
 
 export default function Search() {
     const params = useLocalSearchParams<{ q?: string }>();
+    const { width: windowWidth } = useWindowDimensions();
+    // Desktop keeps the 48px gutter; phones use 16px.
+    const sidePad = IS_WEB && !isPhoneWidth(windowWidth) ? 48 : 16;
     const { rows } = useCatalog();
     const router = useRouter();
     const inputRef = useRef<TextInput>(null);
@@ -91,7 +96,7 @@ export default function Search() {
             <StatusBar style="light" />
             <Stack.Screen options={{ headerShown: false, animation: 'none' }} />
 
-            <View style={[styles.header, IS_WEB && webStyles.header]}>
+            <View style={[styles.header, IS_WEB && webStyles.header, { paddingHorizontal: sidePad }]}>
                 <TouchableOpacity
                     onPress={closeSearch}
                     style={styles.backButton}
@@ -133,7 +138,7 @@ export default function Search() {
             ) : (
                 <ScrollView
                     style={styles.content}
-                    contentContainerStyle={[styles.section, IS_WEB && webStyles.section]}
+                    contentContainerStyle={[styles.section, IS_WEB && webStyles.section, { paddingHorizontal: sidePad }]}
                     keyboardShouldPersistTaps="handled"
                 >
                     <Text style={styles.sectionTitle}>
