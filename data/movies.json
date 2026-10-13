@@ -17762,6 +17762,39 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/sASxGVO6wioRG6jNM2LHOjBAgWu.jpg"
                 },
                 {
+                    "id": "netflix-anime-81602834",
+                    "title": "Jujutsu Kaisen 0",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/23oJaeBh0FDk2mQ2P240PU9Xxfh.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "810693",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81602834",
+                    "netflixUrl": "https://www.netflix.com/in/title/81602834",
+                    "catalogCollection": "netflix-anime-7424",
+                    "year": "2021",
+                    "description": "Yuta Okkotsu is a nervous high school student who is suffering from a serious problem—his childhood friend Rika has turned into a curse and won't leave him alone. Since Rika is no ordinary curse, his plight is noticed by Satoru Gojo, a teacher at Jujutsu High, a school where fledgling exorcists learn how to combat curses. Gojo convinces Yuta to enroll, but can he learn enough in time to confront the curse that haunts him?",
+                    "duration": "1h 45m",
+                    "cast": [
+                        "Crunchyroll",
+                        "Sony Liv",
+                        "Crunchyroll Amazon Channel",
+                        "Megumi Ogata",
+                        "Kana Hanazawa",
+                        "Yuichi Nakamura",
+                        "Takahiro Sakurai",
+                        "Mikako Komatsu",
+                        "Koki Uchiyama",
+                        "Tomokazu Seki"
+                    ],
+                    "genres": [
+                        "Animation",
+                        "Action",
+                        "Fantasy"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rcEDPOOOUTLFxLLQJggfLffbofe.jpg"
+                },
+                {
                     "id": "netflix-anime-80990863",
                     "title": "Yasuke",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/hgYqEkZQS2fgC6E9fe8Le1Kxbmw.jpg",
@@ -21477,6 +21510,39 @@
                         "Adventure"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/rogeBJK44LtWynOqzMFmEF30T80.jpg"
+                },
+                {
+                    "id": "netflix-anime-81602834",
+                    "title": "Jujutsu Kaisen 0",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/23oJaeBh0FDk2mQ2P240PU9Xxfh.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "810693",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81602834",
+                    "netflixUrl": "https://www.netflix.com/in/title/81602834",
+                    "catalogCollection": "netflix-anime-7424",
+                    "year": "2021",
+                    "description": "Yuta Okkotsu is a nervous high school student who is suffering from a serious problem—his childhood friend Rika has turned into a curse and won't leave him alone. Since Rika is no ordinary curse, his plight is noticed by Satoru Gojo, a teacher at Jujutsu High, a school where fledgling exorcists learn how to combat curses. Gojo convinces Yuta to enroll, but can he learn enough in time to confront the curse that haunts him?",
+                    "duration": "1h 45m",
+                    "cast": [
+                        "Crunchyroll",
+                        "Sony Liv",
+                        "Crunchyroll Amazon Channel",
+                        "Megumi Ogata",
+                        "Kana Hanazawa",
+                        "Yuichi Nakamura",
+                        "Takahiro Sakurai",
+                        "Mikako Komatsu",
+                        "Koki Uchiyama",
+                        "Tomokazu Seki"
+                    ],
+                    "genres": [
+                        "Animation",
+                        "Action",
+                        "Fantasy"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rcEDPOOOUTLFxLLQJggfLffbofe.jpg"
                 },
                 {
                     "id": "netflix-anime-82040442",
@@ -25575,6 +25641,39 @@
                         "Adventure"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/rogeBJK44LtWynOqzMFmEF30T80.jpg"
+                },
+                {
+                    "id": "netflix-anime-movies-81602834",
+                    "title": "Jujutsu Kaisen 0",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/23oJaeBh0FDk2mQ2P240PU9Xxfh.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "810693",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81602834",
+                    "netflixUrl": "https://www.netflix.com/in/title/81602834",
+                    "catalogCollection": "netflix-anime-3063",
+                    "year": "2021",
+                    "description": "Yuta Okkotsu is a nervous high school student who is suffering from a serious problem—his childhood friend Rika has turned into a curse and won't leave him alone. Since Rika is no ordinary curse, his plight is noticed by Satoru Gojo, a teacher at Jujutsu High, a school where fledgling exorcists learn how to combat curses. Gojo convinces Yuta to enroll, but can he learn enough in time to confront the curse that haunts him?",
+                    "duration": "1h 45m",
+                    "cast": [
+                        "Crunchyroll",
+                        "Sony Liv",
+                        "Crunchyroll Amazon Channel",
+                        "Megumi Ogata",
+                        "Kana Hanazawa",
+                        "Yuichi Nakamura",
+                        "Takahiro Sakurai",
+                        "Mikako Komatsu",
+                        "Koki Uchiyama",
+                        "Tomokazu Seki"
+                    ],
+                    "genres": [
+                        "Animation",
+                        "Action",
+                        "Fantasy"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rcEDPOOOUTLFxLLQJggfLffbofe.jpg"
                 },
                 {
                     "id": "netflix-anime-movies-82040442",

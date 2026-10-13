@@ -1,5 +1,4 @@
 # Titles from data/netflix-anime-movies-3063.txt that nxsha did not match (not shown in the app).
-Jujutsu Kaisen 0: The Movie | 81602834 | no-nxsha-match
 Pretty Guardian Sailor Moon Cosmos The Movie | 81732000 | no-nxsha-match
 Gintama the Movie 2026: Yoshiwara in Flames | 82968180 | no-nxsha-match
 The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261 | no-nxsha-match
