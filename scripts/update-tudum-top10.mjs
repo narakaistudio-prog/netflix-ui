@@ -207,6 +207,15 @@ export function diagnose(html) {
         watchLinkCount: (raw.match(/(?:\/|%2F)watch(?:\/|%2F)\d+/gi) || []).length,
         posterCount: (raw.match(/dnm\.nflximg\.net/g) || []).length,
         windows: hits.slice(0, 6).map(i => raw.slice(Math.max(0, i - 350), i + 60).replace(/\s+/g, ' ')),
+        // Where a title and a Netflix id from the Movies list (rank 6 this week) appear.
+        around: [
+            ['82723106', raw.indexOf('82723106')],
+            ['Romanchakam', raw.indexOf('Romanchakam')],
+        ].map(([needle, i]) => ({
+            needle,
+            count: raw.split(needle).length - 1,
+            window: i < 0 ? '' : raw.slice(Math.max(0, i - 300), i + 120).replace(/\s+/g, ' '),
+        })),
     };
 }
 
