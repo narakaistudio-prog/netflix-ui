@@ -6,6 +6,7 @@ import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import { markWatched } from '@/lib/recentlyWatched';
+import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -37,11 +38,24 @@ function officialUrlFor(movie: Movie): string {
 export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Props) {
     const { width, height } = useWindowDimensions();
     const [playing, setPlaying] = useState(false);
+    /** Episode chosen from the list (TV). Null plays the first episode. */
+    const [episodeRef, setEpisodeRef] = useState<{ season: number; episode: number } | null>(null);
+    const [season, setSeason] = useState(1);
+    const [seasonMenuOpen, setSeasonMenuOpen] = useState(false);
 
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
         setPlaying(false);
+        setEpisodeRef(null);
+        setSeason(1);
+        setSeasonMenuOpen(false);
     }, [movie?.id]);
+
+    const seasons = useMemo(
+        () => (movie?.mediaType === 'tv' ? getTvSeasons(movie.tmdb_id) : []),
+        [movie],
+    );
+    const currentSeason = seasons.find((s) => s.season_number === season) ?? seasons[0];
 
     const src = useMemo(() => {
         if (!movie) return '';
@@ -50,10 +64,11 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
             // Netflix titles play in the Netflix-accent nxsha player.
             // Netflix shows (mediaType 'tv') open their first episode in the same accent player.
             if (movie.mediaType === 'tv') {
+                const ep = episodeRef ?? { season: 1, episode: 1 };
                 return buildEmbedUrl(
                     provider,
                     'tv',
-                    { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url, season: 1, episode: 1 },
+                    { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url, season: ep.season, episode: ep.episode },
                     provider === 'nxsha' ? { tvTemplate: NETFLIX_NXSHA_TV } : {},
                 );
             }
@@ -66,7 +81,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
         } catch {
             return '';
         }
-    }, [movie]);
+    }, [movie, episodeRef]);
 
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
@@ -83,8 +98,9 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
     const cast = (movie.cast || []).filter((name) => name && name !== 'Cast not available');
     const genres = movie.genres || [];
 
-    const handlePlay = () => {
+    const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
+            if (episode) setEpisodeRef(episode);
             try {
                 markWatched({
                     id: movie.id,
@@ -146,7 +162,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
                             <View style={styles.heroContent}>
                                 <Text style={styles.title} numberOfLines={2}>{movie.title || ''}</Text>
                                 <Pressable
-                                    onPress={handlePlay}
+                                    onPress={() => handlePlay()}
                                     style={styles.playButton}
                                     accessibilityLabel={`Play ${movie.title || ''}`}
                                 >
@@ -186,6 +202,78 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
                             </View>
                         </View>
 
+                        {currentSeason ? (
+                            <View style={[styles.episodes, wide && styles.episodesWide]}>
+                                <View style={styles.episodesHeader}>
+                                    <Text style={styles.moreTitle}>Episodes</Text>
+                                    {seasons.length > 1 ? (
+                                        <Pressable
+                                            onPress={() => setSeasonMenuOpen((open) => !open)}
+                                            style={styles.seasonButton}
+                                            accessibilityLabel="Choose season"
+                                        >
+                                            <Text style={styles.seasonButtonText}>
+                                                {`${currentSeason.name || `Season ${currentSeason.season_number}`} (${currentSeason.episode_count} EP)`}
+                                            </Text>
+                                            <Ionicons name={seasonMenuOpen ? 'chevron-up' : 'chevron-down'} size={16} color="#fff" />
+                                        </Pressable>
+                                    ) : (
+                                        <Text style={styles.metaText}>{`${currentSeason.episode_count} EP`}</Text>
+                                    )}
+                                </View>
+
+                                {seasonMenuOpen && seasons.length > 1 ? (
+                                    <View style={styles.seasonMenu}>
+                                        {seasons.map((item) => (
+                                            <Pressable
+                                                key={item.season_number}
+                                                onPress={() => {
+                                                    setSeason(item.season_number);
+                                                    setSeasonMenuOpen(false);
+                                                }}
+                                                style={[styles.seasonOption, item.season_number === currentSeason.season_number && styles.seasonOptionActive]}
+                                                accessibilityLabel={`Season ${item.season_number}`}
+                                            >
+                                                <Text style={styles.seasonOptionText}>
+                                                    {`${item.name || `Season ${item.season_number}`} (${item.episode_count} EP)`}
+                                                </Text>
+                                            </Pressable>
+                                        ))}
+                                    </View>
+                                ) : null}
+
+                                {currentSeason.episodes.map((ep) => (
+                                    <Pressable
+                                        key={`${ep.season}-${ep.episode}`}
+                                        onPress={() => handlePlay({ season: ep.season, episode: ep.episode })}
+                                        style={styles.episodeRow}
+                                        accessibilityLabel={`Play episode ${ep.episode}: ${ep.name}`}
+                                    >
+                                        <Text style={styles.episodeNumber}>{ep.episode}</Text>
+                                        <View style={styles.episodeThumb}>
+                                            <SafeImage
+                                                source={{ uri: ep.still || image }}
+                                                style={{ width: '100%', height: '100%' } as any}
+                                                fallbackLabel={ep.name}
+                                            />
+                                            <View style={styles.episodePlayBadge} pointerEvents="none">
+                                                <Ionicons name="play" size={14} color="#fff" />
+                                            </View>
+                                        </View>
+                                        <View style={styles.episodeInfo}>
+                                            <View style={styles.episodeTop}>
+                                                <Text style={styles.episodeName} numberOfLines={1}>{ep.name}</Text>
+                                                {ep.runtime ? <Text style={styles.episodeRuntime}>{formatRuntime(ep.runtime)}</Text> : null}
+                                            </View>
+                                            {ep.overview ? (
+                                                <Text style={styles.episodeOverview} numberOfLines={3}>{ep.overview}</Text>
+                                            ) : null}
+                                        </View>
+                                    </Pressable>
+                                ))}
+                            </View>
+                        ) : null}
+
                         {related.length > 0 ? (
                             <View style={styles.more}>
                                 <Text style={styles.moreTitle}>More Like This</Text>
@@ -217,7 +305,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
                     <View style={styles.playerLayer}>
                         <EmbedPlayer
                             src={src}
-                            title={movie.title}
+                            title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
                             onClose={() => setPlaying(false)}
                             fallbackUrl={officialUrlFor(movie)}
                         />
@@ -349,6 +437,114 @@ const styles = StyleSheet.create({
     },
     sideLabel: {
         color: MUTED,
+    },
+    episodes: {
+        paddingHorizontal: 16,
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    episodesWide: {
+        paddingHorizontal: 40,
+    },
+    episodesHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 12,
+        zIndex: 5,
+    },
+    seasonButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.6)',
+        backgroundColor: 'rgba(0,0,0,0.4)',
+    },
+    seasonButtonText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    seasonMenu: {
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.15)',
+        borderRadius: 4,
+        backgroundColor: '#222',
+        marginBottom: 12,
+        overflow: 'hidden',
+    },
+    seasonOption: {
+        paddingHorizontal: 14,
+        paddingVertical: 12,
+    },
+    seasonOptionActive: {
+        backgroundColor: 'rgba(255,255,255,0.08)',
+    },
+    seasonOptionText: {
+        color: '#fff',
+        fontSize: 14,
+    },
+    episodeRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        paddingVertical: 14,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255,255,255,0.1)',
+    },
+    episodeNumber: {
+        color: MUTED,
+        fontSize: 20,
+        width: 24,
+        textAlign: 'center',
+    },
+    episodeThumb: {
+        width: 150,
+        aspectRatio: 16 / 9,
+        borderRadius: 4,
+        overflow: 'hidden',
+        backgroundColor: '#222',
+    },
+    episodePlayBadge: {
+        position: 'absolute',
+        left: 6,
+        bottom: 6,
+        width: 26,
+        height: 26,
+        borderRadius: 13,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    episodeInfo: {
+        flex: 1,
+        minWidth: 0,
+    },
+    episodeTop: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 8,
+    },
+    episodeName: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: '700',
+        flex: 1,
+    },
+    episodeRuntime: {
+        color: MUTED,
+        fontSize: 13,
+    },
+    episodeOverview: {
+        color: MUTED,
+        fontSize: 13,
+        lineHeight: 18,
+        marginTop: 4,
     },
     more: {
         paddingHorizontal: 24,
