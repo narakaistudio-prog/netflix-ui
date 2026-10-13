@@ -1,5 +1,4 @@
 # Titles from data/netflix-anime-7424.txt that nxsha did not match (not shown in the app).
-Hajime no Ippo: The Fighting! | 80995578 | no-nxsha-match
 STEEL BALL RUN JoJo's Bizarre Adventure | 82116553 | no-nxsha-match
 Magic and Muscles | 81685164 | no-nxsha-match
 Kuroko's Basketball: Last Game | 80991755 | no-nxsha-match
@@ -13,12 +12,9 @@ Pokémon Horizons: Season 2: The Search for Laqua | 81944585 | no-nxsha-match
 PUELLA MAGI MADOKA MAGICA SIDE STORY [MAGIA RECORD] | 81234338 | no-nxsha-match
 Jujutsu Kaisen 0: The Movie | 81602834 | no-nxsha-match
 SWORDGAI The Animation | 80175350 | no-nxsha-match
-Puniru Is a Cute Slime | 81975106 | no-nxsha-match
 Violet Evergarden: Special | 81010662 | no-nxsha-match
-Hell's Paradise: Jigokuraku | 81574246 | no-nxsha-match
 Inuyasha: The Final Act | 80057177 | no-nxsha-match
 Mobile Suit Gundam Seed Destiny | 81724493 | no-nxsha-match
-Gin Tama | 80018959 | no-nxsha-match
 Pretty Guardian Sailor Moon Cosmos The Movie | 81732000 | no-nxsha-match
 Gintama the Movie 2026: Yoshiwara in Flames | 82968180 | no-nxsha-match
 The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261 | no-nxsha-match
