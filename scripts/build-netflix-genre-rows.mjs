@@ -23,10 +23,12 @@
  *   anime            data/netflix-anime-7424.txt, rows prefixed "Anime: " so they
  *                    never replace a genre row with the same name ("Your Next Watch").
  *                    catalogCollection netflix-anime-7424.
+ *   anime-movies     data/netflix-anime-movies-3063.txt (Netflix genre 3063), rows
+ *                    prefixed "Anime Movies: ", catalogCollection netflix-anime-3063.
  * Titles that nxsha does not match are written to data/<source>.unmatched.txt,
  * so the result can be read from the repo (runner logs are not readable from here).
  *
- * Usage: node scripts/build-netflix-genre-rows.mjs [--preset=genre|anime] [--dry-run]
+ * Usage: node scripts/build-netflix-genre-rows.mjs [--preset=genre|anime|anime-movies] [--dry-run]
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -47,6 +49,13 @@ const PRESETS = {
         collection: 'netflix-anime-7424',
         idPrefix: 'netflix-anime-',
         rowPrefix: 'Anime: ',
+    },
+    // Netflix "Anime Movies" page (genre 3063), shown in the Anime section as its own group.
+    'anime-movies': {
+        source: 'data/netflix-anime-movies-3063.txt',
+        collection: 'netflix-anime-3063',
+        idPrefix: 'netflix-anime-movies-',
+        rowPrefix: 'Anime Movies: ',
     },
 };
 const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));

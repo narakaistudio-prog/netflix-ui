@@ -79,3 +79,28 @@ test('anime rows are recognised by their collection and no genre row is', () => 
     expect(isAnimeRow(animeRow)).toBe(true);
     expect(isAnimeRow(genreRow)).toBe(false);
 });
+
+const moviesText = readFileSync(join(__dirname, '..', 'data', 'netflix-anime-movies-3063.txt'), 'utf8');
+
+test('the Anime Movies source (genre 3063) has its 12 rows in page order, with unique entries per row', () => {
+    const movieRows = parse(moviesText);
+    expect(movieRows.map(r => r.rowTitle)).toEqual([
+        'Action & Adventure Movies',
+        'New on Netflix',
+        'Your Next Watch',
+        'Critically Acclaimed Movies',
+        'Feel-good Movies',
+        'Anime for Beginners',
+        'Family Sci-Fi & Fantasy Movies',
+        'Action Movies',
+        'Anime',
+        'Sci-Fi Movies',
+        '90-Minute Movies',
+        'Exciting Movies',
+    ]);
+    for (const r of movieRows) {
+        const ids = r.titles.map(t => t.netflixId);
+        expect(new Set(ids).size).toBe(ids.length);
+        for (const id of ids) expect(id).toMatch(/^\d+$/);
+    }
+});

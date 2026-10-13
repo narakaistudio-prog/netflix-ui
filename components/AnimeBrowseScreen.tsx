@@ -4,7 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCatalog } from '@/hooks/useCatalog';
 import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
-import { animeRowLabel, isAnimeRow } from '@/lib/anime';
+import { animeRowLabel, isAnimeMovieRow, isAnimeRow } from '@/lib/anime';
+import type { MovieRow } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -15,13 +16,18 @@ const IS_WEB = Platform.OS === 'web';
 export function AnimeBrowseScreen() {
     const { rows } = useCatalog();
     const insets = useSafeAreaInsets();
-    const animeRows = useMemo(
-        () => rows.filter(isAnimeRow).map(row => ({ ...row, rowTitle: animeRowLabel(row.rowTitle) })),
-        [rows],
-    );
+    // Anime series rows first (Netflix Anime page), then the Anime Movies page rows as a group.
+    const { seriesRows, movieRows } = useMemo(() => {
+        const animeSource = rows.filter(isAnimeRow);
+        const withLabel = (row: MovieRow): MovieRow => ({ ...row, rowTitle: animeRowLabel(row.rowTitle) });
+        return {
+            seriesRows: animeSource.filter(row => !isAnimeMovieRow(row)).map(withLabel),
+            movieRows: animeSource.filter(isAnimeMovieRow).map(withLabel),
+        };
+    }, [rows]);
     const uniqueTitleCount = useMemo(
-        () => new Set(animeRows.flatMap(row => row.movies.map(item => item.id))).size,
-        [animeRows],
+        () => new Set([...seriesRows, ...movieRows].flatMap(row => row.movies.map(item => item.netflixId ?? item.id))).size,
+        [seriesRows, movieRows],
     );
 
     return (
@@ -43,8 +49,17 @@ export function AnimeBrowseScreen() {
                 </View>
 
                 <View style={page.shelves}>
-                    {animeRows.map((row, index) => (
-                        <DeferredMovieList key={`${row.rowTitle}-${index}`} eager={index === 0} {...row} />
+                    {seriesRows.map((row, index) => (
+                        <DeferredMovieList key={`series-${row.rowTitle}-${index}`} eager={index === 0} {...row} />
+                    ))}
+                    {movieRows.length > 0 && (
+                        <View style={page.group}>
+                            <Text style={page.groupTitle}>Anime Movies</Text>
+                            <Text style={page.groupSubtitle}>Anime films from the Netflix India Anime Movies collection</Text>
+                        </View>
+                    )}
+                    {movieRows.map((row, index) => (
+                        <DeferredMovieList key={`movie-${row.rowTitle}-${index}`} eager={false} {...row} />
                     ))}
                 </View>
             </ScrollView>
@@ -88,5 +103,25 @@ const page = StyleSheet.create({
     },
     shelves: {
         width: '100%',
+    },
+    group: {
+        width: '100%',
+        maxWidth: 1240,
+        alignSelf: 'center',
+        paddingHorizontal: IS_WEB ? 48 : 16,
+        marginTop: 28,
+        marginBottom: 4,
+    },
+    groupTitle: {
+        color: '#fff',
+        fontSize: IS_WEB ? 24 : 20,
+        fontWeight: '800',
+        letterSpacing: -0.3,
+    },
+    groupSubtitle: {
+        color: '#b3b3b3',
+        fontSize: IS_WEB ? 14 : 12,
+        lineHeight: 20,
+        marginTop: 4,
     },
 });

@@ -42,10 +42,19 @@ const genreItem = (id: string) => ({
     mediaType: 'movie',
     catalogCollection: 'netflix-genre-100381',
 });
+const animeMovieItem = (id: string) => ({
+    id: `netflix-anime-movies-${id}`,
+    netflixId: id,
+    title: `Anime Movie ${id}`,
+    imageUrl: 'https://image.tmdb.org/t/p/w500/m.jpg',
+    mediaType: 'movie',
+    catalogCollection: 'netflix-anime-3063',
+});
 const rows = [
     { rowTitle: 'Your Next Watch', type: 'normal', movies: [genreItem('1')] },
     { rowTitle: 'Anime: Your Next Watch', type: 'normal', movies: [animeItem('10'), animeItem('11')] },
     { rowTitle: 'Anime: Action Movies', type: 'normal', movies: [animeItem('10')] },
+    { rowTitle: 'Anime Movies: Action Movies', type: 'normal', movies: [animeMovieItem('90')] },
 ];
 let mockRows = rows;
 jest.mock('@/hooks/useCatalog', () => ({ useCatalog: () => ({ rows: mockRows, isLive: false }) }));
@@ -67,15 +76,16 @@ afterEach(() => {
     container.remove();
 });
 
-test('the Anime section shows the anime rows with the prefix removed, and not the genre rows', () => {
+test('the Anime section shows the series rows, then the Anime Movies group, with prefixes removed and no genre rows', () => {
     act(() => root.render(<AnimeBrowseScreen />));
     const shelves = Array.from(container.querySelectorAll('section')).map(el => el.getAttribute('data-row'));
-    expect(shelves).toEqual(['Your Next Watch', 'Action Movies']);
+    expect(shelves).toEqual(['Your Next Watch', 'Action Movies', 'Action Movies']);
+    expect(container.textContent).toContain('Anime Movies');
     expect(container.textContent).toContain('Your Next Watch:2');
-    expect(container.textContent).toContain('2 titles available');
+    expect(container.textContent).toContain('3 titles available');
 });
 
-test('Movies and TV browse leave the anime rows out', () => {
+test('Movies and TV browse leave the anime rows out, both anime pages', () => {
     const movieRows = getCatalogSections(rows, 'movie');
     expect(movieRows.map(r => r.rowTitle)).toEqual(['Your Next Watch']);
     expect(movieRows[0].movies.map(m => m.id)).toEqual(['netflix-genre-1']);
