@@ -51620,6 +51620,243 @@
    }
   ]
  },
+ "117465": {
+  "seasons": [
+   {
+    "season_number": 1,
+    "name": "Season 1",
+    "overview": "",
+    "episode_count": 25,
+    "episodes": [
+     {
+      "season": 1,
+      "episode": 1,
+      "name": "The Death Row Convict and the Executioner",
+      "overview": "Gabimaru, a ninja member of a clan of assassins, is sentenced to death. He claims to have nothing to tie him to life, yet no method of execution manages to end his life. His meeting with Sagiri Yamada Asaemon, who seems to be investigating him, will change ev…",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/cBYGS8slT5GnBfJylLrimTKPRQG.jpg",
+      "air_date": "2023-04-01"
+     },
+     {
+      "season": 1,
+      "episode": 2,
+      "name": "Screening and Choosing",
+      "overview": "The condemned criminals are gathered on the beach to prepare for the expedition to Shinsenkyo, but first, they must reduce their numbers.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/huhB21i6IKWnGBQLd6JRRIHRSgL.jpg",
+      "air_date": "2023-04-08"
+     },
+     {
+      "season": 1,
+      "episode": 3,
+      "name": "Weakness and Strength",
+      "overview": "Gabimaru, Sagiri, and the others arrive on Shinsenkyo, and their battle for survival begins.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/9yZfCDYjgUvqwJj4cR1vaxSq9dQ.jpg",
+      "air_date": "2023-04-15"
+     },
+     {
+      "season": 1,
+      "episode": 4,
+      "name": "Hell and Paradise",
+      "overview": "Gabimaru and Sagiri are in trouble during their first fight against the island's mysterious creatures. Gabimaru is unaware of these monstrosities and this puts him at a disadvantage in battle. The sudden arrival of Yuzuriha, the female ninja, will change the…",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/czrHtpVCRGSQSLeDH0pgnOkiB6y.jpg",
+      "air_date": "2023-04-22"
+     },
+     {
+      "season": 1,
+      "episode": 5,
+      "name": "The Samurai and the Woman",
+      "overview": "Gabimaru and Sagiri's group cross paths with another Yamada Asaemon, Genji, who takes a dim view of Sagiri's involvement in the present matter. Meanwhile, Yamada Asaemon Tenza tries to find a way off the island along with his charge, Nurugai.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/rwS8pUyguI6WnYjfRx2TprDiOX8.jpg",
+      "air_date": "2023-04-29"
+     },
+     {
+      "season": 1,
+      "episode": 6,
+      "name": "Heart and Reason",
+      "overview": "Rokurota starts to cause serious problems for Sagiri and Gabimaru, and now they must think of a strategy to defeat him!",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/1Is8K5zejhwAkGovdmKeIM6TEME.jpg",
+      "air_date": "2023-05-06"
+     },
+     {
+      "season": 1,
+      "episode": 7,
+      "name": "Flowers and Offerings",
+      "overview": "Chobe and Toma encounter people unlike any they've ever encountered before. Gabimaru and Sagiri's party finally meet people who live on the island.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/uO1jm9qnpZaQivdhIL1aqwRxjJD.jpg",
+      "air_date": "2023-05-13"
+     },
+     {
+      "season": 1,
+      "episode": 8,
+      "name": "Student and Master",
+      "overview": "Tenza and Nurugai also encounter one of the island's strange denizens with unfathomable power. All seems lost before they encounter another Yamada Asaemon...",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/3CF2Q6AZM1tHSovv1AwlrRlozJ3.jpg",
+      "air_date": "2023-05-20"
+     },
+     {
+      "season": 1,
+      "episode": 9,
+      "name": "Gods and People",
+      "overview": "Sagiri's group sets off in search of Horai. Gabimaru goes ahead and encounters the same powerful being that confronted Tenza...",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/eqtEoIzqJoDSV0v9ETZayli3mPi.jpg",
+      "air_date": "2023-06-03"
+     },
+     {
+      "season": 1,
+      "episode": 10,
+      "name": "Yin and Yang",
+      "overview": "Mei attempts to explain something very important to Sagiri's party in the forest. Shion tries to explain how he interacts with the world to Nurugai. A mysterious servant of the Tensen tries to explain why Aza Chobe and Toma shouldn't escape.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/ApVsykHWYMpwJnx2Qrk9pfT8g7C.jpg",
+      "air_date": "2023-06-10"
+     },
+     {
+      "season": 1,
+      "episode": 11,
+      "name": "Weak and Strong",
+      "overview": "Chobe brings new abilities to bear as he faces the Tensen's servants. A secret of Mei's is revealed to Gabimaru, hardening his resolve to fight and opening him up to a new perception of the world.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/3Uf9vLl7gjIMUe0xEuXKaJQaPWP.jpg",
+      "air_date": "2023-06-17"
+     },
+     {
+      "season": 1,
+      "episode": 12,
+      "name": "Umbrella and Ink",
+      "overview": "Mu Dan confronts Sagiri's party and reveals shocking truths about the island's true nature.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/iZE9vDF33ZKhKllFAFEUEuDt5B7.jpg",
+      "air_date": "2023-06-24"
+     },
+     {
+      "season": 1,
+      "episode": 13,
+      "name": "Dreams and Reality",
+      "overview": "Sagiri's party faces Mu Dan's seemingly unstoppable true form. Shion does his best to rise to the challenge with his mastery of waves.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/tddzRELfd45ZWGEu6komcGBg1Zp.jpg",
+      "air_date": "2023-07-01"
+     },
+     {
+      "season": 1,
+      "episode": 14,
+      "name": "Dawn and Confusion",
+      "overview": "Shugen and Jikka are sent to Shinsenkyo, while Gabimaru and his companions battle Aza Chobe and Toma.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/2wzISrFWV8d5rtjb9KhfdseK06Z.jpg",
+      "air_date": "2026-01-11"
+     },
+     {
+      "season": 1,
+      "episode": 15,
+      "name": "Reality and Fantasy",
+      "overview": "Aza Chobe and Gabimaru lose themselves in battle, but Mei stops their fight.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/zFqylZ9YjHeooe5J0K34ufr1yV9.jpg",
+      "air_date": "2026-01-18"
+     },
+     {
+      "season": 1,
+      "episode": 16,
+      "name": "Immutability and Change",
+      "overview": "While Aza Chobe battles Rien, Gabimaru regains his memories and begins training in the use of tao.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/1iCVihRZNcSjuPEqX0tCCgrtMMG.jpg",
+      "air_date": "2026-01-25"
+     },
+     {
+      "season": 1,
+      "episode": 17,
+      "name": "The Samurai Code and Carnage",
+      "overview": "Sagiri believes Shugen will be an ally and eagerly anticipates the expedition's arrival, but Shion is skeptical.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/z9jGQEbyq3h4wK2lkJkkY0rfLvf.jpg",
+      "air_date": "2026-02-01"
+     },
+     {
+      "season": 1,
+      "episode": 18,
+      "name": "Humans and Sages",
+      "overview": "As the expeditioners prepare, Gabimaru asks Mei if she's sure she wants to leave the island with them.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/wnqaZvCNNk3A8pv7eAjk6TljRDF.jpg",
+      "air_date": "2026-02-08"
+     },
+     {
+      "season": 1,
+      "episode": 19,
+      "name": "Hindering and Restoration",
+      "overview": "Gabimaru's group finally enters the sacred mountain, but the Tensen can see everything they're up to.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/1mqcZ361jdMRD0jf9SC93vQJ7ht.jpg",
+      "air_date": "2026-02-15"
+     },
+     {
+      "season": 1,
+      "episode": 20,
+      "name": "Two People and One Person",
+      "overview": "Gantetsusai and Fuchi struggle against Tao Fa, but they seem to be enjoying themselves.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/6FIYLFojxuPtqBQTg4yPKiQdeUl.jpg",
+      "air_date": "2026-02-22"
+     },
+     {
+      "season": 1,
+      "episode": 21,
+      "name": "Chrysanthemum and Peach",
+      "overview": "When Tao Fa asks Ju Fa for help, Ju Fa recalls the time they spent together.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/x0ihmwPMql3SERh9Q13Lty9vqsC.jpg",
+      "air_date": "2026-03-01"
+     },
+     {
+      "season": 1,
+      "episode": 22,
+      "name": "Love and Karma",
+      "overview": "The expeditioners work together to take on Tao Fa and Ju Fa, who have undergone Kishikai transformations.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/naK0MmRAxo6kch2nZhLllxz4eHY.jpg",
+      "air_date": "2026-03-08"
+     },
+     {
+      "season": 1,
+      "episode": 23,
+      "name": "Master and Student",
+      "overview": "Shion and Nurugai take on Zhu Jin, but both sides lack the ability to finish the other off.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/tWpF3Qr1YjefmGt9RlxribaRQMD.jpg",
+      "air_date": "2026-03-15"
+     },
+     {
+      "season": 1,
+      "episode": 24,
+      "name": "Ephemeralness and Fire",
+      "overview": "Gabimaru recalls the days he spent with Yui. How will his battle against Rien end?",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/kmMbC5ApvlGsvFhGZV2bQwUKoko.jpg",
+      "air_date": "2026-03-22"
+     },
+     {
+      "season": 1,
+      "episode": 25,
+      "name": "Endings and Beginnings",
+      "overview": "As Gabimaru and his companions finish their respective battles, the additional expedition arrives.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/k0i6XHRvknsDvSc8759I0MlNKkg.jpg",
+      "air_date": "2026-03-29"
+     }
+    ]
+   }
+  ]
+ },
  "117682": {
   "seasons": [
    {
@@ -69887,6 +70124,234 @@
       "runtime": 24,
       "still": "https://image.tmdb.org/t/p/w500/jWmpS57wesBF4lde1RcRZXgs7G6.jpg",
       "air_date": "2024-08-06"
+     }
+    ]
+   }
+  ]
+ },
+ "241811": {
+  "seasons": [
+   {
+    "season_number": 1,
+    "name": "Season 1",
+    "overview": "",
+    "episode_count": 24,
+    "episodes": [
+     {
+      "season": 1,
+      "episode": 1,
+      "name": "I HATE YOU and I LOVE YOU",
+      "overview": "Puniru follows Kotaro to school to take him something he forgot, but they end up getting into a fight. Puniru turns into an idol to get Kotaro to admit she’s cute. Kotaro tries to enlist Puniru’s help in winning the affections of his crush, Kirara-senpai.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/8KCGwMIcoP4qavrGE5nqX2mVTIw.jpg",
+      "air_date": "2024-10-06"
+     },
+     {
+      "season": 1,
+      "episode": 2,
+      "name": "Neither Friend nor Slime",
+      "overview": "Kotaro asks Puniru to turn into a first grader and act lost so he can look good in front of Kirara-senpai, but little does he know Kirara’s maternal instincts go into overdrive around children. Puniru later plays a trick using this knowledge.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/A26lUycZZtB0vvpQmVerArR9OAE.jpg",
+      "air_date": "2024-10-13"
+     },
+     {
+      "season": 1,
+      "episode": 3,
+      "name": "Kawaii Puniru is a Slime",
+      "overview": "Kotaro’s favorite plushie as a child was the adorable Kyuthi-chan, which had a profound (jealous) effect on Puniru. Now he wants to go to the Kyuthi Café, where he gets Puniru to pretend to be his girlfriend so he can order a dish meant for couples.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/yoIzmF1wo9OrlqztKAD2ZAIEcca.jpg",
+      "air_date": "2024-10-20"
+     },
+     {
+      "season": 1,
+      "episode": 4,
+      "name": "Alice in Kyuthi Land",
+      "overview": "Alice, granddaughter to the president of the toy company that made Kyuthi-chan, challenges Puniru to see whether she or a character Alice created is more adorable—and you could say the competition gets blown into gigantic proportions!",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/mDKP2kqkYRBY61mLeel2RwFpQVO.jpg",
+      "air_date": "2024-10-27"
+     },
+     {
+      "season": 1,
+      "episode": 5,
+      "name": "GO! GO! Fabulous Cheer Routine!",
+      "overview": "In an attempt to please Alice, Hodai dons a Runrune costume. Meanwhile, Nanpa, Puniru, and Hone-chan fight over Robo Runrune. Then, to put some pep back in the exhausted Kirara-senpai’s step, Puniru and Runrune become cheerleaders.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/3ITOUtlDN7JjEMo6Axnedoer1S6.jpg",
+      "air_date": "2024-11-03"
+     },
+     {
+      "season": 1,
+      "episode": 6,
+      "name": "The Runrune-tastic Grand Prix, Now with Puniru!",
+      "overview": "Puniru gets moldy and down in the dumps when Runrune starts ignoring her. Later, she’s determined to get Runrune and Alice to be friends again. Next, AI Runrune hits the scene, and Alice and Puniru face off to see which Runrune is better.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/fkphjVuhO0XNMdWJCmB7ohBLGUb.jpg",
+      "air_date": "2024-11-10"
+     },
+     {
+      "season": 1,
+      "episode": 7,
+      "name": "Sweet Bitter Summer",
+      "overview": "Kotaro and the boys go to the beach for a day of fun while Puniru and Kirara-senpai are at the school pool. Later, Kotaro asks Puniru to help him cool off with a special transformation, the gang hits a café, and then it’s time to tackle summer homework.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/4rLFncWMsNiNCBFqKvbMVQCQvhe.jpg",
+      "air_date": "2024-11-17"
+     },
+     {
+      "season": 1,
+      "episode": 8,
+      "name": "Gather 'Round for the School Festival!",
+      "overview": "It’s time for the school festival, but Puniru and Alice get into a fight over Kotaro. Alice tries to win him over with an incredible offer, and Puniru tries to throw the match so he can pursue his dreams.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/s24JcQtWGYzrlYO6RDZRfnepWCO.jpg",
+      "air_date": "2024-11-24"
+     },
+     {
+      "season": 1,
+      "episode": 9,
+      "name": "Let's Start a Band, Punks!",
+      "overview": "Kotaro wants to be cool and decides to try his luck with dragons and a rock band. Puniru then lets the cat out of the bag about Kotaro’s feelings for Kirara, which forces him to make a move. Can he get Puniru to help him out?",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/z0Tu65MYcp8jc0xWVxmsbtPdqLF.jpg",
+      "air_date": "2024-12-01"
+     },
+     {
+      "season": 1,
+      "episode": 10,
+      "name": "Merry Punirumas!",
+      "overview": "Ever since being teased as kid for liking cute things, Kotaro has never enjoyed Christmas. This year his parents are going on a trip for the holiday, so in order to avoid being stuck home alone with Puniru, he tries to throw a Christmas party.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/mqgJdEI84OtlmhyaAQosh5YhdQB.jpg",
+      "air_date": "2024-12-08"
+     },
+     {
+      "season": 1,
+      "episode": 11,
+      "name": "Scoop Up a Spoonful of Christmas",
+      "overview": "Puniru says she’ll spend the holiday with whoever brings her the cutest Christmas cake, but the offerings she gets are... interesting. When a certain someone loses their patience, she may yet get a Christmas to remember.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/6JkMggwIGKZwIbFmpVhxi3ZfnND.jpg",
+      "air_date": "2024-12-15"
+     },
+     {
+      "season": 1,
+      "episode": 12,
+      "name": "A Lovely, Puniful Destination",
+      "overview": "Out of the blue, Kotaro wins tickets to a ski resort—specifically the Runrune Resort run by Alice. When they get there, Puniru is determined to make an impression, and her desire to be cuter than ever may just spur even greater adventure.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/bCknY7MfUWs6OIFXREW6evg56rd.jpg",
+      "air_date": "2024-12-22"
+     },
+     {
+      "season": 1,
+      "episode": 13,
+      "name": "Puniru Returns",
+      "overview": "While hoping for Puniru's return, a lonely Kotaro sees the fruits of her cuteness training from afar. One day, he receives an unexpected package.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/7iZrFQJpduFgbzGrOMGjDbFN3XI.jpg",
+      "air_date": "2025-07-06"
+     },
+     {
+      "season": 1,
+      "episode": 14,
+      "name": "Going on a Journey with My Childhood Friend Slime in Another World. And Valentine's, Too!",
+      "overview": "Finding himself transported to a fantasy world, Kotaro learns he must rescue Princess Kyuthi, who has been imprisoned in the Demon Lord's castle.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/8rSMNstRMaFs4Ff0xtDLVZDZ8e4.jpg",
+      "air_date": "2025-07-13"
+     },
+     {
+      "season": 1,
+      "episode": 15,
+      "name": "Rune Rune Dance",
+      "overview": "After Runru breaks down, Puniru decides to inject it with some slime-based medicine that has an unexpected side effect: awakening its sense of self.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/fjuaOmGbgeu2vOSmRRc3wJRc46x.jpg",
+      "air_date": "2025-07-20"
+     },
+     {
+      "season": 1,
+      "episode": 16,
+      "name": "A Being More Perfect than a Toy",
+      "overview": "Mado succeeds in creating an artificial slime lifeform and names her Gelee. Wanting to become more human, Gelee begins searching for someone to love.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/pl6GapmkRNImR7P3DP3Mhx2m1JO.jpg",
+      "air_date": "2025-07-27"
+     },
+     {
+      "season": 1,
+      "episode": 17,
+      "name": "Puniru Powers Up?! See It for Yourself!",
+      "overview": "Kotaro has big plans for the summer, but could he be his own worst enemy? Meanwhile, Puniru seeks to power up.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/Sa3AMCzSiBCRwHpKufbpeLt9jp.jpg",
+      "air_date": "2025-08-03"
+     },
+     {
+      "season": 1,
+      "episode": 18,
+      "name": "A Human Happy Ending",
+      "overview": "Gelee becomes the center of attention among the school's boys, including Kotaro, much to Puniru's chagrin.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/rt6Hi8ba62YqkKJnc9352u6mcLO.jpg",
+      "air_date": "2025-08-10"
+     },
+     {
+      "season": 1,
+      "episode": 19,
+      "name": "A Midsummer's Runrune Resort",
+      "overview": "Alice invites Kotaro to stay at Runrune Resort, but all Kotaro can think about is Gelee and her advances.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/z0soDCEhKgstBywZW47uudElYuN.jpg",
+      "air_date": "2025-08-17"
+     },
+     {
+      "season": 1,
+      "episode": 20,
+      "name": "Trick or Kawaii!",
+      "overview": "Gelee joins Kotaro's class as a student, to her chagrin. Meanwhile, Puniru plans a big surprise for Halloween.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/1OT0ekDRVUjmVufDlMkz1bpy0fd.jpg",
+      "air_date": "2025-08-24"
+     },
+     {
+      "season": 1,
+      "episode": 21,
+      "name": "Art Is All About \"Kawaii\"!",
+      "overview": "Hodai hatches a scheme to discredit Kotaro in Alice's eyes by having him face Nanpa in an artistic face-off.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/4s5zW52XliF6jb6jjhrOyJ2G05w.jpg",
+      "air_date": "2025-08-31"
+     },
+     {
+      "season": 1,
+      "episode": 22,
+      "name": "Friendly Enough to Always Argue",
+      "overview": "Kotaro gets into a big fight with Puniru, who runs away to Mami's apartment and meets the Kirara family.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/tXhO8baUwX4S3oXzyS91LhlLzOF.jpg",
+      "air_date": "2025-09-07"
+     },
+     {
+      "season": 1,
+      "episode": 23,
+      "name": "The Human Condition",
+      "overview": "Kotaro holds a study group with friends, but his careless remark to Gelee ends up having dire consequences.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/989irLfFn9N23056jWJPW47l2bx.jpg",
+      "air_date": "2025-09-14"
+     },
+     {
+      "season": 1,
+      "episode": 24,
+      "name": "That's What the World Calls Love",
+      "overview": "Puniru turns into a perfect human girl, but Kotaro doesn't seem as happy to hear the news as everyone else.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/qcGRboY5WChCucyKm8qFPcm4Kbe.jpg",
+      "air_date": "2025-09-21"
      }
     ]
    }
