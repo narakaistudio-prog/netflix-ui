@@ -1,4 +1,18 @@
 {
     "ok": false,
-    "error": "Tudum page: no movie at rank 1 (found 3 ranked movies)"
+    "error": "Tudum page: no movie at rank 1 (found 3 ranked movies)",
+    "diagnostic": {
+        "length": 731458,
+        "inMoviesCount": 10,
+        "watchLinkCount": 3,
+        "posterCount": 139,
+        "windows": [
+            "ign--Asset-Width);}</style><img data-hawkins-id=\"Emoji.TopTen\" src=\"https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAfUhN0I5wFej8zqKbBiMl9h0mtVBZ84A2VBvUILfVkv2Yp57PKc9UZLMOoQsScKuQCZ_XSIo46R35U-nng2VvS3inFjlqQpKM7xwkKKLtpfhsZyR91j9xbKUv3V3DJh2p38_UI0.svg\" aria-hidden=\"true\" class=\"default-ltr-iqcdef-cache-ub8ddh ejnndvn0\"/>#1 in Movies</div></div></div></li><li data-entity-id=\"top10-4h",
+            "def-cache-itwhe0 eufyfg40\"><img data-hawkins-id=\"Emoji.TopTen\" src=\"https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAfUhN0I5wFej8zqKbBiMl9h0mtVBZ84A2VBvUILfVkv2Yp57PKc9UZLMOoQsScKuQCZ_XSIo46R35U-nng2VvS3inFjlqQpKM7xwkKKLtpfhsZyR91j9xbKUv3V3DJh2p38_UI0.svg\" aria-hidden=\"true\" class=\"default-ltr-iqcdef-cache-ub8ddh ejnndvn0\"/>#2 in Movies</div></div></div></li><li data-entity-id=\"top10-4h",
+            "def-cache-itwhe0 eufyfg40\"><img data-hawkins-id=\"Emoji.TopTen\" src=\"https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAfUhN0I5wFej8zqKbBiMl9h0mtVBZ84A2VBvUILfVkv2Yp57PKc9UZLMOoQsScKuQCZ_XSIo46R35U-nng2VvS3inFjlqQpKM7xwkKKLtpfhsZyR91j9xbKUv3V3DJh2p38_UI0.svg\" aria-hidden=\"true\" class=\"default-ltr-iqcdef-cache-ub8ddh ejnndvn0\"/>#3 in Movies</div></div></div></li><li data-entity-id=\"top10-4h",
+            "def-cache-itwhe0 eufyfg40\"><img data-hawkins-id=\"Emoji.TopTen\" src=\"https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAfUhN0I5wFej8zqKbBiMl9h0mtVBZ84A2VBvUILfVkv2Yp57PKc9UZLMOoQsScKuQCZ_XSIo46R35U-nng2VvS3inFjlqQpKM7xwkKKLtpfhsZyR91j9xbKUv3V3DJh2p38_UI0.svg\" aria-hidden=\"true\" class=\"default-ltr-iqcdef-cache-ub8ddh ejnndvn0\"/>#4 in Movies</div></div></div></li><li data-entity-id=\"top10-4h",
+            "def-cache-itwhe0 eufyfg40\"><img data-hawkins-id=\"Emoji.TopTen\" src=\"https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAfUhN0I5wFej8zqKbBiMl9h0mtVBZ84A2VBvUILfVkv2Yp57PKc9UZLMOoQsScKuQCZ_XSIo46R35U-nng2VvS3inFjlqQpKM7xwkKKLtpfhsZyR91j9xbKUv3V3DJh2p38_UI0.svg\" aria-hidden=\"true\" class=\"default-ltr-iqcdef-cache-ub8ddh ejnndvn0\"/>#5 in Movies</div></div></div></li><li data-entity-id=\"top10-4h",
+            "def-cache-itwhe0 eufyfg40\"><img data-hawkins-id=\"Emoji.TopTen\" src=\"https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAfUhN0I5wFej8zqKbBiMl9h0mtVBZ84A2VBvUILfVkv2Yp57PKc9UZLMOoQsScKuQCZ_XSIo46R35U-nng2VvS3inFjlqQpKM7xwkKKLtpfhsZyR91j9xbKUv3V3DJh2p38_UI0.svg\" aria-hidden=\"true\" class=\"default-ltr-iqcdef-cache-ub8ddh ejnndvn0\"/>#6 in Movies</div></div></div></li><li data-entity-id=\"top10-4h"
+        ]
+    }
 }
