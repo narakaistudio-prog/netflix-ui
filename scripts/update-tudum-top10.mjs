@@ -194,6 +194,24 @@ async function fetchTudum() {
     }
 }
 
+/**
+ * Facts about a page that did not parse, for the status file: counts and the raw HTML
+ * around the first "in Movies" texts. Only written on failure, so it stays small.
+ */
+export function diagnose(html) {
+    const raw = String(html || '');
+    const hits = [...raw.matchAll(/in\s*Movies/gi)].map(m => m.index);
+    return {
+        length: raw.length,
+        inMoviesCount: hits.length,
+        watchLinkCount: (raw.match(/(?:\/|%2F)watch(?:\/|%2F)\d+/gi) || []).length,
+        posterCount: (raw.match(/dnm\.nflximg\.net/g) || []).length,
+        windows: hits.slice(0, 6).map(i => raw.slice(Math.max(0, i - 350), i + 60).replace(/\s+/g, ' ')),
+    };
+}
+
+let lastHtml = '';
+
 function readHistory() {
     if (!existsSync(HISTORY)) return { source: TUDUM_URL, weeks: [] };
     return JSON.parse(readFileSync(HISTORY, 'utf8'));
@@ -207,6 +225,7 @@ function writeStatus(status) {
 
 async function main() {
     const html = await fetchTudum();
+    lastHtml = html;
     const { week, movies: ranked } = parseTudumTop10(html);
     console.log(`Tudum Top 10 Movies in India, week ${week || 'unknown'}:`);
     for (const m of ranked) console.log(`  #${m.rank} ${m.title} (netflix ${m.netflixId})`);
@@ -261,7 +280,7 @@ async function updateRow(week, ranked) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
     main().catch(e => {
         console.error(e);
-        writeStatus({ ok: false, error: String(e?.message || e) });
+        writeStatus({ ok: false, error: String(e?.message || e), diagnostic: diagnose(lastHtml) });
         process.exit(1);
     });
 }
