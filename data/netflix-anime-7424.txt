@@ -2,6 +2,7 @@
 # Format: "## Row title" starts a row; "Title | Netflix title id" is one movie or show.
 # Rows and titles are copied in page order. The same title can appear in several rows.
 # nxsha supplies every detail and image; see scripts/build-netflix-genre-rows.mjs (--preset=anime).
+# Titles nxsha lists under another name are aliased in NXSHA_ALIASES (build-netflix-genre-rows.mjs).
 
 ## Your Next Watch
 Demon Slayer: Kimetsu no Yaiba Infinity Castle I | 82723106
