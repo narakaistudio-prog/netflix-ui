@@ -1,7 +1,8 @@
 name: Probe nxsha TV seasons (temporary)
 
 # Diagnostic only: prints where nxsha serves TV season 2+ episode lists.
-# Writes nothing to the repo. Remove once the episode builder is in place.
+# The output is committed to data/probe-nxsha-tv.txt so it can be read from the repo.
+# Remove once the episode builder is in place.
 on:
   push:
     branches:
@@ -11,8 +12,12 @@ on:
       - 'scripts/probe-nxsha-tv.mjs'
   workflow_dispatch:
 
+concurrency:
+  group: probe-nxsha-tv-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   probe:
@@ -20,8 +25,20 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - name: Probe
-        run: node scripts/probe-nxsha-tv.mjs
+        run: node scripts/probe-nxsha-tv.mjs > data/probe-nxsha-tv.txt 2>&1 || true
+      - name: Commit the probe output
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/probe-nxsha-tv.txt
+          if git diff --cached --quiet; then echo "No change."; else
+            git commit -m "chore(probe): nxsha TV season output"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi
