@@ -114,3 +114,28 @@ test('usableItems drops titles without an nxsha id or an image', () => {
     ];
     expect(call(`m.usableItems(${JSON.stringify(items)}).map(i => i.id)`)).toEqual(['a']);
 });
+
+test('a rank card with only its data-entity-id gives the Netflix id and an empty title', () => {
+    const card = `<li data-entity-id="top10-4hB3vzDf6ZuX1ToDt7bAL9-82723106"><div data-uia="top10-card"></div><span>#6 in Movies</span></li>`;
+    const page = FIXTURE.replace(entry(6, 'Demon Slayer: Kimetsu no Yaiba Infinity Castle I', '82723106'), card);
+    const movie = call(`m.parseTudumTop10(${JSON.stringify(page)}).movies[5]`);
+    expect(movie).toEqual({ rank: 6, title: '', netflixId: '82723106' });
+});
+
+test('resolveTitles uses the title the page gave, then the row, and only then the title page', async () => {
+    const ranked = [
+        { rank: 1, title: 'From Page', netflixId: '1' },
+        { rank: 2, title: '', netflixId: '2' },
+    ];
+    const known = { '2': 'From Row' };
+    const out = call(`m.resolveTitles(${JSON.stringify(ranked)}, new Map(${JSON.stringify(Object.entries(known))}))`);
+    expect(out.map((m: any) => m.title)).toEqual(['From Page', 'From Row']);
+});
+
+test('titleFromNetflixPage reads og:title or <title> and drops the site name', () => {
+    const og = '<meta property="og:title" content="Romanchakam | Netflix Official Site"/>';
+    expect(call(`m.titleFromNetflixPage(${JSON.stringify(og)})`)).toBe('Romanchakam');
+    const tag = '<title>Watch Romanchakam | Netflix</title>';
+    expect(call(`m.titleFromNetflixPage(${JSON.stringify(tag)})`)).toBe('Romanchakam');
+    expect(call(`m.titleFromNetflixPage(${JSON.stringify('<title>Netflix</title>')})`)).toBe('');
+});

@@ -58,13 +58,15 @@ export function decode(value) {
 /**
  * Pull the ranked movie list out of the Tudum page HTML.
  *
- * Each list entry has a poster image whose alt text is the title, a link to
- * /watch/<netflix id>, and the text "#<rank> in Movies". Tags are turned into
- * markers first, so the order of the page and not its exact markup decides the
- * result. The first entry for each rank wins; the page can repeat the list.
+ * Each list entry has a card whose data-entity-id ends with the Netflix id, a
+ * poster whose alt text is usually the title, and the text "#<rank> in Movies".
+ * The raw HTML does not always carry every title (the page fills some in on the
+ * client), so a missing title comes back as '' and resolveTitles() fills it in.
+ * Tags become markers first, so the order of the page decides the result. The
+ * first entry for each rank wins; the page can repeat the list.
  *
  * Returns { week, movies: [{ rank, title, netflixId }] } with exactly ranks 1..10,
- * and throws when the page does not give a complete list.
+ * and throws when an id or rank is missing.
  */
 export function parseTudumTop10(html) {
     const marked = String(html || '')
@@ -77,6 +79,9 @@ export function parseTudumTop10(html) {
             // ...login?nextpage=https%3A%2F%2Fwww.netflix.com%2Fwatch%2F<id>...
             const watch = /(?:\/|%2F)watch(?:\/|%2F)(\d+)/i.exec(tag);
             if (watch) return ` [[WATCH:${watch[1]}]] `;
+            // Rank cards carry the id at the end of data-entity-id, e.g. "top10-4hB3…-82723106".
+            const entity = /data-entity-id="[^"]*-(\d{6,9})"/i.exec(tag);
+            if (entity) return ` [[WATCH:${entity[1]}]] `;
             return ' ';
         });
     const text = decode(marked);
@@ -95,7 +100,7 @@ export function parseTudumTop10(html) {
             if (!pendingId) pendingId = m[2];
         } else {
             const rank = Number(m[3]);
-            if (m[4] === 'Movies' && !byRank.has(rank) && pendingTitle && pendingId) {
+            if (m[4] === 'Movies' && !byRank.has(rank) && pendingId) {
                 byRank.set(rank, { rank, title: pendingTitle, netflixId: pendingId });
             }
             pendingTitle = '';
@@ -110,6 +115,72 @@ export function parseTudumTop10(html) {
         movies.push(hit);
     }
     return { week, movies };
+}
+
+/** Title from a Netflix title page: og:title or <title>, without the site name or "Watch". */
+export function titleFromNetflixPage(html) {
+    const og = /<meta[^>]+property="og:title"[^>]+content="([^"]*)"/i.exec(String(html || ''));
+    const tag = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(String(html || ''));
+    const raw = decode(og ? og[1] : tag ? tag[1] : '');
+    const title = raw
+        .replace(/\s*[|\u2013\u2014-]\s*Netflix.*$/i, '')
+        .replace(/^Watch\s+/i, '')
+        .trim();
+    if (!title || /^netflix/i.test(title)) return '';
+    return title;
+}
+
+/** Log of title lookups in this run, written to the status file on failure. */
+const lookupLog = [];
+
+/**
+ * Give every ranked movie a title: the title the Tudum page gave, else the title the
+ * row already has for that id, else the Netflix title page. Throws when none works.
+ */
+export async function resolveTitles(ranked, knownTitles) {
+    const out = [];
+    for (const m of ranked) {
+        if (m.title) {
+            out.push(m);
+            continue;
+        }
+        const known = knownTitles.get(String(m.netflixId));
+        if (known) {
+            out.push({ ...m, title: known });
+            continue;
+        }
+        const html = await get(`https://www.netflix.com/in/title/${m.netflixId}`);
+        const title = html ? titleFromNetflixPage(html) : '';
+        lookupLog.push({ netflixId: m.netflixId, found: Boolean(html), title });
+        if (!title) throw new Error(`no title for Netflix id ${m.netflixId} (rank ${m.rank})`);
+        out.push({ ...m, title });
+    }
+    return out;
+}
+
+/** GET with a few retries; null on 404. Used for the Netflix title page. */
+async function get(url) {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 30000);
+    try {
+        for (let attempt = 1; attempt <= 3; attempt += 1) {
+            try {
+                const res = await fetch(url, {
+                    signal: ctl.signal,
+                    redirect: 'follow',
+                    headers: { 'User-Agent': UA, Accept: 'text/html,*/*', 'Accept-Language': 'en-US,en;q=0.9' },
+                });
+                if (res.status === 200) return await res.text();
+                if (res.status === 404) return null;
+            } catch (e) {
+                if (attempt === 3) throw e;
+            }
+            await new Promise(r => setTimeout(r, 800 * attempt));
+        }
+        return null;
+    } finally {
+        clearTimeout(timer);
+    }
 }
 
 /** Upsert one week into the history (keeps first-seen date, never rewrites an unchanged week). */
@@ -235,7 +306,13 @@ function writeStatus(status) {
 async function main() {
     const html = await fetchTudum();
     lastHtml = html;
-    const { week, movies: ranked } = parseTudumTop10(html);
+    const parsed = parseTudumTop10(html);
+    const knownTitles = new Map();
+    for (const row of JSON.parse(readFileSync(MOVIES, 'utf8')).movies) {
+        for (const item of row.movies || []) if (item.netflixId && item.title) knownTitles.set(String(item.netflixId), item.title);
+    }
+    const week = parsed.week;
+    const ranked = await resolveTitles(parsed.movies, knownTitles);
     console.log(`Tudum Top 10 Movies in India, week ${week || 'unknown'}:`);
     for (const m of ranked) console.log(`  #${m.rank} ${m.title} (netflix ${m.netflixId})`);
     if (DRY) {
@@ -276,7 +353,7 @@ async function updateRow(week, ranked) {
         }
         filled.movies = kept;
         writeFileSync(MOVIES, JSON.stringify(after, null, 4) + '\n');
-        writeStatus({ ok: true, week, titles: kept.map(m => m.title) });
+        writeStatus({ ok: true, week, titles: kept.map(m => m.title), titleLookups: lookupLog });
         console.log(`updated ${ROW_TITLE}: ${kept.length} of ${ranked.length} titles usable (${kept.map(m => m.title).join(', ')})`);
     } catch (e) {
         // Put the previous row back, so a failed run never leaves a half-filled row.
@@ -289,7 +366,12 @@ async function updateRow(week, ranked) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
     main().catch(e => {
         console.error(e);
-        writeStatus({ ok: false, error: String(e?.message || e), diagnostic: diagnose(lastHtml) });
+        writeStatus({
+            ok: false,
+            error: String(e?.message || e),
+            titleLookups: lookupLog,
+            diagnostic: diagnose(lastHtml),
+        });
         process.exit(1);
     });
 }
