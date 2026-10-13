@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T18:45:14.559Z",
+  "generatedAt": "2026-10-13T06:46:56.115Z",
   "titles": [
     {
       "key": "aot",
@@ -4644,15 +4644,15 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 87264,
+      "bytes": 87364,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
         "https://web.nxsha.app/movie/1441228",
         "https://web.nxsha.app/movie/1441228",
         "https://www.youtube.com/watch?v=lqlYx4MdsAY",
+        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\",
         "https://web.nxsha.app/movie/1441228\\",
-        "https://web.nxsha.app/movie/1441228\\",
-        "https://www.youtube.com/watch?v=lqlYx4MdsAY\\"
+        "https://web.nxsha.app/movie/1441228\\"
       ],
       "ordinals": [],
       "snippet": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href="
