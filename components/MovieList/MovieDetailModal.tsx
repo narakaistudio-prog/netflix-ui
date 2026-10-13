@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
-import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE } from '@/lib/embeds';
+import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import { markWatched } from '@/lib/recentlyWatched';
 import type { Movie } from '@/types/movie';
 
@@ -48,6 +48,15 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
         try {
             const provider = movie.embed_provider || 'nxsha';
             // Netflix titles play in the Netflix-accent nxsha player.
+            // Netflix shows (mediaType 'tv') open their first episode in the same accent player.
+            if (movie.mediaType === 'tv') {
+                return buildEmbedUrl(
+                    provider,
+                    'tv',
+                    { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url, season: 1, episode: 1 },
+                    provider === 'nxsha' ? { tvTemplate: NETFLIX_NXSHA_TV } : {},
+                );
+            }
             return buildEmbedUrl(
                 provider,
                 'movie',
