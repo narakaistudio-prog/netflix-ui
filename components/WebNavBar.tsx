@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Pressable, StyleSheet, Platform, TextInput, useWindowDimensions } from 'react-native';
 import { isPhoneWidth } from '@/lib/layout';
+import { NOTIFICATIONS, NOTIFICATIONS_SEEN_KEY, unseenCount } from '@/lib/notifications';
+
+const todayKey = () => {
+    const d = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
@@ -22,11 +29,6 @@ const NAV_LINKS = [
     { label: 'Crunchyroll', href: '/crunchyroll' as const, type: 'route' },
 ];
 
-const NOTIFICATIONS = [
-    { id: '1', title: 'Heeramandi: The Diamond Bazaar', time: '1 day ago', text: 'Season 1 is now streaming in 4K HDR Hindi & Regional.' },
-    { id: '2', title: 'Jawan', time: '2 days ago', text: 'Shah Rukh Khan’s #1 blockbuster now available.' },
-    { id: '3', title: 'Animal', time: '4 days ago', text: 'Top 10 trending in India today.' },
-];
 
 /**
  * Present-day Netflix India desktop navigation bar.
@@ -40,6 +42,8 @@ export function WebNavBar() {
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showBellMenu, setShowBellMenu] = useState(false);
+    const [seenDate, setSeenDate] = useState<string | null>(null);
+    const unread = unseenCount(NOTIFICATIONS, seenDate);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showTvGuide, setShowTvGuide] = useState(false);
     const { isTvMode, toggleTvMode } = useTvMode();
@@ -53,6 +57,15 @@ export function WebNavBar() {
         setSearchOpen(false);
         setSearchQuery('');
     };
+
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+        try {
+            setSeenDate(window.localStorage.getItem(NOTIFICATIONS_SEEN_KEY));
+        } catch {
+            // Storage blocked: every item simply counts as new.
+        }
+    }, []);
 
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
@@ -305,6 +318,16 @@ export function WebNavBar() {
                     <View style={styles.bellContainer}>
                         <Pressable
                             onPress={() => {
+                                // Opening the bell marks everything up to today as seen.
+                                if (!showBellMenu) {
+                                    const today = todayKey();
+                                    setSeenDate(today);
+                                    try {
+                                        window.localStorage.setItem(NOTIFICATIONS_SEEN_KEY, today);
+                                    } catch {
+                                        // Storage blocked: the badge may come back next visit.
+                                    }
+                                }
                                 setShowBellMenu((prev) => !prev);
                                 setShowProfileMenu(false);
                             }}
@@ -321,15 +344,20 @@ export function WebNavBar() {
                             style={({ hovered }: any) => [styles.iconBtn, hovered && { opacity: 0.75 }]}
                         >
                             <Ionicons name="notifications-outline" size={21} color="#fff" />
-                            <View style={styles.bellDot}>
-                                <Text style={styles.bellDotText}>3</Text>
-                            </View>
+                            {unread > 0 && (
+                                <View style={styles.bellDot}>
+                                    <Text style={styles.bellDotText}>{unread}</Text>
+                                </View>
+                            )}
                         </Pressable>
 
                         {/* Bell Notifications Dropdown */}
                         {showBellMenu && (
                             <View style={styles.dropdownMenu}>
                                 <Text style={styles.dropdownHeader}>Notifications</Text>
+                                {NOTIFICATIONS.length === 0 && (
+                                    <Text style={styles.notifText}>No new notifications</Text>
+                                )}
                                 {NOTIFICATIONS.map((n) => (
                                     <Pressable
                                         key={n.id}
@@ -340,7 +368,7 @@ export function WebNavBar() {
                                         <View style={{ flex: 1 }}>
                                             <Text style={styles.notifTitle}>{n.title}</Text>
                                             <Text style={styles.notifText}>{n.text}</Text>
-                                            <Text style={styles.notifTime}>{n.time}</Text>
+                                            <Text style={styles.notifTime}>{n.date}</Text>
                                         </View>
                                     </Pressable>
                                 ))}
