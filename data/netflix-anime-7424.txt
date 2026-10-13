@@ -1,0 +1,518 @@
+# Source: https://www.netflix.com/in/browse/genre/7424 (Anime), captured 2026-10-13.
+# Format: "## Row title" starts a row; "Title | Netflix title id" is one movie or show.
+# Rows and titles are copied in page order. The same title can appear in several rows.
+# nxsha supplies every detail and image; see scripts/build-netflix-genre-rows.mjs (--preset=anime).
+
+## Your Next Watch
+Demon Slayer: Kimetsu no Yaiba Infinity Castle I | 82723106
+One-Punch Man | 80117291
+Black Clover | 80238012
+One Piece | 80107103
+Jujutsu Kaisen | 81278456
+Naruto | 70205012
+BAKI-DOU: The Invincible Samurai | 81922765
+JoJo's Bizarre Adventure | 80179831
+Demon Slayer: Kimetsu no Yaiba | 81091393
+VINLAND SAGA | 81249833
+The Apothecary Diaries | 81712068
+The Seven Deadly Sins | 80050063
+Blue Lock | 81640753
+My Hero Academia | 80135674
+Hajime no Ippo: The Fighting! | 80995578
+InuYasha | 70204995
+Hunter X Hunter (2011) | 70300472
+Shangri-La Frontier | 81727242
+Assassination Classroom | 80045948
+SAKAMOTO DAYS | 81663325
+Record of Ragnarok | 81281579
+DEATH NOTE | 70204970
+Delicious in Dungeon | 81564899
+STEEL BALL RUN JoJo's Bizarre Adventure | 82116553
+Kuroko's Basketball | 80063153
+Haikyu!! | 80090673
+Baki Hanma | 81236338
+Ranma1/2 | 81171925
+DAN DA DAN | 81736884
+Castlevania | 80095241
+BAKI | 80204451
+Overlord | 80132110
+The Disastrous Life of Saiki K. | 80117781
+Magic and Muscles | 81685164
+Blue Box | 81663323
+KENGAN ASHURA | 80992228
+The Fragrant Flower Blooms With Dignity | 82024665
+BEASTARS | 81054847
+Dr.STONE | 81046193
+The Seven Deadly Sins: Four Knights of the Apocalypse | 81562396
+
+## Young Adult Movies & Shows
+My Hero Academia | 80135674
+Blue Lock | 81640753
+Kuroko's Basketball | 80063153
+The Fragrant Flower Blooms With Dignity | 82024665
+The Disastrous Life of Saiki K. | 80117781
+The Ramparts of Ice | 82031882
+Ranma1/2 | 81171925
+Blue Box | 81663323
+DAN DA DAN | 81736884
+Wind Breaker | 81771389
+Tougen Anki | 81969861
+Ouran High School Host Club | 70205014
+KenIchi: The Mightiest Disciple | 70204998
+The Summer Hikaru Died | 81948057
+World Trigger | 80149562
+Romantic Killer | 81318888
+Sparks of Tomorrow | 81698957
+WITCH WATCH | 81991687
+Kamisama Kiss | 80070071
+Your lie in April | 80041089
+Sailor Moon Crystal | 80145747
+Cosmic Princess Kaguya! | 81756595
+Lookism | 81177634
+Slam Dunk | 70024218
+My Hero Academia: World Heroes' Mission | 81642996
+From Me to You: Kimi ni Todoke | 80236253
+My Hero Academia: Heroes Rising | 81398907
+The Disastrous Life of Saiki K.: Reawakened | 81054849
+Suzume | 81696498
+Bubble | 81345945
+Cells at Work! | 81028791
+Blue Period | 81318842
+My Hero Academia: Vigilantes | 82036361
+GTO: Great Teacher Onizuka | 80124041
+Akane-Banashi | 82701514
+The First Slam Dunk | 81765372
+Magic Knight Rayearth | 70308293
+CAROLE & TUESDAY | 80992137
+KAKEGURUI TWIN | 81176966
+Kuroko's Basketball: Last Game | 80991755
+
+## Anime Series
+JoJo's Bizarre Adventure | 80179831
+The Apothecary Diaries | 81712068
+BAKI-DOU: The Invincible Samurai | 81922765
+Demon Slayer: Kimetsu no Yaiba | 81091393
+VINLAND SAGA | 81249833
+Hajime no Ippo: The Fighting! | 80995578
+Blue Lock | 81640753
+The Seven Deadly Sins | 80050063
+Hunter X Hunter (2011) | 70300472
+Record of Ragnarok | 81281579
+Assassination Classroom | 80045948
+Shangri-La Frontier | 81727242
+SAKAMOTO DAYS | 81663325
+InuYasha | 70204995
+DEATH NOTE | 70204970
+Kuroko's Basketball | 80063153
+Delicious in Dungeon | 81564899
+Blue Box | 81663323
+Haikyu!! | 80090673
+Ranma1/2 | 81171925
+Castlevania | 80095241
+DAN DA DAN | 81736884
+The Disastrous Life of Saiki K. | 80117781
+STEEL BALL RUN JoJo's Bizarre Adventure | 82116553
+Baki Hanma | 81236338
+Overlord | 80132110
+Magic and Muscles | 81685164
+The Fragrant Flower Blooms With Dignity | 82024665
+Tougen Anki | 81969861
+KENGAN ASHURA | 80992228
+The Seven Deadly Sins: Four Knights of the Apocalypse | 81562396
+Dr.STONE | 81046193
+Daemons of the Shadow Realm | 82719204
+BEASTARS | 81054847
+Fullmetal Alchemist: Brotherhood | 70204981
+The Ramparts of Ice | 82031882
+BAKI | 80204451
+Komi Can't Communicate | 81228573
+Rurouni Kenshin | 81705252
+Wind Breaker | 81771389
+
+## Bingeworthy TV Shows
+DEATH NOTE | 70204970
+STEEL BALL RUN JoJo's Bizarre Adventure | 82116553
+Baki Hanma | 81236338
+Dr.STONE | 81046193
+BAKI | 80204451
+Cyberpunk: Edgerunners | 81054853
+Fullmetal Alchemist: Brotherhood | 70204981
+Blood of Zeus | 81001988
+Castlevania: Nocturne | 81436901
+Monster | 81409869
+Banana Fish | 81218604
+PLUTO | 81281344
+Orb: On the Movements of the Earth | 81765022
+Scott Pilgrim Takes Off | 81153115
+AJIN: Demi-Human | 80043576
+RESIDENT EVIL: Infinite Darkness | 80987064
+Great Pretender | 81220435
+Super Crooks | 81034907
+B: The Beginning | 80097594
+DRAGON PILOT: Hisone & Masotan | 80241960
+Ghost in the Shell: SAC_2045 | 81030224
+GOOD NIGHT WORLD | 81340213
+Captain Laserhawk: A Blood Dragon Remix | 81306319
+HERO MASK | 80200027
+Leviathan | 81152269
+exception | 81002444
+Japan Sinks: 2020 | 80993018
+LOST SONG | 80191369
+The Idhun Chronicles | 81002001
+
+## Kids' TV
+Pokémon The Series: XY | 80088367
+Captain Tsubasa | 81003894
+Pokémon The Series: Indigo League | 70297439
+Pokémon Horizons: Season 3: Rising Hope | 82077961
+DRAGON QUEST The Adventure of Dai | 81374392
+Beyblade X | 81924739
+Pokémon Horizons: The Series | 81696980
+Sonic X | 81172267
+Dinosaur King | 80007912
+Pokémon Horizons: Season 2: The Search for Laqua | 81944585
+Shimajiro: A Wonderful Adventure | 81235103
+Dino Girl Gauko | 80216180
+Chi's Sweet Adventure | 81712502
+Den-noh Coil | 81299264
+
+## Dark Fantasy Anime
+Record of Ragnarok | 81281579
+Castlevania | 80095241
+Tougen Anki | 81969861
+Overlord | 80132110
+Daemons of the Shadow Realm | 82719204
+Blood of Zeus | 81001988
+Castlevania: Nocturne | 81436901
+Puella Magi Madoka Magica | 70302572
+BASTARD‼ -Heavy Metal, Dark Fantasy- | 81281582
+Dorohedoro | 80991903
+PUELLA MAGI MADOKA MAGICA SIDE STORY [MAGIA RECORD] | 81234338
+Jujutsu Kaisen 0: The Movie | 81602834
+Yasuke | 80990863
+OVERLORD:The Sacred Kingdom | 82040442
+The Grimm Variations | 81050090
+Resident Evil: Damnation | 70229183
+Zom 100: Bucket List of the Dead | 81680101
+Resident Evil: Vendetta | 80190911
+SWORDGAI The Animation | 80175350
+Resident Evil: Death Island | 81714596
+AJIN: Demi-Human | 80043576
+Naruto Shippuden the Movie: Blood Prison | 80152537
+RESIDENT EVIL: Infinite Darkness | 80987064
+B: The Beginning | 80097594
+Dragon's Dogma | 80992784
+Devilman Crybaby | 80174974
+Seis Manos | 80217066
+Onmyoji | 81215624
+Vampire in the Garden | 80996247
+Trese | 81012541
+The Seven Deadly Sins: Grudge of Edinburgh Part 2 | 81306306
+The Seven Deadly Sins: Grudge of Edinburgh Part 1 | 81302750
+Children of the Whales | 80174917
+Sakuna: Of Rice and Ruin | 81914001
+
+## Anime for Beginners
+The Seven Deadly Sins | 80050063
+Hunter X Hunter (2011) | 70300472
+Shangri-La Frontier | 81727242
+Assassination Classroom | 80045948
+InuYasha | 70204995
+DAN DA DAN | 81736884
+KENGAN ASHURA | 80992228
+The Seven Deadly Sins: Four Knights of the Apocalypse | 81562396
+Magic and Muscles | 81685164
+Baki Hanma | 81236338
+Rurouni Kenshin | 81705252
+Overlord | 80132110
+BEASTARS | 81054847
+Wind Breaker | 81771389
+Fullmetal Alchemist: Brotherhood | 70204981
+BAKI | 80204451
+Dr.STONE | 81046193
+Cyberpunk: Edgerunners | 81054853
+Neon Genesis Evangelion | 81033445
+Mob Psycho 100 | 80179798
+Frieren: Beyond Journey's End | 81726714
+Blood of Zeus | 81001988
+The Rising of the Shield Hero | 81058649
+Castlevania: Nocturne | 81436901
+Kakegurui | 80175351
+BASTARD‼ -Heavy Metal, Dark Fantasy- | 81281582
+World Trigger | 80149562
+Puella Magi Madoka Magica | 70302572
+My Happy Marriage | 81564905
+DOTA: Dragon's Blood | 80994336
+Detective Conan | 80090370
+Gurren Lagann | 70213196
+Your lie in April | 80041089
+Aggretsuko | 80198505
+Black Clover: Sword of the Wizard King | 81448990
+OVERLORD:The Sacred Kingdom | 82040442
+Sailor Moon Crystal | 80145747
+Rising Impact | 81563026
+Violet Evergarden | 80182123
+Mobile Suit Gundam Seed | 80146549
+
+## Romantic TV Shows
+Ranma1/2 | 81171925
+Blue Box | 81663323
+My Happy Marriage | 81564905
+My Dress-Up Darling | 81569754
+Ouran High School Host Club | 70205014
+Sparks of Tomorrow | 81698957
+Romantic Killer | 81318888
+Vampire Knight | 70309457
+Kamisama Kiss | 80070071
+WITCH WATCH | 81991687
+Your lie in April | 80041089
+Love Through a Prism | 81498882
+Violet Evergarden | 80182123
+From Me to You: Kimi ni Todoke | 80236253
+Ōoku: The Inner Chambers | 81464005
+Puniru Is a Cute Slime | 81975106
+Hi Score Girl | 80997338
+Violet Evergarden: Special | 81010662
+
+## Exciting TV Shows
+SAKAMOTO DAYS | 81663325
+Delicious in Dungeon | 81564899
+Magic and Muscles | 81685164
+KENGAN ASHURA | 80992228
+The Seven Deadly Sins: Four Knights of the Apocalypse | 81562396
+Fullmetal Alchemist: Brotherhood | 70204981
+Rurouni Kenshin | 81705252
+Dr.STONE | 81046193
+Daemons of the Shadow Realm | 82719204
+KenIchi: The Mightiest Disciple | 70204998
+Neon Genesis Evangelion | 81033445
+Blood of Zeus | 81001988
+The Rising of the Shield Hero | 81058649
+Hell's Paradise: Jigokuraku | 81574246
+That Time I Got Reincarnated as a Slime | 81028712
+Kakegurui | 80175351
+Toriko | 82107992
+World Trigger | 80149562
+Toriko X One Piece Collaboration Special | 82108045
+BASTARD‼ -Heavy Metal, Dark Fantasy- | 81281582
+SHAMAN KING | 81239555
+Inuyasha: The Final Act | 80057177
+Detective Conan | 80090370
+Gurren Lagann | 70213196
+Sailor Moon Crystal | 80145747
+KILL BLUE | 82757009
+Snowball Earth | 82746480
+Slam Dunk | 70024218
+Mobile Suit Gundam Seed | 80146549
+Magi | 80009097
+Dragon Ball DAIMA | 81943491
+Mobile Suit Gundam Seed Destiny | 81724493
+EDENS ZERO | 81261630
+SPY x FAMILY | 81511410
+Gin Tama | 80018959
+Ultraman | 80231373
+Scott Pilgrim Takes Off | 81153115
+Rooster Fighter | 82647303
+Pacific Rim: The Black | 81002003
+Little Witch Academia | 80156387
+
+## In a Hurry? Try These 30-Minute Hits
+Haikyu!! | 80090673
+Rurouni Kenshin | 81705252
+Wind Breaker | 81771389
+BEASTARS | 81054847
+Mob Psycho 100 | 80179798
+Frieren: Beyond Journey's End | 81726714
+The Rising of the Shield Hero | 81058649
+Hell's Paradise: Jigokuraku | 81574246
+DOTA: Dragon's Blood | 80994336
+That Time I Got Reincarnated as a Slime | 81028712
+World Trigger | 80149562
+Kakegurui | 80175351
+My Happy Marriage | 81564905
+Dorohedoro | 80991903
+BASTARD‼ -Heavy Metal, Dark Fantasy- | 81281582
+Romantic Killer | 81318888
+Kotaro Lives Alone | 81275353
+Kamisama Kiss | 80070071
+Aggretsuko | 80198505
+Sailor Moon Crystal | 80145747
+Rising Impact | 81563026
+Tekken: Bloodline | 81002441
+Pacific Rim: The Black | 81002003
+Little Witch Academia | 80156387
+The Disastrous Life of Saiki K.: Reawakened | 81054849
+BNA | 81220429
+Garouden: The Way of the Lone Wolf | 81215625
+7SEEDS | 80183051
+My Daemon | 81261227
+CAROLE & TUESDAY | 80992137
+
+## Action Movies
+Dragon Ball Z: Battle of Gods | 70295183
+Black Clover: Sword of the Wizard King | 81448990
+Jujutsu Kaisen 0: The Movie | 81602834
+OVERLORD:The Sacred Kingdom | 82040442
+My Hero Academia: World Heroes' Mission | 81642996
+My Hero Academia: You're Next | 82036353
+My Hero Academia: Heroes Rising | 81398907
+Pretty Guardian Sailor Moon Cosmos The Movie | 81732000
+Hunter x Hunter: Phantom Rouge | 80108601
+Baki Hanma VS Kengan Ashura | 81648184
+Naruto Shippûden the Movie: Bonds | 70105699
+Naruto Shippuden the Movie: Blood Prison | 80152537
+Naruto Shippûden the Movie: The Will of Fire | 80045673
+Gintama the Movie 2026: Yoshiwara in Flames | 82968180
+The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261
+Hunter x Hunter: The Last Mission | 80108453
+Mobile Suit Gundam Hathaway | 81439253
+The Seven Deadly Sins: Cursed by Light | 81263946
+Dragon Quest Your Story | 81170086
+One Piece Film: Red | 81700392
+Monster Hunter: Legends of the Guild | 81346827
+Mobile Suit Gundam Hathaway: The Sorcery of Nymph Circe | 82854665
+The Witcher: Nightmare of the Wolf | 81037868
+New Gods: Nezha Reborn | 81418302
+BLAME! | 80115466
+Naruto Shippuden: The Movie | 70124999
+Naruto Shippuden: The Movie: The Lost Tower | 70275937
+One Piece Film: Gold | 80163050
+The End of Evangelion | 60024788
+One Piece Film Z | 80198443
+The Seven Deadly Sins: Grudge of Edinburgh Part 2 | 81306306
+Mobile Suit Gundam SEED FREEDOM | 81747912
+GODZILLA City on the Edge of Battle | 80180376
+One Piece: Episode of Alabasta | 70086565
+Naruto the Movie: Ninja Clash in the Land of Snow | 70074559
+One Piece Heart of Gold | 81679591
+Altered Carbon: Resleeved | 81001991
+Scarlet | 82888057
+The Seven Deadly Sins: Grudge of Edinburgh Part 1 | 81302750
+Naruto the Movie 3: Guardians of the Crescent Moon Kingdom | 70108386
+
+## Family Time TV
+Dragon Ball DAIMA | 81943491
+My Melody & Kuromi | 81318403
+From Me to You: Kimi ni Todoke | 80236253
+Transformers: War for Cybertron: Earthrise | 81393633
+Little Witch Academia | 80156387
+Transformers: War for Cybertron: Siege | 81002438
+Transformers: War for Cybertron: Kingdom | 81393636
+Gudetama: An Eggcellent Adventure | 81090127
+Pokémon Concierge | 81186864
+Forest of Piano | 80986797
+Chi's Sweet Adventure | 81712502
+Rilakkuma and Kaoru | 80196883
+Eden | 80992783
+Rilakkuma's Theme Park Adventure | 81341765
+
+## 30-Minute Laughs
+Komi Can't Communicate | 81228573
+KenIchi: The Mightiest Disciple | 70204998
+KILL BLUE | 82757009
+Romantic Killer | 81318888
+WITCH WATCH | 81991687
+Chainsmoker Cat | 82760630
+Aggretsuko | 80198505
+SPY x FAMILY | 81511410
+Gin Tama | 80018959
+Rooster Fighter | 82647303
+The Disastrous Life of Saiki K.: Reawakened | 81054849
+Scott Pilgrim Takes Off | 81153115
+Uncle from Another World | 81499847
+Zom 100: Bucket List of the Dead | 81680101
+The Way of the Househusband | 81261669
+Back Street Girls -GOKUDOLS- | 80996957
+GTO: Great Teacher Onizuka | 80124041
+Thermae Romae Novae | 81264354
+Puniru Is a Cute Slime | 81975106
+Dandelion | 81579317
+Hi Score Girl | 80997338
+Babanba Banban Vampire | 81949674
+Aggretsuko: We Wish You a Metal Christmas | 81008536
+
+## Suspenseful TV Shows
+Neon Genesis Evangelion | 81033445
+Monster | 81409869
+Banana Fish | 81218604
+Detective Conan | 80090370
+PLUTO | 81281344
+High-Rise Invasion | 81043571
+RESIDENT EVIL: Infinite Darkness | 80987064
+AJIN: Demi-Human | 80043576
+B: The Beginning | 80097594
+7SEEDS | 80183051
+Ghost in the Shell: SAC_2045 | 81030224
+The Witcher: Nightmare of the Wolf | 81037868
+Akuma Kun | 81400498
+Cagaster of an Insect Cage | 80224581
+HERO MASK | 80200027
+Ingress: The Animation | 80992853
+MAKE MY DAY | 81176967
+exception | 81002444
+
+## Family Movies
+Pokémon: Mewtwo Strikes Back - Evolution | 81223075
+A Whisker Away | 81281872
+Drifting Home | 81328781
+Pokémon the Movie: Secrets of the Jungle | 81346307
+Words Bubble Up Like Soda Pop | 81400497
+My Oni Girl | 81582442
+STAND BY ME Doraemon 2 | 81451264
+Dragon Quest Your Story | 81170086
+Monster Hunter: Legends of the Guild | 81346827
+STAND BY ME Doraemon | 80158156
+Child of Kamiari Month | 81478031
+The Imaginary | 81565710
+NiNoKuni | 81093113
+Anpanman: Apple Boy And Everyone's Hope | 81719818
+Anpanman: Star-Spirited Dollie | 81719799
+Anpanman: Nanda and Runda from Star of Toys | 81719826
+Anpanman: The Secret of Fairy Rin-Rin | 81719804
+Anpanman: Adventure of Happie | 81719798
+Anpanman: The Blacknose with Magical Song | 81719808
+
+## TV Shows Based on Books
+The Grimm Variations | 81050090
+Garouden: The Way of the Lone Wolf | 81215625
+Onmyoji | 81215624
+The Witcher: Nightmare of the Wolf | 81037868
+Leviathan | 81152269
+Japan Sinks: 2020 | 80993018
+SHIBOYUGI: Playing Death Games to Put Food on the Table | 82047155
+The Idhun Chronicles | 81002001
+
+## Watch in One Night
+Gundam: Requiem for Vengeance | 81276500
+Lookism | 81177634
+Yasuke | 80990863
+Toriko X One Piece Collaboration Special | 82108045
+Scott Pilgrim Takes Off | 81153115
+Terminator Zero | 81217220
+The Grimm Variations | 81050090
+Tekken: Bloodline | 81002441
+RESIDENT EVIL: Infinite Darkness | 80987064
+Onimusha | 81153116
+Garouden: The Way of the Lone Wolf | 81215625
+Yakitori: Soldiers of Misfortune | 81186862
+Vampire in the Garden | 80996247
+KAKEGURUI TWIN | 81176966
+Dragon Age: Absolution | 81183924
+One Piece Adventure of Nebulandia | 81679588
+Trese | 81012541
+The Orbital Children | 81340914
+Case Closed: Zero's Tea Time | 81313289
+Captain Laserhawk: A Blood Dragon Remix | 81306319
+Dandelion | 81579317
+One Piece: 3D2Y - Overcome Ace's Death! Luffy's Vow to His Friends | 81679587
+MAKE MY DAY | 81176967
+Tokyo Override | 81153111
+Monsters 103 Mercies Dragon Damnation | 81733654
+exception | 81002444
+One Piece Episode of East blue - Luffy and His Four Crewmates' Great Adventure | 81679589
+One Piece Fan Letter | 81947352
+One Piece Episode of Skypiea | 81679590
+One Piece: Heroines | 82904737
+Case Closed: The Culprit Hanzawa | 81313291
+Revelations: The Masters of the Universe: Revelation Aftershow | 81473420
+Trese After Dark | 81452597

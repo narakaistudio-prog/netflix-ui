@@ -17,7 +17,16 @@
  * Rows named in the source file are replaced. Other rows, including Trending, are
  * left untouched. Crunchyroll data is never read or written.
  *
- * Usage: node scripts/build-netflix-genre-rows.mjs [--dry-run]
+ * Presets choose the Netflix page to read:
+ *   genre (default)  data/netflix-genre-100381.txt, rows named as on Netflix,
+ *                    catalogCollection netflix-genre-100381.
+ *   anime            data/netflix-anime-7424.txt, rows prefixed "Anime: " so they
+ *                    never replace a genre row with the same name ("Your Next Watch").
+ *                    catalogCollection netflix-anime-7424.
+ * Titles that nxsha does not match are written to data/<source>.unmatched.txt,
+ * so the result can be read from the repo (runner logs are not readable from here).
+ *
+ * Usage: node scripts/build-netflix-genre-rows.mjs [--preset=genre|anime] [--dry-run]
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -26,8 +35,29 @@ import { decode, parseMoviePage } from './build-trending-nxsha.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const MOVIES = resolve(ROOT, 'data', 'movies.json');
-const SOURCE = resolve(ROOT, 'data', 'netflix-genre-100381.txt');
-const CATALOG_COLLECTION = 'netflix-genre-100381';
+const PRESETS = {
+    genre: {
+        source: 'data/netflix-genre-100381.txt',
+        collection: 'netflix-genre-100381',
+        idPrefix: 'netflix-genre-',
+        rowPrefix: '',
+    },
+    anime: {
+        source: 'data/netflix-anime-7424.txt',
+        collection: 'netflix-anime-7424',
+        idPrefix: 'netflix-anime-',
+        rowPrefix: 'Anime: ',
+    },
+};
+const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));
+const PRESET_NAME = PRESET_ARG ? PRESET_ARG.slice('--preset='.length) : 'genre';
+if (!PRESETS[PRESET_NAME]) {
+    console.error(`unknown --preset=${PRESET_NAME}; use one of: ${Object.keys(PRESETS).join(', ')}`);
+    process.exit(1);
+}
+const PRESET = PRESETS[PRESET_NAME];
+const SOURCE = resolve(ROOT, PRESET.source);
+const REPORT = resolve(ROOT, PRESET.source.replace(/\.txt$/, '.unmatched.txt'));
 const BASE = 'https://nxsha.space';
 const UA =
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
@@ -182,7 +212,7 @@ async function buildItem({ title, netflixId }) {
     const info = parseMoviePage(page);
     const mediaType = hit.type;
     const item = {
-        id: `netflix-genre-${netflixId}`,
+        id: `${PRESET.idPrefix}${netflixId}`,
         title: info.title || hit.name || title,
         imageUrl: hit.poster || info.backdrop || '',
         type: mediaType === 'tv' ? 'SERIES' : 'FILM',
@@ -191,7 +221,7 @@ async function buildItem({ title, netflixId }) {
         embed_provider: 'nxsha',
         netflixId,
         netflixUrl: `https://www.netflix.com/in/title/${netflixId}`,
-        catalogCollection: CATALOG_COLLECTION,
+        catalogCollection: PRESET.collection,
     };
     if (info.year || hit.year) item.year = info.year || hit.year;
     if (info.description) item.description = info.description;
@@ -210,6 +240,7 @@ async function main() {
     console.log(`source: ${source.length} rows, ${uniq.size} unique titles`);
 
     const built = new Map();
+    const unmatched = [];
     const report = { ok: 0, failed: 0, byStatus: {} };
     for (const [netflixId, t] of uniq) {
         let res;
@@ -225,6 +256,7 @@ async function main() {
         } else {
             report.failed += 1;
             report.byStatus[res.status] = (report.byStatus[res.status] || 0) + 1;
+            unmatched.push(`${t.title} | ${netflixId} | ${res.status}`);
             console.log(`${res.status.padEnd(16)} ${t.title}`);
         }
         await sleep(300);
@@ -240,7 +272,7 @@ async function main() {
             seen.add(item.id);
             movies.push(item);
         }
-        if (movies.length) rows.push({ rowTitle: src.rowTitle, type: 'normal', movies });
+        if (movies.length) rows.push({ rowTitle: `${PRESET.rowPrefix}${src.rowTitle}`, type: 'normal', movies });
     }
 
     console.log(`built ${report.ok}/${uniq.size} titles into ${rows.length} rows; failed: ${JSON.stringify(report.byStatus)}`);
@@ -249,13 +281,17 @@ async function main() {
         return;
     }
 
+    writeFileSync(REPORT, `# Titles from ${PRESET.source} that nxsha did not match (not shown in the app).\n` +
+        unmatched.join('\n') + '\n');
+    console.log(`wrote ${REPORT}: ${unmatched.length} unmatched`);
+
     const data = JSON.parse(readFileSync(MOVIES, 'utf8'));
-    const replaced = new Set(source.map((r) => r.rowTitle));
+    const replaced = new Set(source.map((r) => `${PRESET.rowPrefix}${r.rowTitle}`));
     // Keep rows that are not from this source (Trending and others) in their order.
     const kept = data.movies.filter((r) => !replaced.has(r.rowTitle));
     data.movies = [...kept, ...rows];
     writeFileSync(MOVIES, JSON.stringify(data, null, 4) + '\n');
-    console.log(`wrote data/movies.json: ${rows.length} genre rows, ${kept.length} other rows kept`);
+    console.log(`wrote data/movies.json: ${rows.length} ${PRESET_NAME} rows, ${kept.length} other rows kept`);
 }
 
 // Run only when executed directly; the parsers above are importable for tests.
