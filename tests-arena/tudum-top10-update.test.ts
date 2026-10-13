@@ -139,3 +139,23 @@ test('titleFromNetflixPage reads og:title or <title> and drops the site name', (
     expect(call(`m.titleFromNetflixPage(${JSON.stringify(tag)})`)).toBe('Romanchakam');
     expect(call(`m.titleFromNetflixPage(${JSON.stringify('<title>Netflix</title>')})`)).toBe('');
 });
+
+
+describe('New Entries row helper', () => {
+    const weeks = [
+        { week: 'old', firstSeen: '2026-10-06', movies: [{ title: 'Alpha' }, { title: 'Beta' }] },
+        { week: 'new', firstSeen: '2026-10-13', movies: [{ title: 'Alpha' }, { title: 'Gamma' }] },
+    ];
+
+    test('lists only titles that were not in the previous week', () => {
+        expect(call(`m.newEntriesFor(${JSON.stringify(weeks)}, 'new', ['Alpha', 'Gamma'])`)).toEqual(['Gamma']);
+    });
+
+    test('the first recorded week has no new entries (baseline)', () => {
+        expect(call(`m.newEntriesFor(${JSON.stringify([weeks[0]])}, 'old', ['Alpha', 'Beta'])`)).toEqual([]);
+    });
+
+    test('the row title is fixed', () => {
+        expect(call('m.FRESH_ROW_TITLE')).toBe('New Entries in India Top 10');
+    });
+});

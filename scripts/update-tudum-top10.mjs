@@ -34,6 +34,8 @@ const STATUS = resolve(ROOT, 'data', 'tudum-top10-india-status.json');
 const TRENDING_BUILDER = resolve(ROOT, 'scripts', 'build-trending-nxsha.mjs');
 export const TUDUM_URL = 'https://www.netflix.com/tudum/top10/india';
 export const ROW_TITLE = 'Trending Now in India';
+/** Row with the titles that entered the India Top 10 this week (not in last week's list). */
+export const FRESH_ROW_TITLE = 'New Entries in India Top 10';
 export const CATALOG_SOURCE = 'tudum-top10-india';
 /** Fewer usable titles than this keeps the previous row. */
 export const MIN_TITLES = 5;
@@ -181,6 +183,21 @@ async function get(url) {
     } finally {
         clearTimeout(timer);
     }
+}
+
+/**
+ * Titles in `week` that were not in the previous week's list. The previous week is the
+ * recorded week with the latest firstSeen before `week`. No previous week = no new
+ * entries (the first recorded week is a baseline).
+ */
+export function newEntriesFor(weeks, week, titles) {
+    const current = weeks.find(w => w.week === week);
+    const previous = weeks
+        .filter(w => w.week !== week && current && w.firstSeen < current.firstSeen)
+        .sort((a, b) => (a.firstSeen < b.firstSeen ? 1 : a.firstSeen > b.firstSeen ? -1 : 0))[0];
+    if (!previous) return [];
+    const before = new Set(previous.movies.map(m => m.title.toLowerCase()));
+    return titles.filter(t => !before.has(t.toLowerCase()));
 }
 
 /** Upsert one week into the history (keeps first-seen date, never rewrites an unchanged week). */
@@ -352,6 +369,15 @@ async function updateRow(week, ranked) {
             throw new Error(`only ${kept.length} titles have nxsha details and an image; keeping the previous row`);
         }
         filled.movies = kept;
+
+        // "New Entries" row: a subset of the Trending items that are new this week.
+        const newTitles = newEntriesFor(merged.weeks, week, ranked.map(m => m.title));
+        after.movies = after.movies.filter(r => r.rowTitle !== FRESH_ROW_TITLE);
+        const fresh = kept.filter(m => newTitles.some(t => t.toLowerCase() === String(m.title).toLowerCase()));
+        if (fresh.length) {
+            const at = after.movies.indexOf(filled);
+            after.movies.splice(at + 1, 0, { rowTitle: FRESH_ROW_TITLE, type: 'normal', movies: fresh });
+        }
         writeFileSync(MOVIES, JSON.stringify(after, null, 4) + '\n');
         writeStatus({ ok: true, week, titles: kept.map(m => m.title), titleLookups: lookupLog });
         console.log(`updated ${ROW_TITLE}: ${kept.length} of ${ranked.length} titles usable (${kept.map(m => m.title).join(', ')})`);

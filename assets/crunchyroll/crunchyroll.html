@@ -781,6 +781,7 @@
       function cardHtml(key,isMovie){var a=shows[key],m=catalogMeta(a);return '<article class="show-card'+(isMovie?' movie-card':'')+'" data-genre="'+a.genres.join(' ')+'" data-title="'+a.title+'" data-year="'+a.year+'" data-rating="'+a.rating+'" data-status="'+m.status+'" data-type="'+m.type+'" data-open="'+key+'" tabindex="0" role="button"><div class="poster">'+posterImage(a.img,a.title+(isMovie?' anime movie poster':' anime poster'),true)+(isMovie?'<span class="movie-badge">MOVIE</span>':'')+'<button class="bookmark" aria-label="Add '+a.title+' to watchlist" data-save-key="'+key+'">＋</button></div><div class="card-copy"><h3>'+a.title+'</h3><p>★ '+a.rating+' · '+genreText(a)+(isMovie?' <span class="movie-runtime">· '+a.runtime+'</span>':'')+'</p></div></article>'}
       function renderCatalog(){var html='';each(keysOf(shows),function(key){html+=cardHtml(key,false)});byId('catalogGrid').innerHTML=html;queueLazy()}
       function renderMovies(filter){var html='';each(movieKeys,function(key){var show=shows[key];if(!filter||filter==='all'||arrayContains(show.genres,filter)){html+=cardHtml(key,true)}});byId('movieGrid').innerHTML=html;queueLazy()}
+      /*CR_DROPS_START*/var CR_NEW_DROPS=[];/*CR_DROPS_END*/
       renderHomeRows();renderCatalog();renderMovies('all');
       var saved={};var favorites={solo:true,jjk:true,demon:true};var activeKey='solo';
       var dialog=byId('detailDialog'),toast=document.querySelector('.toast'),toastTimer,playerShell=byId('playerShell'),videoStage=byId('videoStage');
@@ -795,7 +796,7 @@
       
       function syncSaved(key){each(all('[data-save-key="'+key+'"]'),function(el){setClass(el,'saved',!!saved[key]);el.setAttribute('aria-pressed',saved[key]?'true':'false');if(hasClass(el,'secondary')){el.innerHTML=saved[key]?'− Remove from watchlist':'+ Add to watchlist'}});if(activeKey===key){setClass(byId('detailSave'),'active',!!saved[key]);byId('detailSave').setAttribute('aria-pressed',saved[key]?'true':'false')}}
       function toggleSave(key){saved[key]=!saved[key];syncSaved(key);showToast(saved[key]?'Added to watchlist for this session':'Removed from watchlist')}
-      function nxFor(key){return (typeof NX_DATA!=='undefined'&&NX_DATA[key])?NX_DATA[key]:null}
+      function nxFor(key){return (typeof NX_DATA!=='undefined'&&NX_DATA[key])?NX_DATA[key]:((window.CR_NX_DROPS&&CR_NX_DROPS[key])||null)}
       function epSource(key){var n=nxFor(key);if(!n||!n.id)return null;var legacy=(typeof EP_DATA!=='undefined')?EP_DATA[key]:null;var labels=(legacy&&legacy.labels)||[];return {kind:'nx',data:{seasons:n.seasons||{'1':1},labels:labels},nx:n,labels:labels}}
       function epSeasons(key){var src=epSource(key);return src?src.data.seasons:null}
       function serverAvailable(i){return i===0&&!!nxFor(playState.key)}

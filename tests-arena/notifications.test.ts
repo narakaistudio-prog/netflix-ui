@@ -11,7 +11,8 @@ describe('bell notifications', () => {
     test('one notification per weekly update, newest first, with real titles', () => {
         const items = notificationsFromHistory(history);
         expect(items.map(i => i.id)).toEqual(['top10-9/28/26 - 10/4/26', 'top10-9/21/26 - 9/27/26']);
-        expect(items[0].text).toBe('Week 9/28/26 - 10/4/26: A, B, C and more.');
+        expect(items[0].text).toBe('Week 9/28/26 - 10/4/26: new entries A, B, C and more.');
+        expect(items[0].title).toBe('New in India Top 10');
         expect(items[0].date).toBe('2026-10-13');
     });
 
@@ -30,5 +31,26 @@ describe('bell notifications', () => {
         const items: ContentNotification[] = NOTIFICATIONS;
         expect(items.length).toBeGreaterThan(0);
         expect(items.every(i => /^\d{4}-\d{2}-\d{2}$/.test(i.date))).toBe(true);
+    });
+});
+
+import { notificationsFromCrunchyroll } from '@/lib/notifications';
+
+describe('crunchyroll fresh-drop notifications', () => {
+    test('only titles first seen after the baseline run notify', () => {
+        const items = notificationsFromCrunchyroll({
+            updated: '2026-10-14',
+            items: {
+                'tv:1': { kind: 'tv', id: '1', title: 'Old One', year: '2019', firstSeen: '2026-10-13', baseline: true },
+                'tv:2': { kind: 'tv', id: '2', title: 'New One', year: '2026', firstSeen: '2026-10-14', baseline: false },
+            },
+        });
+        expect(items.map(i => i.id)).toEqual(['cr-tv:2']);
+        expect(items[0].text).toBe('New One (2026) was just added to Fresh Drops.');
+        expect(items[0].date).toBe('2026-10-14');
+    });
+
+    test('an empty state gives no notifications', () => {
+        expect(notificationsFromCrunchyroll({ updated: null, items: {} })).toEqual([]);
     });
 });
