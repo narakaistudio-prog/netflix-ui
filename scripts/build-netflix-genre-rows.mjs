@@ -83,6 +83,7 @@ const NXSHA_ALIASES = {
     'Gin Tama': 'Gintama',
     "Hell's Paradise: Jigokuraku": "Hell's Paradise",
     'Puniru Is a Cute Slime': 'Puniru Is a Kawaii Slime',
+    'Jujutsu Kaisen 0: The Movie': 'Jujutsu Kaisen 0',
 };
 
 async function get(url) {
