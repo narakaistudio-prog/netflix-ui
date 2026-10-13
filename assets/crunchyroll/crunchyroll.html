@@ -370,6 +370,18 @@
       .ranked-track .rank-number{font-size:86px;line-height:.72;width:auto;padding-right:6px;transform:none;-webkit-text-stroke:2px #85888f}
       .ranked-track .rank-card .rail-card{width:150px;-webkit-flex:0 0 150px;flex:0 0 150px;margin:0 0 6px}
     }
+    /* Phone (app-style): every rail swipes sideways with even cards; grids show two per row;
+       search results keep their title and meta next to the poster. */
+    @media(max-width:620px){
+      .rail-track:not(.ranked-track){flex-wrap:nowrap;-webkit-flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;gap:10px;padding:4px 0 12px;scrollbar-width:none}
+      .rail-track:not(.ranked-track)::-webkit-scrollbar{display:none}
+      .rail-track:not(.ranked-track) .rail-card{-webkit-flex:0 0 140px;flex:0 0 140px;width:140px;margin:0 0 6px;scroll-snap-align:start}
+      .show-card{width:calc(50% - 6px);margin:0 0 16px}
+      .result span{display:block}
+      .detail-toolbar .detail-back.dialog-close{position:relative;right:auto;top:auto;z-index:auto;background:#0d111d;color:#f5f5f5}
+      .result{align-items:center;min-width:0}
+      .result-copy{min-width:0;flex:1 1 auto}
+    }
 
     /* Restore the original screenshot-style episode guide without changing the ES5/TV layer */
     .episode-guide{padding-top:0}
