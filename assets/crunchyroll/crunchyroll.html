@@ -361,6 +361,16 @@
     .up-card{overflow:hidden}.up-card>img{width:100%;height:auto}
     @media(max-width:620px){.poster,.rail-poster{height:0;padding-bottom:150%}.detail-poster{height:auto}.detail-hero{min-height:610px}}
 
+    /* Phone: ranked rows (Top 10) scroll sideways like the app's rails, with a
+       small rank number beside each poster, instead of one full-width card per row. */
+    @media(max-width:620px){
+      .ranked-track.rail-track{flex-wrap:nowrap;-webkit-flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;gap:0;padding:4px 0 12px;scrollbar-width:none}
+      .ranked-track.rail-track::-webkit-scrollbar{display:none}
+      .ranked-track .rank-card{-webkit-flex:0 0 auto;flex:0 0 auto;width:auto;display:flex;align-items:flex-end;margin:0 12px 0 0;scroll-snap-align:start}
+      .ranked-track .rank-number{font-size:86px;line-height:.72;width:auto;padding-right:6px;transform:none;-webkit-text-stroke:2px #85888f}
+      .ranked-track .rank-card .rail-card{width:150px;-webkit-flex:0 0 150px;flex:0 0 150px;margin:0 0 6px}
+    }
+
     /* Restore the original screenshot-style episode guide without changing the ES5/TV layer */
     .episode-guide{padding-top:0}
     .episode-head{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;padding:0 0 15px;border-bottom:1px solid #171b27}

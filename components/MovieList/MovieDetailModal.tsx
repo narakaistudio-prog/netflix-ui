@@ -571,7 +571,8 @@ const styles = StyleSheet.create({
         width: '31.5%',
     },
     moreItemNarrow: {
-        width: '48.5%',
+        // Three per row on phones: 3 x 30% plus two 12px gaps fits even in a 331px panel.
+        width: '30%',
     },
     morePoster: {
         width: '100%',
