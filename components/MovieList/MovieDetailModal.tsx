@@ -90,7 +90,7 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
                     id: movie.id,
                     titleId: movie.id,
                     title: movie.title,
-                    type: 'movie',
+                    type: movie.mediaType === 'tv' ? 'tv' : 'movie',
                     tmdbId: movie.tmdb_id,
                     imdbId: movie.imdb_id,
                     provider: movie.embed_provider || 'nxsha',

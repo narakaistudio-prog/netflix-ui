@@ -37,7 +37,7 @@ export function ContinueWatchingRow() {
     const { rows } = useCatalog();
 
     useEffect(() => {
-        const refresh = () => setEntries(getRecentlyWatched().filter((e) => e.type === 'movie'));
+        const refresh = () => setEntries(getRecentlyWatched());
         refresh();
         if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return;
         window.addEventListener(RECENTLY_WATCHED_EVENT, refresh);
@@ -66,7 +66,7 @@ export function ContinueWatchingRow() {
             tmdb_id: full?.tmdb_id ?? e.tmdbId,
             imdb_id: full?.imdb_id ?? e.imdbId,
             embed_provider: (full?.embed_provider ?? e.provider) as Movie['embed_provider'],
-            mediaType: 'movie',
+            mediaType: e.type === 'tv' ? 'tv' : 'movie',
         } as Movie;
     };
 
