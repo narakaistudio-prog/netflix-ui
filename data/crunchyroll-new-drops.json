@@ -1,4 +1,145 @@
 {
-  "updated": null,
-  "items": {}
+  "updated": "2026-10-13",
+  "items": {
+    "tv:70998": {
+      "kind": "tv",
+      "id": "70998",
+      "title": "Souryo to Majiwaru Shikiyoku no Yoru ni...",
+      "img": "https://image.tmdb.org/t/p/w500/ueI9EeoRdMVa7hWEm21nQEU8Zv3.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:65733": {
+      "kind": "tv",
+      "id": "65733",
+      "title": "Doraemon",
+      "img": "https://image.tmdb.org/t/p/w500/9ZN1P32SHviL3SV51qLivxycvcx.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:57775": {
+      "kind": "tv",
+      "id": "57775",
+      "title": "Chibi Maruko-chan",
+      "img": "https://image.tmdb.org/t/p/w500/bfn54AAMuh47IFqeoco0jgeVH1a.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:34860": {
+      "kind": "tv",
+      "id": "34860",
+      "title": "Ninja Boy Rantaro",
+      "img": "https://image.tmdb.org/t/p/w500/fzNiSp0HhCthOTYu9IYWlPPa7fU.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:46260": {
+      "kind": "tv",
+      "id": "46260",
+      "title": "Naruto",
+      "img": "https://image.tmdb.org/t/p/w500/xppeysfvDKVx775MFuH8Z9BlpMk.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:60572": {
+      "kind": "tv",
+      "id": "60572",
+      "title": "Pokémon",
+      "img": "https://image.tmdb.org/t/p/w500/lP4zwr0F7hWTbAFltfoFTc2AxRG.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:207840": {
+      "kind": "tv",
+      "id": "207840",
+      "title": "Harem Camp!",
+      "img": "https://image.tmdb.org/t/p/w500/dsaYRfBviInhrulwtHOyg1KB4ct.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:95897": {
+      "kind": "tv",
+      "id": "95897",
+      "title": "Overflow",
+      "img": "https://image.tmdb.org/t/p/w500/AaWnto23ZT8gTm6dd8I2j5sLZMz.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:204269": {
+      "kind": "tv",
+      "id": "204269",
+      "title": "Caressing My Hibernating Bear",
+      "img": "https://image.tmdb.org/t/p/w500/jSRmnyrqY1wmECpCCk7jv7AGFn6.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:30983": {
+      "kind": "tv",
+      "id": "30983",
+      "title": "Case Closed",
+      "img": "https://image.tmdb.org/t/p/w500/iHfA63x7rFaWbP2C832uCe2r0zy.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:95479": {
+      "kind": "tv",
+      "id": "95479",
+      "title": "JUJUTSU KAISEN",
+      "img": "https://image.tmdb.org/t/p/w500/6qQzMJG27XOJsyAEEIisoJB45j2.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:46298": {
+      "kind": "tv",
+      "id": "46298",
+      "title": "Hunter x Hunter",
+      "img": "https://image.tmdb.org/t/p/w500/i2EEr2uBvRlAwJ8d8zTG2Y19mIa.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:9537": {
+      "kind": "tv",
+      "id": "9537",
+      "title": "Atashin&#x27;chi",
+      "img": "https://image.tmdb.org/t/p/w500/bQCZvbyTJFWt3majCn37ykJBpIf.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    },
+    "tv:57911": {
+      "kind": "tv",
+      "id": "57911",
+      "title": "Doraemon",
+      "img": "https://image.tmdb.org/t/p/w500/bHMqPDsW7Lb71CVHXq4PuEvQ4NY.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-13",
+      "baseline": true
+    }
+  }
 }
