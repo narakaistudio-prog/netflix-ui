@@ -38,6 +38,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const NXSHA_ALIASES = {
     'Demon Slayer: Kimetsu no Yaiba Infinity Castle I': 'Demon Slayer: Kimetsu no Yaiba Infinity Castle',
     'The Ba**ds of Bollywood': 'The Bastards of Bollywood',
+    'Operation Safed Sagar: The Highest Air Force Mission': 'Operation Safed Sagar',
 };
 
 async function get(url) {
@@ -122,26 +123,43 @@ export function parseSearchResults(html) {
     return out;
 }
 
-/** Name variants to try in order: the alias or name, then without a language/version suffix. */
+/** Name variants to try in order: the alias or name, then shorter forms of it. */
 export function searchNames(title) {
     const base = NXSHA_ALIASES[title] || title;
     const names = [base];
-    const stripped = base.replace(/\s*\((Hindi|English|Hindi Version|Reloaded Version|Raw & Undekha|Raw \(Hindi\)|Raw)\)\s*$/i, '').trim();
-    if (stripped && stripped !== base) names.push(stripped);
+    const add = (n) => {
+        const t = n.replace(/\s+/g, ' ').trim();
+        if (t && !names.includes(t)) names.push(t);
+    };
+    add(base.replace(/\s*\((Hindi|English|Hindi Version|Reloaded Version|Raw & Undekha|Raw \(Hindi\)|Raw)\)\s*$/i, ''));
+    add(base.replace(/\s*\([^)]*\)\s*$/, ''));
+    add(base.replace(/\s+-\s+.*$/, ''));
+    add(base.replace(/:?\s*Extended Cut$/i, ''));
     return names;
 }
 
-/** Pick the exact name match with a poster, preferring the newest year. */
+/** Name before any subtitle: "Salaar: Part 1 - Ceasefire" -> "Salaar". */
+export function headOf(name) {
+    return decode(name).split(/\s*:\s*|\s*\(|\s+[-–]\s+/)[0];
+}
+
+/**
+ * Pick a result with a poster. An exact name match wins; otherwise the result
+ * whose name before its subtitle matches (the film "Devara: Part 1" for "Devara").
+ * Newest year first among equals.
+ */
 export function pickMatch(results, wantedName) {
     const want = norm(wantedName);
-    const exact = results
-        .filter((r) => norm(r.name) === want)
-        .sort(
-            (a, b) =>
-                Number(Boolean(b.poster)) - Number(Boolean(a.poster)) ||
-                Number(b.year || 0) - Number(a.year || 0),
-        );
-    return exact.find((r) => r.poster) || null;
+    const withPoster = results.filter((r) => r.poster);
+    const byYear = (a, b) => Number(b.year || 0) - Number(a.year || 0);
+    const exact = withPoster.filter((r) => norm(r.name) === want).sort(byYear);
+    if (exact.length) return exact[0];
+    // A sequel number is part of the name ("Dhoom: 2" is not "Dhoom"), so it never head-matches.
+    const isNumberedSequel = (name) => /^[:(\-–]?\s*\d/.test(decode(name).slice(headOf(name).length).trim());
+    const head = withPoster
+        .filter((r) => norm(headOf(r.name)) === want && !isNumberedSequel(r.name))
+        .sort(byYear);
+    return head[0] || null;
 }
 
 async function findOnNxsha(title) {
