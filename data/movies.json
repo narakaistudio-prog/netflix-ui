@@ -445,6 +445,33 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/6s3cO8M1xHhCkogK13q5Ghmt9Ff.jpg"
                 },
                 {
+                    "id": "netflix-genre-81616273",
+                    "title": "Operation Safed Sagar: The Untold Story of the Kargil War",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/f56PHAGbUFPmHMRippWWNpRgSao.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "284753",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81616273",
+                    "netflixUrl": "https://www.netflix.com/in/title/81616273",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2026",
+                    "description": "As the Kargil War erupts between India and Pakistan, the Golden Arrows squadron of the Air Force takes flight on a dangerous mission behind enemy lines.",
+                    "cast": [
+                        "Siddharth",
+                        "Jimmy Shergill",
+                        "Abhay Verma",
+                        "Manu Rishi Chadha",
+                        "Vinay Pathak",
+                        "Dia Mirza",
+                        "Adil Hussain",
+                        "Harssh A. Singh",
+                        "Mihir Ahuja",
+                        "K.C. Shankar"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/qa7OF8e0mkvQgUrI4DqFkBW39s5.jpg"
+                },
+                {
                     "id": "netflix-genre-81787058",
                     "title": "Gandhari",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/hCHei97aPYCCsh4vicz9X0wmdFV.jpg",
@@ -2527,6 +2554,38 @@
                         "Drama"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/82sMBMHziUTGczj1D4YtlJjoX5z.jpg"
+                },
+                {
+                    "id": "netflix-genre-81473277",
+                    "title": "Thimmarusu: Assignment Vali",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/9dieUbTLijMnE9gKV8qt4Byc6Cx.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "805014",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81473277",
+                    "netflixUrl": "https://www.netflix.com/in/title/81473277",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2021",
+                    "description": "After a cab driver is found dead, a young pub employee is framed for the murder and is sent to jail for 8 years. When he comes out on parole, a young lawyer takes up the case to prove his innocence.",
+                    "duration": "2h 7m",
+                    "cast": [
+                        "Satyadev Kancharana",
+                        "Priyanka Jawalkar",
+                        "Ajay",
+                        "Brahmaji",
+                        "Harsha Chemudu",
+                        "Praveen",
+                        "Jhansi",
+                        "Sandhya Janak",
+                        "Ravi Babu",
+                        "Ankith Koyya"
+                    ],
+                    "genres": [
+                        "Crime",
+                        "Thriller"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tZINXLOJqVGg3Fv241xMXFzmV4G.jpg"
                 },
                 {
                     "id": "netflix-genre-81591213",
@@ -4752,7 +4811,7 @@
                 {
                     "id": "netflix-genre-81633804",
                     "title": "Mission Majnu",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/jHQitiHK4M561W1O7WwfJ0dJ8S1.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/rYlbpbtLGMlWOnFrvBKa1LTcvOC.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
                     "tmdb_id": "778946",
@@ -5031,6 +5090,38 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/nrDyzITJljfb6As9qnLnH8rf4Is.jpg"
                 },
                 {
+                    "id": "netflix-genre-81728598",
+                    "title": "Devara: Part 1",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/lQfuaXjANoTsdx5iS0gCXlK9D2L.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "811941",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81728598",
+                    "netflixUrl": "https://www.netflix.com/in/title/81728598",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2024",
+                    "description": "A mighty warrior takes a stand against the criminal deeds of his village, while his mild-mannered son grows up to walk his own path.",
+                    "duration": "2h 58m",
+                    "cast": [
+                        "N.T. Rama Rao Jr.",
+                        "Saif Ali Khan",
+                        "Prakash Raj",
+                        "Srikanth",
+                        "Kalaiyarasan",
+                        "Shruti Marathe",
+                        "Janhvi Kapoor",
+                        "Shine Tom Chacko",
+                        "Ajay",
+                        "Zarina Wahab"
+                    ],
+                    "genres": [
+                        "Drama",
+                        "Action"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/hAQnXxOwCjgYcKRgTdYPRC8neqL.jpg"
+                },
+                {
                     "id": "netflix-genre-81678595",
                     "title": "Bade Miyan Chote Miyan",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/ote8HmQOgmoAfqFaqVKsEdgD2q4.jpg",
@@ -5126,6 +5217,38 @@
                         "Drama"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/7rmSMnH5HDHWWil6tYmxPlH8vqz.jpg"
+                },
+                {
+                    "id": "netflix-genre-81493411",
+                    "title": "Jawan",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jFt1gS4BGHlK8xt76Y81Alp4dbt.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "872906",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81493411",
+                    "netflixUrl": "https://www.netflix.com/in/title/81493411",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2023",
+                    "description": "An emotional journey of a prison warden, driven by a personal vendetta while keeping up to a promise made years ago, recruits inmates to commit outrageous crimes that shed light on corruption and injustice, in an attempt to get even with his past, and that leads him to an unexpected reunion.",
+                    "duration": "2h 49m",
+                    "cast": [
+                        "Shah Rukh Khan",
+                        "Nayanthara",
+                        "Vijay Sethupathi",
+                        "Deepika Padukone",
+                        "Sanjay Dutt",
+                        "Priyamani",
+                        "Sanya Malhotra",
+                        "Girija Oak",
+                        "Lehar Khan",
+                        "Sanjeeta Bhattacharya"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Thriller"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/5LtSjMNw6j3LkG29Oa4O0iY5U8.jpg"
                 },
                 {
                     "id": "netflix-genre-81587852",
@@ -5254,6 +5377,39 @@
                         "Drama"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/2m8zoc7iL1MiWP2FuPiyQvTSBtE.jpg"
+                },
+                {
+                    "id": "netflix-genre-81727155",
+                    "title": "Salaar: Part 1 - Ceasefire",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/nlu9WbcetNFRGXXPWITr30ob7W6.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "770906",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81727155",
+                    "netflixUrl": "https://www.netflix.com/in/title/81727155",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2023",
+                    "description": "Set in the fictional dystopian city-state of Khansaar, the film follows the friendship between Deva, a tribesman, and Varadha, the prince of Khansaar. When a coup d'état is planned by his father's ministers and his relatives, Varadha enlists Deva's help to become Khansaar's undisputed ruler.",
+                    "duration": "2h 55m",
+                    "cast": [
+                        "VI movies and tv",
+                        "Prabhas",
+                        "Prithviraj Sukumaran",
+                        "Shruti Haasan",
+                        "Easwari Rao",
+                        "Jagapati Babu",
+                        "Bobby Simha",
+                        "Sriya Reddy",
+                        "Ramachandra Raju",
+                        "Mime Gopi"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Crime",
+                        "Drama"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xtOCTmGemASooRkAxRorYODig1p.jpg"
                 },
                 {
                     "id": "netflix-genre-83195142",
@@ -6854,6 +7010,38 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/6RV2o8PBCEyw9ylOWViV1CtULIF.jpg"
                 },
                 {
+                    "id": "netflix-genre-81493411",
+                    "title": "Jawan",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jFt1gS4BGHlK8xt76Y81Alp4dbt.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "872906",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81493411",
+                    "netflixUrl": "https://www.netflix.com/in/title/81493411",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2023",
+                    "description": "An emotional journey of a prison warden, driven by a personal vendetta while keeping up to a promise made years ago, recruits inmates to commit outrageous crimes that shed light on corruption and injustice, in an attempt to get even with his past, and that leads him to an unexpected reunion.",
+                    "duration": "2h 49m",
+                    "cast": [
+                        "Shah Rukh Khan",
+                        "Nayanthara",
+                        "Vijay Sethupathi",
+                        "Deepika Padukone",
+                        "Sanjay Dutt",
+                        "Priyamani",
+                        "Sanya Malhotra",
+                        "Girija Oak",
+                        "Lehar Khan",
+                        "Sanjeeta Bhattacharya"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Thriller"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/5LtSjMNw6j3LkG29Oa4O0iY5U8.jpg"
+                },
+                {
                     "id": "netflix-genre-70262614",
                     "title": "Talaash",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/oCxyN7HmJ7zWp8jtJeMRHABnutF.jpg",
@@ -7531,6 +7719,35 @@
                         "Thriller"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/3jsXJRxDr2rDItjeOtFcVcSvaHH.jpg"
+                },
+                {
+                    "id": "netflix-genre-81205388",
+                    "title": "Tribhanga",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/6OWTh12f8gmZ8uo4O2rE5TPKvzc.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "744991",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81205388",
+                    "netflixUrl": "https://www.netflix.com/in/title/81205388",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2021",
+                    "description": "When her estranged mother falls into a coma, a self-made single mom grapples with regret and resentment while reflecting on their strained relationship.",
+                    "duration": "1h 35m",
+                    "cast": [
+                        "Kajol",
+                        "Tanvi Azmi",
+                        "Mithila Palkar",
+                        "Kunaal Roy Kapur",
+                        "Vaibhav Tatwawadi",
+                        "Manav Gohil",
+                        "Kanwaljit Singh"
+                    ],
+                    "genres": [
+                        "Drama",
+                        "Family"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/rf1GLwpT0LU20DDFROHBAz8SHI3.jpg"
                 },
                 {
                     "id": "netflix-genre-82027408",
@@ -9254,6 +9471,38 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/nrDyzITJljfb6As9qnLnH8rf4Is.jpg"
                 },
                 {
+                    "id": "netflix-genre-81728598",
+                    "title": "Devara: Part 1",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/lQfuaXjANoTsdx5iS0gCXlK9D2L.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "811941",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81728598",
+                    "netflixUrl": "https://www.netflix.com/in/title/81728598",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2024",
+                    "description": "A mighty warrior takes a stand against the criminal deeds of his village, while his mild-mannered son grows up to walk his own path.",
+                    "duration": "2h 58m",
+                    "cast": [
+                        "N.T. Rama Rao Jr.",
+                        "Saif Ali Khan",
+                        "Prakash Raj",
+                        "Srikanth",
+                        "Kalaiyarasan",
+                        "Shruti Marathe",
+                        "Janhvi Kapoor",
+                        "Shine Tom Chacko",
+                        "Ajay",
+                        "Zarina Wahab"
+                    ],
+                    "genres": [
+                        "Drama",
+                        "Action"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/hAQnXxOwCjgYcKRgTdYPRC8neqL.jpg"
+                },
+                {
                     "id": "netflix-genre-81587834",
                     "title": "Raazi",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/l9VJoRj0CYBURsnetvazq73FOfz.jpg",
@@ -9817,6 +10066,29 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/vK9IQRVtQkFX1cJ5pTQ40vzNQXN.jpg"
                 },
                 {
+                    "id": "netflix-genre-81088331",
+                    "title": "Chhota Bheem: Dinosaur World",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/oJJcI3zcZqHhau1CUrEgrcM840B.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "852957",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81088331",
+                    "netflixUrl": "https://www.netflix.com/in/title/81088331",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2025",
+                    "description": "When a scientist has trouble caring for his secret baby dinosaur, he takes Bheem and friends back in time to return the pet to its natural habitat.",
+                    "duration": "1h 5m",
+                    "cast": [
+                        "Sonal Kaushal"
+                    ],
+                    "genres": [
+                        "Adventure",
+                        "Fantasy"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w500/oJJcI3zcZqHhau1CUrEgrcM840B.jpg"
+                },
+                {
                     "id": "netflix-genre-81020066",
                     "title": "Mighty Little Bheem: Diwali",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/4FI7HOfpKe5bxsKTOT8p3APiOyI.jpg",
@@ -10046,7 +10318,7 @@
                 {
                     "id": "netflix-genre-81633804",
                     "title": "Mission Majnu",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/jHQitiHK4M561W1O7WwfJ0dJ8S1.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/rYlbpbtLGMlWOnFrvBKa1LTcvOC.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
                     "tmdb_id": "778946",
@@ -10230,6 +10502,71 @@
                         "Thriller"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/nrDyzITJljfb6As9qnLnH8rf4Is.jpg"
+                },
+                {
+                    "id": "netflix-genre-81493411",
+                    "title": "Jawan",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jFt1gS4BGHlK8xt76Y81Alp4dbt.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "872906",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81493411",
+                    "netflixUrl": "https://www.netflix.com/in/title/81493411",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2023",
+                    "description": "An emotional journey of a prison warden, driven by a personal vendetta while keeping up to a promise made years ago, recruits inmates to commit outrageous crimes that shed light on corruption and injustice, in an attempt to get even with his past, and that leads him to an unexpected reunion.",
+                    "duration": "2h 49m",
+                    "cast": [
+                        "Shah Rukh Khan",
+                        "Nayanthara",
+                        "Vijay Sethupathi",
+                        "Deepika Padukone",
+                        "Sanjay Dutt",
+                        "Priyamani",
+                        "Sanya Malhotra",
+                        "Girija Oak",
+                        "Lehar Khan",
+                        "Sanjeeta Bhattacharya"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Thriller"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/5LtSjMNw6j3LkG29Oa4O0iY5U8.jpg"
+                },
+                {
+                    "id": "netflix-genre-81727155",
+                    "title": "Salaar: Part 1 - Ceasefire",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/nlu9WbcetNFRGXXPWITr30ob7W6.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "770906",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81727155",
+                    "netflixUrl": "https://www.netflix.com/in/title/81727155",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2023",
+                    "description": "Set in the fictional dystopian city-state of Khansaar, the film follows the friendship between Deva, a tribesman, and Varadha, the prince of Khansaar. When a coup d'état is planned by his father's ministers and his relatives, Varadha enlists Deva's help to become Khansaar's undisputed ruler.",
+                    "duration": "2h 55m",
+                    "cast": [
+                        "VI movies and tv",
+                        "Prabhas",
+                        "Prithviraj Sukumaran",
+                        "Shruti Haasan",
+                        "Easwari Rao",
+                        "Jagapati Babu",
+                        "Bobby Simha",
+                        "Sriya Reddy",
+                        "Ramachandra Raju",
+                        "Mime Gopi"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Crime",
+                        "Drama"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/xtOCTmGemASooRkAxRorYODig1p.jpg"
                 },
                 {
                     "id": "netflix-genre-83072495",
@@ -10637,6 +10974,39 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/k4cFld0vF83NSCWICwQpBKE0d34.jpg"
                 },
                 {
+                    "id": "netflix-genre-81762714",
+                    "title": "GOAT",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/wfuqMlaExcoYiUEvKfVpUTt1v4u.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1297842",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81762714",
+                    "netflixUrl": "https://www.netflix.com/in/title/81762714",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2026",
+                    "description": "A small goat with big dreams gets a once-in-a-lifetime shot to join the pros and play roarball, a high-intensity, co-ed, full-contact sport dominated by the fastest, fiercest animals in the world.",
+                    "duration": "1h 40m",
+                    "cast": [
+                        "Caleb McLaughlin",
+                        "Gabrielle Union",
+                        "Stephen Curry",
+                        "Aaron Pierre",
+                        "Nicola Coughlan",
+                        "David Harbour",
+                        "Nick Kroll",
+                        "Jenifer Lewis",
+                        "Patton Oswalt",
+                        "Jelly Roll"
+                    ],
+                    "genres": [
+                        "Animation",
+                        "Comedy",
+                        "Family"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tq3h43fZy0H80vzf47MAY7R9Mxo.jpg"
+                },
+                {
                     "id": "netflix-genre-70307646",
                     "title": "Gunday",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/JMjQWxnVSI9BrMCFlzdEqC0y4o.jpg",
@@ -10734,7 +11104,7 @@
                 {
                     "id": "netflix-genre-81157385",
                     "title": "Saaho",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/rWXIpR2uPkwb1Hrhjj2FA62FGdu.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/zmxIRKFdPKDevVT4dzVvlAdULup.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
                     "tmdb_id": "454292",
@@ -11244,6 +11614,38 @@
                         "Comedy"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/gC1kJpDPtaogbq7N543si20jC0w.jpg"
+                },
+                {
+                    "id": "netflix-genre-81227047",
+                    "title": "Panipat",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/z59Vr7l2ZFQPh76ooSQdXjW3YRo.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "577332",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81227047",
+                    "netflixUrl": "https://www.netflix.com/in/title/81227047",
+                    "catalogCollection": "netflix-genre-100381",
+                    "year": "2019",
+                    "description": "During 18th century India, the Marathas emerged as the most powerful empire in the nation until the Afghan King Ahmad Shah Abdali plans to take over India. Sadashiv Rao Bhau is brought in to save the empire from the king which then leads to the third battle of Panipat.",
+                    "duration": "2h 51m",
+                    "cast": [
+                        "Arjun Kapoor",
+                        "Kriti Sanon",
+                        "Sanjay Dutt",
+                        "Mohnish Behl",
+                        "Mohan Joshi",
+                        "Nawab Shah",
+                        "Padmini Kolhapure",
+                        "Arun Bali"
+                    ],
+                    "genres": [
+                        "Action",
+                        "History",
+                        "War",
+                        "Romance"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/vYDtSCpcltgS0uNURkX1IDQKqWt.jpg"
                 },
                 {
                     "id": "netflix-genre-82034831",
