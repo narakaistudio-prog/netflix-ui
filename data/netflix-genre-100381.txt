@@ -1,0 +1,531 @@
+# Source: https://www.netflix.com/in/browse/genre/100381 (Indian Movies & TV), captured 2026-10-13.
+# Format: "## Row title" starts a row; "Title | Netflix title id" is one movie or show.
+# Rows and titles are copied in page order. The same title can appear in several rows.
+# nxsha supplies every detail and image; see scripts/build-netflix-genre-rows.mjs.
+
+## Your Next Watch
+Mandaadi | 82787383
+Shaque: Trust No One | 81762865
+Vishwanath & Sons | 82034837
+Epic | 82673568
+Operation Safed Sagar: The Highest Air Force Mission | 81616273
+Gandhari | 81787058
+Dhurandhar | 82156122
+Irumudi | 83001420
+Pradhama Drishtiya Kuttakkar | 83197640
+Kabhi Khushi Kabhie Gham | 60036750
+Dhamaal 4 | 81950460
+The Great Indian Kapil Show | 81737430
+Kurukshetra: The Great War of Mahabharata | 82063102
+Dhurandhar The Revenge (Raw & Undekha) | 82813021
+Alpha | 82023350
+Taskaree: The Smuggler's Web | 81406373
+Blast | 82188226
+Cocktail 2 | 81912924
+Desi Bling | 81990239
+Gatta Kusthi 2 | 82072530
+Modha Rathri | 82811466
+Delhi Crime | 81076756
+Ohh My Dog | 83197638
+Peddi | 83075036
+Musafir Cafe | 82023964
+Animal | 81436990
+The Royals | 81593166
+Korean Kanakaraju | 82995870
+Kara | 82057588
+Bhooth Bangla | 82008494
+Ikka | 82134666
+Main Vaapas Aaunga | 82018915
+Dhee Double Impact | 83064630
+The Ba**ds of Bollywood | 81975483
+Least Eligible Bachelor | 83001279
+Dude | 81900290
+Made in Korea | 81754582
+C.I.D | 80059132
+Mahavatar Narsimha | 82131939
+RRR (Hindi) | 81476453
+
+## Relentless Crime Dramas
+Taskaree: The Smuggler's Web | 81406373
+Blast | 82188226
+Ikka | 82134666
+Kara | 82057588
+Ustaad Bhagat Singh | 82180524
+Dabba Cartel | 81476853
+Mardaani 3 | 82023351
+Newton's 3rd Law | 83001645
+Khakee: The Bengal Chapter | 81995349
+KARTAVYA | 82698051
+Sacred Games | 80115328
+Deva | 81704205
+Raid 2 | 81760050
+Talaash | 70262614
+CAT | 81281063
+Black Warrant | 81971071
+Kohrra | 81443393
+Crime Patrol: City Crimes | 80059015
+Lucky Baskhar | 81902035
+Khakee: The Bihar Chapter | 81290872
+Officer on Duty | 81945131
+Chor Nikal Ke Bhaga | 81305487
+Vadh 2 | 82047260
+Guns & Gulaabs | 81313531
+Crime Patrol: 26 Jurm, 26 Cases | 82051930
+Maareesan | 81781839
+The Buckingham Murders | 81509546
+Con City | 82776007
+Sikandar Ka Muqaddar | 81750030
+Vadh | 81554104
+Tribhuvan Mishra CA Topper | 81285617
+Raat Akeli Hai - The Bansal Murders | 81922895
+CBI 5: The Brain | 81597698
+Kingdom | 81678097
+Jigra | 81730619
+Talvar | 80080618
+Inspector Zende | 81778084
+Anweshippin Kandethum | 81602976
+Thimmarusu | 81473277
+Glory | 81591213
+
+## Comedy Movies
+Dhamaal 4 | 81950460
+Modha Rathri | 82811466
+Cocktail 2 | 81912924
+Korean Kanakaraju | 82995870
+Gatta Kusthi 2 | 82072530
+Bhooth Bangla | 82008494
+Lust Stories 3 | 81734814
+Dude | 81900290
+Kal Ho Naa Ho | 60036735
+Raakaasa | 82180278
+Kuch Kuch Hota Hai | 60036752
+Pyaar Prema Kalyanam | 82146074
+De De Pyaar De 2 | 81713690
+Son of Sardaar 2 | 81760388
+Fukrey Returns | 82689944
+Daadi Ki Shaadi | 82741941
+Baby Do Die Do | 83195142
+Dhoom Dhaam | 81943001
+Jolly LLB 3 | 82145971
+Mimi | 81267360
+Idhayam Murali | 82072500
+Dunki | 81731618
+Laapataa Ladies | 81760391
+Rab Ne Bana Di Jodi | 70103521
+Pati Patni Aur Woh Do | 82034869
+Maa Behen | 81702997
+Darlings | 81537953
+Aap Jaisa Koi | 81660570
+Youth | 82723855
+Main Hoon Na | 70000196
+Dilwale Dulhania Le Jayenge | 60036747
+Chennai Express | 70254350
+Revolver Rita | 81643034
+Ginny Weds Sunny | 81294132
+Do Deewane Seher Mein | 82168832
+Tanu Weds Manu | 70176968
+Honeymoon | 81630998
+Sunny Sanskari ki Tulsi Kumari | 81786449
+Con City | 82776007
+Bharathanatyam 2 Mohiniyattam | 82819898
+
+## TV Dramedies
+Least Eligible Bachelor | 83001279
+The Royals | 81593166
+Mismatched | 80220079
+The Ba**ds of Bollywood | 81975483
+#Love | 81680908
+Kota Factory | 81249783
+Single Papa | 81728970
+Tribhuvan Mishra CA Topper | 81285617
+Guns & Gulaabs | 81313531
+Choona | 81264055
+Super Subbu | 81660220
+Maamla Legal Hai | 81480217
+Killer Soup | 81241510
+Little Things | 81011159
+Masaba Masaba | 81122196
+Call My Agent Bollywood | 81476629
+AIR: All India Rankers | 82640275
+Hasmukh | 80236782
+Taj Mahal 1989 | 81183493
+Gurthukosthunnayi | 83001256
+
+## Reality, Variety & Talk Shows
+The Great Indian Kapil Show | 81737430
+Dhee Double Impact | 83064630
+Desi Bling | 81990239
+Hustle 5 - Apna Homeground | 83129590
+Fabulous Lives of Bollywood Wives | 81180964
+I-Popstar | 83190432
+Ranveer vs. Wild with Bear Grylls | 81977145
+Lock Upp | 82146940
+India's Got Latent | 82988577
+IRL - In Real Love | 81417598
+Social Currency | 81312464
+Best of The Great Indian Kapil Show | 81909542
+My Next Guest with David Letterman and Shah Rukh Khan | 81121023
+The Big Day | 81161576
+What the Love! with Karan Johar | 81038824
+Sunday Brunch With Kamiya Jani | 83111798
+
+## Action Movies
+Dhurandhar | 82156122
+Dhurandhar The Revenge (Raw & Undekha) | 82813021
+Alpha | 82023350
+They Call Him OG | 81902063
+Animal | 81436990
+Jaat | 82034833
+Ustaad Bhagat Singh | 82180524
+Border 2 | 81956873
+Jewel Thief - The Heist Begins | 81688854
+War 2 | 81937035
+Mission Majnu | 81633804
+Mahavatar Narsimha | 82131939
+RRR (Hindi) | 81476453
+Pushpa 2: The Rule (Reloaded Version) | 82006666
+Mardaani 3 | 82023351
+Fighter | 81698397
+Don 2 | 70224999
+Amaran | 81728596
+Kondal | 81721827
+Tehran | 81577018
+Devara | 81728598
+Bade Miyan Chote Miyan | 81678595
+Kesari | 81587752
+Raja Shivaji | 82821158
+Jawan: Extended Cut | 81493411
+Tiger Zinda Hai | 81587852
+Revolver Rita | 81643034
+Main Hoon Na | 70000196
+Thammudu | 83072495
+Salaar | 81727155
+Baby Do Die Do | 83195142
+Akhanda 2: Thaandavam | 82180284
+Leo (Hindi) | 81639323
+Dilwale | 80091866
+Mass Jathara | 81678098
+Baahubali: The Beginning (Hindi Version) | 80204117
+War | 81587729
+Chennai Express | 70254350
+Gunjan Saxena: The Kargil Girl | 81292944
+Sooryavanshi | 81144150
+
+## Thriller Movies
+Irumudi | 83001420
+Pradhama Drishtiya Kuttakkar | 83197640
+Reporting Live | 81917272
+Accused | 81661375
+Ekō from the Infinite Chronicles of Kurichan | 82673540
+Jaane Jaan | 81586376
+Deva | 81704205
+KARTAVYA | 82698051
+Talaash | 70262614
+Raid 2 | 81760050
+Sector 36 | 81777258
+Darlings | 81537953
+Haseen Dillruba | 81320770
+Officer on Duty | 81945131
+HIT: The Third Case | 81999621
+Mardaani 2 | 82027409
+Do Patti | 81681817
+Chor Nikal Ke Bhaga | 81305487
+Khufiya | 81252372
+Lucky Baskhar | 81902035
+The Girl on the Train | 81144153
+Vadh 2 | 82047260
+Bhakshak | 81732726
+Maareesan | 81781839
+Article 370 | 81773534
+Sikandar Ka Muqaddar | 81750030
+Badla | 81112446
+Bharathanatyam 2 Mohiniyattam | 82819898
+Raat Akeli Hai - The Bansal Murders | 81922895
+Mrs. Serial Killer | 81076113
+CBI 5: The Brain | 81597698
+Tu Yaa Main | 82134630
+TEST | 81775792
+Toaster | 81779444
+Gumraah | 81595555
+Mrithyunjay | 82735085
+Vadh | 81554104
+Phir Aayi Hasseen Dillruba | 81683052
+Baramulla | 82127717
+Iraivan (Hindi) | 81690269
+
+## Critically Acclaimed Movies
+Kabhi Khushi Kabhie Gham | 60036750
+RRR (Hindi) | 81476453
+Gangubai Kathiawadi | 81280352
+12th Fail | 81761732
+Jawan: Extended Cut | 81493411
+Talaash | 70262614
+Veer-Zaara | 70024184
+Rab Ne Bana Di Jodi | 70103521
+Baahubali: The Beginning (Hindi Version) | 80204117
+Homebound | 82109253
+Raazi | 81587834
+Dilwale Dulhania Le Jayenge | 60036747
+Laapataa Ladies | 81760391
+Om Shanti Om | 70083535
+Bajrangi Bhaijaan | 80065328
+Jab Tak Hai Jaan | 70258134
+Swades | 70019491
+Amar Singh Chamkila | 81664257
+Chak De! India | 70077853
+The Elephant Whisperers | 81312835
+Article 370 | 81773534
+Gunjan Saxena: The Kargil Girl | 81292944
+An Action Hero | 81514149
+Dum Laga Ke Haisha | 80081701
+Ullozhukku | 82656255
+Dhoom: 2 | 70059536
+Bulbbul | 81029150
+PK | 70303496
+'83 | 81144147
+Fanaa | 70054084
+Fan | 80100644
+Tribhanga - Tedhi Medhi Crazy | 81205388
+Sui Dhaaga: Made in India | 82027408
+Zindagi Na Milegi Dobara | 70202336
+Paheli | 70039405
+Darr | 20704518
+Badhaai Do | 81350338
+Milestone | 81381748
+Udta Punjab | 80118002
+Raat Akeli Hai | 81269716
+
+## Crowd Pleasers
+Delhi Crime | 81076756
+Lucky Baskhar | 81902035
+Haq | 82085150
+Laapataa Ladies | 81760391
+'83 | 81144147
+Mad | 81678103
+OMG 2 | 81722145
+Irugapatru | 81600221
+
+## Love & Obsession
+Yeh Kaali Kaali Ankhein | 81173113
+Tere Ishk Mein | 81772320
+The Girlfriend | 82050268
+Phir Aayi Hasseen Dillruba | 81683052
+Kalank | 82739048
+Telusu Kada | 82020122
+Dil Se | 17671454
+Doosara Aadmi | 70004840
+
+## International Movies
+Ohh My Dog | 83197638
+Peddi | 83075036
+GDN | 82853382
+Made in Korea | 81754582
+Main Vaapas Aaunga | 82018915
+Dude | 81900290
+Kal Ho Naa Ho | 60036735
+Mahavatar Narsimha | 82131939
+They Call Him OG | 81902063
+Jaat | 82034833
+Gangubai Kathiawadi | 81280352
+RRR (Hindi) | 81476453
+War 2 | 81937035
+Mardaani 3 | 82023351
+Pyaar Prema Kalyanam | 82146074
+Saiyaara | 82024663
+Fighter | 81698397
+Border 2 | 81956873
+Accused | 81661375
+Daadi Ki Shaadi | 82741941
+Kuch Kuch Hota Hai | 60036752
+Mimi | 81267360
+Pushpa 2: The Rule (Reloaded Version) | 82006666
+Reporting Live | 81917272
+De De Pyaar De 2 | 81713690
+Jolly LLB 3 | 82145971
+Idhayam Murali | 82072500
+Lust Stories 3 | 81734814
+Deva | 81704205
+Don 2 | 70224999
+Talaash | 70262614
+KARTAVYA | 82698051
+The Diplomat | 81946513
+Baby Do Die Do | 83195142
+Raid 2 | 81760050
+Tehran | 81577018
+Devara | 81728598
+Raazi | 81587834
+Veer-Zaara | 70024184
+Lucky Baskhar | 81902035
+
+## True Crime Documentary Series
+The Hunt for Veerappan | 81111279
+House of Secrets: The Burari Deaths | 81095095
+The Indrani Mukerjea Story: Buried Truth | 81150989
+Indian Predator: Murder in a Courtroom | 81610577
+Indian Predator: The Butcher of Delhi | 81252894
+Crime Stories: India Detectives | 81000068
+Beast of Bangalore: Indian Predator | 81610578
+Indian Predator: The Diary of a Serial Killer | 81610333
+
+## Gritty TV Dramas
+Sacred Games | 80115328
+Khakee: The Bihar Chapter | 81290872
+Khakee: The Bengal Chapter | 81995349
+Rana Naidu | 81313283
+Black Warrant | 81971071
+Kohrra | 81443393
+CAT | 81281063
+Jamtara - Sabka Number Ayega | 81183491
+Tribhuvan Mishra CA Topper | 81285617
+Selection Day | 80194558
+
+## Animated TV
+Kurukshetra: The Great War of Mahabharata | 82063102
+Mighty Little Bheem | 80211492
+Mighty Bheem's Playtime | 81322703
+Mighty Little Bheem: Festival of Colors | 81193947
+Chhota Bheem | 81088331
+Mighty Little Bheem: Diwali | 81020066
+Chhota Bheem Kirmada | 81701032
+Mighty Little Bheem: Kite Festival | 81273728
+Mighty Raju | 81450321
+Chhota Bheem aur Gadadhari Bheem | 81701055
+ChuChuTV Surprise Eggs | 83070502
+Mighty Little Bheem: I Love Taj Mahal | 81312752
+ChuChuTV Colors in Funzone | 83070533
+Chhota Bheem Magic Block Buster | 81701063
+Chota Bheem Zuhu Ka Zalzala | 81701050
+EMoMee - Playtime Explorers | 83128243
+Krish, Trish & Baltiboy Bharat Hain Hum | 81713009
+Chhota Bheem Rangda | 81701039
+Chhota Bheem Mahashaitaan Ka Mahayudh | 81700184
+Chhota Bheem Damyan | 81701044
+ChuChuTV Drawing with ChuChu | 83070517
+Emomee - Big Skills For Little Ones minis | 83111664
+ChuChuTV Nursery Rhymes | 83070793
+
+## Action Thriller Movies
+Mardaani 3 | 82023351
+Mission Majnu | 81633804
+War 2 | 81937035
+Jewel Thief - The Heist Begins | 81688854
+Baby Do Die Do | 83195142
+Don 2 | 70224999
+Tehran | 81577018
+Jawan: Extended Cut | 81493411
+Salaar | 81727155
+Thammudu | 83072495
+Tiger Zinda Hai | 81587852
+Dhoom: 3 | 70287293
+Mass Jathara | 81678098
+Leo (Hindi) | 81639323
+Sooryavanshi | 81144150
+An Action Hero | 81514149
+Drive | 81189912
+Daaku Maharaaj | 81715676
+Kingdom | 81678097
+Codename: Tiranga | 81387252
+Fan | 80100644
+Waltair Veerayya | 81551307
+Raw (Hindi) | 81508719
+VidaaMuyarchi | 81644287
+GOAT - The Greatest of All Time | 81762714
+Gunday | 70307646
+Dhoom: 2 | 70059536
+Leo (English) | 81742215
+Saaho | 81157385
+Kalagathalaivan | 81597751
+Thunivu (Hindi) | 81672761
+Kantara (Hindi) | 81656709
+Malang | 81214289
+Dhurandhar (Raw & Undekha) | 82813816
+Wild Dog | 81427455
+Gumrah | 24012660
+Gandeevadhari Arjuna | 81504462
+The Ghost (Hindi) | 81648103
+Don | 70059026
+Force 2 | 80159955
+
+## Emotional Movies
+Saiyaara | 82024663
+Border 2 | 81956873
+De De Pyaar De 2 | 81713690
+Kal Ho Naa Ho | 60036735
+Homebound | 82109253
+Kuch Kuch Hota Hai | 60036752
+Jolly LLB 3 | 82145971
+Panipat - The Great Betrayal | 81227047
+Idli Kadai | 82034831
+The Diplomat | 81946513
+The Girlfriend | 82050268
+Mimi | 81267360
+Raazi | 81587834
+Amaran | 81728596
+Kabhi Alvida Naa Kehna | 70057651
+Rab Ne Bana Di Jodi | 70103521
+Haq | 82085150
+Mrs. Chatterjee vs Norway | 81508378
+Talaash | 70262614
+Swades | 70019491
+Tere Ishk Mein | 81772320
+Mohabbatein | 60004005
+Veer-Zaara | 70024184
+Meiyazhagan | 81713677
+Thammudu | 83072495
+Main Hoon Na | 70000196
+Dilwale | 80091866
+Dhadak 2 | 81730965
+Court: State vs A Nobody | 81950906
+Jab Tak Hai Jaan | 70258134
+12th Fail | 81761732
+Sunny Sanskari ki Tulsi Kumari | 81786449
+Gunjan Saxena: The Kargil Girl | 81292944
+Sultan | 80104037
+Mujhse Dosti Karoge! | 60036754
+Kalank | 82739048
+Dilwale Dulhania Le Jayenge | 60036747
+Chennai Express | 70254350
+Sikandar | 81993917
+Thoda Pyaar Thoda Magic | 70102768
+
+## Feel-good Movies
+Pyaar Prema Kalyanam | 82146074
+Ginny Weds Sunny | 81294132
+With Love | 82629230
+Happy New Year | 80017528
+Plan A Plan B | 81110816
+Skater Girl | 81283585
+Shabaash Mithu (Hindi) | 81318084
+Kilometers and Kilometers | 81354207
+Student of the Year 2 | 81464996
+Nadaaniyan | 81689641
+Hichki | 81587844
+Dil Bole Hadippa! | 70123008
+Meenakshi Sundareshwar | 81131656
+Greater Kalesh | 82171959
+Zindagi Na Milegi Dobara | 70202336
+Hey Sinamika (Hindi) | 81582585
+Ladies vs Ricky Bahl | 70224885
+Pyaar Impossible | 70128228
+Tanu Weds Manu Returns | 80057196
+Friday Night Plan | 81580846
+Miss India | 81258622
+Mishan Impossible | 81597037
+The Archies | 81134807
+Shuddh Desi Romance | 70287292
+Love Per Square Foot | 80227304
+Ta Ra Rum Pum | 70069019
+Most Eligible Bachelor | 81412247
+OK Jaanu | 80170125
+Don | 81588444
+Mere Dad Ki Maruti | 70273258
+Bunty Aur Babli | 70038540
+Dhoom | 70018451
+Uma Maheswara Ugra Roopasya | 81256436
+Krishna and His Leela | 81296771
+Cinema Bandi | 81382253
+Dostana | 70109680
+Gippi | 70276514
+Luv Ka The End | 70189512
+Sarbath | 81226570
+Sillu Karuppatti | 81218363
