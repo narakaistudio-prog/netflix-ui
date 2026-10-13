@@ -69,6 +69,11 @@ const NXSHA_ALIASES = {
     'Demon Slayer: Kimetsu no Yaiba Infinity Castle I': 'Demon Slayer: Kimetsu no Yaiba Infinity Castle',
     'The Ba**ds of Bollywood': 'The Bastards of Bollywood',
     'Operation Safed Sagar: The Highest Air Force Mission': 'Operation Safed Sagar',
+    // Anime: the same single show under nxsha's name (checked on nxsha search).
+    'Hajime no Ippo: The Fighting!': 'Fighting Spirit',
+    'Gin Tama': 'Gintama',
+    "Hell's Paradise: Jigokuraku": "Hell's Paradise",
+    'Puniru Is a Cute Slime': 'Puniru Is a Kawaii Slime',
 };
 
 async function get(url) {
