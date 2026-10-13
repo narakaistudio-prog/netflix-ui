@@ -1,0 +1,27 @@
+name: Probe nxsha TV seasons (temporary)
+
+# Diagnostic only: prints where nxsha serves TV season 2+ episode lists.
+# Writes nothing to the repo. Remove once the episode builder is in place.
+on:
+  push:
+    branches:
+      - arena/12789678-netflix-ui
+    paths:
+      - '.github/workflows/probe-nxsha-tv.yml'
+      - 'scripts/probe-nxsha-tv.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe
+        run: node scripts/probe-nxsha-tv.mjs
