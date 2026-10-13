@@ -370,6 +370,18 @@
       .ranked-track .rank-number{font-size:86px;line-height:.72;width:auto;padding-right:6px;transform:none;-webkit-text-stroke:2px #85888f}
       .ranked-track .rank-card .rail-card{width:150px;-webkit-flex:0 0 150px;flex:0 0 150px;margin:0 0 6px}
     }
+    /* Phone: browse filters stack as full-width fields; search results read like app rows. */
+    @media(max-width:620px){
+      .browse-tools{-webkit-flex-direction:column;flex-direction:column;gap:12px;margin-bottom:16px}
+      .browse-tools label{width:100%;margin-right:0;-webkit-flex-direction:column;flex-direction:column;gap:6px}
+      .browse-tools select{width:100%}
+      .search-results .result{width:100%;margin:0 0 10px;-webkit-align-items:center;align-items:center}
+      .search-results .result img{width:52px;height:70px;-webkit-flex:0 0 52px;flex:0 0 52px}
+      .search-results .result-copy{-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:4px}
+      .search-results .result-copy strong{display:block;font-size:14px;line-height:1.25}
+      .search-results .result-copy small{display:block;color:#a9abb0;font-size:11px;line-height:1.35;white-space:normal}
+      .search-results .result>span:not(.result-copy){display:block;flex:0 0 auto;white-space:nowrap;font-size:11px}
+    }
     /* Phone (app-style): every rail swipes sideways with even cards; grids show two per row;
        search results keep their title and meta next to the poster. */
     @media(max-width:620px){
