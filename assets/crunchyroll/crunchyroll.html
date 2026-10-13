@@ -382,6 +382,13 @@
       .search-results .result-copy small{display:block;color:#a9abb0;font-size:11px;line-height:1.35;white-space:normal}
       .search-results .result>span:not(.result-copy){display:block;flex:0 0 auto;white-space:nowrap;font-size:11px}
     }
+    /* Phone: title page stacks — poster small on top, info card full width below. */
+    @media(max-width:620px){
+      .detail-hero-inner{-webkit-flex-direction:column;flex-direction:column;-webkit-align-items:stretch;align-items:stretch;gap:14px;padding:96px 16px 22px;width:100%;max-width:none;margin:0}
+      .detail-poster{width:124px;height:auto;-webkit-flex:0 0 124px;flex:0 0 124px;align-self:flex-start;margin:0}
+      .detail-intro{width:100%;max-width:none;margin:0;-webkit-flex:none;flex:none;padding:18px}
+      .detail-intro h2{font-size:32px}
+    }
     /* Phone (app-style): every rail swipes sideways with even cards; grids show two per row;
        search results keep their title and meta next to the poster. */
     @media(max-width:620px){
