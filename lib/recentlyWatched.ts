@@ -20,6 +20,21 @@ export interface WatchedEntry {
     startedAt: number;   // epoch ms
     /** 0..100 manual progress — default 0 because we can't read it from iframe. */
     progress: number;
+    /** Artwork saved at Play time so the row does not need the catalog to draw. */
+    imageUrl?: string;
+    backdropUrl?: string;
+    year?: string;
+}
+
+/** Fired on every write so mounted rows refresh without a reload. */
+export const RECENTLY_WATCHED_EVENT = 'recently-watched-change';
+
+function notify() {
+    try {
+        if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+            window.dispatchEvent(new Event(RECENTLY_WATCHED_EVENT));
+        }
+    } catch {}
 }
 
 const STORAGE_KEY = 'netflix-recently-watched-v1';
@@ -43,6 +58,7 @@ function writeAll(items: WatchedEntry[]) {
         if (typeof localStorage === 'undefined') return;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     } catch {}
+    notify();
 }
 
 export function markWatched(entry: Omit<WatchedEntry, 'startedAt' | 'progress'> & { progress?: number }): WatchedEntry {
@@ -67,6 +83,11 @@ export function updateProgress(id: string, progress: number) {
 
 export function getRecentlyWatched(): WatchedEntry[] {
     return readAll();
+}
+
+/** Remove one title from the Continue Watching row. */
+export function removeWatched(id: string) {
+    writeAll(readAll().filter(w => w.id !== id));
 }
 
 export function clearRecentlyWatched() {

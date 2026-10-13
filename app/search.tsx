@@ -7,7 +7,9 @@ import {
     TouchableOpacity,
     ScrollView,
     Text,
+    useWindowDimensions,
 } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
@@ -16,15 +18,22 @@ import { useCatalog } from '@/hooks/useCatalog';
 import { SafeImage } from '@/components/SafeImage';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
+import { MovieDetailModal } from '@/components/MovieList/MovieDetailModal';
+import { selectRelatedTitles } from '@/lib/relatedTitles';
 
 const IS_WEB = Platform.OS === 'web';
 
 export default function Search() {
     const params = useLocalSearchParams<{ q?: string }>();
+    const { width: windowWidth } = useWindowDimensions();
+    // Desktop keeps the 48px gutter; phones use 16px.
+    const sidePad = IS_WEB && !isPhoneWidth(windowWidth) ? 48 : 16;
     const { rows } = useCatalog();
     const router = useRouter();
     const inputRef = useRef<TextInput>(null);
     const [searchQuery, setSearchQuery] = useState(params.q ?? '');
+    /** Title opened from the results; shown in the title modal over this page. */
+    const [selected, setSelected] = useState<Movie | null>(null);
 
     const catalog = useMemo(() => {
         const seen = new Set<string>();
@@ -76,11 +85,10 @@ export default function Search() {
         return () => window.removeEventListener('keydown', onKey);
     }, [router]);
 
-    const openTitle = (id: string) => {
+    // Titles open in the in-page modal, never the /movie/[id] detail page.
+    const openTitle = (item: Movie) => {
         inputRef.current?.blur();
-        // Replace so search unmounts immediately instead of staying under the
-        // title modal until a stack animation finishes.
-        router.replace(`/movie/${id}` as any);
+        setSelected(item);
     };
 
     return (
@@ -88,7 +96,7 @@ export default function Search() {
             <StatusBar style="light" />
             <Stack.Screen options={{ headerShown: false, animation: 'none' }} />
 
-            <View style={[styles.header, IS_WEB && webStyles.header]}>
+            <View style={[styles.header, IS_WEB && webStyles.header, { paddingHorizontal: sidePad }]}>
                 <TouchableOpacity
                     onPress={closeSearch}
                     style={styles.backButton}
@@ -130,7 +138,7 @@ export default function Search() {
             ) : (
                 <ScrollView
                     style={styles.content}
-                    contentContainerStyle={[styles.section, IS_WEB && webStyles.section]}
+                    contentContainerStyle={[styles.section, IS_WEB && webStyles.section, { paddingHorizontal: sidePad }]}
                     keyboardShouldPersistTaps="handled"
                 >
                     <Text style={styles.sectionTitle}>
@@ -141,7 +149,7 @@ export default function Search() {
                             <TouchableOpacity
                                 key={String(item.id)}
                                 style={styles.card}
-                                onPress={() => openTitle(String(item.id))}
+                                onPress={() => openTitle(item)}
                                 activeOpacity={0.85}
                                 tabIndex={0}
                                 accessibilityRole="button"
@@ -170,6 +178,12 @@ export default function Search() {
                     </View>
                 </ScrollView>
             )}
+            <MovieDetailModal
+                movie={selected}
+                related={selected ? selectRelatedTitles(rows, selected, 12) : []}
+                onClose={() => setSelected(null)}
+                onSelect={(item) => setSelected(item)}
+            />
         </View>
     );
 }

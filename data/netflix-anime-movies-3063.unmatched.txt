@@ -1,0 +1,12 @@
+# Titles from data/netflix-anime-movies-3063.txt that nxsha did not match (not shown in the app).
+Pretty Guardian Sailor Moon Cosmos The Movie | 81732000 | no-nxsha-match
+Gintama the Movie 2026: Yoshiwara in Flames | 82968180 | no-nxsha-match
+The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261 | no-nxsha-match
+The End of Evangelion | 60024788 | no-nxsha-match
+Pokémon: Mewtwo Strikes Back - Evolution | 81223075 | no-nxsha-match
+Pretty Guardian Sailor Moon Eternal The Movie | 81214399 | no-nxsha-match
+Kuroko's Basketball: Last Game | 80991755 | no-nxsha-match
+One Piece: Episode of Alabasta | 70086565 | no-nxsha-match
+Naruto the Movie 3: Guardians of the Crescent Moon Kingdom | 70108386 | no-nxsha-match
+One Piece: Episode of Chopper: Bloom in the Winter, Miracle Sakura | 80998780 | no-nxsha-match
+Naruto the Movie 2: Legend of the Stone of Gelel | 70101321 | no-nxsha-match

@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Pressable, StyleSheet, Platform, TextInput } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Platform, TextInput, useWindowDimensions } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
+import { NOTIFICATIONS, NOTIFICATIONS_SEEN_KEY, unseenCount } from '@/lib/notifications';
+
+const todayKey = () => {
+    const d = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
@@ -16,15 +24,11 @@ const NAV_LINKS = [
     { label: 'Home', href: '/' as const, type: 'route' },
     { label: 'TV Shows', href: '/browse/tv' as const, type: 'catalog', catalog: 'tv' as const },
     { label: 'Movies', href: '/browse/movies' as const, type: 'catalog', catalog: 'movies' as const },
+    { label: 'Anime', href: '/anime' as const, type: 'route' },
     { label: 'My List', href: '/profile' as const, type: 'route' },
     { label: 'Crunchyroll', href: '/crunchyroll' as const, type: 'route' },
 ];
 
-const NOTIFICATIONS = [
-    { id: '1', title: 'Heeramandi: The Diamond Bazaar', time: '1 day ago', text: 'Season 1 is now streaming in 4K HDR Hindi & Regional.' },
-    { id: '2', title: 'Jawan', time: '2 days ago', text: 'Shah Rukh Khan’s #1 blockbuster now available.' },
-    { id: '3', title: 'Animal', time: '4 days ago', text: 'Top 10 trending in India today.' },
-];
 
 /**
  * Present-day Netflix India desktop navigation bar.
@@ -38,16 +42,30 @@ export function WebNavBar() {
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showBellMenu, setShowBellMenu] = useState(false);
+    const [seenDate, setSeenDate] = useState<string | null>(null);
+    const unread = unseenCount(NOTIFICATIONS, seenDate);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showTvGuide, setShowTvGuide] = useState(false);
     const { isTvMode, toggleTvMode } = useTvMode();
     const searchBoxRef = useRef<View>(null);
     const submitLock = useRef(false);
+    // Phones: the section links move to the bottom tab bar (PhoneTabBar).
+    const { width: windowWidth } = useWindowDimensions();
+    const isPhone = isPhoneWidth(windowWidth);
 
     const closeSearch = () => {
         setSearchOpen(false);
         setSearchQuery('');
     };
+
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+        try {
+            setSeenDate(window.localStorage.getItem(NOTIFICATIONS_SEEN_KEY));
+        } catch {
+            // Storage blocked: every item simply counts as new.
+        }
+    }, []);
 
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
@@ -122,7 +140,7 @@ export function WebNavBar() {
                 />
             )}
 
-            <View style={styles.bar}>
+            <View style={[styles.bar, isPhone && styles.barPhone]}>
                 {/* Netflix Brand Wordmark */}
                 <Pressable
                     onPress={() => router.push('/')}
@@ -138,18 +156,19 @@ export function WebNavBar() {
                     } as any)}
                     style={({ hovered }: any) => [styles.logoBtn, hovered && { opacity: 0.85 }]}
                 >
-                    <Text style={styles.logo}>NETFLIX</Text>
+                    <Text style={[styles.logo, isPhone && styles.logoPhone]}>NETFLIX</Text>
                 </Pressable>
 
                 {/* Main Desktop Links */}
                 <View style={styles.links}>
-                    {NAV_LINKS.map((link, i) => {
+                    {!isPhone && NAV_LINKS.map((link, i) => {
                         const isHome = link.label === 'Home' && (pathname === '/' || pathname === '/index');
                         const isCatalog = link.type === 'catalog' && pathname === `/browse/${link.catalog}`;
+                        const isAnime = link.label === 'Anime' && pathname === '/anime';
                         const isMyList = link.label === 'My List' && pathname.startsWith('/profile');
                         const isOtt = link.label === 'Crunchyroll';
                         const isCrunchyroll = isOtt && pathname.startsWith('/crunchyroll');
-                        const active = isHome || isCatalog || isMyList || isCrunchyroll;
+                        const active = isHome || isCatalog || isAnime || isMyList || isCrunchyroll;
 
                         return (
                             <Pressable
@@ -206,10 +225,10 @@ export function WebNavBar() {
                 </View>
 
                 {/* Right utility items */}
-                <View style={styles.right}>
+                <View style={[styles.right, isPhone && styles.rightPhone]}>
                     {/* Expandable Search Input */}
                     {searchOpen ? (
-                        <View ref={searchBoxRef} style={styles.searchBox}>
+                        <View ref={searchBoxRef} style={[styles.searchBox, isPhone && styles.searchBoxPhone]}>
                             <Ionicons name="search" size={18} color="#fff" />
                             <TextInput
                                 placeholder="Titles, people, genres"
@@ -247,6 +266,8 @@ export function WebNavBar() {
                         </Pressable>
                     )}
 
+                    {!isPhone && (
+                        <>
                     {/* TV Mode: one press = remote mode ON/OFF, '?' opens the guide */}
                     <Pressable
                         onPress={toggleTvMode}
@@ -290,10 +311,23 @@ export function WebNavBar() {
                         <Ionicons name="help-circle-outline" size={18} color="#ddd" />
                     </Pressable>
 
+                        </>
+                    )}
+
                     {/* Notifications Bell */}
                     <View style={styles.bellContainer}>
                         <Pressable
                             onPress={() => {
+                                // Opening the bell marks everything up to today as seen.
+                                if (!showBellMenu) {
+                                    const today = todayKey();
+                                    setSeenDate(today);
+                                    try {
+                                        window.localStorage.setItem(NOTIFICATIONS_SEEN_KEY, today);
+                                    } catch {
+                                        // Storage blocked: the badge may come back next visit.
+                                    }
+                                }
                                 setShowBellMenu((prev) => !prev);
                                 setShowProfileMenu(false);
                             }}
@@ -310,15 +344,20 @@ export function WebNavBar() {
                             style={({ hovered }: any) => [styles.iconBtn, hovered && { opacity: 0.75 }]}
                         >
                             <Ionicons name="notifications-outline" size={21} color="#fff" />
-                            <View style={styles.bellDot}>
-                                <Text style={styles.bellDotText}>3</Text>
-                            </View>
+                            {unread > 0 && (
+                                <View style={styles.bellDot}>
+                                    <Text style={styles.bellDotText}>{unread}</Text>
+                                </View>
+                            )}
                         </Pressable>
 
                         {/* Bell Notifications Dropdown */}
                         {showBellMenu && (
                             <View style={styles.dropdownMenu}>
                                 <Text style={styles.dropdownHeader}>Notifications</Text>
+                                {NOTIFICATIONS.length === 0 && (
+                                    <Text style={styles.notifText}>No new notifications</Text>
+                                )}
                                 {NOTIFICATIONS.map((n) => (
                                     <Pressable
                                         key={n.id}
@@ -329,7 +368,7 @@ export function WebNavBar() {
                                         <View style={{ flex: 1 }}>
                                             <Text style={styles.notifTitle}>{n.title}</Text>
                                             <Text style={styles.notifText}>{n.text}</Text>
-                                            <Text style={styles.notifTime}>{n.time}</Text>
+                                            <Text style={styles.notifTime}>{n.date}</Text>
                                         </View>
                                     </Pressable>
                                 ))}
@@ -462,6 +501,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 48,
         gap: 32,
+    },
+    barPhone: {
+        paddingHorizontal: 14,
+        gap: 10,
+    },
+    logoPhone: {
+        fontSize: 20,
+        letterSpacing: 0.8,
+    },
+    rightPhone: {
+        gap: 14,
+    },
+    searchBoxPhone: {
+        width: 190,
     },
     logoBtn: {
         marginRight: 8,

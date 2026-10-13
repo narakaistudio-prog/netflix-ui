@@ -1,0 +1,63 @@
+name: Crunchyroll daily Fresh Drops
+
+# Once a day, reads the nxsha anime listings and finds titles that were not seen before.
+# Those titles get firstSeen = today. They are shown in the "Fresh Drops" rail on the
+# Crunchyroll page (block between CR_DROPS markers in assets/crunchyroll/crunchyroll.html)
+# and become bell notifications (lib/notifications.ts reads data/crunchyroll-new-drops.json).
+#
+# The first run is a baseline: everything found then is marked and never notified.
+#
+# GitHub runs a "schedule" trigger only from the repository's default branch. Until this
+# workflow is on the default branch, the daily run does not start by itself; push and
+# manual triggers still work on this branch.
+#
+# Commits made with GITHUB_TOKEN do not start other workflows.
+on:
+  schedule:
+    # 04:00 UTC every day, which is 09:30 in India.
+    - cron: '0 4 * * *'
+  push:
+    branches:
+      - arena/12789678-netflix-ui
+    paths:
+      - '.github/workflows/crunchyroll-daily-drops.yml'
+      - 'scripts/build-crunchyroll-new-drops.mjs'
+  workflow_dispatch:
+
+concurrency:
+  group: crunchyroll-drops-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  drops:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build the Fresh Drops from nxsha
+        run: node scripts/build-crunchyroll-new-drops.mjs
+
+      - name: Commit the drops state and the page block
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/crunchyroll-new-drops.json assets/crunchyroll/crunchyroll.html
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "chore(crunchyroll): refresh Fresh Drops from nxsha"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi

@@ -1,5 +1,6 @@
 import React, { useId, useRef, useState } from 'react';
 import { View, Text, Pressable, FlatList, ScrollView, StyleSheet, Platform, useWindowDimensions } from 'react-native';
+import { isPhoneWidth } from '@/lib/layout';
 import { useRouter } from 'expo-router';
 import { styles } from '@/styles';
 import { Movie, MovieRow } from '@/types/movie';
@@ -8,6 +9,8 @@ import { HoverableView } from '@/components/ui/VisionContainer';
 import { SafeImage } from '@/components/SafeImage';
 import { Ionicons } from '@expo/vector-icons';
 import { getCarouselWindow, spacerWidth, WEB_CAROUSEL_WINDOW } from './carouselWindow';
+import { MovieDetailModal } from './MovieDetailModal';
+import { selectRelatedTitles } from '@/lib/relatedTitles';
 
 const IS_WEB = Platform.OS === 'web';
 const ROW_PADDING = IS_WEB ? 48 : 16;
@@ -31,17 +34,14 @@ const NumberBackground = ({ number }: { number: number }) => {
     );
 };
 
-const MovieItem = ({ item, router, index, isTop10 }: {
+const MovieItem = ({ item, onOpen, index, isTop10 }: {
     item: Movie;
-    router: any;
+    onOpen: (item: Movie) => void;
     index: number;
     isTop10: boolean;
 }) => (
     <Pressable
-        onPress={() => router.push({
-            pathname: '/movie/[id]',
-            params: { id: item.id }
-        })}
+        onPress={() => onOpen(item)}
         style={[
             styles.contentItem,
             isTop10 && styles.top10Item
@@ -73,6 +73,8 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
     const [focused, setFocused] = useState(false);
     const num = index + 1;
     const isActive = !isTvRemoteMode() && (hovered || focused);
+    const { width: windowWidth } = useWindowDimensions();
+    const phone = isPhoneWidth(windowWidth);
 
     return (
         <Pressable
@@ -97,12 +99,12 @@ const WebTop10Card = ({ item, index, rowTitle = 'top_10', onPress }: {
         >
             <View style={top10.row}>
                 {/* Netflix Stylized Rank Number */}
-                <View style={top10.numberBox}>
-                    <Text style={top10.number}>{num}</Text>
+                <View style={[top10.numberBox, phone && top10.numberBoxPhone]}>
+                    <Text style={[top10.number, phone && top10.numberPhone]}>{num}</Text>
                 </View>
 
                 {/* Vertical Poster Card */}
-                <View style={[top10.posterBox, isActive && top10.posterBoxHover]}>
+                <View style={[top10.posterBox, phone && top10.posterBoxPhone, isActive && top10.posterBoxHover]}>
                     <SafeImage
                         source={{ uri: item.imageUrl }}
                         style={top10.poster}
@@ -141,6 +143,8 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
     const isActive = !isTvRemoteMode() && (hovered || focused);
+    const { width: windowWidth } = useWindowDimensions();
+    const phone = isPhoneWidth(windowWidth);
 
     return (
         <Pressable
@@ -161,9 +165,9 @@ const WebPosterCard = ({ item, index = 0, rowTitle = 'row', onPress }: {
                     tvIndex: String(index),
                 },
             } as any)}
-            style={[card.wrap, isActive && card.wrapHover]}
+            style={[card.wrap, phone && card.wrapPhone, isActive && card.wrapHover]}
         >
-            <View style={[card.posterBox, isActive && card.posterBoxHover]}>
+            <View style={[card.posterBox, phone && card.posterBoxPhone, isActive && card.posterBoxHover]}>
                 <SafeImage
                     source={{ uri: item.imageUrl }}
                     style={card.poster}
@@ -221,6 +225,9 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     const navRow = `${rowTitle}#${shelfUid}`;
     const { isVisionOS } = useVisionOS();
     const { width: windowWidth } = useWindowDimensions();
+    const phone = isPhoneWidth(windowWidth);
+    // Phones swipe the shelves; the desktop arrows would sit on top of the posters.
+    const rowPadding = IS_WEB && phone ? 14 : ROW_PADDING;
     // Web uses a horizontal ScrollView while native uses FlatList; both refs
     // expose different imperative scroll methods.
     const listRef = useRef<any>(null);
@@ -248,10 +255,9 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
         }
     };
 
-    const openMovie = (item: Movie) => router.push({
-        pathname: '/movie/[id]',
-        params: { id: item.id },
-    });
+    // Pressing a title opens its details over the row (poster/backdrop modal); Play runs inside it.
+    const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+    const openMovie = (item: Movie) => setSelectedMovie(item);
 
     const renderItem = ({ item, index }: { item: Movie; index: number }) => {
         if (IS_WEB) {
@@ -280,7 +286,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
             <HoverableView key={`${item.id}-${index}`}>
                 <MovieItem
                     item={item}
-                    router={router}
+                    onOpen={openMovie}
                     index={index}
                     isTop10={isTop10}
                 />
@@ -291,7 +297,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
     return (
         <View style={[styles.container, IS_WEB && rowStyles.rowContainer]}>
             {IS_WEB ? (
-                <View style={rowStyles.headerRow}>
+                <View style={[rowStyles.headerRow, { paddingHorizontal: rowPadding }]}>
                     <Text style={[styles.sectionTitle, rowStyles.sectionTitle]}>{rowTitle}</Text>
                     {!hideExploreAll ? (
                         <Pressable
@@ -344,8 +350,8 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                             styles.contentList,
                             isTop10 && styles.top10List,
                             {
-                                paddingHorizontal: ROW_PADDING,
-                                columnGap: isTop10 ? 28 : 12,
+                                paddingHorizontal: rowPadding,
+                                columnGap: isTop10 ? (phone ? 14 : 28) : 12,
                                 // The TV focus ring is scale(1.06) + a 4px outline
                                 // with a 3px offset, i.e. ~15px taller than the
                                 // poster. This ScrollView clips overflow, so without
@@ -385,7 +391,7 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                         ]}
                     />
                 )}
-                {IS_WEB && (
+                {IS_WEB && !phone && (
                     <>
                         <Pressable
                             style={({ hovered }: any) => [
@@ -419,11 +425,24 @@ export function MovieList({ rowTitle, movies, type, hideExploreAll }: MovieRow &
                     ))}
                 </View>
             ) : null}
+            <MovieDetailModal
+                movie={selectedMovie}
+                related={selectedMovie ? selectRelatedTitles([{ rowTitle, movies, type }], selectedMovie, 12) : []}
+                onClose={() => setSelectedMovie(null)}
+                onSelect={openMovie}
+            />
         </View>
     );
 }
 
 const card = StyleSheet.create({
+    wrapPhone: {
+        width: 124,
+    },
+    posterBoxPhone: {
+        width: 124,
+        height: 180,
+    },
     wrap: {
         width: 175,
         cursor: 'pointer' as any,
@@ -531,6 +550,18 @@ const card = StyleSheet.create({
 });
 
 const top10 = StyleSheet.create({
+    numberBoxPhone: {
+        width: 46,
+        marginRight: -10,
+    },
+    numberPhone: {
+        fontSize: 96,
+        lineHeight: 96,
+    },
+    posterBoxPhone: {
+        width: 124,
+        height: 180,
+    },
     wrap: {
         flexDirection: 'row',
         alignItems: 'center',

@@ -1,0 +1,268 @@
+# Source: https://www.netflix.com/in/browse/genre/3063 (Anime Movies), captured 2026-10-13.
+# Format: "## Row title" starts a row; "Title | Netflix title id" is one movie or show.
+# Rows and titles are copied in page order. The same title can appear in several rows.
+# nxsha supplies every detail and image; see scripts/build-netflix-genre-rows.mjs (--preset=anime-movies).
+# Part 1 and Part 2 of a film stay unmatched: nxsha lists the two parts apart, and one part is not the film.
+
+## Action & Adventure Movies
+Demon Slayer: Kimetsu no Yaiba Infinity Castle I | 82723106
+Dragon Ball Z: Battle of Gods | 70295183
+Black Clover: Sword of the Wizard King | 81448990
+Jujutsu Kaisen 0: The Movie | 81602834
+OVERLORD:The Sacred Kingdom | 82040442
+My Hero Academia: World Heroes' Mission | 81642996
+Resident Evil: Damnation | 70229183
+My Hero Academia: You're Next | 82036353
+Resident Evil: Vendetta | 80190911
+Suzume | 81696498
+My Hero Academia: Heroes Rising | 81398907
+Resident Evil: Death Island | 81714596
+Pretty Guardian Sailor Moon Cosmos The Movie | 81732000
+Hunter x Hunter: Phantom Rouge | 80108601
+Drifting Home | 81328781
+Baki Hanma VS Kengan Ashura | 81648184
+Naruto Shippûden the Movie: Bonds | 70105699
+Naruto Shippuden the Movie: Blood Prison | 80152537
+Naruto Shippûden the Movie: The Will of Fire | 80045673
+Gintama the Movie 2026: Yoshiwara in Flames | 82968180
+The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261
+Hunter x Hunter: The Last Mission | 80108453
+Mobile Suit Gundam Hathaway | 81439253
+The Seven Deadly Sins: Cursed by Light | 81263946
+One Piece Film: Red | 81700392
+New Gods: Nezha Reborn | 81418302
+Monster Hunter: Legends of the Guild | 81346827
+Mobile Suit Gundam Hathaway: The Sorcery of Nymph Circe | 82854665
+Dragon Quest Your Story | 81170086
+The Witcher: Nightmare of the Wolf | 81037868
+BLAME! | 80115466
+Naruto Shippuden: The Movie: The Lost Tower | 70275937
+My Oni Girl | 81582442
+Naruto Shippuden: The Movie | 70124999
+The End of Evangelion | 60024788
+One Piece Film: Gold | 80163050
+One Piece Film Z | 80198443
+Mobile Suit Gundam SEED FREEDOM | 81747912
+The Seven Deadly Sins: Grudge of Edinburgh Part 2 | 81306306
+THE RIBBON HERO | 81493703
+
+## New on Netflix
+Demon Slayer: Kimetsu no Yaiba Infinity Castle I | 82723106
+Resident Evil: Vendetta | 80190911
+Resident Evil: Damnation | 70229183
+Mononoke The Movie: Chapter Ⅲ - The Curse of the Serpent | 82012956
+Gintama the Movie 2026: Yoshiwara in Flames | 82968180
+Mobile Suit Gundam Hathaway: The Sorcery of Nymph Circe | 82854665
+THE RIBBON HERO | 81493703
+
+## Your Next Watch
+Pokémon: Mewtwo Strikes Back - Evolution | 81223075
+Cosmic Princess Kaguya! | 81756595
+My Hero Academia: Heroes Rising | 81398907
+Grave of the Fireflies | 557010
+My Hero Academia: You're Next | 82036353
+Pretty Guardian Sailor Moon Cosmos The Movie | 81732000
+Suzume | 81696498
+Pokémon the Movie: Secrets of the Jungle | 81346307
+A Whisker Away | 81281872
+Drifting Home | 81328781
+Hunter x Hunter: Phantom Rouge | 80108601
+Naruto Shippûden the Movie: Bonds | 70105699
+Naruto Shippuden the Movie: Blood Prison | 80152537
+The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261
+Bubble | 81345945
+Naruto Shippûden the Movie: The Will of Fire | 80045673
+Gintama the Movie 2026: Yoshiwara in Flames | 82968180
+Pokémon: The Arceus Chronicles | 81605060
+The Seven Deadly Sins: Cursed by Light | 81263946
+Mobile Suit Gundam Hathaway | 81439253
+Pretty Guardian Sailor Moon Eternal The Movie | 81214399
+Hunter x Hunter: The Last Mission | 80108453
+100 Meters | 81785821
+One Piece Film: Red | 81700392
+STAND BY ME Doraemon | 80158156
+New Gods: Nezha Reborn | 81418302
+Monster Hunter: Legends of the Guild | 81346827
+BLAME! | 80115466
+Dragon Quest Your Story | 81170086
+One Piece Film: Gold | 80163050
+The First Slam Dunk | 81765372
+Mobile Suit Gundam Hathaway: The Sorcery of Nymph Circe | 82854665
+Naruto Shippuden: The Movie | 70124999
+STAND BY ME Doraemon 2 | 81451264
+My Oni Girl | 81582442
+Violet Evergarden the Movie | 81193214
+Naruto Shippuden: The Movie: The Lost Tower | 70275937
+One Piece Film Z | 80198443
+Kuroko's Basketball: Last Game | 80991755
+The Imaginary | 81565710
+
+## Critically Acclaimed Movies
+Suzume | 81696498
+One Piece Film: Red | 81700392
+The Witcher: Nightmare of the Wolf | 81037868
+The First Slam Dunk | 81765372
+Violet Evergarden the Movie | 81193214
+The End of Evangelion | 60024788
+Words Bubble Up Like Soda Pop | 81400497
+BLUE GIANT | 81763062
+
+## Feel-good Movies
+A Whisker Away | 81281872
+STAND BY ME Doraemon | 80158156
+STAND BY ME Doraemon 2 | 81451264
+Anpanman: Shine! Kulun and the Stars of Life | 81719828
+Anpanman: Apple Boy And Everyone's Hope | 81719818
+Anpanman: Twinkle! Princess Vanilla of Ice Cream Land | 81719829
+Anpanman: Star-Spirited Dollie | 81719799
+Anpanman: Revive Banana Island! | 81719813
+Anpanman: Nanda and Runda from Star of Toys | 81719826
+Anpanman: The Secret of Fairy Rin-Rin | 81719804
+Anpanman: Purun, The Soap Bubble | 81719801
+Anpanman: Adventure of Happie | 81719798
+Anpanman: The Blacknose with Magical Song | 81719808
+
+## Anime for Beginners
+Naruto Shippuden the Movie: Blood Prison | 80152537
+The Seven Deadly Sins the Movie: Prisoners of the Sky | 81006261
+Baki Hanma VS Kengan Ashura | 81648184
+Naruto Shippûden the Movie: The Will of Fire | 80045673
+Dragon Quest Your Story | 81170086
+One Piece Film Z | 80198443
+GODZILLA City on the Edge of Battle | 80180376
+NiNoKuni | 81093113
+BLUE GIANT | 81763062
+One Piece Film: Strong World | 80998781
+GODZILLA Planet of the Monsters | 80180373
+GODZILLA The Planet Eater | 80198623
+
+## Family Sci-Fi & Fantasy Movies
+Drifting Home | 81328781
+Monster Hunter: Legends of the Guild | 81346827
+My Oni Girl | 81582442
+Child of Kamiari Month | 81478031
+The Imaginary | 81565710
+NiNoKuni | 81093113
+Anpanman: Apple Boy And Everyone's Hope | 81719818
+Anpanman: Star-Spirited Dollie | 81719799
+Anpanman: Nanda and Runda from Star of Toys | 81719826
+Anpanman: The Secret of Fairy Rin-Rin | 81719804
+Anpanman: Adventure of Happie | 81719798
+Anpanman: The Blacknose with Magical Song | 81719808
+
+## Action Movies
+Hunter x Hunter: Phantom Rouge | 80108601
+Naruto Shippûden the Movie: Bonds | 70105699
+Hunter x Hunter: The Last Mission | 80108453
+Mobile Suit Gundam Hathaway | 81439253
+The Seven Deadly Sins: Cursed by Light | 81263946
+New Gods: Nezha Reborn | 81418302
+The Witcher: Nightmare of the Wolf | 81037868
+BLAME! | 80115466
+Naruto Shippuden: The Movie: The Lost Tower | 70275937
+Naruto Shippuden: The Movie | 70124999
+One Piece Film: Gold | 80163050
+The End of Evangelion | 60024788
+One Piece Film Z | 80198443
+The Seven Deadly Sins: Grudge of Edinburgh Part 2 | 81306306
+Mobile Suit Gundam SEED FREEDOM | 81747912
+GODZILLA City on the Edge of Battle | 80180376
+One Piece: Episode of Alabasta | 70086565
+Naruto the Movie: Ninja Clash in the Land of Snow | 70074559
+One Piece Heart of Gold | 81679591
+Altered Carbon: Resleeved | 81001991
+Scarlet | 82888057
+The Seven Deadly Sins: Grudge of Edinburgh Part 1 | 81302750
+Naruto the Movie 3: Guardians of the Crescent Moon Kingdom | 70108386
+One Piece Film: Strong World | 80998781
+GODZILLA Planet of the Monsters | 80180373
+GODZILLA The Planet Eater | 80198623
+Ghost in the Shell: SAC_2045 Sustainable War | 81513128
+One Piece: Episode of Chopper: Bloom in the Winter, Miracle Sakura | 80998780
+Naruto the Movie 2: Legend of the Stone of Gelel | 70101321
+Sol Levante | 81017017
+Bright: Samurai Soul | 81001990
+EVANGELION: DEATH (TRUE)² | 81033473
+
+## Anime
+Pokémon the Movie: Secrets of the Jungle | 81346307
+Bubble | 81345945
+Pokémon: The Arceus Chronicles | 81605060
+Pretty Guardian Sailor Moon Eternal The Movie | 81214399
+100 Meters | 81785821
+BLAME! | 80115466
+Monster Hunter: Legends of the Guild | 81346827
+The First Slam Dunk | 81765372
+New Gods: Nezha Reborn | 81418302
+Dragon Quest Your Story | 81170086
+STAND BY ME Doraemon | 80158156
+Naruto Shippuden: The Movie | 70124999
+One Piece Film: Gold | 80163050
+Violet Evergarden the Movie | 81193214
+Naruto Shippuden: The Movie: The Lost Tower | 70275937
+My Oni Girl | 81582442
+STAND BY ME Doraemon 2 | 81451264
+THE RIBBON HERO | 81493703
+Kuroko's Basketball: Last Game | 80991755
+One Piece Film Z | 80198443
+The Imaginary | 81565710
+The Seven Deadly Sins: Grudge of Edinburgh Part 2 | 81306306
+Child of Kamiari Month | 81478031
+maboroshi | 81450803
+Words Bubble Up Like Soda Pop | 81400497
+One Piece Heart of Gold | 81679591
+BLUE GIANT | 81763062
+GODZILLA City on the Edge of Battle | 80180376
+Naruto the Movie: Ninja Clash in the Land of Snow | 70074559
+NiNoKuni | 81093113
+One Piece: Episode of Alabasta | 70086565
+Milky☆Subway: The Galactic Limited Express – the Movie | 82703490
+Scarlet | 82888057
+Mononoke The Movie: Chapter Ⅲ - The Curse of the Serpent | 82012956
+One Piece Film: Strong World | 80998781
+Naruto the Movie 3: Guardians of the Crescent Moon Kingdom | 70108386
+Violet Evergarden: Eternity and the Auto Memory Doll | 81208936
+The Seven Deadly Sins: Grudge of Edinburgh Part 1 | 81302750
+Mononoke The Movie: The Phantom in the Rain | 81580574
+GODZILLA Planet of the Monsters | 80180373
+
+## Sci-Fi Movies
+GODZILLA City on the Edge of Battle | 80180376
+Mobile Suit Gundam SEED FREEDOM | 81747912
+Milky☆Subway: The Galactic Limited Express – the Movie | 82703490
+Altered Carbon: Resleeved | 81001991
+GODZILLA Planet of the Monsters | 80180373
+GODZILLA The Planet Eater | 80198623
+Ghost in the Shell: SAC_2045 Sustainable War | 81513128
+Sturgill Simpson Presents Sound & Fury | 81171121
+EVANGELION: DEATH (TRUE)² | 81033473
+
+## 90-Minute Movies
+Resident Evil: Death Island | 81714596
+Naruto Shippuden: The Movie | 70124999
+Kuroko's Basketball: Last Game | 80991755
+Naruto Shippuden: The Movie: The Lost Tower | 70275937
+Words Bubble Up Like Soda Pop | 81400497
+One Piece: Episode of Alabasta | 70086565
+Violet Evergarden: Eternity and the Auto Memory Doll | 81208936
+Naruto the Movie: Ninja Clash in the Land of Snow | 70074559
+GODZILLA The Planet Eater | 80198623
+Violet Evergarden: Recollections | 81630362
+Mononoke The Movie: The Phantom in the Rain | 81580574
+GODZILLA Planet of the Monsters | 80180373
+
+## Exciting Movies
+One Piece Film: Gold | 80163050
+The Seven Deadly Sins: Grudge of Edinburgh Part 2 | 81306306
+Naruto the Movie: Ninja Clash in the Land of Snow | 70074559
+One Piece Heart of Gold | 81679591
+Naruto the Movie 3: Guardians of the Crescent Moon Kingdom | 70108386
+The Seven Deadly Sins: Grudge of Edinburgh Part 1 | 81302750
+One Piece Film: Strong World | 80998781
+GODZILLA Planet of the Monsters | 80180373
+Ghost in the Shell: SAC_2045 Sustainable War | 81513128
+Sturgill Simpson Presents Sound & Fury | 81171121
+One Piece: Episode of Chopper: Bloom in the Winter, Miracle Sakura | 80998780
+Naruto the Movie 2: Legend of the Stone of Gelel | 70101321
+EVANGELION: DEATH (TRUE)² | 81033473
+Bright: Samurai Soul | 81001990

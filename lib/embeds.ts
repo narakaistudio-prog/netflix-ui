@@ -52,6 +52,14 @@ export const DEFAULT_NXSHA_MOVIE =
 export const DEFAULT_NXSHA_TV =
     'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true';
 
+/** Netflix-accent nxsha player (color=netflix). Used by the Netflix catalog modal only. */
+export const NETFLIX_NXSHA_MOVIE =
+    'https://nxsha.space/embed/movie/{id}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
+
+/** Netflix-accent nxsha TV player (color=netflix). Same rule: Netflix catalog modal only. */
+export const NETFLIX_NXSHA_TV =
+    'https://nxsha.space/embed/tv/{id}/{s}/{e}?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true';
+
 export const DEFAULT_NHD_MOVIE = 'https://nhdapi.com/movie/{id}';
 export const DEFAULT_NHD_TV = 'https://nhdapi.com/tv/{id}/{s}/{e}';
 

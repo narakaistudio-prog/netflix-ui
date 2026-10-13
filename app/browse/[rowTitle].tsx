@@ -8,6 +8,8 @@ import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 import { Movie } from '@/types/movie';
 import { CatalogBrowseScreen, CatalogKind } from '@/components/CatalogBrowseScreen';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
+import { MovieDetailModal } from '@/components/MovieList/MovieDetailModal';
+import { selectRelatedTitles } from '@/lib/relatedTitles';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -22,6 +24,7 @@ export default function BrowseRow() {
             : null;
     const { rows } = useCatalog();
     const router = useRouter();
+    const [selected, setSelected] = useState<Movie | null>(null);
 
     if (catalogKind) {
         return (
@@ -77,14 +80,17 @@ export default function BrowseRow() {
                             item={item}
                             index={index}
                             isTop10={row?.type === 'top_10'}
-                            onPress={() => router.push({
-                                pathname: '/movie/[id]',
-                                params: { id: item.id },
-                            })}
+                            onPress={() => setSelected(item)}
                         />
                     ))}
                 </View>
             </ScrollView>
+            <MovieDetailModal
+                movie={selected}
+                related={selected ? selectRelatedTitles(rows, selected, 12) : []}
+                onClose={() => setSelected(null)}
+                onSelect={(item) => setSelected(item)}
+            />
         </View>
     );
 }

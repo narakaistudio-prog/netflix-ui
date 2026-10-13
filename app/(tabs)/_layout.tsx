@@ -65,6 +65,13 @@ export const TAB_SCREENS = [
     ),
   },
   {
+    name: 'anime',
+    title: 'Anime',
+    icon: ({ color }: { color: string; focused: boolean }) => (
+      <Ionicons name="sparkles-outline" size={24} color={color} />
+    ),
+  },
+  {
     name: 'tv',
     title: 'TV Shows',
     icon: ({ color }: { color: string; focused: boolean }) => (

@@ -1,0 +1,68 @@
+name: Update Top 10 India movies from Netflix Tudum
+
+# Keeps the "Trending Now in India" row in step with Netflix's Tudum Top 10 for India
+# (Movies). Each run reads https://www.netflix.com/tudum/top10/india, updates that row
+# in data/movies.json, and records each week in data/tudum-top10-india-history.json.
+# Details and images come from nxsha, as for the rest of the Trending row.
+#
+# GitHub runs a "schedule" trigger only from the repository's default branch. Until
+# this workflow is on the default branch, the daily run does not start by itself; the
+# push and manual triggers still work on this branch.
+#
+# Commits made with GITHUB_TOKEN do not start other workflows. The row is rebuilt in
+# the same job, so nothing else needs to run after the commit.
+on:
+  schedule:
+    # 03:45 UTC every day, which is 09:15 in India.
+    - cron: '45 3 * * *'
+  push:
+    branches:
+      - arena/12789678-netflix-ui
+    paths:
+      - '.github/workflows/tudum-top10-india.yml'
+      - 'scripts/update-tudum-top10.mjs'
+      - 'scripts/build-trending-nxsha.mjs'
+  workflow_dispatch:
+
+# Same group as the other jobs that rewrite data/movies.json, so they run one at a time.
+concurrency:
+  group: trending-nxsha-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Update the Trending row from the Tudum Top 10
+        run: node scripts/update-tudum-top10.mjs
+
+      - name: Commit the row, the weekly history and the status
+        # Runs even when the update failed, so the status file records the failure.
+        if: always()
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          for f in data/movies.json data/tudum-top10-india-history.json data/tudum-top10-india-status.json; do
+            if [ -e "$f" ]; then git add "$f"; fi
+          done
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "chore(tudum): refresh Top 10 India movies from Netflix Tudum"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi

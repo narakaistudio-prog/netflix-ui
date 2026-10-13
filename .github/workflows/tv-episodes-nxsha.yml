@@ -1,0 +1,54 @@
+name: Fill TV seasons and episodes from Nxsha
+
+# TV titles need their seasons and episode lists (name, still, runtime, overview),
+# which only nxsha.space serves. The sandbox cannot reach nxsha, so this job runs
+# on a hosted runner, rebuilds data/tv-episodes.json, and commits it. It never reads
+# or writes the Crunchyroll data (data/nxsha-*, crunchyroll.html).
+on:
+  push:
+    branches:
+      - arena/12789678-netflix-ui
+    paths:
+      - '.github/workflows/tv-episodes-nxsha.yml'
+      - 'scripts/build-tv-episodes-nxsha.mjs'
+      - 'data/movies.json'
+  workflow_dispatch:
+
+# Same group as the other Nxsha jobs, so pushes to the branch are handled one at a time.
+concurrency:
+  group: trending-nxsha-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build TV seasons and episodes from Nxsha
+        run: node scripts/build-tv-episodes-nxsha.mjs
+
+      - name: Commit the episode data
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/tv-episodes.json
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "chore(tv-episodes): fill TV seasons and episodes from Nxsha"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi

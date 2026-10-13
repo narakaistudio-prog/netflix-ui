@@ -8,6 +8,14 @@ jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
     return { Ionicons: (props: any) => ReactLocal.createElement('i', props) };
 });
+jest.mock('../hooks/useCatalog', () => {
+    const movie = (id: string) => ({ id, imageUrl: '', title: `Title ${id}`, year: '2024', mediaType: 'movie' });
+    const rows = [{
+        rowTitle: 'Fixture shelf',
+        movies: [movie('current'), ...Array.from({ length: 12 }, (_, i) => movie(`related-${i}`))],
+    }];
+    return { useCatalog: () => ({ rows, isLive: false }) };
+});
 jest.mock('expo-av', () => ({ Video: () => null, ResizeMode: {} }));
 jest.mock('react-native-awesome-slider', () => ({ Slider: () => null }));
 jest.mock('react-native-reanimated', () => ({ useSharedValue: (value: number) => ({ value }) }));
@@ -16,7 +24,6 @@ jest.mock('react-native-safe-area-context', () => ({
 }));
 
 import { ExpandedPlayer } from '../components/BottomSheet/ExpandedPlayer';
-import catalog from '../data/movies.json';
 
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 const Scroll = (props: any) => <ScrollView {...props} />;
@@ -34,7 +41,7 @@ afterEach(() => {
 });
 
 it('shows compact, keyboard-accessible posters and sends the clicked title to navigation', () => {
-    const current = catalog.movies[0].movies[0];
+    const current = { id: 'current', imageUrl: '', title: 'Title current', year: '2024', mediaType: 'movie' };
     const onSelectRelated = jest.fn();
     act(() => root.render(
         <ExpandedPlayer movie={current} scrollComponent={Scroll} onSelectRelated={onSelectRelated} />,

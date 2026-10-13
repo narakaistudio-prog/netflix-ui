@@ -1,0 +1,61 @@
+{
+    "source": "https://www.netflix.com/tudum/top10/india",
+    "weeks": [
+        {
+            "week": "9/28/26 - 10/4/26",
+            "firstSeen": "2026-10-13",
+            "movies": [
+                {
+                    "rank": 1,
+                    "title": "Vishwanath & Sons",
+                    "netflixId": "82034837"
+                },
+                {
+                    "rank": 2,
+                    "title": "Irumudi",
+                    "netflixId": "83001420"
+                },
+                {
+                    "rank": 3,
+                    "title": "Modha Rathri",
+                    "netflixId": "82811466"
+                },
+                {
+                    "rank": 4,
+                    "title": "Baby Do Die Do",
+                    "netflixId": "83195142"
+                },
+                {
+                    "rank": 5,
+                    "title": "Romã​nchakam",
+                    "netflixId": "82969780"
+                },
+                {
+                    "rank": 6,
+                    "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle I",
+                    "netflixId": "82723106"
+                },
+                {
+                    "rank": 7,
+                    "title": "Lust Stories 3",
+                    "netflixId": "81734814"
+                },
+                {
+                    "rank": 8,
+                    "title": "UNABOMBER",
+                    "netflixId": "82010386"
+                },
+                {
+                    "rank": 9,
+                    "title": "Ohh My Dog",
+                    "netflixId": "83197638"
+                },
+                {
+                    "rank": 10,
+                    "title": "Dhamaal 4",
+                    "netflixId": "81950460"
+                }
+            ]
+        }
+    ]
+}

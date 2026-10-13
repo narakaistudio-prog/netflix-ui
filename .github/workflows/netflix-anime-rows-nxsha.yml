@@ -1,0 +1,68 @@
+name: Fill Netflix anime rows from Nxsha
+
+# The Anime section (Netflix "Anime" genre page, data/netflix-anime-7424.txt) needs
+# details and images that only nxsha.space has. The sandbox cannot reach nxsha, so
+# this job runs on a hosted runner, rebuilds the "Anime: " rows in data/movies.json,
+# and commits it. Titles nxsha does not match are written to
+# data/netflix-anime-7424.unmatched.txt. It never reads or writes the Crunchyroll
+# data, and it leaves the genre and Trending rows alone.
+#
+# Commits made with GITHUB_TOKEN do not start other workflows, so the TV episode
+# builder is started by hand at the end (workflow_dispatch is allowed for this token).
+on:
+  push:
+    branches:
+      - arena/12789678-netflix-ui
+    paths:
+      - '.github/workflows/netflix-anime-rows-nxsha.yml'
+      - 'data/netflix-anime-7424.txt'
+      - 'data/netflix-anime-movies-3063.txt'
+      - 'scripts/build-netflix-genre-rows.mjs'
+      - 'scripts/build-trending-nxsha.mjs'
+  workflow_dispatch:
+
+# Same group as the other Nxsha jobs: all of them rewrite data/movies.json, so run one at a time.
+concurrency:
+  group: trending-nxsha-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build the Netflix anime rows from Nxsha
+        run: |
+          node scripts/build-netflix-genre-rows.mjs --preset=anime
+          node scripts/build-netflix-genre-rows.mjs --preset=anime-movies
+
+      - name: Commit the anime rows and the unmatched report
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/movies.json data/netflix-anime-7424.unmatched.txt data/netflix-anime-movies-3063.unmatched.txt
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "chore(anime-rows): fill Netflix anime rows from Nxsha"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+            # Season and episode data reads the titles in movies.json, so rebuild it now.
+            gh workflow run tv-episodes-nxsha.yml --ref "${{ github.ref_name }}"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}

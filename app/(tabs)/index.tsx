@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Platform, View, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,6 +15,10 @@ import { styles } from '@/styles';
 import { AnimatedHeader } from '@/components/Header/AnimatedHeader';
 import { FeaturedContent } from '@/components/FeaturedContent/FeaturedContent';
 import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
+import { ContinueWatchingRow } from '@/components/ContinueWatchingRow';
+import { MovieDetailModal } from '@/components/MovieList/MovieDetailModal';
+import { selectRelatedTitles } from '@/lib/relatedTitles';
+import { isAnimeRow } from '@/lib/anime';
 import { useDeviceMotion } from '@/hooks/useDeviceMotion';
 import { MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -35,9 +39,10 @@ export default function HomeScreen() {
   // Keep the Home contract independent of refresh-row insertion order.
   // Current editorial shelves may be refreshed separately, but Top 10 stays
   // immediately below the hero like Netflix.
+  // Anime rows belong to the Anime section, not to Home.
   const orderedMovies = useMemo(() => [
-    ...movies.filter(row => row.type === 'top_10'),
-    ...movies.filter(row => row.type !== 'top_10'),
+    ...movies.filter(row => row.type === 'top_10' && !isAnimeRow(row)),
+    ...movies.filter(row => row.type !== 'top_10' && !isAnimeRow(row)),
   ], [movies]);
   const insets = useSafeAreaInsets();
   // The web billboard does not use tilt transforms; don't start a continuous
@@ -46,6 +51,8 @@ export default function HomeScreen() {
   const { isVisionOS } = useVisionOS();
   const router = useRouter();
   const { selectedProfile } = useUser();
+  /** Hero Play opens the title in the modal (player inside it), not the detail page. */
+  const [heroMovie, setHeroMovie] = useState<any>(null);
 
   const allMovies = orderedMovies.flatMap(row => row.movies);
   // Hero = today's #1 title in India (first Top 10 row), always current
@@ -169,11 +176,11 @@ export default function HomeScreen() {
             movie={{
               id: featuredMovie.id,
               title: featuredMovie.title ?? '',
-              thumbnail: featuredMovie.imageUrl ?? '',
+              thumbnail: featuredMovie.backdropUrl || featuredMovie.imageUrl || '',
               categories: [],
               typeLabel: featuredMovie.type === 'SERIES' ? 'SERIES' : 'FILM',
               year: featuredMovie.year,
-              durationLabel: featuredMovie.type === 'SERIES' ? '1 Season' : '2h 10m',
+              durationLabel: featuredMovie.type === 'SERIES' ? '1 Season' : featuredMovie.duration || '2h 10m',
               ranking: featuredMovie.ranking_text,
             }}
             imageStyle={imageStyle}
@@ -183,17 +190,22 @@ export default function HomeScreen() {
             variant={IS_WEB ? 'billboard' : 'mobile'}
             description={featuredMovie.description}
             onPlay={() =>
-              router.push({
-                pathname: '/movie/[id]',
-                params: { id: featuredMovie.id },
-              })
+              setHeroMovie(allMovies.find((m: any) => m.id === featuredMovie.id) ?? featuredMovie)
             }
           />
           )}
 
+          <ContinueWatchingRow />
+
           {orderedMovies.map((row, index) => (
             <DeferredMovieList key={row.rowTitle} eager={index < 5} {...row} />
           ))}
+          <MovieDetailModal
+            movie={heroMovie}
+            related={heroMovie ? selectRelatedTitles(movies, heroMovie, 12) : []}
+            onClose={() => setHeroMovie(null)}
+            onSelect={(item) => setHeroMovie(item)}
+          />
         </Animated.ScrollView>
       </VisionContainer>
     </TabScreenWrapper>
