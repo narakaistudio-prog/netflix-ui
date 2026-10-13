@@ -1,0 +1,36 @@
+PROBE ids: 247769, 285147, 284753
+PROBE page /tv/247769 status=200 len=86813
+PROBE "Season " occurrences: 6
+PROBE data-season / season attrs: []
+PROBE ctx[0]: an><span class="pill-dark">Mar 30, 2024</span><span class="pill-dark">5<!-- --> season<!-- -->s</span><span class="pill-dark">Returning Series</span></div><div><p class="text-gray-300 text-sm md:text-
+PROBE ctx[1]:  class="text-xs font-semibold uppercase tracking-[0.24em] text-yellow">Binge by season</p><h2 class="mt-1 font-display text-2xl font-bold text-white">Episodes</h2></div><div class="rounded-full border
+PROBE ctx[2]: -base font-semibold transition bg-yellow text-black shadow-lg shadow-yellow/20">Season <!-- -->1</button><button type="button" class="whitespace-nowrap rounded-full px-6 py-3 text-base font-semibold t
+PROBE ctx[3]: bold transition border border-white/10 bg-white/5 text-white hover:bg-white/10">Season <!-- -->2</button><button type="button" class="whitespace-nowrap rounded-full px-6 py-3 text-base font-semibold t
+PROBE ctx[4]: bold transition border border-white/10 bg-white/5 text-white hover:bg-white/10">Season <!-- -->3</button><button type="button" class="whitespace-nowrap rounded-full px-6 py-3 text-base font-semibold t
+PROBE ctx[5]: bold transition border border-white/10 bg-white/5 text-white hover:bg-white/10">Season <!-- -->4</button><button type="button" class="whitespace-nowrap rounded-full px-6 py-3 text-base font-semibold t
+PROBE ctx[6]: bold transition border border-white/10 bg-white/5 text-white hover:bg-white/10">Season <!-- -->5</button></div><button type="button" class="absolute right-0 top-1/2 z-20 hidden h-10 w-10 -translate-y-
+PROBE ctx[7]: , 2024\"}],[\"$\",\"span\",null,{\"className\":\"pill-dark\",\"children\":[5,\" season\",\"s\"]}],[\"$\",\"span\",null,{\"className\":\"pill-dark\",\"children\":\"Returning Series\"}]]}],[\"$\",\"$L1e
+PROBE ctx[8]: 2:[\"$\",\"div\",null,{\"id\":\"episodes\",\"children\":[\"$\",\"$L28\",null,{\"seasons\":[{\"air_date\":\"2024-03-30\",\"episode_count\":13,\"id\":381542,\"name\":\"Season 1\",\"overview\":\"Comedian
+PROBE ctx[9]: s\":[{\"air_date\":\"2024-03-30\",\"episode_count\":13,\"id\":381542,\"name\":\"Season 1\",\"overview\":\"Comedian Kapil Sharma hosts this laugh-out-loud variety talk show with celebrity guests, hilar
+PROBE ctx[10]: ature supporting cast.\",\"poster_path\":\"/lSR8Pn996v5Xfr3SpgO2sRhwamk.jpg\",\"season_number\":1,\"vote_average\":6.9},{\"air_date\":\"2024-09-21\",\"episode_count\":13,\"id\":417968,\"name\":\"Seaso
+PROBE ctx[11]: 6.9},{\"air_date\":\"2024-09-21\",\"episode_count\":13,\"id\":417968,\"name\":\"Season 2\",\"overview\":\"Comedian Kapil Sharma brings desi fun to an all-new season featuring celebrity guests, side-sp
+PROBE api-like paths in page: []
+PROBE script srcs (11): ["/_next/static/chunks/2bzlqb104tejm.js","/_next/static/chunks/025e_g9ksha1v.js","/_next/static/chunks/1xq8ggvplsax4.js","/_next/static/chunks/turbopack-3-ry682tkyiqk.js","/_next/static/chunks/3l0c7amwd_jwv.js","/_next/static/chunks/027q3di0xvd71.js","/_next/static/chunks/3asuc5u20hnsv.js","/_next/static/chunks/0cz1d0mv5g_q7.js","/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js","/_next/static/chunks/1kexj4s7oxhs2.js","https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"]
+PROBE __NEXT_DATA__: none
+PROBE watch raw status=200 len=51079 episode links: []
+PROBE embed status=200 len=17696 tv-paths: []
+PROBE cand /api/tv/247769/season/2 -> 200 application/json len=19430 "{\"success\":true,\"season\":{\"id\":417968,\"season_number\":2,\"name\":\"Season 2\",\"poster_path\":\"/2yFoz0EHXMlDIqDm6wo6XHv2wiY.jpg\",\"air_date\":\"2024-09-21\",\"overview\":\"C"
+PROBE cand /api/tv/247769/seasons/2 -> 404 text/html len=9139 
+PROBE cand /api/tv/247769?season=2 -> 404 text/html len=9139 
+PROBE cand /api/tv/247769/2 -> 404 text/html len=9139 
+PROBE cand /api/season/247769/2 -> 404 text/html len=9139 
+PROBE cand /api/episodes/247769/2 -> 404 text/html len=9139 
+PROBE cand /tv/247769/season-2 -> 404 text/html len=9139 
+PROBE cand /tv/247769/seasons/2 -> 404 text/html len=9139 
+PROBE cand /tv/247769?s=2 -> 200 text/html len=86821 "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-"
+PROBE cand /season/247769/2 -> 404 text/html len=9139 
+PROBE cand /tv/247769/2/episodes -> 404 text/html len=9139 
+PROBE cand /api/tv/247769/season/2/episodes -> 404 text/html len=9139 
+PROBE js api/season strings (1): ["/api/tv/${a}/season/${e}"]
+PROBE other tv 285147: status=200 seasons-text=none eps-text=
+PROBE other tv 284753: status=200 seasons-text=none eps-text=
