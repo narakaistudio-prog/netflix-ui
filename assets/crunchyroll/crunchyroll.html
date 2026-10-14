@@ -781,7 +781,18 @@
       function cardHtml(key,isMovie){var a=shows[key],m=catalogMeta(a);return '<article class="show-card'+(isMovie?' movie-card':'')+'" data-genre="'+a.genres.join(' ')+'" data-title="'+a.title+'" data-year="'+a.year+'" data-rating="'+a.rating+'" data-status="'+m.status+'" data-type="'+m.type+'" data-open="'+key+'" tabindex="0" role="button"><div class="poster">'+posterImage(a.img,a.title+(isMovie?' anime movie poster':' anime poster'),true)+(isMovie?'<span class="movie-badge">MOVIE</span>':'')+'<button class="bookmark" aria-label="Add '+a.title+' to watchlist" data-save-key="'+key+'">＋</button></div><div class="card-copy"><h3>'+a.title+'</h3><p>★ '+a.rating+' · '+genreText(a)+(isMovie?' <span class="movie-runtime">· '+a.runtime+'</span>':'')+'</p></div></article>'}
       function renderCatalog(){var html='';each(keysOf(shows),function(key){html+=cardHtml(key,false)});byId('catalogGrid').innerHTML=html;queueLazy()}
       function renderMovies(filter){var html='';each(movieKeys,function(key){var show=shows[key];if(!filter||filter==='all'||arrayContains(show.genres,filter)){html+=cardHtml(key,true)}});byId('movieGrid').innerHTML=html;queueLazy()}
-      /*CR_DROPS_START*/var CR_NEW_DROPS=[];/*CR_DROPS_END*/
+      /*CR_DROPS_START*/
+var CR_NEW_DROPS=[];
+(function(){
+  if(!CR_NEW_DROPS.length)return;
+  window.CR_NX_DROPS={};
+  CR_NEW_DROPS.forEach(function(d){
+    shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img,type:d.kind==='movie'?'Movie':'TV'};
+    CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:{}};
+  });
+  rows.unshift({title:'Fresh Drops',ranked:false,keys:CR_NEW_DROPS.map(function(d){return d.key})});
+})();
+/*CR_DROPS_END*/
       renderHomeRows();renderCatalog();renderMovies('all');
       var saved={};var favorites={solo:true,jjk:true,demon:true};var activeKey='solo';
       var dialog=byId('detailDialog'),toast=document.querySelector('.toast'),toastTimer,playerShell=byId('playerShell'),videoStage=byId('videoStage');
