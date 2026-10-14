@@ -22,29 +22,28 @@ const BASE = 'https://nxsha.space';
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
 
 const PAGES = [
-  '/browse/anime?sort=popularity.desc&genres=16',
   '/browse/anime?sort=first_air_date.desc&genres=16',
-  '/browse/anime?sort=first_air_date.desc&genres=16&page=2',
-  '/browse/anime',
   '/anime',
   '/browse/tv-shows?sort=first_air_date.desc&genres=16',
-  '/',
+  '/browse/tv-shows?sort=first_air_date.desc&genres=16&page=2',
+  '/browse/tv-shows?sort=first_air_date.desc&genres=16&page=3',
+  '/browse/tv-shows?sort=popularity.desc&genres=16',
+  '/browse/movies?sort=primary_release_date.desc&genres=16',
+  '/browse/movies?sort=release_date.desc&genres=16',
 ];
 
 const API_CANDIDATES = [
-  '/api/browse/anime?sort=first_air_date.desc&genres=16&page=1',
-  '/api/browse?type=anime&sort=first_air_date.desc&genres=16&page=1',
-  '/api/discover/tv?sort_by=first_air_date.desc&with_genres=16&page=1',
-  '/api/discover?type=tv&sort=first_air_date.desc&genres=16&page=1',
-  '/api/anime?sort=first_air_date.desc&page=1',
-  '/api/anime/latest',
-  '/api/tv/airing-today',
-  '/api/tv/on-the-air',
-  '/api/trending/tv',
-  '/api/trending',
-  '/api/home',
-  '/api/tv/1429',
-  '/api/tv/1429/season/1',
+  '/api/media?type=tv&sort=first_air_date.desc&genres=16&page=1',
+  '/api/media?type=tv&sort_by=first_air_date.desc&with_genres=16&page=1',
+  '/api/media?media_type=tv&sort=first_air_date.desc&genres=16&page=1',
+  '/api/media?mediaType=tv&sort=first_air_date.desc&genres=16&page=1',
+  '/api/media?type=anime&sort=first_air_date.desc&genres=16&page=1',
+  '/api/media?category=anime&sort=first_air_date.desc&page=1',
+  '/api/media?type=tv&sort=first_air_date.desc&genres=16&page=2',
+  '/api/media?type=tv&sort=popularity.desc&genres=16&page=1',
+  '/api/media?type=movie&sort=primary_release_date.desc&genres=16&page=1',
+  '/api/media',
+  '/api/media?page=1',
 ];
 
 async function get(url, accept) {
@@ -64,6 +63,27 @@ async function get(url, accept) {
 
 const uniq = (list) => [...new Set(list)];
 const cut = (s, n) => (s.length > n ? `${s.slice(0, n)}…` : s);
+
+/** Cards in page order, with the heading that precedes them: [{ heading, cards: [...] }]. */
+function sections(text) {
+  const out = [];
+  let current = { heading: '(top)', cards: [] };
+  const re = /<h[1-4]\b[^>]*>([\s\S]*?)<\/h[1-4]>|<a\b[^>]*href="(?:https:\/\/[^"/]+)?\/(tv|movie)\/(\d+)[^"]*"[^>]*>([\s\S]*?)<\/a>/g;
+  for (const m of text.matchAll(re)) {
+    if (m[1] !== undefined) {
+      if (current.cards.length) out.push(current);
+      current = { heading: m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(), cards: [] };
+      continue;
+    }
+    const inner = m[4];
+    const img = (inner.match(/<img[^>]+src="(https:\/\/image\.tmdb\.org\/t\/p\/[^"]+)"/) || [])[1] || '';
+    const alt = (inner.match(/<img[^>]+alt="([^"]*)"/) || [])[1] || '';
+    const texts = inner.replace(/<svg\b[\s\S]*?<\/svg>/g, ' ').replace(/<[^>]+>/g, '\n').split('\n').map((t) => t.trim()).filter(Boolean);
+    current.cards.push({ kind: m[2], id: m[3], alt, img, texts: texts.slice(0, 8) });
+  }
+  if (current.cards.length) out.push(current);
+  return out;
+}
 
 function describeHtml(text) {
   const title = (text.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '';
@@ -88,12 +108,12 @@ function describeHtml(text) {
   const nextData = uniq([...text.matchAll(/\/_next\/data\/[^"'\s]+/g)].map((m) => m[0])).slice(0, 20);
   const scripts = uniq([...text.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1])).slice(0, 40);
   const headSample = cut(text.replace(/<script\b[\s\S]*?<\/script>/g, '').replace(/<style\b[\s\S]*?<\/style>/g, ''), 6000);
-  return { title, tvLinks: tvLinks.slice(0, 80), tvLinkCount: tvLinks.length, tmdbImages, anchors, flight, apiRoutes, nextData, scripts, textSample: headSample };
+  return { title, tvLinks: tvLinks.slice(0, 80), tvLinkCount: tvLinks.length, tmdbImages, sections: sections(text), anchors: anchors.slice(0, 1), flight: flight.map((f) => ({ bytes: f.bytes, sample: cut(f.sample, 1500) })), apiRoutes, nextData, scripts, textSample: cut(headSample, 1500) };
 }
 
 async function scanScripts(scriptUrls) {
   const out = [];
-  for (const src of scriptUrls.slice(0, 14)) {
+  for (const src of scriptUrls.filter((u) => /_next\/static\/chunks\//.test(u)).slice(0, 14)) {
     const url = src.startsWith('http') ? src : `${BASE}${src}`;
     const res = await get(url, '*/*');
     if (!res.text) {
@@ -103,11 +123,16 @@ async function scanScripts(scriptUrls) {
     const routes = uniq([...res.text.matchAll(/["'`](\/api\/[A-Za-z0-9_\-/{}$?=&.%[\]]*)/g)].map((m) => m[1])).slice(0, 80);
     const concat = uniq([...res.text.matchAll(/["'`]\/api\/["'`]\s*[+,]\s*[A-Za-z0-9_.$]+/g)].map((m) => m[0])).slice(0, 20);
     const hints = uniq([...res.text.matchAll(/[A-Za-z0-9_\-/.]*(?:discover|browse|airing|on_the_air|trending|latest|first_air_date|sort_by)[A-Za-z0-9_\-/.?=&]*/g)].map((m) => m[0])).slice(0, 60);
-    // Code around the browse/discover fetch call, if any.
+    // Code around the media API call and its query building, if any.
     const around = [];
-    for (const m of res.text.matchAll(/fetch\([^)]{0,300}(?:discover|browse|sort)[^)]{0,300}\)/g)) {
-      around.push(cut(m[0], 700));
-      if (around.length >= 4) break;
+    for (const needle of ['/api/media', 'first_air_date.lte', 'first_air_date.desc', 'searchParams', 'URLSearchParams']) {
+      let from = 0;
+      for (let hit = 0; hit < 3; hit += 1) {
+        const i = res.text.indexOf(needle, from);
+        if (i === -1) break;
+        around.push({ needle, code: res.text.slice(Math.max(0, i - 1200), i + 1200) });
+        from = i + needle.length;
+      }
     }
     out.push({ url, status: res.status, bytes: res.bytes, routes, concat, hints, around });
   }
@@ -123,7 +148,7 @@ async function main() {
     if (res.text && /html/i.test(res.contentType || '')) Object.assign(entry, describeHtml(res.text));
     else if (res.text) entry.sample = cut(res.text, 3000);
     report.pages.push(entry);
-    if (p.startsWith('/browse/anime?sort=first_air_date') && entry.scripts) scriptUrls = entry.scripts;
+    if (p.startsWith('/browse/tv-shows?sort=first_air_date.desc&genres=16') && entry.scripts) scriptUrls = entry.scripts;
     console.log(`${p}: ${res.status} ${res.bytes}b tv-links=${entry.tvLinkCount ?? '-'} api=${(entry.apiRoutes || []).length}`);
   }
   for (const p of API_CANDIDATES) {
