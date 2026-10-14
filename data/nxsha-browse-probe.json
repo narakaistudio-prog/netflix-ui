@@ -1,0 +1,631 @@
+{
+  "generatedAt": "2026-10-14T09:08:49.376Z",
+  "base": "https://nxsha.space",
+  "pages": [
+    {
+      "path": "/browse/anime?sort=popularity.desc&genres=16",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/browse/anime?sort=popularity.desc&genres=16",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 67504,
+      "ms": 288,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [
+        "tv/70998",
+        "tv/65733",
+        "tv/57775",
+        "tv/30984",
+        "tv/94664",
+        "tv/34860",
+        "tv/46260",
+        "tv/60572",
+        "tv/12971",
+        "tv/207840",
+        "tv/65942",
+        "tv/220542",
+        "tv/45790",
+        "tv/95897",
+        "tv/204269",
+        "tv/30983",
+        "tv/95479",
+        "tv/46298",
+        "tv/9537",
+        "tv/57911"
+      ],
+      "tvLinkCount": 20,
+      "tmdbImages": 60,
+      "anchors": [
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/70998\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/ueI9EeoRdMVa7hWEm21nQEU8Zv3.jpg\" alt=\"Souryo to Majiwaru Shikiyoku no Yoru ni...\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->5.5</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Souryo to Majiwaru Shikiyoku no Yoru ni...</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2017</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/65733\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/9ZN1P32SHviL3SV51qLivxycvcx.jpg\" alt=\"Doraemon\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->8.1</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Doraemon</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2005</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/57775\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/bfn54AAMuh47IFqeoco0jgeVH1a.jpg\" alt=\"Chibi Maruko-chan\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->7.8</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Chibi Maruko-chan</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">1990</p></a>"
+      ],
+      "flight": [],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/3ehk_ts9rego3.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/_next/static/media/1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" href=\"/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/Logo.png\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div cl…"
+    },
+    {
+      "path": "/browse/anime?sort=first_air_date.desc&genres=16",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/browse/anime?sort=first_air_date.desc&genres=16",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 67504,
+      "ms": 169,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [
+        "tv/70998",
+        "tv/65733",
+        "tv/57775",
+        "tv/30984",
+        "tv/94664",
+        "tv/34860",
+        "tv/46260",
+        "tv/60572",
+        "tv/12971",
+        "tv/207840",
+        "tv/65942",
+        "tv/220542",
+        "tv/45790",
+        "tv/95897",
+        "tv/204269",
+        "tv/30983",
+        "tv/95479",
+        "tv/46298",
+        "tv/9537",
+        "tv/57911"
+      ],
+      "tvLinkCount": 20,
+      "tmdbImages": 60,
+      "anchors": [
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/70998\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/ueI9EeoRdMVa7hWEm21nQEU8Zv3.jpg\" alt=\"Souryo to Majiwaru Shikiyoku no Yoru ni...\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->5.5</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Souryo to Majiwaru Shikiyoku no Yoru ni...</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2017</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/65733\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/9ZN1P32SHviL3SV51qLivxycvcx.jpg\" alt=\"Doraemon\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->8.1</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Doraemon</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2005</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/57775\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/bfn54AAMuh47IFqeoco0jgeVH1a.jpg\" alt=\"Chibi Maruko-chan\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->7.8</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Chibi Maruko-chan</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">1990</p></a>"
+      ],
+      "flight": [],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/3ehk_ts9rego3.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/_next/static/media/1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" href=\"/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/Logo.png\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div cl…"
+    },
+    {
+      "path": "/browse/anime?sort=first_air_date.desc&genres=16&page=2",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/browse/anime?sort=first_air_date.desc&genres=16&page=2",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 67504,
+      "ms": 172,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [
+        "tv/70998",
+        "tv/65733",
+        "tv/57775",
+        "tv/30984",
+        "tv/94664",
+        "tv/34860",
+        "tv/46260",
+        "tv/60572",
+        "tv/12971",
+        "tv/207840",
+        "tv/65942",
+        "tv/220542",
+        "tv/45790",
+        "tv/95897",
+        "tv/204269",
+        "tv/30983",
+        "tv/95479",
+        "tv/46298",
+        "tv/9537",
+        "tv/57911"
+      ],
+      "tvLinkCount": 20,
+      "tmdbImages": 60,
+      "anchors": [
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/70998\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/ueI9EeoRdMVa7hWEm21nQEU8Zv3.jpg\" alt=\"Souryo to Majiwaru Shikiyoku no Yoru ni...\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->5.5</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Souryo to Majiwaru Shikiyoku no Yoru ni...</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2017</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/65733\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/9ZN1P32SHviL3SV51qLivxycvcx.jpg\" alt=\"Doraemon\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->8.1</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Doraemon</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2005</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/57775\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/bfn54AAMuh47IFqeoco0jgeVH1a.jpg\" alt=\"Chibi Maruko-chan\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->7.8</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Chibi Maruko-chan</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">1990</p></a>"
+      ],
+      "flight": [],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/3ehk_ts9rego3.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/_next/static/media/1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" href=\"/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/Logo.png\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div cl…"
+    },
+    {
+      "path": "/browse/anime",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/browse/anime",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 67504,
+      "ms": 163,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [
+        "tv/70998",
+        "tv/65733",
+        "tv/57775",
+        "tv/30984",
+        "tv/94664",
+        "tv/34860",
+        "tv/46260",
+        "tv/60572",
+        "tv/12971",
+        "tv/207840",
+        "tv/65942",
+        "tv/220542",
+        "tv/45790",
+        "tv/95897",
+        "tv/204269",
+        "tv/30983",
+        "tv/95479",
+        "tv/46298",
+        "tv/9537",
+        "tv/57911"
+      ],
+      "tvLinkCount": 20,
+      "tmdbImages": 60,
+      "anchors": [
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/70998\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/ueI9EeoRdMVa7hWEm21nQEU8Zv3.jpg\" alt=\"Souryo to Majiwaru Shikiyoku no Yoru ni...\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->5.5</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Souryo to Majiwaru Shikiyoku no Yoru ni...</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2017</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/65733\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/9ZN1P32SHviL3SV51qLivxycvcx.jpg\" alt=\"Doraemon\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->8.1</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Doraemon</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2005</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/57775\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/bfn54AAMuh47IFqeoco0jgeVH1a.jpg\" alt=\"Chibi Maruko-chan\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->7.8</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Chibi Maruko-chan</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">1990</p></a>"
+      ],
+      "flight": [],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/3ehk_ts9rego3.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/_next/static/media/1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" href=\"/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/Logo.png\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div cl…"
+    },
+    {
+      "path": "/anime",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/anime",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 149949,
+      "ms": 178,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [
+        "tv/70998",
+        "tv/456",
+        "tv/1434",
+        "tv/65733",
+        "tv/1433",
+        "tv/46260",
+        "tv/57775",
+        "tv/30984",
+        "tv/60625",
+        "tv/94664",
+        "tv/60572",
+        "tv/284833",
+        "tv/65334",
+        "tv/2190",
+        "tv/34860",
+        "tv/209867",
+        "tv/246",
+        "tv/37854",
+        "tv/94605",
+        "tv/31911",
+        "tv/138502",
+        "tv/1429",
+        "tv/127532",
+        "tv/92685",
+        "tv/42705",
+        "tv/42573",
+        "tv/46298",
+        "tv/220542",
+        "tv/89456",
+        "movie/980477",
+        "movie/1084242",
+        "movie/1022789",
+        "movie/420818",
+        "movie/330457",
+        "movie/502356",
+        "movie/109445",
+        "movie/260513",
+        "movie/211672",
+        "movie/1084244",
+        "movie/301528",
+        "movie/10193",
+        "movie/1241982",
+        "movie/324852",
+        "movie/127380"
+      ],
+      "tvLinkCount": 44,
+      "tmdbImages": 149,
+      "anchors": [
+        "<a class=\"btn-yellow flex items-center justify-center gap-2 whitespace-nowrap w-[85%] max-w-sm px-6 py-3.5 text-sm md:w-auto md:px-8 md:py-4 md:text-base\" href=\"/tv/70998\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"black\" class=\"shrink-0\"><polygon points=\"3,1 14,8 3,15\"></polygon></svg>Watch Now</a>",
+        "<a class=\"group flex-shrink-0 cursor-pointer\" href=\"/tv/70998\"><div class=\"relative w-[146px] overflow-hidden rounded-2xl border border-white/10 bg-white/5\"><div class=\"relative h-[218px] overflow-hidden rounded-2xl bg-[#141414]\"><img src=\"https://image.tmdb.org/t/p/w500/ueI9EeoRdMVa7hWEm21nQEU8Zv3.jpg\" alt=\"Souryo to Majiwaru Shikiyoku no Yoru ni...\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent opacity-80\"></div><div class=\"absolute right-2 top-2 flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg>5.5</div><div class=\"absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100\"><div class=\"flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black shadow-2xl shadow-yellow/20\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" fill=\"currentColor\"><polygon points=\"4,2 16,9 4,16\"></polygon></svg></div></div></div></div><div class=\"mt-3 w-[146px] px-1\"><p class=\"truncate text-sm font-semibold leading-snug text-white\">Souryo to Majiwaru Shikiyoku no Yoru ni...</p><p class=\"mt-1 text-xs text-gray-400\">Apr 3, 2017</p></div></a>",
+        "<a class=\"group flex-shrink-0 cursor-pointer\" href=\"/tv/456\"><div class=\"relative w-[146px] overflow-hidden rounded-2xl border border-white/10 bg-white/5\"><div class=\"relative h-[218px] overflow-hidden rounded-2xl bg-[#141414]\"><img src=\"https://image.tmdb.org/t/p/w500/tf0CUEynk6GfmrlHIQKQ5mfFP5P.jpg\" alt=\"The Simpsons\" class=\"h-full w-full object-cover transition duration-300 group-hover:scale-105\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent opacity-80\"></div><div class=\"absolute right-2 top-2 flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg>8.0</div><div class=\"absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100\"><div class=\"flex h-12 w-12 items-center justify-center rounded-full bg-yellow text-black shadow-2xl shadow-yellow/20\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" fill=\"currentColor\"><polygon points=\"4,2 16,9 4,16\"></polygon></svg></div></div></div></div><div class=\"mt-3 w-[146px] px-1\"><p class=\"truncate text-sm font-semibold leading-snug text-white\">The Simpsons</p><p class=\"mt-1 text-xs text-gray-400\">Dec 17, 1989</p></div></a>"
+      ],
+      "flight": [
+        {
+          "bytes": 51350,
+          "sample": "1:\\\"$Sreact.fragment\\\"\\n2:\\\"/_next/static/chunks/3l0c7amwd_jwv.js\\\"\\n3:I[39756,[\\\"$2\\\"],\\\"default\\\"]\\n4:I[37457,[\\\"$2\\\"],\\\"default\\\"]\\nb:I[97367,[\\\"$2\\\"],\\\"OutletBoundary\\\"]\\nc:\\\"$Sreact.suspense\\\"\\ne:\\\"ViewportBoundary\\\"\\nf:I[97367,[\\\"$2\\\"],\\\"$e\\\"]\\n11:\\\"MetadataBoundary\\\"\\n12:I[97367,[\\\"$2\\\"],\\\"$11\\\"]\\n14:I[68027,[],\\\"default\\\",1]\\n:HL[\\\"/_next/static/chunks/15sqny0dz82fl.css\\\",\\\"style\\\"]\\n:HL[\\\"/_next/static/media/1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n:HL[\\\"/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n5:X\\n9:[[\\\"children\\\",{\\\"s\\\":\\\"__PAGE__\\\",\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[\\\"$La\\\",[[\\\"$\\\",\\\"script\\\",\\\"script-0\\\",{\\\"src\\\":\\\"/_next/static/chunks/1zbfaiu7wglup.js\\\",\\\"async\\\":true,\\\"nonce\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"$Lb\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$c\\\",null,{\\\"name\\\":\\\"Next.MetadataOutlet\\\",\\\"children\\\":\\\"$@d\\\"}]}]]}],\\\"p\\\":false,\\\"v\\\":null}}]]\\n8:[[\\\"children\\\",{\\\"s\\\":\\\"anime\\\",\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]]}],\\\"p\\\":false,\\\"v\\\":\\\"$5\\\"},\\\"c\\\":\\\"$Q9\\\"}]]\\n6:[[\\\"children\\\",{\\\"s\\\":\\\"(main)\\\",\\\"h\\\":16,\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/chunks/15sqny0dz82fl.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\",\\\"nonce\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"script\\\",\\\"script-0\\\",{\\\"src\\\":\\\"/_next/static/chunks/027q3di0xvd71.js\\\",\\\"async\\\":true,\\\"nonce\\\":\\\"$undefined\\\"}]],\\\"$L7\\\"]}],\\\"p\\\":false,\\\"v\\\":null},\\\"c\\\":\\\"$Q8\\\"}]]\\n0:{\\\"P\\\":null,\\\"c\\\":[\\\"\\\",\\\"anime\\\"],\\\"q\\\":\\\"\\\",\\\"i\\\":false,\\\"t\\\":{\\\"t\\\":{\\\"s\\\":\\\"\\\",\\\"h\\\":16,\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"flex\\\",\\\"alignItems\\\":\\\"center\\\",\\\"justifyContent\\\":\\\"center\\\",\\\"minHeight\\\":\\\"100vh\\\",\\\"backgroundColor\\\":\\\"#000000\\\",\\\"color\\\":\\\"#FFFFFF\\\",\\\"fontFamily\\\":\\\"\\\\\\\"Inter\\\\\\\", system-ui, -apple-system, sans-serif\\\",\\\"overflow\\\":\\\"hidden\\\",\\\"position\\\":\\\"relative\\\",\\\"padding\\\":\\\"24px\\\"},\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"position\\\":\\\"absolute\\\",\\\"width\\\":\\\"min(400px, 80vw)\\\",\\\"height\\\":\\\"min(400px, 80vw)\\\",\\\"background\\\":\\\"radial-gradient(circle, rgba(255, 204, 0, 0.08) 0%, rgba(0,0,0,0) 70%)\\\",\\\"top\\\":\\\"50%\\\",\\\"left\\\":\\\"50%\\\",\\\"transform\\\":\\\"translate(-50%, -50%)\\\",\\\"pointerEvents\\\":\\\"none\\\"}}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"textAlign\\\":\\\"center\\\",\\\"zIndex\\\":10,\\\"maxWidth\\\":\\\"480px\\\",\\\"width\\\":\\\"100%\\\"},\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"inline-flex\\\",\\\"flexDirection\\\":\\\"column\\\",\\\"alignItems\\\":\\\"center\\\",\\\"marginBottom\\\":\\\"24px\\\",\\\"width\\\":\\\"100%\\\"},\\\"children\\\":[[\\\"$\\\",\\\"h1\\\",null,{\\\"style\\\":{\\\"fontSize\\\":\\\"clamp(5rem, 22vw, 8.5rem)\\\",\\\"fontWeight\\\":\\\"900\\\",\\\"margin\\\":0,\\\"lineHeight\\\":\\\"0.9\\\",\\\"letterSpacing\\\":\\\"-0.05em\\\",\\\"background\\\":\\\"linear-gradient(135deg, #FFE259 0%, #FFA751 100%)\\\",\\\"WebkitBackgroundClip\\\":\\\"text\\\",\\\"WebkitTextFillColor\\\":\\\"transparent\\\"},\\\"children\\\":\\\"404\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"width\\\":\\\"60px\\\",\\\"height\\\":\\\"3px\\\",\\\"marginTop\\\":\\\"16px\\\",\\\"background\\\":\\\"linear-gradient(90deg, #FFE259 0%, #FFA751 100%)\\\",\\\"borderRadius\\\":\\\"2px\\\"}}]]}],[\\\"$\\\",\\\"h2\\\",null,{\\\"style\\\":{\\\"fontSize\\\":\\\"clamp(1rem, 4vw, 1.2rem)\\\",\\\"fontWeight\\\":\\\"700\\\",\\\"letterSpacing\\\":\\\"0.3em\\\",\\\"color\\\":\\\"#E5E5E5\\\",\\\"margin\\\":\\\"0 0 1…"
+        }
+      ],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/1zbfaiu7wglup.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"preload\" as=\"image\" href=\"https://image.tmdb.org/t/p/w1280/4kQiFnWtwndtCyKMszVJNPEE1kY.jpg\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div class=\"mt-auto\"></div></aside><nav class=\"mobile-only fixed bottom-2 left-3 right-3 z-50 flex items-center rounded-2xl border border-white/10 bg-black/75 px-1 py-1.5 backdrop-blur-xl\"><a class=\"flex flex-1 flex-…"
+    },
+    {
+      "path": "/browse/tv-shows?sort=first_air_date.desc&genres=16",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/browse/tv-shows?sort=first_air_date.desc&genres=16",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 102257,
+      "ms": 306,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [
+        "tv/306887",
+        "tv/290040",
+        "tv/321508",
+        "tv/334454",
+        "tv/334275",
+        "tv/337566",
+        "tv/332089",
+        "tv/325153",
+        "tv/333859",
+        "tv/338301",
+        "tv/317269",
+        "tv/333434",
+        "tv/330569",
+        "tv/322737",
+        "tv/313394",
+        "tv/283502",
+        "tv/336620",
+        "tv/321207",
+        "tv/307325",
+        "tv/329249"
+      ],
+      "tvLinkCount": 20,
+      "tmdbImages": 42,
+      "anchors": [
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/306887\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/mQbvyR1ak6xoJ41wmKtPjMhkBoy.jpg\" alt=\"Matrix Dreads\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->NR</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Matrix Dreads</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2030</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/290040\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/gg2uusRKPESBGkxG035Tj396KR4.jpg\" alt=\"(Not)Normal Family\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->NR</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">(Not)Normal Family</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2029</p></a>",
+        "<a class=\"group min-w-0 cursor-pointer\" href=\"/tv/321508\"><div class=\"relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03] transition group-hover:border-white/20\" style=\"padding-bottom:150%\"><img src=\"https://image.tmdb.org/t/p/w500/pYdHeBZ7R1Ow7I6C9S4BBZQQllL.jpg\" alt=\"Moonbeam\" class=\"absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]\" loading=\"lazy\" decoding=\"async\"/><div class=\"absolute inset-0 bg-gradient-to-t from-black/90 via-black/5 to-transparent\"></div><div class=\"absolute left-1.5 top-1.5 flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-1 text-[9px] font-bold text-white backdrop-blur-sm\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 24 24\" fill=\"#FFC300\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-star text-yellow\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg> <!-- -->NR</div></div><p class=\"mt-2.5 truncate text-xs font-semibold text-gray-200 transition group-hover:text-white sm:text-[13px]\">Moonbeam</p><p class=\"mt-1 truncate text-[10px] text-gray-600\">2028</p></a>"
+      ],
+      "flight": [
+        {
+          "bytes": 60301,
+          "sample": "1:\\\"$Sreact.fragment\\\"\\n2:\\\"/_next/static/chunks/3l0c7amwd_jwv.js\\\"\\n3:I[39756,[\\\"$2\\\"],\\\"default\\\"]\\n4:I[37457,[\\\"$2\\\"],\\\"default\\\"]\\nc:I[97367,[\\\"$2\\\"],\\\"OutletBoundary\\\"]\\nd:\\\"$Sreact.suspense\\\"\\nf:\\\"ViewportBoundary\\\"\\n10:I[97367,[\\\"$2\\\"],\\\"$f\\\"]\\n12:\\\"MetadataBoundary\\\"\\n13:I[97367,[\\\"$2\\\"],\\\"$12\\\"]\\n15:I[68027,[],\\\"default\\\",1]\\n:HL[\\\"/_next/static/chunks/15sqny0dz82fl.css\\\",\\\"style\\\"]\\n:HL[\\\"/_next/static/media/1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n:HL[\\\"/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n5:X\\na:[[\\\"children\\\",{\\\"s\\\":\\\"__PAGE__\\\",\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[\\\"$Lb\\\",[[\\\"$\\\",\\\"script\\\",\\\"script-0\\\",{\\\"src\\\":\\\"/_next/static/chunks/3ehk_ts9rego3.js\\\",\\\"async\\\":true,\\\"nonce\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"$Lc\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$d\\\",null,{\\\"name\\\":\\\"Next.MetadataOutlet\\\",\\\"children\\\":\\\"$@e\\\"}]}]]}],\\\"p\\\":false,\\\"v\\\":null}}]]\\n9:[[\\\"children\\\",{\\\"s\\\":\\\"tv-shows\\\",\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]]}],\\\"p\\\":false,\\\"v\\\":\\\"$5\\\"},\\\"c\\\":\\\"$Qa\\\"}]]\\n8:[[\\\"children\\\",{\\\"s\\\":\\\"browse\\\",\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]]}],\\\"p\\\":false,\\\"v\\\":\\\"$5\\\"},\\\"c\\\":\\\"$Q9\\\"}]]\\n6:[[\\\"children\\\",{\\\"s\\\":\\\"(main)\\\",\\\"h\\\":16,\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/chunks/15sqny0dz82fl.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\",\\\"nonce\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"script\\\",\\\"script-0\\\",{\\\"src\\\":\\\"/_next/static/chunks/027q3di0xvd71.js\\\",\\\"async\\\":true,\\\"nonce\\\":\\\"$undefined\\\"}]],\\\"$L7\\\"]}],\\\"p\\\":false,\\\"v\\\":null},\\\"c\\\":\\\"$Q8\\\"}]]\\n0:{\\\"P\\\":null,\\\"c\\\":[\\\"\\\",\\\"browse\\\",\\\"tv-shows?sort=first_air_date.desc\\u0026genres=16\\\"],\\\"q\\\":\\\"?sort=first_air_date.desc\\u0026genres=16\\\",\\\"i\\\":false,\\\"t\\\":{\\\"t\\\":{\\\"s\\\":\\\"\\\",\\\"h\\\":16,\\\"d\\\":{\\\"r\\\":[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"flex\\\",\\\"alignItems\\\":\\\"center\\\",\\\"justifyContent\\\":\\\"center\\\",\\\"minHeight\\\":\\\"100vh\\\",\\\"backgroundColor\\\":\\\"#000000\\\",\\\"color\\\":\\\"#FFFFFF\\\",\\\"fontFamily\\\":\\\"\\\\\\\"Inter\\\\\\\", system-ui, -apple-system, sans-serif\\\",\\\"overflow\\\":\\\"hidden\\\",\\\"position\\\":\\\"relative\\\",\\\"padding\\\":\\\"24px\\\"},\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"position\\\":\\\"absolute\\\",\\\"width\\\":\\\"min(400px, 80vw)\\\",\\\"height\\\":\\\"min(400px, 80vw)\\\",\\\"background\\\":\\\"radial-gradient(circle, rgba(255, 204, 0, 0.08) 0%, rgba(0,0,0,0) 70%)\\\",\\\"top\\\":\\\"50%\\\",\\\"left\\\":\\\"50%\\\",\\\"transform\\\":\\\"translate(-50%, -50%)\\\",\\\"pointerEvents\\\":\\\"none\\\"}}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"textAlign\\\":\\\"center\\\",\\\"zIndex\\\":10,\\\"maxWidth\\\":\\\"480px\\\",\\\"width\\\":\\\"100%\\\"},\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"inline-flex\\\",\\\"flexDirection\\\":\\\"column\\\",\\\"alignItems\\\":\\\"center\\\",\\\"marginBottom\\\":\\\"24px\\\",\\\"width\\\":\\\"100%\\\"},\\\"children\\\":[[\\\"$\\\",\\\"h1\\\",null,{\\\"style\\\":{\\\"fontSize\\\":\\\"clamp(5rem, 22vw, 8.5rem)\\\",\\\"fontWeight\\\":\\\"900\\\",\\\"margin\\\":0,\\\"…"
+        }
+      ],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/3ehk_ts9rego3.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div class=\"mt-auto\"></div></aside><nav class=\"mobile-only fixed bottom-2 left-3 right-3 z-50 flex items-center rounded-2xl border border-white/10 bg-black/75 px-1 py-1.5 backdrop-blur-xl\"><a class=\"flex flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-2 transition-all text-gray-500 hover:bg-white/10 h…"
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "finalUrl": "https://nxsha.space/",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 39021,
+      "ms": 143,
+      "title": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
+      "tvLinks": [],
+      "tvLinkCount": 0,
+      "tmdbImages": 0,
+      "anchors": [],
+      "flight": [],
+      "apiRoutes": [],
+      "nextData": [],
+      "scripts": [
+        "/_next/static/chunks/2bzlqb104tejm.js",
+        "/_next/static/chunks/025e_g9ksha1v.js",
+        "/_next/static/chunks/1xq8ggvplsax4.js",
+        "/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+        "/_next/static/chunks/3l0c7amwd_jwv.js",
+        "/_next/static/chunks/027q3di0xvd71.js",
+        "/_next/static/chunks/0cibaga-fij2n.js",
+        "/_next/static/chunks/2f-7l0ga2p1h9.js",
+        "/_next/static/chunks/1zbfaiu7wglup.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "/_next/static/chunks/1kexj4s7oxhs2.js",
+        "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
+      ],
+      "textSample": "<!DOCTYPE html><html lang=\"en\" class=\"H2HC7W_variable _1JuiMa_variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover\"/><link rel=\"preload\" href=\"/LogoTextHigh.png\" as=\"image\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/15sqny0dz82fl.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><meta name=\"theme-color\" content=\"#000000\"/><title>Nxsha - Watch Movies, TV Shows &amp; Anime Free</title><meta name=\"description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality. Nxsha provides the best curated links for seamless OTT entertainment without any registration.\"/><link rel=\"manifest\" href=\"/manifest.webmanifest\"/><meta name=\"keywords\" content=\"movies,tv shows,anime,streaming,watch online,free movies,nxsha,free tv shows\"/><meta name=\"mobile-web-app-capable\" content=\"yes\"/><meta name=\"apple-mobile-web-app-title\" content=\"Nxsha\"/><meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\"/><meta property=\"og:title\" content=\"Nxsha - Free Movies, TV Shows &amp; Anime Streaming\"/><meta property=\"og:description\" content=\"Watch the latest movies, TV shows, and anime online for free on Nxsha. High quality streaming across all OTT platforms.\"/><meta property=\"og:site_name\" content=\"Nxsha\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Nxsha - Watch Movies, TV Shows &amp; Anime Free\"/><meta name=\"twitter:description\" content=\"Stream the latest movies, TV shows, and anime online for free in High Quality.\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><meta name=\"next-size-adjust\" content=\"\"/></head><body class=\"font-body min-h-screen bg-black text-white\"><div hidden=\"\"><!--$--><!--/$--></div><aside class=\"desktop-only fixed left-0 top-0 bottom-0 z-50 flex w-[78px] flex-col items-center bg-transparent py-4\"><div class=\"mb-auto pt-2\"><a class=\"flex items-center\" href=\"/\"><img src=\"/Logo.png\" alt=\"NXSHA\" class=\"h-6 w-6 md:h-10 md:w-10 object-contain\"/></a></div><div class=\"flex w-full flex-1 flex-col items-center justify-center gap-7 px-2\"><a title=\"Home\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-yellow\" href=\"/\"><span class=\"absolute -left-[15px] h-6 w-1 rounded-r-full bg-yellow\"></span><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-home drop-shadow-[0_0_8px_rgba(255,195,0,0.5)]\"><path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Home</span></a><a title=\"Search\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/search\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-search\"><circle cx=\"11\" cy=\"11\" r=\"8\"></circle><path d=\"m21 21-4.3-4.3\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">Search</span></a><a title=\"NxBox\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/nxbox\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-zap\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">NxBox</span></a><a title=\"WatchList\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/watchlist\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-bookmark\"><path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"></path></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">WatchList</span></a><a title=\"My Space\" class=\"group relative flex h-12 w-12 items-center justify-center transition-all duration-200 text-gray-400 hover:text-white\" href=\"/myspace\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-user\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg><span class=\"pointer-events-none absolute left-14 whitespace-nowrap rounded-md bg-[#1a1a1a] px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100\">My Space</span></a></div><div class=\"mt-auto\"></div></aside><nav class=\"mobile-only fixed bottom-2 left-3 right-3 z-50 flex items-center rounded-2xl border border-white/10 bg-black/75 px-1 py-1.5 backdrop-blur-xl\"><a class=\"flex flex-1 flex-col i…"
+    }
+  ],
+  "api": [
+    {
+      "path": "/api/browse/anime?sort=first_air_date.desc&genres=16&page=1",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 131,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/browse?type=anime&sort=first_air_date.desc&genres=16&page=1",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 122,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/discover/tv?sort_by=first_air_date.desc&with_genres=16&page=1",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 124,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/discover?type=tv&sort=first_air_date.desc&genres=16&page=1",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 124,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/anime?sort=first_air_date.desc&page=1",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 121,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/anime/latest",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 140,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/tv/airing-today",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 140,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/tv/on-the-air",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 148,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/trending/tv",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 142,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/trending",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 142,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/home",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 125,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/tv/1429",
+      "status": 404,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 8772,
+      "ms": 124,
+      "sample": "<!DOCTYPE html><html><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/1kexj4s7oxhs2.js\"/><script src=\"/_next/static/chunks/2bzlqb104tejm.js\" async=\"\"></script><script src=\"/_next/static/chunks/025e_g9ksha1v.js\" async=\"\"></script><script src=\"/_next/static/chunks/1xq8ggvpl…"
+    },
+    {
+      "path": "/api/tv/1429/season/1",
+      "status": 200,
+      "contentType": "application/json",
+      "bytes": 304422,
+      "ms": 209,
+      "sample": "{\"success\":true,\"season\":{\"id\":3788,\"season_number\":1,\"name\":\"Season 1\",\"poster_path\":\"/gC78bsXhdU2PwT3FkLcn8R5YcHb.jpg\",\"air_date\":\"2013-04-07\",\"overview\":\"Centuries ago, mankind was slaughtered to near extinction by monstrous humanoid creatures called titans, forcing humans to hide in fear behind enormous concentric walls. What makes these giants truly terrifying is that their taste for human flesh is not born out of hunger but what appears to be out of pleasure. To ensure their survival, the remnants of humanity began living within defensive barriers, resulting in one hundred years without a single titan encounter. However, that fragile calm is soon shattered when a colossal titan manages to breach the supposedly impregnable outer wall, reigniting the fight for survival against the man-eating abominations.\",\"episode_count\":25},\"episodes\":[{\"air_date\":\"2013-04-07\",\"episode_number\":1,\"episode_type\":\"standard\",\"id\":65480,\"name\":\"To You, in 2000 Years: The Fall of Shiganshina (1)\",\"overview\":\"After one hundred years of peace, humanity is suddenly reminded of the terror of being at the Titans' mercy.\",\"production_code\":\"\",\"runtime\":24,\"season_number\":1,\"show_id\":1429,\"still_path\":\"/e363TDn4uP8jP7kHAXQfHAs6HTR.jpg\",\"vote_average\":8.7,\"vote_count\":219,\"crew\":[{\"job\":\"Writer\",\"department\":\"Writing\",\"credit_id\":\"5b549590c3a3680b6103194d\",\"adult\":false,\"gender\":1,\"id\":506610,\"known_for_department\":\"Writing\",\"name\":\"Yasuko Kobayashi\",\"original_name\":\"小林靖子\",\"popularity\":1.2093,\"profile_path\":\"/watatoeziTz0xoyWeppAeFow8KC.jpg\"},{\"job\":\"Animation Director\",\"department\":\"Visual Effects\",\"credit_id\":\"5d60fa046dea3a001293a9cc\",\"adult\":false,\"gender\":2,\"id\":1842654,\"known_for_department\":\"Visual Effects\",\"name\":\"Yasuyuki Ebara\",\"original_name\":\"江原康之\",\"popularity\":0.6721,\"profile_path\":null},{\"job\":\"Animation Director\",\"department\":\"Visual Effects\",\"credit_id\":\"5d60f5a17f6c8d0017ec8149\",\"adult\":false,\"gender\":2,\"id\":2039478,\"known_for_department\":\"Visual Effects\",\"name\":\"Toshihiro Kikuchi\",\"original_name\":\"菊池聡延\",\"popularity\":0.8584,\"profile_path\":null},{\"job\":\"Director\",\"department\":\"Directing\",\"credit_id\":\"5d60ea506dea3a0014939103\",\"adult\":false,\"gender\":2,\"id\":1440053,\"known_for_department\":\"Directing\",\"name\":\"Hiroyuki Tanaka\",\"original_name\":\"田中洋之\",\"popularity\":0.9331,\"profile_path\":null},{\"job\":\"Animation Director\",\"department\":\"Visual Effects\",\"credit_id\":\"5d60f7507f6c8d0015ec86d7\",\"adult\":false,\"gender\":2,\"id\":1848281,\"known_for_department\":\"Visual Effects\",\"name\":\"Takaaki Chiba\",\"original_name\":\"千葉崇明\",\"popularity\":0.9095,\"profile_path\":null},{\"job\":\"Animation Director\",\"department\":\"Visual Effects\",\"credit_id\":\"5d60efd56dea3a0013939c12\",\"adult\":false,\"gender\":2,\"id\":2394638,\"known_for_department\":\"Visual Effects\",\"name\":\"Ichiro Hattori\",\"original_name\":\"服部一郎\",\"popularity\":0.8828,\"profile_path\":null},{\"job\":\"Director\",\"department\":\"Directing\",\"credit_id\":\"5faa6f3d53866e004115f969\",\"adult\":false,\"gender\":2,\"id\":1148353,\"known_for_department\":\"Directing\",\"name\":\"Tetsuro Araki\",\"original_name\":\"荒木哲郎\",\"popularity\":6.3393,\"profile_path\":\"/oEdiTbFLMJDSGUSDe8a48VbueGJ.jpg\"},{\"job\":\"Supervising Animation Director\",\"department\":\"Visual Effects\",\"credit_id\":\"5faa5d18d4d509003eff88d2\",\"adult\":false,\"gender\":2,\"id\":230645,\"known_for_department\":\"Visual Effects\",\"name\":\"Kyoji Asano\",\"original_name\":\"浅野恭司\",\"popularity\":1.144,\"profile_path\":\"/uRGvUEL50iRU7JauHolboEmOzZ6.jpg\"},{\"job\":\"Animation Director\",\"department\":\"Visual Effects\",\"credit_id\":\"5fee623c4a4bf60041d486f3\",\"adult\":false,\"gender\":2,\"id\":2043666,\"known_for_department\":\"Visual Effects\",\"name\":\"Arifumi Imai\",\"original_name\":\"今井有文\",\"popularity\":0.8288,\"profile_path\":\"/7BHfTwieAaLZfQ4TtCbJkWlllfq.jpg\"},{\"job\":\"Key Animation\",\"department\":\"Visual Effects\",\"credit_id\":\"5fc5685c3a340b0040e0bc91\",\"adult\":false,\"gender\":2,\"id\":1601273,\"known_for_department\":\"Visual Effects\",\"name\":\"Nobuyoshi Souzaki\",\"original_name\":\"宗崎暢芳\",\"popularity\":0.6811,\"profile_path\":null},{\"job\":\"Key Animation\",\"department\":\"Visual Effects\",\"credit_id\":\"5fc568e11b7294003e8f84bc\",\"adult\":false,\"gender\":2,\"id\":2394640,\"known_for_department\":\"Visual Effects\",\"name\":\"Kyohei Tezuka\",\"original_name\":\"手塚響平\",\"popularity\":0.6479,\"profile_path\":null},{\"job\":\"Key Animation\",\"department\":\"Visual Effects\",\"credit_id\":\"5fc5691e2f8d0900400d9abb\",\"adult\":false,\"gender\":2,\"id\":1488854,\"known_for_department\":\"Visual Effects\",\"name\":\"Satoshi Nakano\",\"original_name\":\"中野悟史\",\"popularity\":0.7235,\"profile_path\":\"/eBq4UEztUsgM6bm2SDp9vgeorpc.jpg\"},{\"job\":\"Key Animation\",\"department\":\"Visual Effects\",\"credit_id\":\"5fc568a00328b9003d6c1085\",\"adult\":false,\"gender\":1,\"id\":2876525,\"known_for_department\":\"Visual Effects\",\"name\":\"Miki Yoshimoto\",\"original_name\":\"吉元美妃\",\"popularity\":0.6047,\"profile_path\":null},{\"job\":\"Key Animation\",\"department\":\"Visual Effects\",\"credit_id\":\"5fc566f5d132d600411ce5bd\",\"adult\":false,\"gender\":2,\"id\":1848281,\"known_for_department\":\"Visual Effects\",\"name\":\"Takaaki Chiba\",\"original_name\":\"千葉崇明\",\"popularity\":0.…"
+    }
+  ],
+  "scripts": [
+    {
+      "url": "https://nxsha.space/_next/static/chunks/2bzlqb104tejm.js",
+      "status": 200,
+      "bytes": 33760,
+      "routes": [],
+      "concat": [],
+      "hints": [
+        "r.browser=function",
+        "browser",
+        "o.browser="
+      ],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/025e_g9ksha1v.js",
+      "status": 200,
+      "bytes": 228651,
+      "routes": [],
+      "concat": [],
+      "hints": [
+        "f.discoverKnownRoute"
+      ],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/1xq8ggvplsax4.js",
+      "status": 200,
+      "bytes": 163147,
+      "routes": [],
+      "concat": [],
+      "hints": [
+        "c.discoverKnownRoute",
+        "v.discoverKnownRoute",
+        "browser",
+        "O.discoverKnownRoute",
+        "E.discoverKnownRoute",
+        "discoverKnownRoute",
+        "action-browser",
+        "app-pages-browser",
+        "pages-dir-browser"
+      ],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+      "status": 200,
+      "bytes": 10030,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/3l0c7amwd_jwv.js",
+      "status": 200,
+      "bytes": 21503,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/027q3di0xvd71.js",
+      "status": 200,
+      "bytes": 26773,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/3ehk_ts9rego3.js",
+      "status": 200,
+      "bytes": 22374,
+      "routes": [
+        "/api/media?${t.toString"
+      ],
+      "concat": [],
+      "hints": [
+        "first_air_date.lte",
+        "browse",
+        "first_air_date.desc"
+      ],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/0cz1d0mv5g_q7.js",
+      "status": 200,
+      "bytes": 112541,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+      "status": 200,
+      "bytes": 1239,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    },
+    {
+      "url": "https://nxsha.space/_next/static/chunks/1kexj4s7oxhs2.js",
+      "status": 200,
+      "bytes": 6528,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    },
+    {
+      "url": "https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920",
+      "status": 200,
+      "bytes": 31679,
+      "routes": [],
+      "concat": [],
+      "hints": [],
+      "around": []
+    }
+  ]
+}
