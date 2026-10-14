@@ -4,6 +4,12 @@ name: Probe nxsha anime listings (temporary)
 # the Fresh Drops builder can be fixed from real page data. The sandbox cannot reach
 # nxsha.space; the result is committed as data/nxsha-browse-probe.json.
 on:
+  push:
+    branches:
+      - arena/3429411b-netflix-ui
+    paths:
+      - '.github/workflows/probe-nxsha-browse.yml'
+      - 'scripts/probe-nxsha-browse.mjs'
   workflow_dispatch:
 
 permissions:
