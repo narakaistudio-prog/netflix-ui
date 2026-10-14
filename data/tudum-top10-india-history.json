@@ -56,6 +56,62 @@
                     "netflixId": "81950460"
                 }
             ]
+        },
+        {
+            "week": "10/5/26 - 10/11/26",
+            "firstSeen": "2026-10-14",
+            "movies": [
+                {
+                    "rank": 1,
+                    "title": "Mandaadi",
+                    "netflixId": "82787383"
+                },
+                {
+                    "rank": 2,
+                    "title": "Reporting Live",
+                    "netflixId": "81917272"
+                },
+                {
+                    "rank": 3,
+                    "title": "Pradhama Drishtiya Kuttakkar",
+                    "netflixId": "83197640"
+                },
+                {
+                    "rank": 4,
+                    "title": "Vishwanath & Sons",
+                    "netflixId": "82034837"
+                },
+                {
+                    "rank": 5,
+                    "title": "Irumudi",
+                    "netflixId": "83001420"
+                },
+                {
+                    "rank": 6,
+                    "title": "Epic",
+                    "netflixId": "82673568"
+                },
+                {
+                    "rank": 7,
+                    "title": "Ohh My Dog",
+                    "netflixId": "83197638"
+                },
+                {
+                    "rank": 8,
+                    "title": "Modha Rathri",
+                    "netflixId": "82811466"
+                },
+                {
+                    "rank": 9,
+                    "title": "Romã​nchakam",
+                    "netflixId": "82969780"
+                },
+                {
+                    "rank": 10,
+                    "title": "Baby Do Die Do",
+                    "netflixId": "83195142"
+                }
+            ]
         }
     ]
 }
