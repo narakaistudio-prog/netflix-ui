@@ -1,0 +1,61 @@
+{
+  "updated": "2026-10-15",
+  "source": "https://deadtoons.sbs",
+  "items": {
+    "popular": {
+      "slug": "popular",
+      "title": "Popular Anime &amp Cartoons",
+      "kind": "tv",
+      "url": "https://deadtoons.sbs/popular",
+      "img": "",
+      "year": "",
+      "tags": [],
+      "firstSeen": "2026-10-15",
+      "baseline": true
+    },
+    "series": {
+      "slug": "series",
+      "title": "Series",
+      "kind": "tv",
+      "url": "https://deadtoons.sbs/series",
+      "img": "",
+      "year": "",
+      "tags": [],
+      "firstSeen": "2026-10-15",
+      "baseline": true
+    },
+    "movies": {
+      "slug": "movies",
+      "title": "Movies",
+      "kind": "tv",
+      "url": "https://deadtoons.sbs/movies",
+      "img": "",
+      "year": "",
+      "tags": [],
+      "firstSeen": "2026-10-15",
+      "baseline": true
+    },
+    "ongoing": {
+      "slug": "ongoing",
+      "title": "Ongoing Series",
+      "kind": "tv",
+      "url": "https://deadtoons.sbs/ongoing",
+      "img": "",
+      "year": "",
+      "tags": [],
+      "firstSeen": "2026-10-15",
+      "baseline": true
+    },
+    "completed": {
+      "slug": "completed",
+      "title": "Completed Series",
+      "kind": "tv",
+      "url": "https://deadtoons.sbs/completed",
+      "img": "",
+      "year": "",
+      "tags": [],
+      "firstSeen": "2026-10-15",
+      "baseline": true
+    }
+  }
+}

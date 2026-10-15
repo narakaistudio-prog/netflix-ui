@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-14",
+  "updated": "2026-10-15",
   "items": {
     "tv:70998": {
       "kind": "tv",
@@ -124,7 +124,7 @@
     "tv:9537": {
       "kind": "tv",
       "id": "9537",
-      "title": "Atashin&#x27;chi",
+      "title": "Atashin'chi",
       "img": "https://image.tmdb.org/t/p/w500/bQCZvbyTJFWt3majCn37ykJBpIf.jpg",
       "rating": "1.5",
       "year": "2000",
