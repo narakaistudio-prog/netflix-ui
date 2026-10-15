@@ -217,6 +217,47 @@ describe('DeadToons schedule harvester', () => {
         ]);
     });
 
+    test('an escaped schedule title still finds its catalog id', () => {
+        const registryPath = join(ROOT, 'data', 'nxsha-titles.json');
+        const card = callHarvester(`(async () => {
+            const fs = await import('node:fs');
+            const html = \`<a href="/posts/jojo-s-bizarre-adventure-season-4-2018"><img src="https://image.tmdb.org/t/p/w154/cMF.jpg" alt="JoJo&#x27;s Bizarre Adventure"><span>S4 · Episode 5</span><time>1:30 PM</time></a>\`;
+            const entry = m.parseSchedule(html, { today: '2026-10-15' }).items[0];
+            const byTitle = m.registryIndex(JSON.parse(fs.readFileSync(${JSON.stringify(registryPath)}, 'utf8')));
+            const catalog = byTitle.get(m.titleKey(entry.title));
+            return {
+                title: entry.title, season: entry.season, episode: entry.episode,
+                catalog: catalog ? { id: catalog.id, kind: catalog.kind } : null,
+            };
+        })()`);
+        // The page escapes titles (`JoJo&#x27;s …`); left escaped they key nothing
+        // and the card is dropped even though the catalog already has the show.
+        expect(card.title).toBe("JoJo's Bizarre Adventure");
+        expect(card.season).toBe(4);
+        expect(card.episode).toBe(5);
+        expect(card.catalog).toEqual({ id: '45790', kind: 'tv' });
+    });
+
+    test('a card whose poster has not loaded is still a card', () => {
+        const parsed = callHarvester(`(() => {
+            const html = \`<section class="schedule">
+                <a href="/posts/link-click-season-3-multi-audio-hindi-1080p"><span>LINK CLICK</span><span>S3E11</span><time>11:20 PM</time></a>
+                <a href="/posts/trending-now">Trending now</a>
+              </section>\`;
+            const result = m.parseSchedule(html, { today: '2026-10-15' });
+            return {
+                items: result.items.map((i) => ({ title: i.title, season: i.season, episode: i.episode, time: i.time, img: i.img })),
+                skipped: result.skipped.map((s) => s.title),
+            };
+        })()`);
+        // No <img> on the card means no alt text: the slug has to name it, and the
+        // compact "S3E11" has to parse. A plain nav link is not a schedule card.
+        expect(parsed.items).toEqual([
+            { title: 'Link Click', season: 3, episode: 11, time: '11:20 PM', img: '' },
+        ]);
+        expect(parsed.skipped).toEqual([]);
+    });
+
     test('an id is accepted only when Nxsha names the same show', () => {
         const verdicts = callHarvester(`(() => {
             const good = m.parseEmbedTitle(m.embedTitle('<title>Watch JoJo\\'s Bizarre Adventure - S4:E1</title>'));

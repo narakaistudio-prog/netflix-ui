@@ -17,6 +17,11 @@
  * An entry with no verified id is stored under `skipped`, never in `items` — that
  * is what stopped the old slug-shaped ids from opening a 404 player.
  *
+ * A card is read from its poster `alt`, its own heading, or its post slug (in that
+ * order), so a brand-new episode that went up without artwork is still harvested,
+ * and titles are entity-decoded — the page ships `JoJo&#x27;s Bizarre Adventure`,
+ * which keys nothing while it stays escaped.
+ *
  * Writes data/deadtoons-schedule.json:
  *   { updated, source, today, items:[…], resolved:{…}, skipped:[…] }
  * and always writes the diagnostics report (default data/deadtoons-schedule-probe.json, --out=FILE)
@@ -55,16 +60,86 @@ const PROBE = args.includes('--probe');
 const VERBOSE = args.includes('--verbose');
 
 /* ------------------------------- utilities ------------------------------- */
+/** Junk that trails a post slug (listings shout: "…-multi-audio-hindi-1080p"). */
+const TAGS_RE = [
+  /\b(hindi|hin|english|eng|japanese|jap|tamil|telugu|malayalam|kannada|bengali|urdu|punjabi|korean)\b/gi,
+  /\b(dubbed|dub|dual[\s-]?audio|multi[\s-]?audio|single[\s-]?audio|original[\s-]?audio|fan[\s-]?dub(?:bed)?|audios?)\b/gi,
+  /\b(web[\s-]?dl|web[\s-]?rip|hdrip|bluray|blu[\s-]?ray|hdtv|hdcam|dvdrip|remux|hevc|x264|x265|h\.?264|h\.?265|10[\s-]?bit|aac|esubs?|subs?|subbed|mmsub|softsub)\b/gi,
+  /\b(2160p|1440p|1080p|720p|576p|480p|360p|4k|uhd|full[\s-]?hd)\b/gi,
+  /\b(zippyshare|gdrive|google[\s-]?drive|mega\.nz|telegram|torrent|direct[\s-]?link)\b/gi,
+  /\b(download|watch|streaming|online|mega links?)\b/gi,
+  /\b(episode|episodes|ep|eps)\b\s*[-–]?\s*\d{1,4}(\.\d)?/gi,
+  /\b(e|ep)\s?-?\d{1,4}(\.\d)?\b/gi,
+  /\b(season|s)\s?\d{1,2}\b/gi,
+  /\b(part|volume|vol)\s?\d{1,2}\b/gi,
+  /\b(complete|batch|pack)\b/gi,
+];
+/** Words that stay lowercase inside a title-cased name ("Spy x Family"). */
+const SMALL_WORDS = new Set(['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from', 'in', 'into', 'nor', 'of', 'on', 'onto', 'or', 'over', 'so', 'the', 'to', 'up', 'with', 'vs', 'x', 'via']);
+const YEAR_RE = /\b(19|20)\d{2}\b/;
+
+/** Slug text arrives lowercase; only fully lowercase text is title-cased. */
+export function titleCase(text) {
+  const value = String(text || '');
+  if (/[A-Z]/.test(value)) return value;
+  return value
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word, i) => {
+      if (i > 0 && SMALL_WORDS.has(word.toLowerCase())) return word.toLowerCase();
+      return word.replace(/^([a-z])/, (c) => c.toUpperCase());
+    })
+    .join(' ');
+}
+
+/** "link-click-season-3-multi-audio-hindi-1080p" -> "Link Click" */
+export function titleFromSlug(slug) {
+  let text = decodeEntities(String(slug || ''))
+    .replace(/\.(html?|php|aspx?)$/i, '')
+    .replace(/[+_/]+/g, ' ')
+    // "jojo-s-bizarre" is a possessive, not a word.
+    .replace(/([a-z0-9])-s-/gi, "$1's ")
+    .replace(/-+/g, ' ');
+  text = text
+    .replace(/\b(19|20)\d{2}\b/g, ' ')
+    // "season 3" is stripped by TAGS_RE below, which also eats the number.
+    .replace(/\b(episodes?|eps?|hd|sd|uhd|movie|movies)\b/gi, ' ');
+  for (const re of TAGS_RE) text = text.replace(re, ' ');
+  return titleCase(
+    text
+      .replace(/[^A-Za-z0-9'&!?:.\s-]/g, ' ')
+      .replace(/[\s\-–—:·.,]+$/, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim(),
+  );
+}
+
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+const NAMED_ENTITIES = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+  rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”', hellip: '…', mdash: '—', ndash: '–',
+};
+
+const fromCodePoint = (code) => {
+  try {
+    return String.fromCodePoint(code);
+  } catch {
+    return '';
+  }
+};
+
+/**
+ * The schedule page escapes its titles (`JoJo&#x27;s Bizarre Adventure`), in hex
+ * as often as in decimal, and a title that reaches the resolver still escaped
+ * matches nothing — not the catalog registry, not TMDB, not Wikidata.
+ */
 export function decodeEntities(text) {
   return String(text || '')
-    .replace(/&(amp|lt|gt|quot|apos|nbsp|#39|rsquo|lsquo|ldquo|rdquo)\b;?/gi, (entity) => ({
-      '&amp': '&', '&lt': '<', '&gt': '>', '&quot': '"', '&apos': "'", '&nbsp': ' ',
-      '&#39': "'", '&rsquo': '’', '&lsquo': '‘', '&ldquo': '“', '&rdquo': '”',
-    }[entity.toLowerCase()] ?? entity))
-    .replace(/&#(\d{2,5});/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 10)));
+    .replace(/&#x([0-9a-f]{1,6});?/gi, (m, hex) => fromCodePoint(Number.parseInt(hex, 16)) || m)
+    .replace(/&#(\d{2,6});?/g, (m, dec) => fromCodePoint(Number.parseInt(dec, 10)) || m)
+    .replace(/&([a-z][a-z0-9]{1,9});?/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] ?? m);
 }
 
 export function stripTags(html) {
@@ -89,9 +164,14 @@ export function titleKey(title) {
 
 /** "S3 · Episode 11 · Hin-Tam-Tel-Eng-Jap" → season/episode/audio. */
 export function parseEpisodeMeta(text) {
-  const m = /(?:^|\b)S\s*(\d{1,2})\s*[·:.\-–—]\s*(?:EP|Episode)\s*(\d{1,3})\b/i.exec(String(text || ''));
+  const value = String(text || '');
+  // "S3 · Episode 11" is the long form; cards also print "S3E11" and "3x11".
+  const m =
+    /(?:^|\b)S\s*(\d{1,2})\s*[·:.\-–—]\s*(?:EP|Episode)\s*(\d{1,3})\b/i.exec(value) ||
+    /(?:^|\b)S\s*(\d{1,2})\s*E\s*P?\s*(\d{1,3})\b/i.exec(value) ||
+    /(?:^|\b)(\d{1,2})\s*[xX]\s*(\d{1,3})\b/.exec(value);
   if (!m) return null;
-  const rest = String(text || '').slice(m.index + m[0].length);
+  const rest = value.slice(m.index + m[0].length);
   const until = rest.split(/\n|\b\d{1,2}:\d{2}\s*(?:AM|PM)\b|\b(?:Sun|Mon|Tue|Wed|Thu|Fri|Sat)\b/i)[0] || '';
   const line = until.replace(/^[\s·:\-–—]+/, '').replace(/[\s·:\-–—]+$/, '').trim();
   const audio = /^[A-Za-z][A-Za-z\-\s]{2,60}$/.test(line) ? line : '';
@@ -161,7 +241,7 @@ const sameName = (a, b) => titleKey(a).length > 2 && titleKey(a) === titleKey(b)
 export function scheduleBlocks(html) {
   const text = String(html || '');
   const hits = [...text.matchAll(/<img\b[^>]*>/gi)];
-  return hits.map((hit, i) => {
+  const blocks = hits.map((hit, i) => {
     const start = hit.index;
     const next = i + 1 < hits.length ? hits[i + 1].index : Math.min(text.length, start + 4000);
     // Cards are anchors (<a href="/posts/…">) or plain blocks (upcoming days);
@@ -180,6 +260,29 @@ export function scheduleBlocks(html) {
       body: text.slice(start + hit[0].length, end),
     };
   });
+
+  // Posters load lazily and a brand-new episode can go up without one, so a card
+  // with no <img> is invisible to the loop above. Scan the /posts/ anchors too,
+  // but only the ones that really are a schedule card (episode number plus a
+  // clock or a date) — a nav or sidebar link has none of that. Anchors that do
+  // carry a poster are already covered, and their `alt` is the better title.
+  for (const open of text.matchAll(/<a\b[^>]*href\s*=\s*("([^"]*\/posts\/[^"]*)"|'([^']*\/posts\/[^']*)'|([^\s>]*\/posts\/[^\s>]*))[^>]*>/gi)) {
+    const start = open.index;
+    const closeA = text.indexOf('</a>', start + open[0].length);
+    const end = closeA === -1 ? Math.min(text.length, start + 4000) : closeA;
+    if (hits.some((h) => h.index > start && h.index < end)) continue;
+    const body = text.slice(start + open[0].length, end);
+    const plain = stripTags(body);
+    if (!parseEpisodeMeta(plain)) continue;
+    if (!/\d{1,2}:\d{2}\s*(?:AM|PM)|\b[A-Z][a-z]{2},?\s+[A-Z][a-z]{2}\s+\d{1,2}\b/i.test(plain)) continue;
+    blocks.push({
+      tag: '',
+      index: start,
+      href: decodeEntities(open[2] ?? open[3] ?? open[4] ?? ''),
+      body,
+    });
+  }
+  return blocks.sort((a, b) => a.index - b.index);
 }
 
 function imgAttr(tag, name) {
@@ -211,10 +314,16 @@ export function parseSchedule(html, { base = DEFAULT_BASE, today = isoDay() } = 
 
   for (const block of scheduleBlocks(text)) {
     const { tag, body } = block;
-    const title = decodeEntities(imgAttr(tag, 'alt')).trim();
-    if (!title || title.length < 2) continue;
     const meta = parseEpisodeMeta(stripTags(body).split('\n').slice(0, 6).join('\n')) || parseEpisodeMeta(body);
     const plain = stripTags(body);
+    // The poster's `alt` is the clean title. A card without one (or without a
+    // poster at all) falls back to its own heading, then to its post slug.
+    const heading = /<(h[1-6]|strong|b)\b[^>]*>([\s\S]*?)<\/\1>/i.exec(body)?.[2] ?? '';
+    const title = (
+      decodeEntities(imgAttr(tag, 'alt')).trim() ||
+      decodeEntities(stripTags(heading)).trim() ||
+      ''
+    );
     const link = /(?:https?:\/\/deadtoons\.sbs)?\/posts\/[^"'\s>)]+/.exec(block.href || '') || /(?:https?:\/\/deadtoons\.sbs)?\/posts\/[^"'\s>)]+/.exec(body);
     const slug = link ? decodeURIComponent(link[0].replace(/^https?:\/\/deadtoons\.sbs/, '').replace(/^\/posts\//, '')).replace(/[#?].*$/, '') : '';
     // Self-contained signal first: an upcoming card carries a weekday + month +
@@ -224,13 +333,16 @@ export function parseSchedule(html, { base = DEFAULT_BASE, today = isoDay() } = 
     const hasClock = /\d{1,2}:\d{2}\s*(?:AM|PM)/i.test(plain);
     const isUpcoming = hasDate || (!hasClock && upcomingAt !== -1 && block.index > upcomingAt);
     const parsed = isUpcoming ? parseScheduleDate(plain, today) : { date: today, time: clockOnly(plain) };
-    const key = `${titleKey(title)}:${isUpcoming ? 'upcoming' : 'today'}`;
+    const slugTitle = titleFromSlug(slug);
+    const name = title.length > 1 ? title : slugTitle;
+    if (!name || name.length < 2) continue;
+    const key = `${titleKey(name)}:${isUpcoming ? 'upcoming' : 'today'}`;
     if (seen.has(key)) continue;
     seen.add(key);
 
     const entry = {
       key: `sch-${slug || key}`,
-      title,
+      title: name,
       slug,
       url: link ? `${base}/posts/${slug}` : '',
       img: posterUrl(imgAttr(tag, 'src')),
@@ -487,6 +599,20 @@ function selfTest() {
     return m && m.season === 5 && m.episode === 1 && m.audio === 'Hin-Tam-Tel-Eng-Jap';
   })(), JSON.stringify(parseEpisodeMeta('Black Clover S5 · Episode 1 · Hin-Tam-Tel-Eng-Jap')));
   check('clock only', clockOnly('1:30 PM') === '1:30 PM');
+  check('compact episode meta', (() => {
+    const a = parseEpisodeMeta('LINK CLICK\nS3E11\n11:20 PM');
+    const b = parseEpisodeMeta('Some Show 2x11 9:00 PM');
+    return a && a.season === 3 && a.episode === 11 && b && b.season === 2 && b.episode === 11;
+  })(), JSON.stringify(parseEpisodeMeta('LINK CLICK\nS3E11\n11:20 PM')));
+  check('escaped titles are decoded', (() => {
+    const title = decodeEntities('JoJo&#x27;s Bizarre Adventure');
+    // The escaped form keys nothing: the resolver would look for a show called
+    // "jojox27sbizarreadventure".
+    return title === "JoJo's Bizarre Adventure" && titleKey(title) === 'jojosbizarreadventure';
+  })(), decodeEntities('JoJo&#x27;s Bizarre Adventure'));
+  check('slug is the last-resort title', (() => {
+    return titleFromSlug('link-click-season-3-multi-audio-hindi-1080p') === 'Link Click';
+  })(), titleFromSlug('link-click-season-3-multi-audio-hindi-1080p'));
   check('upcoming date', (() => {
     const d = parseScheduleDate('Fri, Oct 23 12:30 PM', '2026-10-15');
     return d.date === '2026-10-23' && d.time === '12:30 PM';
@@ -519,6 +645,21 @@ function selfTest() {
 
   const parsed = parseSchedule(fixture, { today: '2026-10-15' });
   check('schedule finds every poster card', parsed.items.length === 4, String(parsed.items.length));
+
+  // A card whose poster has not loaded yet ships no <img> at all — it still has
+  // to be harvested, and the slug has to name it when there is no alt text.
+  const posterless = `
+    <section class="schedule">
+      <a class="slot" href="/posts/link-click-season-3-multi-audio-hindi-1080p">
+        <span>LINK CLICK</span><span>S3E11</span><time>11:20 PM</time></a>
+      <a class="nav" href="/posts/trending-now">Trending now</a>
+    </section>`;
+  const posterlessParsed = parseSchedule(posterless, { today: '2026-10-15' });
+  const link = posterlessParsed.items[0] || {};
+  check('card without a poster is still harvested', posterlessParsed.items.length === 1 && link.season === 3 && link.episode === 11, JSON.stringify(posterlessParsed.items));
+  check('poster-less card is named from its slug', link.title === 'Link Click', link.title);
+  check('poster-less card keeps its post link', link.url === 'https://deadtoons.sbs/posts/link-click-season-3-multi-audio-hindi-1080p', link.url);
+  check('plain nav link is not a card', !posterlessParsed.skipped.some((x) => /trending/i.test(x.title)), JSON.stringify(posterlessParsed.skipped));
   const jojo = parsed.items.find((i) => /jojo/i.test(i.title)) || {};
   check('today first, by clock', parsed.items[0]?.title === 'Chainsmoker Cat', parsed.items.map((i) => `${i.title}@${i.time}`).join(', '));
   check('today entry keeps its post link and art', /\/posts\/jojo-s-bizarre-adventure-season-4-2018$/.test(jojo.url || '') && /w300/.test(jojo.img || ''), JSON.stringify(jojo));
