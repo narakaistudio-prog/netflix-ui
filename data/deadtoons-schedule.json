@@ -23,6 +23,94 @@
           "1": 5
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "1": {
+          "1": {
+            "title": "The Frontier Lord and the Girl with the Blue Horn",
+            "overview": "Dias is awarded a domain for his wartime service, but there's one small problem. Does anyone even live there?",
+            "image": "https://image.tmdb.org/t/p/w300/4RhF8RB8IwTOmjj1mS50FyrKPqm.jpg",
+            "airDate": "2026-07-10",
+            "runtime": 26
+          },
+          "2": {
+            "title": "The Frontier Lord and His First Visitor",
+            "overview": "Dias settles into daily life with Alna, and little by little, people begin to come calling.",
+            "image": "https://image.tmdb.org/t/p/w300/utkG0hiuK1IHJFpANhByetXpprR.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Frontier Lord and the Strange Merchant",
+            "overview": "The population of Nezrose slowly grows, including a few surprises courtesy of an unusual visitor.",
+            "image": "https://image.tmdb.org/t/p/w300/70PxngQl8oYBYE8wbU2WGQgJApR.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Frontier Lord and the Neighboring Lord",
+            "overview": "Dias meets the new lord of the neighboring domain, and he learns there are many rumors about them both.",
+            "image": "https://image.tmdb.org/t/p/w300/aEjVPOk7V2awTZcVUxRNegNVfZ7.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Frontier Lord and the Assailants from the Desert",
+            "overview": "Dias tries his hand at farming, and Eldan sends a caravan of gifts to help him establish his domain.",
+            "image": "https://image.tmdb.org/t/p/w300/vjalBTqGcRiJzWp63n9E5ZvJyn7.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Frontier Lord and the Twins' Prayer",
+            "overview": "Senai and Ayhan want to secretly help Dias cultivate his field. Can a new arrival offer them a solution?",
+            "image": "https://image.tmdb.org/t/p/w300/2gZMQmnvB6R6w3PGXSkNpIL4baZ.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "7": {
+            "title": "The Frontier Lord and the New Subjects",
+            "overview": "Expectations are low for a new group of dogkin immigrants, but Dias has some ideas for how they'd be useful.",
+            "image": "https://image.tmdb.org/t/p/w300/5dkPgMGN8pzDpuu70D4mhB5fah4.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "8": {
+            "title": "The Frontier Lord and the Grassland Battle",
+            "overview": "Diane's plans quickly go awry when she launches an attack on Dias in his own domain.",
+            "image": "https://image.tmdb.org/t/p/w300/2zondpaWWQoVTW0wtGyCDdiSPyW.jpg",
+            "airDate": "2026-08-28",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The Frontier Lord and the Wedding",
+            "overview": "Klaus and Canis have grown close, and an event must be held, even if Dias is oblivious.",
+            "image": "https://image.tmdb.org/t/p/w300/znVKvYyCdtbnuWBuBJDyFkcXlXH.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "10": {
+            "title": "The Frontier Lord and His Son and Daughters",
+            "overview": "A bunch of new faces arrive at Iluk Village, but not many of them turn out to be total strangers.",
+            "image": "https://image.tmdb.org/t/p/w300/9X0YquMdck8iWN3DDNUAACYMX2H.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          },
+          "11": {
+            "title": "The Frontier Lord and Alna's Big Brother",
+            "overview": "Zorg rushes home to save his sister Alna from the wicked domain lord, utterly unprepared for what awaits him.",
+            "image": "https://image.tmdb.org/t/p/w300/kBXOApOCipfaGRp0KwlLrPgg8ly.jpg",
+            "airDate": "2026-09-18",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Frontier Lord and the Story That Began with Zero Subjects",
+            "overview": "Eldan visits Dias' domain, and delivers a range of official tidings from the king.",
+            "image": "https://image.tmdb.org/t/p/w300/mG45YSqVt3e85K1Xk83Ekcmo3ze.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 24
+          }
+        }
       }
     },
     {
@@ -45,6 +133,170 @@
           "1": 13
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "1": {
+          "1": {
+            "title": "I'm Elymas the Heavy Knight",
+            "overview": "Elymas Edvaughn is disowned by his father for becoming a Heavy Knight.",
+            "image": "https://image.tmdb.org/t/p/w300/t3UzqD6baWwEkcDw7rz8HML4k1W.jpg",
+            "airDate": "2026-07-03",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Menacing Foul Eight-Legged Beast",
+            "overview": "Elymas uses his wits and game knowledge to defeat a much more powerful monster.",
+            "image": "https://image.tmdb.org/t/p/w300/mibYdWH4QAmdGn17hOChtOE7GsI.jpg",
+            "airDate": "2026-07-10",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Raid Quest",
+            "overview": "Elymas finds himself surrounded by fearful newbies and an arrogant veteran on his first Raid Quest.",
+            "image": "https://image.tmdb.org/t/p/w300/2y0dlWJPTGXWAb3lazoiRqeflku.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Existence Evolution",
+            "overview": "With Gowtan paralyzed, Elymas must survive against the Mad Headder until he can get back in the fight.",
+            "image": "https://image.tmdb.org/t/p/w300/2BupnkZATb4FeEIDpSK5AFWUaMR.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Fang of Smoldering Insanity",
+            "overview": "Elymas goes shopping for a skillbook only to discover they're prohibitively expensive.",
+            "image": "https://image.tmdb.org/t/p/w300/zwqiGXuZZEMpEtJNYJKQIyw0tAw.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Ruche the Pierrot",
+            "overview": "Elymas begs Ruche to join his party so he can use her skills to find the item he needs.",
+            "image": "https://image.tmdb.org/t/p/w300/95NZXAYb2pDKrZmWMTsyVBeOXXK.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Golden Raana Farming",
+            "overview": "Elymas uses his game knowledge to exploit the weaknesses of the elusive Golden Raana.",
+            "image": "https://image.tmdb.org/t/p/w300/9kviyiXte0KkL7WNFaGqRY7GjLX.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Wandering",
+            "overview": "Elymas and Ruche's celebration is interrupted by a wandering dungeon boss.",
+            "image": "https://image.tmdb.org/t/p/w300/gKqQE0ww8K1Y9lmSefjKRgCpGDX.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Dreamlord",
+            "overview": "Ruche returns to save Elymas from a desperate situation, and they make one last gamble to beat the Dreamlord.",
+            "image": "https://image.tmdb.org/t/p/w300/qq2cc5cOhWBMGdUcbJgE8D2BX0o.jpg",
+            "airDate": "2026-08-28",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Negotiation",
+            "overview": "Elymas and Ruche celebrate their payout and promotion and return to the shady shop for a Skill Book.",
+            "image": "https://image.tmdb.org/t/p/w300/eMDDVMpIb5MhNG2bbfqoxOZkMgG.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Inescapable Past",
+            "overview": "Elymas' father hears about his success and visits the guild with Malice, who has a twisted attachment to him.",
+            "image": "https://image.tmdb.org/t/p/w300/8SApfPGTBto5Isiaxv2bEbHqLOZ.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Malice the Master Swordsman",
+            "overview": "Elymas activates the true power of the Heavy Knight to make a comeback against Malice.",
+            "image": "https://image.tmdb.org/t/p/w300/r7wrLFD3GMtc3UYYGbaPyrNGNLG.jpg",
+            "airDate": "2026-09-18",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Lacoryna, City of Adventurers",
+            "overview": "After defeating Malice and saying goodbye to his father, Elymas visits Lacoryna, the holy land of adventurers.",
+            "image": "https://image.tmdb.org/t/p/w300/7JMkQTaoAD0Z5vRRxQp6cFvJ0J9.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Mythril Giant",
+            "overview": "Elymas and Ruche take on an overpowering foe in hopes of acquiring powerful materials.",
+            "image": "https://image.tmdb.org/t/p/w300/kbFu6Nn7j7e5L3dCRYt0PxQErGv.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Dreamlord of the Dreamhole",
+            "overview": "With their new skills gained on level up, Elymas and Ruche decide to take on the Rock Centipede.",
+            "image": "https://image.tmdb.org/t/p/w300/qUn01Nh4lhi3Ew7dvGXq7B3qwVj.jpg",
+            "airDate": "2026-10-09",
+            "runtime": 24
+          },
+          "16": {
+            "title": "No Defense Spared",
+            "airDate": "2026-10-16",
+            "runtime": 24
+          },
+          "17": {
+            "title": "Episode 17",
+            "airDate": "2026-10-23",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Episode 18",
+            "airDate": "2026-10-30",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Episode 19",
+            "airDate": "2026-11-06",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Episode 20",
+            "airDate": "2026-11-13",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Episode 21",
+            "airDate": "2026-11-20",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Episode 22",
+            "airDate": "2026-11-27",
+            "runtime": 24
+          },
+          "23": {
+            "title": "Episode 23",
+            "airDate": "2026-12-04",
+            "runtime": 24
+          },
+          "24": {
+            "title": "Episode 24",
+            "airDate": "2026-12-11",
+            "runtime": 24
+          },
+          "25": {
+            "title": "Episode 25",
+            "airDate": "2026-12-18",
+            "runtime": 24
+          },
+          "26": {
+            "title": "Episode 26",
+            "airDate": "2026-12-25",
+            "runtime": 24
+          }
+        }
       }
     },
     {
@@ -89,6 +341,94 @@
           "1": 12
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "1": {
+          "1": {
+            "title": "I'm Yani Neko, Nya",
+            "overview": "Catgirl Yani struggles to pay rent and spends what little she has on cigarettes — until an urgent text from her sister Imoko sparks a far greater crisis.",
+            "image": "https://image.tmdb.org/t/p/w300/iXAJZZOuY92eRsm1macyt1ruZ0P.jpg",
+            "airDate": "2026-07-03",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Meet My Juniors, Nya",
+            "overview": "Yani wants to continue her carefree life, but she receives a job offer as financial pressure builds. Will she commit to this opportunity or her freedom?",
+            "image": "https://image.tmdb.org/t/p/w300/wlOsOfggPKLJsh5uvXotSaVO0ny.jpg",
+            "airDate": "2026-07-10",
+            "runtime": 24
+          },
+          "3": {
+            "title": "I'm More Straight Than Funny, Nya",
+            "overview": "After another clash with her landlord, Yani agrees to tend his garden to cover her rent. It seems like a perfect fix — until she faces his cabbage patch.",
+            "image": "https://image.tmdb.org/t/p/w300/qZIElrCqwp3l847xhMIS5IDrw3r.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Freaks All Around Me, Nya",
+            "overview": "Yani lands a job assisting Saori Tatsuro, a risque manga artist. After Yani mistakenly burns her manuscript, an unexpected police visit follows.",
+            "image": "https://image.tmdb.org/t/p/w300/77xW9AEuwwUsfzsJlipjtsaaWxC.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "5": {
+            "title": "We're Off to a Secret Place, Nya",
+            "overview": "Despite her sister's attempts to take away her cigarettes, Yani refuses to quit. At the same time, Imoko navigates a youthful romance.",
+            "image": "https://image.tmdb.org/t/p/w300/eQ49Gk4KYjMlxaQevI0TEnccSFu.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Summer Starts and Ends Here, Nya",
+            "overview": "Yani's fellow tenant Aruko disappears during a drinking party while three new assistants arrive at Tatsuro's workplace as her deadline looms closer.",
+            "image": "https://image.tmdb.org/t/p/w300/pEjvXzWVPiPJz6hl5FTnVTmEtpF.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "7": {
+            "title": "I Was Born to Parents Too, Nya",
+            "overview": "Yani takes a cleaning job at a shady underground facility. Meanwhile, her landlord welcomes a new houseguest, quickly followed by an unexpected mishap.",
+            "image": "https://image.tmdb.org/t/p/w300/sBoV3yzrtuIcjykTqQHHb24bypS.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Even We Run Around in December, Nya",
+            "overview": "Yani expects a lonely birthday, unaware that Imoko is planning a surprise party for her. Elsewhere, Yani's landlord becomes trapped in a foul time loop.",
+            "image": "https://image.tmdb.org/t/p/w300/16Xayd5qJQ4eUGRBmIYMwijF7Cw.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "9": {
+            "title": "My Little Sis Is Popular, Nya",
+            "overview": "Yani's peculiar toilet habits spark chaos around her while Imoko receives a gift from a secret admirer who turns out to be anything but ordinary.",
+            "image": "https://image.tmdb.org/t/p/w300/zVaLQWkjC3uUzcas2oGXeEUCIGk.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "10": {
+            "title": "I'm Gonnya Enjoy the Outing Too, Nya",
+            "overview": "Yani's neighbors Yakuneko and Hameneko head to a mystical waterfall — but Hameneko's selfishness drives Yakuneko to hatch a wild revenge plan.",
+            "image": "https://image.tmdb.org/t/p/w300/gZvAXKbpRIsXsGH6ne5DwjSTH1Z.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          },
+          "11": {
+            "title": "We're in Kyoto, Nya",
+            "overview": "Yani and her flatmates set off on a Kyoto and Nara getaway — but her antics lead to an encounter with the \"King of Deer,\" a creature of ancient wisdom.",
+            "image": "https://image.tmdb.org/t/p/w300/7awLpPqLdFbbEdVVGvIPNJ21ACE.jpg",
+            "airDate": "2026-09-18",
+            "runtime": 24
+          },
+          "12": {
+            "title": "I'm Gonnya Smoke Even in the Last Episode, Nya",
+            "overview": "As her issues push the other residents to the edge, a worn-out Yani lashes out at her landlord — triggering the biggest brawl in the building's history.",
+            "image": "https://image.tmdb.org/t/p/w300/y2bsRfKaHsehwlWA1iHx0PfIRwL.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 24
+          }
+        }
       }
     },
     {
@@ -183,6 +523,68 @@
           "1": 1
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "1": {
+          "1": {
+            "title": "Urban Legend",
+            "overview": "High school student Ageha finds a mysterious telephone card in a phone booth.",
+            "image": "https://image.tmdb.org/t/p/w300/asAwNRMJMgBoNaUpWCOrgMMbqYT.jpg",
+            "airDate": "2026-10-05",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Tavoo",
+            "overview": "The Psyren game begins. Ageha must protect Amamiya in a world overrun by monsters.",
+            "image": "https://image.tmdb.org/t/p/w300/qeu2JR5tDNq8tK82VkHhjIQPsrc.jpg",
+            "airDate": "2026-10-12",
+            "runtime": 24
+          },
+          "3": {
+            "title": "PSI",
+            "airDate": "2026-10-19"
+          },
+          "4": {
+            "title": "Episode 4",
+            "airDate": "2026-10-26"
+          },
+          "5": {
+            "title": "Episode 5",
+            "airDate": "2026-11-02"
+          },
+          "6": {
+            "title": "Episode 6",
+            "airDate": "2026-11-09"
+          },
+          "7": {
+            "title": "Episode 7",
+            "airDate": "2026-11-16"
+          },
+          "8": {
+            "title": "Episode 8",
+            "airDate": "2026-11-23"
+          },
+          "9": {
+            "title": "Episode 9",
+            "airDate": "2026-11-30"
+          },
+          "10": {
+            "title": "Episode 10",
+            "airDate": "2026-12-07"
+          },
+          "11": {
+            "title": "Episode 11",
+            "airDate": "2026-12-14"
+          },
+          "12": {
+            "title": "Episode 12",
+            "airDate": "2026-12-21"
+          },
+          "13": {
+            "title": "Episode 13",
+            "airDate": "2026-12-28"
+          }
+        }
       }
     },
     {
@@ -205,6 +607,79 @@
           "2": 1
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "2": {
+          "1": {
+            "title": "To See You Once More",
+            "overview": "Kimihiko and his friends are kidnapped as they go to visit Siesta's grave.",
+            "image": "https://image.tmdb.org/t/p/w300/cRGnY53etSQkpHi3o6p8xEAjIkd.jpg",
+            "airDate": "2026-10-07",
+            "runtime": 24
+          },
+          "2": {
+            "title": "A Story of That Day No One Knows",
+            "overview": "Siesta is gone, but Kimihiko and his friends must uncover a new mystery tied to her legacy.",
+            "image": "https://image.tmdb.org/t/p/w300/7nY4snj9mPlWTTcGjSTMkDuKDVa.jpg",
+            "airDate": "2026-10-14",
+            "runtime": 24
+          },
+          "3": {
+            "title": "An Easy Way to Support Your Favorite by Being an Idol Producer",
+            "airDate": "2026-10-21",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Episode 4",
+            "airDate": "2026-10-28",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Episode 5",
+            "airDate": "2026-11-04",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Episode 6",
+            "airDate": "2026-11-11",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Episode 7",
+            "airDate": "2026-11-18",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Episode 8",
+            "airDate": "2026-11-25",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Episode 9",
+            "airDate": "2026-12-02",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Episode 10",
+            "airDate": "2026-12-09",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Episode 11",
+            "airDate": "2026-12-16",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Episode 12",
+            "airDate": "2026-12-23",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Episode 13",
+            "airDate": "2026-12-30",
+            "runtime": 24
+          }
+        }
       }
     },
     {
@@ -227,6 +702,61 @@
           "2": 1
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "2": {
+          "1": {
+            "title": "The Boy Who Is the World’s Strongest Sorcerer Participates in a Large Scale Magic Battle Tournament",
+            "overview": "Ray, Ariane, and Amelia form a team to participate in the Magicks War tournament. Now it's time to train!",
+            "image": "https://image.tmdb.org/t/p/w300/vPHdzNIr0WkHKTJYoVivcM2t2QS.jpg",
+            "airDate": "2026-10-09",
+            "runtime": 25
+          },
+          "2": {
+            "title": "The Boy Who Is the World's Strongest Sorcerer Dons a Mask... Again",
+            "airDate": "2026-10-16"
+          },
+          "3": {
+            "title": "Episode 3",
+            "airDate": "2026-10-23"
+          },
+          "4": {
+            "title": "Episode 4",
+            "airDate": "2026-10-30"
+          },
+          "5": {
+            "title": "Episode 5",
+            "airDate": "2026-11-06"
+          },
+          "6": {
+            "title": "Episode 6",
+            "airDate": "2026-11-13"
+          },
+          "7": {
+            "title": "Episode 7",
+            "airDate": "2026-11-20"
+          },
+          "8": {
+            "title": "Episode 8",
+            "airDate": "2026-11-27"
+          },
+          "9": {
+            "title": "Episode 9",
+            "airDate": "2026-12-04"
+          },
+          "10": {
+            "title": "Episode 10",
+            "airDate": "2026-12-11"
+          },
+          "11": {
+            "title": "Episode 11",
+            "airDate": "2026-12-18"
+          },
+          "12": {
+            "title": "Episode 12",
+            "airDate": "2026-12-25"
+          }
+        }
       }
     },
     {
@@ -249,6 +779,61 @@
           "1": 1
         },
         "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "1": {
+          "1": {
+            "title": "An Unwanted Repayment",
+            "overview": "A frail young lady finds herself kidnapped. Her only hope is to win over a man hired to kill her.",
+            "image": "https://image.tmdb.org/t/p/w300/5eeSPZOaK7tBHzIyHqFITdLEaEN.jpg",
+            "airDate": "2026-10-09",
+            "runtime": 23
+          },
+          "2": {
+            "title": "Episode 2",
+            "airDate": "2026-10-16"
+          },
+          "3": {
+            "title": "Episode 3",
+            "airDate": "2026-10-23"
+          },
+          "4": {
+            "title": "Episode 4",
+            "airDate": "2026-10-30"
+          },
+          "5": {
+            "title": "Episode 5",
+            "airDate": "2026-11-06"
+          },
+          "6": {
+            "title": "Episode 6",
+            "airDate": "2026-11-13"
+          },
+          "7": {
+            "title": "Episode 7",
+            "airDate": "2026-11-20"
+          },
+          "8": {
+            "title": "Episode 8",
+            "airDate": "2026-11-27"
+          },
+          "9": {
+            "title": "Episode 9",
+            "airDate": "2026-12-04"
+          },
+          "10": {
+            "title": "Episode 10",
+            "airDate": "2026-12-11"
+          },
+          "11": {
+            "title": "Episode 11",
+            "airDate": "2026-12-18"
+          },
+          "12": {
+            "title": "Episode 12",
+            "airDate": "2026-12-25"
+          }
+        }
       }
     }
   ],
