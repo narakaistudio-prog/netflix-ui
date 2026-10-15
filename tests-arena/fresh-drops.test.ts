@@ -1,3 +1,7 @@
+// Guards the "Fresh Drops" row on the Crunchyroll page: the DeadToons release
+// schedule (today + upcoming, every card Nxsha-backed) leads the row, the nxsha
+// drop state fills the rest, and the baked block in assets/crunchyroll/crunchyroll.html
+// keeps working in a browser (JSDOM here, no network).
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -8,17 +12,10 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const SCRIPT = join(ROOT, 'scripts', 'build-crunchyroll-new-drops.mjs');
-const DEADTOONS_SCRIPT = join(ROOT, 'scripts', 'harvest-deadtoons-drops.mjs');
+const SCHEDULE_SCRIPT = join(ROOT, 'scripts', 'harvest-deadtoons-schedule.mjs');
+const REGISTRY = JSON.parse(readFileSync(join(ROOT, 'data', 'nxsha-titles.json'), 'utf8')) as Record<string, { id: string; kind: string; title: string }>;
 
-const POSTER = 'https://image.tmdb.org/t/p/w500/poster.jpg';
-
-// The harvester is an ES module; Jest here runs CommonJS, so the checks below
-// evaluate it in a child Node process and read the JSON result back.
-const DEADTOONS_URL = pathToFileURL(DEADTOONS_SCRIPT).href;
-function callHarvester(expression: string): any {
-    const code = `const m = await import(${JSON.stringify(DEADTOONS_URL)});\nconsole.log(JSON.stringify(await (${expression})));`;
-    return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
-}
+const POSTER = 'https://image.tmdb.org/t/p/w300/poster.jpg';
 
 type RailItem = {
     key: string;
@@ -27,7 +24,21 @@ type RailItem = {
     firstSeen: string;
     fresh: boolean;
     img: string;
+    id: string;
+    kind: string;
+    seasons?: Record<string, number>;
+    verb?: string;
+    season?: number | null;
+    episode?: number | null;
 };
+
+// The harvester is an ES module; Jest here runs CommonJS, so the checks below
+// evaluate it in a child Node process and read the JSON result back.
+const SCHEDULE_URL = pathToFileURL(SCHEDULE_SCRIPT).href;
+function callHarvester(expression: string): any {
+    const code = `const m = await import(${JSON.stringify(SCHEDULE_URL)});\nconsole.log(JSON.stringify(await (${expression})));`;
+    return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
+}
 
 function nxshaCard(overrides: Record<string, unknown> = {}) {
     return {
@@ -36,10 +47,22 @@ function nxshaCard(overrides: Record<string, unknown> = {}) {
     };
 }
 
-function deadtoonsCard(overrides: Record<string, unknown> = {}) {
+/** One entry of data/deadtoons-schedule.json, as the harvester writes it. */
+function scheduleEntry(overrides: Record<string, unknown> = {}) {
     return {
-        slug: 'show', title: 'Show', kind: 'tv', url: 'https://deadtoons.sbs/show/', img: POSTER,
-        year: '', tags: ['hindi'], firstSeen: '2026-10-14', baseline: true, ...overrides,
+        key: 'sch-show-season-1-2026',
+        title: 'Show',
+        slug: 'show-season-1-2026',
+        url: 'https://deadtoons.sbs/posts/show-season-1-2026',
+        img: POSTER,
+        season: 1,
+        episode: 3,
+        audio: '',
+        date: '2026-10-15',
+        time: '1:30 PM',
+        today: true,
+        nx: { id: '12345', kind: 'tv', seasons: { 1: 12 }, from: 'tmdb' },
+        ...overrides,
     };
 }
 
@@ -49,18 +72,21 @@ function deadtoonsCard(overrides: Record<string, unknown> = {}) {
  * The bake writes to a throwaway copy of the page, so the checked-in page is
  * never touched, and takes both state files as fixtures.
  */
-function bakeFor(items: { nxsha?: Record<string, unknown>; deadtoons?: Record<string, unknown> }) {
+function bakeFor(items: { nxsha?: Record<string, unknown>; schedule?: Record<string, unknown>[] }) {
     const dir = mkdtempSync(join(tmpdir(), 'cr-drops-'));
     const nxsha = join(dir, 'crunchyroll-new-drops.json');
-    const deadtoons = join(dir, 'deadtoons-drops.json');
+    const schedule = join(dir, 'deadtoons-schedule.json');
     const page = join(dir, 'page.html');
     writeFileSync(nxsha, JSON.stringify({ updated: '2026-10-15', items: items.nxsha ?? {} }));
-    writeFileSync(deadtoons, JSON.stringify({ updated: '2026-10-15', source: 'https://deadtoons.sbs', items: items.deadtoons ?? {} }));
+    writeFileSync(
+        schedule,
+        JSON.stringify({ updated: '2026-10-15', source: 'https://deadtoons.sbs/schedule', items: items.schedule ?? [] }),
+    );
     copyFileSync(HTML_PATH, page);
     const env = {
         ...process.env,
         DROPS_STATE_FILE: nxsha,
-        DROPS_DEADTOONS_FILE: deadtoons,
+        DROPS_SCHEDULE_FILE: schedule,
         DROPS_HTML_FILE: page,
     };
 
@@ -71,36 +97,63 @@ function bakeFor(items: { nxsha?: Record<string, unknown>; deadtoons?: Record<st
 }
 
 describe('Fresh Drops rail selection', () => {
-    test('daily DeadToons finds lead the row, newest first, ahead of the pool fillers', () => {
+    test("today's DeadToons episodes lead the row, in clock order, ahead of the pool fillers", () => {
         const rail = bakeFor({
-            nxsha: { 'tv:1': nxshaCard({ title: 'Pool Show' }) },
-            deadtoons: {
-                'wistoria-wand-and-sword': deadtoonsCard({ slug: 'wistoria-wand-and-sword', title: 'Wistoria: Wand and Sword', firstSeen: '2026-10-15', baseline: false }),
-                kagurabachi: deadtoonsCard({ slug: 'kagurabachi', title: 'Kagurabachi', firstSeen: '2026-10-15', baseline: false }),
-                'sakamoto-days': deadtoonsCard({ slug: 'sakamoto-days', title: 'Sakamoto Days', firstSeen: '2026-10-14', baseline: true }),
-            },
+            nxsha: { 'tv:9': nxshaCard({ id: '9', title: 'Pool Show', firstSeen: '2026-10-14' }) },
+            schedule: [
+                scheduleEntry({ key: 'sch-jojo', title: "JoJo's Bizarre Adventure", time: '1:30 PM', nx: { id: '45790', kind: 'tv', seasons: { 4: 28 } } }),
+                scheduleEntry({ key: 'sch-ramparts', title: 'The Ramparts of Ice', slug: 'the-ramparts-of-ice-season-2-2026', time: '12:00 PM', season: 2, episode: 3, nx: { id: '273109', kind: 'tv', seasons: { 2: 3 } } }),
+                scheduleEntry({ key: 'sch-apothecary', title: 'The Apothecary Diaries', today: false, date: '2026-10-23', time: '12:30 PM', season: 3, episode: 1, nx: { id: '220542', kind: 'tv', seasons: { 3: 1 } } }),
+            ],
         });
-        expect(rail.mode).toBe('new');
-        // Fresh finds first (DeadToons ahead), then the newest pool titles fill the row.
-        expect(rail.items.map(i => i.title)).toEqual(['Kagurabachi', 'Wistoria: Wand and Sword', 'Sakamoto Days', 'Pool Show']);
-        expect(rail.items.filter(i => i.fresh).map(i => i.title)).toEqual(['Kagurabachi', 'Wistoria: Wand and Sword']);
-        expect(rail.items.map(i => i.key)).toEqual([
-            'drop-dt-kagurabachi',
-            'drop-dt-wistoria-wand-and-sword',
-            'drop-dt-sakamoto-days',
-            'drop-tv-1',
+        expect(rail.mode).toBe('today');
+        expect(rail.items.map(i => i.title)).toEqual([
+            'The Ramparts of Ice',
+            "JoJo's Bizarre Adventure",
+            'The Apothecary Diaries',
+            'Pool Show',
         ]);
+        // Only today's episodes get the NEW flag; the upcoming one says when it airs.
+        expect(rail.items.filter(i => i.fresh).map(i => i.title)).toEqual(['The Ramparts of Ice', "JoJo's Bizarre Adventure"]);
+        const upcoming = rail.items.find(i => i.title === 'The Apothecary Diaries');
+        expect(upcoming?.verb).toBe('Airs');
+        expect(upcoming?.firstSeen).toBe('2026-10-23');
+        // Every card carries a real Nxsha id — that is what makes the row play.
+        expect(rail.items.every(i => /^\d+$/.test(i.id))).toBe(true);
         expect(rail.items.map(i => i.source)).toEqual(['deadtoons', 'deadtoons', 'deadtoons', 'nxsha']);
     });
 
-    test("the listing's own update date breaks same-day ties", () => {
+    test('the row only reaches 12 cards and keeps pool fillers last', () => {
+        const schedule = Array.from({ length: 4 }, (_, i) =>
+            scheduleEntry({ key: `sch-${i}`, title: `Schedule Show ${i}`, slug: `schedule-show-${i}`, time: `${1 + i}:00 PM`, nx: { id: `${900 + i}`, kind: 'tv', seasons: { 1: 12 } } }),
+        );
+        const nxsha = Object.fromEntries(
+            Array.from({ length: 12 }, (_, i) => [`tv:${100 + i}`, nxshaCard({ id: `${100 + i}`, title: `Pool Show ${i}`, firstSeen: `2026-10-${String(10 + (i % 5)).padStart(2, '0')}` })]),
+        );
+        const rail = bakeFor({ nxsha, schedule });
+        expect(rail.items).toHaveLength(12);
+        expect(rail.items.slice(0, 4).every(i => i.source === 'deadtoons')).toBe(true);
+        expect(rail.items[4].source).toBe('nxsha');
+    });
+
+    test('a schedule title the catalog carries reuses the catalog card key', () => {
+        const aot = REGISTRY.aot;
         const rail = bakeFor({
-            deadtoons: {
-                'older-post': deadtoonsCard({ slug: 'older-post', title: 'Older Post', firstSeen: '2026-10-15', siteUpdated: '2026-10-10', baseline: false }),
-                'newer-post': deadtoonsCard({ slug: 'newer-post', title: 'Newer Post', firstSeen: '2026-10-15', siteUpdated: '2026-10-14', baseline: false }),
-            },
+            schedule: [scheduleEntry({ key: 'sch-aot', title: aot.title, nx: { id: aot.id, kind: aot.kind, seasons: { 4: 28 } } })],
         });
-        expect(rail.items.map(i => i.title)).toEqual(['Newer Post', 'Older Post']);
+        expect(rail.items[0].key).toBe('aot');
+        expect(rail.items[0].id).toBe(aot.id);
+    });
+
+    test('schedule entries without a verified Nxsha id never reach the row', () => {
+        const rail = bakeFor({
+            nxsha: { 'tv:9': nxshaCard({ id: '9', title: 'Pool Show' }) },
+            schedule: [
+                scheduleEntry({ key: 'sch-unknown', title: 'Unknown Show', nx: null }),
+                scheduleEntry({ key: 'sch-known', title: 'Playable Show', nx: { id: '555', kind: 'tv', seasons: { 1: 5 } } }),
+            ],
+        });
+        expect(rail.items.map(i => i.title)).toEqual(['Playable Show', 'Pool Show']);
     });
 
     test('nxsha-only state still fills the row from the newest pool titles', () => {
@@ -115,28 +168,19 @@ describe('Fresh Drops rail selection', () => {
         expect(rail.items.every(i => !i.fresh)).toBe(true);
     });
 
-    test('adult listings, catalog titles and duplicates stay off the rail', () => {
+    test('adult listings, catalog titles and duplicates stay off the pool filler', () => {
         const rail = bakeFor({
             nxsha: {
-                'tv:1': nxshaCard({ title: 'Harem Camp!', firstSeen: '2026-10-14' }),
-                'tv:2': nxshaCard({ id: '2', title: 'Overflow', firstSeen: '2026-10-14' }),
-            },
-            deadtoons: {
-                // Already playable through the catalog (exact and substring matches).
-                'solo-leveling-hindi': deadtoonsCard({ slug: 'solo-leveling-hindi', title: 'Solo Leveling', firstSeen: '2026-10-15', baseline: false }),
-                'attack-on-titan-movie': deadtoonsCard({ slug: 'attack-on-titan-movie', title: 'Attack on Titan Movie', firstSeen: '2026-10-15', baseline: false }),
-                // Two episode posts of one show collapse into a single card.
-                doraemon: deadtoonsCard({ slug: 'doraemon', title: 'Doraemon', firstSeen: '2026-10-15', baseline: false }),
-                'doraemon-hindi-dubbed': deadtoonsCard({ slug: 'doraemon-hindi-dubbed', title: 'Doraemon', firstSeen: '2026-10-15', baseline: false }),
-                // Adult listing from the DeadToons side.
-                'harem-camp-ova': deadtoonsCard({ slug: 'harem-camp-ova', title: 'Harem Camp OVA', firstSeen: '2026-10-15', baseline: false }),
-                // A real drop with no artwork yet — the card falls back to placeholder art.
-                kagurabachi: deadtoonsCard({ slug: 'kagurabachi', title: 'Kagurabachi', img: '', firstSeen: '2026-10-15', baseline: false }),
+                'tv:1': nxshaCard({ id: '1', title: 'Harem Camp!', stateKey: 'tv:207840' }),
+                'tv:2': nxshaCard({ id: '2', title: 'Attack on Titan Movie' }),
+                'tv:3': nxshaCard({ id: '3', title: REGISTRY.solo.title }),
+                'tv:4': nxshaCard({ id: '4', title: 'Kagurabachi' }),
+                'tv:5': nxshaCard({ id: '5', title: 'Kagurabachi' }),
             },
         });
-        expect(rail.items.map(i => i.title)).toEqual(['Doraemon', 'Kagurabachi']);
-        expect(rail.items.every(i => i.source === 'deadtoons')).toBe(true);
-        expect(rail.items.find(i => i.title === 'Kagurabachi')?.img).toBe('');
+        // Only the pool filler is filtered: the schedule may repeat a catalog title on purpose.
+        expect(rail.items.map(i => i.title)).toEqual(['Kagurabachi']);
+        expect(rail.items).toHaveLength(1);
     });
 
     test('an empty pool leaves the row out instead of rendering it blank', () => {
@@ -145,61 +189,72 @@ describe('Fresh Drops rail selection', () => {
     });
 });
 
-describe('DeadToons drop harvester', () => {
+describe('DeadToons schedule harvester', () => {
     test('offline parser self-tests pass', () => {
-        const out = execFileSync(process.execPath, [DEADTOONS_SCRIPT, '--self-test'], { encoding: 'utf8', timeout: 60000 });
-        expect(out).toContain('All DeadToons drop self-tests passed');
+        const out = execFileSync(process.execPath, [SCHEDULE_SCRIPT, '--self-test'], { encoding: 'utf8', timeout: 60000 });
+        expect(out).toContain('All DeadToons schedule self-tests passed');
     }, 60000);
 
-    test('live DeadToons listing text is rewritten from the slug', () => {
-        const cleaned = callHarvester(`(() => {
-            const items = {
-                're-zero': { slug: 're-zero-starting-life-in-another-world-season-4-episodes-multi-audio-hindi-english-japanese-480p-720p-1080p-hd-web-dl-10bit-hevc-esub', title: 'Re: Zero Starting Life in Another World &amp HD', year: '' },
-                'liar-game': { slug: 'liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub', title: 'Liar Game &amp HD', year: '' },
-                'grand-blue': { slug: 'grand-blue-dreaming-season-3-2026', title: 'Grand Blue Dreaming Anime Times AMZN DDP2.0', year: '' },
-            };
-            m.normalizeDropTitles(items);
-            return { titles: Object.values(items).map((i) => i.title), rebaked: m.normalizeDropTitles(items).length };
+    test('the schedule page becomes dated, playable entries', () => {
+        const parsed = callHarvester(`(() => {
+            const html = \`<section class="days"><button>Thu15 Today 6</button></div>
+                <a href="https://deadtoons.sbs/posts/jojo-s-bizarre-adventure-season-4-2018">
+                  <img src="https://image.tmdb.org/t/p/w154/cMF.jpg" alt="JoJo's Bizarre Adventure">
+                  <div>JoJo's Bizarre Adventure</div><span>S4 · Episode 5</span><time>1:30 PM</time>
+                </a>
+                <section class="upcoming"><h2>Upcoming</h2>
+                  <article><img src="https://image.tmdb.org/t/p/w154/apo.jpg" alt="The Apothecary Diaries">
+                    <strong>The Apothecary Diaries</strong><span>S3 · Episode 1 · Hin-Tam-Tel-Eng-Jap</span><span>Fri, Oct 23 12:30 PM</span></article>
+                </section></section>\`;
+            return m.parseSchedule(html, { today: '2026-10-15' }).items.map((i) => ({
+                title: i.title, season: i.season, episode: i.episode, today: i.today, date: i.date, time: i.time,
+                slug: i.slug, img: i.img, audio: i.audio,
+            }));
         })()`);
-        expect(cleaned.titles).toEqual([
-            'Re Zero Starting Life in Another World',
-            'Liar Game',
-            'Grand Blue Dreaming',
+        expect(parsed).toEqual([
+            { title: "JoJo's Bizarre Adventure", season: 4, episode: 5, today: true, date: '2026-10-15', time: '1:30 PM', slug: 'jojo-s-bizarre-adventure-season-4-2018', img: 'https://image.tmdb.org/t/p/w300/cMF.jpg', audio: '' },
+            { title: 'The Apothecary Diaries', season: 3, episode: 1, today: false, date: '2026-10-23', time: '12:30 PM', slug: '', img: 'https://image.tmdb.org/t/p/w300/apo.jpg', audio: 'Hin-Tam-Tel-Eng-Jap' },
         ]);
-        // A second pass is a no-op, so the daily job does not churn titles.
-        expect(cleaned.rebaked).toBe(0);
     });
 
-    test('taxonomy pages stay out of the state, real posts stay in', () => {
-        const verdicts = callHarvester(`[
-            'https://deadtoons.sbs/posts/black-torch-season-1-2026',
-            'https://deadtoons.sbs/posts/blue-box-season-2-2026',
-            'https://deadtoons.sbs/genre/action',
-            'https://deadtoons.sbs/category/ova',
-            'https://deadtoons.sbs/ott/netflix',
-            'https://deadtoons.sbs/privacy-policy',
-        ].map((u) => m.isPostUrl(u, 'https://deadtoons.sbs'))`);
-        expect(verdicts).toEqual([true, true, false, false, false, false]);
+    test('an id is accepted only when Nxsha names the same show', () => {
+        const verdicts = callHarvester(`(() => {
+            const good = m.parseEmbedTitle(m.embedTitle('<title>Watch JoJo\\'s Bizarre Adventure - S4:E1</title>'));
+            const other = m.parseEmbedTitle(m.embedTitle('<title>Watch The Fighter - S1:E1</title>'));
+            return {
+                match: good.name === "JoJo's Bizarre Adventure" && good.season === 4,
+                mismatch: other.name === 'Fighter',
+                url: m.nxshaVerifyUrl('tv', '45790', 4, 5),
+                catalog: [...m.registryIndex({ jojo: { id: '45790', kind: 'tv', title: "JoJo's Bizarre Adventure", seasons: { 4: 28 } } }).values()][0],
+            };
+        })()`);
+        expect(verdicts.match).toBe(true);
+        // "Fighter" must never accept "The Fighter".
+        expect(verdicts.mismatch).toBe(false);
+        expect(verdicts.url).toContain('https://nxsha.space/embed/tv/45790/4/5');
+        expect(verdicts.catalog).toEqual({ id: '45790', kind: 'tv', seasons: { 4: 28 } });
     });
 
-    test('the daily job harvests DeadToons, then bakes the row', () => {
+    test('the daily job harvests the schedule, then bakes the row', () => {
         const workflow = readFileSync(join(ROOT, '.github', 'workflows', 'crunchyroll-daily-drops.yml'), 'utf8');
-        expect(workflow).toContain('node scripts/harvest-deadtoons-drops.mjs');
+        expect(workflow).toContain('node scripts/harvest-deadtoons-schedule.mjs');
         expect(workflow).toContain('continue-on-error: true');
         expect(workflow).toContain('node scripts/build-crunchyroll-new-drops.mjs --from-state');
-        expect(workflow).toContain('data/deadtoons-drops.json');
+        expect(workflow).toContain('data/deadtoons-schedule.json');
         expect(workflow).toContain("cron: '0 4 * * *'");
-        // Manual runs can probe the site without writing anything.
+        // Manual runs can probe the site without touching the state.
         expect(workflow).toContain('--probe');
         const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as { scripts: Record<string, string> };
-        expect(pkg.scripts['harvest:deadtoons-drops']).toContain('harvest-deadtoons-drops.mjs');
+        expect(pkg.scripts['harvest:deadtoons-schedule']).toContain('harvest-deadtoons-schedule.mjs');
     });
 
-    test('the harvester defaults to deadtoons.sbs and stays a listing-only source', () => {
-        const script = readFileSync(DEADTOONS_SCRIPT, 'utf8');
-        expect(script).toContain("'https://deadtoons.sbs'");
+    test('the harvester reads the schedule and writes nothing without a verified id', () => {
+        const script = readFileSync(SCHEDULE_SCRIPT, 'utf8');
+        expect(script).toContain("const DEFAULT_BASE = 'https://deadtoons.sbs'");
+        expect(script).toContain('/schedule');
         expect(script).toContain('DEADTOONS_BASE');
-        // No player may ever be built from this listing harvest.
+        expect(script).toContain('nxsha: no verified id');
+        // Listing-only: the player itself stays on the page.
         expect(script).not.toContain('serverUrl');
         expect(script).not.toContain('iframe');
     });
@@ -237,62 +292,81 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         expect(pkg.scripts['bake:crunchyroll-drops']).toBe('node scripts/build-crunchyroll-new-drops.mjs --from-state');
     });
 
-    test('the baked row renders as the first rail, with NEW flags only on fresh finds', () => {
-        const virtualConsole = new VirtualConsole();
-        virtualConsole.on('jsdomError', () => {});
-        const dom = new JSDOM(html, {
-            runScripts: 'dangerously',
-            pretendToBeVisual: true,
-            url: 'https://app.local/crunchyroll',
-            virtualConsole,
+    test('the baked row renders as the first rail, with NEW flags only on today’s drops', async () => {
+        const { items: baked, page } = bakeFor({
+            nxsha: { 'tv:9': nxshaCard({ id: '9', title: 'Pool Show' }) },
+            schedule: [
+                scheduleEntry({ key: 'sch-jojo', title: "JoJo's Bizarre Adventure", season: 4, episode: 5, nx: { id: '45790', kind: 'tv', seasons: { 4: 28 } } }),
+                scheduleEntry({ key: 'sch-apothecary', title: 'The Apothecary Diaries', img: '', today: false, date: '2026-10-23', nx: { id: '220542', kind: 'tv', seasons: { 3: 1 } } }),
+            ],
         });
+
+        const virtualConsole = new VirtualConsole();
+        virtualConsole.on('jsdomError', (error: Error) => {
+            // jsdom has no layout: scrollTo (and similar) are expected no-ops.
+            if (/Not implemented/.test(error.message)) return;
+            throw error;
+        });
+        const dom = new JSDOM(readFileSync(page, 'utf8'), { runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole });
         const doc = dom.window.document;
 
-        const baked = JSON.parse(
-            html.slice(
-                html.indexOf('var CR_NEW_DROPS=') + 'var CR_NEW_DROPS='.length,
-                html.indexOf(';\nvar CR_NEW_DROPS_MODE'),
-            ),
-        ) as { key: string; title: string; fresh: boolean; src: string }[];
-        expect(baked.length).toBeGreaterThan(0);
+        // The row rendered at the top of the home rails.
+        const railHead = doc.querySelector('#homeRows .anime-rail .rail-head h2');
+        expect(railHead?.textContent).toBe('Fresh Drops');
 
-        const rails = doc.querySelectorAll('#homeRows .anime-rail');
-        expect(rails.length).toBeGreaterThan(1);
-
-        const freshRail = rails[0] as HTMLElement;
-        expect(freshRail.classList.contains('fresh-rail')).toBe(true);
-        expect(freshRail.querySelector('h2')?.textContent).toBe('Fresh Drops');
-        expect(freshRail.querySelector('.rail-sub')?.textContent).toMatch(/catalog$/);
-
-        const cards = freshRail.querySelectorAll('.rail-card');
-        expect(cards).toHaveLength(baked.length);
-        expect(freshRail.querySelectorAll('.fresh-flag')).toHaveLength(baked.filter(entry => entry.fresh).length);
+        const cards = Array.from(doc.querySelectorAll('#homeRows .anime-rail:first-child .rail-card')) as HTMLElement[];
+        expect(cards.length).toBe(baked.length);
+        expect(cards.length).toBeGreaterThan(0);
 
         baked.forEach((entry, i) => {
             const node = cards[i] as HTMLElement;
             expect(node.dataset.open).toBe(entry.key);
             expect(node.querySelector('.rail-copy h3')?.textContent?.replace(/\s+/g, ' ')).toBe(entry.title.replace(/\s+/g, ' '));
-            // Drop cards have no playable route yet, so they show when they landed.
-            expect(node.querySelector('.rail-copy p')?.textContent).toMatch(/^Added \d{1,2} [A-Z][a-z]{2}( · New)? · (Series|Movie)$/);
-            // DeadToons finds say where the listing came from; artwork always has a fallback.
+            // The copy line says when it landed (or airs) and what it is.
+            expect(node.querySelector('.rail-copy p')?.textContent).toMatch(/^(S\d+ · E\d+ · )?(Added|Airs) \d{1,2} [A-Z][a-z]{2}( · New)? · (Series|Movie)$/);
             const meta = node.querySelector('.quick-meta')?.textContent ?? '';
-            expect(meta).toMatch(/^Added \d{1,2} [A-Z][a-z]{2}/);
-            if (entry.src === 'deadtoons') expect(meta).toContain('via DeadToons');
+            expect(meta).toMatch(/^(Added|Airs) \d{1,2} [A-Z][a-z]{2}/);
+            if (entry.source === 'deadtoons') expect(meta).toContain('via DeadToons');
+            // Artwork always has a fallback, so a poster-less drop still shows a card.
             expect(node.querySelector('.rail-poster img')?.getAttribute('onerror')).toBeTruthy();
+            // A poster-less entry falls back to the generated placeholder art.
+            if (entry.img === '') expect(decodeURIComponent(node.querySelector('.rail-poster img')?.getAttribute('onerror') ?? '')).toContain('svg');
         });
 
-        // Drops have no Nxsha route yet, so they stay out of the browse grid —
+        // NEW is on today's episode only, never on the upcoming one or the pool filler.
+        expect(cards.map((c) => !!c.querySelector('.fresh-flag'))).toEqual(baked.map((entry) => entry.fresh));
+        expect(baked.map((entry) => entry.fresh)).toEqual([true, false, false]);
+
+        // Drops have no Nxsha route of their own yet, so they stay out of the browse grid —
         // that grid is exactly the playable catalog.
         const browse = new Set(
             Array.from(doc.querySelectorAll('#catalogGrid [data-open]')).map(node => node.getAttribute('data-open')),
         );
-        baked.forEach((entry) => expect(browse.has(entry.key)).toBe(false));
+        // Rail-only drops stay out of the browse grid; a schedule title the catalog
+        // already carries is that catalog card (it is in the grid by definition).
+        baked.filter((entry) => entry.key.startsWith('drop-')).forEach((entry) => expect(browse.has(entry.key)).toBe(false));
+        baked.filter((entry) => !entry.key.startsWith('drop-')).forEach((entry) => expect(browse.has(entry.key)).toBe(true));
 
-        // The row is a real discoverable card: clicking one opens its detail page.
-        const first = cards[0] as HTMLElement;
-        first.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+        // Clicking a schedule card opens its detail page, and Play starts the
+        // Nxsha player for the verified id and the episode that just aired —
+        // this is what used to 404 with the old slug-shaped ids.
+        const click = (el: Element | null) => el?.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+        click(cards[0]);
         expect(doc.getElementById('detailDialog')?.hasAttribute('open')).toBe(true);
         expect(doc.getElementById('detailTitle')?.textContent).toBe(baked[0].title);
+        click(doc.getElementById('demoPlay'));
+        expect(doc.getElementById('stagePosterText')?.textContent).toContain('S4 EP5');
+        click(doc.getElementById('stagePlay'));
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        const frame = doc.querySelector('#serverFrame') as HTMLIFrameElement | null;
+        expect(frame?.getAttribute('src')).toContain('https://nxsha.space/embed/tv/45790/4/5');
+
+        // The pool filler keeps playing the catalog entry it already had.
+        click(cards[baked.length - 1]);
+        click(doc.getElementById('demoPlay'));
+        click(doc.getElementById('stagePlay'));
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        expect(frame?.getAttribute('src')).toContain('https://nxsha.space/embed/tv/9/');
 
         dom.window.close();
     }, 60000);

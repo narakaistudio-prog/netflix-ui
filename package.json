@@ -11,12 +11,12 @@
     "build": "npm run build:web",
     "build:web": "node scripts/build-crunchyroll-new-drops.mjs --from-state && node scripts/bake-animahd-links.mjs && expo export --platform web && node scripts/prepare-web-dist.mjs",
     "bake:crunchyroll-drops": "node scripts/build-crunchyroll-new-drops.mjs --from-state",
-    "harvest:deadtoons-drops": "node scripts/harvest-deadtoons-drops.mjs",
     "test": "jest --watchAll",
     "lint": "expo lint",
     "harvest:anidisk": "node scripts/harvest-deadtoons.mjs && node scripts/bake-anidisk-links.mjs",
     "harvest:animahd": "node scripts/harvest-animahd.mjs solo-leveling --key solo --seasons 12,13 && node scripts/bake-animahd-links.mjs",
-    "harvest:nxsha-guide": "node scripts/harvest-nxsha-guide.mjs && node scripts/bake-animahd-links.mjs"
+    "harvest:nxsha-guide": "node scripts/harvest-nxsha-guide.mjs && node scripts/bake-animahd-links.mjs",
+    "harvest:deadtoons-schedule": "node scripts/harvest-deadtoons-schedule.mjs"
   },
   "jest": {
     "preset": "jest-expo"

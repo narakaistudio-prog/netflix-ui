@@ -3,7 +3,7 @@
  * "Fresh Drops" builder for the Crunchyroll (anime) page.
  *
  * 1. Reads the nxsha anime listings (several sorts and pages) plus the DeadToons
- *    listing harvest (data/deadtoons-drops.json — scripts/harvest-deadtoons-drops.mjs).
+ *    release schedule (data/deadtoons-schedule.json — scripts/harvest-deadtoons-schedule.mjs).
  * 2. Keeps a state file, data/crunchyroll-new-drops.json, with the first date each
  *    title was seen (firstSeen). The very first run is a baseline: everything found
  *    then is marked baseline=true and never counts as "new" (no bell flood).
@@ -12,8 +12,13 @@
  * 4. Rewrites the block between /*CR_DROPS_START*\/ and /*CR_DROPS_END*\/ in
  *    assets/crunchyroll/crunchyroll.html. That block always tops the home rails
  *    with the "Fresh Drops" row:
- *      - titles first seen after the baseline run first (DeadToons daily finds lead),
+ *      - the DeadToons schedule first — today's episodes, then the upcoming ones —
  *        then the newest pool titles, so the row is never blank.
+ *    Every schedule entry the row shows is Nxsha-backed (the harvester only keeps
+ *    entries whose Nxsha id it verified), so every card plays. A schedule title
+ *    that the catalog already carries reuses the catalog card (poster, episode
+ *    guide, playback route); the rest become rail-only drop cards with the
+ *    verified Nxsha id, so they play too.
  *    The row subtitle says which of the two it is, and every card gets a NEW flag
  *    plus the day it was first seen.
  *
@@ -31,7 +36,7 @@
  *
  * Env:   DROPS_DATE=YYYY-MM-DD  override "today" (IST by default)
  *        DROPS_STATE_FILE       point the bake at another nxsha state file
- *        DROPS_DEADTOONS_FILE   point the bake at another DeadToons state file
+ *        DROPS_SCHEDULE_FILE    point the bake at another DeadToons schedule file
  *        DROPS_HTML_FILE        write the baked page somewhere else
  */
 import fs from 'node:fs';
@@ -44,10 +49,10 @@ const STATE_FILE = path.resolve(
   process.env.DROPS_STATE_FILE || path.join(ROOT, 'data', 'crunchyroll-new-drops.json'),
 );
 const REGISTRY_FILE = path.join(ROOT, 'data', 'nxsha-titles.json');
-const DEADTOONS_FILE = path.resolve(
-  process.env.DROPS_DEADTOONS_FILE || path.join(ROOT, 'data', 'deadtoons-drops.json'),
+const SCHEDULE_FILE = path.resolve(
+  process.env.DROPS_SCHEDULE_FILE || path.join(ROOT, 'data', 'deadtoons-schedule.json'),
 );
-// DROPS_DEADTOONS_FILE / DROPS_HTML_FILE let previews and tests bake elsewhere.
+// DROPS_SCHEDULE_FILE / DROPS_HTML_FILE let previews and tests bake elsewhere.
 const HTML_FILE = path.resolve(
   process.env.DROPS_HTML_FILE || path.join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'),
 );
@@ -137,12 +142,29 @@ export function isKnownTitle(title, knownTitles) {
   return false;
 }
 
+/** Minutes past midnight for "1:30 PM" — the schedule's clock. */
+export function clockMinutes(time) {
+  const m = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(String(time || ''));
+  if (!m) return 0;
+  let hour = Number.parseInt(m[1], 10) % 12;
+  if ((m[3] || '').toUpperCase() === 'PM') hour += 12;
+  return hour * 60 + Number.parseInt(m[2], 10);
+}
+
+/** Rail key for a title only the schedule carries (no catalog entry). */
+export function dropKey(title) {
+  return `drop-sch-${String(title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
+}
+
 /**
- * One rail pool from both sources: the nxsha drop state and the DeadToons
- * listing state. DeadToons items keep their slug as id (they have no tmdb id),
- * so the row can show anime the catalog does not carry yet.
+ * One rail pool from both sources: the DeadToons release schedule (the daily
+ * "fresh drop" signal) and the nxsha drop state (the fallback pool).
+ *
+ * Every entry carries a real Nxsha id — that is what makes the row playable.
+ * A schedule title the catalog already carries keeps the catalog key, so its
+ * card reuses the catalog poster and its episode guide.
  */
-export function collectRailPool(nxshaState, deadtoonsState) {
+export function collectRailPool(nxshaState, scheduleState, catalogKeys = new Map()) {
   const pool = [];
   for (const [stateKey, item] of Object.entries(nxshaState?.items || {})) {
     if (!item?.title) continue;
@@ -160,21 +182,34 @@ export function collectRailPool(nxshaState, deadtoonsState) {
       baseline: !!item.baseline,
     });
   }
-  for (const [slug, item] of Object.entries(deadtoonsState?.items || {})) {
-    if (!item?.title) continue;
+  for (const item of scheduleState?.items || []) {
+    // Playable only: the harvester verifies the Nxsha id before storing an entry
+    // (an unverified id opened a 404 player in the old listing-based drop).
+    if (!item?.title || !item?.nx?.id) continue;
+    const title = decodeEntities(item.title).trim();
+    const catalogKey = catalogKeys.get(titleKey(title));
     pool.push({
       source: 'deadtoons',
-      stateKey: `deadtoons:${slug}`,
-      key: `drop-dt-${slug}`,
-      kind: item.kind === 'movie' ? 'movie' : 'tv',
-      id: slug,
-      title: decodeEntities(item.title).trim(),
+      stateKey: `schedule:${item.key || item.slug || title}`,
+      key: catalogKey || dropKey(title),
+      kind: item.nx.kind === 'movie' ? 'movie' : 'tv',
+      id: String(item.nx.id),
+      seasons: item.nx.seasons || {},
+      title,
       img: item.img || '',
       rating: '',
-      year: item.year || '',
-      firstSeen: item.firstSeen || '',
-      siteUpdated: item.siteUpdated || '',
-      baseline: !!item.baseline,
+      year: '',
+      firstSeen: item.date || scheduleState?.updated || '',
+      fresh: !!item.today,
+      baseline: false,
+      scheduled: true,
+      slot: item.today ? 0 : 1,
+      // Fixed-width minutes: 'date|minutes' sorts correctly as a string and does
+      // not depend on collation rules (localeCompare ignores the colon).
+      order: `${item.date || ''}|${String(clockMinutes(item.time)).padStart(4, '0')}`,
+      season: item.season ?? null,
+      episode: item.episode ?? null,
+      verb: item.today ? 'Added' : 'Airs',
       url: item.url || '',
     });
   }
@@ -224,21 +259,23 @@ function readJson(file, fallback) {
 /**
  * Pick the rail for the "Fresh Drops" row.
  *
- * Titles first seen after the baseline run lead (newest first, DeadToons ahead
- * of nxsha on the same day), then the newest pool titles fill the rest, so the
- * row always has content. An item is "fresh" — the NEW flag on its card — only
- * when it is one of those post-baseline finds.
+ * Order: today's DeadToons episodes first (by clock), then the upcoming ones (by
+ * date), then — only if slots are left — the newest nxsha pool titles. The row
+ * therefore always has content, and every card has a real Nxsha id.
  *
- * Skipped: adult listings (RAIL_BLOCKED_*), duplicate titles, and titles the
- * catalog already carries (knownTitles) — a drop card has no playback route, so
- * it must not repeat a show that already has one.
+ * "fresh" (the NEW flag on the card) marks the episodes released today.
+ *
+ * Skipped: adult listings (RAIL_BLOCKED_*), duplicate titles, and — for the pool
+ * filler only — titles the catalog already carries (the schedule may repeat a
+ * catalog title on purpose: that is a new episode of a show we already carry,
+ * and its card reuses the catalog entry).
  */
 export function selectRailItems(pool, limit = MAX_ROWS, knownTitles = new Set()) {
   const usable = (pool || [])
     .map((item) => ({ ...item, title: decodeEntities(item.title).trim() }))
     .filter((item) => item.title && item.kind && item.id)
     .filter((item) => !RAIL_BLOCKED_IDS.has(item.stateKey) && !RAIL_BLOCKED_TITLE.test(item.title))
-    .filter((item) => !isKnownTitle(item.title, knownTitles));
+    .filter((item) => item.scheduled || !isKnownTitle(item.title, knownTitles));
 
   const newestFirst = (a, b) => (a.firstSeen < b.firstSeen ? 1 : a.firstSeen > b.firstSeen ? -1 : 0);
   // Within the same first-sighting day the listing's own last-update date decides,
@@ -250,20 +287,26 @@ export function selectRailItems(pool, limit = MAX_ROWS, knownTitles = new Set())
     (SOURCE_RANK[a.source] ?? 9) - (SOURCE_RANK[b.source] ?? 9) ||
     (a.title < b.title ? -1 : a.title > b.title ? 1 : 0);
 
-  const fresh = usable.filter((item) => !item.baseline).sort(compare);
-  const rest = usable.filter((item) => item.baseline).sort(compare);
+  const bySlot = (a, b) =>
+    (a.scheduled ? a.slot : 2) - (b.scheduled ? b.slot : 2) ||
+    (a.scheduled && b.scheduled ? String(a.order).localeCompare(String(b.order)) : 0);
+  const fresh = usable.filter((item) => !item.baseline && (item.scheduled ? item.slot === 0 : true)).sort(compare);
+  const upcoming = usable.filter((item) => item.scheduled && item.slot === 1).sort(compare);
+  const rest = usable.filter((item) => !item.scheduled && item.baseline).sort(compare);
   const freshKeys = new Set(fresh.map((item) => item.stateKey));
+  const ordered = [...fresh, ...upcoming, ...rest].sort((a, b) => bySlot(a, b));
 
   const titles = new Set();
   const rail = [];
-  for (const item of [...fresh, ...rest]) {
+  for (const item of ordered) {
     const key = titleKey(item.title);
     if (!key || titles.has(key)) continue;
     titles.add(key);
     rail.push({ ...item, fresh: freshKeys.has(item.stateKey) });
     if (rail.length === limit) break;
   }
-  return { mode: fresh.length ? 'new' : 'pool', items: rail };
+  const mode = fresh.length ? (upcoming.length ? 'today' : 'new') : upcoming.length ? 'upcoming' : 'pool';
+  return { mode, items: rail };
 }
 
 /** The page block between the CR_DROPS markers. */
@@ -281,9 +324,17 @@ export function dropsBlock({ mode, items }) {
       firstSeen: item.firstSeen || '',
       fresh: !!item.fresh,
       src: item.source,
+      seasons: item.seasons || {},
+      verb: item.verb || '',
+      season: item.season ?? null,
+      episode: item.episode ?? null,
     })),
   ).replace(/<\//g, '<\\/');
-  const subtitle = mode === 'new' ? 'Just added to the catalog' : 'Newest in the catalog';
+  const subtitle =
+    mode === 'today' ? "Today's DeadToons releases"
+      : mode === 'upcoming' ? 'Coming up on DeadToons'
+        : mode === 'new' ? 'Just added to the catalog'
+          : 'Newest in the catalog';
 
   return [
     START,
@@ -297,13 +348,15 @@ export function dropsBlock({ mode, items }) {
     '  for(i=0;i<CR_NEW_DROPS.length;i++){',
     '    d=CR_NEW_DROPS[i];',
     "    if(!d||!d.key||!d.title)continue;",
-    '    // drop:true keeps them out of the browse grid / search — a drop has no Nxsha route yet.',
-    "    shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img||'',type:d.kind==='movie'?'Movie':'TV',drop:true};",
-    "    window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:{},added:d.firstSeen||'',fresh:!!d.fresh,src:d.src||''};",
+    '    // A schedule title the catalog already carries keeps the catalog entry',
+    '    // (poster, episode guide, playback route) and only gains drop metadata.',
+    '    // drop:true keeps the rail-only ones out of the browse grid / search.',
+    "    if(!shows[d.key])shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img||'',type:d.kind==='movie'?'Movie':'TV',drop:true};",
+    "    window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:d.seasons||{},added:d.firstSeen||'',fresh:!!d.fresh,src:d.src||'',verb:d.verb||'',season:d.season||null,episode:d.episode||null};",
     '    freshKeys.push(d.key);',
     '  }',
     '  if(!freshKeys.length)return;',
-    `  rows.unshift({title:'${ROW_TITLE}',subtitle:'${subtitle}',fresh:true,ranked:false,keys:freshKeys});`,
+    `  rows.unshift({title:'${ROW_TITLE}',subtitle:'${subtitle.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}',fresh:true,ranked:false,keys:freshKeys});`,
     '})();',
     END,
   ].join('\n');
@@ -321,23 +374,36 @@ export function replaceDropsBlock(html, block) {
   return html.slice(0, s) + block + html.slice(e + END.length);
 }
 
-/** Titles the app already routes — a drop card must never repeat one. */
+/** Titles the app already routes — the pool filler must never repeat one. */
 function catalogTitles() {
-  const registry = readJson(REGISTRY_FILE, {});
-  return new Set(Object.values(registry).map((entry) => titleKey(entry?.title || '')).filter(Boolean));
+  return new Set([...catalogKeys().keys()]);
 }
 
-/** Both drop states: the nxsha pool and the DeadToons listing harvest. */
+/** Catalog title → rail key, so a schedule title reuses its catalog card. */
+function catalogKeys() {
+  const registry = readJson(REGISTRY_FILE, {});
+  const map = new Map();
+  for (const [key, entry] of Object.entries(registry)) {
+    const title = titleKey(entry?.title || '');
+    // The registry key is the key the page's catalog uses, so the rail card
+    // reuses that entry (poster, episode guide, playback route) instead of
+    // creating a rail-only twin of a show the catalog already carries.
+    if (title) map.set(title, key);
+  }
+  return map;
+}
+
+/** Both drop states: the nxsha pool and the DeadToons release schedule. */
 function readDropStates() {
   return {
     nxsha: readJson(STATE_FILE, null),
-    deadtoons: readJson(DEADTOONS_FILE, null),
+    schedule: readJson(SCHEDULE_FILE, null),
   };
 }
 
 /** The block the current state files should produce. */
 function blockFromState(states) {
-  return dropsBlock(selectRailItems(collectRailPool(states.nxsha, states.deadtoons), MAX_ROWS, catalogTitles()));
+  return dropsBlock(selectRailItems(collectRailPool(states.nxsha, states.schedule, catalogKeys()), MAX_ROWS, catalogTitles()));
 }
 
 function currentBlock(html) {
@@ -371,10 +437,10 @@ async function main() {
   // Bake (no network) — used by `npm run build:web` and local refreshes.
   if (FROM_STATE || CHECK) {
     const states = readDropStates();
-    const pool = collectRailPool(states.nxsha, states.deadtoons);
+    const pool = collectRailPool(states.nxsha, states.schedule, catalogKeys());
     if (!pool.length) {
       console.error(
-        `No drop state at ${path.relative(ROOT, STATE_FILE)} or ${path.relative(ROOT, DEADTOONS_FILE)}. ` +
+        `No drop state at ${path.relative(ROOT, STATE_FILE)} or ${path.relative(ROOT, SCHEDULE_FILE)}. ` +
           'Run the daily job first.',
       );
       process.exit(1);
@@ -446,15 +512,15 @@ async function main() {
   }
 
   const newCount = Object.values(items).filter((i) => !i.baseline && i.firstSeen === day).length;
-  const deadtoons = readJson(DEADTOONS_FILE, null);
-  const rail = selectRailItems(collectRailPool({ items }, deadtoons), MAX_ROWS, catalogTitles());
+  const schedule = readJson(SCHEDULE_FILE, null);
+  const rail = selectRailItems(collectRailPool({ items }, schedule, catalogKeys()), MAX_ROWS, catalogTitles());
   const sources = rail.items.reduce((acc, item) => ({ ...acc, [item.source]: (acc[item.source] || 0) + 1 }), {});
   const nextState = { updated: day, items };
   console.log(
     `baseline run: ${baselineRun}; new today: ${newCount}; rail: ${rail.items.length} cards ` +
       `(${rail.items.filter((item) => item.fresh).length} new, mode: ${rail.mode}; ` +
       `sources ${Object.entries(sources).map(([k, v]) => `${k}:${v}`).join(' ') || 'none'}); ` +
-      `pool: ${Object.values(items).length} nxsha + ${Object.keys(deadtoons?.items || {}).length} deadtoons`,
+      `pool: ${Object.values(items).length} nxsha + ${(schedule?.items || []).length} scheduled`,
   );
 
   if (DRY_RUN) {
