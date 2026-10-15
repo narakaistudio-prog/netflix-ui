@@ -40,6 +40,9 @@ function callHarvester(expression: string): any {
     return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
 }
 
+// One still from Nxsha's episode API, baked for the guided card below.
+const EPISODE_STILL = 'https://image.tmdb.org/t/p/w300/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg';
+
 function nxshaCard(overrides: Record<string, unknown> = {}) {
     return {
         kind: 'tv', id: '1', title: 'Show', img: POSTER, rating: '8.1', year: '2021',
@@ -276,6 +279,36 @@ describe('DeadToons schedule harvester', () => {
         expect(parsed.card).toMatchObject({ refused: true, reason: 'episode line unreadable' });
     });
 
+    test('a resolved title gets its episode art and details from Nxsha', () => {
+        const guided = callHarvester(`(() => {
+            const guide = m.buildSeasonGuide({
+                success: true,
+                season: { season_number: 4, name: 'Golden Wind' },
+                episodes: [
+                    { episode_number: 1, name: 'Golden Wind', overview: '<b>Koichi</b> lands in Italy', still_path: '/iPT7.jpg', air_date: '2018-10-06', runtime: 24 },
+                ],
+            }, 4);
+            return {
+                guide,
+                // A season Nxsha does not carry (or an id it does not know) has none.
+                empty: m.buildSeasonGuide({ success: false, message: 'Season not found' }, 5),
+            };
+        })()`);
+        expect(guided.guide).toEqual({
+            '4': {
+                '1': {
+                    title: 'Golden Wind',
+                    // Markup out, and the still is a rail-sized TMDB image.
+                    overview: 'Koichi lands in Italy',
+                    image: 'https://image.tmdb.org/t/p/w300/iPT7.jpg',
+                    airDate: '2018-10-06',
+                    runtime: 24,
+                },
+            },
+        });
+        expect(guided.empty).toBeNull();
+    });
+
     test('an id is accepted only when Nxsha names the same show', () => {
         const verdicts = callHarvester(`(() => {
             const good = m.parseEmbedTitle(m.embedTitle('<title>Watch JoJo\\'s Bizarre Adventure - S4:E1</title>'));
@@ -360,8 +393,23 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         const { items: baked, page } = bakeFor({
             nxsha: { 'tv:9': nxshaCard({ id: '9', title: 'Pool Show' }) },
             schedule: [
-                scheduleEntry({ key: 'sch-jojo', title: "JoJo's Bizarre Adventure", season: 4, episode: 5, nx: { id: '45790', kind: 'tv', seasons: { 4: 28 } } }),
-                scheduleEntry({ key: 'sch-apothecary', title: 'The Apothecary Diaries', img: '', today: false, date: '2026-10-23', nx: { id: '220542', kind: 'tv', seasons: { 3: 1 } } }),
+                scheduleEntry({
+                    key: 'sch-jojo', title: "JoJo's Bizarre Adventure", season: 4, episode: 5,
+                    nx: { id: '45790', kind: 'tv', seasons: { 4: 28 } },
+                }),
+                scheduleEntry({
+                    // Not a catalog title: its episode list is drawn from the drop's own
+                    // Nxsha episode guide, which is where the art and details come from.
+                    key: 'sch-chainsmoker', title: 'Chainsmoker Cat', time: '5:00 PM', season: 1, episode: 12,
+                    nx: { id: '312949', kind: 'tv', seasons: { 1: 12 }, from: 'wikidata-tmdb' },
+                    guide: {
+                        1: {
+                            1: { title: 'The Cat Comes Home', image: EPISODE_STILL, overview: 'A stray cat moves in and takes over the flat.', airDate: '2026-07-24', runtime: 24 },
+                            12: { title: 'One More Cigarette', image: EPISODE_STILL, airDate: '2026-10-09', runtime: 24 },
+                        },
+                    },
+                }),
+                scheduleEntry({ key: 'sch-apothecary', title: 'The Apothecary Diaries', img: '', today: false, date: '2026-10-23', time: '4:30 PM', nx: { id: '220542', kind: 'tv', seasons: { 3: 1 } } }),
             ],
         });
 
@@ -399,7 +447,7 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
 
         // NEW is on today's episode only, never on the upcoming one or the pool filler.
         expect(cards.map((c) => !!c.querySelector('.fresh-flag'))).toEqual(baked.map((entry) => entry.fresh));
-        expect(baked.map((entry) => entry.fresh)).toEqual([true, false, false]);
+        expect(baked.map((entry) => entry.fresh)).toEqual([true, true, false, false]);
 
         // Drops have no Nxsha route of their own yet, so they stay out of the browse grid —
         // that grid is exactly the playable catalog.
@@ -418,12 +466,31 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         click(cards[0]);
         expect(doc.getElementById('detailDialog')?.hasAttribute('open')).toBe(true);
         expect(doc.getElementById('detailTitle')?.textContent).toBe(baked[0].title);
+
         click(doc.getElementById('demoPlay'));
         expect(doc.getElementById('stagePosterText')?.textContent).toContain('S4 EP5');
         click(doc.getElementById('stagePlay'));
         await new Promise((resolve) => setTimeout(resolve, 300));
         const frame = doc.querySelector('#serverFrame') as HTMLIFrameElement | null;
         expect(frame?.getAttribute('src')).toContain('https://nxsha.space/embed/tv/45790/4/5');
+
+        // A schedule title the catalog does not carry carries its own episode art
+        // and details: the guided episode shows its still, title, overview and air
+        // date, and an episode outside the guide falls back to placeholder art.
+        click(cards[1]);
+        expect(doc.getElementById('detailTitle')?.textContent).toBe(baked[1].title);
+        const episodes = Array.from(doc.querySelectorAll('#episodeList .episode-card')) as HTMLElement[];
+        expect(episodes.length).toBe(12);
+        const firstEpisode = episodes[0] as HTMLElement;
+        expect(firstEpisode.querySelector('.episode-copy strong')?.textContent).toBe('The Cat Comes Home');
+        expect(firstEpisode.querySelector('.episode-desc')?.textContent).toContain('A stray cat moves in');
+        expect(firstEpisode.querySelector('.episode-air-date')?.textContent).toContain('2026');
+        expect(firstEpisode.querySelector('img')?.getAttribute('data-src')).toBe(EPISODE_STILL);
+        const lastEpisode = episodes[11] as HTMLElement;
+        expect(lastEpisode.querySelector('.episode-copy strong')?.textContent).toBe('One More Cigarette');
+        const unguided = episodes[1] as HTMLElement;
+        expect(unguided.querySelector('.episode-copy strong')?.textContent).toBe('Episode 2');
+        expect(unguided.querySelector('img')?.getAttribute('data-src')).toContain('data:image/svg+xml');
 
         // The pool filler keeps playing the catalog entry it already had.
         click(cards[baked.length - 1]);

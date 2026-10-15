@@ -210,6 +210,9 @@ export function collectRailPool(nxshaState, scheduleState, catalogKeys = new Map
       season: item.season ?? null,
       episode: item.episode ?? null,
       verb: item.today ? 'Added' : 'Airs',
+      // Episode art + details for this title's own episode list (the rail's
+      // detail view). Catalog titles keep theirs from NX_EPISODE_DATA.
+      ...(item.guide ? { guide: item.guide } : {}),
       url: item.url || '',
     });
   }
@@ -328,6 +331,7 @@ export function dropsBlock({ mode, items }) {
       verb: item.verb || '',
       season: item.season ?? null,
       episode: item.episode ?? null,
+      ...(item.guide ? { guide: item.guide } : {}),
     })),
   ).replace(/<\//g, '<\\/');
   const subtitle =
@@ -352,7 +356,7 @@ export function dropsBlock({ mode, items }) {
     '    // (poster, episode guide, playback route) and only gains drop metadata.',
     '    // drop:true keeps the rail-only ones out of the browse grid / search.',
     "    if(!shows[d.key])shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img||'',type:d.kind==='movie'?'Movie':'TV',drop:true};",
-    "    window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:d.seasons||{},added:d.firstSeen||'',fresh:!!d.fresh,src:d.src||'',verb:d.verb||'',season:d.season||null,episode:d.episode||null};",
+    "    window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:d.seasons||{},added:d.firstSeen||'',fresh:!!d.fresh,src:d.src||'',verb:d.verb||'',season:d.season||null,episode:d.episode||null,guide:d.guide||null};",
     '    freshKeys.push(d.key);',
     '  }',
     '  if(!freshKeys.length)return;',

@@ -22,8 +22,14 @@
  * and titles are entity-decoded — the page ships `JoJo&#x27;s Bizarre Adventure`,
  * which keys nothing while it stays escaped.
  *
+ * Each playable entry also carries its season's episode guide — Nxsha's
+ * /api/tv/{id}/season/{n} answers with the still, title, overview, air date and
+ * runtime of every episode — so the rail's episode list shows real episode art
+ * and real episode details instead of placeholder thumbnails.
+ *
  * Writes data/deadtoons-schedule.json:
  *   { updated, source, today, items:[…], resolved:{…}, skipped:[…] }
+ *   (an item with a guide: item.guide[season][episode] = {title,image,overview,airDate,runtime})
  * and always writes the diagnostics report (default data/deadtoons-schedule-probe.json, --out=FILE)
  * so a markup change can be fixed from the CI log alone.
  *
@@ -215,6 +221,44 @@ export function clockOnly(text) {
 }
 
 const isoDay = (date = new Date()) => date.toISOString().slice(0, 10);
+
+/**
+ * Nxsha's own episode API: /api/tv/{id}/season/{n} -> one entry per episode with
+ * its still, title, overview, air date and runtime. The rail's detail view draws
+ * its episode list from this, so a schedule title the catalog does not carry gets
+ * real thumbnails instead of the placeholder art.
+ */
+export function buildSeasonGuide(response, requestedSeason, { overviewLimit = 320 } = {}) {
+  const season = Number(response?.season?.season_number) || Number(requestedSeason) || 1;
+  const episodes = Array.isArray(response?.episodes) ? response.episodes : [];
+  const guide = {};
+  for (const episode of episodes) {
+    const number = Number.parseInt(episode?.episode_number, 10);
+    if (!Number.isInteger(number) || number < 1) continue;
+    const still = String(episode.still_path || '').trim();
+    const image = !still
+      ? ''
+      : /^https?:\/\//i.test(still)
+        ? still
+        : `https://image.tmdb.org/t/p/w300${still.startsWith('/') ? '' : '/'}${still}`;
+    const overview = String(episode.overview || '')
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, overviewLimit);
+    const runtime = Number.parseInt(episode.runtime, 10);
+    const meta = {
+      ...(episode.name ? { title: String(episode.name).trim() } : {}),
+      ...(overview ? { overview } : {}),
+      ...(image ? { image } : {}),
+      ...(episode.air_date ? { airDate: String(episode.air_date) } : {}),
+      ...(Number.isInteger(runtime) && runtime > 0 ? { runtime } : {}),
+    };
+    if (Object.keys(meta).length) guide[String(number)] = meta;
+  }
+  if (!Object.keys(guide).length) return null;
+  return { [String(season)]: guide };
+}
 
 /** Nxsha embed page title: "Watch JoJo's Bizarre Adventure - S4:E1". */
 export function embedTitle(html) {
@@ -476,6 +520,8 @@ export function candidateIds(entry, registryHit) {
   const seen = new Set();
   return ids.filter((c) => (seen.has(c.id) ? false : (seen.add(c.id), true)));
 }
+
+const NX_BASE = 'https://nxsha.space';
 
 export function nxshaVerifyUrl(kind, id, season = 1, episode = 1) {
   return kind === 'movie'
@@ -750,6 +796,27 @@ function selfTest() {
   })());
   check('embed url shape', nxshaVerifyUrl('tv', '45790', 4, 5).startsWith('https://nxsha.space/embed/tv/45790/4/5?server=GbruHindi'));
   check('schedule report counts episode hits', siteReport(fixture).episodeHits === 4, String(siteReport(fixture).episodeHits));
+  check('season guide keeps stills, titles and dates', (() => {
+    const guide = buildSeasonGuide({
+      success: true,
+      season: { season_number: 4, episode_count: 2 },
+      episodes: [
+        { episode_number: 2, name: 'Golden Wind', overview: '<p>Koichi lands in Italy</p>', still_path: '/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg', air_date: '2018-10-13', runtime: 24 },
+        { episode_number: 1, still_path: 'https://image.tmdb.org/t/p/w500/x.jpg' },
+      ],
+    }, 4);
+    const fourth = guide && guide['4'];
+    return Boolean(
+      fourth &&
+        fourth['1'].image === 'https://image.tmdb.org/t/p/w500/x.jpg' &&
+        fourth['2'].title === 'Golden Wind' &&
+        fourth['2'].overview === 'Koichi lands in Italy' &&
+        fourth['2'].image === 'https://image.tmdb.org/t/p/w300/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg' &&
+        fourth['2'].airDate === '2018-10-13' &&
+        fourth['2'].runtime === 24,
+    );
+  })(), JSON.stringify(buildSeasonGuide({ success: true, season: { season_number: 1 }, episodes: [{ episode_number: 1, name: 'A' }] }, 1)));
+  check('an episode-less season has no guide', buildSeasonGuide({ success: false, message: 'Season not found' }, 5) === null);
   check('a stale copy loses to a richer one', (() => {
     const stale = parseSchedule(fixture, { today: '2026-10-15' });
     const fresh = parseSchedule(`${fixture}<a href="/posts/link-click-season-3-2026"><img src="https://image.tmdb.org/t/p/w154/4PCQ.jpg" alt="LINK CLICK"><span>S3 · Episode 11</span><time>11:20 PM</time></a>`, { today: '2026-10-15' });
@@ -878,6 +945,30 @@ async function main() {
   }
   report.resolved = items.filter((i) => i.nx).length;
   report.unresolved = unresolved.length;
+  // Episode art and episode details for the rail's episode list. The catalog's own
+  // shows already carry a guide (the daily guide job bakes NX_EPISODE_DATA); a
+  // schedule title that the catalog does not carry needs its own, or its episode
+  // grid shows placeholder art and "Episode 7" instead of the real episode.
+  const guides = [];
+  for (const entry of items) {
+    const id = String(entry.nx?.id || '');
+    if (!/^\d+$/.test(id) || entry.nx?.from === 'catalog') continue;
+    const season = Number(entry.season) || 1;
+    try {
+      const res = await getJson(`${NX_BASE}/api/tv/${id}/season/${season}`);
+      const guide = buildSeasonGuide(res, season);
+      if (guide) {
+        entry.guide = guide;
+        guides.push({ title: entry.title, id, season, episodes: Object.keys(guide[String(season)]).length });
+      } else {
+        guides.push({ title: entry.title, id, season, episodes: 0, reason: String(res?.message || 'no episodes') });
+      }
+    } catch (error) {
+      guides.push({ title: entry.title, id, season, error: String(error?.message || error).slice(0, 140) });
+    }
+    await sleep(250);
+  }
+  report.guides = guides;
   report.items = items.map((i) => ({ title: i.title, season: i.season, episode: i.episode, today: i.today, nx: i.nx }));
   report.cards = parsed.cards;
   writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
