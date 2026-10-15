@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { JSDOM, VirtualConsole } from 'jsdom';
 
 const ROOT = join(__dirname, '..');
@@ -10,6 +11,14 @@ const SCRIPT = join(ROOT, 'scripts', 'build-crunchyroll-new-drops.mjs');
 const DEADTOONS_SCRIPT = join(ROOT, 'scripts', 'harvest-deadtoons-drops.mjs');
 
 const POSTER = 'https://image.tmdb.org/t/p/w500/poster.jpg';
+
+// The harvester is an ES module; Jest here runs CommonJS, so the checks below
+// evaluate it in a child Node process and read the JSON result back.
+const DEADTOONS_URL = pathToFileURL(DEADTOONS_SCRIPT).href;
+function callHarvester(expression: string): any {
+    const code = `const m = await import(${JSON.stringify(DEADTOONS_URL)});\nconsole.log(JSON.stringify(await (${expression})));`;
+    return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
+}
 
 type RailItem = {
     key: string;
@@ -84,6 +93,16 @@ describe('Fresh Drops rail selection', () => {
         expect(rail.items.map(i => i.source)).toEqual(['deadtoons', 'deadtoons', 'deadtoons', 'nxsha']);
     });
 
+    test("the listing's own update date breaks same-day ties", () => {
+        const rail = bakeFor({
+            deadtoons: {
+                'older-post': deadtoonsCard({ slug: 'older-post', title: 'Older Post', firstSeen: '2026-10-15', siteUpdated: '2026-10-10', baseline: false }),
+                'newer-post': deadtoonsCard({ slug: 'newer-post', title: 'Newer Post', firstSeen: '2026-10-15', siteUpdated: '2026-10-14', baseline: false }),
+            },
+        });
+        expect(rail.items.map(i => i.title)).toEqual(['Newer Post', 'Older Post']);
+    });
+
     test('nxsha-only state still fills the row from the newest pool titles', () => {
         const rail = bakeFor({
             nxsha: {
@@ -131,6 +150,37 @@ describe('DeadToons drop harvester', () => {
         const out = execFileSync(process.execPath, [DEADTOONS_SCRIPT, '--self-test'], { encoding: 'utf8', timeout: 60000 });
         expect(out).toContain('All DeadToons drop self-tests passed');
     }, 60000);
+
+    test('live DeadToons listing text is rewritten from the slug', () => {
+        const cleaned = callHarvester(`(() => {
+            const items = {
+                're-zero': { slug: 're-zero-starting-life-in-another-world-season-4-episodes-multi-audio-hindi-english-japanese-480p-720p-1080p-hd-web-dl-10bit-hevc-esub', title: 'Re: Zero Starting Life in Another World &amp HD', year: '' },
+                'liar-game': { slug: 'liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub', title: 'Liar Game &amp HD', year: '' },
+                'grand-blue': { slug: 'grand-blue-dreaming-season-3-2026', title: 'Grand Blue Dreaming Anime Times AMZN DDP2.0', year: '' },
+            };
+            m.normalizeDropTitles(items);
+            return { titles: Object.values(items).map((i) => i.title), rebaked: m.normalizeDropTitles(items).length };
+        })()`);
+        expect(cleaned.titles).toEqual([
+            'Re Zero Starting Life in Another World',
+            'Liar Game',
+            'Grand Blue Dreaming',
+        ]);
+        // A second pass is a no-op, so the daily job does not churn titles.
+        expect(cleaned.rebaked).toBe(0);
+    });
+
+    test('taxonomy pages stay out of the state, real posts stay in', () => {
+        const verdicts = callHarvester(`[
+            'https://deadtoons.sbs/posts/black-torch-season-1-2026',
+            'https://deadtoons.sbs/posts/blue-box-season-2-2026',
+            'https://deadtoons.sbs/genre/action',
+            'https://deadtoons.sbs/category/ova',
+            'https://deadtoons.sbs/ott/netflix',
+            'https://deadtoons.sbs/privacy-policy',
+        ].map((u) => m.isPostUrl(u, 'https://deadtoons.sbs'))`);
+        expect(verdicts).toEqual([true, true, false, false, false, false]);
+    });
 
     test('the daily job harvests DeadToons, then bakes the row', () => {
         const workflow = readFileSync(join(ROOT, '.github', 'workflows', 'crunchyroll-daily-drops.yml'), 'utf8');

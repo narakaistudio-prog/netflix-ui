@@ -352,6 +352,33 @@ export function dropsDate() {
  * /genre/action and /privacy-policy as "titles"). They are re-discoverable, so
  * pruning only ever removes junk.
  */
+/**
+ * The post page's own <title> is a fallback only: the slug already gave a clean
+ * name, while page titles carry marketing tails ("Liar Game HD", "… AMZN DDP2.0").
+ */
+export function refineFromPageTitle(item, pageTitleText) {
+  const title = cleanAnimeTitle(pageTitleText || '');
+  if (title.title && (!item.title || item.title.length <= 2)) item.title = title.title;
+  if (!item.year && title.year) item.year = title.year;
+  return item;
+}
+
+/** Re-derive stored titles from their slugs (self-heals a parser change). */
+export function normalizeDropTitles(items) {
+  const changed = [];
+  for (const [slug, entry] of Object.entries(items || {})) {
+    if (!entry) continue;
+    const fromSlug = titleFromSlug(entry.slug || slug);
+    if (fromSlug.title.length <= 2) continue;
+    if (entry.title !== fromSlug.title) {
+      entry.title = fromSlug.title;
+      changed.push(slug);
+    }
+    if (fromSlug.year) entry.year = fromSlug.year;
+  }
+  return changed;
+}
+
 export function pruneDropItems(items, base) {
   const removed = [];
   for (const [slug, entry] of Object.entries(items || {})) {
@@ -583,7 +610,7 @@ async function harvest({ base, limit, maxArt, verbose, requests }) {
       const html = await fetchText(item.url, { timeoutMs: 15000, retries: 0, requests });
       item.img = extractPostImage(html);
       const title = cleanAnimeTitle(pageTitle(html) || '');
-      if (title.title) item.title = title.title;
+      refineFromPageTitle(item, title.title);
       item.year = item.year || title.year;
     } catch (err) {
       if (verbose) console.log(`  art miss ${item.url}: ${err.message}`);
@@ -804,6 +831,21 @@ function selfTest() {
     titleFromSlug('re-zero-starting-life-in-another-world-season-4-episodes-multi-audio-hindi-english-japanese-480p-720p-1080p-hd-web-dl-10bit-hevc-esub').title === 'Re Zero Starting Life in Another World',
     titleFromSlug('re-zero-starting-life-in-another-world-season-4-episodes-multi-audio-hindi-english-japanese-480p-720p-1080p-hd-web-dl-10bit-hevc-esub').title,
   );
+  check('page title never beats the slug title', (() => {
+    const item = { slug: 'liar-game-season-1-multi-audio-hindi-tamil-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub', title: 'Liar Game', year: '' };
+    refineFromPageTitle(item, 'Liar Game HD');
+    return item.title === 'Liar Game';
+  })());
+  check('page title fills a nameless entry', (() => {
+    const item = { slug: 'x', title: '', year: '' };
+    refineFromPageTitle(item, 'Kaiju No. 8');
+    return item.title === 'Kaiju No. 8';
+  })());
+  check('stored titles re-derive from their slugs', (() => {
+    const items = { 'blue-box': { slug: 'blue-box-season-2-2026', title: 'Blue Box DDP5.1 &amp HD', year: '' } };
+    const changed = normalizeDropTitles(items);
+    return changed.length === 1 && items['blue-box'].title === 'Blue Box' && items['blue-box'].year === '2026';
+  })(), 'stored title not re-derived');
   check('firstSeen is harvest day', (() => {
     const st = { items: {} };
     mergeDropItem(st.items, { slug: 'x-show', title: 'X Show', url: 'https://deadtoons.sbs/posts/x-show', date: '2026-09-01' }, '2026-10-15', false);
@@ -870,11 +912,13 @@ async function main() {
   const stateItems = state?.items || {};
   const pruned = pruneDropItems(stateItems, base);
   if (pruned.length) console.log(`deadtoons: pruned ${pruned.length} non-post entry(ies): ${pruned.slice(0, 5).join(', ')}${pruned.length > 5 ? ' …' : ''}`);
+  const retitled = normalizeDropTitles(stateItems);
+  if (retitled.length) console.log(`deadtoons: re-derived ${retitled.length} stored title(s) from their slugs`);
   const before = Object.keys(stateItems).length;
   const fresh = [];
   for (const item of items) {
     const entry = mergeDropItem(stateItems, item, day, baselineRun);
-    if (!entry.baseline && entry.firstSeen === (item.date || day)) fresh.push(entry.title);
+    if (!entry.baseline && entry.firstSeen === day) fresh.push(entry.title);
   }
 
   console.log(
