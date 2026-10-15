@@ -273,8 +273,16 @@ export function scheduleBlocks(html) {
     if (hits.some((h) => h.index > start && h.index < end)) continue;
     const body = text.slice(start + open[0].length, end);
     const plain = stripTags(body);
-    if (!parseEpisodeMeta(plain)) continue;
-    if (!/\d{1,2}:\d{2}\s*(?:AM|PM)|\b[A-Z][a-z]{2},?\s+[A-Z][a-z]{2}\s+\d{1,2}\b/i.test(plain)) continue;
+    // Anything that mentions an episode number or a clock is worth keeping: a
+    // card whose episode line the parser cannot read shows up in the report
+    // instead of vanishing.
+    const looksLikeAVideo = /\d{1,2}:\d{2}\s*(?:AM|PM)|\bS\d{1,2}\s*[·:.]?\s*(?:E\s*P?\s*\d|Episode)|\bEpisode\s*\d/i.test(plain);
+    if (!looksLikeAVideo) continue;
+    const cardLike = Boolean(parseEpisodeMeta(plain)) && /\d{1,2}:\d{2}\s*(?:AM|PM)|\b[A-Z][a-z]{2},?\s+[A-Z][a-z]{2}\s+\d{1,2}\b/i.test(plain);
+    if (!cardLike) {
+      blocks.push({ tag: '', index: start, href: decodeEntities(open[2] ?? open[3] ?? open[4] ?? ''), body, refused: true });
+      continue;
+    }
     blocks.push({
       tag: '',
       index: start,
@@ -311,8 +319,23 @@ export function parseSchedule(html, { base = DEFAULT_BASE, today = isoDay() } = 
   const items = [];
   const seen = new Set();
   const skipped = [];
+  // What the page actually offered, card by card, and what happened to it. The
+  // report carries this so a card that never reaches the row can be explained
+  // from the repository alone.
+  const cards = [];
 
   for (const block of scheduleBlocks(text)) {
+    if (block.refused) {
+      cards.push({
+        poster: false,
+        refused: true,
+        href: block.href,
+        text: stripTags(block.body).slice(0, 140),
+        html: block.body.slice(0, 300),
+        reason: 'episode line unreadable',
+      });
+      continue;
+    }
     const { tag, body } = block;
     const meta = parseEpisodeMeta(stripTags(body).split('\n').slice(0, 6).join('\n')) || parseEpisodeMeta(body);
     const plain = stripTags(body);
@@ -335,9 +358,30 @@ export function parseSchedule(html, { base = DEFAULT_BASE, today = isoDay() } = 
     const parsed = isUpcoming ? parseScheduleDate(plain, today) : { date: today, time: clockOnly(plain) };
     const slugTitle = titleFromSlug(slug);
     const name = title.length > 1 ? title : slugTitle;
-    if (!name || name.length < 2) continue;
+    const card = {
+      poster: Boolean(tag),
+      alt: decodeEntities(imgAttr(tag, 'alt')).trim(),
+      href: block.href,
+      slug,
+      title: name,
+      today: !isUpcoming,
+      season: meta?.season ?? null,
+      episode: meta?.episode ?? null,
+      time: parsed.time || '',
+      date: parsed.date || '',
+      reason: '',
+    };
+    if (!name || name.length < 2) {
+      card.reason = 'no title';
+      cards.push(card);
+      continue;
+    }
     const key = `${titleKey(name)}:${isUpcoming ? 'upcoming' : 'today'}`;
-    if (seen.has(key)) continue;
+    if (seen.has(key)) {
+      card.reason = 'duplicate';
+      cards.push(card);
+      continue;
+    }
     seen.add(key);
 
     const entry = {
@@ -356,9 +400,13 @@ export function parseSchedule(html, { base = DEFAULT_BASE, today = isoDay() } = 
       nx: null,
     };
     if (!entry.season || !entry.episode) {
+      card.reason = 'no season/episode';
       skipped.push({ title: entry.title, reason: 'schedule: no season/episode' });
+      cards.push(card);
       continue;
     }
+    card.reason = 'ok';
+    cards.push(card);
     items.push(entry);
   }
 
@@ -367,7 +415,7 @@ export function parseSchedule(html, { base = DEFAULT_BASE, today = isoDay() } = 
     if (a.today) return clockMinutes(a.time) - clockMinutes(b.time);
     return (a.date || '').localeCompare(b.date || '') || clockMinutes(a.time) - clockMinutes(b.time);
   });
-  return { items: LIMIT > 0 ? items.slice(0, LIMIT) : items, skipped };
+  return { items: LIMIT > 0 ? items.slice(0, LIMIT) : items, skipped, cards };
 }
 
 function clockMinutes(time) {
@@ -764,6 +812,7 @@ async function main() {
   report.resolved = items.filter((i) => i.nx).length;
   report.unresolved = unresolved.length;
   report.items = items.map((i) => ({ title: i.title, season: i.season, episode: i.episode, today: i.today, nx: i.nx }));
+  report.cards = parsed.cards;
   writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
 
   const playable = items.length;

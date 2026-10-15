@@ -248,6 +248,7 @@ describe('DeadToons schedule harvester', () => {
             return {
                 items: result.items.map((i) => ({ title: i.title, season: i.season, episode: i.episode, time: i.time, img: i.img })),
                 skipped: result.skipped.map((s) => s.title),
+                cards: result.cards.map((c) => ({ title: c.title, reason: c.reason })),
             };
         })()`);
         // No <img> on the card means no alt text: the slug has to name it, and the
@@ -256,6 +257,23 @@ describe('DeadToons schedule harvester', () => {
             { title: 'Link Click', season: 3, episode: 11, time: '11:20 PM', img: '' },
         ]);
         expect(parsed.skipped).toEqual([]);
+        // Every card the page offered is accounted for in the report.
+        expect(parsed.cards).toEqual([{ title: 'Link Click', reason: 'ok' }]);
+    });
+
+    test('a card the parser cannot read is reported, not dropped in silence', () => {
+        const parsed = callHarvester(`(() => {
+            const html = \`<section><a href="/posts/link-clink-season-3-2026"><span>LINK CLICK</span><time>11:20 PM</time></a></section>\`;
+            const result = m.parseSchedule(html, { today: '2026-10-15' });
+            return {
+                items: result.items.length,
+                card: result.cards.find((c) => /LINK/i.test(c.text || '')) || null,
+            };
+        })()`);
+        // No episode line on the card means no season/episode: it cannot resolve,
+        // but the report has to say so or the next markup change is invisible.
+        expect(parsed.items).toBe(0);
+        expect(parsed.card).toMatchObject({ refused: true, reason: 'episode line unreadable' });
     });
 
     test('an id is accepted only when Nxsha names the same show', () => {
