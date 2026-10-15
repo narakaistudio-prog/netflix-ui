@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-15T08:02:30.725Z",
+  "generated": "2026-10-15T08:06:46.354Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
@@ -9,28 +9,10 @@
       "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792051348311",
+      "url": "https://deadtoons.sbs/schedule?v=1792051603541",
       "status": 200,
       "bytes": 126870,
       "label": "fresh"
-    },
-    {
-      "url": "https://deadtoons.sbs/schedule?tz=Asia%2FKolkata",
-      "status": 200,
-      "bytes": 126870,
-      "label": "tz-query"
-    },
-    {
-      "url": "https://deadtoons.sbs/schedule",
-      "status": 200,
-      "bytes": 126870,
-      "label": "tz-cookie"
-    },
-    {
-      "url": "https://deadtoons.sbs/schedule",
-      "status": 200,
-      "bytes": 126870,
-      "label": "timezone-cookie"
     }
   ],
   "site": {
@@ -95,7 +77,51 @@
     "episodeHits": 12,
     "upcomingAt": 35379,
     "rawHead": "<!DOCTYPE html><html lang=\"en\" class=\"changa_636d5c62-module__VB_YLW__variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/logo.png\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/40c3zvtsqh2jc.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/0iq1i69206cyl.js\"/><script src=\"/_next/static/chunks/27jktro2p5rq9.js\" async=\"\"></script><script src=\"/_next/static/chunks/07u_h6i539_wj.js\" async=\"\"></script><script src=\"/_next/static/chunks/0iec5q4ack_04.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-12dm4pjgasbr9.js\" async=\"\"></script><script src=\"/_next/static/chunks/0-jgp_eix67-2.js\" async=\"\"></script><script src=\"/_next/static/chunks/14mrh2-p_w84d.js\" async=\"\"></script><script src=\"/_next/static/chunks/11utg6uw0p4sh.js\" async=\"\"></script><script src=\"/_next/static/chunks/02fdl-fsfzdvm.js\" async=\"\"></script><meta name=\"next-size-adjust\" content=\"\"/><title>Release Schedule | Deadtoons | Deadtoons</title><meta name=\"description\" content=\"Deadtoons — anime and cartoons dubbed in Hindi, Tamil, Telugu.\"/><link rel=\"icon\" href=\"/favicon.ico?favicon.12dnovj88pkao.ico\" sizes=\"48x48\" type=\"image/x-icon\"/><link rel=\"icon\" href=\"/icon.png?icon.1iqhzz-cn-5js.png\" sizes=\"180x180\" type=\"image/p",
-    "rawBody": "all-super-beerus-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Dragon Ball Super: Beerus Season 1 (2026) Japanese Audio English Subbed 480p , 720p \\u0026 1080p | 10Bit\\\"}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"black-torch-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/black-torch-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"BLACK TORCH Season 1 (2026) Multi Audio [Hindi-English-Japanese]  Muse India | 1080p HQ \\u0026 720p x265, 720p \\u0026 480p x264\\\"}]}]\\n39:[\\\"$\\\",\\\"li\\\",\\\"trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Trapped in a Dating Sim Season 2 Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920\" integrity=\"sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>"
+    "rawBody": "all-super-beerus-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Dragon Ball Super: Beerus Season 1 (2026) Japanese Audio English Subbed 480p , 720p \\u0026 1080p | 10Bit\\\"}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"black-torch-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/black-torch-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"BLACK TORCH Season 1 (2026) Multi Audio [Hindi-English-Japanese]  Muse India | 1080p HQ \\u0026 720p x265, 720p \\u0026 480p x264\\\"}]}]\\n39:[\\\"$\\\",\\\"li\\\",\\\"trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Trapped in a Dating Sim Season 2 Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920\" integrity=\"sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
+    "payloadAt": 47730,
+    "payloadKeys": [
+      "crossOrigin",
+      "type",
+      "children",
+      "loading",
+      "className",
+      "rel",
+      "href",
+      "precedence",
+      "nonce",
+      "src",
+      "async",
+      "lang",
+      "suppressHydrationWarning",
+      "attribute",
+      "defaultTheme",
+      "enableSystem",
+      "parallelRouterKey",
+      "error",
+      "errorStyles",
+      "errorScripts",
+      "template",
+      "templateStyles",
+      "templateScripts",
+      "notFound",
+      "forbidden",
+      "unauthorized",
+      "name",
+      "hidden",
+      "content",
+      "charSet",
+      "tags",
+      "slug",
+      "genres",
+      "languages",
+      "otts",
+      "alt",
+      "width",
+      "height",
+      "action",
+      "placeholder"
+    ],
+    "payloadSlice": "self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,\"1:I[39756,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"LoadingBoundaryProvider\\\"]\\nd:I[68027,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"default\\\",1]\\n:HL[\\\"/_next/static/chunks/40c3zvtsqh2jc.css\\\",\\\"style\\\"]\\n:HL[\\\"/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n\"])</script><script>self.__next_f.push([1,\"0:{\\\"P\\\":null,\\\"c\\\":[\\\"\\\",\\\"schedule?_rsc=6grVij_EUBxTWnLP\\\"],\\\"q\\\":\\\"\\\",\\\"i\\\":false,\\\"f\\\":[[[\\\"\\\",{\\\"children\\\":[\\\"schedule\\\",{\\\"children\\\":[\\\"__PAGE__\\\",{}]},\\\"$undefined\\\",\\\"$undefined\\\",4]},\\\"$undefined\\\",\\\"$undefined\\\",28],[[\\\"$\\\",\\\"$L1\\\",null,{\\\"loading\\\":[[\\\"$\\\",\\\"div\\\",\\\"l\\\",{\\\"className\\\":\\\"flex min-h-screen flex-col bg-background\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"border-b border-border\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mx-auto flex h-16 max-w-7xl items-center gap-6 px-4\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-8 w-32 shrink-0\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"hidden items-center gap-5 sm:flex\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",\\\"0\\\",{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-16\\\"}],[\\\"$\\\",\\\"div\\\",\\\"1\\\",{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-16\\\"}],[\\\"$\\\",\\\"div\\\",\\\"2\\\",{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-16\\\"}],[\\\"$\\\",\\\"div\\\",\\\"3\\\",{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-16\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted ml-auto h-9 w-9 shrink-0 rounded-full\\\"}]]}]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"bg-card flex-1\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mx-auto grid max-w-7xl gap-8 px-4 py-6 lg:grid-cols-[1fr_320px]\\\",\\\"children\\\":[[\\\"$\\\",\\\"main\\\",null,{\\\"className\\\":\\\"min-w-0\\\",\\\"children\\\":[\\\"$\\\",\\\"ul\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"li\\\",\\\"0\\\",{\\\"className\\\":\\\"flex flex-col gap-5 py-6 sm:flex-row\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted aspect-video shrink-0 rounded-sm sm:w-64\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-w-0 flex-1\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-24\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-3 h-7 w-4/5\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-2 h-7 w-1/2\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-3 flex gap-4\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-20\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-16\\\"}]]}]]}]]}],[\\\"$\\\",\\\"li\\\",\\\"1\\\",{\\\"className\\\":\\\"flex flex-col gap-5 py-6 sm:flex-row\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted aspect-video shrink-0 rounded-sm sm:w-64\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-w-0 flex-1\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-24\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-3 h-7 w-4/5\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-2 h-7 w-1/2\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-3 flex gap-4\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-20\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-16\\\"}]]}]]}]]}],[\\\"$\\\",\\\"li\\\",\\\"2\\\",{\\\"className\\\":\\\"flex flex-col gap-5 py-6 sm:flex-row\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted aspect-video shrink-0 rounded-sm sm:w-64\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-w-0 flex-1\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-24\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-3 h-7 w-4/5\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-2 h-7 w-1/2\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-3 flex gap-4\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-20\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-16\\\"}]]}]]}]]}],[\\\"$\\\",\\\"li\\\",\\\"3\\\",{\\\"className\\\":\\\"flex flex-col gap-5 py-6 sm:flex-row\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted aspect-video shrink-0 rounded-sm sm:w-64\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-w-0 flex-1\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-24\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-3 h-7 w-4/5\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-2 h-7 w-1/2\\\"}],\\\"$L2\\\"]}]]}],\\\"$L3\\\",\\\"$L4\\\",\\\"$L5\\\",\\\"$L6\\\"]}]}],\\\"$L7\\\"]}]}]]}],[],[]],\\\"children\\\":\\\"$L8\\\"}],{\\\"children\\\":[\\\"$L9\\\",{\\\"children\\\":[\\\"$La\\\",{},null,false,null]},null,false,\\\"$@b\\\"]},null,false,null],\\\"$Lc\\\",false]],\\\"m\\\":\\\"$undefined\\\",\\\"G\\\":[\\\"$d\\\",[\\\"$Le\\\"]],\\\"S\\\":true,\\\"h\\\":null,\\\"s\\\":\\\"$undefined\\\",\\\"l\\\":\\\"$undefined\\\",\\\"p\\\":\\\"$undefined\\\",\\\"d\\\":\\\"$undefined\\\",\\\"b\\\":\\\"b188E_yaBeweVpBR4puHL\\\"}\\n\"])</script><script>self.__next_f.push([1,\"f:\\\"$Sreact.fragment\\\"\\n10:I[59919,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"ThemeProvider\\\"]\\n11:I[75714,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\",\\\"/_next/static/chunks/11utg6uw0p4sh.js\\\",\\\"/_next/static/chunks/02fdl-fsfzdvm.js\\\"],\\\"SiteAdsProvider\\\"]\\n12:I[39756,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"default\\\"]\\n13:I[37457,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"default\\\"]\\n15:I[88,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"MobileBottomNav\\\"]\\n16:I[83864,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"TelegramPopup\\\"]\\n1e:I[97367,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"OutletBoundary\\\"]\\n1f:\\\"$Sreact.suspense\\\"\\n22:I[97367,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"ViewportBoundary\\\"]\\n24:I[97367,[\\\"/_next/static/chunks/0-jgp_eix67-2.js\\\",\\\"/_next/static/chunks/14mrh2-p_w84d.js\\\"],\\\"MetadataBoundary\\\"]\\n2:[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-3 flex gap-4\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-20\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-3 w-16\\\"}]]}]\\n3:[\\\"$\\\",\\\"li\\\",\\\"4\\\",{\\\"className\\\":\\\"flex flex-col gap-5 py-6 sm:flex-row\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted aspect-video shrink-0 rounded-sm sm:w-64\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-w-0 flex-1\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted h-4 w-24\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-muted mt-3 h-7 w-4/5\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"aria-hidden\\\":true,\\\"className\\\":\\\"animate-pulse rounded-sm bg-mu"
   },
   "parses": [
     {
@@ -114,49 +140,7 @@
     },
     {
       "label": "fresh",
-      "url": "https://deadtoons.sbs/schedule?v=1792051348311",
-      "cards": 14,
-      "today": 6,
-      "first": "",
-      "last": "5:30 PM",
-      "headers": [
-        [
-          "vary",
-          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
-        ]
-      ]
-    },
-    {
-      "label": "tz-query",
-      "url": "https://deadtoons.sbs/schedule?tz=Asia%2FKolkata",
-      "cards": 14,
-      "today": 6,
-      "first": "",
-      "last": "5:30 PM",
-      "headers": [
-        [
-          "vary",
-          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
-        ]
-      ]
-    },
-    {
-      "label": "tz-cookie",
-      "url": "https://deadtoons.sbs/schedule",
-      "cards": 14,
-      "today": 6,
-      "first": "",
-      "last": "5:30 PM",
-      "headers": [
-        [
-          "vary",
-          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
-        ]
-      ]
-    },
-    {
-      "label": "timezone-cookie",
-      "url": "https://deadtoons.sbs/schedule",
+      "url": "https://deadtoons.sbs/schedule?v=1792051603541",
       "cards": 14,
       "today": 6,
       "first": "",
