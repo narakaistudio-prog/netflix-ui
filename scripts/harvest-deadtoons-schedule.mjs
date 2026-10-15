@@ -637,11 +637,11 @@ export function siteReport(html, { base = DEFAULT_BASE, status = 0, bytes = 0 } 
     rawHead: text.slice(0, 1500),
     rawBody: text.length > 2000 ? text.slice(-2000) : '',
     // The page is a Next.js app: the data the client renders from travels in the
-    // RSC payload. Its shape is what a zone-independent parse would read, so the
-    // report keeps the keys it uses (and a slice, while this is being worked on).
+    // RSC payload. The report keeps where it starts and which keys it carries —
+    // the ground truth if the DOM parse ever has to be replaced by a
+    // zone-independent one.
     payloadAt,
     payloadKeys,
-    payloadSlice: payloadAt === -1 ? '' : text.slice(payloadAt, payloadAt + 8000),
   };
 }
 
