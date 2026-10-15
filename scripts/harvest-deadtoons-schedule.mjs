@@ -228,6 +228,28 @@ const isoDay = (date = new Date()) => date.toISOString().slice(0, 10);
  * its episode list from this, so a schedule title the catalog does not carry gets
  * real thumbnails instead of the placeholder art.
  */
+/** Title -> catalog key, so a schedule title can be matched to the catalog guide. */
+export function catalogKeysByTitle(guideData) {
+  const map = new Map();
+  for (const [key, show] of Object.entries(guideData?.shows || {})) {
+    if (show && show.title) map.set(titleKey(show.title), key);
+  }
+  return map;
+}
+
+/** Does the catalog's own guide already carry this title's season? */
+export function catalogGuideCovers(guideData, key, season) {
+  const episodes = guideData?.shows?.[key]?.episodes;
+  if (!Array.isArray(episodes)) return false;
+  return episodes.some((episode) => String(episode.season) === String(season));
+}
+
+/** The numeric TMDB id the guide job resolved for a catalog key ('' if none). */
+export function catalogNumericId(guideData, key) {
+  const id = String(guideData?.shows?.[key]?.id || '');
+  return /^\d+$/.test(id) ? id : '';
+}
+
 export function buildSeasonGuide(response, requestedSeason, { overviewLimit = 320 } = {}) {
   const season = Number(response?.season?.season_number) || Number(requestedSeason) || 1;
   const episodes = Array.isArray(response?.episodes) ? response.episodes : [];
@@ -522,6 +544,10 @@ export function candidateIds(entry, registryHit) {
 }
 
 const NX_BASE = 'https://nxsha.space';
+// The catalog's own episode guides (data/nxsha-episodes.json, written by the
+// daily guide job). A drop of a title the catalog already covers does not need a
+// second guide — unless the drop's season is one the catalog does not carry yet.
+const NX_GUIDE_PATH = resolve(process.env.DROPS_NX_GUIDE_FILE || resolve(ROOT, 'data', 'nxsha-episodes.json'));
 
 export function nxshaVerifyUrl(kind, id, season = 1, episode = 1) {
   return kind === 'movie'
@@ -817,6 +843,25 @@ function selfTest() {
     );
   })(), JSON.stringify(buildSeasonGuide({ success: true, season: { season_number: 1 }, episodes: [{ episode_number: 1, name: 'A' }] }, 1)));
   check('an episode-less season has no guide', buildSeasonGuide({ success: false, message: 'Season not found' }, 5) === null);
+  check('the catalog guide is reused when it covers the drop season', (() => {
+    const guideData = { shows: { apothecary: { id: '220542', episodes: [{ season: 1, episode: 1 }] } } };
+    return (
+      catalogGuideCovers(guideData, 'apothecary', 1) === true &&
+      // Season 3 of the same title is not in the catalog guide yet.
+      catalogGuideCovers(guideData, 'apothecary', 3) === false &&
+      catalogGuideCovers(guideData, 'unknown', 1) === false
+    );
+  })());
+  check('a schedule title finds its catalog key', (() => {
+    const guideData = { shows: { jojo: { title: "JoJo's Bizarre Adventure", id: '45790', episodes: [{ season: 4, episode: 5 }] } } };
+    const keys = catalogKeysByTitle(guideData);
+    const key = keys.get(titleKey("JoJo's Bizarre Adventure")) || '';
+    return key === 'jojo' && catalogGuideCovers(guideData, key, 4) === true;
+  })());
+  check('the catalog knows the numeric id behind a title', (() => {
+    const guideData = { shows: { blackclover: { id: '34572', episodes: [] } } };
+    return catalogNumericId(guideData, 'blackclover') === '34572' && catalogNumericId(guideData, 'nope') === '';
+  })());
   check('a stale copy loses to a richer one', (() => {
     const stale = parseSchedule(fixture, { today: '2026-10-15' });
     const fresh = parseSchedule(`${fixture}<a href="/posts/link-click-season-3-2026"><img src="https://image.tmdb.org/t/p/w154/4PCQ.jpg" alt="LINK CLICK"><span>S3 · Episode 11</span><time>11:20 PM</time></a>`, { today: '2026-10-15' });
@@ -950,25 +995,42 @@ async function main() {
   // schedule title that the catalog does not carry needs its own, or its episode
   // grid shows placeholder art and "Episode 7" instead of the real episode.
   const guides = [];
+  const guideData = existsSync(NX_GUIDE_PATH) ? JSON.parse(readFileSync(NX_GUIDE_PATH, 'utf8')) : {};
+  const catalogKeys = catalogKeysByTitle(guideData);
+  let guidesSkipped = 0;
   for (const entry of items) {
-    const id = String(entry.nx?.id || '');
-    if (!/^\d+$/.test(id) || entry.nx?.from === 'catalog') continue;
     const season = Number(entry.season) || 1;
+    const catalogKey = catalogKeys.get(titleKey(entry.title)) || '';
+    // The catalog's own guide is already in the page, so it is only worth a call
+    // when the drop airs a season the catalog does not carry yet.
+    if (catalogKey && catalogGuideCovers(guideData, catalogKey, season)) {
+      guidesSkipped += 1;
+      continue;
+    }
+    // A catalog title resolved by title may only carry an IMDb id; the guide job
+    // knows the numeric id Nxsha's API answers to.
+    const ownId = String(entry.nx?.id || '');
+    const id = /^\d+$/.test(ownId) ? ownId : catalogNumericId(guideData, catalogKey);
+    if (!/^\d+$/.test(id)) {
+      guides.push({ title: entry.title, key: catalogKey || titleKey(entry.title), season, reason: 'no numeric Nxsha id' });
+      continue;
+    }
     try {
       const res = await getJson(`${NX_BASE}/api/tv/${id}/season/${season}`);
       const guide = buildSeasonGuide(res, season);
       if (guide) {
         entry.guide = guide;
-        guides.push({ title: entry.title, id, season, episodes: Object.keys(guide[String(season)]).length });
+        guides.push({ title: entry.title, key: catalogKey || titleKey(entry.title), id, season, episodes: Object.keys(guide[String(season)]).length });
       } else {
-        guides.push({ title: entry.title, id, season, episodes: 0, reason: String(res?.message || 'no episodes') });
+        guides.push({ title: entry.title, key: catalogKey || titleKey(entry.title), id, season, episodes: 0, reason: String(res?.message || 'no episodes') });
       }
     } catch (error) {
-      guides.push({ title: entry.title, id, season, error: String(error?.message || error).slice(0, 140) });
+      guides.push({ title: entry.title, key: catalogKey || titleKey(entry.title), id, season, error: String(error?.message || error).slice(0, 140) });
     }
     await sleep(250);
   }
   report.guides = guides;
+  report.guidesSkipped = guidesSkipped;
   report.items = items.map((i) => ({ title: i.title, season: i.season, episode: i.episode, today: i.today, nx: i.nx }));
   report.cards = parsed.cards;
   writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
