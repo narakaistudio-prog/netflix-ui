@@ -2,7 +2,8 @@
 /**
  * "Fresh Drops" builder for the Crunchyroll (anime) page.
  *
- * 1. Reads the nxsha anime listings (several sorts and pages).
+ * 1. Reads the nxsha anime listings (several sorts and pages) plus the DeadToons
+ *    listing harvest (data/deadtoons-drops.json — scripts/harvest-deadtoons-drops.mjs).
  * 2. Keeps a state file, data/crunchyroll-new-drops.json, with the first date each
  *    title was seen (firstSeen). The very first run is a baseline: everything found
  *    then is marked baseline=true and never counts as "new" (no bell flood).
@@ -11,8 +12,8 @@
  * 4. Rewrites the block between /*CR_DROPS_START*\/ and /*CR_DROPS_END*\/ in
  *    assets/crunchyroll/crunchyroll.html. That block always tops the home rails
  *    with the "Fresh Drops" row:
- *      - titles first seen after the baseline run when there are any, else
- *      - the newest titles of the drop pool, so the row is never blank.
+ *      - titles first seen after the baseline run first (DeadToons daily finds lead),
+ *        then the newest pool titles, so the row is never blank.
  *    The row subtitle says which of the two it is, and every card gets a NEW flag
  *    plus the day it was first seen.
  *
@@ -29,6 +30,9 @@
  *   --dry-run      scrape but write nothing
  *
  * Env:   DROPS_DATE=YYYY-MM-DD  override "today" (IST by default)
+ *        DROPS_STATE_FILE       point the bake at another nxsha state file
+ *        DROPS_DEADTOONS_FILE   point the bake at another DeadToons state file
+ *        DROPS_HTML_FILE        write the baked page somewhere else
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -40,7 +44,13 @@ const STATE_FILE = path.resolve(
   process.env.DROPS_STATE_FILE || path.join(ROOT, 'data', 'crunchyroll-new-drops.json'),
 );
 const REGISTRY_FILE = path.join(ROOT, 'data', 'nxsha-titles.json');
-const HTML_FILE = path.join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
+const DEADTOONS_FILE = path.resolve(
+  process.env.DROPS_DEADTOONS_FILE || path.join(ROOT, 'data', 'deadtoons-drops.json'),
+);
+// DROPS_DEADTOONS_FILE / DROPS_HTML_FILE let previews and tests bake elsewhere.
+const HTML_FILE = path.resolve(
+  process.env.DROPS_HTML_FILE || path.join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'),
+);
 const START = '/*CR_DROPS_START*/';
 const END = '/*CR_DROPS_END*/';
 const MAX_ROWS = 12;
@@ -50,6 +60,11 @@ const FROM_STATE = process.argv.includes('--from-state');
 const CHECK = process.argv.includes('--check');
 
 const ROW_TITLE = 'Fresh Drops';
+
+/** DeadToons finds lead the row: they are the daily "new anime" signal. */
+const SOURCE_RANK = { deadtoons: 0, nxsha: 1 };
+/** Shorter-than-this containment matches are too weak to call a title "known". */
+const KNOWN_MATCH_MIN = 5;
 
 /**
  * Titles the public rail never shows.
@@ -104,6 +119,67 @@ export function titleKey(value) {
   return decodeEntities(value).toLowerCase().replace(/[^a-z0-9]+/g, '');
 }
 
+/**
+ * Does the app already carry this title?
+ *
+ * Drops are titles the catalog has no route for, so the row must not repeat a
+ * show that is already playable — including a substring match, because listing
+ * titles trail extra words ("Attack on Titan Movie" is Attack on Titan).
+ */
+export function isKnownTitle(title, knownTitles) {
+  const key = titleKey(title);
+  if (!key) return true;
+  if (knownTitles.has(key)) return true;
+  for (const known of knownTitles) {
+    if (known.length < KNOWN_MATCH_MIN || key.length < KNOWN_MATCH_MIN) continue;
+    if (key.includes(known) || known.includes(key)) return true;
+  }
+  return false;
+}
+
+/**
+ * One rail pool from both sources: the nxsha drop state and the DeadToons
+ * listing state. DeadToons items keep their slug as id (they have no tmdb id),
+ * so the row can show anime the catalog does not carry yet.
+ */
+export function collectRailPool(nxshaState, deadtoonsState) {
+  const pool = [];
+  for (const [stateKey, item] of Object.entries(nxshaState?.items || {})) {
+    if (!item?.title) continue;
+    pool.push({
+      source: 'nxsha',
+      stateKey,
+      key: `drop-${item.kind}-${item.id}`,
+      kind: item.kind,
+      id: item.id,
+      title: decodeEntities(item.title).trim(),
+      img: item.img || '',
+      rating: item.rating || '',
+      year: item.year || '',
+      firstSeen: item.firstSeen || '',
+      baseline: !!item.baseline,
+    });
+  }
+  for (const [slug, item] of Object.entries(deadtoonsState?.items || {})) {
+    if (!item?.title) continue;
+    pool.push({
+      source: 'deadtoons',
+      stateKey: `deadtoons:${slug}`,
+      key: `drop-dt-${slug}`,
+      kind: item.kind === 'movie' ? 'movie' : 'tv',
+      id: slug,
+      title: decodeEntities(item.title).trim(),
+      img: item.img || '',
+      rating: '',
+      year: item.year || '',
+      firstSeen: item.firstSeen || '',
+      baseline: !!item.baseline,
+      url: item.url || '',
+    });
+  }
+  return pool;
+}
+
 /** Parse one listing page into cards {kind,id,title,img,rating,year}. */
 export function parseListing(text) {
   const cards = [];
@@ -144,43 +220,45 @@ function readJson(file, fallback) {
   }
 }
 
-export function dropKey(item) {
-  return `drop-${item.kind}-${item.id}`;
-}
-
 /**
  * Pick the rail for the "Fresh Drops" row.
  *
- * Titles first seen after the baseline run win. When the pool has none yet
- * (e.g. right after the baseline run) the newest pool titles are shown instead,
- * so the row always has content. Skipped: adult listings (RAIL_BLOCKED_*),
- * duplicate titles, and titles the app already routes (passed in as
- * knownTitles) — a drop card has no playback route, so it must not repeat a
- * show that already has one.
+ * Titles first seen after the baseline run lead (newest first, DeadToons ahead
+ * of nxsha on the same day), then the newest pool titles fill the rest, so the
+ * row always has content. An item is "fresh" — the NEW flag on its card — only
+ * when it is one of those post-baseline finds.
+ *
+ * Skipped: adult listings (RAIL_BLOCKED_*), duplicate titles, and titles the
+ * catalog already carries (knownTitles) — a drop card has no playback route, so
+ * it must not repeat a show that already has one.
  */
-export function selectRailItems(items, limit = MAX_ROWS, knownTitles = new Set()) {
-  const usable = Object.entries(items || {})
-    // Older state entries kept the raw entity in the title ("Atashin&#x27;chi").
-    .map(([stateKey, item]) => ({ ...item, title: decodeEntities(item.title).trim(), stateKey, key: dropKey(item) }))
-    .filter((item) => item.kind && item.id && item.title && item.img)
+export function selectRailItems(pool, limit = MAX_ROWS, knownTitles = new Set()) {
+  const usable = (pool || [])
+    .map((item) => ({ ...item, title: decodeEntities(item.title).trim() }))
+    .filter((item) => item.title && item.kind && item.id)
     .filter((item) => !RAIL_BLOCKED_IDS.has(item.stateKey) && !RAIL_BLOCKED_TITLE.test(item.title))
-    .filter((item) => !knownTitles.has(titleKey(item.title)));
+    .filter((item) => !isKnownTitle(item.title, knownTitles));
 
   const newestFirst = (a, b) => (a.firstSeen < b.firstSeen ? 1 : a.firstSeen > b.firstSeen ? -1 : 0);
-  const fresh = usable.filter((item) => !item.baseline).sort(newestFirst);
-  const mode = fresh.length ? 'new' : 'pool';
-  const candidates = mode === 'new' ? fresh : [...usable].sort(newestFirst);
+  const compare = (a, b) =>
+    newestFirst(a, b) ||
+    (SOURCE_RANK[a.source] ?? 9) - (SOURCE_RANK[b.source] ?? 9) ||
+    (a.title < b.title ? -1 : a.title > b.title ? 1 : 0);
+
+  const fresh = usable.filter((item) => !item.baseline).sort(compare);
+  const rest = usable.filter((item) => item.baseline).sort(compare);
+  const freshKeys = new Set(fresh.map((item) => item.stateKey));
 
   const titles = new Set();
   const rail = [];
-  for (const item of candidates) {
+  for (const item of [...fresh, ...rest]) {
     const key = titleKey(item.title);
-    if (titles.has(key)) continue;
+    if (!key || titles.has(key)) continue;
     titles.add(key);
-    rail.push(item);
+    rail.push({ ...item, fresh: freshKeys.has(item.stateKey) });
     if (rail.length === limit) break;
   }
-  return { mode, items: rail };
+  return { mode: fresh.length ? 'new' : 'pool', items: rail };
 }
 
 /** The page block between the CR_DROPS markers. */
@@ -192,10 +270,12 @@ export function dropsBlock({ mode, items }) {
       kind: item.kind,
       id: item.id,
       title: item.title,
-      img: item.img,
+      img: item.img || '',
       rating: item.rating || '',
       year: item.year || '',
       firstSeen: item.firstSeen || '',
+      fresh: !!item.fresh,
+      src: item.source,
     })),
   ).replace(/<\//g, '<\\/');
   const subtitle = mode === 'new' ? 'Just added to the catalog' : 'Newest in the catalog';
@@ -211,10 +291,10 @@ export function dropsBlock({ mode, items }) {
     '  var freshKeys=[],i,d;',
     '  for(i=0;i<CR_NEW_DROPS.length;i++){',
     '    d=CR_NEW_DROPS[i];',
-    "    if(!d||!d.key||!d.title||!d.img)continue;",
-    // drop:true keeps them out of the browse grid / search — a drop has no Nxsha route yet.
-    "    shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img,type:d.kind==='movie'?'Movie':'TV',drop:true};",
-    "    window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:{},added:d.firstSeen||'',mode:CR_NEW_DROPS_MODE};",
+    "    if(!d||!d.key||!d.title)continue;",
+    '    // drop:true keeps them out of the browse grid / search — a drop has no Nxsha route yet.',
+    "    shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img||'',type:d.kind==='movie'?'Movie':'TV',drop:true};",
+    "    window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:{},added:d.firstSeen||'',fresh:!!d.fresh,src:d.src||''};",
     '    freshKeys.push(d.key);',
     '  }',
     '  if(!freshKeys.length)return;',
@@ -237,14 +317,22 @@ export function replaceDropsBlock(html, block) {
 }
 
 /** Titles the app already routes — a drop card must never repeat one. */
-function routedTitles() {
+function catalogTitles() {
   const registry = readJson(REGISTRY_FILE, {});
   return new Set(Object.values(registry).map((entry) => titleKey(entry?.title || '')).filter(Boolean));
 }
 
-/** The block the current state file should produce. */
-function blockFromState(state) {
-  return dropsBlock(selectRailItems(state?.items || {}, MAX_ROWS, routedTitles()));
+/** Both drop states: the nxsha pool and the DeadToons listing harvest. */
+function readDropStates() {
+  return {
+    nxsha: readJson(STATE_FILE, null),
+    deadtoons: readJson(DEADTOONS_FILE, null),
+  };
+}
+
+/** The block the current state files should produce. */
+function blockFromState(states) {
+  return dropsBlock(selectRailItems(collectRailPool(states.nxsha, states.deadtoons), MAX_ROWS, catalogTitles()));
 }
 
 function currentBlock(html) {
@@ -277,14 +365,18 @@ async function scrape() {
 async function main() {
   // Bake (no network) — used by `npm run build:web` and local refreshes.
   if (FROM_STATE || CHECK) {
-    const state = readJson(STATE_FILE, null);
-    if (!state || !state.items) {
-      console.error(`No drop state at ${path.relative(ROOT, STATE_FILE)}. Run the daily job first.`);
+    const states = readDropStates();
+    const pool = collectRailPool(states.nxsha, states.deadtoons);
+    if (!pool.length) {
+      console.error(
+        `No drop state at ${path.relative(ROOT, STATE_FILE)} or ${path.relative(ROOT, DEADTOONS_FILE)}. ` +
+          'Run the daily job first.',
+      );
       process.exit(1);
     }
-    const block = blockFromState(state);
+    const rail = selectRailItems(pool, MAX_ROWS, catalogTitles());
+    const block = dropsBlock({ mode: rail.mode, items: rail.items });
     const html = readHtml();
-    const rail = selectRailItems(state.items, MAX_ROWS, routedTitles());
 
     if (DRY_RUN) {
       console.log(JSON.stringify({ mode: rail.mode, items: rail.items }, null, 2));
@@ -296,14 +388,20 @@ async function main() {
         console.error('Crunchyroll Fresh Drops block is out of sync. Run: node scripts/build-crunchyroll-new-drops.mjs --from-state');
         process.exit(1);
       }
-      console.log(`Fresh Drops block is in sync (${rail.items.length} cards, mode: ${rail.mode}).`);
+      const freshCount = rail.items.filter((item) => item.fresh).length;
+      console.log(
+        `Fresh Drops block is in sync (${rail.items.length} cards, ${freshCount} new, mode: ${rail.mode}).`,
+      );
       return;
     }
 
     const next = replaceDropsBlock(html, block);
     if (next === null) throw new Error('CR_DROPS markers not found in crunchyroll.html');
     fs.writeFileSync(HTML_FILE, next);
-    console.log(`baked ${rail.items.length} Fresh Drops cards (mode: ${rail.mode}) into ${path.relative(ROOT, HTML_FILE)}`);
+    console.log(
+      `baked ${rail.items.length} Fresh Drops cards (${rail.items.filter((item) => item.fresh).length} new, ` +
+        `mode: ${rail.mode}) into ${path.relative(ROOT, HTML_FILE)}`,
+    );
     return;
   }
 
@@ -343,16 +441,19 @@ async function main() {
   }
 
   const newCount = Object.values(items).filter((i) => !i.baseline && i.firstSeen === day).length;
-  const rail = selectRailItems(items, MAX_ROWS, routedTitles());
-  const marked = rail.items.map((i) => ({ ...i, key: dropKey(i) }));
+  const deadtoons = readJson(DEADTOONS_FILE, null);
+  const rail = selectRailItems(collectRailPool({ items }, deadtoons), MAX_ROWS, catalogTitles());
+  const sources = rail.items.reduce((acc, item) => ({ ...acc, [item.source]: (acc[item.source] || 0) + 1 }), {});
   const nextState = { updated: day, items };
   console.log(
-    `baseline run: ${baselineRun}; new today: ${newCount}; rail: ${marked.length} cards (mode: ${rail.mode}); ` +
-      `pool: ${Object.values(items).length} tracked titles`,
+    `baseline run: ${baselineRun}; new today: ${newCount}; rail: ${rail.items.length} cards ` +
+      `(${rail.items.filter((item) => item.fresh).length} new, mode: ${rail.mode}; ` +
+      `sources ${Object.entries(sources).map(([k, v]) => `${k}:${v}`).join(' ') || 'none'}); ` +
+      `pool: ${Object.values(items).length} nxsha + ${Object.keys(deadtoons?.items || {}).length} deadtoons`,
   );
 
   if (DRY_RUN) {
-    console.log(JSON.stringify({ mode: rail.mode, items: marked.slice(0, 3) }, null, 2));
+    console.log(JSON.stringify({ mode: rail.mode, items: rail.items.slice(0, 3) }, null, 2));
     return;
   }
 
@@ -360,7 +461,7 @@ async function main() {
   fs.writeFileSync(STATE_FILE, JSON.stringify(nextState, null, 2) + '\n');
 
   const html = readHtml();
-  const block = dropsBlock({ mode: rail.mode, items: marked });
+  const block = dropsBlock({ mode: rail.mode, items: rail.items });
   const next = replaceDropsBlock(html, block);
   if (next === null) throw new Error('CR_DROPS markers not found in crunchyroll.html');
   fs.writeFileSync(HTML_FILE, next);
