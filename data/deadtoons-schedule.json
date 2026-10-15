@@ -92,6 +92,33 @@
       }
     },
     {
+      "key": "sch-jojo-s-bizarre-adventure-season-4-2018",
+      "title": "JoJo's Bizarre Adventure",
+      "slug": "jojo-s-bizarre-adventure-season-4-2018",
+      "url": "https://deadtoons.sbs/posts/jojo-s-bizarre-adventure-season-4-2018",
+      "img": "https://image.tmdb.org/t/p/w300/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
+      "season": 4,
+      "episode": 5,
+      "audio": "",
+      "day": "",
+      "date": "2026-10-15",
+      "time": "5:30 PM",
+      "today": true,
+      "nx": {
+        "id": "45790",
+        "kind": "tv",
+        "seasons": {
+          "1": 26,
+          "2": 48,
+          "3": 39,
+          "4": 39,
+          "5": 38,
+          "6": 12
+        },
+        "from": "catalog"
+      }
+    },
+    {
       "key": "sch-black-clover-season-5-2026",
       "title": "The Apothecary Diaries",
       "slug": "black-clover-season-5-2026",
@@ -324,6 +351,20 @@
       },
       "from": "wikidata-tmdb",
       "checked": "2026-10-15"
+    },
+    "jojosbizarreadventure": {
+      "id": "45790",
+      "kind": "tv",
+      "seasons": {
+        "1": 26,
+        "2": 48,
+        "3": 39,
+        "4": 39,
+        "5": 38,
+        "6": 12
+      },
+      "from": "catalog",
+      "checked": "2026-10-15"
     }
   },
   "skipped": [
@@ -334,10 +375,6 @@
     {
       "title": "Join us on Telegram",
       "reason": "schedule: no season/episode"
-    },
-    {
-      "title": "JoJo&#x27;s Bizarre Adventure",
-      "reason": "nxsha: no verified id"
     },
     {
       "title": "Super Timid Noble Girl",
