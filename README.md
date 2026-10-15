@@ -25,6 +25,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 
 - 🏠 Animated home screen with featured content
 - 🍥 Crunchyroll OTT section (beside My List) — opens a full-screen, self-contained anime experience (`assets/crunchyroll/crunchyroll.html`)
+- 🆕 **Fresh Drops** rail at the top of the Crunchyroll home rails: anime titles the daily job (`.github/workflows/crunchyroll-daily-drops.yml` → `scripts/build-crunchyroll-new-drops.mjs`) finds in the nxsha listings but the app has no route for. Titles first seen after the baseline run lead the row; when none are new yet the newest pool titles fill it, so the rail is never blank. Cards carry a NEW flag and the day they landed, and stay out of Browse/Search/playback because they have no Nxsha route. Re-bake with `npm run bake:crunchyroll-drops` (runs on every `npm run build:web`)
 - ▶️ Player (FINAL v2): [Server 1: AnimaHD] + [Server 2: Drive] tabs from one file_id table — Solo Leveling S1+S2 (25 eps); re-harvest with `npm run harvest:animahd`
 - 🔗 AniDisk confirmed-links pipeline + extractor API stay warm (`data/`, `server/`) for future use
 - 🎬 Separate Netflix-style Movies and TV Shows shelves
