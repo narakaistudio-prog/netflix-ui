@@ -1,15 +1,29 @@
 name: Crunchyroll daily Fresh Drops
 
-# Once a day, reads the nxsha anime listings and finds titles that were not seen before.
-# Those titles get firstSeen = today. They are shown in the "Fresh Drops" rail on the
-# Crunchyroll page (block between CR_DROPS markers in assets/crunchyroll/crunchyroll.html)
-# and become bell notifications (lib/notifications.ts reads data/crunchyroll-new-drops.json).
+# Once a day this keeps the "Fresh Drops" row on the Crunchyroll page current:
 #
-# The first run is a baseline: everything found then is marked and never notified.
+#   1. nxsha anime listings  -> titles the catalog has no route for
+#      (data/crunchyroll-new-drops.json + bell notifications, lib/notifications.ts)
+#   2. DeadToons schedule    -> today's + upcoming anime episodes, each with the
+#      Nxsha id the harvester verified, so every card in the row plays
+#      (data/deadtoons-schedule.json; scripts/harvest-deadtoons-schedule.mjs)
+#   3. both states          -> the rail block between CR_DROPS markers in
+#      assets/crunchyroll/crunchyroll.html (scripts/build-crunchyroll-new-drops.mjs)
 #
-# GitHub runs a "schedule" trigger only from the repository's default branch. Until this
-# workflow is on the default branch, the daily run does not start by itself; push and
-# manual triggers still work on this branch.
+# Every step degrades safely: a schedule harvest that finds nothing (site down or
+# changed shape) leaves the previous state in place, and the bake is verified
+# with --check, so the row is never blanked.
+#
+# The first run of a source is a baseline: everything found then is marked and
+# never counts as "new".
+#
+# GitHub runs a "schedule" trigger only from the repository's default branch, so
+# until this branch is merged the daily run has to be started manually
+# (`gh workflow run "Crunchyroll daily Fresh Drops" --ref <branch>`).
+#
+# Manual runs can pass probe=true to only write the diagnostics report for
+# deadtoons.sbs/schedule (the state is left untouched) — use it when the site
+# changes shape.
 #
 # Commits made with GITHUB_TOKEN do not start other workflows.
 on:
@@ -18,11 +32,18 @@ on:
     - cron: '0 4 * * *'
   push:
     branches:
-      - arena/12789678-netflix-ui
+      - arena/598565e9-netflix-ui
+      - main
     paths:
       - '.github/workflows/crunchyroll-daily-drops.yml'
       - 'scripts/build-crunchyroll-new-drops.mjs'
+      - 'scripts/harvest-deadtoons-schedule.mjs'
   workflow_dispatch:
+    inputs:
+      probe:
+        description: 'Only probe deadtoons.sbs/schedule (write the report, no state)'
+        type: boolean
+        default: false
 
 concurrency:
   group: crunchyroll-drops-${{ github.ref }}
@@ -34,7 +55,7 @@ permissions:
 jobs:
   drops:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Checkout the requested branch
         uses: actions/checkout@v4
@@ -46,18 +67,93 @@ jobs:
         with:
           node-version: 20
 
-      - name: Build the Fresh Drops from nxsha
+      - name: Probe deadtoons.sbs/schedule only
+        if: inputs.probe == true
+        run: node scripts/harvest-deadtoons-schedule.mjs --probe --verbose --out=data/deadtoons-schedule-probe.json
+
+      - name: Build the nxsha drops state
+        if: inputs.probe != true
         run: node scripts/build-crunchyroll-new-drops.mjs
 
-      - name: Commit the drops state and the page block
+      - name: Harvest the DeadToons release schedule
+        id: deadtoons
+        if: inputs.probe != true
+        continue-on-error: true
+        env:
+          # Repo Settings → Variables → DEADTOONS_BASE wins; default is deadtoons.sbs
+          DEADTOONS_BASE: ${{ vars.DEADTOONS_BASE }}
+        run: node scripts/harvest-deadtoons-schedule.mjs
+
+      # Probe runs — and harvests that found nothing — commit the diagnostics
+      # file so the site's shape is reviewable from the repository, not just the
+      # (short-lived) run log.
+      - name: Commit the probe report
+        if: inputs.probe == true || steps.deadtoons.outcome == 'failure'
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/deadtoons-schedule-probe.json
+          if git diff --cached --quiet; then
+            echo "Probe report unchanged."
+          else
+            git commit -m "chore(crunchyroll): record the deadtoons.sbs schedule probe report"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi
+
+      - name: Bake both states into the Fresh Drops row
+        if: inputs.probe != true
+        run: |
+          node scripts/build-crunchyroll-new-drops.mjs --from-state
+          node scripts/build-crunchyroll-new-drops.mjs --check
+
+      - name: Summarize the row
+        if: inputs.probe != true
+        run: |
+          node scripts/build-crunchyroll-new-drops.mjs --from-state --dry-run > row.json
+          node -e "
+            const rail = require('./row.json');
+            const lines = rail.items.map(i => '- ' + (i.fresh ? 'NEW ' : '') + i.title + ' (' + i.source + ', ' + i.firstSeen + ', nxsha:' + i.id + ')');
+            console.log('Fresh Drops (' + rail.mode + '):', lines.length + ' cards');
+            console.log(lines.join('\n'));
+          " | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.deadtoons.outcome }}" != "success" ]; then
+            echo "" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "DeadToons schedule harvest did not complete (site unreachable or changed) — the row kept the previous titles." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Commit the drops states and the page block
+        if: inputs.probe != true
         run: |
           git config user.name "netflix-catalog-bot"
           git config user.email "netflix-catalog-bot@users.noreply.github.com"
           git add data/crunchyroll-new-drops.json assets/crunchyroll/crunchyroll.html
+          # The schedule state only exists once a harvest has succeeded.
+          if [ -f data/deadtoons-schedule.json ]; then
+            git add data/deadtoons-schedule.json
+          else
+            echo "No DeadToons schedule state yet (harvest did not complete)."
+          fi
+          # The harvest always writes what the page looked like; keeping it in the
+          # repository is how a markup change is debugged without a fresh CI run.
+          if [ -f data/deadtoons-schedule-probe.json ]; then
+            git add data/deadtoons-schedule-probe.json
+          fi
           if git diff --cached --quiet; then
             echo "No change."
           else
-            git commit -m "chore(crunchyroll): refresh Fresh Drops from nxsha"
+            git commit -m "chore(crunchyroll): refresh Fresh Drops from nxsha + the DeadToons schedule"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin HEAD:"${{ github.ref_name }}"
           fi
+
+      - name: Trigger the production Vercel deploy hook when configured
+        if: inputs.probe != true && github.ref_name == 'main'
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL is not configured; relying on Vercel's Git integration."
+            exit 0
+          fi
+          curl --fail --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK_URL"

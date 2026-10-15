@@ -1,0 +1,576 @@
+{
+  "generated": "2026-10-15T08:27:11.189Z",
+  "source": "https://deadtoons.sbs/schedule",
+  "requests": [
+    {
+      "url": "https://deadtoons.sbs/schedule",
+      "status": 200,
+      "bytes": 126857,
+      "label": "plain"
+    },
+    {
+      "url": "https://deadtoons.sbs/schedule?v=1792052829843",
+      "status": 200,
+      "bytes": 126857,
+      "label": "fresh"
+    }
+  ],
+  "site": {
+    "url": "https://deadtoons.sbs/schedule",
+    "status": 200,
+    "bytes": 126857,
+    "markers": [
+      "S1 · Episode",
+      "Episode",
+      "Upcoming",
+      "Today"
+    ],
+    "hrefs": [
+      "/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2",
+      "/logo.png",
+      "/_next/static/chunks/40c3zvtsqh2jc.css",
+      "/_next/static/chunks/0iq1i69206cyl.js",
+      "/favicon.ico?favicon.12dnovj88pkao.ico",
+      "/icon.png?icon.1iqhzz-cn-5js.png",
+      "/apple-icon.png?apple-icon.1iqhzz-cn-5js.png",
+      "/",
+      "/popular",
+      "/schedule",
+      "/completed",
+      "/request",
+      "/posts/the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "/posts/the-ramparts-of-ice-season-2-2026",
+      "/posts/chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "/posts/jojo-s-bizarre-adventure-season-4-2018",
+      "/posts/black-clover-season-5-2026",
+      "https://t.me/+jZNbckjV9xE0NWM0",
+      "/posts/tomb-raider-king-season-1-multi-audio-hindi-tamil-telugu-eng-kor-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
+      "/posts/doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie",
+      "/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
+      "/posts/dragon-ball-super-beerus-season-1-2026",
+      "/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth",
+      "/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026",
+      "/posts/black-torch-season-1-2026",
+      "/posts/trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "/dmca",
+      "/about",
+      "/privacy-policy"
+    ],
+    "images": [
+      "/logo.png",
+      "https://image.tmdb.org/t/p/w154/vHTHQZy3JhgoVMkbXlOot5gOUzZ.jpg",
+      "https://image.tmdb.org/t/p/w154/bADzMfofNWYdxLnlqNuMkO6du34.jpg",
+      "https://image.tmdb.org/t/p/w154/eEspAI6TAhvWphW6Hrt8ObLlfNQ.jpg",
+      "https://image.tmdb.org/t/p/w154/kqeKlSd7o9BCbTraZsDnksRSfxm.jpg",
+      "https://image.tmdb.org/t/p/w154/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
+      "https://image.tmdb.org/t/p/w154/7qx7OwBZcI0dRWc8DrbtxY5IrlV.jpg",
+      "https://media.deadbase.host/w154/47649b78-39f0-435d-b971-af4b0cdc73fe.webp",
+      "https://image.tmdb.org/t/p/w154/qHyvpoxaJKpYRlYPfD8hg8pOvhP.jpg",
+      "https://image.tmdb.org/t/p/w154/3imj2VLU77bLOyJ4aPnEUlpJZDX.jpg",
+      "https://image.tmdb.org/t/p/w154/gob5oouCFv74rO3MaVAm3hKqc7r.jpg",
+      "https://image.tmdb.org/t/p/w154/efgmNqFfVRLsP1T9QG9cdddOaIr.jpg",
+      "https://image.tmdb.org/t/p/w154/Auw2NxgGThu6XAO2pyRoipMIDHG.jpg",
+      "/join-telegram.png"
+    ],
+    "episodeHits": 12,
+    "upcomingAt": 35379,
+    "rawHead": "<!DOCTYPE html><html lang=\"en\" class=\"changa_636d5c62-module__VB_YLW__variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/logo.png\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/40c3zvtsqh2jc.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/0iq1i69206cyl.js\"/><script src=\"/_next/static/chunks/27jktro2p5rq9.js\" async=\"\"></script><script src=\"/_next/static/chunks/07u_h6i539_wj.js\" async=\"\"></script><script src=\"/_next/static/chunks/0iec5q4ack_04.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-12dm4pjgasbr9.js\" async=\"\"></script><script src=\"/_next/static/chunks/0-jgp_eix67-2.js\" async=\"\"></script><script src=\"/_next/static/chunks/14mrh2-p_w84d.js\" async=\"\"></script><script src=\"/_next/static/chunks/11utg6uw0p4sh.js\" async=\"\"></script><script src=\"/_next/static/chunks/02fdl-fsfzdvm.js\" async=\"\"></script><meta name=\"next-size-adjust\" content=\"\"/><title>Release Schedule | Deadtoons | Deadtoons</title><meta name=\"description\" content=\"Deadtoons — anime and cartoons dubbed in Hindi, Tamil, Telugu.\"/><link rel=\"icon\" href=\"/favicon.ico?favicon.12dnovj88pkao.ico\" sizes=\"48x48\" type=\"image/x-icon\"/><link rel=\"icon\" href=\"/icon.png?icon.1iqhzz-cn-5js.png\" sizes=\"180x180\" type=\"image/p",
+    "rawBody": "ccent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Black Clover (2017) Season 02 - 04 Dual Audio [English-Japanese] 1080p 10Bit WEB-DL HD\\\"}]}],\\\"$L36\\\",\\\"$L37\\\",\\\"$L38\\\"]}]]}]]}]\\n\"])</script><script>self.__next_f.push([1,\"36:[\\\"$\\\",\\\"li\\\",\\\"the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"black-torch-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/black-torch-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"BLACK TORCH Season 1 (2026) Multi Audio [Hindi-English-Japanese]  Muse India | 1080p HQ \\u0026 720p x265, 720p \\u0026 480p x264\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Trapped in a Dating Sim Season 2 Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920\" integrity=\"sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
+    "payloadAt": 47730,
+    "payloadKeys": [
+      "crossOrigin",
+      "type",
+      "children",
+      "loading",
+      "className",
+      "rel",
+      "href",
+      "precedence",
+      "nonce",
+      "src",
+      "async",
+      "lang",
+      "suppressHydrationWarning",
+      "attribute",
+      "defaultTheme",
+      "enableSystem",
+      "parallelRouterKey",
+      "error",
+      "errorStyles",
+      "errorScripts",
+      "template",
+      "templateStyles",
+      "templateScripts",
+      "notFound",
+      "forbidden",
+      "unauthorized",
+      "name",
+      "hidden",
+      "content",
+      "charSet",
+      "tags",
+      "slug",
+      "genres",
+      "languages",
+      "otts",
+      "alt",
+      "width",
+      "height",
+      "action",
+      "placeholder"
+    ]
+  },
+  "parses": [
+    {
+      "label": "plain",
+      "url": "https://deadtoons.sbs/schedule",
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
+    },
+    {
+      "label": "fresh",
+      "url": "https://deadtoons.sbs/schedule?v=1792052829843",
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
+    }
+  ],
+  "resolved": 11,
+  "unresolved": 1,
+  "guides": [
+    {
+      "title": "The Frontier Lord Begins with Zero Subjects",
+      "key": "thefrontierlordbeginswithzerosubjects",
+      "id": "296437",
+      "season": 1,
+      "episodes": 12
+    },
+    {
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "key": "theexiledheavyknightknowshowtogamethesystem",
+      "id": "270603",
+      "season": 1,
+      "episodes": 26
+    },
+    {
+      "title": "The Ramparts of Ice",
+      "key": "therampartsofice",
+      "id": "283428",
+      "season": 2,
+      "error": "HTTP 404"
+    },
+    {
+      "title": "Chainsmoker Cat",
+      "key": "chainsmokercat",
+      "id": "312949",
+      "season": 1,
+      "episodes": 12
+    },
+    {
+      "title": "The Apothecary Diaries",
+      "key": "apothecary",
+      "id": "220542",
+      "season": 3,
+      "error": "HTTP 404"
+    },
+    {
+      "title": "Black Clover",
+      "key": "blackclover",
+      "id": "73223",
+      "season": 5,
+      "error": "HTTP 404"
+    },
+    {
+      "title": "PSYREN",
+      "key": "psyren",
+      "id": "297903",
+      "season": 1,
+      "episodes": 13
+    },
+    {
+      "title": "The Detective Is Already Dead",
+      "key": "thedetectiveisalreadydead",
+      "id": "117061",
+      "season": 2,
+      "episodes": 13
+    },
+    {
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "key": "theicebladesorcerershallruletheworld",
+      "id": "200777",
+      "season": 2,
+      "episodes": 12
+    },
+    {
+      "title": "Firefly Wedding",
+      "key": "fireflywedding",
+      "id": "320909",
+      "season": 1,
+      "episodes": 12
+    }
+  ],
+  "guidesSkipped": 1,
+  "items": [
+    {
+      "title": "The Frontier Lord Begins with Zero Subjects",
+      "season": 1,
+      "episode": 5,
+      "today": true,
+      "nx": {
+        "id": "296437",
+        "kind": "tv",
+        "seasons": {
+          "1": 5
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "season": 1,
+      "episode": 13,
+      "today": true,
+      "nx": {
+        "id": "270603",
+        "kind": "tv",
+        "seasons": {
+          "1": 13
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "The Ramparts of Ice",
+      "season": 2,
+      "episode": 3,
+      "today": true,
+      "nx": {
+        "id": "283428",
+        "kind": "tv",
+        "seasons": {
+          "2": 3
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "Chainsmoker Cat",
+      "season": 1,
+      "episode": 12,
+      "today": true,
+      "nx": {
+        "id": "312949",
+        "kind": "tv",
+        "seasons": {
+          "1": 12
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "JoJo's Bizarre Adventure",
+      "season": 4,
+      "episode": 5,
+      "today": true,
+      "nx": {
+        "id": "45790",
+        "kind": "tv",
+        "seasons": {
+          "1": 26,
+          "2": 48,
+          "3": 39,
+          "4": 39,
+          "5": 38,
+          "6": 12
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "title": "The Apothecary Diaries",
+      "season": 3,
+      "episode": 1,
+      "today": false,
+      "nx": {
+        "id": "220542",
+        "kind": "tv",
+        "seasons": {
+          "1": 60
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "title": "Black Clover",
+      "season": 5,
+      "episode": 1,
+      "today": false,
+      "nx": {
+        "id": "tt7441658",
+        "kind": "tv",
+        "seasons": {
+          "1": 170,
+          "2": 26
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "title": "PSYREN",
+      "season": 1,
+      "episode": 1,
+      "today": false,
+      "nx": {
+        "id": "297903",
+        "kind": "tv",
+        "seasons": {
+          "1": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "The Detective Is Already Dead",
+      "season": 2,
+      "episode": 1,
+      "today": false,
+      "nx": {
+        "id": "117061",
+        "kind": "tv",
+        "seasons": {
+          "2": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "season": 2,
+      "episode": 1,
+      "today": false,
+      "nx": {
+        "id": "200777",
+        "kind": "tv",
+        "seasons": {
+          "2": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "Firefly Wedding",
+      "season": 1,
+      "episode": 1,
+      "today": false,
+      "nx": {
+        "id": "320909",
+        "kind": "tv",
+        "seasons": {
+          "1": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    }
+  ],
+  "cards": [
+    {
+      "poster": true,
+      "alt": "Deadtoons India",
+      "href": "/",
+      "slug": "",
+      "title": "Deadtoons India",
+      "today": true,
+      "season": null,
+      "episode": null,
+      "time": "",
+      "date": "2026-10-15",
+      "reason": "no season/episode"
+    },
+    {
+      "poster": true,
+      "alt": "The Frontier Lord Begins with Zero Subjects",
+      "href": "/posts/the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "slug": "the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "title": "The Frontier Lord Begins with Zero Subjects",
+      "today": true,
+      "season": 1,
+      "episode": 5,
+      "time": "8:07 AM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Exiled Heavy Knight Knows How to Game the System",
+      "href": "/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "today": true,
+      "season": 1,
+      "episode": 13,
+      "time": "3:30 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Ramparts of Ice",
+      "href": "/posts/the-ramparts-of-ice-season-2-2026",
+      "slug": "the-ramparts-of-ice-season-2-2026",
+      "title": "The Ramparts of Ice",
+      "today": true,
+      "season": 2,
+      "episode": 3,
+      "time": "4:00 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Chainsmoker Cat",
+      "href": "/posts/chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "slug": "chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "title": "Chainsmoker Cat",
+      "today": true,
+      "season": 1,
+      "episode": 12,
+      "time": "5:00 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "JoJo's Bizarre Adventure",
+      "href": "/posts/jojo-s-bizarre-adventure-season-4-2018",
+      "slug": "jojo-s-bizarre-adventure-season-4-2018",
+      "title": "JoJo's Bizarre Adventure",
+      "today": true,
+      "season": 4,
+      "episode": 5,
+      "time": "5:30 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Apothecary Diaries",
+      "href": "",
+      "slug": "black-clover-season-5-2026",
+      "title": "The Apothecary Diaries",
+      "today": false,
+      "season": 3,
+      "episode": 1,
+      "time": "4:30 PM",
+      "date": "2026-10-23",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Black Clover",
+      "href": "/posts/black-clover-season-5-2026",
+      "slug": "black-clover-season-5-2026",
+      "title": "Black Clover",
+      "today": false,
+      "season": 5,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-24",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Super Timid Noble Girl",
+      "href": "",
+      "slug": "",
+      "title": "Super Timid Noble Girl",
+      "today": false,
+      "season": 1,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-25",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "PSYREN",
+      "href": "",
+      "slug": "",
+      "title": "PSYREN",
+      "today": false,
+      "season": 1,
+      "episode": 1,
+      "time": "3:00 PM",
+      "date": "2026-10-26",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Detective Is Already Dead",
+      "href": "",
+      "slug": "",
+      "title": "The Detective Is Already Dead",
+      "today": false,
+      "season": 2,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-28",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Iceblade Sorcerer Shall Rule the World",
+      "href": "",
+      "slug": "",
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "today": false,
+      "season": 2,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-29",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Firefly Wedding",
+      "href": "",
+      "slug": "",
+      "title": "Firefly Wedding",
+      "today": false,
+      "season": 1,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-30",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Join us on Telegram",
+      "href": "https://t.me/+jZNbckjV9xE0NWM0",
+      "slug": "",
+      "title": "Join us on Telegram",
+      "today": false,
+      "season": null,
+      "episode": null,
+      "time": "",
+      "date": "",
+      "reason": "no season/episode"
+    }
+  ]
+}
