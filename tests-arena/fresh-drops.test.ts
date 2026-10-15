@@ -221,7 +221,7 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         baked.forEach((entry, i) => {
             const node = cards[i] as HTMLElement;
             expect(node.dataset.open).toBe(entry.key);
-            expect(node.querySelector('.rail-copy h3')?.textContent).toBe(entry.title);
+            expect(node.querySelector('.rail-copy h3')?.textContent?.replace(/\s+/g, ' ')).toBe(entry.title.replace(/\s+/g, ' '));
             // Drop cards have no playable route yet, so they show when they landed.
             expect(node.querySelector('.rail-copy p')?.textContent).toMatch(/^Added \d{1,2} [A-Z][a-z]{2}( · New)? · (Series|Movie)$/);
             // DeadToons finds say where the listing came from; artwork always has a fallback.

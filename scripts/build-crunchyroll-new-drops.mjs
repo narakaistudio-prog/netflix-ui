@@ -109,7 +109,7 @@ export function decodeEntities(value) {
   return String(value ?? '')
     .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
-    .replace(/&(amp|lt|gt|quot|apos|nbsp);/gi, (_, name) => (
+    .replace(/&(amp|lt|gt|quot|apos|nbsp)\b;?/gi, (_, name) => (
       { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' }[name.toLowerCase()]
     ));
 }
@@ -173,6 +173,7 @@ export function collectRailPool(nxshaState, deadtoonsState) {
       rating: '',
       year: item.year || '',
       firstSeen: item.firstSeen || '',
+      siteUpdated: item.siteUpdated || '',
       baseline: !!item.baseline,
       url: item.url || '',
     });
@@ -240,8 +241,12 @@ export function selectRailItems(pool, limit = MAX_ROWS, knownTitles = new Set())
     .filter((item) => !isKnownTitle(item.title, knownTitles));
 
   const newestFirst = (a, b) => (a.firstSeen < b.firstSeen ? 1 : a.firstSeen > b.firstSeen ? -1 : 0);
+  // Within the same first-sighting day the listing's own last-update date decides,
+  // then DeadToons (the daily finds) ahead of nxsha, then the title.
+  const siteOrder = (a, b) => ((a.siteUpdated || '') < (b.siteUpdated || '') ? 1 : (a.siteUpdated || '') > (b.siteUpdated || '') ? -1 : 0);
   const compare = (a, b) =>
     newestFirst(a, b) ||
+    siteOrder(a, b) ||
     (SOURCE_RANK[a.source] ?? 9) - (SOURCE_RANK[b.source] ?? 9) ||
     (a.title < b.title ? -1 : a.title > b.title ? 1 : 0);
 

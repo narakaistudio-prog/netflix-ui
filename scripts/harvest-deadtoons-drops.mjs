@@ -36,7 +36,7 @@ const OUT_PATH = resolve(ROOT, 'data', 'deadtoons-drops.json');
 /** Drop this many listing pages at most when walking /page/N and search pages. */
 const MAX_LISTING_PAGES = 3;
 /** Post pages fetched for artwork / titles in one run. */
-const DEFAULT_MAX_ART = 60;
+const DEFAULT_MAX_ART = 150;
 /** Path segments that are navigation/listing pages, never a post. */
 const NAV_WORDS = new Set([
   'popular', 'series', 'movie', 'movies', 'anime', 'cartoon', 'cartoons', 'anime-list', 'ongoing',
@@ -66,7 +66,7 @@ const ANIME_SIGNAL = /\b(anime|hindi|dub|dubbed|dual audio|multi audio|episode|e
 /** Junk that trails a post slug/title (case-insensitive: listings shout). */
 const TAGS_RE = [
   /\b(hindi|hin|english|eng|japanese|jap|tamil|telugu|malayalam|kannada|bengali|urdu|punjabi|korean)\b/gi,
-  /\b(dubbed|dub|dual[\s-]?audio|multi[\s-]?audio|original[\s-]?audio|audios?)\b/gi,
+  /\b(dubbed|dub|dual[\s-]?audio|multi[\s-]?audio|single[\s-]?audio|original[\s-]?audio|fan[\s-]?dub(?:bed)?|audios?)\b/gi,
   /\b(web[\s-]?dl|web[\s-]?rip|hdrip|bluray|blu[\s-]?ray|hdtv|hdcam|dvdrip|remux|hevc|x264|x265|h\.?264|h\.?265|10[\s-]?bit|aac|esubs?|subs?|subbed|mmsub|softsub)\b/gi,
   /\b(2160p|1440p|1080p|720p|576p|480p|360p|4k|uhd|full[\s-]?hd)\b/gi,
   /\b(zippyshare|gdrive|google[\s-]?drive|mega\.nz|telegram|torrent|direct[\s-]?link)\b/gi,
@@ -85,7 +85,7 @@ export function decodeEntities(value) {
   return String(value ?? '')
     .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
-    .replace(/&(amp|lt|gt|quot|apos|nbsp|#39|rsquo|lsquo|ldquo|rdquo);/gi, (entity) => ({
+    .replace(/&(amp|lt|gt|quot|apos|nbsp|#39|rsquo|lsquo|ldquo|rdquo)\b;?/gi, (entity) => ({
       amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', '#39': "'",
       rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”',
     }[entity.toLowerCase()] ?? entity));
@@ -103,10 +103,12 @@ export function titleFromSlug(slug) {
   let text = decodeEntities(String(slug || ''))
     .replace(/\.(html?|php|aspx?)$/i, '')
     .replace(/[+_/]+/g, ' ')
+    // "jojo-s-bizarre" / "masamune-kun-s-revenge" are possessives, not words.
+    .replace(/([a-z0-9])-s-/gi, "$1's ")
     .replace(/-+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
-  return cleanAnimeTitle(text);
+  return cleanAnimeTitle(text, { slug: true });
 }
 
 /**
@@ -129,7 +131,7 @@ export function titleCase(text) {
     .join(' ');
 }
 
-export function cleanAnimeTitle(raw) {
+export function cleanAnimeTitle(raw, { slug = false } = {}) {
   let text = decodeEntities(stripTags(raw)).replace(/\s*[|–—]\s*DeadToons.*$/i, ' ');
   const year = (text.match(YEAR_RE) || [])[0] || '';
   text = text
@@ -138,6 +140,12 @@ export function cleanAnimeTitle(raw) {
     .replace(/\{[^}]*\}/g, ' ')
     .replace(/\b(19|20)\d{2}\b/g, ' ');
   for (const re of TAGS_RE) text = text.replace(re, ' ');
+  // Slugs carry bare tech words the listing titles keep ("…episodes… hd…").
+  if (slug) {
+    text = text.replace(/\b(episodes?|eps?|hd|sd|uhd|season|seasons)\b/gi, ' ');
+    // "…-2026-movie" trails the year; the title itself already says Movie.
+    text = text.replace(/[\s-]+(movie|film)\s*$/i, ' ');
+  }
   text = text
     .replace(/[^A-Za-z0-9'&!?:.\s-]/g, ' ')
     .replace(/\s*[-:]\s*$/g, '')
@@ -362,6 +370,7 @@ export function mergeDropItem(items, item, day, baselineRun) {
     items[key] = {
       ...existing,
       title: item.title || existing.title,
+      siteUpdated: item.date || existing.siteUpdated || '',
       img: item.img || existing.img,
       url: item.url || existing.url,
       tags: [...new Set([...(existing.tags || []), ...(item.tags || [])])],
@@ -376,7 +385,10 @@ export function mergeDropItem(items, item, day, baselineRun) {
     img: item.img || '',
     year: item.year || '',
     tags: item.tags || [],
-    firstSeen: item.date || day,
+    // firstSeen is when this harvest first saw the title — the site's own
+    // lastmod ("siteUpdated") is interesting, but it is not our first sighting.
+    firstSeen: day,
+    siteUpdated: item.date || '',
     baseline: baselineRun,
   };
   return items[key];
@@ -786,6 +798,17 @@ function selfTest() {
     'https://deadtoons.sbs/posts',
   ].every((u) => !isPostUrl(u, 'https://deadtoons.sbs')));
   check('candidate title from slug', titleFromSlug('black-torch-season-1-2026').title === 'Black Torch');
+  check('slug possessive', titleFromSlug('jojo-s-bizarre-adventure-season-4-2018').title === "Jojo's Bizarre Adventure", titleFromSlug('jojo-s-bizarre-adventure-season-4-2018').title);
+  check(
+    'slug tech tail',
+    titleFromSlug('re-zero-starting-life-in-another-world-season-4-episodes-multi-audio-hindi-english-japanese-480p-720p-1080p-hd-web-dl-10bit-hevc-esub').title === 'Re Zero Starting Life in Another World',
+    titleFromSlug('re-zero-starting-life-in-another-world-season-4-episodes-multi-audio-hindi-english-japanese-480p-720p-1080p-hd-web-dl-10bit-hevc-esub').title,
+  );
+  check('firstSeen is harvest day', (() => {
+    const st = { items: {} };
+    mergeDropItem(st.items, { slug: 'x-show', title: 'X Show', url: 'https://deadtoons.sbs/posts/x-show', date: '2026-09-01' }, '2026-10-15', false);
+    return st.items['x-show'].firstSeen === '2026-10-15' && st.items['x-show'].siteUpdated === '2026-09-01';
+  })());
   check('candidate year from slug', titleFromSlug('blue-box-season-2-2026').year === '2026');
   const pruneState = {
     'genre-action': { slug: 'genre-action', title: 'Action Anime', url: 'https://deadtoons.sbs/genre/action' },
