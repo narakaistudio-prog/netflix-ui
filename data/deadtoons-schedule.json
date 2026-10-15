@@ -1,0 +1,347 @@
+{
+  "updated": "2026-10-15",
+  "source": "https://deadtoons.sbs/schedule",
+  "today": "2026-10-15",
+  "items": [
+    {
+      "key": "sch-the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "title": "The Frontier Lord Begins with Zero Subjects",
+      "slug": "the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "url": "https://deadtoons.sbs/posts/the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "img": "https://image.tmdb.org/t/p/w300/vHTHQZy3JhgoVMkbXlOot5gOUzZ.jpg",
+      "season": 1,
+      "episode": 5,
+      "audio": "",
+      "day": "The",
+      "date": "2026-10-15",
+      "time": "8:07 AM",
+      "today": true,
+      "nx": {
+        "id": "296437",
+        "kind": "tv",
+        "seasons": {
+          "1": 5
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "url": "https://deadtoons.sbs/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "img": "https://image.tmdb.org/t/p/w300/bADzMfofNWYdxLnlqNuMkO6du34.jpg",
+      "season": 1,
+      "episode": 13,
+      "audio": "",
+      "day": "The",
+      "date": "2026-10-15",
+      "time": "3:30 PM",
+      "today": true,
+      "nx": {
+        "id": "270603",
+        "kind": "tv",
+        "seasons": {
+          "1": 13
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-the-ramparts-of-ice-season-2-2026",
+      "title": "The Ramparts of Ice",
+      "slug": "the-ramparts-of-ice-season-2-2026",
+      "url": "https://deadtoons.sbs/posts/the-ramparts-of-ice-season-2-2026",
+      "img": "https://image.tmdb.org/t/p/w300/eEspAI6TAhvWphW6Hrt8ObLlfNQ.jpg",
+      "season": 2,
+      "episode": 3,
+      "audio": "",
+      "day": "The",
+      "date": "2026-10-15",
+      "time": "4:00 PM",
+      "today": true,
+      "nx": {
+        "id": "283428",
+        "kind": "tv",
+        "seasons": {
+          "2": 3
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "title": "Chainsmoker Cat",
+      "slug": "chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "url": "https://deadtoons.sbs/posts/chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "img": "https://image.tmdb.org/t/p/w300/kqeKlSd7o9BCbTraZsDnksRSfxm.jpg",
+      "season": 1,
+      "episode": 12,
+      "audio": "",
+      "day": "Cat",
+      "date": "2026-10-15",
+      "time": "5:00 PM",
+      "today": true,
+      "nx": {
+        "id": "312949",
+        "kind": "tv",
+        "seasons": {
+          "1": 12
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-black-clover-season-5-2026",
+      "title": "The Apothecary Diaries",
+      "slug": "black-clover-season-5-2026",
+      "url": "https://deadtoons.sbs/posts/black-clover-season-5-2026",
+      "img": "https://image.tmdb.org/t/p/w300/7qx7OwBZcI0dRWc8DrbtxY5IrlV.jpg",
+      "season": 3,
+      "episode": 1,
+      "audio": "Hin-Tam-Tel-Eng-Jap",
+      "day": "",
+      "date": "2026-10-23",
+      "time": "4:30 PM",
+      "today": false,
+      "nx": {
+        "id": "220542",
+        "kind": "tv",
+        "seasons": {
+          "1": 60
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "key": "sch-black-clover-season-5-2026",
+      "title": "Black Clover",
+      "slug": "black-clover-season-5-2026",
+      "url": "https://deadtoons.sbs/posts/black-clover-season-5-2026",
+      "img": "https://media.deadbase.host/w300/47649b78-39f0-435d-b971-af4b0cdc73fe.webp",
+      "season": 5,
+      "episode": 1,
+      "audio": "Hin-Tam-Tel-Eng-Jap",
+      "day": "",
+      "date": "2026-10-24",
+      "time": "7:00 AM",
+      "today": false,
+      "nx": {
+        "id": "tt7441658",
+        "kind": "tv",
+        "seasons": {
+          "1": 170,
+          "2": 26
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "key": "sch-psyren:upcoming",
+      "title": "PSYREN",
+      "slug": "",
+      "url": "",
+      "img": "https://image.tmdb.org/t/p/w300/3imj2VLU77bLOyJ4aPnEUlpJZDX.jpg",
+      "season": 1,
+      "episode": 1,
+      "audio": "Hindi-Eng-Jap",
+      "day": "",
+      "date": "2026-10-26",
+      "time": "3:00 PM",
+      "today": false,
+      "nx": {
+        "id": "297903",
+        "kind": "tv",
+        "seasons": {
+          "1": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-thedetectiveisalreadydead:upcoming",
+      "title": "The Detective Is Already Dead",
+      "slug": "",
+      "url": "",
+      "img": "https://image.tmdb.org/t/p/w300/gob5oouCFv74rO3MaVAm3hKqc7r.jpg",
+      "season": 2,
+      "episode": 1,
+      "audio": "Hindi-Eng-Jap",
+      "day": "",
+      "date": "2026-10-28",
+      "time": "7:00 AM",
+      "today": false,
+      "nx": {
+        "id": "117061",
+        "kind": "tv",
+        "seasons": {
+          "2": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-theicebladesorcerershallruletheworld:upcoming",
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "slug": "",
+      "url": "",
+      "img": "https://image.tmdb.org/t/p/w300/efgmNqFfVRLsP1T9QG9cdddOaIr.jpg",
+      "season": 2,
+      "episode": 1,
+      "audio": "Hindi-Eng-Jap",
+      "day": "",
+      "date": "2026-10-29",
+      "time": "7:00 AM",
+      "today": false,
+      "nx": {
+        "id": "200777",
+        "kind": "tv",
+        "seasons": {
+          "2": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "key": "sch-fireflywedding:upcoming",
+      "title": "Firefly Wedding",
+      "slug": "",
+      "url": "",
+      "img": "https://image.tmdb.org/t/p/w300/Auw2NxgGThu6XAO2pyRoipMIDHG.jpg",
+      "season": 1,
+      "episode": 1,
+      "audio": "Hin-Tam-Tel-Eng-Jap",
+      "day": "",
+      "date": "2026-10-30",
+      "time": "7:00 AM",
+      "today": false,
+      "nx": {
+        "id": "320909",
+        "kind": "tv",
+        "seasons": {
+          "1": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    }
+  ],
+  "resolved": {
+    "thefrontierlordbeginswithzerosubjects": {
+      "id": "296437",
+      "kind": "tv",
+      "seasons": {
+        "1": 5
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "theexiledheavyknightknowshowtogamethesystem": {
+      "id": "270603",
+      "kind": "tv",
+      "seasons": {
+        "1": 13
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "therampartsofice": {
+      "id": "283428",
+      "kind": "tv",
+      "seasons": {
+        "2": 3
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "chainsmokercat": {
+      "id": "312949",
+      "kind": "tv",
+      "seasons": {
+        "1": 12
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "jojox27sbizarreadventure": {
+      "checked": "2026-10-15",
+      "tried": []
+    },
+    "theapothecarydiaries": {
+      "id": "220542",
+      "kind": "tv",
+      "seasons": {
+        "1": 60
+      },
+      "from": "catalog",
+      "checked": "2026-10-15"
+    },
+    "blackclover": {
+      "id": "tt7441658",
+      "kind": "tv",
+      "seasons": {
+        "1": 170,
+        "2": 26
+      },
+      "from": "catalog",
+      "checked": "2026-10-15"
+    },
+    "supertimidnoblegirl": {
+      "checked": "2026-10-15",
+      "tried": []
+    },
+    "psyren": {
+      "id": "297903",
+      "kind": "tv",
+      "seasons": {
+        "1": 1
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "thedetectiveisalreadydead": {
+      "id": "117061",
+      "kind": "tv",
+      "seasons": {
+        "2": 1
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "theicebladesorcerershallruletheworld": {
+      "id": "200777",
+      "kind": "tv",
+      "seasons": {
+        "2": 1
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    },
+    "fireflywedding": {
+      "id": "320909",
+      "kind": "tv",
+      "seasons": {
+        "1": 1
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-15"
+    }
+  },
+  "skipped": [
+    {
+      "title": "Deadtoons India",
+      "reason": "schedule: no season/episode"
+    },
+    {
+      "title": "Join us on Telegram",
+      "reason": "schedule: no season/episode"
+    },
+    {
+      "title": "JoJo&#x27;s Bizarre Adventure",
+      "reason": "nxsha: no verified id"
+    },
+    {
+      "title": "Super Timid Noble Girl",
+      "reason": "nxsha: no verified id"
+    }
+  ]
+}
