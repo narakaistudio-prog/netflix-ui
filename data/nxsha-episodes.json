@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-14T04:51:38.053Z",
+    "generatedAt": "2026-10-15T04:36:20.788Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
@@ -1313,7 +1313,8 @@
         {
           "season": 1,
           "episode": 53,
-          "title": "Episode 53",
+          "title": "Crack a Smile",
+          "image": "https://image.tmdb.org/t/p/w780/wZjUQZKvDU5298FYMinRuMVZCdg.jpg",
           "airDate": "2026-10-17"
         },
         {
@@ -40935,7 +40936,7 @@
         {
           "season": 6,
           "episode": 5,
-          "title": "Episode 5",
+          "title": "The Terrorist from a Faraway Country",
           "airDate": "2026-10-16"
         },
         {

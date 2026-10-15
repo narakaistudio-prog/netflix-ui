@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T04:51:38.131Z",
+  "generatedAt": "2026-10-15T04:36:20.861Z",
   "titles": [
     {
       "key": "aot",
@@ -4634,7 +4634,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13552,
+      "bytes": 13638,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -4644,7 +4644,7 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 87507,
+      "bytes": 88072,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
         "https://web.nxsha.app/movie/1441228",
