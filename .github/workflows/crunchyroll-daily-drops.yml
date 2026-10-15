@@ -66,7 +66,23 @@ jobs:
 
       - name: Probe deadtoons.sbs only
         if: inputs.probe == true
-        run: node scripts/harvest-deadtoons-drops.mjs --probe --verbose
+        run: node scripts/harvest-deadtoons-drops.mjs --probe --verbose --out=data/deadtoons-probe.json
+
+      # Probe runs commit the diagnostics file so the site's shape is reviewable
+      # from the repository (not just the run log).
+      - name: Commit the probe report
+        if: inputs.probe == true
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/deadtoons-probe.json
+          if git diff --cached --quiet; then
+            echo "Probe report unchanged."
+          else
+            git commit -m "chore(crunchyroll): record deadtoons.sbs probe report"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi
 
       - name: Build the nxsha drops state
         if: inputs.probe != true

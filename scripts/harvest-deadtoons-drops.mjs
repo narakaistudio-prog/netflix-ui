@@ -20,7 +20,7 @@
  *
  * Usage:
  *   node scripts/harvest-deadtoons-drops.mjs [--base=<url>] [--limit=N]
- *        [--max-art=N] [--dry-run] [--probe] [--verbose]
+ *        [--max-art=N] [--dry-run] [--probe] [--verbose] [--out=FILE]
  *   node scripts/harvest-deadtoons-drops.mjs --self-test    # offline parsers
  *
  * Env: DEADTOONS_BASE  site root (default https://deadtoons.sbs)
@@ -527,7 +527,56 @@ async function harvest({ base, limit, maxArt, verbose, probe }) {
   return { items, probe: requests };
 }
 
-async function probeSite(base, verbose) {
+/** All same-host links on a page (diagnostics: shows what the listing really links to). */
+export function pageHrefs(html, base) {
+  const host = hostOf(base);
+  const out = [];
+  const seen = new Set();
+  for (const m of String(html || '').matchAll(/<a\b[^>]*href=("|')([^"']+)\1/gi)) {
+    const url = absolute(m[2], base);
+    if (!url || !sameHost(url, host) || seen.has(url)) continue;
+    seen.add(url);
+    out.push(url.replace(base, '') || '/');
+    if (out.length >= 80) break;
+  }
+  return out;
+}
+
+/** Same-host image URLs on a page (diagnostics). */
+export function pageImages(html, base) {
+  const host = hostOf(base);
+  const out = [];
+  const seen = new Set();
+  for (const m of String(html || '').matchAll(/<img\b[^>]*\bsrc=("|')([^"']+)\1/gi)) {
+    const url = absolute(m[2], base);
+    if (!url || !sameHost(url, host) || seen.has(url)) continue;
+    seen.add(url);
+    out.push(url);
+    if (out.length >= 20) break;
+  }
+  return out;
+}
+
+/** Framework/marker sniffing (diagnostics: is the HTML server-rendered?). */
+export function pageMarkers(html) {
+  const text = String(html || '');
+  const markers = [];
+  for (const [name, re] of [
+    ['__NEXT_DATA__', /__NEXT_DATA__/],
+    ['window.__NUXT__', /window\.__NUXT__/],
+    ['wp-content', /wp-content/],
+    ['wp-json', /wp-json/],
+    ['vuejs', /data-v-[0-9a-f]{6,}/i],
+    ['react-root', /data-reactroot|id="root"/i],
+    ['jsonld', /application\/ld\+json/i],
+    ['load-more', /load[\s-]?more|infinite/i],
+  ]) {
+    if (re.test(text)) markers.push(name);
+  }
+  return markers;
+}
+
+async function probeSite(base, verbose, outFile) {
   console.log(`deadtoons: probing ${base}`);
   const requests = [];
   const paths = [
@@ -563,6 +612,28 @@ async function probeSite(base, verbose) {
   }
   const usable = requests.filter((r) => typeof r.status === 'number' && r.status < 400 && r.bytes > 200).length;
   console.log(`deadtoons: probe done — ${usable}/${requests.length} endpoints reachable`);
+
+  const report = {
+    base,
+    updated: dropsDate(),
+    endpoints: requests.map((r) => ({
+      path: r.url.replace(base, '') || '/',
+      status: r.status,
+      type: r.type,
+      bytes: r.bytes,
+      markers: pageMarkers(r.body || ''),
+      hrefs: pageHrefs(r.body || '', base).slice(0, 40),
+      images: pageImages(r.body || '', base).slice(0, 10),
+      restTitles: parseRestPosts(r.body || '', base).slice(0, 5).map((p) => p.title),
+      sitemapLocs: parseSitemapXml(r.body || '').slice(0, 10).map((s2) => s2.url),
+      listings: parseHtmlListing(r.body || '', base).slice(0, 10).map((p) => ({ title: p.title, url: p.url, img: p.img })),
+      rawHead: String(r.body || '').replace(/\s+/g, ' ').slice(0, 900),
+    })),
+  };
+  if (outFile) {
+    writeFileSync(outFile, JSON.stringify(report, null, 2) + '\n');
+    console.log(`deadtoons: probe report written to ${outFile}`);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -667,7 +738,7 @@ async function main() {
   const probe = argv.includes('--probe');
 
   if (probe) {
-    await probeSite(base, verbose);
+    await probeSite(base, verbose, get('out'));
     return;
   }
 
