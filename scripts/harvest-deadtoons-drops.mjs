@@ -20,7 +20,7 @@
  *
  * Usage:
  *   node scripts/harvest-deadtoons-drops.mjs [--base=<url>] [--limit=N]
- *        [--max-art=N] [--dry-run] [--probe] [--verbose] [--out=FILE]
+ *        [--max-art=N] [--dry-run] [--probe] [--verbose] [--out=FILE]\n *   --out also sets where a harvest run writes its diagnostics report\n *   (default data/deadtoons-probe.json, committed when a harvest finds nothing)
  *   node scripts/harvest-deadtoons-drops.mjs --self-test    # offline parsers
  *
  * Env: DEADTOONS_BASE  site root (default https://deadtoons.sbs)
@@ -37,9 +37,21 @@ const OUT_PATH = resolve(ROOT, 'data', 'deadtoons-drops.json');
 const MAX_LISTING_PAGES = 3;
 /** Post pages fetched for artwork / titles in one run. */
 const DEFAULT_MAX_ART = 60;
-/** Same-origin paths that never hold an anime post. */
-const SKIP_PATH = /^\/(wp-|feed|comments|tag|category\/[^/]*$|author|page\/|privacy|dmca|contact|about|how-to|disclaimer|request|sitemap|anime-list)/i;
-const LISTING_HINTS = [/^\/?$/, /^\/anime\/?$/i, /^\/category\/anime\/?$/i, /^\/search\//i, /^\/\?s=/i, /^\/page\/\d+\/?$/i];
+/** Path segments that are navigation/listing pages, never a post. */
+const NAV_WORDS = new Set([
+  'popular', 'series', 'movie', 'movies', 'anime', 'cartoon', 'cartoons', 'anime-list', 'ongoing',
+  'completed', 'home', 'index', 'genre', 'genres', 'trending', 'latest', 'new', 'all', 'upcoming',
+  'schedule', 'dubbed', 'subbed', 'hindi', 'english', 'blog', 'news', 'top', 'top-rated', 'search',
+  'watch', 'list', 'dmca', 'privacy', 'contact', 'about', 'login', 'register', 'signup', 'profile',
+  'random', 'tag', 'tags', 'category', 'categories', 'author', 'page', 'sitemap', 'rss', 'feed', 'api',
+  'tv', 'shows', 'episodes', 'episode', 'season', 'seasons', 'type', 'types', 'quality', 'qualities',
+  'recently-added', 'most-popular', 'spotlight', 'collection', 'collections', 'request', 'requests',
+  'disclaimer', 'faq', 'terms', 'policy', 'rules', 'help', 'support', 'donate', 'discord', 'telegram',
+  'how-to', 'guide', 'report', 'dmca-policy', 'load', 'more',
+]);
+/** First path segments that are infrastructure, not content. */
+const SKIP_PREFIX = new Set(['wp-json', 'wp-content', 'wp-admin', 'wp-includes', 'api', 'static', 'assets', '_next', 'cdn', 'images', 'img', 'uploads', 'user', 'users', 'account', 'auth']);
+const LISTING_HINTS = [/^\/?$/, /^\/search\//i, /^\/\?s=/i, /^\/page\/\d+\/?$/i, /^\/p\/\d+\/?$/i];
 /** Titles we never rail: adult listings and non-anime noise. */
 const TITLE_BLOCK = /\b(harem camp|overflow|hentai|ecchi|nsfw|porn|xxx|sex|nude|adult)\b/i;
 const NON_ANIME = /\b(software|apk|mod app|game|wallpaper|cricket|football|news|lyrics|ringtone|tutorial)\b/i;
@@ -240,7 +252,13 @@ export function pageTitle(html) {
   return title ? stripTags(title[1]) : '';
 }
 
-/** Is this same-host URL a post (not a listing, feed, asset or admin page)? */
+/**
+ * Is this same-host URL an anime post (not a nav section, feed, asset or admin page)?
+ *
+ * Post URLs come in several shapes on anime sites — `/slug/`, `/series/slug/`,
+ * `/watch/slug-1x2/` — so up to three segments are allowed as long as the last
+ * one is a real slug and no segment is a known navigation word.
+ */
 export function isPostUrl(url, base = '') {
   let u;
   try {
@@ -249,13 +267,21 @@ export function isPostUrl(url, base = '') {
     return false;
   }
   if (u.search || u.hash) return false;
-  if (/\/[^/]+\/?$/.test(u.pathname) === false) return false;
-  if (/\/(wp-json|wp-content|wp-admin|wp-includes|feed|rss)/i.test(u.pathname)) return false;
-  if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|xml|json|txt|mp4|zip|apk)$/i.test(u.pathname)) return false;
-  if (SKIP_PATH.test(u.pathname)) return false;
-  if (LISTING_HINTS.some((re) => re.test(u.pathname) || re.test(u.pathname + u.search))) return false;
-  const slug = u.pathname.replace(/^\/|\/$/g, '');
-  if (slug.length < 3 || slug.split('/').length > 1) return false;
+  if (/\.(?:css|js|png|jpe?g|webp|gif|svg|ico|woff2?|xml|json|txt|mp4|zip|apk|pdf)$/i.test(u.pathname)) return false;
+  if (LISTING_HINTS.some((re) => re.test(u.pathname))) return false;
+
+  const parts = u.pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
+  if (!parts.length || parts.length > 3) return false;
+  if (SKIP_PREFIX.has(parts[0].toLowerCase())) return false;
+
+  const last = parts[parts.length - 1];
+  if (last.length < 3 || /^\d+$/.test(last)) return false;
+  if (NAV_WORDS.has(last.toLowerCase())) return false;
+  // A nav-like parent ("/series") with no slug behind it never reaches here.
+  if (parts.length > 1 && NAV_WORDS.has(parts[0].toLowerCase()) && !/\d/.test(last) && !ANIME_SIGNAL.test(last)) {
+    // /anime/naruto/ is content; /series/page-2/ is not.
+    if (/^(page|p|\d+)$/i.test(parts[1] || '')) return false;
+  }
   return true;
 }
 
@@ -337,7 +363,7 @@ export function mergeDropItem(items, item, day, baselineRun) {
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function fetchText(url, { timeoutMs = 20000, retries = 1, probe = null } = {}) {
+async function fetchText(url, { timeoutMs = 20000, retries = 1, probe = null, requests = null } = {}) {
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
@@ -347,7 +373,9 @@ async function fetchText(url, { timeoutMs = 20000, retries = 1, probe = null } =
         signal: AbortSignal.timeout(timeoutMs),
       });
       const body = await res.text();
-      if (probe) probe.push({ url, status: res.status, type: res.headers.get('content-type') || '', bytes: body.length, body });
+      const record = { url, status: res.status, type: res.headers.get('content-type') || '', bytes: body.length, body };
+      if (probe) probe.push(record);
+      if (requests) requests.push(record);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return body;
     } catch (err) {
@@ -358,14 +386,14 @@ async function fetchText(url, { timeoutMs = 20000, retries = 1, probe = null } =
   throw lastError;
 }
 
-async function discoverFromRest(base, verbose) {
+async function discoverFromRest(base, verbose, requests = null) {
   const items = [];
   for (const endpoint of [
     '/wp-json/wp/v2/posts?per_page=100&orderby=date&order=desc',
     '/wp-json/wp/v2/posts?per_page=100&orderby=date&order=desc&page=2',
   ]) {
     try {
-      const raw = await fetchText(base + endpoint);
+      const raw = await fetchText(base + endpoint, { requests });
       const rows = parseRestPosts(raw, base);
       if (verbose) console.log(`  REST ${endpoint.split('?')[0]} → ${rows.length} posts`);
       if (!rows.length) break;
@@ -378,7 +406,7 @@ async function discoverFromRest(base, verbose) {
   return items;
 }
 
-async function discoverFromSitemaps(base, verbose) {
+async function discoverFromSitemaps(base, verbose, requests = null) {
   const seen = [];
   const queue = ['/wp-sitemap.xml', '/sitemap_index.xml', '/post-sitemap.xml', '/sitemap.xml'];
   const visited = new Set();
@@ -387,7 +415,7 @@ async function discoverFromSitemaps(base, verbose) {
     if (visited.has(path)) continue;
     visited.add(path);
     try {
-      const xml = await fetchText(base + path, { retries: 0 });
+      const xml = await fetchText(base + path, { retries: 0, requests });
       const rows = parseSitemapXml(xml);
       const nested = rows.filter((r) => r.nested || /\.xml($|\?)/i.test(r.url));
       const posts = rows.filter((r) => !nested.includes(r));
@@ -397,7 +425,7 @@ async function discoverFromSitemaps(base, verbose) {
         if (visited.has(nestedPath)) continue;
         visited.add(nestedPath);
         try {
-          const child = parseSitemapXml(await fetchText(nestedPath, { retries: 0 }));
+          const child = parseSitemapXml(await fetchText(nestedPath, { retries: 0, requests }));
           posts.push(...child.filter((r) => !r.nested));
         } catch (err) {
           if (verbose) console.log(`  nested sitemap miss ${nestedPath}: ${err.message}`);
@@ -412,12 +440,12 @@ async function discoverFromSitemaps(base, verbose) {
   return seen.map((r) => ({ url: r.url, date: r.lastmod }));
 }
 
-async function discoverFromHtml(base, verbose) {
+async function discoverFromHtml(base, verbose, requests = null) {
   const found = [];
   for (const path of ['/', '/?s=anime', '/anime/', '/category/anime/', '/page/2/']) {
     let html;
     try {
-      html = await fetchText(base + path, { retries: 0 });
+      html = await fetchText(base + path, { retries: 0, requests });
     } catch (err) {
       if (verbose) console.log(`  listing miss ${path}: ${err.message}`);
       continue;
@@ -430,7 +458,7 @@ async function discoverFromHtml(base, verbose) {
   // Extra listing pages only when the site paginates.
   for (let page = 2; page <= MAX_LISTING_PAGES; page++) {
     try {
-      const items = parseHtmlListing(await fetchText(`${base}/page/${page}/`, { retries: 0 }), base);
+      const items = parseHtmlListing(await fetchText(`${base}/page/${page}/`, { retries: 0, requests }), base);
       if (!items.length) break;
       if (verbose) console.log(`  listing /page/${page}/ → ${items.length} post links`);
       found.push(...items);
@@ -453,8 +481,7 @@ function slugFromUrl(url) {
 /* Harvest                                                             */
 /* ------------------------------------------------------------------ */
 
-async function harvest({ base, limit, maxArt, verbose, probe }) {
-  const requests = probe ? [] : null;
+async function harvest({ base, limit, maxArt, verbose, requests }) {
   const candidates = new Map();
   const addCandidate = (url, title, img, date) => {
     if (!url || !isPostUrl(url, base)) return;
@@ -471,20 +498,20 @@ async function harvest({ base, limit, maxArt, verbose, probe }) {
   };
 
   console.log('deadtoons: discovery');
-  const rest = await discoverFromRest(base, verbose).catch((err) => (console.log(`  REST failed: ${err.message}`), []));
+  const rest = await discoverFromRest(base, verbose, requests).catch((err) => (console.log(`  REST failed: ${err.message}`), []));
   for (const row of rest) {
     const clean = cleanAnimeTitle(row.title || titleFromSlug(slugFromUrl(row.url)).title);
     addCandidate(row.url, isAnimeListing(row.title, { animeScoped: true }) ? clean.title : '', row.img, row.date);
   }
   if (!candidates.size) {
-    const sitemap = await discoverFromSitemaps(base, verbose).catch((err) => (console.log(`  sitemaps failed: ${err.message}`), []));
+    const sitemap = await discoverFromSitemaps(base, verbose, requests).catch((err) => (console.log(`  sitemaps failed: ${err.message}`), []));
     for (const row of sitemap) {
       const clean = titleFromSlug(slugFromUrl(row.url));
       addCandidate(row.url, isAnimeListing(clean.title, { animeScoped: true }) ? clean.title : '', '', row.date);
     }
   }
   if (!candidates.size) {
-    const html = await discoverFromHtml(base, verbose).catch((err) => (console.log(`  listings failed: ${err.message}`), []));
+    const html = await discoverFromHtml(base, verbose, requests).catch((err) => (console.log(`  listings failed: ${err.message}`), []));
     for (const row of html) addCandidate(row.url, row.title, row.img, '');
   }
 
@@ -512,7 +539,7 @@ async function harvest({ base, limit, maxArt, verbose, probe }) {
     if (artFetches >= maxArt) break;
     artFetches += 1;
     try {
-      const html = await fetchText(item.url, { timeoutMs: 15000, retries: 0 });
+      const html = await fetchText(item.url, { timeoutMs: 15000, retries: 0, requests });
       item.img = extractPostImage(html);
       const title = cleanAnimeTitle(pageTitle(html) || '');
       if (title.title) item.title = title.title;
@@ -524,7 +551,7 @@ async function harvest({ base, limit, maxArt, verbose, probe }) {
   }
   console.log(`deadtoons: artwork for ${artFetches} post(s)`);
 
-  return { items, probe: requests };
+  return { items };
 }
 
 /** All same-host links on a page (diagnostics: shows what the listing really links to). */
@@ -576,6 +603,28 @@ export function pageMarkers(html) {
   return markers;
 }
 
+/** Diagnostics for whatever the site just returned (probe runs and failed harvests). */
+export function siteReport(base, requests) {
+  return {
+    base,
+    updated: dropsDate(),
+    endpoints: requests.map((r) => ({
+      path: String(r.url || '').replace(base, '') || '/',
+      status: r.status,
+      type: r.type,
+      bytes: r.bytes,
+      markers: pageMarkers(r.body || ''),
+      hrefs: pageHrefs(r.body || '', base).slice(0, 40),
+      images: pageImages(r.body || '', base).slice(0, 10),
+      restTitles: parseRestPosts(r.body || '', base).slice(0, 5).map((p) => p.title),
+      sitemapLocs: parseSitemapXml(r.body || '').slice(0, 10).map((s2) => s2.url),
+      listings: parseHtmlListing(r.body || '', base).slice(0, 10).map((p) => ({ title: p.title, url: p.url, img: p.img })),
+      rawHead: String(r.body || '').replace(/\s+/g, ' ').slice(0, 1200),
+      rawBody: /html/i.test(r.type || '') ? String(r.body || '').slice(0, 12000) : '',
+    })),
+  };
+}
+
 async function probeSite(base, verbose, outFile) {
   console.log(`deadtoons: probing ${base}`);
   const requests = [];
@@ -613,23 +662,7 @@ async function probeSite(base, verbose, outFile) {
   const usable = requests.filter((r) => typeof r.status === 'number' && r.status < 400 && r.bytes > 200).length;
   console.log(`deadtoons: probe done — ${usable}/${requests.length} endpoints reachable`);
 
-  const report = {
-    base,
-    updated: dropsDate(),
-    endpoints: requests.map((r) => ({
-      path: r.url.replace(base, '') || '/',
-      status: r.status,
-      type: r.type,
-      bytes: r.bytes,
-      markers: pageMarkers(r.body || ''),
-      hrefs: pageHrefs(r.body || '', base).slice(0, 40),
-      images: pageImages(r.body || '', base).slice(0, 10),
-      restTitles: parseRestPosts(r.body || '', base).slice(0, 5).map((p) => p.title),
-      sitemapLocs: parseSitemapXml(r.body || '').slice(0, 10).map((s2) => s2.url),
-      listings: parseHtmlListing(r.body || '', base).slice(0, 10).map((p) => ({ title: p.title, url: p.url, img: p.img })),
-      rawHead: String(r.body || '').replace(/\s+/g, ' ').slice(0, 900),
-    })),
-  };
+  const report = siteReport(base, requests);
   if (outFile) {
     writeFileSync(outFile, JSON.stringify(report, null, 2) + '\n');
     console.log(`deadtoons: probe report written to ${outFile}`);
@@ -743,10 +776,19 @@ async function main() {
   }
 
   const day = dropsDate();
-  const { items } = await harvest({ base, limit, maxArt, verbose });
+  const probeOut = get('out') || process.env.DEADTOONS_PROBE_OUT || resolve(ROOT, 'data', 'deadtoons-probe.json');
+  const requests = [];
+  const { items } = await harvest({ base, limit, maxArt, verbose, requests });
+
+  // Keep the diagnostics either way: a changed site must be reviewable from the repo.
+  try {
+    writeFileSync(probeOut, JSON.stringify(siteReport(base, requests), null, 2) + '\n');
+  } catch (err) {
+    console.warn(`could not write probe report: ${err.message}`);
+  }
 
   if (!items.length) {
-    console.error('No DeadToons listings parsed. Leaving files untouched.');
+    console.error(`No DeadToons listings parsed. Diagnostics written to ${probeOut}; leaving the state untouched.`);
     process.exitCode = 1;
     return;
   }

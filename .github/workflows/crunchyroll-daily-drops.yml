@@ -68,10 +68,11 @@ jobs:
         if: inputs.probe == true
         run: node scripts/harvest-deadtoons-drops.mjs --probe --verbose --out=data/deadtoons-probe.json
 
-      # Probe runs commit the diagnostics file so the site's shape is reviewable
-      # from the repository (not just the run log).
+      # Probe runs — and harvests that found nothing — commit the diagnostics
+      # file so the site's shape is reviewable from the repository, not just the
+      # (short-lived) run log.
       - name: Commit the probe report
-        if: inputs.probe == true
+        if: inputs.probe == true || steps.deadtoons.outcome == 'failure'
         run: |
           git config user.name "netflix-catalog-bot"
           git config user.email "netflix-catalog-bot@users.noreply.github.com"
