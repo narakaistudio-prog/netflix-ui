@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-15T08:22:59.713Z",
+  "generated": "2026-10-15T08:27:11.189Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
@@ -9,7 +9,7 @@
       "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792052577671",
+      "url": "https://deadtoons.sbs/schedule?v=1792052829843",
       "status": 200,
       "bytes": 126857,
       "label": "fresh"
@@ -139,7 +139,7 @@
     },
     {
       "label": "fresh",
-      "url": "https://deadtoons.sbs/schedule?v=1792052577671",
+      "url": "https://deadtoons.sbs/schedule?v=1792052829843",
       "cards": 14,
       "today": 6,
       "first": "",
@@ -157,53 +157,76 @@
   "guides": [
     {
       "title": "The Frontier Lord Begins with Zero Subjects",
+      "key": "thefrontierlordbeginswithzerosubjects",
       "id": "296437",
       "season": 1,
       "episodes": 12
     },
     {
       "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "key": "theexiledheavyknightknowshowtogamethesystem",
       "id": "270603",
       "season": 1,
       "episodes": 26
     },
     {
       "title": "The Ramparts of Ice",
+      "key": "therampartsofice",
       "id": "283428",
       "season": 2,
       "error": "HTTP 404"
     },
     {
       "title": "Chainsmoker Cat",
+      "key": "chainsmokercat",
       "id": "312949",
       "season": 1,
       "episodes": 12
     },
     {
+      "title": "The Apothecary Diaries",
+      "key": "apothecary",
+      "id": "220542",
+      "season": 3,
+      "error": "HTTP 404"
+    },
+    {
+      "title": "Black Clover",
+      "key": "blackclover",
+      "id": "73223",
+      "season": 5,
+      "error": "HTTP 404"
+    },
+    {
       "title": "PSYREN",
+      "key": "psyren",
       "id": "297903",
       "season": 1,
       "episodes": 13
     },
     {
       "title": "The Detective Is Already Dead",
+      "key": "thedetectiveisalreadydead",
       "id": "117061",
       "season": 2,
       "episodes": 13
     },
     {
       "title": "The Iceblade Sorcerer Shall Rule the World",
+      "key": "theicebladesorcerershallruletheworld",
       "id": "200777",
       "season": 2,
       "episodes": 12
     },
     {
       "title": "Firefly Wedding",
+      "key": "fireflywedding",
       "id": "320909",
       "season": 1,
       "episodes": 12
     }
   ],
+  "guidesSkipped": 1,
   "items": [
     {
       "title": "The Frontier Lord Begins with Zero Subjects",
