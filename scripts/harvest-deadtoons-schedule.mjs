@@ -27,6 +27,9 @@
  * and always writes the diagnostics report (default data/deadtoons-schedule-probe.json, --out=FILE)
  * so a markup change can be fixed from the CI log alone.
  *
+ * The page renders clocks (and therefore its day tabs) in the requester's zone, so
+ * the run asks for the Indian rendering as well and keeps the richest answer.
+ *
  * Usage: node scripts/harvest-deadtoons-schedule.mjs
  *          [--base=URL] [--limit=N] [--dry-run] [--no-resolve] [--probe]
  *          [--verbose] [--self-test] [--out=FILE]
@@ -482,7 +485,7 @@ export function nxshaVerifyUrl(kind, id, season = 1, episode = 1) {
 
 /* --------------------------------- network -------------------------------- */
 
-async function fetchText(url, { timeoutMs = TIMEOUT_MS, retries = 2, json = false } = {}) {
+async function fetchText(url, { timeoutMs = TIMEOUT_MS, retries = 2, json = false, headers = {} } = {}) {
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
@@ -491,6 +494,7 @@ async function fetchText(url, { timeoutMs = TIMEOUT_MS, retries = 2, json = fals
           'user-agent': UA,
           accept: json ? 'application/json' : 'text/html,application/xhtml+xml,*/*',
           'accept-language': 'en-IN,en;q=0.9',
+          ...headers,
         },
         signal: AbortSignal.timeout(timeoutMs),
         redirect: 'follow',
@@ -501,7 +505,13 @@ async function fetchText(url, { timeoutMs = TIMEOUT_MS, retries = 2, json = fals
         lastError = new Error('HTTP 429');
         continue;
       }
-      return { status: res.status, text: await res.text() };
+      return {
+        status: res.status,
+        text: await res.text(),
+        // The schedule page renders "times in your own local time", so whatever
+        // the server tells us about the zone it picked is worth keeping.
+        headers: [...res.headers.entries()].filter(([key]) => /cookie|zone|tz|geo|country|city|vary/i.test(key)),
+      };
     } catch (error) {
       lastError = error;
       await sleep(700 * (attempt + 1));
@@ -758,18 +768,26 @@ async function main() {
   const byTitle = registryIndex(registry);
 
   console.log(`deadtoons: schedule ${url}`);
-  // Twice: the plain URL and a cache-busted one. The schedule page sits behind a
-  // CDN and its copy can be hours old — old enough to still be missing the
-  // episode that is about to air — so the richer of the two answers wins.
-  const attempts = [url, `${url}?v=${Date.now()}`];
+  // The page renders its clocks in the requester's zone, and the day tabs follow
+  // that zone: a job running four hours ahead of India sees a different "today"
+  // and drops the late-night episode. Ask for the Indian rendering too (a few
+  // shapes, the site accepts at most one of them) and keep the richest answer.
+  const IST = 'Asia/Kolkata';
+  const attempts = [
+    { label: 'plain', url },
+    { label: 'fresh', url: `${url}?v=${Date.now()}` },
+    { label: 'tz-query', url: `${url}?tz=${encodeURIComponent(IST)}` },
+    { label: 'tz-cookie', url, headers: { cookie: `tz=${IST}` } },
+    { label: 'timezone-cookie', url, headers: { cookie: `timezone=${IST}; TZ=${IST}` } },
+  ];
   const fetches = [];
   for (const attempt of attempts) {
     try {
-      const res = await fetchText(attempt);
-      fetches.push({ url: attempt, status: res.status, html: res.text });
-      requests.push({ url: attempt, status: res.status, bytes: res.text.length });
+      const res = await fetchText(attempt.url, { headers: attempt.headers || {} });
+      fetches.push({ label: attempt.label, url: attempt.url, status: res.status, html: res.text, headers: res.headers });
+      requests.push({ url: attempt.url, status: res.status, bytes: res.text.length, label: attempt.label });
     } catch (error) {
-      requests.push({ url: attempt, error: String(error?.message || error) });
+      requests.push({ url: attempt.url, label: attempt.label, error: String(error?.message || error) });
     }
     await sleep(200);
   }
@@ -791,18 +809,37 @@ async function main() {
     return;
   }
 
-  let parsed = parseSchedule(html, { base: BASE, today });
-  const parses = usable.map((f) => ({ url: f.url, cards: parseSchedule(f.html, { base: BASE, today }).cards.length }));
-  for (const candidate of usable.slice(1)) {
-    const richer = parseSchedule(candidate.html, { base: BASE, today });
-    if (richer.cards.length > parsed.cards.length) {
-      console.log(`deadtoons: the cache-busted copy has ${richer.cards.length} card(s), keeping it over ${parsed.cards.length}`);
-      parsed = richer;
-      html = candidate.html;
-    }
+  const renderings = usable.map((f) => {
+    const attempt = parseSchedule(f.html, { base: BASE, today });
+    const todays = attempt.cards.filter((c) => c.today);
+    return {
+      label: f.label,
+      url: f.url,
+      cards: attempt.cards.length,
+      today: todays.length,
+      first: todays[0]?.time || '',
+      last: todays[todays.length - 1]?.time || '',
+      headers: f.headers,
+      html: f.html,
+      parsed: attempt,
+    };
+  });
+  report.parses = renderings.map(({ html: _html, parsed: _parsed, ...rest }) => rest);
+  const prefersIndia = (rendering) => (/tz|timezone/.test(rendering.label) ? 0 : 1);
+  const best =
+    [...renderings].sort(
+      (a, b) =>
+        b.cards - a.cards ||
+        b.today - a.today ||
+        prefersIndia(a) - prefersIndia(b) ||
+        renderings.indexOf(a) - renderings.indexOf(b),
+    )[0] ?? null;
+  let parsed = best?.parsed ?? { items: [], cards: [], skipped: [] };
+  if (best) {
+    html = best.html;
+    console.log(`deadtoons: ${best.label} rendering has the most cards (${best.cards}, ${best.today} today) of ${renderings.length} attempt(s)`);
   }
   report.site = siteReport(html, { base: BASE, status });
-  report.parses = parses;
   console.log(`deadtoons: ${parsed.items.length} schedule episode(s) parsed${LIMIT ? ` (limit ${LIMIT})` : ''}`);
 
   const unresolved = [];

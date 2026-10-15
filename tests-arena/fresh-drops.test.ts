@@ -313,6 +313,10 @@ describe('DeadToons schedule harvester', () => {
         expect(script).toContain('/schedule');
         expect(script).toContain('DEADTOONS_BASE');
         expect(script).toContain('nxsha: no verified id');
+        // The site renders its clocks per requester zone; the row is Indian.
+        expect(script).toContain('Asia/Kolkata');
+        // Hex escapes (`&#x27;`) have to be decoded, not just decimal ones.
+        expect(script).toContain('&#x');
         // Listing-only: the player itself stays on the page.
         expect(script).not.toContain('serverUrl');
         expect(script).not.toContain('iframe');
