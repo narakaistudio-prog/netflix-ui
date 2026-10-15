@@ -47,10 +47,17 @@ const NAV_WORDS = new Set([
   'tv', 'shows', 'episodes', 'episode', 'season', 'seasons', 'type', 'types', 'quality', 'qualities',
   'recently-added', 'most-popular', 'spotlight', 'collection', 'collections', 'request', 'requests',
   'disclaimer', 'faq', 'terms', 'policy', 'rules', 'help', 'support', 'donate', 'discord', 'telegram',
-  'how-to', 'guide', 'report', 'dmca-policy', 'load', 'more',
+  'how-to', 'guide', 'report', 'load', 'more', 'posts', 'post', 'watchlist',
+  'policy', 'terms', 'faq', 'rules', 'staff', 'dmca', 'silent', 'trust',
 ]);
 /** First path segments that are infrastructure, not content. */
-const SKIP_PREFIX = new Set(['wp-json', 'wp-content', 'wp-admin', 'wp-includes', 'api', 'static', 'assets', '_next', 'cdn', 'images', 'img', 'uploads', 'user', 'users', 'account', 'auth']);
+const SKIP_PREFIX = new Set([
+  'wp-json', 'wp-content', 'wp-admin', 'wp-includes', 'api', 'static', 'assets', '_next', 'cdn', 'images',
+  'img', 'uploads', 'user', 'users', 'account', 'auth',
+  // taxonomies: /category/<x>, /genre/<x>, /language/<x>, /ott/<x> list titles, they are not titles
+  'category', 'categories', 'genre', 'genres', 'language', 'languages', 'ott', 'tag', 'tags', 'author',
+  'year', 'calendar', 'country', 'network', 'studio', 'studios', 'producer', 'company', 'comment',
+]);
 const LISTING_HINTS = [/^\/?$/, /^\/search\//i, /^\/\?s=/i, /^\/page\/\d+\/?$/i, /^\/p\/\d+\/?$/i];
 /** Titles we never rail: adult listings and non-anime noise. */
 const TITLE_BLOCK = /\b(harem camp|overflow|hentai|ecchi|nsfw|porn|xxx|sex|nude|adult)\b/i;
@@ -276,7 +283,10 @@ export function isPostUrl(url, base = '') {
 
   const last = parts[parts.length - 1];
   if (last.length < 3 || /^\d+$/.test(last)) return false;
+  const lastWords = last.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
   if (NAV_WORDS.has(last.toLowerCase())) return false;
+  // "privacy-policy" is navigation even though the whole slug is not a nav word.
+  if (lastWords.length > 1 && lastWords.every((word) => NAV_WORDS.has(word))) return false;
   // A nav-like parent ("/series") with no slug behind it never reaches here.
   if (parts.length > 1 && NAV_WORDS.has(parts[0].toLowerCase()) && !/\d/.test(last) && !ANIME_SIGNAL.test(last)) {
     // /anime/naruto/ is content; /series/page-2/ is not.
@@ -329,6 +339,22 @@ export function dropsDate() {
 }
 
 /** Fold one listing item into the state map (keeps the first date seen). */
+/**
+ * Drop stored entries that are not posts any more (a site change once stored
+ * /genre/action and /privacy-policy as "titles"). They are re-discoverable, so
+ * pruning only ever removes junk.
+ */
+export function pruneDropItems(items, base) {
+  const removed = [];
+  for (const [slug, entry] of Object.entries(items || {})) {
+    if (entry?.url && !isPostUrl(entry.url, base)) {
+      delete items[slug];
+      removed.push(slug);
+    }
+  }
+  return removed;
+}
+
 export function mergeDropItem(items, item, day, baselineRun) {
   const key = item.slug;
   const existing = items[key];
@@ -516,8 +542,11 @@ async function harvest({ base, limit, maxArt, verbose, requests }) {
   }
 
   const all = [...candidates.values()].map((c) => {
-    const clean = c.title ? cleanAnimeTitle(c.title) : titleFromSlug(c.slug);
-    return { ...c, title: clean.title, year: clean.year };
+    // The slug is the stable name ("black-torch-season-1-2026" -> "Black Torch");
+    // listing text is only a fallback, it carries site noise ("Liar Game HD").
+    const fromSlug = titleFromSlug(c.slug);
+    const clean = fromSlug.title.length > 2 ? fromSlug : cleanAnimeTitle(c.title || '');
+    return { ...c, title: clean.title, year: clean.year || fromSlug.year };
   }).filter((c) => c.title && c.title.length > 2 && !TITLE_BLOCK.test(c.title));
 
   console.log(`deadtoons: ${all.length} candidate posts`);
@@ -745,6 +774,26 @@ function selfTest() {
   check('artwork upgrades in place', state.items['kaiju-no-8'].img === 'b.jpg');
 
   check('post url filter', isPostUrl('https://deadtoons.sbs/one-piece-episode-1/', 'https://deadtoons.sbs'));
+  check('deadtoons /posts/<slug> is a post', isPostUrl('https://deadtoons.sbs/posts/black-torch-season-1-2026', 'https://deadtoons.sbs'));
+  check('taxonomy pages are not posts', [
+    'https://deadtoons.sbs/genre/action',
+    'https://deadtoons.sbs/category/ova',
+    'https://deadtoons.sbs/language/chinese',
+    'https://deadtoons.sbs/ott/netflix',
+    'https://deadtoons.sbs/privacy-policy',
+    'https://deadtoons.sbs/dmca-policy',
+    'https://deadtoons.sbs/popular',
+    'https://deadtoons.sbs/posts',
+  ].every((u) => !isPostUrl(u, 'https://deadtoons.sbs')));
+  check('candidate title from slug', titleFromSlug('black-torch-season-1-2026').title === 'Black Torch');
+  check('candidate year from slug', titleFromSlug('blue-box-season-2-2026').year === '2026');
+  const pruneState = {
+    'genre-action': { slug: 'genre-action', title: 'Action Anime', url: 'https://deadtoons.sbs/genre/action' },
+    'black-torch': { slug: 'black-torch', title: 'Black Torch', url: 'https://deadtoons.sbs/posts/black-torch-season-1-2026' },
+  };
+  const removed = pruneDropItems(pruneState, 'https://deadtoons.sbs');
+  check('prune drops taxonomy entries', removed.length === 1 && removed[0] === 'genre-action', JSON.stringify(removed));
+  check('prune keeps real posts', !!pruneState['black-torch']);
   check('listing url rejected', !isPostUrl('https://deadtoons.sbs/category/anime/', 'https://deadtoons.sbs'));
   check('asset url rejected', !isPostUrl('https://deadtoons.sbs/wp-content/uploads/a.jpg', 'https://deadtoons.sbs'));
 
@@ -796,6 +845,8 @@ async function main() {
   const state = existsSync(OUT_PATH) ? JSON.parse(readFileSync(OUT_PATH, 'utf8')) : null;
   const baselineRun = !state || !state.items || Object.keys(state.items).length === 0;
   const stateItems = state?.items || {};
+  const pruned = pruneDropItems(stateItems, base);
+  if (pruned.length) console.log(`deadtoons: pruned ${pruned.length} non-post entry(ies): ${pruned.slice(0, 5).join(', ')}${pruned.length > 5 ? ' …' : ''}`);
   const before = Object.keys(stateItems).length;
   const fresh = [];
   for (const item of items) {
