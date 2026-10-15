@@ -622,6 +622,9 @@ export function siteReport(html, { base = DEFAULT_BASE, status = 0, bytes = 0 } 
   const markers = ['S1 · Episode', 'Episode', 'Upcoming', 'Today', 'release-schedule', '__NEXT_DATA__', 'wp-content'].filter((m) =>
     text.toLowerCase().includes(m.toLowerCase()),
   );
+  const payloadAt = text.search(/self\.__next_f/);
+  const payload = payloadAt === -1 ? '' : text.slice(payloadAt);
+  const payloadKeys = [...new Set([...payload.matchAll(/\\?"([A-Za-z][A-Za-z0-9_]{1,24})\\?":/g)].map((m) => m[1]))].slice(0, 40);
   return {
     url: `${base}/schedule`,
     status,
@@ -633,6 +636,12 @@ export function siteReport(html, { base = DEFAULT_BASE, status = 0, bytes = 0 } 
     upcomingAt: text.search(/upcoming/i),
     rawHead: text.slice(0, 1500),
     rawBody: text.length > 2000 ? text.slice(-2000) : '',
+    // The page is a Next.js app: the data the client renders from travels in the
+    // RSC payload. Its shape is what a zone-independent parse would read, so the
+    // report keeps the keys it uses (and a slice, while this is being worked on).
+    payloadAt,
+    payloadKeys,
+    payloadSlice: payloadAt === -1 ? '' : text.slice(payloadAt, payloadAt + 8000),
   };
 }
 
@@ -768,17 +777,14 @@ async function main() {
   const byTitle = registryIndex(registry);
 
   console.log(`deadtoons: schedule ${url}`);
-  // The page renders its clocks in the requester's zone, and the day tabs follow
-  // that zone: a job running four hours ahead of India sees a different "today"
-  // and drops the late-night episode. Ask for the Indian rendering too (a few
-  // shapes, the site accepts at most one of them) and keep the richest answer.
-  const IST = 'Asia/Kolkata';
+  // Twice: the page behind the CDN can still be the previous render, and the row
+  // is built from whichever answer carries more cards. (Its clock — and therefore
+  // its day tabs — is rendered for the requester's zone; ?tz= and timezone
+  // cookies are ignored, so a late-evening entry can land on tomorrow's tab and
+  // arrive one run later.)
   const attempts = [
     { label: 'plain', url },
     { label: 'fresh', url: `${url}?v=${Date.now()}` },
-    { label: 'tz-query', url: `${url}?tz=${encodeURIComponent(IST)}` },
-    { label: 'tz-cookie', url, headers: { cookie: `tz=${IST}` } },
-    { label: 'timezone-cookie', url, headers: { cookie: `timezone=${IST}; TZ=${IST}` } },
   ];
   const fetches = [];
   for (const attempt of attempts) {
