@@ -1,16 +1,36 @@
 {
-  "generated": "2026-10-15T08:00:08.086Z",
+  "generated": "2026-10-15T08:02:30.725Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
       "url": "https://deadtoons.sbs/schedule",
       "status": 200,
-      "bytes": 126870
+      "bytes": 126870,
+      "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792051206293",
+      "url": "https://deadtoons.sbs/schedule?v=1792051348311",
       "status": 200,
-      "bytes": 126870
+      "bytes": 126870,
+      "label": "fresh"
+    },
+    {
+      "url": "https://deadtoons.sbs/schedule?tz=Asia%2FKolkata",
+      "status": 200,
+      "bytes": 126870,
+      "label": "tz-query"
+    },
+    {
+      "url": "https://deadtoons.sbs/schedule",
+      "status": 200,
+      "bytes": 126870,
+      "label": "tz-cookie"
+    },
+    {
+      "url": "https://deadtoons.sbs/schedule",
+      "status": 200,
+      "bytes": 126870,
+      "label": "timezone-cookie"
     }
   ],
   "site": {
@@ -79,12 +99,74 @@
   },
   "parses": [
     {
+      "label": "plain",
       "url": "https://deadtoons.sbs/schedule",
-      "cards": 14
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792051206293",
-      "cards": 14
+      "label": "fresh",
+      "url": "https://deadtoons.sbs/schedule?v=1792051348311",
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
+    },
+    {
+      "label": "tz-query",
+      "url": "https://deadtoons.sbs/schedule?tz=Asia%2FKolkata",
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
+    },
+    {
+      "label": "tz-cookie",
+      "url": "https://deadtoons.sbs/schedule",
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
+    },
+    {
+      "label": "timezone-cookie",
+      "url": "https://deadtoons.sbs/schedule",
+      "cards": 14,
+      "today": 6,
+      "first": "",
+      "last": "5:30 PM",
+      "headers": [
+        [
+          "vary",
+          "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding"
+        ]
+      ]
     }
   ],
   "resolved": 11,
