@@ -731,6 +731,11 @@ function selfTest() {
   })());
   check('embed url shape', nxshaVerifyUrl('tv', '45790', 4, 5).startsWith('https://nxsha.space/embed/tv/45790/4/5?server=GbruHindi'));
   check('schedule report counts episode hits', siteReport(fixture).episodeHits === 4, String(siteReport(fixture).episodeHits));
+  check('a stale copy loses to a richer one', (() => {
+    const stale = parseSchedule(fixture, { today: '2026-10-15' });
+    const fresh = parseSchedule(`${fixture}<a href="/posts/link-click-season-3-2026"><img src="https://image.tmdb.org/t/p/w154/4PCQ.jpg" alt="LINK CLICK"><span>S3 · Episode 11</span><time>11:20 PM</time></a>`, { today: '2026-10-15' });
+    return stale.cards.length === 4 && fresh.cards.length === 5;
+  })());
 
   if (failures) {
     console.error(`\n${failures} DeadToons schedule self-test(s) failed.`);
@@ -753,16 +758,24 @@ async function main() {
   const byTitle = registryIndex(registry);
 
   console.log(`deadtoons: schedule ${url}`);
-  let html = '';
-  let status = 0;
-  try {
-    const res = await fetchText(url);
-    status = res.status;
-    html = res.text;
-    requests.push({ url, status, bytes: html.length });
-  } catch (error) {
-    requests.push({ url, error: String(error?.message || error) });
+  // Twice: the plain URL and a cache-busted one. The schedule page sits behind a
+  // CDN and its copy can be hours old — old enough to still be missing the
+  // episode that is about to air — so the richer of the two answers wins.
+  const attempts = [url, `${url}?v=${Date.now()}`];
+  const fetches = [];
+  for (const attempt of attempts) {
+    try {
+      const res = await fetchText(attempt);
+      fetches.push({ url: attempt, status: res.status, html: res.text });
+      requests.push({ url: attempt, status: res.status, bytes: res.text.length });
+    } catch (error) {
+      requests.push({ url: attempt, error: String(error?.message || error) });
+    }
+    await sleep(200);
   }
+  const usable = fetches.filter((f) => f.status === 200 && f.html);
+  let html = usable[0]?.html ?? '';
+  const status = usable.length ? 200 : (fetches[0]?.status ?? 0);
 
   const report = {
     generated: new Date().toISOString(),
@@ -778,7 +791,18 @@ async function main() {
     return;
   }
 
-  const parsed = parseSchedule(html, { base: BASE, today });
+  let parsed = parseSchedule(html, { base: BASE, today });
+  const parses = usable.map((f) => ({ url: f.url, cards: parseSchedule(f.html, { base: BASE, today }).cards.length }));
+  for (const candidate of usable.slice(1)) {
+    const richer = parseSchedule(candidate.html, { base: BASE, today });
+    if (richer.cards.length > parsed.cards.length) {
+      console.log(`deadtoons: the cache-busted copy has ${richer.cards.length} card(s), keeping it over ${parsed.cards.length}`);
+      parsed = richer;
+      html = candidate.html;
+    }
+  }
+  report.site = siteReport(html, { base: BASE, status });
+  report.parses = parses;
   console.log(`deadtoons: ${parsed.items.length} schedule episode(s) parsed${LIMIT ? ` (limit ${LIMIT})` : ''}`);
 
   const unresolved = [];
