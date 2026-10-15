@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-15T07:51:49.200Z",
+  "generated": "2026-10-15T07:55:47.698Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
@@ -234,6 +234,190 @@
         },
         "from": "wikidata-tmdb"
       }
+    }
+  ],
+  "cards": [
+    {
+      "poster": true,
+      "alt": "Deadtoons India",
+      "href": "/",
+      "slug": "",
+      "title": "Deadtoons India",
+      "today": true,
+      "season": null,
+      "episode": null,
+      "time": "",
+      "date": "2026-10-15",
+      "reason": "no season/episode"
+    },
+    {
+      "poster": true,
+      "alt": "The Frontier Lord Begins with Zero Subjects",
+      "href": "/posts/the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "slug": "the-frontier-lord-begins-with-zero-subjects-season-1-2026",
+      "title": "The Frontier Lord Begins with Zero Subjects",
+      "today": true,
+      "season": 1,
+      "episode": 5,
+      "time": "8:07 AM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Exiled Heavy Knight Knows How to Game the System",
+      "href": "/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "today": true,
+      "season": 1,
+      "episode": 13,
+      "time": "3:30 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Ramparts of Ice",
+      "href": "/posts/the-ramparts-of-ice-season-2-2026",
+      "slug": "the-ramparts-of-ice-season-2-2026",
+      "title": "The Ramparts of Ice",
+      "today": true,
+      "season": 2,
+      "episode": 3,
+      "time": "4:00 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Chainsmoker Cat",
+      "href": "/posts/chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "slug": "chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "title": "Chainsmoker Cat",
+      "today": true,
+      "season": 1,
+      "episode": 12,
+      "time": "5:00 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "JoJo's Bizarre Adventure",
+      "href": "/posts/jojo-s-bizarre-adventure-season-4-2018",
+      "slug": "jojo-s-bizarre-adventure-season-4-2018",
+      "title": "JoJo's Bizarre Adventure",
+      "today": true,
+      "season": 4,
+      "episode": 5,
+      "time": "5:30 PM",
+      "date": "2026-10-15",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Apothecary Diaries",
+      "href": "",
+      "slug": "black-clover-season-5-2026",
+      "title": "The Apothecary Diaries",
+      "today": false,
+      "season": 3,
+      "episode": 1,
+      "time": "4:30 PM",
+      "date": "2026-10-23",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Black Clover",
+      "href": "/posts/black-clover-season-5-2026",
+      "slug": "black-clover-season-5-2026",
+      "title": "Black Clover",
+      "today": false,
+      "season": 5,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-24",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Super Timid Noble Girl",
+      "href": "",
+      "slug": "",
+      "title": "Super Timid Noble Girl",
+      "today": false,
+      "season": 1,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-25",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "PSYREN",
+      "href": "",
+      "slug": "",
+      "title": "PSYREN",
+      "today": false,
+      "season": 1,
+      "episode": 1,
+      "time": "3:00 PM",
+      "date": "2026-10-26",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Detective Is Already Dead",
+      "href": "",
+      "slug": "",
+      "title": "The Detective Is Already Dead",
+      "today": false,
+      "season": 2,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-28",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "The Iceblade Sorcerer Shall Rule the World",
+      "href": "",
+      "slug": "",
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "today": false,
+      "season": 2,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-29",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Firefly Wedding",
+      "href": "",
+      "slug": "",
+      "title": "Firefly Wedding",
+      "today": false,
+      "season": 1,
+      "episode": 1,
+      "time": "7:00 AM",
+      "date": "2026-10-30",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Join us on Telegram",
+      "href": "https://t.me/+jZNbckjV9xE0NWM0",
+      "slug": "",
+      "title": "Join us on Telegram",
+      "today": false,
+      "season": null,
+      "episode": null,
+      "time": "",
+      "date": "",
+      "reason": "no season/episode"
     }
   ]
 }
