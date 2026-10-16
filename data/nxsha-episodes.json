@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-16T08:01:00.546Z",
+    "generatedAt": "2026-10-16T08:20:01.293Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
