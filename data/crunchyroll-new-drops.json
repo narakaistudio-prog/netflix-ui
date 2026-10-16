@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-15",
+  "updated": "2026-10-16",
   "items": {
     "tv:70998": {
       "kind": "tv",
@@ -140,6 +140,56 @@
       "year": "2000",
       "firstSeen": "2026-10-14",
       "baseline": true
+    },
+    "tv:220150": {
+      "kind": "tv",
+      "id": "220150",
+      "title": "Pokémon Horizons",
+      "img": "https://image.tmdb.org/t/p/w500/amemXW39lMbNBJFRMJ5W7q9mLP2.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-16",
+      "baseline": false
+    },
+    "tv:312359": {
+      "kind": "tv",
+      "id": "312359",
+      "title": "Dragon Ball Super: Beerus",
+      "img": "https://image.tmdb.org/t/p/w500/AojgldgsOlzZV8ahyOzaiAjJWvV.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-16",
+      "baseline": false
+    },
+    "tv:153485": {
+      "kind": "tv",
+      "id": "153485",
+      "title": "Sazae-san",
+      "img": "https://image.tmdb.org/t/p/w500/ovOdOiGr0xHxB8rCwLSXAchCrta.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-16",
+      "baseline": false
+    },
+    "tv:45247": {
+      "kind": "tv",
+      "id": "45247",
+      "title": "Chihayafuru",
+      "img": "https://image.tmdb.org/t/p/w500/nUfL7xK5DjViiQAwHiRYlb6VMTE.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-16",
+      "baseline": false
+    },
+    "tv:209867": {
+      "kind": "tv",
+      "id": "209867",
+      "title": "Frieren: Beyond Journey's End",
+      "img": "https://image.tmdb.org/t/p/w500/dqZENchTd7lp5zht7BdlqM7RBhD.jpg",
+      "rating": "1.5",
+      "year": "2000",
+      "firstSeen": "2026-10-16",
+      "baseline": false
     }
   }
 }

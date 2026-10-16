@@ -1,449 +1,88 @@
 {
-  "updated": "2026-10-15",
+  "updated": "2026-10-16",
   "source": "https://deadtoons.sbs/schedule",
-  "today": "2026-10-15",
+  "today": "2026-10-16",
   "items": [
     {
-      "key": "sch-the-frontier-lord-begins-with-zero-subjects-season-1-2026",
-      "title": "The Frontier Lord Begins with Zero Subjects",
-      "slug": "the-frontier-lord-begins-with-zero-subjects-season-1-2026",
-      "url": "https://deadtoons.sbs/posts/the-frontier-lord-begins-with-zero-subjects-season-1-2026",
-      "img": "https://image.tmdb.org/t/p/w300/vHTHQZy3JhgoVMkbXlOot5gOUzZ.jpg",
-      "season": 1,
-      "episode": 5,
+      "key": "sch-link-click-season-3-2026",
+      "title": "LINK CLICK",
+      "slug": "link-click-season-3-2026",
+      "url": "https://deadtoons.sbs/posts/link-click-season-3-2026",
+      "img": "https://image.tmdb.org/t/p/w300/4PCQrhpAkZjo5K7rXHMOOa5NC5i.jpg",
+      "season": 3,
+      "episode": 11,
       "audio": "",
-      "day": "The",
-      "date": "2026-10-15",
-      "time": "8:07 AM",
+      "day": "",
+      "date": "2026-10-16",
+      "time": "3:20 AM",
       "today": true,
       "nx": {
-        "id": "296437",
+        "id": "123542",
         "kind": "tv",
         "seasons": {
-          "1": 5
+          "3": 11
         },
         "from": "wikidata-tmdb"
       },
       "guide": {
-        "1": {
+        "3": {
           "1": {
-            "title": "The Frontier Lord and the Girl with the Blue Horn",
-            "overview": "Dias is awarded a domain for his wartime service, but there's one small problem. Does anyone even live there?",
-            "image": "https://image.tmdb.org/t/p/w300/4RhF8RB8IwTOmjj1mS50FyrKPqm.jpg",
-            "airDate": "2026-07-10",
+            "title": "So Time Begins to Flow Again",
+            "overview": "Following a devastating attack, Lu Guang returns to the time when he first met Cheng Xiaoshi, determined to prevent the future he witnessed. As he relives the beginning of their friendship, a series of seemingly ordinary encounters begins setting their shared destiny in motion once again.",
+            "image": "https://image.tmdb.org/t/p/w300/5GOTfVNbkf2LvntZFo0ZyPei7z3.jpg",
+            "airDate": "2024-12-27",
+            "runtime": 66
+          },
+          "2": {
+            "title": "Prelude",
+            "overview": "While Liu Xiao becomes trapped in a dangerous wager at a Bridon bar, Cheng Xiaoshi discovers a photograph apparently sent by his missing father. Believing it may provide a clue about his parents, he decides to travel to Bridon, despite Qiao Ling’s strong objections.",
+            "image": "https://image.tmdb.org/t/p/w300/i3xaHbChxgW5P9GBtYwR6o016Oq.jpg",
+            "airDate": "2025-01-03",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Them",
+            "overview": "Following clues connected to Cheng Xiaoshi’s missing parents, he and Lu Guang arrive in Bridon and visit a bar popular with football supporters. There they meet the friendly Xia Fei, but an impulsive celebration provokes a rival group and draws the three into a dangerous chase through the city.",
+            "image": "https://image.tmdb.org/t/p/w300/jEDO11g26w2bfcdyBRj9oEpClhU.jpg",
+            "airDate": "2025-01-10",
+            "runtime": 24
+          },
+          "4": {
+            "title": "And Then There Were None",
+            "overview": "After Xia Fei’s enigmatic boss, Vein, rescues the group from their pursuers, Lu Guang becomes suspicious of their new ally. Cheng Xiaoshi later returns to the bar seeking information about BAHATI, where he uncovers a connection to a language school destroyed in a devastating fire ten years earlier.",
+            "image": "https://image.tmdb.org/t/p/w300/oND1N936VhQSIxxyVKwMc3sStBl.jpg",
+            "airDate": "2025-01-17",
+            "runtime": 21
+          },
+          "5": {
+            "title": "Reunion",
+            "overview": "After witnessing the academy fire, Cheng Xiaoshi and Lu Guang search for anyone who survived the disaster. Their investigation leads Cheng into a photograph belonging to Wang Qing, a gifted student trapped in a difficult situation, where he uncovers a personal connection that may bring him closer to the truth about his",
+            "image": "https://image.tmdb.org/t/p/w300/7h5tBm4MfcPLFyJjowuQHD7GnIY.jpg",
+            "airDate": "2025-01-24",
+            "runtime": 25
+          },
+          "6": {
+            "title": "Puzzle",
+            "overview": "To earn Vein’s help in locating Wang Qing, Cheng Xiaoshi and Lu Guang agree to replace a missing model at a photo shoot. Their unusual payment leads them to Wang Qing’s mental health clinic, where her psychological tests begin raising unsettling questions about the people and hidden motives surrounding their investigat",
+            "image": "https://image.tmdb.org/t/p/w300/djrOYPY0JBsQWbKEwpHJi06EPVv.jpg",
+            "airDate": "2025-01-31",
             "runtime": 26
-          },
-          "2": {
-            "title": "The Frontier Lord and His First Visitor",
-            "overview": "Dias settles into daily life with Alna, and little by little, people begin to come calling.",
-            "image": "https://image.tmdb.org/t/p/w300/utkG0hiuK1IHJFpANhByetXpprR.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "3": {
-            "title": "The Frontier Lord and the Strange Merchant",
-            "overview": "The population of Nezrose slowly grows, including a few surprises courtesy of an unusual visitor.",
-            "image": "https://image.tmdb.org/t/p/w300/70PxngQl8oYBYE8wbU2WGQgJApR.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "4": {
-            "title": "The Frontier Lord and the Neighboring Lord",
-            "overview": "Dias meets the new lord of the neighboring domain, and he learns there are many rumors about them both.",
-            "image": "https://image.tmdb.org/t/p/w300/aEjVPOk7V2awTZcVUxRNegNVfZ7.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "5": {
-            "title": "The Frontier Lord and the Assailants from the Desert",
-            "overview": "Dias tries his hand at farming, and Eldan sends a caravan of gifts to help him establish his domain.",
-            "image": "https://image.tmdb.org/t/p/w300/vjalBTqGcRiJzWp63n9E5ZvJyn7.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          },
-          "6": {
-            "title": "The Frontier Lord and the Twins' Prayer",
-            "overview": "Senai and Ayhan want to secretly help Dias cultivate his field. Can a new arrival offer them a solution?",
-            "image": "https://image.tmdb.org/t/p/w300/2gZMQmnvB6R6w3PGXSkNpIL4baZ.jpg",
-            "airDate": "2026-08-14",
-            "runtime": 24
-          },
-          "7": {
-            "title": "The Frontier Lord and the New Subjects",
-            "overview": "Expectations are low for a new group of dogkin immigrants, but Dias has some ideas for how they'd be useful.",
-            "image": "https://image.tmdb.org/t/p/w300/5dkPgMGN8pzDpuu70D4mhB5fah4.jpg",
-            "airDate": "2026-08-21",
-            "runtime": 24
-          },
-          "8": {
-            "title": "The Frontier Lord and the Grassland Battle",
-            "overview": "Diane's plans quickly go awry when she launches an attack on Dias in his own domain.",
-            "image": "https://image.tmdb.org/t/p/w300/2zondpaWWQoVTW0wtGyCDdiSPyW.jpg",
-            "airDate": "2026-08-28",
-            "runtime": 24
-          },
-          "9": {
-            "title": "The Frontier Lord and the Wedding",
-            "overview": "Klaus and Canis have grown close, and an event must be held, even if Dias is oblivious.",
-            "image": "https://image.tmdb.org/t/p/w300/znVKvYyCdtbnuWBuBJDyFkcXlXH.jpg",
-            "airDate": "2026-09-04",
-            "runtime": 24
-          },
-          "10": {
-            "title": "The Frontier Lord and His Son and Daughters",
-            "overview": "A bunch of new faces arrive at Iluk Village, but not many of them turn out to be total strangers.",
-            "image": "https://image.tmdb.org/t/p/w300/9X0YquMdck8iWN3DDNUAACYMX2H.jpg",
-            "airDate": "2026-09-11",
-            "runtime": 24
-          },
-          "11": {
-            "title": "The Frontier Lord and Alna's Big Brother",
-            "overview": "Zorg rushes home to save his sister Alna from the wicked domain lord, utterly unprepared for what awaits him.",
-            "image": "https://image.tmdb.org/t/p/w300/kBXOApOCipfaGRp0KwlLrPgg8ly.jpg",
-            "airDate": "2026-09-18",
-            "runtime": 24
-          },
-          "12": {
-            "title": "The Frontier Lord and the Story That Began with Zero Subjects",
-            "overview": "Eldan visits Dias' domain, and delivers a range of official tidings from the king.",
-            "image": "https://image.tmdb.org/t/p/w300/mG45YSqVt3e85K1Xk83Ekcmo3ze.jpg",
-            "airDate": "2026-09-25",
-            "runtime": 24
           }
         }
       }
     },
     {
-      "key": "sch-the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
-      "title": "The Exiled Heavy Knight Knows How to Game the System",
-      "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
-      "url": "https://deadtoons.sbs/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
-      "img": "https://image.tmdb.org/t/p/w300/bADzMfofNWYdxLnlqNuMkO6du34.jpg",
-      "season": 1,
-      "episode": 13,
-      "audio": "",
-      "day": "The",
-      "date": "2026-10-15",
-      "time": "3:30 PM",
-      "today": true,
-      "nx": {
-        "id": "270603",
-        "kind": "tv",
-        "seasons": {
-          "1": 13
-        },
-        "from": "wikidata-tmdb"
-      },
-      "guide": {
-        "1": {
-          "1": {
-            "title": "I'm Elymas the Heavy Knight",
-            "overview": "Elymas Edvaughn is disowned by his father for becoming a Heavy Knight.",
-            "image": "https://image.tmdb.org/t/p/w300/t3UzqD6baWwEkcDw7rz8HML4k1W.jpg",
-            "airDate": "2026-07-03",
-            "runtime": 24
-          },
-          "2": {
-            "title": "Menacing Foul Eight-Legged Beast",
-            "overview": "Elymas uses his wits and game knowledge to defeat a much more powerful monster.",
-            "image": "https://image.tmdb.org/t/p/w300/mibYdWH4QAmdGn17hOChtOE7GsI.jpg",
-            "airDate": "2026-07-10",
-            "runtime": 24
-          },
-          "3": {
-            "title": "The Raid Quest",
-            "overview": "Elymas finds himself surrounded by fearful newbies and an arrogant veteran on his first Raid Quest.",
-            "image": "https://image.tmdb.org/t/p/w300/2y0dlWJPTGXWAb3lazoiRqeflku.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Existence Evolution",
-            "overview": "With Gowtan paralyzed, Elymas must survive against the Mad Headder until he can get back in the fight.",
-            "image": "https://image.tmdb.org/t/p/w300/2BupnkZATb4FeEIDpSK5AFWUaMR.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "5": {
-            "title": "Fang of Smoldering Insanity",
-            "overview": "Elymas goes shopping for a skillbook only to discover they're prohibitively expensive.",
-            "image": "https://image.tmdb.org/t/p/w300/zwqiGXuZZEMpEtJNYJKQIyw0tAw.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Ruche the Pierrot",
-            "overview": "Elymas begs Ruche to join his party so he can use her skills to find the item he needs.",
-            "image": "https://image.tmdb.org/t/p/w300/95NZXAYb2pDKrZmWMTsyVBeOXXK.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          },
-          "7": {
-            "title": "Golden Raana Farming",
-            "overview": "Elymas uses his game knowledge to exploit the weaknesses of the elusive Golden Raana.",
-            "image": "https://image.tmdb.org/t/p/w300/9kviyiXte0KkL7WNFaGqRY7GjLX.jpg",
-            "airDate": "2026-08-14",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Wandering",
-            "overview": "Elymas and Ruche's celebration is interrupted by a wandering dungeon boss.",
-            "image": "https://image.tmdb.org/t/p/w300/gKqQE0ww8K1Y9lmSefjKRgCpGDX.jpg",
-            "airDate": "2026-08-21",
-            "runtime": 24
-          },
-          "9": {
-            "title": "Dreamlord",
-            "overview": "Ruche returns to save Elymas from a desperate situation, and they make one last gamble to beat the Dreamlord.",
-            "image": "https://image.tmdb.org/t/p/w300/qq2cc5cOhWBMGdUcbJgE8D2BX0o.jpg",
-            "airDate": "2026-08-28",
-            "runtime": 24
-          },
-          "10": {
-            "title": "Negotiation",
-            "overview": "Elymas and Ruche celebrate their payout and promotion and return to the shady shop for a Skill Book.",
-            "image": "https://image.tmdb.org/t/p/w300/eMDDVMpIb5MhNG2bbfqoxOZkMgG.jpg",
-            "airDate": "2026-09-04",
-            "runtime": 24
-          },
-          "11": {
-            "title": "Inescapable Past",
-            "overview": "Elymas' father hears about his success and visits the guild with Malice, who has a twisted attachment to him.",
-            "image": "https://image.tmdb.org/t/p/w300/8SApfPGTBto5Isiaxv2bEbHqLOZ.jpg",
-            "airDate": "2026-09-11",
-            "runtime": 24
-          },
-          "12": {
-            "title": "Malice the Master Swordsman",
-            "overview": "Elymas activates the true power of the Heavy Knight to make a comeback against Malice.",
-            "image": "https://image.tmdb.org/t/p/w300/r7wrLFD3GMtc3UYYGbaPyrNGNLG.jpg",
-            "airDate": "2026-09-18",
-            "runtime": 24
-          },
-          "13": {
-            "title": "Lacoryna, City of Adventurers",
-            "overview": "After defeating Malice and saying goodbye to his father, Elymas visits Lacoryna, the holy land of adventurers.",
-            "image": "https://image.tmdb.org/t/p/w300/7JMkQTaoAD0Z5vRRxQp6cFvJ0J9.jpg",
-            "airDate": "2026-09-25",
-            "runtime": 24
-          },
-          "14": {
-            "title": "Mythril Giant",
-            "overview": "Elymas and Ruche take on an overpowering foe in hopes of acquiring powerful materials.",
-            "image": "https://image.tmdb.org/t/p/w300/kbFu6Nn7j7e5L3dCRYt0PxQErGv.jpg",
-            "airDate": "2026-10-02",
-            "runtime": 24
-          },
-          "15": {
-            "title": "Dreamlord of the Dreamhole",
-            "overview": "With their new skills gained on level up, Elymas and Ruche decide to take on the Rock Centipede.",
-            "image": "https://image.tmdb.org/t/p/w300/qUn01Nh4lhi3Ew7dvGXq7B3qwVj.jpg",
-            "airDate": "2026-10-09",
-            "runtime": 24
-          },
-          "16": {
-            "title": "No Defense Spared",
-            "image": "https://image.tmdb.org/t/p/w300/lvgZ0gOjXItvE4I0UUIw77PWiBi.jpg",
-            "airDate": "2026-10-16",
-            "runtime": 24
-          },
-          "17": {
-            "title": "Episode 17",
-            "airDate": "2026-10-23",
-            "runtime": 24
-          },
-          "18": {
-            "title": "Episode 18",
-            "airDate": "2026-10-30",
-            "runtime": 24
-          },
-          "19": {
-            "title": "Episode 19",
-            "airDate": "2026-11-06",
-            "runtime": 24
-          },
-          "20": {
-            "title": "Episode 20",
-            "airDate": "2026-11-13",
-            "runtime": 24
-          },
-          "21": {
-            "title": "Episode 21",
-            "airDate": "2026-11-20",
-            "runtime": 24
-          },
-          "22": {
-            "title": "Episode 22",
-            "airDate": "2026-11-27",
-            "runtime": 24
-          },
-          "23": {
-            "title": "Episode 23",
-            "airDate": "2026-12-04",
-            "runtime": 24
-          },
-          "24": {
-            "title": "Episode 24",
-            "airDate": "2026-12-11",
-            "runtime": 24
-          },
-          "25": {
-            "title": "Episode 25",
-            "airDate": "2026-12-18",
-            "runtime": 24
-          },
-          "26": {
-            "title": "Episode 26",
-            "airDate": "2026-12-25",
-            "runtime": 24
-          }
-        }
-      }
-    },
-    {
-      "key": "sch-the-ramparts-of-ice-season-2-2026",
-      "title": "The Ramparts of Ice",
-      "slug": "the-ramparts-of-ice-season-2-2026",
-      "url": "https://deadtoons.sbs/posts/the-ramparts-of-ice-season-2-2026",
-      "img": "https://image.tmdb.org/t/p/w300/eEspAI6TAhvWphW6Hrt8ObLlfNQ.jpg",
-      "season": 2,
-      "episode": 3,
-      "audio": "",
-      "day": "The",
-      "date": "2026-10-15",
-      "time": "4:00 PM",
-      "today": true,
-      "nx": {
-        "id": "283428",
-        "kind": "tv",
-        "seasons": {
-          "2": 3
-        },
-        "from": "wikidata-tmdb"
-      }
-    },
-    {
-      "key": "sch-chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
-      "title": "Chainsmoker Cat",
-      "slug": "chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
-      "url": "https://deadtoons.sbs/posts/chainsmoker-cat-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
-      "img": "https://image.tmdb.org/t/p/w300/kqeKlSd7o9BCbTraZsDnksRSfxm.jpg",
-      "season": 1,
-      "episode": 12,
-      "audio": "",
-      "day": "Cat",
-      "date": "2026-10-15",
-      "time": "5:00 PM",
-      "today": true,
-      "nx": {
-        "id": "312949",
-        "kind": "tv",
-        "seasons": {
-          "1": 12
-        },
-        "from": "wikidata-tmdb"
-      },
-      "guide": {
-        "1": {
-          "1": {
-            "title": "I'm Yani Neko, Nya",
-            "overview": "Catgirl Yani struggles to pay rent and spends what little she has on cigarettes — until an urgent text from her sister Imoko sparks a far greater crisis.",
-            "image": "https://image.tmdb.org/t/p/w300/iXAJZZOuY92eRsm1macyt1ruZ0P.jpg",
-            "airDate": "2026-07-03",
-            "runtime": 24
-          },
-          "2": {
-            "title": "Meet My Juniors, Nya",
-            "overview": "Yani wants to continue her carefree life, but she receives a job offer as financial pressure builds. Will she commit to this opportunity or her freedom?",
-            "image": "https://image.tmdb.org/t/p/w300/wlOsOfggPKLJsh5uvXotSaVO0ny.jpg",
-            "airDate": "2026-07-10",
-            "runtime": 24
-          },
-          "3": {
-            "title": "I'm More Straight Than Funny, Nya",
-            "overview": "After another clash with her landlord, Yani agrees to tend his garden to cover her rent. It seems like a perfect fix — until she faces his cabbage patch.",
-            "image": "https://image.tmdb.org/t/p/w300/qZIElrCqwp3l847xhMIS5IDrw3r.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Freaks All Around Me, Nya",
-            "overview": "Yani lands a job assisting Saori Tatsuro, a risque manga artist. After Yani mistakenly burns her manuscript, an unexpected police visit follows.",
-            "image": "https://image.tmdb.org/t/p/w300/77xW9AEuwwUsfzsJlipjtsaaWxC.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "5": {
-            "title": "We're Off to a Secret Place, Nya",
-            "overview": "Despite her sister's attempts to take away her cigarettes, Yani refuses to quit. At the same time, Imoko navigates a youthful romance.",
-            "image": "https://image.tmdb.org/t/p/w300/eQ49Gk4KYjMlxaQevI0TEnccSFu.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Summer Starts and Ends Here, Nya",
-            "overview": "Yani's fellow tenant Aruko disappears during a drinking party while three new assistants arrive at Tatsuro's workplace as her deadline looms closer.",
-            "image": "https://image.tmdb.org/t/p/w300/pEjvXzWVPiPJz6hl5FTnVTmEtpF.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          },
-          "7": {
-            "title": "I Was Born to Parents Too, Nya",
-            "overview": "Yani takes a cleaning job at a shady underground facility. Meanwhile, her landlord welcomes a new houseguest, quickly followed by an unexpected mishap.",
-            "image": "https://image.tmdb.org/t/p/w300/sBoV3yzrtuIcjykTqQHHb24bypS.jpg",
-            "airDate": "2026-08-14",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Even We Run Around in December, Nya",
-            "overview": "Yani expects a lonely birthday, unaware that Imoko is planning a surprise party for her. Elsewhere, Yani's landlord becomes trapped in a foul time loop.",
-            "image": "https://image.tmdb.org/t/p/w300/16Xayd5qJQ4eUGRBmIYMwijF7Cw.jpg",
-            "airDate": "2026-08-21",
-            "runtime": 24
-          },
-          "9": {
-            "title": "My Little Sis Is Popular, Nya",
-            "overview": "Yani's peculiar toilet habits spark chaos around her while Imoko receives a gift from a secret admirer who turns out to be anything but ordinary.",
-            "image": "https://image.tmdb.org/t/p/w300/zVaLQWkjC3uUzcas2oGXeEUCIGk.jpg",
-            "airDate": "2026-09-04",
-            "runtime": 24
-          },
-          "10": {
-            "title": "I'm Gonnya Enjoy the Outing Too, Nya",
-            "overview": "Yani's neighbors Yakuneko and Hameneko head to a mystical waterfall — but Hameneko's selfishness drives Yakuneko to hatch a wild revenge plan.",
-            "image": "https://image.tmdb.org/t/p/w300/gZvAXKbpRIsXsGH6ne5DwjSTH1Z.jpg",
-            "airDate": "2026-09-11",
-            "runtime": 24
-          },
-          "11": {
-            "title": "We're in Kyoto, Nya",
-            "overview": "Yani and her flatmates set off on a Kyoto and Nara getaway — but her antics lead to an encounter with the \"King of Deer,\" a creature of ancient wisdom.",
-            "image": "https://image.tmdb.org/t/p/w300/7awLpPqLdFbbEdVVGvIPNJ21ACE.jpg",
-            "airDate": "2026-09-18",
-            "runtime": 24
-          },
-          "12": {
-            "title": "I'm Gonnya Smoke Even in the Last Episode, Nya",
-            "overview": "As her issues push the other residents to the edge, a worn-out Yani lashes out at her landlord — triggering the biggest brawl in the building's history.",
-            "image": "https://image.tmdb.org/t/p/w300/y2bsRfKaHsehwlWA1iHx0PfIRwL.jpg",
-            "airDate": "2026-09-25",
-            "runtime": 24
-          }
-        }
-      }
-    },
-    {
-      "key": "sch-jojo-s-bizarre-adventure-season-4-2018",
+      "key": "sch-jojo-s-bizarre-adventure-2026-season-06-steel-ball-run-dubbed-by-netflix-multi-audio-hindi-english-japanese",
       "title": "JoJo's Bizarre Adventure",
-      "slug": "jojo-s-bizarre-adventure-season-4-2018",
-      "url": "https://deadtoons.sbs/posts/jojo-s-bizarre-adventure-season-4-2018",
-      "img": "https://image.tmdb.org/t/p/w300/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
-      "season": 4,
+      "slug": "jojo-s-bizarre-adventure-2026-season-06-steel-ball-run-dubbed-by-netflix-multi-audio-hindi-english-japanese",
+      "url": "https://deadtoons.sbs/posts/jojo-s-bizarre-adventure-2026-season-06-steel-ball-run-dubbed-by-netflix-multi-audio-hindi-english-japanese",
+      "img": "https://image.tmdb.org/t/p/w300/rVeraqjLdiAXrCZUWo2hpqiuxFD.jpg",
+      "season": 6,
       "episode": 5,
       "audio": "",
       "day": "",
-      "date": "2026-10-15",
-      "time": "5:30 PM",
+      "date": "2026-10-16",
+      "time": "10:08 AM",
       "today": true,
       "nx": {
         "id": "45790",
@@ -455,6 +94,258 @@
           "4": 39,
           "5": 38,
           "6": 12
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "key": "sch-marvel-s-the-punisher-season-2-2019",
+      "title": "Marvel's The Punisher",
+      "slug": "marvel-s-the-punisher-season-2-2019",
+      "url": "https://deadtoons.sbs/posts/marvel-s-the-punisher-season-2-2019",
+      "img": "https://image.tmdb.org/t/p/w300/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
+      "season": 2,
+      "episode": 2,
+      "audio": "",
+      "day": "The",
+      "date": "2026-10-16",
+      "time": "2:22 PM",
+      "today": true,
+      "nx": {
+        "id": "67178",
+        "kind": "tv",
+        "seasons": {
+          "2": 2
+        },
+        "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "2": {
+          "1": {
+            "title": "Roadhouse Blues",
+            "overview": "While driving through Michigan, Frank stops for a beer at a roadside bar. But staying out of trouble has never been his strong suit.",
+            "image": "https://image.tmdb.org/t/p/w300/p6b8Au2By66QENIUrmnc4tqydlN.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 53
+          },
+          "2": {
+            "title": "Fight or Flight",
+            "overview": "Frank and a reluctant Rachel go on the run as a menacing adversary gives chase. Meanwhile, Madani pays Russo an unwelcome visit.",
+            "image": "https://image.tmdb.org/t/p/w300/lDfOgz7tVzEFTssD07u8t95TuQ9.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 54
+          },
+          "3": {
+            "title": "Trouble the Water",
+            "overview": "As Pilgrim's past comes into focus, Frank and Rachel find themselves in police custody, where they're anything but safe.",
+            "image": "https://image.tmdb.org/t/p/w300/sTqiA7ye1rGJKlZsNZdqRulaGtL.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 51
+          },
+          "4": {
+            "title": "Scar Tissue",
+            "overview": "Rachel recalls the night everything changed and lets Frank in on the truth about her name. Russo sits down with a face from his childhood.",
+            "image": "https://image.tmdb.org/t/p/w300/tgGG2XChpNswv86Of74VcIqSrpz.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 57
+          },
+          "5": {
+            "title": "One-Eyed Jacks",
+            "overview": "It's not a trap if you know it's coming: That's Frank's philosophy. Madani opens up and Pilgrim plans a visit to an unholy land.",
+            "image": "https://image.tmdb.org/t/p/w300/75Z9dLKERPNbR0v3niEDAoFbGp5.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 51
+          },
+          "6": {
+            "title": "Nakazat",
+            "overview": "Amy (formerly Rachel) develops photographs that point to a conspiracy. Russo reads his own report. Madani's story about Russo comes under fire.",
+            "image": "https://image.tmdb.org/t/p/w300/2YnR28mHdFmPyvpflBRpPDEaNk6.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 56
+          },
+          "7": {
+            "title": "One Bad Day",
+            "overview": "Madani's quest to ID Pilgrim hits a wall. Russo and his crew put their plan into action. Frank encounters someone from the past.",
+            "image": "https://image.tmdb.org/t/p/w300/9gy9UYX2qi28zOcZ014XCv34Elx.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 51
+          },
+          "8": {
+            "title": "My Brother's Keeper",
+            "overview": "Painful memories take ahold of Russo. Frank's frustration frightens those closest to him. Madani receives a visitor bearing a warning.",
+            "image": "https://image.tmdb.org/t/p/w300/pxAQpGT7dC4iUqO9zrSCXiGpjQP.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 48
+          },
+          "9": {
+            "title": "Flustercluck",
+            "overview": "A big bounty inspires New York's worst to pursue the Punisher. A restless Amy seeks help from a fellow grifter. Russo and Krista consider the future.",
+            "image": "https://image.tmdb.org/t/p/w300/7gtOkfTTH7cNmAd5UAV9iwfMzZF.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 57
+          },
+          "10": {
+            "title": "The Dark Hearts of Men",
+            "overview": "As Madani and Krista debate who's worth saving, Frank prepares to storm Russo's territory. A brutal encounter pushes Pilgrim back into old habits.",
+            "image": "https://image.tmdb.org/t/p/w300/1EU6IbVLxK0GzNTykIumaYBnc8M.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 47
+          },
+          "11": {
+            "title": "The Abyss",
+            "overview": "Amy rushes to protect Frank, who lies defenseless in a hospital. Pilgrim gets some crushing news, and Karen Page calls in a favor.",
+            "image": "https://image.tmdb.org/t/p/w300/1jBcIeAyKftgDYIhNZsZXEFbik2.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 54
+          },
+          "12": {
+            "title": "Collision Course",
+            "overview": "Buckle up -- Mahoney and Frank are about to take a ride to remember. Amy makes an entrance, Russo cashes out, and Madani comes clean to Krista.",
+            "image": "https://image.tmdb.org/t/p/w300/iVCBLb45TLOXi1Pl3pT6YvaiK5Y.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 49
+          },
+          "13": {
+            "title": "The Whirlwind",
+            "overview": "Frank, Pilgrim, Madani, Russo, Amy, Curt and the Schultz family. No bullet is left unspent as season two comes to an explosive conclusion.",
+            "image": "https://image.tmdb.org/t/p/w300/oqu7NwokmhEQRCplas6wixHJ9H2.jpg",
+            "airDate": "2019-01-18",
+            "runtime": 57
+          }
+        }
+      }
+    },
+    {
+      "key": "sch-the-elusive-samurai-season-2-2026",
+      "title": "The Elusive Samurai",
+      "slug": "the-elusive-samurai-season-2-2026",
+      "url": "https://deadtoons.sbs/posts/the-elusive-samurai-season-2-2026",
+      "img": "https://image.tmdb.org/t/p/w300/p0s5ymGzfM4zGQCVaU9MJOSaAWu.jpg",
+      "season": 2,
+      "episode": 11,
+      "audio": "",
+      "day": "The",
+      "date": "2026-10-16",
+      "time": "4:25 PM",
+      "today": true,
+      "nx": {
+        "id": "222623",
+        "kind": "tv",
+        "seasons": {
+          "2": 11
+        },
+        "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "2": {
+          "1": {
+            "title": "Longing for Sea Bream!",
+            "overview": "It is the first year of the Kenmu era (1334), in Suwa, Shinano province. Tokiyuki, now fully accustomed to life in Suwa, is reminded of meals from his days in Kamakura during a casual conversation. He recalls how much he loved eating freshly caught sea bream from Yuigahama, seasoned with wasabi and soy sauce from Izu.",
+            "image": "https://image.tmdb.org/t/p/w300/zkIkqDDc738DmfT741hNKPlIJ2T.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Ayako's Heart-Pounding Operation!",
+            "overview": "The Ashikaga forces keep a vigilant watch across the country, searching for remnants of the Hojo clan scattered throughout Japan. Sadamune, the governor of Shinano, has grown suspicious of “Chojumaru,” a young warrior who has repeatedly distinguished himself in battle—first during the dog-shooting competition, and late",
+            "image": "https://image.tmdb.org/t/p/w300/zPBDbcy3eBwPguyy0hWlU0Yxv5X.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Tokiyuki and Three Great Generals",
+            "overview": "Provincial official Kiyohara returns to Shinano after fleeing back to Kyo following the previous battle. Having grown even more ruthless, Kiyohara launches a large-scale invasion against pro-Hojo factions in northern Shinano. To oppose the combined forces of Kiyohara and Sadamune, the three great generals of the Suwa f",
+            "image": "https://image.tmdb.org/t/p/w300/uqbzSPqBxUT0yDKXI2NaqFMeu7x.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Warrior of Love: Shinano Mask!",
+            "overview": "Tokiyuki and his companions race across the battlefield, sparing even the slightest moments of rest in order to relay information to their allies. However, when they arrive at the northern front where Mochizuki and Tokoiwa are fighting, what they witness is a fortress engulfed in flames, falliing into ruin... Ayako col",
+            "image": "https://image.tmdb.org/t/p/w300/kFOSkyzTSrq4Gxr2ovio3BsNS4E.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Unyielding",
+            "overview": "The central battlefield descends into total chaos. Just as victory seems within reach for the Hoshina–Shinomiya forces, a new obstacle suddenly appears before them: Kiyohara’s newly devised battle mikoshi. Originally intended as a palanquin for issuing commands from the rear, it is now reinforced with heavy armor.",
+            "image": "https://image.tmdb.org/t/p/w300/6O5uCSow8osBNBb6Kj4fd7gib4o.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Boy Who Became a God",
+            "overview": "The battle ends in defeat for the Suwa Sect. Although they manage to keep casualties to a minimum, the losses they suffer are significant. As they look toward the next great conflict, everyone in the Suwa Sect comes to share an even stronger resolve. The battle becomes another valuable lesson for Tokiyuki as well—one t",
+            "image": "https://image.tmdb.org/t/p/w300/AoOSvb63DJkNBk4tRU0XNsnjdjN.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "7": {
+            "title": "My Uncle",
+            "overview": "Tokiyuki’s uncle, Yasuie Hojo, is still alive! Once a key figure at the heart of the Kamakura Shogunate, Yasuie survives the fall of Kamakura. Afterward, he travels throughout the Tohoku region, continuing to fight alongside the remaining Hojo loyalists. But after suffering defeat after defeat, he eventually finds his ",
+            "image": "https://image.tmdb.org/t/p/w300/aKq8cxE3EgR5nwmWffKzCxHRNpg.jpg",
+            "airDate": "2026-08-28",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Irreplaceable",
+            "overview": "At the suggestion of Yorishige and Yasuie, Tokiyuki sets out for the capital, Kyo, together with the Elusive Warriors. Major Counselor Kinmune Saionji, an ally of Yasuie, awaits their arrival in Kyo. While Yasuie and Kinmune conduct a secret discussion, Tokiyuki and his companions venture out into the city.",
+            "image": "https://image.tmdb.org/t/p/w300/cnudixNIlcnD230aJrTXeDDspK0.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The Man Called Masashige Kusunoki",
+            "overview": "Having grown closer over a game of dice, Mima invites Tokiyuki and his companions on a tour of Kyo. Even though they know she is the daughter of their enemy, the Elusive Warriors accept her kindness and spend a brief, youthful moment enjoying themselves as ordinary boys and girls. However, upon returning to the Saionji",
+            "image": "https://image.tmdb.org/t/p/w300/xRcKG1ifQN02KxfD4sIId9gKMRI.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          },
+          "10": {
+            "title": "The Night of the Assassination",
+            "overview": "Through his dialogue with the warrior Masashige Kusunoki, known as a “god of war,” Tokiyuki is moved by Kusunoki's unwavering convictions and develops an even deeper sense of confidence in the possibilities of “fleeing.” Just as he is smiling over this fortunate encounter, everything suddenly changes when he hears news",
+            "image": "https://image.tmdb.org/t/p/w300/3f4vF5ASY6PDJJOwfbNdrFYs7cn.jpg",
+            "airDate": "2026-09-18",
+            "runtime": 24
+          },
+          "11": {
+            "title": "My Buddha, Part Two",
+            "overview": "Although the attempt to assassinate Takauji ends in failure, Tokiyuki has grown significantly as a warrior through his experiences in Kyo. Upon his return to Suwa, Yorishige tells him that the time has finally come. The attempted assassinations of both the Emperor and Takauji plunged Kyo into chaos, where warriors from",
+            "image": "https://image.tmdb.org/t/p/w300/kJVcoU30nlYtH07tODbObii3mw6.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Age",
+            "overview": "With preparations for war complete, the Suwa forces are finally about to ignite the great conflict. Tokiyuki is appointed commander-in-chief, taking command of the “Kamakura Party,” a unit formed from surviving retainers of the Hojo clan—while keeping his true identity hidden. Can he prove himself worthy as a leader to",
+            "image": "https://image.tmdb.org/t/p/w300/A9pNtcCz4haWbeXvzcsudQPdjsl.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 24
+          }
+        }
+      }
+    },
+    {
+      "key": "sch-that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
+      "title": "That Time I Got Reincarnated as a Slime",
+      "slug": "that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
+      "url": "https://deadtoons.sbs/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
+      "img": "https://image.tmdb.org/t/p/w300/94MjsZUyxubodMPJdWOVkcJ0bdU.jpg",
+      "season": 4,
+      "episode": 21,
+      "audio": "Hin-Tam-Tel-Eng-Jap",
+      "day": "Got",
+      "date": "2026-10-16",
+      "time": "4:33 PM",
+      "today": true,
+      "nx": {
+        "id": "82684",
+        "kind": "tv",
+        "seasons": {
+          "1": 24,
+          "2": 24,
+          "3": 24,
+          "4": 24
         },
         "from": "catalog"
       }
@@ -715,11 +606,13 @@
           },
           "2": {
             "title": "The Boy Who Is the World's Strongest Sorcerer Dons a Mask... Again",
+            "overview": "Ray trains Ariane, while Lieselotte trains Amelia. Ray's mom also wants Ariane to get ahead in love?!",
             "image": "https://image.tmdb.org/t/p/w300/5hFMVLllVFnRIWP8QFnKLY6avkv.jpg",
-            "airDate": "2026-10-16"
+            "airDate": "2026-10-16",
+            "runtime": 25
           },
           "3": {
-            "title": "Episode 3",
+            "title": "The Boy Who Is the World's Strongest Sorcerer Keeps Winning With His Team",
             "airDate": "2026-10-23"
           },
           "4": {
@@ -793,6 +686,7 @@
           },
           "2": {
             "title": "Episode 2",
+            "image": "https://image.tmdb.org/t/p/w300/dSzYsg5GXnGUXgeV5t71v6cb604.jpg",
             "airDate": "2026-10-16"
           },
           "3": {
@@ -952,6 +846,45 @@
       },
       "from": "catalog",
       "checked": "2026-10-15"
+    },
+    "linkclick": {
+      "id": "123542",
+      "kind": "tv",
+      "seasons": {
+        "3": 11
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-16"
+    },
+    "marvelsthepunisher": {
+      "id": "67178",
+      "kind": "tv",
+      "seasons": {
+        "2": 2
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-16"
+    },
+    "theelusivesamurai": {
+      "id": "222623",
+      "kind": "tv",
+      "seasons": {
+        "2": 11
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-16"
+    },
+    "thattimeigotreincarnatedasaslime": {
+      "id": "82684",
+      "kind": "tv",
+      "seasons": {
+        "1": 24,
+        "2": 24,
+        "3": 24,
+        "4": 24
+      },
+      "from": "catalog",
+      "checked": "2026-10-16"
     }
   },
   "skipped": [
