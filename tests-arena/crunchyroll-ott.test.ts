@@ -14,13 +14,14 @@ test('crunchyroll OTT demo page ships with the app', () => {
 test('Crunchyroll player exposes Nxsha as its only playback source', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('<div class="stage-col">');
-    expect(html).toContain('id="serverBar"');
-    expect(html.match(/class="server-pill/g) || []).toHaveLength(1);
-    expect(html).toContain('server-pill active" data-server="0"');
-    expect(html).toContain('title="Reload Nxsha player — nxsha.space"');
+    // The server bar (episode stepper, provider pill, hints) is gone from the
+    // watch page — Nxsha loads on its own and the watch cards handle episodes.
+    expect(html).not.toContain('id="serverBar"');
+    expect(html).not.toContain('class="server-bar"');
+    expect(html).not.toContain('.server-pill{');
+    expect(html).not.toContain('.ep-stepper{');
     expect(html).toContain("var SERVERS=[{name:'Nxsha',host:'nxsha.space'}];");
     expect(html).toContain('var PLAYER_DEFAULT_SERVER=0;');
-    expect(html).toContain('Nxsha · nxsha.space');
     expect(html).not.toContain('Server 1');
     expect(html).not.toContain('Server 2');
     expect(html).not.toContain('Server 3');
@@ -38,13 +39,13 @@ test('player embeds episode links from Nxsha only (no bundled files or legacy id
     expect(html).not.toContain('1NyXWP9KBQtkxKJX6ZU--3PFwMeD5iDn-');
     expect(html).toContain('<iframe id="serverFrame"');
     expect(html).toContain('id="frameLoader"');
-    expect(html).toContain('id="serverOpen"');
-    expect(html).toContain('id="serverHelp"');
     expect(html).toContain('id="playerTitle"');
     expect(html).toContain('https://nxsha.space/embed/');
     expect(html).toContain("?server=GbruHindi&lang=hi&sub=hi&color=orange");
     expect(html).toContain('function serverUrl(i)');
-    expect(html).toContain('id="epStepper"');
+    // Episode switching lives in the watch page's next/previous cards.
+    expect(html).toContain('id="watchNextCard"');
+    expect(html).toContain('id="watchPrevCard"');
 });
 
 test('episode metadata is kept separate from playback links', () => {
@@ -97,7 +98,8 @@ test('player has Nxsha failure handling with retry and no fallback tab', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('onServerTimeout');
     expect(html).toContain('disarmWatchdog');
-    expect(html).toContain('id="serverHelp"');
+    // The help trigger rides the guarded listener (the bar itself is gone).
+    expect(html).toContain("var serverHelpBtn=byId('serverHelp');if(serverHelpBtn)serverHelpBtn.addEventListener(");
     expect(html).not.toContain('id="noticeAlt"');
     expect(html).toContain('Retry the player or open it in a new tab.');
     expect(html).toContain("setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");

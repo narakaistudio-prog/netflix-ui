@@ -124,10 +124,9 @@ test('Nxsha is the sole player and the default for the Crunchyroll section', asy
     await wait(200);
     const doc = dom.window.document;
 
-    expect(activePlayer(dom.window)).toEqual([
-        { server: '0', active: true, label: 'Nxsha' },
-    ]);
-    expect(doc.getElementById('serverName')!.textContent).toBe('Nxsha · nxsha.space');
+    // The server bar is gone — the player boots straight into Nxsha.
+    expect(activePlayer(dom.window)).toEqual([]);
+    expect(doc.getElementById('serverName')).toBeNull();
     expect(doc.body.textContent).not.toContain('Server 1');
     expect(doc.body.textContent).not.toContain('Server 2');
 
@@ -308,34 +307,45 @@ test('Nxsha iframe remains sandboxed and allows fullscreen playback', async () =
     dom.window.close();
 });
 
-test('episode next/previous navigation reloads Nxsha with the new episode number', async () => {
+test('the watch page next-episode card reloads Nxsha with the new episode number', async () => {
     const dom = boot();
     await wait(200);
     await play(dom.window, 'aot');
+    const doc = dom.window.document;
 
-    click(dom.window, dom.window.document.getElementById('epNext'));
+    const nextCard = doc.getElementById('watchNextCard') as HTMLButtonElement | null;
+    expect(nextCard).toBeTruthy();
+    expect(nextCard!.hidden).toBe(false);
+    expect(nextCard!.querySelector('.up-info b')?.textContent).toBe('E2 – That Day: The Fall of Shiganshina (2)');
+    click(dom.window, nextCard);
     await wait(120);
-    expect(dom.window.document.getElementById('serverFrame')!.getAttribute('src')).toContain(
+    // openEpisode re-arms the poster gate; one click loads the new episode.
+    click(dom.window, doc.getElementById('stagePoster'));
+    await wait(180);
+    expect(doc.getElementById('serverFrame')!.getAttribute('src')).toContain(
         'https://nxsha.space/embed/tv/tt2560140/1/2',
     );
     dom.window.close();
 });
 
-test('Nxsha playback failure offers retry but no alternate server', async () => {
+test('the failure notice still offers retry with no alternate server (trigger guarded)', async () => {
     const dom = boot();
     await wait(200);
-    await play(dom.window, 'solo');
-
-    click(dom.window, dom.window.document.getElementById('serverHelp'));
     const doc = dom.window.document;
-    expect(doc.getElementById('frameBlocked')!.hasAttribute('hidden')).toBe(false);
-    expect(doc.getElementById('noticeTitle')!.textContent).toContain('Nxsha');
-    expect(doc.getElementById('noticeText')!.textContent).toContain('Nxsha is not responding');
-    expect(doc.getElementById('blockedOpen')!.textContent).toBe('Retry');
-    expect(doc.getElementById('noticeAlt')).toBeNull();
 
-    click(dom.window, doc.getElementById('blockedOpen'));
-    await wait(120);
+    // The old help button went away with the server bar; the notice it opened is
+    // still wired through the guarded listener and the playback watchdog, and
+    // there is still no alternate server anywhere.
+    expect(doc.getElementById('noticeAlt')).toBeNull();
+    expect(readFileSync(HTML_PATH, 'utf8')).toContain('function onServerTimeout(');
+    expect(readFileSync(HTML_PATH, 'utf8')).toContain('Retry the player or open it in a new tab.');
+    expect(readFileSync(HTML_PATH, 'utf8')).toContain(
+        "var serverHelpBtn=byId('serverHelp');if(serverHelpBtn)serverHelpBtn.addEventListener(",
+    );
+    expect(doc.getElementById('blockedOpen')).toBeTruthy();
+    expect(readFileSync(HTML_PATH, 'utf8')).not.toContain('function nextServer(');
+
+    await play(dom.window, 'solo');
     expect(doc.getElementById('serverFrame')!.getAttribute('src')).toContain(
         'https://nxsha.space/embed/tv/127532/1/1',
     );
@@ -379,6 +389,5 @@ test('fullscreen exit keeps the Nxsha URL and enables the one-tap repaint recove
 
     expect(frame.getAttribute('src')).toBe(srcBefore);
     expect(dom.window.document.querySelector('.toast')!.textContent).toContain('Player frozen?');
-    expect(dom.window.document.getElementById('serverName')!.textContent).toBe('Nxsha · nxsha.space');
     dom.window.close();
 });
