@@ -469,6 +469,20 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
 
         click(doc.getElementById('demoPlay'));
         expect(doc.getElementById('stagePosterText')?.textContent).toContain('S4 EP5');
+
+        // Under the player the watch page mirrors Crunchyroll's watch layout:
+        // show title, "E5 – <episode>", released date, and next/previous cards.
+        expect(doc.getElementById('watchShow')?.textContent).toBe("JoJo's Bizarre Adventure");
+        expect(doc.getElementById('watchEpTitle')?.textContent).toMatch(/^E5 – .+/);
+        expect(doc.getElementById('watchReleased')?.textContent).toMatch(/^Released on [A-Z][a-z]{2} \d{1,2}, \d{4}$/);
+        const nextCard = doc.getElementById('watchNextCard') as HTMLElement;
+        expect(nextCard.hidden).toBe(false);
+        expect(nextCard.querySelector('.up-info b')?.textContent).toMatch(/^E6 – .+/);
+        expect(nextCard.querySelector('.up-badge')?.textContent).toMatch(/^\d+m$/);
+        expect(nextCard.querySelector('.up-info span')?.textContent).toMatch(/^(Subtitled|Sub \| Dub)$/);
+        const prevCard = doc.getElementById('watchPrevCard') as HTMLElement;
+        expect(prevCard.hidden).toBe(false);
+        expect(prevCard.querySelector('.up-info b')?.textContent).toMatch(/^E4 – .+/);
         click(doc.getElementById('stagePlay'));
         await new Promise((resolve) => setTimeout(resolve, 300));
         const frame = doc.querySelector('#serverFrame') as HTMLIFrameElement | null;
@@ -491,6 +505,25 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         const unguided = episodes[1] as HTMLElement;
         expect(unguided.querySelector('.episode-copy strong')?.textContent).toBe('Episode 2');
         expect(unguided.querySelector('img')?.getAttribute('data-src')).toContain('data:image/svg+xml');
+
+        // Playing the newest episode opens the watch page with this episode's
+        // details; the season's last episode has no NEXT card and the PREVIOUS
+        // card falls back to placeholder art for the unguided episode.
+        click(doc.getElementById('demoPlay'));
+        expect(doc.getElementById('watchShow')?.textContent).toBe('Chainsmoker Cat');
+        expect(doc.getElementById('watchEpTitle')?.textContent).toBe('E12 – One More Cigarette');
+        expect(doc.getElementById('watchReleased')?.textContent).toBe('Released on Oct 9, 2026');
+        expect((doc.getElementById('watchNextCard') as HTMLElement).hidden).toBe(true);
+        expect((doc.getElementById('watchNextHead') as HTMLElement).hidden).toBe(true);
+        const dropPrev = doc.getElementById('watchPrevCard') as HTMLElement;
+        expect(dropPrev.hidden).toBe(false);
+        expect(dropPrev.querySelector('.up-info b')?.textContent).toBe('E11 – Episode 11');
+        expect(dropPrev.querySelector('img')?.getAttribute('data-src')).toContain('data:image/svg+xml');
+
+        // "See More Episodes" returns to the detail view and its episode list.
+        click(doc.getElementById('watchSeeMore'));
+        expect(doc.getElementById('playerShell')?.hasAttribute('hidden')).toBe(true);
+        expect(doc.getElementById('detailDialog')?.hasAttribute('open')).toBe(true);
 
         // The pool filler keeps playing the catalog entry it already had.
         click(cards[baked.length - 1]);
