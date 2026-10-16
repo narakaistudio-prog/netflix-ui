@@ -527,10 +527,41 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         expect(dropPrev.querySelector('.up-info b')?.textContent).toBe('E11 – Episode 11');
         expect(dropPrev.querySelector('img')?.getAttribute('src')).toContain('data:image/svg+xml');
 
-        // "See More Episodes" returns to the detail view and its episode list.
+        // "See More Episodes" opens the Crunchyroll-style season guide over the
+        // still-running player: a grid of episodes with the duration badge,
+        // NOW PLAYING on the current episode and the show caption on every card.
         click(doc.getElementById('watchSeeMore'));
-        expect(doc.getElementById('playerShell')?.hasAttribute('hidden')).toBe(true);
-        expect(doc.getElementById('detailDialog')?.hasAttribute('open')).toBe(true);
+        const seasonModal = doc.getElementById('seasonModal') as HTMLElement;
+        expect(seasonModal.hidden).toBe(false);
+        expect(doc.getElementById('playerShell')?.hasAttribute('hidden')).toBe(false);
+        expect(doc.getElementById('seasonModalTitle')?.textContent).toBe('Season 1');
+        const grid = Array.from(doc.querySelectorAll('#seasonGrid .season-ep')) as HTMLElement[];
+        expect(grid.length).toBe(12);
+        expect(grid[11].classList.contains('active')).toBe(true);
+        expect(grid[11].querySelector('.season-now')?.textContent).toBe('NOW PLAYING');
+        expect(grid[11].querySelector('.season-title')?.textContent).toBe('E12 – One More Cigarette');
+        expect(grid[11].querySelector('.season-badge')?.textContent).toBe('24m');
+        expect(grid[11].querySelector('.season-show')?.textContent).toBe('Chainsmoker Cat');
+        expect(grid[11].querySelector('img')?.getAttribute('src')).toBe(EPISODE_STILL);
+        // Unguided episodes keep the placeholder art in the grid too.
+        expect(grid[1].querySelector('img')?.getAttribute('src')).toContain('data:image/svg+xml');
+
+        // Picking an episode closes the guide and plays that episode.
+        click(grid[2]);
+        expect(seasonModal.hidden).toBe(true);
+        click(doc.getElementById('stagePlay'));
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        const gridFrame = doc.querySelector('#serverFrame') as HTMLIFrameElement | null;
+        expect(gridFrame?.getAttribute('src')).toContain('https://nxsha.space/embed/tv/312949/1/3');
+
+        // The guide re-opens on the episode now playing, and the close button hides it.
+        click(doc.getElementById('watchSeeMore'));
+        expect(doc.getElementById('seasonModalTitle')?.textContent).toBe('Season 1');
+        const gridAgain = Array.from(doc.querySelectorAll('#seasonGrid .season-ep')) as HTMLElement[];
+        expect(gridAgain[2].classList.contains('active')).toBe(true);
+        expect(gridAgain[11].querySelector('.season-now')).toBeNull();
+        click(doc.getElementById('closeSeasonModal'));
+        expect((doc.getElementById('seasonModal') as HTMLElement).hidden).toBe(true);
 
         // The pool filler keeps playing the catalog entry it already had.
         click(cards[baked.length - 1]);
