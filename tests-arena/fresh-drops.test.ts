@@ -419,7 +419,7 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
             if (/Not implemented/.test(error.message)) return;
             throw error;
         });
-        const dom = new JSDOM(readFileSync(page, 'utf8'), { runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole });
+        const dom = new JSDOM(readFileSync(page, 'utf8'), { runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole, url: 'https://app.local/crunchyroll' });
         const doc = dom.window.document;
 
         // The row rendered at the top of the home rails.
@@ -562,6 +562,40 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         expect(gridAgain[11].querySelector('.season-now')).toBeNull();
         click(doc.getElementById('closeSeasonModal'));
         expect((doc.getElementById('seasonModal') as HTMLElement).hidden).toBe(true);
+
+        // Continue Watching is real now: it lists exactly what was played in
+        // this browser (newest first) and nothing else.
+        const continueSection = doc.getElementById('continueWatching') as HTMLElement;
+        expect(continueSection.hidden).toBe(false);
+        const resumeCards = Array.from(doc.querySelectorAll('#continueGrid .continue-card')) as HTMLElement[];
+        expect(resumeCards.map((c) => c.querySelector('strong')?.textContent)).toEqual(['Chainsmoker Cat', "JoJo's Bizarre Adventure"]);
+        expect(resumeCards[0].querySelector('small')?.textContent).toBe('Episode 3');
+        expect(resumeCards[0].querySelector('em')?.textContent).toBe('S1 · EP3 · just now');
+        expect(resumeCards[1].querySelector('em')?.textContent).toBe('S4 · EP5 · just now');
+        expect(JSON.parse(doc.defaultView!.localStorage.getItem('cr-resume-v1') ?? '[]')).toHaveLength(2);
+        // The fake seeded cards (Solo Leveling E3 at 64%) are gone for good.
+        expect(doc.body.textContent).not.toContain('64% watched');
+
+        // Dismissing an entry really removes it (and persists the removal).
+        click(resumeCards[0].querySelector('.dismiss'));
+        expect(doc.querySelectorAll('#continueGrid .continue-card')).toHaveLength(1);
+        expect(JSON.parse(doc.defaultView!.localStorage.getItem('cr-resume-v1') ?? '[]')).toHaveLength(1);
+
+        // The notification bell shows the real fresh-drop count and the panel
+        // lists the real baked drops, not invented ones.
+        const badge = doc.getElementById('notifyCount') as HTMLElement;
+        expect(badge.textContent).toBe('2');
+        click(doc.getElementById('notificationButton'));
+        const notices = Array.from(doc.querySelectorAll('#noticeList [data-notice-open]')) as HTMLElement[];
+        expect(notices.length).toBeGreaterThanOrEqual(2);
+        const noticeTitles = notices.map((n) => n.querySelector('strong')?.textContent);
+        expect(noticeTitles).toContain("JoJo's Bizarre Adventure");
+        expect(noticeTitles).toContain('Chainsmoker Cat');
+        expect(doc.getElementById('noticeList')?.textContent).not.toContain('New Hindi episode is ready');
+        click(notices[0]);
+        expect((doc.getElementById('notificationPanel') as HTMLElement).hidden).toBe(true);
+        expect(doc.getElementById('detailDialog')?.hasAttribute('open')).toBe(true);
+        click(doc.querySelector('#detailDialog .dialog-close'));
 
         // The pool filler keeps playing the catalog entry it already had.
         click(cards[baked.length - 1]);
