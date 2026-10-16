@@ -25,7 +25,7 @@ test('Nxsha is the sole locked provider and the default player', () => {
     expect(html).not.toContain('noticeAlt');
 });
 
-test('the only visible provider control is Nxsha', async () => {
+test('no provider controls remain in the DOM (the server bar is gone)', async () => {
     const virtualConsole = new VirtualConsole();
     virtualConsole.on('jsdomError', () => {});
     const dom = new JSDOM(readFileSync(HTML_PATH, 'utf8'), {
@@ -37,10 +37,9 @@ test('the only visible provider control is Nxsha', async () => {
 
     await new Promise((resolve) => setTimeout(resolve, 200));
     const pills = Array.from(dom.window.document.querySelectorAll('.server-pill'));
-    expect(pills).toHaveLength(1);
-    expect(pills[0].getAttribute('data-server')).toBe('0');
-    expect(pills[0].textContent?.trim()).toBe('Nxsha');
-    expect(pills[0].classList.contains('active')).toBe(true);
+    expect(pills).toHaveLength(0);
+    // The stage is still Nxsha's and only Nxsha's.
+    expect(dom.window.document.getElementById('serverFrame')).toBeTruthy();
     dom.window.close();
 });
 

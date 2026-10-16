@@ -473,15 +473,15 @@
     }
 
     .stage-col{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:12px;-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0}
-    .server-bar{background:#101216;border:1px solid #26282e;border-radius:14px;padding:12px 14px}
-    .server-row{display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;align-items:center;gap:10px}
-    .server-pill{display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:7px;background:#23252b;color:#f7f7f7;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:800;cursor:pointer;transition:border-color .15s ease,background .15s ease}
-    .server-pill:hover{border-color:#f47521}
-    .server-pill.active{background:#f47521;border-color:#f47521;color:#160e08}
-    .server-pill .dot{width:7px;height:7px;border-radius:50%;background:#46d369}
-    .server-pill.active .dot{background:#160e08}
-    .server-name{margin-left:auto;font-size:12px;color:#a9abb0;font-weight:700}
-    .server-hint{margin:9px 0 0;font-size:11.5px;color:#777}
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @media(max-width:1050px){.stage-col{-webkit-flex:1 1 100%;flex:1 1 100%}}
 
     .video-stage iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:#000}
@@ -495,8 +495,8 @@
     .frame-loader .spinner{width:38px;height:38px;border-radius:50%;border:3px solid #333;border-top-color:#f47521;-webkit-animation:spin .8s linear infinite;animation:spin .8s linear infinite}
     @-webkit-keyframes spin{to{-webkit-transform:rotate(360deg)}}
     @keyframes spin{to{transform:rotate(360deg)}}
-    .server-ghost{background:transparent;color:#f7f7f7;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
-    .server-ghost:hover{border-color:#f47521;color:#f47521}
+    
+    
 
     .frame-blocked{position:absolute;inset:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#0a0b0e;color:#f7f7f7;text-align:center;padding:20px}
     .frame-blocked strong{font-size:16px}
@@ -504,9 +504,9 @@
     .frame-blocked p{margin:0;font-size:12.5px;color:#a9abb0;line-height:1.6}
     .blocked-open{background:#f47521;border:0;color:#160e08;font-weight:900;font-size:13px;border-radius:10px;padding:10px 18px;cursor:pointer;margin-top:6px}
 
-    .ep-stepper{display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:6px;background:#1a1d23;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:4px 6px}
-    .ep-stepper button{background:#2a2d34;color:#fff;border:0;border-radius:7px;width:26px;height:26px;font-size:11px;font-weight:900;cursor:pointer;line-height:1}
-    .ep-stepper button:hover{background:#f47521;color:#160e08}
+    
+    
+    
     #epLabel{font-size:12px;font-weight:900;color:#f47521;min-width:66px;text-align:center;white-space:nowrap}
 
     .blocked-alt{background:transparent;border:1px solid rgba(255,255,255,.25);color:#f7f7f7;font-weight:800;font-size:12.5px;border-radius:10px;padding:9px 16px;cursor:pointer}
@@ -682,20 +682,7 @@
         <div class="frame-loader" id="frameLoader" hidden><span class="spinner"></span><p>Loading server…</p></div>
         <div class="frame-blocked" id="frameBlocked" hidden><strong id="noticeTitle">Server · <span>Info</span></strong><p id="noticeText"></p><button class="blocked-open" id="blockedOpen">Open in new tab ↗</button></div>
       </div>
-      <div class="server-bar" id="serverBar">
-        <div class="server-row">
-          <div class="ep-stepper" id="epStepper">
-            <button id="epPrev" aria-label="Previous episode" title="Previous episode">◀</button>
-            <span id="epLabel">S1 · EP1</span>
-            <button id="epNext" aria-label="Next episode" title="Next episode">▶</button>
-          </div>
-          <button class="server-pill active" data-server="0" title="Reload Nxsha player — nxsha.space" aria-label="Reload Nxsha player"><span class="dot"></span>Nxsha</button>
-          <span class="server-name" id="serverName">Nxsha · nxsha.space</span>
-          <button class="server-ghost" id="serverOpen" title="Open Nxsha player in a new tab">Open in new tab ↗</button>
-          <button class="server-ghost" id="serverHelp" title="Server not playing?">⚠ Not playing?</button>
-        </div>
-        <p class="server-hint">◀ ▶ to change episodes · Playback via Nxsha</p>
-      </div>
+      
       </div>
     </div>
       <div class="watch-body">
@@ -966,8 +953,8 @@ var CR_NEW_DROPS_MODE='today';
       function openEpisode(key,season,ep){if(key&&shows[key])activeKey=key;playState={key:activeKey,season:String(season||'1'),ep:Math.max(1,parseInt(ep,10)||1)};openPlayer()}
       function openFromNode(node){var card=closest(node,'[data-continue-card]')||node,key=activeKey,ep=1;var strong=(card&&card.querySelector)?card.querySelector('strong'):null;var fk=strong?keyForTitle(strong.textContent):null;if(fk)key=fk;var m=/episode\s+(\d+)/i.exec((card&&card.textContent)||'');if(m)ep=parseInt(m[1],10)||1;openEpisode(key,'1',ep)}
       function stepEp(d){var st=playState;if(isMovieKey(st.key))return;var list=seasonList(st.key),e=st.ep+d;if(e<1){var pi=list.indexOf(String(st.season));if(pi>0){var ps=list[pi-1];st.season=ps;st.ep=seasonEpCount(st.key,ps);showToast('Season '+ps+' · EP'+st.ep)}else{showToast('This is the first episode');return}}else if(e>seasonEpCount(st.key,st.season)){var ci=list.indexOf(String(st.season));if(ci>=0&&ci<list.length-1){var ns=list[ci+1];st.season=ns;st.ep=1;showToast('Season '+ns+' started')}else{showToast('This is the last episode');return}}else{st.ep=e}loadServer(activeServer)}
-      byId('epPrev').addEventListener('click',function(){stepEp(-1)},false);
-      byId('epNext').addEventListener('click',function(){stepEp(1)},false);
+      var epPrevBtn=byId('epPrev');if(epPrevBtn)epPrevBtn.addEventListener('click',function(){stepEp(-1)},false);
+      var epNextBtn=byId('epNext');if(epNextBtn)epNextBtn.addEventListener('click',function(){stepEp(1)},false);
       var SERVERS=[{name:'Nxsha',host:'nxsha.space'}];
       var PLAYER_DEFAULT_SERVER=0;
       var activeServer=PLAYER_DEFAULT_SERVER;
@@ -979,7 +966,7 @@ var CR_NEW_DROPS_MODE='today';
       function setActiveServer(i){for(var k=0;k<serverPills.length;k++){var ok=serverAvailable(k);setHidden(serverPills[k],!ok);setClass(serverPills[k],'active',k===i&&ok)}if(serverName){serverName.textContent=SERVERS[0].name+' · '+SERVERS[0].host}}
       function watchDate(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(v||''));if(!m)return '';var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return M[(+m[2])-1]+' '+(+m[3])+', '+m[1]}
       function neighborEpisode(d){var st=playState;if(isMovieKey(st.key))return null;var list=seasonList(st.key),e=st.ep+d;if(e<1){var pi=list.indexOf(String(st.season));if(pi>0){var ps=list[pi-1];return{season:ps,ep:seasonEpCount(st.key,ps)}}return null}if(e>seasonEpCount(st.key,st.season)){var ci=list.indexOf(String(st.season));if(ci>=0&&ci<list.length-1)return{season:list[ci+1],ep:1};return null}return{season:String(st.season),ep:e}}
-      function renderUpCard(btn,head,info){if(!btn)return;if(!info){setHidden(btn,true);setHidden(head,true);return}var show=shows[playState.key],eps=episodeData(playState.key,info.season),meta=eps[info.ep-1]||{},audio=String((show&&show.audio)||'Sub | Dub').replace(/\s*&\s*/g,' | ');var line=(String(info.season)!==String(playState.season)?('S'+info.season+' · '):'')+audio;btn.innerHTML='<span class="up-thumb">'+wideImage((meta.image||(show&&show.img)||''),((show&&show.title)||'Episode')+' — '+(meta.title||('Episode '+info.ep))+' thumbnail',true)+(meta.runtime?'<b class="up-badge">'+escapeHtml(meta.runtime)+'</b>':'')+'<span class="up-play">▶</span></span><span class="up-info"><b>E'+info.ep+' – '+escapeHtml(meta.title||('Episode '+info.ep))+'</b><span>'+escapeHtml(line)+'</span></span>';setHidden(btn,false);setHidden(head,false);btn.onclick=function(){openEpisode(playState.key,info.season,info.ep)}}
+      function renderUpCard(btn,head,info){if(!btn)return;if(!info){setHidden(btn,true);setHidden(head,true);return}var show=shows[playState.key],eps=episodeData(playState.key,info.season),meta=eps[info.ep-1]||{},audio=String((show&&show.audio)||'Sub | Dub').replace(/\s*&\s*/g,' | ');var line=(String(info.season)!==String(playState.season)?('S'+info.season+' · '):'')+audio;btn.innerHTML='<span class="up-thumb">'+wideImage((meta.image||(show&&show.img)||''),((show&&show.title)||'Episode')+' — '+(meta.title||('Episode '+info.ep))+' thumbnail',false)+(meta.runtime?'<b class="up-badge">'+escapeHtml(meta.runtime)+'</b>':'')+'<span class="up-play">▶</span></span><span class="up-info"><b>E'+info.ep+' – '+escapeHtml(meta.title||('Episode '+info.ep))+'</b><span>'+escapeHtml(line)+'</span></span>';setHidden(btn,false);setHidden(head,false);btn.onclick=function(){openEpisode(playState.key,info.season,info.ep)}}
       var watchDescText='',watchDescOpen=false,watchReaction=0;
       function syncWatchDesc(){var el=byId('watchDesc'),t=byId('watchDescToggle');if(!el)return;var long=watchDescText.length>220;el.textContent=watchDescOpen||!long?watchDescText:(watchDescText.slice(0,217).replace(/\s+\S*$/,'')+'…');if(t){setHidden(t,!long);t.textContent=watchDescOpen?'SHOW LESS':'SHOW MORE'}}
       function syncWatchReaction(){var l=byId('watchLike'),d=byId('watchDislike'),lc=byId('watchLikeCount'),dc=byId('watchDislikeCount');if(l)setClass(l,'active',watchReaction===1);if(d)setClass(d,'active',watchReaction===-1);if(lc){setHidden(lc,watchReaction!==1);lc.textContent='1'}if(dc){setHidden(dc,watchReaction!==-1);dc.textContent='1'}}
@@ -1010,9 +997,9 @@ var CR_NEW_DROPS_MODE='today';
       if(stagePoster){stagePoster.addEventListener('click',function(){if(stageInjected)return;stageInjected=true;injectServer(PLAYER_DEFAULT_SERVER)},false)}
       setActiveServer(PLAYER_DEFAULT_SERVER);
       serverPills.forEach(function(pill){pill.addEventListener('click',function(){loadServer(PLAYER_DEFAULT_SERVER);showToast('Nxsha — loading')},false)});
-      byId('serverOpen').addEventListener('click',function(){var u=serverUrl(PLAYER_DEFAULT_SERVER);if(!u){showToast('No Nxsha link found for this episode');return}showToast('Nxsha — opened in new tab');try{window.open(u,'_blank','noopener')}catch(e){}},false);
+      var serverOpenBtn=byId('serverOpen');if(serverOpenBtn)serverOpenBtn.addEventListener('click',function(){var u=serverUrl(PLAYER_DEFAULT_SERVER);if(!u){showToast('No Nxsha link found for this episode');return}showToast('Nxsha — opened in new tab');try{window.open(u,'_blank','noopener')}catch(e){}},false);
       byId('blockedOpen').addEventListener('click',function(){if(noticeAction==='retry'){loadServer(PLAYER_DEFAULT_SERVER);showToast('Nxsha — retrying')}else{var u=serverUrl(PLAYER_DEFAULT_SERVER);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Opened in new tab')}}},false);
-      byId('serverHelp').addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
+      var serverHelpBtn=byId('serverHelp');if(serverHelpBtn)serverHelpBtn.addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
       var navExit=byId('navExit');
       if(navExit){navExit.addEventListener('click',function(){
         try{if(window.parent&&window.parent!==window){window.parent.postMessage({type:'crunchyroll:exit'},'*');return}}catch(e){}

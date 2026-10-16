@@ -470,8 +470,10 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         click(doc.getElementById('demoPlay'));
         expect(doc.getElementById('stagePosterText')?.textContent).toContain('S4 EP5');
 
-        // Under the player the watch page mirrors Crunchyroll's watch layout:
-        // show title, "E5 – <episode>", released date, and next/previous cards.
+        // The old server bar (episode stepper, server pill, hints) is gone —
+        // episode switching lives in the next/previous cards and the episode list.
+        expect(doc.getElementById('serverBar')).toBeNull();
+        expect(doc.getElementById('epPrev')).toBeNull();
         expect(doc.getElementById('watchShow')?.textContent).toBe("JoJo's Bizarre Adventure");
         expect(doc.getElementById('watchEpTitle')?.textContent).toMatch(/^E5 – .+/);
         expect(doc.getElementById('watchReleased')?.textContent).toMatch(/^Released on [A-Z][a-z]{2} \d{1,2}, \d{4}$/);
@@ -480,6 +482,11 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         expect(nextCard.querySelector('.up-info b')?.textContent).toMatch(/^E6 – .+/);
         expect(nextCard.querySelector('.up-badge')?.textContent).toMatch(/^\d+m$/);
         expect(nextCard.querySelector('.up-info span')?.textContent).toMatch(/^(Subtitled|Sub \| Dub)$/);
+        // The next-episode still is rendered eagerly, so the card shows its
+        // picture right away (a lazy loader never runs inside the player).
+        // The still comes from the guide — here the catalog's own.
+        expect(nextCard.querySelector('img')?.getAttribute('src')).toMatch(/^https:\/\/image\.tmdb\.org\//);
+        expect(nextCard.querySelector('img')?.getAttribute('data-src')).toBeNull();
         const prevCard = doc.getElementById('watchPrevCard') as HTMLElement;
         expect(prevCard.hidden).toBe(false);
         expect(prevCard.querySelector('.up-info b')?.textContent).toMatch(/^E4 – .+/);
@@ -518,7 +525,7 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         const dropPrev = doc.getElementById('watchPrevCard') as HTMLElement;
         expect(dropPrev.hidden).toBe(false);
         expect(dropPrev.querySelector('.up-info b')?.textContent).toBe('E11 – Episode 11');
-        expect(dropPrev.querySelector('img')?.getAttribute('data-src')).toContain('data:image/svg+xml');
+        expect(dropPrev.querySelector('img')?.getAttribute('src')).toContain('data:image/svg+xml');
 
         // "See More Episodes" returns to the detail view and its episode list.
         click(doc.getElementById('watchSeeMore'));
