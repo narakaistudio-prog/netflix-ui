@@ -21,6 +21,19 @@ test('Crunchyroll player exposes Nxsha as its only playback source', () => {
     expect(html).not.toContain('.server-pill{');
     expect(html).not.toContain('.ep-stepper{');
     expect(html).toContain("var SERVERS=[{name:'Nxsha',host:'nxsha.space'}];");
+    // The brand stays in the plumbing only — no "Nxsha" text renders in the UI.
+    expect(html).not.toContain('· Nxsha');
+    expect(html).not.toContain('— Nxsha');
+    expect(html).not.toContain('watch on Nxsha');
+    expect(html).not.toContain('Nxsha is not responding');
+    // Continue Watching starts empty (real entries come from actual playback)
+    // and the fake notification cards are gone.
+    expect(html).not.toContain('64% watched');
+    expect(html).not.toContain('38% watched · 14m left');
+    expect(html).not.toContain('New Hindi episode is ready');
+    expect(html).toContain('id="continueGrid"');
+    expect(html).toContain('id="noticeList"');
+    expect(html).toContain('RESUME_KEY');
     expect(html).toContain('var PLAYER_DEFAULT_SERVER=0;');
     expect(html).not.toContain('Server 1');
     expect(html).not.toContain('Server 2');
@@ -140,7 +153,8 @@ test('player shows a notice when a title has no Nxsha mapping', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     expect(html).toContain('id="frameBlocked"');
     expect(html).toContain('id="blockedOpen"');
-    expect(html).toContain('has no Nxsha source available yet.<br>Pick another episode or title.');
+    // No server branding in the notice either.
+    expect(html).toContain('has no source available yet.<br>Pick another episode or title.');
 });
 
 test('demo page toast stays fully hidden until triggered', () => {

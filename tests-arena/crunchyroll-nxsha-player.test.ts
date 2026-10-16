@@ -131,7 +131,8 @@ test('Nxsha is the sole player and the default for the Crunchyroll section', asy
     expect(doc.body.textContent).not.toContain('Server 2');
 
     await play(dom.window, 'aot');
-    expect(doc.getElementById('playerSub')!.textContent).toBe('S1 · EP1 · Nxsha');
+    // The player heading carries no server branding any more.
+    expect(doc.getElementById('playerSub')!.textContent).toBe('S1 · EP1');
     expect(doc.getElementById('serverFrame')!.getAttribute('src')).toBe(
         `https://nxsha.space/embed/tv/tt2560140/1/1?${NXSHA_PARAMS}`,
     );
