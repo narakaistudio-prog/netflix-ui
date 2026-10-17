@@ -63,8 +63,10 @@ export function KdramaBrowseScreen() {
 const page = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#000',
     },
     content: {
+        minHeight: '100%',
         paddingBottom: 42,
     },
     header: {

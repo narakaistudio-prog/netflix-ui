@@ -6,6 +6,10 @@
 # Known misses: Reply 1988 (nxsha has tv/64010 but the runner's search keeps missing it)
 # and The Girl Who Sees Scents (nxsha's same-name result is a 2023 Chinese remake, not the
 # 2015 K-drama — an alias would land the wrong show, so it stays off the site).
+# Wrong-show fixes (Netflix id -> pinned/aliased nxsha id): Queen of Tears tv/215720,
+# My Demon tv/218539, Eve tv/138251, Possessed tv/86640, My Sassy Girl tv/71347,
+# Inheritors -> "The Heirs" tv/48462, The Privileged -> "High Society" tv/62863,
+# You are Beautiful -> "You're Beautiful" tv/31417.
 
 ## International TV Dramas
 Doctor X: Mafia in White | 82682379

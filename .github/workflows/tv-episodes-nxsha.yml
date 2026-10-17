@@ -7,11 +7,18 @@ name: Fill TV seasons and episodes from Nxsha
 on:
   push:
     branches:
+      - main
       - arena/12789678-netflix-ui
+      - arena/11455542-netflix-ui
     paths:
       - '.github/workflows/tv-episodes-nxsha.yml'
       - 'scripts/build-tv-episodes-nxsha.mjs'
       - 'data/movies.json'
+  # The genre-rows job commits movies.json with GITHUB_TOKEN, and pushes made with
+  # GITHUB_TOKEN do not trigger other workflows — so chain off its completion too.
+  workflow_run:
+    workflows: ['Fill Netflix genre rows from Nxsha']
+    types: [completed]
   workflow_dispatch:
 
 # Same group as the other Nxsha jobs, so pushes to the branch are handled one at a time.
@@ -26,6 +33,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    # For workflow_run events, only react to successful main refills (a branch's
+    # own pushes already trigger this job via the paths filter).
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     steps:
       - name: Checkout the requested branch
         uses: actions/checkout@v4

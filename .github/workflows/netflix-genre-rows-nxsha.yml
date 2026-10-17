@@ -9,8 +9,9 @@ name: Fill Netflix genre rows from Nxsha
 on:
   push:
     branches:
+      - main
       - arena/12789678-netflix-ui
-      - arena/31859ef9-netflix-ui
+      - arena/11455542-netflix-ui
     paths:
       - '.github/workflows/netflix-genre-rows-nxsha.yml'
       - 'data/netflix-genre-100381.txt'
