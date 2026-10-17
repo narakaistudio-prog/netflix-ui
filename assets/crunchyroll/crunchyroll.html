@@ -99,6 +99,11 @@
     .card-copy h3{font-size:16px;line-height:1.24;margin:0 0 6px;font-weight:900}
     .card-copy p{font-size:12px;line-height:1.4;color:#a9abb0;margin:0}
     .movie-section{scroll-margin-top:60px}
+    /* Studio Ghibli collection rail inside Movies */
+    .ghibli-rail{margin:2px 0 36px}
+    .ghibli-rail .rail-head h3{font-family:"Roboto Condensed",sans-serif;font-size:2.2vw;line-height:1;margin:0;text-transform:uppercase;letter-spacing:.01em}
+    .ghibli-flag{position:absolute;top:10px;left:10px;z-index:4;background:#efe2c0;color:#171008;padding:4px 7px;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;pointer-events:none}
+    .ghibli-card .rail-poster{border-bottom:3px solid #c9a96b}
     .movie-card .poster{border-bottom:3px solid #f47521}
     .movie-card .poster::after{content:"View movie"}
     .movie-badge{position:absolute;left:9px;top:9px;z-index:2;background:#f47521;color:#181008;padding:5px 8px;font-size:10px;font-weight:900;letter-spacing:.08em}
@@ -271,7 +276,7 @@
       main{padding-bottom:82px}.hero{min-height:60dvh;align-items:flex-end}.hero-media img{object-position:61% center}.hero-media::after{background:linear-gradient(0deg,rgba(0,0,0,.96) 3%,rgba(0,0,0,.68) 46%,rgba(0,0,0,.12) 82%)}
       .hero-content{width:100%;padding:100px 17px 26px}.hero-kicker{font-size:11px;margin-bottom:11px}.hero h1{font-size:58px;margin-bottom:15px}.hero p{font-size:14px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.meta{font-size:11px}.primary,.secondary{min-height:44px;padding:10px 13px;font-size:12px}
       .content-section{padding:20px 13px 0}.section-head{align-items:flex-start;flex-direction:column;gap:0;margin-bottom:10px;padding-bottom:8px}.section-head p{display:none}.filter-row{gap:5px;margin-bottom:10px}.chip{padding:7px 11px;font-size:12px}.show-grid{gap:24px 10px}.card-copy h3{font-size:14px}.poster::after{display:none}.bookmark{width:32px;height:32px}
-      .home-rails{padding-top:18px}.anime-rail{margin-bottom:28px}.rail-head h2{font-size:22px}.rail-sub{font-size:10px}.rail-controls{display:none}.rail-track{overflow:visible;gap:20px 9px;padding:2px 0 10px;cursor:auto}.ranked-track{}.rank-card{align-items:center}.rank-number{font-size:110px}.quick-info{display:none}.rail-copy h3{font-size:13px}
+      .home-rails{padding-top:18px}.anime-rail{margin-bottom:28px}.rail-head h2,.ghibli-rail .rail-head h3{font-size:22px}.rail-sub{font-size:10px}.rail-controls{display:none}.rail-track{overflow:visible;gap:20px 9px;padding:2px 0 10px;cursor:auto}.ranked-track{}.rank-card{align-items:center}.rank-number{font-size:110px}.quick-info{display:none}.rail-copy h3{font-size:13px}
       .spotlight{}.spot-card,.spot-card:last-child{min-height:210px}
       .footer{margin-top:44px;padding-bottom:95px}.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:-webkit-flex;display:flex;background:#23252b;border-top:1px solid rgba(255,255,255,.12);padding:5px 6px 7px}.bottom-nav button{border:0;background:transparent;color:#bdbdbd;display:-webkit-flex;display:flex;align-items:center;justify-content:center;gap:2px;padding:5px 2px;font-size:9px;font-weight:700;cursor:pointer}.bottom-nav button.active{color:#f47521}.bottom-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
       .player-top{min-height:58px}.player-layout{padding:0 0 24px;gap:0}.video-stage{max-height:calc(100vh - 58px);width:100%}.video-stage.theater{height:calc(100vh - 58px);}.player-controls{padding:34px 8px 8px}.ctrl{width:34px}.volume{display:none}.time-readout{font-size:10px;margin:0 2px}.up-next{display:block;border-top-width:2px;padding:16px}.up-next h2{font-size:21px}.up-card{display:-webkit-flex;display:flex;}.up-card img{height:100%}.settings-menu{position:fixed;right:10px;bottom:72px}
@@ -373,7 +378,7 @@
     html{background:#000;color:#f7f7f7}
     body{background:#000;color:#f7f7f7;font-family:Arial,Helvetica,sans-serif}
     button,input,select,textarea{font-family:Arial,Helvetica,sans-serif}
-    .brand-word,.hero h1,.section-head h2,.rail-head h2,.detail-copy h2,.rank-number,.stat-grid strong,.detail-intro h2,.episode-head h3,.more-like h3,.comments-head h2{font-family:"Arial Narrow",Arial,Helvetica,sans-serif}
+    .brand-word,.hero h1,.section-head h2,.rail-head h2,.rail-head h3,.detail-copy h2,.rank-number,.stat-grid strong,.detail-intro h2,.episode-head h3,.more-like h3,.comments-head h2{font-family:"Arial Narrow",Arial,Helvetica,sans-serif}
     .topbar{background:#202227;padding-left:4%;padding-right:4%}
     .brand-word .accent,.detail-copy .label,.episode-no,.recommend-card span,.sources-list a:hover{color:#f47521}
     .primary,.chip.active,.chip:hover,.movie-badge,.notify-dot,.progress i,.profile-avatar,.pagination button.active,.pagination button:hover,.episode-no{background:#f47521;color:#160e08}
@@ -592,6 +597,10 @@
 
     <section class="content-section movie-section" id="movies" aria-labelledby="movies-title" hidden>
       <div class="section-head"><h2 id="movies-title"><span class="orange-line"></span>Anime Movies</h2><p>Feature-length stories, no episode lists</p></div>
+      <section class="ghibli-rail anime-rail" aria-labelledby="ghibli-title">
+        <div class="rail-head"><div class="rail-titles"><h3 id="ghibli-title"><span class="orange-line"></span>Ghibli Movies</h3><p class="rail-sub">All 22 Studio Ghibli films</p></div><div class="rail-controls"><button class="rail-arrow" data-rail-prev aria-label="Scroll Ghibli Movies left">‹</button><button class="rail-arrow" data-rail-next aria-label="Scroll Ghibli Movies right">›</button></div></div>
+        <div class="rail-track" id="ghibliTrack"></div>
+      </section>
       <div class="filter-row" id="movieFilters" aria-label="Filter movies by genre"><button class="chip active" data-movie-filter="all">All movies</button><button class="chip" data-movie-filter="fantasy">Fantasy</button><button class="chip" data-movie-filter="romance">Romance</button><button class="chip" data-movie-filter="action">Action</button><button class="chip" data-movie-filter="drama">Drama</button></div>
       <div class="show-grid" id="movieGrid"></div>
     </section>
@@ -653,6 +662,7 @@
         <a href="https://www.watsup.in/movie-description?id=372058" target="_blank" rel="noreferrer">Your Name</a>
         <a href="https://onesheet.org/movie/suzume-2022/" target="_blank" rel="noreferrer">Suzume</a>
         <a href="https://tubeculture.co/en/movie/2016/" target="_blank" rel="noreferrer">A Silent Voice</a>
+        <a href="https://www.themoviedb.org/company/10342-studio-ghibli/movie" target="_blank" rel="noreferrer">Studio Ghibli posters (TMDB)</a>
       </div></details>
     </footer>
   </main>
@@ -803,8 +813,28 @@
         jojo:{title:'JoJo\'s Bizarre Adventure',year:2012,rating:'4.3',genres:['action','adventure','fantasy'],audio:'Subtitled',img:'https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=480,height=720/display/keyart/T00102553-base_asset_2x3-en-US',desc:''},
         shangri:{title:'Shangri-La Frontier',year:2023,rating:'4.1',genres:['action','adventure','science-fiction'],audio:'Sub & Dub',img:'https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=480,height=720/display/keyart/T00117483-base_asset_2x3-en-US',desc:''},
         iruma:{title:'Welcome to Demon School! Iruma-kun',year:2019,rating:'4.2',genres:['adventure','comedy','fantasy'],audio:'Sub & Dub',img:'https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=480,height=720/display/keyart/T00169855-base_asset_2x3-en-US',desc:''},
+        kaguya:{title:'The Tale of The Princess Kaguya',year:2013,rating:'4.7',genres:['fantasy','drama'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/cQidJuA546OSSXKWXoiCeINDxuj.jpg',runtime:'2h 17m',type:'Movie',railOnly:true,desc:'Found in a bamboo stalk, a tiny girl grows into a princess coveted by nobles — and must choose her own fate.'},
+        marnie:{title:'When Marnie Was There',year:2014,rating:'4.5',genres:['drama'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/vug1dvDI1tSa60Z8qjCuUE7ntkO.jpg',runtime:'1h 43m',type:'Movie',railOnly:true,desc:'A shy girl sent to the countryside meets Marnie, a mysterious friend who may not be quite real.'},
+        fireflies:{title:'Grave of the Fireflies',year:1988,rating:'4.9',genres:['drama'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/k9tv1rXZbOhH7eiCk378x61kNQ1.jpg',runtime:'1h 28m',type:'Movie',railOnly:true,desc:'A young boy and his little sister fight to survive in Japan during the last months of World War II.'},
+        arrietty:{title:'The Secret World of Arrietty',year:2010,rating:'4.5',genres:['adventure','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/3lSRaSjDp2nkXMQkzzjpRi3035O.jpg',runtime:'1h 34m',type:'Movie',railOnly:true,desc:'A tiny girl living secretly beneath a country house is discovered by a human boy.'},
+        pompoko:{title:'Pom Poko',year:1994,rating:'4.3',genres:['adventure','comedy','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/gyoJmFf24MOUc4TTu97sd0cHIQF.jpg',runtime:'1h 59m',type:'Movie',railOnly:true,desc:'Shape-shifting raccoon dogs band together to save their forest from the spread of Tokyo.'},
+        onlyyesterday:{title:'Only Yesterday',year:1991,rating:'4.5',genres:['drama','romance'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/tOSnFE9e82iH3ZAzSTtuOkBsabJ.jpg',runtime:'1h 59m',type:'Movie',railOnly:true,desc:'A Tokyo office worker revisits her childhood memories during a trip to the countryside.'},
+        totoro:{title:'My Neighbor Totoro',year:1988,rating:'4.8',genres:['adventure','comedy','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg',runtime:'1h 26m',type:'Movie',railOnly:true,desc:'Two sisters move to the country and befriend the magical forest spirits who live nearby.'},
+        windrises:{title:'The Wind Rises',year:2013,rating:'4.6',genres:['drama','romance'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/jfwSexzlIzaOgxP9A8bTA6t8YYb.jpg',runtime:'2h 6m',type:'Movie',railOnly:true,desc:'An aviation engineer chases his dream of flight as war closes in on Japan.'},
+        nausicaa:{title:'Nausicaä of the Valley of the Wind',year:1984,rating:'4.7',genres:['action','adventure','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/r74DvbQuz8zjxWvLwkX0iTIGs8C.jpg',runtime:'1h 57m',type:'Movie',railOnly:true,desc:'A pacifist princess tries to stop two warring nations from destroying their dying world.'},
+        ponyo:{title:'Ponyo',year:2008,rating:'4.5',genres:['adventure','comedy','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/yp8vEZflGynlEylxEesbYasc06i.jpg',runtime:'1h 41m',type:'Movie',railOnly:true,desc:'A goldfish princess longs to become human after falling for a little boy by the sea.'},
+        kiki:{title:'Kiki\'s Delivery Service',year:1989,rating:'4.6',genres:['adventure','comedy','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/Aufa4YdZIv4AXpR9rznwVA5SEfd.jpg',runtime:'1h 43m',type:'Movie',railOnly:true,desc:'A young witch settles in a seaside town and launches a high-flying delivery service.'},
+        yamadas:{title:'My Neighbors the Yamadas',year:1999,rating:'4.3',genres:['comedy','drama'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/nj0ijnOozQtu52r0ncut769G1FX.jpg',runtime:'1h 44m',type:'Movie',railOnly:true,desc:'The everyday ups and downs of a thoroughly ordinary Japanese family.'},
+        porco:{title:'Porco Rosso',year:1992,rating:'4.5',genres:['action','adventure','comedy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/8mIvSvnVBApfORL9N6S38Q7wD6A.jpg',runtime:'1h 34m',type:'Movie',railOnly:true,desc:'A World War I ace turned anthropomorphic pig flies against sky pirates in 1930s Italy.'},
+        castleinthesky:{title:'Castle in the Sky',year:1986,rating:'4.7',genres:['action','adventure','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/41XxSsJc5OrulP0m7TrrUeO2hoz.jpg',runtime:'2h 4m',type:'Movie',railOnly:true,desc:'A boy and a girl race pirates and agents to find a legendary castle floating in the sky.'},
+        whisper:{title:'Whisper of the Heart',year:1995,rating:'4.6',genres:['drama','romance'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/5FROLD8zpWFs9ja7aYho1uOMJHg.jpg',runtime:'1h 51m',type:'Movie',railOnly:true,desc:'A book-loving girl and the boy who always checked out her library books before her.'},
+        poppyhill:{title:'From Up on Poppy Hill',year:2011,rating:'4.4',genres:['drama','romance'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/rRLYX4RZIyloHSJwvZKAhphAjiB.jpg',runtime:'1h 30m',type:'Movie',railOnly:true,desc:'Yokohama teens fight to save their clubhouse on the eve of the 1964 Tokyo Olympics.'},
+        earthsea:{title:'Tales from Earthsea',year:2006,rating:'4.0',genres:['action','adventure','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/y0VnJt4eRPMjA1hpJ8f1EFoVaSf.jpg',runtime:'1h 55m',type:'Movie',railOnly:true,desc:'A wizard and a troubled prince search for the force upsetting the balance of Earthsea.'},
+        catreturns:{title:'The Cat Returns',year:2002,rating:'4.3',genres:['adventure','comedy','fantasy'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/pqyY7IEWkCWNZ7EuRStQaJITEta.jpg',runtime:'1h 15m',type:'Movie',railOnly:true,desc:'A girl who rescues a cat is whisked into a feline kingdom and engaged to its prince.'},
+        oceanwaves:{title:'Ocean Waves',year:1993,rating:'4.2',genres:['drama','romance'],audio:'Sub & Dub',img:'https://image.tmdb.org/t/p/w500/fSR1LLMIJZ6WcQEkM82yKy4F9vQ.jpg',runtime:'1h 16m',type:'Movie',railOnly:true,desc:'A student returns home and remembers the headstrong city girl who upended his high-school year.'},
       };
       var movieKeys=['yourname','suzume','silentvoice','spirited','demonMovie','jjk0','weathering','howl','mononoke','akira','mhaMovie','saoMovie'];
+      var ghibliKeys=['kaguya','spirited','marnie','fireflies','mononoke','arrietty','pompoko','onlyyesterday','totoro','windrises','nausicaa','ponyo','kiki','yamadas','porco','howl','castleinthesky','whisper','poppyhill','earthsea','catreturns','oceanwaves'];
       var rows=[
         {title:'Trending in India — Top 10',ranked:true,keys:['solo','demon','jjk','naruto','onepiece','aot','bluelock','dandadan','mha','deathnote']},
         {title:'Trending Now',keys:['solo','dandadan','jjk','onepiece','frieren','kaiju','demon','bluelock','oshi','chainsaw']},
@@ -819,9 +849,12 @@
       function all(selector,root){return (root||document).querySelectorAll(selector)}
       function each(list,fn){for(var i=0;i<list.length;i++){fn(list[i],i)}}
       function keysOf(object){var result=[];for(var key in object){if(Object.prototype.hasOwnProperty.call(object,key)){result.push(key)}}return result}
-      /* Titles with an Nxsha route — everything the browse grid, search and
-         recommendations may show. Fresh Drops have no route yet. */
-      function catalogKeys(){return keysOf(shows).filter(function(key){return !shows[key].drop})}
+      /* The browse grid is the playable catalog; rail-only collections and
+         Fresh Drops have no Nxsha route of their own, so they stay out. */
+      function catalogKeys(){return keysOf(shows).filter(function(key){return !shows[key].drop && !shows[key].railOnly})}
+      /* Search still finds collection titles such as the Ghibli films. */
+      function searchKeys(){return keysOf(shows).filter(function(key){return !shows[key].drop})}
+      function renderCatalog(){var html='';each(catalogKeys(),function(key){html+=cardHtml(key,false)});byId('catalogGrid').innerHTML=html;queueLazy()}
       function hasClass(el,name){return (' '+el.className+' ').indexOf(' '+name+' ')>-1}
       function addClass(el,name){if(el&&!hasClass(el,name)){el.className+=(el.className?' ':'')+name}}
       function removeClass(el,name){if(el){el.className=(' '+el.className+' ').replace(' '+name+' ',' ').replace(/^\s+|\s+$/g,'')}}
@@ -851,9 +884,25 @@
       function dropDate(key){var drop=dropInfo(key);if(!drop)return '';return shortDropDate(drop.added)||'just now'}
       function railCard(key){var a=shows[key],drop=dropInfo(key),dropAdded=drop?dropDate(key):'',dropEpisode=(drop&&drop.season)?('S'+drop.season+' · E'+drop.episode+' · '):'',dropType=a.type==='Movie'?'Movie':'Series',dropArt=drop?(a.img||dropPlaceholderImage(a.title)):a.img;return '<article class="rail-card" data-open="'+key+'" tabindex="0" role="button"><div class="rail-poster">'+(drop&&drop.fresh?'<span class="fresh-flag">New</span>':'')+posterImage(dropArt,a.title+' anime poster',true,drop?dropPlaceholderImage(a.title):'')+'<div class="quick-info"><h3>'+a.title+'</h3>'+(drop?'<div class="quick-meta">'+(drop.verb||'Added')+' '+dropAdded+'<br>'+dropEpisode+dropType+' · '+(drop.src==='deadtoons'?'via DeadToons':'fresh drop')+'</div>':'<div class="quick-meta"><span class="rating">★ '+a.rating+'</span> · '+a.year+'<br>'+genreText(a)+'</div>')+'<div class="quick-actions"><button data-quick-play="'+key+'">▶ Play</button><button class="quick-save" data-save-key="'+key+'">＋ My List</button></div></div></div><div class="rail-copy"><h3>'+a.title+'</h3><p>'+(drop?dropEpisode+(drop.verb||'Added')+' '+dropAdded+(drop.fresh?' · New':'')+' · '+dropType:'★ '+a.rating+' · '+genreText(a))+'</p></div></article>'}
       function renderHomeRows(){var html='';each(rows,function(row,i){var cards='';each(row.keys,function(key,n){var card=railCard(key);cards+=row.ranked?'<div class="rank-card"><span class="rank-number">'+(n+1)+'</span>'+card+'</div>':card});html+='<section class="anime-rail'+(row.fresh?' fresh-rail':'')+'" aria-labelledby="rail-title-'+i+'"><div class="rail-head"><div class="rail-titles"><h2 id="rail-title-'+i+'"><span class="orange-line"></span>'+row.title+'</h2>'+(row.subtitle?'<p class="rail-sub">'+row.subtitle+'</p>':'')+'</div><div class="rail-controls"><button class="rail-arrow" data-rail-prev aria-label="Scroll '+row.title+' left">‹</button><button class="rail-arrow" data-rail-next aria-label="Scroll '+row.title+' right">›</button></div></div><div class="rail-track'+(row.ranked?' ranked-track':'')+'">'+cards+'</div></section>'});byId('homeRows').innerHTML=html}
+      /* Studio Ghibli collection: 22 feature films from the IMDb list, shown as
+         their own rail inside Movies. Poster art comes from TMDB; if a poster
+         cannot load, a Ghibli-styled placeholder takes its place. */
+      function ghibliPlaceholderImage(title){
+        var safeTitle=String(title||'Studio Ghibli');if(safeTitle.length>34)safeTitle=safeTitle.slice(0,31)+'…';safeTitle=escapeHtml(safeTitle);
+        var svg='<svg xmlns="http://www.w3.org/2000/svg" width="320" height="480" viewBox="0 0 320 480"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2c2619"/><stop offset="1" stop-color="#0d0f12"/></linearGradient></defs><rect width="320" height="480" fill="url(#g)"/><path d="M0 352 112 244l66 55 58-42 84 72v151H0z" fill="#3b3322" opacity=".6"/><text x="24" y="58" fill="#d9c08a" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2">STUDIO GHIBLI</text><text x="24" y="420" fill="#f6f7f9" font-family="Arial,sans-serif" font-size="20" font-weight="700">'+safeTitle+'</text><text x="24" y="450" fill="#9ba3b1" font-family="Arial,sans-serif" font-size="12">Artwork coming soon</text></svg>';
+        return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg).replace(/'/g,'%27')
+      }
+      function ghibliCard(key){
+        var a=shows[key];if(!a)return '';
+        return '<article class="rail-card ghibli-card" data-open="'+key+'" tabindex="0" role="button">'
+          +'<div class="rail-poster"><span class="ghibli-flag">Studio Ghibli</span>'
+          +posterImage(a.img,a.title+' Studio Ghibli movie poster',true,ghibliPlaceholderImage(a.title))
+          +'<div class="quick-info"><h3>'+a.title+'</h3><div class="quick-meta"><span class="rating">★ '+a.rating+'</span> · '+a.year+' · '+a.runtime+'<br>'+genreText(a)+'</div><div class="quick-actions"><button data-open="'+key+'">Details</button><button class="quick-save" data-save-key="'+key+'">＋ My List</button></div></div></div>'
+          +'<div class="rail-copy"><h3>'+a.title+'</h3><p>★ '+a.rating+' · '+a.year+' · '+a.runtime+'</p></div></article>'
+      }
+      function renderGhibliRow(){var track=byId('ghibliTrack');if(!track)return;var html='';each(ghibliKeys,function(key){html+=ghibliCard(key)});track.innerHTML=html;queueLazy()}
       function catalogMeta(a){return {type:a.type.toLowerCase(),status:a.type==='Movie'||a.year<2023?'completed':'airing'}}
       function cardHtml(key,isMovie){var a=shows[key],m=catalogMeta(a);return '<article class="show-card'+(isMovie?' movie-card':'')+'" data-genre="'+a.genres.join(' ')+'" data-title="'+a.title+'" data-year="'+a.year+'" data-rating="'+a.rating+'" data-status="'+m.status+'" data-type="'+m.type+'" data-open="'+key+'" tabindex="0" role="button"><div class="poster">'+posterImage(a.img,a.title+(isMovie?' anime movie poster':' anime poster'),true)+(isMovie?'<span class="movie-badge">MOVIE</span>':'')+'<button class="bookmark" aria-label="Add '+a.title+' to watchlist" data-save-key="'+key+'">＋</button></div><div class="card-copy"><h3>'+a.title+'</h3><p>★ '+a.rating+' · '+genreText(a)+(isMovie?' <span class="movie-runtime">· '+a.runtime+'</span>':'')+'</p></div></article>'}
-      function renderCatalog(){var html='';each(catalogKeys(),function(key){html+=cardHtml(key,false)});byId('catalogGrid').innerHTML=html;queueLazy()}
       function renderMovies(filter){var html='';each(movieKeys,function(key){var show=shows[key];if(!filter||filter==='all'||arrayContains(show.genres,filter)){html+=cardHtml(key,true)}});byId('movieGrid').innerHTML=html;queueLazy()}
       /*CR_DROPS_START*/
 /* Written by scripts/build-crunchyroll-new-drops.mjs — do not edit by hand. */
@@ -877,7 +926,7 @@ var CR_NEW_DROPS_MODE='today';
   rows.unshift({title:'Fresh Drops',subtitle:'Today\'s DeadToons releases',fresh:true,ranked:false,keys:freshKeys});
 })();
 /*CR_DROPS_END*/
-      renderHomeRows();renderCatalog();renderMovies('all');
+      renderHomeRows();renderCatalog();renderMovies('all');renderGhibliRow();
       var saved={};var favorites={solo:true,jjk:true,demon:true};var activeKey='solo';
       var dialog=byId('detailDialog'),toast=document.querySelector('.toast'),toastTimer,playerShell=byId('playerShell'),videoStage=byId('videoStage');
       function showToast(message,ms){clearTimeout(toastTimer);toast.innerHTML=escapeHtml(message);addClass(toast,'show');toastTimer=setTimeout(function(){removeClass(toast,'show')},ms||2200)}
@@ -940,7 +989,7 @@ var CR_NEW_DROPS_MODE='today';
       
       
       var searchPanel=document.querySelector('.search-panel'),searchInput=byId('searchInput'),results=byId('searchResults');
-      function renderResults(query){var q=String(query||'').toLowerCase().replace(/^\s+|\s+$/g,''),html='',count=0;each(catalogKeys(),function(key){var show=shows[key],hay=(show.title+' '+genreText(show)+' '+show.audio+' hindi dub').toLowerCase();if(!q||stringContains(hay,q)){count++;html+='<button class="result" data-search-open="'+key+'">'+posterImage(show.img,'',true)+'<span class="result-copy"><strong>'+show.title+'</strong><small>'+show.year+' · ★ '+show.rating+' · '+genreText(show)+'</small></span><span>Details →</span></button>'}});results.innerHTML=count?html:'<p class="empty">No matching anime found.</p>';queueLazy()}
+      function renderResults(query){var q=String(query||'').toLowerCase().replace(/^\s+|\s+$/g,''),html='',count=0;each(searchKeys(),function(key){var show=shows[key],hay=(show.title+' '+genreText(show)+' '+show.audio+' hindi dub').toLowerCase();if(!q||stringContains(hay,q)){count++;html+='<button class="result" data-search-open="'+key+'">'+posterImage(show.img,'',true)+'<span class="result-copy"><strong>'+show.title+'</strong><small>'+show.year+' · ★ '+show.rating+' · '+genreText(show)+'</small></span><span>Details →</span></button>'}});results.innerHTML=count?html:'<p class="empty">No matching anime found.</p>';queueLazy()}
       function openSearch(){addClass(searchPanel,'open');searchPanel.setAttribute('aria-hidden','false');renderResults('');setTimeout(function(){searchInput.focus()},80)}
       each(all('.search-trigger'),function(button){button.addEventListener('click',openSearch,false)});document.querySelector('.close-search').addEventListener('click',function(){removeClass(searchPanel,'open');searchPanel.setAttribute('aria-hidden','true')},false);searchInput.addEventListener('input',function(){renderResults(this.value)},false);each(all('[data-search-chip]'),function(button){button.addEventListener('click',function(){searchInput.value=attr(button,'data-search-chip');renderResults(searchInput.value);searchInput.focus()},false)});
       results.addEventListener('click',function(event){var button=closest(event.target||event.srcElement,'[data-search-open]');if(button){removeClass(searchPanel,'open');searchPanel.setAttribute('aria-hidden','true');openDetail(attr(button,'data-search-open'))}},false);
