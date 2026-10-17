@@ -181,6 +181,14 @@ const META = {
     'W': { y: '2016', r: 'TV-14', s: '1 Season', g: ['Fantasy', 'Romance'], c: ['Lee Jong-suk', 'Han Hyo-joo'], d: 'A surgeon slips into her father\'s webtoon world and falls for its hero.' },
 };
 
+/**
+ * Titles Nxsha does not carry (checked on nxsha search), so the CI
+ * enrichment drops them. Keep them out of offline builds too, or a
+ * local rebuild would resurrect poster-less cards the hosted runner
+ * had already removed.
+ */
+const NXSHA_UNMATCHED = new Set(['Dong Yi', 'Queen Seondeok', 'Reply 1988']);
+
 function buildItem({ title, netflixId }) {
     const meta = META[title] || {};
     const slug = slugify(title);
@@ -219,6 +227,7 @@ function main() {
     for (const src of source) {
         const movies = [];
         for (const t of src.titles) {
+            if (NXSHA_UNMATCHED.has(t.title)) continue;
             const item = buildItem(t);
             if (seen.has(item.id)) continue;
             seen.add(item.id);

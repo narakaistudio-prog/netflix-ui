@@ -93,6 +93,10 @@ const NXSHA_ALIASES = {
     "Hell's Paradise: Jigokuraku": "Hell's Paradise",
     'Puniru Is a Cute Slime': 'Puniru Is a Kawaii Slime',
     'Jujutsu Kaisen 0: The Movie': 'Jujutsu Kaisen 0',
+    // K-Dramas: nxsha's English titles differ from Netflix's.
+    'Doctor Romantic': 'Dr. Romantic',
+    'Weak Hero Class 1': 'Weak Hero',
+    'Sisyphus: The Myth': 'Sisyphus',
 };
 
 async function get(url) {
