@@ -678,6 +678,177 @@
         "3": 21,
         "4": 24
       }
+    },
+    {
+      "key": "kaguya",
+      "title": "The Tale of The Princess Kaguya",
+      "kind": "movie",
+      "id": "149871",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "marnie",
+      "title": "When Marnie Was There",
+      "kind": "movie",
+      "id": "242828",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "fireflies",
+      "title": "Grave of the Fireflies",
+      "kind": "movie",
+      "id": "12477",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "arrietty",
+      "title": "The Secret World of Arrietty",
+      "kind": "movie",
+      "id": "51739",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "pompoko",
+      "title": "Pom Poko",
+      "kind": "movie",
+      "id": "15283",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "onlyyesterday",
+      "title": "Only Yesterday",
+      "kind": "movie",
+      "id": "15080",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "totoro",
+      "title": "My Neighbor Totoro",
+      "kind": "movie",
+      "id": "8392",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "windrises",
+      "title": "The Wind Rises",
+      "kind": "movie",
+      "id": "149870",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "nausicaa",
+      "title": "Nausicaä of the Valley of the Wind",
+      "kind": "movie",
+      "id": "81",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "ponyo",
+      "title": "Ponyo",
+      "kind": "movie",
+      "id": "12429",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "kiki",
+      "title": "Kiki's Delivery Service",
+      "kind": "movie",
+      "id": "16859",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "yamadas",
+      "title": "My Neighbors the Yamadas",
+      "kind": "movie",
+      "id": "16198",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "porco",
+      "title": "Porco Rosso",
+      "kind": "movie",
+      "id": "11621",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "castleinthesky",
+      "title": "Castle in the Sky",
+      "kind": "movie",
+      "id": "10515",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "whisper",
+      "title": "Whisper of the Heart",
+      "kind": "movie",
+      "id": "37797",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "poppyhill",
+      "title": "From Up on Poppy Hill",
+      "kind": "movie",
+      "id": "83389",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "earthsea",
+      "title": "Tales from Earthsea",
+      "kind": "movie",
+      "id": "37933",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "catreturns",
+      "title": "The Cat Returns",
+      "kind": "movie",
+      "id": "15370",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "oceanwaves",
+      "title": "Ocean Waves",
+      "kind": "movie",
+      "id": "21057",
+      "seasons": {
+        "1": 1
+      }
     }
   ],
   "saoMovieCandidates": [

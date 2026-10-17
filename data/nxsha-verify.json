@@ -4506,6 +4506,348 @@
         ],
         "totalEpisodes": null
       }
+    },
+    {
+      "key": "kaguya",
+      "kind": "movie",
+      "id": "149871",
+      "url": "https://nxsha.space/embed/movie/149871?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch The Tale of The Princess Kaguya",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "marnie",
+      "kind": "movie",
+      "id": "242828",
+      "url": "https://nxsha.space/embed/movie/242828?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch When Marnie Was There",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "fireflies",
+      "kind": "movie",
+      "id": "12477",
+      "url": "https://nxsha.space/embed/movie/12477?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Grave of the Fireflies",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "arrietty",
+      "kind": "movie",
+      "id": "51739",
+      "url": "https://nxsha.space/embed/movie/51739?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Arrietty",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "pompoko",
+      "kind": "movie",
+      "id": "15283",
+      "url": "https://nxsha.space/embed/movie/15283?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Pom Poko",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "onlyyesterday",
+      "kind": "movie",
+      "id": "15080",
+      "url": "https://nxsha.space/embed/movie/15080?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Only Yesterday",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "totoro",
+      "kind": "movie",
+      "id": "8392",
+      "url": "https://nxsha.space/embed/movie/8392?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch My Neighbor Totoro",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "windrises",
+      "kind": "movie",
+      "id": "149870",
+      "url": "https://nxsha.space/embed/movie/149870?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch The Wind Rises",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "nausicaa",
+      "kind": "movie",
+      "id": "81",
+      "url": "https://nxsha.space/embed/movie/81?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Warriors of the Wind",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "ponyo",
+      "kind": "movie",
+      "id": "12429",
+      "url": "https://nxsha.space/embed/movie/12429?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Ponyo",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "kiki",
+      "kind": "movie",
+      "id": "16859",
+      "url": "https://nxsha.space/embed/movie/16859?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Kiki's Delivery Service",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "yamadas",
+      "kind": "movie",
+      "id": "16198",
+      "url": "https://nxsha.space/embed/movie/16198?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch My Neighbors the Yamadas",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "porco",
+      "kind": "movie",
+      "id": "11621",
+      "url": "https://nxsha.space/embed/movie/11621?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Porco Rosso",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "castleinthesky",
+      "kind": "movie",
+      "id": "10515",
+      "url": "https://nxsha.space/embed/movie/10515?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Castle in the Sky",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "whisper",
+      "kind": "movie",
+      "id": "37797",
+      "url": "https://nxsha.space/embed/movie/37797?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Whisper of the Heart",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "poppyhill",
+      "kind": "movie",
+      "id": "83389",
+      "url": "https://nxsha.space/embed/movie/83389?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch From Up on Poppy Hill",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "earthsea",
+      "kind": "movie",
+      "id": "37933",
+      "url": "https://nxsha.space/embed/movie/37933?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Tales from Earthsea",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "catreturns",
+      "kind": "movie",
+      "id": "15370",
+      "url": "https://nxsha.space/embed/movie/15370?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch The Cat Returns",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
+    },
+    {
+      "key": "oceanwaves",
+      "kind": "movie",
+      "id": "21057",
+      "url": "https://nxsha.space/embed/movie/21057?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Ocean Waves",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
+      "ok": true,
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
     }
   ],
   "saoMovie": [

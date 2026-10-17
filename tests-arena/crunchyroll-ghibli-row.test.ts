@@ -107,3 +107,45 @@ test('a Ghibli card opens its movie detail page and can be saved', async () => {
 
     dom.window.close();
 });
+
+test('every Ghibli film has an Nxsha route and Play loads the movie embed', async () => {
+    const dom = boot();
+    await wait(300);
+    const doc = dom.window.document;
+
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
+    expect(match).not.toBeNull();
+    const nxData = JSON.parse((match as RegExpMatchArray)[1]);
+
+    const keys = Array.from(doc.querySelectorAll('#ghibliTrack .rail-card[data-open]')).map((node) =>
+        node.getAttribute('data-open'),
+    );
+    expect(keys).toHaveLength(22);
+    keys.forEach((key) => {
+        expect(nxData[key as string]).toMatchObject({ kind: 'movie' });
+        expect(nxData[key as string].id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
+        expect(Object.keys(nxData[key as string].seasons)).toEqual(['1']);
+    });
+
+    // Card -> detail -> Watch Now -> the Nxsha movie embed for that film.
+    const card = doc.querySelector('#ghibliTrack [data-open="totoro"]') as HTMLElement;
+    card.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+    (doc.getElementById('demoPlay') as HTMLElement).dispatchEvent(
+        new dom.window.MouseEvent('click', { bubbles: true }),
+    );
+    await wait(80);
+    // The watch page gates the embed behind its poster (autoplay policy).
+    (doc.getElementById('stagePoster') as HTMLElement).dispatchEvent(
+        new dom.window.MouseEvent('click', { bubbles: true }),
+    );
+    await wait(250);
+
+    expect(doc.getElementById('playerShell')?.hasAttribute('hidden')).toBe(false);
+    expect(doc.getElementById('serverFrame')?.getAttribute('src')).toBe(
+        'https://nxsha.space/embed/movie/8392?server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true',
+    );
+    expect(doc.getElementById('playerTitle')?.textContent).toBe('My Neighbor Totoro');
+
+    dom.window.close();
+});

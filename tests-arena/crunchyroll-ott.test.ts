@@ -121,12 +121,12 @@ test('player has Nxsha failure handling with retry and no fallback tab', () => {
     expect(html).not.toContain('function nextServer(');
 });
 
-test('all 64 Crunchyroll titles resolve through the Nxsha table', () => {
+test('all 83 Crunchyroll titles resolve through the Nxsha table', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
     expect(match).not.toBeNull();
     const data = JSON.parse((match as RegExpMatchArray)[1]);
-    expect(Object.keys(data)).toHaveLength(64);
+    expect(Object.keys(data)).toHaveLength(83);
     for (const entry of Object.values<any>(data)) {
         expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
         expect(['tv', 'movie']).toContain(entry.kind);
@@ -136,6 +136,9 @@ test('all 64 Crunchyroll titles resolve through the Nxsha table', () => {
     expect(data.saoMovie.id).toBe('413594');
     expect(data.solo.id).toBe('127532');
     expect(data.onepiece.id).toBe('37854');
+    // The Ghibli collection resolves too, so every card can play.
+    expect(data.totoro).toMatchObject({ id: '8392', kind: 'movie' });
+    expect(data.kaguya.id).toBe('149871');
 });
 
 test('Nxsha iframe sandbox and fullscreen permissions are consistent', () => {

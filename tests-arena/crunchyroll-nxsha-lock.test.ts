@@ -62,7 +62,15 @@ test('every catalog key is mapped to Nxsha', async () => {
         dom.window.document.querySelectorAll('#catalogGrid [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
 
+    const ghibliKeys = Array.from(
+        dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
+    ).map((card) => card.getAttribute('data-open') || '');
+
     expect(new Set(catalogKeys).size).toBe(64);
-    expect(Object.keys(nxData).sort()).toEqual([...new Set(catalogKeys)].sort());
+    expect(new Set(ghibliKeys).size).toBe(22);
+    // Every card the page can open — catalog and Ghibli rail — has a route.
+    expect(Object.keys(nxData).sort()).toEqual(
+        [...new Set([...catalogKeys, ...ghibliKeys])].sort(),
+    );
     dom.window.close();
 });
