@@ -1,24 +1,24 @@
 {
-  "generated": "2026-10-16T08:37:39.026Z",
+  "generated": "2026-10-17T08:09:14.177Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
       "url": "https://deadtoons.sbs/schedule",
       "status": 200,
-      "bytes": 130777,
+      "bytes": 132929,
       "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792139852494",
+      "url": "https://deadtoons.sbs/schedule?v=1792224552565",
       "status": 200,
-      "bytes": 130777,
+      "bytes": 132929,
       "label": "fresh"
     }
   ],
   "site": {
     "url": "https://deadtoons.sbs/schedule",
     "status": 200,
-    "bytes": 130777,
+    "bytes": 132929,
     "markers": [
       "S1 · Episode",
       "Episode",
@@ -38,36 +38,36 @@
       "/schedule",
       "/completed",
       "/request",
-      "/posts/link-click-season-3-2026",
-      "/posts/jojo-s-bizarre-adventure-2026-season-06-steel-ball-run-dubbed-by-netflix-multi-audio-hindi-english-japanese",
       "/posts/marvel-s-the-punisher-season-2-2019",
-      "/posts/the-elusive-samurai-season-2-2026",
-      "/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
+      "/posts/jaadugar-a-witch-in-mongolia-season-1-2026",
+      "/posts/ranma1-2-season-3-2026",
       "/posts/jojo-s-bizarre-adventure-season-4-2018",
+      "/posts/hanaori-san-still-wants-to-fight-in-the-next-life-season-1-2026",
       "/posts/black-clover-season-5-2026",
       "https://t.me/+jZNbckjV9xE0NWM0",
       "/posts/tomb-raider-king-season-1-multi-audio-hindi-tamil-telugu-eng-kor-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
       "/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
       "/posts/doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie",
-      "/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth",
-      "/posts/dragon-ball-super-beerus-season-1-2026",
-      "/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026",
       "/posts/black-torch-season-1-2026",
-      "/posts/trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
+      "/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth",
+      "/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026",
+      "/posts/dragon-ball-super-beerus-season-1-2026",
+      "/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026",
       "/dmca",
       "/about",
       "/privacy-policy"
     ],
     "images": [
       "/logo.png",
-      "https://image.tmdb.org/t/p/w154/4PCQrhpAkZjo5K7rXHMOOa5NC5i.jpg",
-      "https://image.tmdb.org/t/p/w154/rVeraqjLdiAXrCZUWo2hpqiuxFD.jpg",
+      "https://media.deadbase.host/w154/5166333d-0b26-43d8-a142-ffc31b3a2417.webp",
       "https://image.tmdb.org/t/p/w154/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
-      "https://image.tmdb.org/t/p/w154/p0s5ymGzfM4zGQCVaU9MJOSaAWu.jpg",
-      "https://image.tmdb.org/t/p/w154/94MjsZUyxubodMPJdWOVkcJ0bdU.jpg",
+      "https://image.tmdb.org/t/p/w154/723NT7KY9xBFLYNNBaEEREbLaPC.jpg",
+      "https://media.deadbase.host/w154/678d9a62-3095-4e23-b080-dc241e41ab6f.webp",
       "https://image.tmdb.org/t/p/w154/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
-      "https://image.tmdb.org/t/p/w154/7qx7OwBZcI0dRWc8DrbtxY5IrlV.jpg",
+      "https://image.tmdb.org/t/p/w154/mMckrgWZRxOMY6aUWzTUTddLOc9.jpg",
       "https://media.deadbase.host/w154/47649b78-39f0-435d-b971-af4b0cdc73fe.webp",
+      "https://image.tmdb.org/t/p/w154/7qx7OwBZcI0dRWc8DrbtxY5IrlV.jpg",
       "https://image.tmdb.org/t/p/w154/qHyvpoxaJKpYRlYPfD8hg8pOvhP.jpg",
       "https://image.tmdb.org/t/p/w154/3imj2VLU77bLOyJ4aPnEUlpJZDX.jpg",
       "https://image.tmdb.org/t/p/w154/gob5oouCFv74rO3MaVAm3hKqc7r.jpg",
@@ -75,11 +75,11 @@
       "https://image.tmdb.org/t/p/w154/Auw2NxgGThu6XAO2pyRoipMIDHG.jpg",
       "/join-telegram.png"
     ],
-    "episodeHits": 13,
-    "upcomingAt": 36182,
+    "episodeHits": 14,
+    "upcomingAt": 36870,
     "rawHead": "<!DOCTYPE html><html lang=\"en\" class=\"changa_636d5c62-module__VB_YLW__variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/logo.png\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/40c3zvtsqh2jc.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/0iq1i69206cyl.js\"/><script src=\"/_next/static/chunks/27jktro2p5rq9.js\" async=\"\"></script><script src=\"/_next/static/chunks/07u_h6i539_wj.js\" async=\"\"></script><script src=\"/_next/static/chunks/0iec5q4ack_04.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-12dm4pjgasbr9.js\" async=\"\"></script><script src=\"/_next/static/chunks/0-jgp_eix67-2.js\" async=\"\"></script><script src=\"/_next/static/chunks/14mrh2-p_w84d.js\" async=\"\"></script><script src=\"/_next/static/chunks/11utg6uw0p4sh.js\" async=\"\"></script><script src=\"/_next/static/chunks/02fdl-fsfzdvm.js\" async=\"\"></script><meta name=\"next-size-adjust\" content=\"\"/><title>Release Schedule | Deadtoons | Deadtoons</title><meta name=\"description\" content=\"Deadtoons — anime and cartoons dubbed in Hindi, Tamil, Telugu.\"/><link rel=\"icon\" href=\"/favicon.ico?favicon.12dnovj88pkao.ico\" sizes=\"48x48\" type=\"image/x-icon\"/><link rel=\"icon\" href=\"/icon.png?icon.1iqhzz-cn-5js.png\" sizes=\"180x180\" type=\"image/p",
-    "rawBody": "ason 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}],\\\"$L36\\\",\\\"$L37\\\",\\\"$L38\\\"]}]]}]]}]\\n\"])</script><script>self.__next_f.push([1,\"36:[\\\"$\\\",\\\"li\\\",\\\"that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"That Time I Got Reincarnated as a Slime Season 4 [Hindi-Tamil-Telugu-Eng-Jap] Multi Audio 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"black-torch-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/black-torch-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"BLACK TORCH Season 1 (2026) Multi Audio [Hindi-English-Japanese]  Muse India | 1080p HQ \\u0026 720p x265, 720p \\u0026 480p x264\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/trapped-in-a-dating-sim-season-2-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Trapped in a Dating Sim Season 2 Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920\" integrity=\"sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
-    "payloadAt": 48533,
+    "rawBody": "-dubbed-by-anime-booth\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Black Clover (2017) Season 02 - 04 Dual Audio [English-Japanese] 1080p 10Bit WEB-DL HD\\\"}]}],\\\"$L36\\\",\\\"$L37\\\",\\\"$L38\\\"]}]]}]]}]\\n\"])</script><script>self.__next_f.push([1,\"36:[\\\"$\\\",\\\"li\\\",\\\"the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"dragon-ball-super-beerus-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/dragon-ball-super-beerus-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Dragon Ball Super: Beerus Season 1 (2026) Japanese Audio English Subbed 480p , 720p \\u0026 1080p | 10Bit\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-exiled-heavy-knight-knows-how-to-game-the-system-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Exiled Heavy Knight Knows How to Game the System Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092\" integrity=\"sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
+    "payloadAt": 49210,
     "payloadKeys": [
       "crossOrigin",
       "type",
@@ -127,10 +127,10 @@
     {
       "label": "plain",
       "url": "https://deadtoons.sbs/schedule",
-      "cards": 15,
-      "today": 7,
+      "cards": 16,
+      "today": 8,
       "first": "",
-      "last": "5:30 PM",
+      "last": "7:10 PM",
       "headers": [
         [
           "vary",
@@ -140,11 +140,11 @@
     },
     {
       "label": "fresh",
-      "url": "https://deadtoons.sbs/schedule?v=1792139852494",
-      "cards": 15,
-      "today": 7,
+      "url": "https://deadtoons.sbs/schedule?v=1792224552565",
+      "cards": 16,
+      "today": 8,
       "first": "",
-      "last": "5:30 PM",
+      "last": "7:10 PM",
       "headers": [
         [
           "vary",
@@ -154,15 +154,15 @@
     }
   ],
   "resolution": [],
-  "resolved": 11,
-  "unresolved": 1,
+  "resolved": 12,
+  "unresolved": 2,
   "guides": [
     {
-      "title": "LINK CLICK",
-      "key": "linkclick",
-      "id": "123542",
-      "season": 3,
-      "episodes": 6
+      "title": "A Wild Last Boss Appeared!",
+      "key": "awildlastbossappeared",
+      "id": "280042",
+      "season": 2,
+      "error": "HTTP 404"
     },
     {
       "title": "Marvel's The Punisher",
@@ -172,11 +172,25 @@
       "episodes": 13
     },
     {
-      "title": "The Elusive Samurai",
-      "key": "theelusivesamurai",
-      "id": "222623",
-      "season": 2,
+      "title": "Jaadugar: A Witch in Mongolia",
+      "key": "jaadugarawitchinmongolia",
+      "id": "288971",
+      "season": 1,
       "episodes": 12
+    },
+    {
+      "title": "Hanaori-san Still Wants to Fight in the Next Life",
+      "key": "hanaorisanstillwantstofightinthenextlife",
+      "id": "312266",
+      "season": 1,
+      "episodes": 12
+    },
+    {
+      "title": "Black Clover",
+      "key": "blackclover",
+      "id": "73223",
+      "season": 5,
+      "error": "HTTP 404"
     },
     {
       "title": "The Apothecary Diaries",
@@ -221,26 +235,54 @@
       "episodes": 12
     }
   ],
-  "guidesSkipped": 2,
+  "guidesSkipped": 1,
   "items": [
     {
-      "title": "LINK CLICK",
-      "season": 3,
-      "episode": 11,
+      "title": "A Wild Last Boss Appeared!",
+      "season": 2,
+      "episode": 1,
       "today": true,
       "nx": {
-        "id": "123542",
+        "id": "280042",
         "kind": "tv",
         "seasons": {
-          "3": 11
+          "2": 1
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "Marvel's The Punisher",
+      "season": 2,
+      "episode": 3,
+      "today": true,
+      "nx": {
+        "id": "67178",
+        "kind": "tv",
+        "seasons": {
+          "2": 2
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "Jaadugar: A Witch in Mongolia",
+      "season": 1,
+      "episode": 10,
+      "today": true,
+      "nx": {
+        "id": "288971",
+        "kind": "tv",
+        "seasons": {
+          "1": 10
         },
         "from": "wikidata-tmdb"
       }
     },
     {
       "title": "JoJo's Bizarre Adventure",
-      "season": 6,
-      "episode": 5,
+      "season": 4,
+      "episode": 7,
       "today": true,
       "nx": {
         "id": "45790",
@@ -257,46 +299,30 @@
       }
     },
     {
-      "title": "Marvel's The Punisher",
-      "season": 2,
-      "episode": 2,
+      "title": "Hanaori-san Still Wants to Fight in the Next Life",
+      "season": 1,
+      "episode": 12,
       "today": true,
       "nx": {
-        "id": "67178",
+        "id": "312266",
         "kind": "tv",
         "seasons": {
-          "2": 2
+          "1": 12
         },
         "from": "wikidata-tmdb"
       }
     },
     {
-      "title": "The Elusive Samurai",
-      "season": 2,
-      "episode": 11,
+      "title": "Black Clover",
+      "season": 5,
+      "episode": 3,
       "today": true,
       "nx": {
-        "id": "222623",
+        "id": "tt7441658",
         "kind": "tv",
         "seasons": {
-          "2": 11
-        },
-        "from": "wikidata-tmdb"
-      }
-    },
-    {
-      "title": "That Time I Got Reincarnated as a Slime",
-      "season": 4,
-      "episode": 21,
-      "today": true,
-      "nx": {
-        "id": "82684",
-        "kind": "tv",
-        "seasons": {
-          "1": 24,
-          "2": 24,
-          "3": 24,
-          "4": 24
+          "1": 170,
+          "2": 26
         },
         "from": "catalog"
       }
@@ -398,33 +424,20 @@
       "season": null,
       "episode": null,
       "time": "",
-      "date": "2026-10-16",
+      "date": "2026-10-17",
       "reason": "no season/episode"
     },
     {
       "poster": true,
-      "alt": "LINK CLICK",
-      "href": "/posts/link-click-season-3-2026",
-      "slug": "link-click-season-3-2026",
-      "title": "LINK CLICK",
+      "alt": "A Wild Last Boss Appeared!",
+      "href": "",
+      "slug": "marvel-s-the-punisher-season-2-2019",
+      "title": "A Wild Last Boss Appeared!",
       "today": true,
-      "season": 3,
-      "episode": 11,
-      "time": "3:20 AM",
-      "date": "2026-10-16",
-      "reason": "ok"
-    },
-    {
-      "poster": true,
-      "alt": "JoJo's Bizarre Adventure",
-      "href": "/posts/jojo-s-bizarre-adventure-2026-season-06-steel-ball-run-dubbed-by-netflix-multi-audio-hindi-english-japanese",
-      "slug": "jojo-s-bizarre-adventure-2026-season-06-steel-ball-run-dubbed-by-netflix-multi-audio-hindi-english-japanese",
-      "title": "JoJo's Bizarre Adventure",
-      "today": true,
-      "season": 6,
-      "episode": 5,
-      "time": "10:08 AM",
-      "date": "2026-10-16",
+      "season": 2,
+      "episode": 1,
+      "time": "2:00 PM",
+      "date": "2026-10-17",
       "reason": "ok"
     },
     {
@@ -435,35 +448,35 @@
       "title": "Marvel's The Punisher",
       "today": true,
       "season": 2,
-      "episode": 2,
+      "episode": 3,
       "time": "2:22 PM",
-      "date": "2026-10-16",
+      "date": "2026-10-17",
       "reason": "ok"
     },
     {
       "poster": true,
-      "alt": "The Elusive Samurai",
-      "href": "/posts/the-elusive-samurai-season-2-2026",
-      "slug": "the-elusive-samurai-season-2-2026",
-      "title": "The Elusive Samurai",
+      "alt": "Jaadugar: A Witch in Mongolia",
+      "href": "/posts/jaadugar-a-witch-in-mongolia-season-1-2026",
+      "slug": "jaadugar-a-witch-in-mongolia-season-1-2026",
+      "title": "Jaadugar: A Witch in Mongolia",
       "today": true,
-      "season": 2,
-      "episode": 11,
+      "season": 1,
+      "episode": 10,
       "time": "4:25 PM",
-      "date": "2026-10-16",
+      "date": "2026-10-17",
       "reason": "ok"
     },
     {
       "poster": true,
-      "alt": "That Time I Got Reincarnated as a Slime",
-      "href": "/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
-      "slug": "that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
-      "title": "That Time I Got Reincarnated as a Slime",
+      "alt": "Ranma1/2",
+      "href": "/posts/ranma1-2-season-3-2026",
+      "slug": "ranma1-2-season-3-2026",
+      "title": "Ranma1/2",
       "today": true,
-      "season": 4,
-      "episode": 21,
-      "time": "4:33 PM",
-      "date": "2026-10-16",
+      "season": 3,
+      "episode": 3,
+      "time": "5:30 PM",
+      "date": "2026-10-17",
       "reason": "ok"
     },
     {
@@ -474,10 +487,36 @@
       "title": "JoJo's Bizarre Adventure",
       "today": true,
       "season": 4,
-      "episode": 6,
+      "episode": 7,
       "time": "5:30 PM",
-      "date": "2026-10-16",
-      "reason": "duplicate"
+      "date": "2026-10-17",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Hanaori-san Still Wants to Fight in the Next Life",
+      "href": "/posts/hanaori-san-still-wants-to-fight-in-the-next-life-season-1-2026",
+      "slug": "hanaori-san-still-wants-to-fight-in-the-next-life-season-1-2026",
+      "title": "Hanaori-san Still Wants to Fight in the Next Life",
+      "today": true,
+      "season": 1,
+      "episode": 12,
+      "time": "5:45 PM",
+      "date": "2026-10-17",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Black Clover",
+      "href": "/posts/black-clover-season-5-2026",
+      "slug": "black-clover-season-5-2026",
+      "title": "Black Clover",
+      "today": true,
+      "season": 5,
+      "episode": 3,
+      "time": "7:10 PM",
+      "date": "2026-10-17",
+      "reason": "ok"
     },
     {
       "poster": true,
