@@ -282,21 +282,21 @@ async function main() {
     const built = new Map();
     const unmatched = [];
     const report = { ok: 0, failed: 0, byStatus: {} };
-    for (const [, t] of uniq) {
+    for (const [key, t] of uniq) {
         let res;
         try {
             res = await buildItem({ title: t.title, netflixId: t.netflixId });
         } catch (e) {
             res = { status: `error: ${String(e?.message || e)}` };
         }
-        built.set(netflixId, res.status === 'ok' ? res.item : null);
+        built.set(key, res.status === 'ok' ? res.item : null);
         if (res.status === 'ok') {
             report.ok += 1;
             console.log(`ok       ${t.title} -> nxsha ${res.mediaType}/${res.nxsha}`);
         } else {
             report.failed += 1;
             report.byStatus[res.status] = (report.byStatus[res.status] || 0) + 1;
-            unmatched.push(`${t.title} | ${netflixId} | ${res.status}`);
+            unmatched.push(`${t.title} | ${t.netflixId || '-'} | ${res.status}`);
             console.log(`${res.status.padEnd(16)} ${t.title}`);
         }
         await sleep(300);
@@ -307,7 +307,7 @@ async function main() {
         const seen = new Set();
         const movies = [];
         for (const t of src.titles) {
-            const item = built.get(t.netflixId);
+            const item = built.get(t.netflixId || `name:${t.title}`);
             if (!item || seen.has(item.id)) continue;
             seen.add(item.id);
             movies.push(item);
