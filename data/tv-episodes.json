@@ -109572,7 +109572,7 @@
     "season_number": 1,
     "name": "Season 1",
     "overview": "",
-    "episode_count": 6,
+    "episode_count": 8,
     "episodes": [
      {
       "season": 1,
@@ -109622,6 +109622,22 @@
       "overview": "Fahadh Faasil makes a special appearance as the pairs continue their efforts to create a hook step with viral potential and claim the Gold Dhee Badge.",
       "runtime": 70,
       "air_date": "2026-10-04"
+     },
+     {
+      "season": 1,
+      "episode": 7,
+      "name": "The Face-Off Begins",
+      "overview": "",
+      "runtime": 70,
+      "air_date": "2026-10-10"
+     },
+     {
+      "season": 1,
+      "episode": 8,
+      "name": "The Ultimate Face-Off",
+      "overview": "",
+      "runtime": 60,
+      "air_date": "2026-10-11"
      }
     ]
    }
