@@ -91,6 +91,13 @@ const NXSHA_ALIASES = {
     "Hell's Paradise: Jigokuraku": "Hell's Paradise",
     'Puniru Is a Cute Slime': 'Puniru Is a Kawaii Slime',
     'Jujutsu Kaisen 0: The Movie': 'Jujutsu Kaisen 0',
+    // K-Dramas: the same show under nxsha's name (checked on nxsha search).
+    'Hot Stove League': 'Stove League',
+    'The Penthouse: War in Life': 'The Penthouse',
+    'Cinderella and the Four Knights': 'Cinderella and Four Knights',
+    "The Master's Sun": "Master's Sun",
+    'Moment of Eighteen': 'At Eighteen',
+    'Bitch and Rich': 'Bitch X Rich',
 };
 
 async function get(url) {
