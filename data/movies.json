@@ -34021,6 +34021,33 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/sfagVOgXVONyDAOI4BjnofLcYpv.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-81343880",
+                    "title": "Stove League",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/1IAu20ygrsr89JZMO68kwRV4D1P.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "315697",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81343880",
+                    "netflixUrl": "https://www.netflix.com/in/title/81343880",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2026",
+                    "description": "The professional baseball team “Dreams” has long been stuck in last place. Factional disputes within the team, players repeatedly making defensive errors—the organization is on the verge of collapse. Entrusted with rebuilding the Dreams is Sakurazaki Jun, a general manager with no experience playing baseball. Although he lacks competitive experience, he is known as a “championship contractor” who has led multiple sports teams to victory. In order to address the root of the problems, Sakurazaki clashes with players and front office staff while introducing a series of unconventional reforms that defy common sense. And the first decision he makes is trading the star player, who is considered the symbol of the franchise. What is victory? What is a team? Not only the players, but also the club staff are drawn into confronting these questions.",
+                    "cast": [
+                        "Kazuya Kamenashi",
+                        "Neru Nagahama",
+                        "Shono Hayama",
+                        "Zen Kajihara",
+                        "Masaya Kimura",
+                        "Itsuji Itao",
+                        "Ryo Katsuji",
+                        "Masahiro Komoto",
+                        "Ayame Goriki",
+                        "Kotaro Yoshida"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/6cR4AY1MqdknJdyDF4arT1bvVNY.jpg"
+                },
+                {
                     "id": "netflix-kdrama-80991107",
                     "title": "Mr. Sunshine",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/p7ljjykSsiyWstGVAwIkbdfPzRV.jpg",
@@ -34345,6 +34372,28 @@
                         "Kim Kang-bin"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/haIqIHTTZPebqPTz3ktte1VEUDL.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-81552562",
+                    "title": "The Penthouse",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/AuBdbFZytyvFT6Tw2CRMRNxaoWt.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1383233",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81552562",
+                    "netflixUrl": "https://www.netflix.com/in/title/81552562",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2026",
+                    "description": "The Penthouse\" is a psychological thriller that follows Saina and David, a young family who moves into a luxurious penthouse in Kuala Lumpur to start a new life.",
+                    "duration": "1h 42m",
+                    "cast": [
+                        "Soji Arai",
+                        "Irina Mikhaylova",
+                        "Josiah Hogan",
+                        "Kween Keela"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/l9aNDMaOa7LFsF8WInhl6zkxT0E.jpg"
                 },
                 {
                     "id": "netflix-kdrama-70296735",
@@ -37573,6 +37622,33 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/p98XiePTvNrXegxyKc6n46UJD85.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-80188605",
+                    "title": "Cinderella and Four Knights",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jgE63Z609gr10IoFu4pe4OdliBr.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "67084",
+                    "embed_provider": "nxsha",
+                    "netflixId": "80188605",
+                    "netflixUrl": "https://www.netflix.com/in/title/80188605",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2016",
+                    "description": "Catching the eye of a wealthy gentleman, spunky Ha-won gets hired to live with his three immature grandsons so she can whip them into shape.",
+                    "cast": [
+                        "Jung Il-woo",
+                        "Park So-dam",
+                        "Ahn Jae-hyun",
+                        "Lee Jung-shin",
+                        "Kim Hye-ri",
+                        "Choi Eun-kyeong",
+                        "Son Na-eun",
+                        "Choi Shang",
+                        "Kim Yong-geon",
+                        "Go Bo-gyeol"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jYdFZ1dKaEf1wjjvyABt5QBIlCN.jpg"
+                },
+                {
                     "id": "netflix-kdrama-81517168",
                     "title": "Twenty Five Twenty One",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/yCQFnmYhYf7XALMka2EoBRAFmPO.jpg",
@@ -39283,6 +39359,33 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/6oxQe4fyYJQT77NBNLQzbW7pf4Z.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-80039906",
+                    "title": "Master's Sun",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/yuw1l5s4ha57ZdKKGJV2LDyN1S7.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "57646",
+                    "embed_provider": "nxsha",
+                    "netflixId": "80039906",
+                    "netflixUrl": "https://www.netflix.com/in/title/80039906",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2013",
+                    "description": "Joo Joong-won is the arrogant, greedy CEO of Kingdom, a conglomerate that includes a supermall and a hotel. \"Ghost whisperer” Tae Gong-shil, is a misunderstood outcast who can't keep a boyfriend or a job since a near death experience left her seeing needy ghosts. She feels compelled to help them resolve their earthly issues so they can move on to the afterlife... and he feels compelled to think she's crazy. Soon their lives merge into a complicated web of hijinx, misunderstandings, and... yes, love.",
+                    "cast": [
+                        "WeTV",
+                        "So Ji-sub",
+                        "Gong Hyo-jin",
+                        "Seo In-guk",
+                        "Kim Yoo-ri",
+                        "Hwang Sun-hee",
+                        "Han Bo-reum",
+                        "Park Hee-bon",
+                        "Kim Mi-kyung",
+                        "Ha Soo-ho"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/7KgwW8NVHEluuTk9rMXpR82xyf3.jpg"
+                },
+                {
                     "id": "netflix-kdrama-81194158",
                     "title": "Parasyte: The Grey",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/9UPneQ4NF7g6WDNSFE5qyt88wJn.jpg",
@@ -39659,6 +39762,33 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/4ATMHvq7islHTcbvYKbOIMQeP7n.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-81211266",
+                    "title": "At Eighteen",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/gQTtXpyiMbw2h3djdqxwGMKHxRa.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "90407",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81211266",
+                    "netflixUrl": "https://www.netflix.com/in/title/81211266",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2019",
+                    "description": "A misunderstood loner is drawn out of his shell after transferring to another high school, where he comes across new ordeals -- and first love.",
+                    "cast": [
+                        "Ong Seong-wu",
+                        "Kim Hyang-gi",
+                        "Shin Seung-ho",
+                        "Kang Ki-young",
+                        "Shim Yi-young",
+                        "Kim Sun-young",
+                        "Choi Jae-woong",
+                        "Moon Bin",
+                        "Jeong Young-joo",
+                        "Jung Hyeon-jun"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/3yNJV0kEARGmE4DqRa6ySN3Iblj.jpg"
+                },
+                {
                     "id": "netflix-kdrama-82037349",
                     "title": "The Winning Try",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/qgh3m9Oh3CoqVBuWkiMIgVgFwI1.jpg",
@@ -39711,6 +39841,33 @@
                         "Cha Mi-kyung"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/rEwuB4VK9N1E3zKydXcI61xL7hd.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-81683734",
+                    "title": "Bitch X Rich",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/r2qOi6cSb0aUH1lzrg8vbr6i0Uw.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "214994",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81683734",
+                    "netflixUrl": "https://www.netflix.com/in/title/81683734",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2023",
+                    "description": "Kim Hye-in has to transfer to Cheongdam International High School after witnessing a murder. She crosses paths with Baek Je-na, a bully who happens to be connected to the case.",
+                    "cast": [
+                        "Channel K Amazon Channel",
+                        "Lee Eun-saem",
+                        "YERI",
+                        "Lee Jong-hyuk",
+                        "Park Si-woo",
+                        "Jang Sung-yoon",
+                        "Jang Se-hyuk",
+                        "Kim Min-kyu",
+                        "Won Gyu-bin",
+                        "Oh Ji-ho"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/t2fl4Po0H38ZYwzPboTTXhQ6v3Y.jpg"
                 },
                 {
                     "id": "netflix-kdrama-81016276",
@@ -40755,6 +40912,33 @@
                         "Lee Tae-ri"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/jJMfTkvU2exHwCFoBHsIqwaHImh.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-80188605",
+                    "title": "Cinderella and Four Knights",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jgE63Z609gr10IoFu4pe4OdliBr.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "67084",
+                    "embed_provider": "nxsha",
+                    "netflixId": "80188605",
+                    "netflixUrl": "https://www.netflix.com/in/title/80188605",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2016",
+                    "description": "Catching the eye of a wealthy gentleman, spunky Ha-won gets hired to live with his three immature grandsons so she can whip them into shape.",
+                    "cast": [
+                        "Jung Il-woo",
+                        "Park So-dam",
+                        "Ahn Jae-hyun",
+                        "Lee Jung-shin",
+                        "Kim Hye-ri",
+                        "Choi Eun-kyeong",
+                        "Son Na-eun",
+                        "Choi Shang",
+                        "Kim Yong-geon",
+                        "Go Bo-gyeol"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jYdFZ1dKaEf1wjjvyABt5QBIlCN.jpg"
                 },
                 {
                     "id": "netflix-kdrama-81318872",
@@ -42221,6 +42405,33 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/bdkfBz4waYCe3DsgLMMHsgQGw8R.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-81211266",
+                    "title": "At Eighteen",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/gQTtXpyiMbw2h3djdqxwGMKHxRa.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "90407",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81211266",
+                    "netflixUrl": "https://www.netflix.com/in/title/81211266",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2019",
+                    "description": "A misunderstood loner is drawn out of his shell after transferring to another high school, where he comes across new ordeals -- and first love.",
+                    "cast": [
+                        "Ong Seong-wu",
+                        "Kim Hyang-gi",
+                        "Shin Seung-ho",
+                        "Kang Ki-young",
+                        "Shim Yi-young",
+                        "Kim Sun-young",
+                        "Choi Jae-woong",
+                        "Moon Bin",
+                        "Jeong Young-joo",
+                        "Jung Hyeon-jun"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/3yNJV0kEARGmE4DqRa6ySN3Iblj.jpg"
+                },
+                {
                     "id": "netflix-kdrama-70215459",
                     "title": "Secret Garden",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/jbb8Yb6xRv3VGlatR0gBUnUjpFt.jpg",
@@ -42237,6 +42448,28 @@
                         "David Attenborough"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/vtlfRVBoBuWqLAhQnMksm4aW4vN.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-81552562",
+                    "title": "The Penthouse",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/AuBdbFZytyvFT6Tw2CRMRNxaoWt.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1383233",
+                    "embed_provider": "nxsha",
+                    "netflixId": "81552562",
+                    "netflixUrl": "https://www.netflix.com/in/title/81552562",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2026",
+                    "description": "The Penthouse\" is a psychological thriller that follows Saina and David, a young family who moves into a luxurious penthouse in Kuala Lumpur to start a new life.",
+                    "duration": "1h 42m",
+                    "cast": [
+                        "Soji Arai",
+                        "Irina Mikhaylova",
+                        "Josiah Hogan",
+                        "Kween Keela"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/l9aNDMaOa7LFsF8WInhl6zkxT0E.jpg"
                 },
                 {
                     "id": "netflix-kdrama-82665870",
@@ -42479,6 +42712,33 @@
                         "Choi Young-jun"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/sf7NCqyVUNoyjYuwW5oJke1T1lH.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-80188605",
+                    "title": "Cinderella and Four Knights",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/jgE63Z609gr10IoFu4pe4OdliBr.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "67084",
+                    "embed_provider": "nxsha",
+                    "netflixId": "80188605",
+                    "netflixUrl": "https://www.netflix.com/in/title/80188605",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2016",
+                    "description": "Catching the eye of a wealthy gentleman, spunky Ha-won gets hired to live with his three immature grandsons so she can whip them into shape.",
+                    "cast": [
+                        "Jung Il-woo",
+                        "Park So-dam",
+                        "Ahn Jae-hyun",
+                        "Lee Jung-shin",
+                        "Kim Hye-ri",
+                        "Choi Eun-kyeong",
+                        "Son Na-eun",
+                        "Choi Shang",
+                        "Kim Yong-geon",
+                        "Go Bo-gyeol"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/jYdFZ1dKaEf1wjjvyABt5QBIlCN.jpg"
                 },
                 {
                     "id": "netflix-kdrama-82007623",
@@ -43314,6 +43574,33 @@
                         "Park Gyu-young"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/34Gl5oc5Z42DxlIomvXKHMFupYZ.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-80039906",
+                    "title": "Master's Sun",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/yuw1l5s4ha57ZdKKGJV2LDyN1S7.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "57646",
+                    "embed_provider": "nxsha",
+                    "netflixId": "80039906",
+                    "netflixUrl": "https://www.netflix.com/in/title/80039906",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2013",
+                    "description": "Joo Joong-won is the arrogant, greedy CEO of Kingdom, a conglomerate that includes a supermall and a hotel. \"Ghost whisperer” Tae Gong-shil, is a misunderstood outcast who can't keep a boyfriend or a job since a near death experience left her seeing needy ghosts. She feels compelled to help them resolve their earthly issues so they can move on to the afterlife... and he feels compelled to think she's crazy. Soon their lives merge into a complicated web of hijinx, misunderstandings, and... yes, love.",
+                    "cast": [
+                        "WeTV",
+                        "So Ji-sub",
+                        "Gong Hyo-jin",
+                        "Seo In-guk",
+                        "Kim Yoo-ri",
+                        "Hwang Sun-hee",
+                        "Han Bo-reum",
+                        "Park Hee-bon",
+                        "Kim Mi-kyung",
+                        "Ha Soo-ho"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/7KgwW8NVHEluuTk9rMXpR82xyf3.jpg"
                 },
                 {
                     "id": "netflix-kdrama-81211303",

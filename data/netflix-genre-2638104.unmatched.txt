@@ -1,9 +1,3 @@
 # Titles from data/netflix-genre-2638104.txt that nxsha did not match (not shown in the app).
 Reply 1988 | 80188351 | no-nxsha-match
-Hot Stove League | 81343880 | no-nxsha-match
-The Penthouse: War in Life | 81552562 | no-nxsha-match
 The Girl Who Sees Scents | 80998965 | no-nxsha-match
-Cinderella and the Four Knights | 80188605 | no-nxsha-match
-The Master's Sun | 80039906 | no-nxsha-match
-Moment of Eighteen | 81211266 | no-nxsha-match
-Bitch and Rich | 81683734 | no-nxsha-match
