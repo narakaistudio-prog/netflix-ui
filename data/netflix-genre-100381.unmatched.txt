@@ -1,4 +1,5 @@
 # Titles from data/netflix-genre-100381.txt that nxsha did not match (not shown in the app).
+Kurukshetra: The Great War of Mahabharata | 82063102 | no-nxsha-match
 The Ba**ds of Bollywood | 81975483 | no-nxsha-match
 Laapataa Ladies | 81760391 | no-nxsha-match
 AIR: All India Rankers | 82640275 | no-nxsha-match

@@ -7,6 +7,7 @@ import { useCatalog } from '@/hooks/useCatalog';
 import { DeferredMovieList } from '@/components/MovieList/DeferredMovieList';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 import { isAnimeRow } from '@/lib/anime';
+import { isKdramaRow } from '@/lib/kdrama';
 
 export type CatalogKind = 'movie' | 'tv';
 
@@ -25,7 +26,7 @@ function isBroadCatalogRow(row: MovieRow) {
  */
 export function getCatalogSections(rows: MovieRow[], kind: CatalogKind): MovieRow[] {
     const matchingRows = rows
-        .filter(row => !isAnimeRow(row))
+        .filter(row => !isAnimeRow(row) && !isKdramaRow(row))
         .filter(row => row.movies.some(item => item.mediaType === kind))
         .map(row => ({
             ...row,
