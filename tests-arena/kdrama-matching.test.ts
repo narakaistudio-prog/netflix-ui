@@ -89,6 +89,7 @@ test('the kdrama preset prefers TV and pins the two stubborn shows to verified i
     expect(script).toContain("'81754357': 'tv/138251'"); // Eve (2022)
     expect(script).toContain("'81087764': 'tv/86640'"); // Possessed (2019)
     expect(script).toContain("'81033645': 'tv/71347'"); // My Sassy Girl (2017)
+    expect(script).toContain("'81999679': 'tv/62863'"); // The Privileged = High Society (2015)
     // Netflix names nxsha lists differently:
     expect(script).toContain("'Inheritors': 'The Heirs'");
     expect(script).toContain("'The Privileged': 'High Society'");

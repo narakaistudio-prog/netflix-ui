@@ -81,6 +81,7 @@ const NXSHA_PINS = {
         '81754357': 'tv/138251', // Eve (2022) — a 2003 sitcom rates higher
         '81087764': 'tv/86640', // Possessed (2019) — the 2009 series rates higher
         '81033645': 'tv/71347', // My Sassy Girl (2017) — the 2008 series rates higher
+        '81999679': 'tv/62863', // The Privileged = High Society (2015) — a 1995 namesake won
     },
 };
 const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));
