@@ -25,6 +25,8 @@
  *                    catalogCollection netflix-anime-7424.
  *   anime-movies     data/netflix-anime-movies-3063.txt (Netflix genre 3063), rows
  *                    prefixed "Anime Movies: ", catalogCollection netflix-anime-3063.
+ *   kdramas          data/netflix-genre-2638104.txt (Netflix genre 2638104), rows
+ *                    prefixed "K-Drama: ", catalogCollection netflix-genre-2638104.
  * Titles that nxsha does not match are written to data/<source>.unmatched.txt,
  * so the result can be read from the repo (runner logs are not readable from here).
  *
@@ -56,6 +58,13 @@ const PRESETS = {
         collection: 'netflix-anime-3063',
         idPrefix: 'netflix-anime-movies-',
         rowPrefix: 'Anime Movies: ',
+    },
+    // Netflix "K-Dramas" page (genre 2638104), its own K-Dramas section.
+    kdramas: {
+        source: 'data/netflix-genre-2638104.txt',
+        collection: 'netflix-genre-2638104',
+        idPrefix: 'netflix-kdrama-',
+        rowPrefix: 'K-Drama: ',
     },
 };
 const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));
@@ -118,7 +127,7 @@ const norm = (s) =>
         .replace(/[^a-z0-9]+/g, ' ')
         .trim();
 
-/** "Title | 123" lines under "## Row" headers. */
+/** "Title | 123" lines under "## Row" headers; the id is optional. */
 export function parseGenreSource(text) {
     const rows = [];
     let current = null;
@@ -130,8 +139,8 @@ export function parseGenreSource(text) {
             rows.push(current);
             continue;
         }
-        const m = /^(.+?)\s*\|\s*(\d+)$/.exec(line);
-        if (m && current) current.titles.push({ title: m[1].trim(), netflixId: m[2] });
+        const m = /^(.+?)\s*(?:\|\s*(\d+))?$/.exec(line);
+        if (m && current) current.titles.push({ title: m[1].trim(), netflixId: m[2] || '' });
     }
     return rows;
 }
@@ -218,6 +227,12 @@ async function findOnNxsha(title) {
 }
 
 /** Full item for one Netflix title, or null when nxsha has no usable match. */
+const slugify = (title) =>
+    String(title)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
 async function buildItem({ title, netflixId }) {
     const found = await findOnNxsha(title);
     if (!found) return { status: 'no-nxsha-match' };
@@ -226,18 +241,21 @@ async function buildItem({ title, netflixId }) {
     if (!page) return { status: 'page-missing' };
     const info = parseMoviePage(page);
     const mediaType = hit.type;
+    // The capture's Netflix id is optional; a slug keeps ids unique without it.
     const item = {
-        id: `${PRESET.idPrefix}${netflixId}`,
+        id: `${PRESET.idPrefix}${netflixId || slugify(title)}`,
         title: info.title || hit.name || title,
         imageUrl: hit.poster || info.backdrop || '',
         type: mediaType === 'tv' ? 'SERIES' : 'FILM',
         mediaType,
         tmdb_id: hit.id,
         embed_provider: 'nxsha',
-        netflixId,
-        netflixUrl: `https://www.netflix.com/in/title/${netflixId}`,
         catalogCollection: PRESET.collection,
     };
+    if (netflixId) {
+        item.netflixId = netflixId;
+        item.netflixUrl = `https://www.netflix.com/in/title/${netflixId}`;
+    }
     if (info.year || hit.year) item.year = info.year || hit.year;
     if (info.description) item.description = info.description;
     if (info.duration) item.duration = info.duration;
@@ -250,17 +268,24 @@ async function buildItem({ title, netflixId }) {
 
 async function main() {
     const source = parseGenreSource(readFileSync(SOURCE, 'utf8'));
+    // Titles without a captured Netflix id are keyed by name so they
+    // still dedupe (the same title can appear in several rows).
     const uniq = new Map();
-    for (const row of source) for (const t of row.titles) if (!uniq.has(t.netflixId)) uniq.set(t.netflixId, t);
+    for (const row of source) {
+        for (const t of row.titles) {
+            const key = t.netflixId || `name:${t.title}`;
+            if (!uniq.has(key)) uniq.set(key, t);
+        }
+    }
     console.log(`source: ${source.length} rows, ${uniq.size} unique titles`);
 
     const built = new Map();
     const unmatched = [];
     const report = { ok: 0, failed: 0, byStatus: {} };
-    for (const [netflixId, t] of uniq) {
+    for (const [, t] of uniq) {
         let res;
         try {
-            res = await buildItem({ title: t.title, netflixId });
+            res = await buildItem({ title: t.title, netflixId: t.netflixId });
         } catch (e) {
             res = { status: `error: ${String(e?.message || e)}` };
         }

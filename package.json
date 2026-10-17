@@ -11,6 +11,7 @@
     "build": "npm run build:web",
     "build:web": "node scripts/build-crunchyroll-new-drops.mjs --from-state && node scripts/bake-animahd-links.mjs && expo export --platform web && node scripts/prepare-web-dist.mjs",
     "bake:crunchyroll-drops": "node scripts/build-crunchyroll-new-drops.mjs --from-state",
+    "kdrama:rows": "node scripts/build-kdrama-rows.mjs",
     "test": "jest --watchAll",
     "lint": "expo lint",
     "harvest:anidisk": "node scripts/harvest-deadtoons.mjs && node scripts/bake-anidisk-links.mjs",

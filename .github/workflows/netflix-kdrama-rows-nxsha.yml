@@ -1,0 +1,57 @@
+name: Fill Netflix K-Drama rows from Nxsha
+
+# The K-Drama rows (Netflix genre 2638104) start as a curated capture
+# (data/netflix-genre-2638104.txt) with offline metadata from
+# scripts/build-kdrama-rows.mjs. This job enriches the same rows on a
+# hosted runner: Nxsha supplies posters, years, synopses, cast, tmdb ids
+# and episode guides, then commits the result to data/movies.json.
+on:
+  push:
+    branches:
+      - arena/da79a817-netflix-ui
+      - main
+    paths:
+      - '.github/workflows/netflix-kdrama-rows-nxsha.yml'
+      - 'data/netflix-genre-2638104.txt'
+      - 'scripts/build-netflix-genre-rows.mjs'
+      - 'scripts/build-trending-nxsha.mjs'
+  workflow_dispatch:
+
+# Same group as the other genre-row jobs: both rewrite data/movies.json.
+concurrency:
+  group: trending-nxsha-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Rebuild the K-Drama rows from Nxsha
+        run: node scripts/build-netflix-genre-rows.mjs --preset=kdramas
+
+      - name: Commit the K-Drama rows
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/movies.json data/netflix-genre-2638104.unmatched.txt
+          if git diff --cached --quiet; then
+            echo "No change."
+          else
+            git commit -m "chore(kdrama-rows): fill Netflix K-Drama rows from Nxsha"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi

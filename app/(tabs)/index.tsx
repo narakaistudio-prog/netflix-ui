@@ -19,6 +19,7 @@ import { ContinueWatchingRow } from '@/components/ContinueWatchingRow';
 import { MovieDetailModal } from '@/components/MovieList/MovieDetailModal';
 import { selectRelatedTitles } from '@/lib/relatedTitles';
 import { isAnimeRow } from '@/lib/anime';
+import { isKdramaRow } from '@/lib/kdrama';
 import { useDeviceMotion } from '@/hooks/useDeviceMotion';
 import { MovieRow } from '@/types/movie';
 import { useCatalog } from '@/hooks/useCatalog';
@@ -40,9 +41,10 @@ export default function HomeScreen() {
   // Current editorial shelves may be refreshed separately, but Top 10 stays
   // immediately below the hero like Netflix.
   // Anime rows belong to the Anime section, not to Home.
+  // K-Drama rows belong to the K-Dramas section, not to Home.
   const orderedMovies = useMemo(() => [
-    ...movies.filter(row => row.type === 'top_10' && !isAnimeRow(row)),
-    ...movies.filter(row => row.type !== 'top_10' && !isAnimeRow(row)),
+    ...movies.filter(row => row.type === 'top_10' && !isAnimeRow(row) && !isKdramaRow(row)),
+    ...movies.filter(row => row.type !== 'top_10' && !isAnimeRow(row) && !isKdramaRow(row)),
   ], [movies]);
   const insets = useSafeAreaInsets();
   // The web billboard does not use tilt transforms; don't start a continuous

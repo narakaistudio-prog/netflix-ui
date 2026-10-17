@@ -35,7 +35,13 @@ export default function BrowseRow() {
         );
     }
 
-    const row = rows.find(r => r.rowTitle === rowTitle) ?? rows[0];
+    // Section pages (Anime, K-Dramas) render shelves under a stripped
+    // label ("Trending K-Dramas"); their stored row titles carry a
+    // section prefix, so a suffix match resolves the same row.
+    const row =
+        rows.find(r => r.rowTitle === rowTitle) ??
+        rows.find(r => r.rowTitle.endsWith(`: ${rowTitle}`)) ??
+        rows[0];
     const movies: Movie[] = row?.movies ?? [];
 
     useTvBackHandler(() => {

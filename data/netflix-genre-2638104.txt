@@ -1,0 +1,271 @@
+# Source: https://www.netflix.com/in/browse/genre/2638104 (K-Dramas), captured 2026-10-17.
+# Format: "## Row title" starts a row; "Title | Netflix title id" is one show.
+# Rows and titles follow the Netflix K-Dramas genre page. The same title can
+# appear in several rows. The Netflix id is optional (only when verified);
+# nxsha supplies every detail and image, so unmatched ids never break a row.
+# Refresh: re-capture the page (scripts/scrape-netflix-for-you.js in a logged-in
+# browser), then run scripts/build-netflix-genre-rows.mjs --preset=kdramas on CI.
+# See scripts/build-kdrama-rows.mjs for the offline metadata bundle.
+
+## Trending K-Dramas
+Squid Game | 80100172
+The Glory
+Queen of Tears
+The Trauma Code
+Extraordinary Attorney Woo
+Crash Landing on You | 81062352
+Goblin | 80192098
+Descendants of the Sun | 80092091
+Alchemy of Souls
+Kingdom | 80180175
+My Demon
+Hierarchy
+The Uncanny Counter
+When Life Gives You Tangerines
+Dear X
+Hometown Cha-Cha-Cha
+Business Proposal
+Vincenzo
+
+## Popular K-Dramas in India
+All of Us Are Dead
+D.P.
+My Name
+Hellbound
+Extracurricular
+Juvenile Justice
+Move to Heaven
+The School Nurse Files
+The Sound of Magic
+Glitch
+Parasyte: The Grey
+The Silent Sea
+Daily Dose of Sunshine
+The Fabulous
+Celebrity
+Forecasting Love and Weather
+The Bequeathed
+The Frog
+A Killer Paradox
+Trigger
+Good Boy
+The Whirlwind
+The Deal
+
+## Romantic K-Dramas
+Crash Landing on You | 81062352
+Goblin | 80192098
+Descendants of the Sun | 80092091
+My Love from the Star
+Boys Over Flowers
+The Heirs
+What's Wrong with Secretary Kim
+Queen of Tears
+King the Land
+Love Next Door
+The First Night with the Duke
+Lovely Runner
+Twenty-Five Twenty-One
+Start-Up
+Record of Youth
+When Life Gives You Tangerines
+My Demon
+Doona!
+The Interest of Love
+Once Upon a Small Town
+
+## K-Drama Thrillers & Crime
+Squid Game | 80100172
+The Glory
+Kingdom | 80180175
+Vincenzo
+My Name
+D.P.
+Extracurricular
+Hellbound
+Signal
+Stranger
+Voice
+The Fiery Priest
+Weak Hero Class 1
+The Bequeathed
+A Killer Paradox
+The Frog
+The Whirlwind
+The Deal
+Trigger
+Good Boy
+The Kidnapping Day
+Healer
+City Hunter
+The K2
+
+## Korean Historical Dramas
+Kingdom | 80180175
+Alchemy of Souls
+Mr. Sunshine
+The Crowned Clown
+The King's Affection
+Love in the Moonlight
+Moon Embracing the Sun
+Dong Yi
+Queen Seondeok
+Jumong
+Empress Ki
+Six Flying Dragons
+Hwarang: The Poet Warrior Youth
+Under the Queen's Umbrella
+Gyeongseong Creature
+The Tale of Lady Ok
+The Red Sleeve
+Knight Flower
+Poong, the Joseon Psychiatrist
+Jewel in the Palace
+
+## K-Drama Comedies
+Business Proposal
+Hometown Cha-Cha-Cha
+What's Wrong with Secretary Kim
+Fight for My Way
+Because This Is My First Life
+Good Manager
+Weightlifting Fairy Kim Bok-joo
+She Was Pretty
+So Not Worth It
+Chicken Nugget
+Behind Every Star
+The Heavenly Idol
+
+## K-Dramas Based on Webtoons
+All of Us Are Dead
+Sweet Home
+Love Alarm
+The Sound of Magic
+The School Nurse Files
+Weak Hero Class 1
+Business Proposal
+The Fabulous
+The Bequeathed
+True Beauty
+Cheese in the Trap
+
+## K-Dramas for Beginners
+Crash Landing on You | 81062352
+Goblin | 80192098
+Descendants of the Sun | 80092091
+Boys Over Flowers
+My Love from the Star
+Hometown Cha-Cha-Cha
+The Heirs
+What's Wrong with Secretary Kim
+Twenty-Five Twenty-One
+Business Proposal
+Extraordinary Attorney Woo
+Queen of Tears
+Vincenzo
+Itaewon Class
+Hotel Del Luna
+Start-Up
+Record of Youth
+King the Land
+Lovely Runner
+Coffee Prince
+Full House
+My Lovely Sam Soon
+
+## Korean Sci-Fi & Fantasy
+Squid Game | 80100172
+The Silent Sea
+Kingdom | 80180175
+Alchemy of Souls
+Hellbound
+Sweet Home
+Parasyte: The Grey
+Glitch
+The School Nurse Files
+My Demon
+The Uncanny Counter
+Goblin | 80192098
+Hotel Del Luna
+Tomorrow
+Tale of the Nine Tailed
+Mystic Pop-up Bar
+A Killer Paradox
+The Legend of the Blue Sea
+Sisyphus: The Myth
+Memories of the Alhambra
+W
+
+## Korean Drama Classics
+Boys Over Flowers
+My Love from the Star
+The Heirs
+Coffee Prince
+Princess Hours
+Full House
+Autumn in My Heart
+Winter Sonata
+My Lovely Sam Soon
+Jewel in the Palace
+Jumong
+Queen Seondeok
+Dong Yi
+Moon Embracing the Sun
+Dream High
+Reply 1988
+Misaeng
+Cheese in the Trap
+Oh My Ghost
+Bread, Love and Dreams
+Bridal Mask
+Sungkyunkwan Scandal
+Iris
+The Legend of the Blue Sea
+
+## Binge-worthy K-Dramas
+Squid Game | 80100172
+The Glory
+Crash Landing on You | 81062352
+Goblin | 80192098
+Descendants of the Sun | 80092091
+Vincenzo
+Itaewon Class
+Kingdom | 80180175
+Alchemy of Souls
+The Uncanny Counter
+Hometown Cha-Cha-Cha
+Hotel Del Luna
+Mr. Sunshine
+Empress Ki
+Jumong
+Dong Yi
+Queen Seondeok
+Jewel in the Palace
+The Red Sleeve
+Under the Queen's Umbrella
+Gyeongseong Creature
+Queen of Tears
+When Life Gives You Tangerines
+Extraordinary Attorney Woo
+My Love from the Star
+Boys Over Flowers
+The Heirs
+Twenty-Five Twenty-One
+Love Alarm
+All of Us Are Dead
+Sweet Home
+D.P.
+My Name
+Hellbound
+Move to Heaven
+The Fiery Priest
+Signal
+Stranger
+Voice
+A Killer Paradox
+The Frog
+Daily Dose of Sunshine
+Doctor Romantic
+The World of the Married
+My Liberation Notes
+Reply 1988

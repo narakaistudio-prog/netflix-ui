@@ -72,6 +72,13 @@ export const TAB_SCREENS = [
     ),
   },
   {
+    name: 'kdramas',
+    title: 'K-Dramas',
+    icon: ({ color, focused }: { color: string; focused: boolean }) => (
+      <Ionicons name={focused ? 'heart' : 'heart-outline'} size={24} color={color} />
+    ),
+  },
+  {
     name: 'tv',
     title: 'TV Shows',
     icon: ({ color }: { color: string; focused: boolean }) => (

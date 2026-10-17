@@ -11,6 +11,7 @@ const TABS = [
     { label: 'TV Shows', href: '/browse/tv' as const, kind: 'catalog' as const, catalog: 'tv', icon: 'tv' as const, match: (p: string) => p === '/browse/tv' },
     { label: 'Movies', href: '/browse/movies' as const, kind: 'catalog' as const, catalog: 'movies', icon: 'film' as const, match: (p: string) => p === '/browse/movies' },
     { label: 'Anime', href: '/anime' as const, kind: 'route' as const, icon: 'sparkles' as const, match: (p: string) => p === '/anime' },
+    { label: 'K-Dramas', href: '/kdramas' as const, kind: 'route' as const, icon: 'heart' as const, match: (p: string) => p === '/kdramas' },
     { label: 'My List', href: '/profile' as const, kind: 'route' as const, icon: 'bookmark' as const, match: (p: string) => p.startsWith('/profile') },
     { label: 'Crunchyroll', href: '/crunchyroll' as const, kind: 'ott' as const, icon: 'play' as const, match: (p: string) => p.startsWith('/crunchyroll') },
 ];

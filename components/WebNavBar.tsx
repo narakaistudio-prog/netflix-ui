@@ -25,6 +25,7 @@ const NAV_LINKS = [
     { label: 'TV Shows', href: '/browse/tv' as const, type: 'catalog', catalog: 'tv' as const },
     { label: 'Movies', href: '/browse/movies' as const, type: 'catalog', catalog: 'movies' as const },
     { label: 'Anime', href: '/anime' as const, type: 'route' },
+    { label: 'K-Dramas', href: '/kdramas' as const, type: 'route' },
     { label: 'My List', href: '/profile' as const, type: 'route' },
     { label: 'Crunchyroll', href: '/crunchyroll' as const, type: 'route' },
 ];
