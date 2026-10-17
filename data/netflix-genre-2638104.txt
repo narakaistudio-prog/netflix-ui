@@ -3,6 +3,9 @@
 # Rows and titles are copied in page order. The same title can appear in several rows.
 # nxsha supplies every detail and image; see scripts/build-netflix-genre-rows.mjs (--preset=kdrama).
 # Titles nxsha lists under another name are aliased in NXSHA_ALIASES (build-netflix-genre-rows.mjs).
+# Known misses: Reply 1988 (nxsha has tv/64010 but the runner's search keeps missing it)
+# and The Girl Who Sees Scents (nxsha's same-name result is a 2023 Chinese remake, not the
+# 2015 K-drama — an alias would land the wrong show, so it stays off the site).
 
 ## International TV Dramas
 Doctor X: Mafia in White | 82682379
