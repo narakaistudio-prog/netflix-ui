@@ -7,7 +7,9 @@ name: Fill TV seasons and episodes from Nxsha
 on:
   push:
     branches:
+      - main
       - arena/12789678-netflix-ui
+      - arena/11455542-netflix-ui
     paths:
       - '.github/workflows/tv-episodes-nxsha.yml'
       - 'scripts/build-tv-episodes-nxsha.mjs'

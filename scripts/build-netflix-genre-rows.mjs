@@ -63,6 +63,21 @@ const PRESETS = {
         collection: 'netflix-genre-2638104',
         idPrefix: 'netflix-kdrama-',
         rowPrefix: 'K-Dramas: ',
+        // Every title on the K-Dramas page is a series. Same-name movies and
+        // low-rated duplicates lose to the TV match the page actually means.
+        preferType: 'tv',
+    },
+};
+
+/**
+ * netflixId -> nxsha 'tv/<id>' / 'movie/<id>' pins for titles whose name alone
+ * keeps matching the wrong show (verified page by page on nxsha search).
+ */
+const NXSHA_PINS = {
+    kdrama: {
+        // Same-name duplicates out-rate-sort their way in otherwise:
+        '81707950': 'tv/215720', // Queen of Tears (2024) — a 2025 low-rated namesake won
+        '81716080': 'tv/218539', // My Demon (2023) — a 2024 movie namesake won
     },
 };
 const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));
@@ -168,6 +183,8 @@ export function parseSearchResults(html) {
             .map((t) => decode(t))
             .filter(Boolean);
         const yearHit = texts.map((t) => /\b(19|20)\d{2}\b/.exec(t)).find(Boolean);
+        // The TMDB vote average sits right under the poster ("8.4", or "NR").
+        const ratingHit = texts.find((t) => /^\d(\.\d)?$/.test(t)) || '';
         const name =
             texts.find(
                 (t) =>
@@ -177,7 +194,7 @@ export function parseSearchResults(html) {
             ) || '';
         const img = /<img\b[^>]*src="([^"]+)"/i.exec(body);
         const poster = img && /image\.tmdb\.org\/t\/p\/w500\//.test(img[1]) ? decode(img[1]) : '';
-        out.push({ type, id, name, year: yearHit ? yearHit[0] : '', poster });
+        out.push({ type, id, name, year: yearHit ? yearHit[0] : '', poster, rating: ratingHit });
     }
     return out;
 }
@@ -205,26 +222,33 @@ export function headOf(name) {
 /**
  * Pick a result with a poster. An exact name match wins; otherwise the result
  * whose name before its subtitle matches (the film "Devara: Part 1" for "Devara").
- * Newest year first among equals.
+ * Among equals the newest year wins — unless preferType is set (the K-Dramas
+ * page is all series), and then results of that type come first and the higher
+ * TMDB rating breaks what is left: real hits out-rate same-name duplicates
+ * ("Queen of Tears" 8.4/2024 beats a 4.0/2025 namesake).
  */
-export function pickMatch(results, wantedName) {
+export function pickMatch(results, wantedName, { preferType } = {}) {
     const want = norm(wantedName);
     const withPoster = results.filter((r) => r.poster);
     const byYear = (a, b) => Number(b.year || 0) - Number(a.year || 0);
-    const exact = withPoster.filter((r) => norm(r.name) === want).sort(byYear);
+    const byRating = (a, b) => Number(b.rating || 0) - Number(a.rating || 0);
+    const byType = (a, b) => Number(b.type === preferType) - Number(a.type === preferType);
+    const exact = withPoster
+        .filter((r) => norm(r.name) === want)
+        .sort(preferType ? (a, b) => byType(a, b) || byRating(a, b) || byYear(a, b) : byYear);
     if (exact.length) return exact[0];
     // A sequel number is part of the name ("Dhoom: 2" is not "Dhoom"), so it never head-matches.
     const isNumberedSequel = (name) => /^[:(\-–]?\s*\d/.test(decode(name).slice(headOf(name).length).trim());
     const head = withPoster
         .filter((r) => norm(headOf(r.name)) === want && !isNumberedSequel(r.name))
-        .sort(byYear);
+        .sort(preferType ? (a, b) => byType(a, b) || byYear(a, b) : byYear);
     return head[0] || null;
 }
 
 async function findOnNxsha(title) {
     for (const name of searchNames(title)) {
         const html = await get(`${BASE}/search?q=${encodeURIComponent(name)}`);
-        const hit = pickMatch(parseSearchResults(html || ''), name);
+        const hit = pickMatch(parseSearchResults(html || ''), name, { preferType: PRESET.preferType });
         if (hit) return { hit, searched: name };
         await sleep(250);
     }
@@ -233,13 +257,18 @@ async function findOnNxsha(title) {
 
 /** Full item for one Netflix title, or null when nxsha has no usable match. */
 async function buildItem({ title, netflixId }) {
-    const found = await findOnNxsha(title);
+    // A pinned id wins outright: the name alone kept matching another show.
+    const pin = (NXSHA_PINS[PRESET_NAME] || {})[netflixId];
+    const found = pin
+        ? { hit: { type: pin.split('/')[0], id: pin.split('/')[1], name: title, year: '', poster: '', rating: '' } }
+        : await findOnNxsha(title);
     if (!found) return { status: 'no-nxsha-match' };
     const { hit } = found;
     const page = await get(`${BASE}/${hit.type}/${hit.id}`);
     if (!page) return { status: 'page-missing' };
     const info = parseMoviePage(page);
     const mediaType = hit.type;
+    if (pin) hit.name = info.title || title;
     const item = {
         id: `${PRESET.idPrefix}${netflixId}`,
         title: info.title || hit.name || title,
