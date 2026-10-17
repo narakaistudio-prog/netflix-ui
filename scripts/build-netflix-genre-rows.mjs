@@ -57,6 +57,13 @@ const PRESETS = {
         idPrefix: 'netflix-anime-movies-',
         rowPrefix: 'Anime Movies: ',
     },
+    // Netflix "K-Dramas" page (genre 2638104), shown in its own K-Dramas section.
+    kdrama: {
+        source: 'data/netflix-genre-2638104.txt',
+        collection: 'netflix-genre-2638104',
+        idPrefix: 'netflix-kdrama-',
+        rowPrefix: 'K-Dramas: ',
+    },
 };
 const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));
 const PRESET_NAME = PRESET_ARG ? PRESET_ARG.slice('--preset='.length) : 'genre';

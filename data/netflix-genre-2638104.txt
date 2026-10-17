@@ -1,0 +1,489 @@
+# Source: https://www.netflix.com/in/browse/genre/2638104 (K-Dramas), captured 2026-10-16.
+# Format: "## Row title" starts a row; "Title | Netflix title id" is one movie or show.
+# Rows and titles are copied in page order. The same title can appear in several rows.
+# nxsha supplies every detail and image; see scripts/build-netflix-genre-rows.mjs (--preset=kdrama).
+# Titles nxsha lists under another name are aliased in NXSHA_ALIASES (build-netflix-genre-rows.mjs).
+
+## International TV Dramas
+Doctor X: Mafia in White | 82682379
+Squid Game | 81040344
+Bloodhounds | 81444051
+Teach You a Lesson | 81947300
+Bon Appétit, Your Majesty | 82024852
+Crash Landing on You | 81159258
+100 Days of Deception | 82682433
+Four Hands, Two Sonatas | 82682404
+Can This Love Be Translated? | 81697769
+Extraordinary Attorney Woo | 81518991
+Beyond the Bar | 82065691
+All of Us Are Dead | 81237994
+When Life Gives You Tangerines | 81681535
+Boys Over Flowers | 70213130
+Inheritors | 81033650
+Nevertheless, | 81435649
+Doctor Slump | 81697985
+Doctors | 80998959
+Sweet Home | 81061734
+The Glory | 81519223
+Love Alarm | 80168068
+Weak Hero | 81742615
+The King's Affection | 81430282
+Eve | 81754357
+The Apartment Job | 82755552
+My ID is Gangnam Beauty | 81030026
+Start-Up | 81290293
+Mr. Queen | 81422314
+Vincenzo | 81365087
+It's Okay to Not Be Okay | 81243992
+Something in the Rain | 80990935
+Encounter | 81482494
+The East Palace | 81778702
+A Time Called You | 81569769
+Alchemy of Souls | 81517188
+Tastefully Yours | 81971172
+The King: Eternal Monarch | 81260283
+As You Stood By | 81900129
+The Scandal | 81911390
+Run On | 81318872
+
+## New on Netflix
+Take Charge of My Heart | 82016402
+Doctor X: Mafia in White | 82682379
+100 Days of Deception | 82682433
+Four Hands, Two Sonatas | 82682404
+Our Sticky Love | 82048302
+The Scandal | 81911390
+Mousetrap | 81991749
+The Auditors | 81914864
+
+## Award-Winning TV Shows
+When Life Gives You Tangerines | 81681535
+Extraordinary Attorney Woo | 81518991
+The Glory | 81519223
+It's Okay to Not Be Okay | 81243992
+The King's Affection | 81430282
+Crash Course in Romance | 81649877
+Twenty Five Twenty One | 81517168
+Our Unwritten Seoul | 82024804
+Under the Queen's Umbrella | 81610893
+The Uncanny Counter | 81323551
+Juvenile Justice | 81312802
+D.P. | 81280917
+The Trauma Code: Heroes on Call | 81677629
+Reply 1988 | 80188351
+Itaewon Class | 81193309
+I Hear Your Voice | 80039909
+Dr. Romantic | 80998941
+Stranger | 80187302
+My Liberation Notes | 81568411
+Mask Girl | 81516491
+Hot Stove League | 81343880
+Mr. Sunshine | 80991107
+Hellbound | 81256675
+Little Women | 81610895
+My Mister | 81267691
+The Dream Life of Mr. Kim | 82068378
+My Love from the Star | 80025266
+Prison Playbook | 80214406
+The Art of Sarah | 81904993
+You and Everything Else | 81687253
+Daily Dose of Sunshine | 81572595
+Secret Garden | 70215459
+When the Camellia Blooms | 81144925
+Narco-Saints | 81343748
+The Penthouse: War in Life | 81552562
+That Winter, the Wind Blows | 70296735
+Extracurricular | 80990668
+Beyond Evil | 81437733
+Signal | 80987077
+Misaeng: Incomplete Life | 80165295
+
+## Your Next Watch
+King the Land | 81671440
+True Beauty | 81410834
+Business Proposal | 81509440
+Can This Love Be Translated? | 81697769
+My Royal Nemesis | 82682323
+Agent Kim Reactivated | 82682338
+All of Us Are Dead | 81237994
+Hometown Cha-Cha-Cha | 81473182
+Boys Over Flowers | 70213130
+My Demon | 81716080
+Four Hands, Two Sonatas | 82682404
+Queen of Tears | 81707950
+Love Next Door | 81739044
+Sold Out on You | 82175564
+Beyond the Bar | 82065691
+The Glory | 81519223
+Dynamite Kiss | 82037587
+Doctors | 80998959
+Inheritors | 81033650
+Spooky in Love | 82682401
+Weak Hero | 81742615
+Nevertheless, | 81435649
+Doctor Slump | 81697985
+Sweet Home | 81061734
+Mr. Queen | 81422314
+The King's Affection | 81430282
+Love Alarm | 80168068
+My ID is Gangnam Beauty | 81030026
+Strong Girl Nam-soon | 81697981
+Our Beloved Summer | 81486372
+The Uncanny Counter | 81323551
+Alchemy of Souls | 81517188
+Encounter | 81482494
+100 Days of Deception | 82682433
+It's Okay to Not Be Okay | 81243992
+Twenty Five Twenty One | 81517168
+See You in My 19th Life | 81671426
+Welcome to Samdal-ri | 81697983
+Vincenzo | 81365087
+Boyfriend on Demand | 82007623
+
+## Crime TV Dramas
+Strong Girl Nam-soon | 81697981
+When the Phone Rings | 81912961
+The Apartment Job | 82755552
+As You Stood By | 81900129
+Juvenile Justice | 81312802
+Behind Your Touch | 81669777
+Undercover Miss Hong | 82632108
+Mercy For None | 81702777
+Idol I | 82634530
+I Hear Your Voice | 80039909
+The Price of Confession | 81757813
+Stranger | 80187302
+The Girl Who Sees Scents | 80998965
+Trigger | 81696655
+The Good Detective | 81323914
+Suspicious Partner | 80998940
+Delightfully Deceitful | 82006226
+The Art of Sarah | 81904993
+Extracurricular | 80990668
+Narco-Saints | 81343748
+Signal | 80987077
+A Model Family | 81349413
+Queen Mantis | 82083709
+Karma | 81703410
+Law School | 81413647
+Possessed | 81087764
+The Lies Within | 81191500
+
+## Fantasy TV Shows
+Alchemy of Souls | 81517188
+The Uncanny Counter | 81323551
+Doom at Your Service | 81488912
+The King: Eternal Monarch | 81260283
+Tale of the Nine Tailed | 81357286
+Genie, Make a Wish | 81748484
+Ghost Doctor | 81587524
+No Tail to Tell | 82076348
+A Korean Odyssey | 80214405
+Hotel Del Luna | 81205849
+Tomorrow | 81503460
+The Great Doctor | 70278883
+Abyss | 81087762
+Arthdal Chronicles | 81028895
+Bulgasal: Immortal Souls | 81483462
+Possessed | 81087764
+Missing: The Other Side | 81556894
+Mystic Pop-up Bar | 81264882
+My Girlfriend Is a Gumiho | 70215462
+The School Nurse Files | 80209129
+
+## TV Dramas
+All of Us Are Dead | 81237994
+Boys Over Flowers | 70213130
+Beyond the Bar | 82065691
+Nevertheless, | 81435649
+Inheritors | 81033650
+Doctors | 80998959
+The Glory | 81519223
+Doctor Slump | 81697985
+Weak Hero | 81742615
+Sweet Home | 81061734
+Love Alarm | 80168068
+The King's Affection | 81430282
+Eve | 81754357
+My ID is Gangnam Beauty | 81030026
+The East Palace | 81778702
+Encounter | 81482494
+Mr. Queen | 81422314
+It's Okay to Not Be Okay | 81243992
+Alchemy of Souls | 81517188
+A Time Called You | 81569769
+Start-Up | 81290293
+The King: Eternal Monarch | 81260283
+The Apartment Job | 82755552
+Tastefully Yours | 81971172
+The Uncanny Counter | 81323551
+Something in the Rain | 80990935
+Vincenzo | 81365087
+Strong Girl Nam-soon | 81697981
+The Scandal | 81911390
+As You Stood By | 81900129
+Run On | 81318872
+See You in My 19th Life | 81671426
+Castaway Diva | 81701128
+Phantom Lawyer | 82699800
+Cinderella and the Four Knights | 80188605
+Twenty Five Twenty One | 81517168
+When the Phone Rings | 81912961
+Juvenile Justice | 81312802
+Reply 1988 | 80188351
+The Potato Lab | 81989515
+
+## Get In on the Action
+Weak Hero | 81742615
+The WONDERfools | 81948067
+My Name | 81011211
+Mercy For None | 81702777
+I Hear Your Voice | 80039909
+Money Heist: Korea - Joint Economic Area | 80997343
+Cashero | 81028446
+The Girl Who Sees Scents | 80998965
+Trigger | 81696655
+Delightfully Deceitful | 82006226
+Sisyphus | 81397558
+Narco-Saints | 81343748
+Vagabond | 81095101
+Military Prosecutor Doberman | 81618666
+Black Knight | 81195027
+My Country: The New Age | 81161487
+Song of the Bandits | 81484051
+Man to Man | 80176866
+Arthdal Chronicles | 81028895
+The Fiery Priest | 81225012
+A Model Family | 81349413
+Signal | 80987077
+
+## Critically Acclaimed TV Shows
+Queen of Tears | 81707950
+Sweet Home | 81061734
+Our Unwritten Seoul | 82024804
+Doctor Cha | 81682438
+D.P. | 81280917
+Gyeongseong Creature | 81618079
+Kingdom | 80180171
+The Price of Confession | 81757813
+Hellbound | 81256675
+A Killer Paradox | 81607354
+Mask Girl | 81516491
+Parasyte: The Grey | 81194158
+Little Women | 81610895
+Daily Dose of Sunshine | 81572595
+The Art of Sarah | 81904993
+The Trunk | 81582447
+Karma | 81703410
+The Bequeathed | 81608592
+Aema | 81671774
+
+## Period Pieces
+The East Palace | 81778702
+Under the Queen's Umbrella | 81610893
+Mr. Queen | 81422314
+100 Days My Prince | 81267722
+Dear Hongrang | 81708925
+Captivating the King | 81742988
+Kingdom | 80180171
+Rookie Historian Goo Hae-Ryung | 81116487
+Mr. Sunshine | 80991107
+Flower Crew: Joseon Marriage Agency | 81211303
+Kingdom: Ashin of the North | 81312457
+My Country: The New Age | 81161487
+The Great Doctor | 70278883
+Arthdal Chronicles | 81028895
+My Sassy Girl | 81033645
+
+## Supernatural TV Shows
+Spooky in Love | 82682401
+Destined with You | 81669779
+If Wishes Could Kill | 81975196
+Phantom Lawyer | 82699800
+Hotel Del Luna | 81205849
+Hi Bye, Mama! | 81243996
+Ghost Doctor | 81587524
+A Korean Odyssey | 80214405
+The Master's Sun | 80039906
+Parasyte: The Grey | 81194158
+Hellbound | 81256675
+Abyss | 81087762
+Bulgasal: Immortal Souls | 81483462
+Mystic Pop-up Bar | 81264882
+Missing: The Other Side | 81556894
+Possessed | 81087764
+The School Nurse Files | 80209129
+Goedam | 81307048
+
+## Young Adult Movies & Shows
+My ID is Gangnam Beauty | 81030026
+Love Alarm | 80168068
+A Love So Beautiful | 81354739
+Hierarchy | 81624364
+My First First Love | 81026700
+Extracurricular | 80990668
+Moment of Eighteen | 81211266
+The Winning Try | 82037349
+Racket Boys | 81443941
+Bitch and Rich | 81683734
+The Sound of Magic | 81016276
+
+## TV War & Politics
+Kingdom | 80180171
+Mr. Sunshine | 80991107
+Queenmaker | 81503026
+Designated Survivor: 60 Days | 81072109
+My Country: The New Age | 81161487
+Military Prosecutor Doberman | 81618666
+The Whirlwind | 81661902
+Trolley | 81636803
+The Lies Within | 81191500
+Chief of Staff | 81070963
+
+## Romantic TV Shows
+Sold Out on You | 82175564
+Love Next Door | 81739044
+Dynamite Kiss | 82037587
+Hometown Cha-Cha-Cha | 81473182
+My Demon | 81716080
+Doctor Slump | 81697985
+Inheritors | 81033650
+Boys Over Flowers | 70213130
+Nevertheless, | 81435649
+The King's Affection | 81430282
+Doctors | 80998959
+When the Phone Rings | 81912961
+See You in My 19th Life | 81671426
+Welcome to Samdal-ri | 81697983
+100 Days of Deception | 82682433
+Forecasting Love and Weather | 81572781
+Love Alarm | 80168068
+Mr. Queen | 81422314
+Something in the Rain | 80990935
+Twenty Five Twenty One | 81517168
+Start-Up | 81290293
+Alchemy of Souls | 81517188
+Boyfriend on Demand | 82007623
+My ID is Gangnam Beauty | 81030026
+Our Beloved Summer | 81486372
+It's Okay to Not Be Okay | 81243992
+Encounter | 81482494
+The King: Eternal Monarch | 81260283
+Tastefully Yours | 81971172
+Destined with You | 81669779
+Cinderella and the Four Knights | 80188605
+Run On | 81318872
+A Time Called You | 81569769
+Record of Youth | 81290301
+Genie, Make a Wish | 81748484
+A Love So Beautiful | 81354739
+Birth of a Beauty | 80999059
+Doom at Your Service | 81488912
+100 Days My Prince | 81267722
+Miss Night and Day | 81738994
+
+## International TV Shows
+Encounter | 81482494
+See You in My 19th Life | 81671426
+Twenty Five Twenty One | 81517168
+Welcome to Samdal-ri | 81697983
+Our Beloved Summer | 81486372
+Forecasting Love and Weather | 81572781
+Vincenzo | 81365087
+The WONDERfools | 81948067
+Boyfriend on Demand | 82007623
+When the Phone Rings | 81912961
+Destined with You | 81669779
+My Name | 81011211
+The East Palace | 81778702
+A Love So Beautiful | 81354739
+As You Stood By | 81900129
+The Apartment Job | 82755552
+Doom at Your Service | 81488912
+Hotel Del Luna | 81205849
+Reply 1988 | 80188351
+The Potato Lab | 81989515
+Juvenile Justice | 81312802
+The Scandal | 81911390
+Doctor Cha | 81682438
+Resident Playbook | 81739042
+Genie, Make a Wish | 81748484
+Miss Night and Day | 81738994
+Mercy For None | 81702777
+Kingdom | 80180171
+Hospital Playlist | 81239224
+The Trauma Code: Heroes on Call | 81677629
+If Wishes Could Kill | 81975196
+Mousetrap | 81991749
+Friendly Rivalry | 82036243
+Hi Bye, Mama! | 81243996
+The Secret Life of My Secretary | 81224991
+The King: Eternal Monarch | 81260283
+The Price of Confession | 81757813
+Something in the Rain | 80990935
+Tastefully Yours | 81971172
+No Tail to Tell | 82076348
+
+## Women Behind the Camera
+Eve | 81754357
+The Good Bad Mother | 81669775
+The Secret Life of My Secretary | 81224991
+Dr. Romantic | 80998941
+Idol I | 82634530
+You are Beautiful | 70215461
+Doctor John | 81343862
+The Privileged | 81999679
+Once Upon a Small Town | 81612967
+Moment of Eighteen | 81211266
+Secret Garden | 70215459
+The Penthouse: War in Life | 81552562
+Still Shining | 82665870
+Little Women | 81610895
+We Are All Trying Here | 82189639
+Our Blues | 81568842
+Green Mothers' Club | 81572801
+Queen Mantis | 82083709
+Glitch | 81340251
+Diary of a Prosecutor | 81296695
+
+## TV Comedies
+Vincenzo | 81365087
+Cinderella and the Four Knights | 80188605
+Boyfriend on Demand | 82007623
+Start-Up | 81290293
+Run On | 81318872
+Rooftop Prince | 70278876
+The Apartment Job | 82755552
+Behind Your Touch | 81669777
+A Love So Beautiful | 81354739
+Birth of a Beauty | 80999059
+Crash Course in Romance | 81649877
+Genie, Make a Wish | 81748484
+Miss Night and Day | 81738994
+The Secret Life of My Secretary | 81224991
+Reply 1988 | 80188351
+The Potato Lab | 81989515
+Mr. Plankton | 81506124
+Love to Hate You | 81463556
+Resident Playbook | 81739042
+Beautiful Gong Shim | 80998943
+Hospital Playlist | 81239224
+Clean With Passion For Now | 81030008
+The Good Bad Mother | 81669775
+Hotel Del Luna | 81205849
+No Tail to Tell | 82076348
+You are Beautiful | 70215461
+Hi Bye, Mama! | 81243996
+My Love from the Star | 80025266
+Undercover Miss Hong | 82632108
+Her Private Life | 81205812
+The Girl Who Sees Scents | 80998965
+Secret Garden | 70215459
+Romance in the House | 81738996
+Mad for Each Other | 81430301
+Café Minamdang | 81568217
+The 8 Show | 81719583
+Suspicious Partner | 80998940
+Romance Is a Bonus Book | 81045349
+The Master's Sun | 80039906
+Flower Crew: Joseon Marriage Agency | 81211303
