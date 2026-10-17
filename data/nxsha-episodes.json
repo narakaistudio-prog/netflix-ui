@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-16T08:54:02.984Z",
+    "generatedAt": "2026-10-17T04:23:32.254Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
@@ -30540,12 +30540,15 @@
           "season": 1,
           "episode": 51,
           "title": "Let Them Eat Cake",
-          "airDate": "2026-10-16"
+          "overview": "Maomao treats a sick girl, but food poisoning and malnutrition are not the true problems that need solving.",
+          "image": "https://image.tmdb.org/t/p/w780/l0hm2lRYXgrRQny1KC1jmVQMERf.jpg",
+          "airDate": "2026-10-16",
+          "runtime": 24
         },
         {
           "season": 1,
           "episode": 52,
-          "title": "Episode 52",
+          "title": "The Last Volume",
           "airDate": "2026-10-23"
         },
         {
@@ -40937,7 +40940,10 @@
           "season": 6,
           "episode": 5,
           "title": "The Terrorist from a Faraway Country",
-          "airDate": "2026-10-16"
+          "overview": "At a checkpoint, Oye — a man who knows Gyro's past — confronts the duo. His power to turn anything he touches into a bomb leaves them with nowhere to run.",
+          "image": "https://image.tmdb.org/t/p/w780/2c7ajDu8SXa4re1FfsCLA2IVZTq.jpg",
+          "airDate": "2026-10-16",
+          "runtime": 25
         },
         {
           "season": 6,

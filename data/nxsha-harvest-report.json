@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T08:54:02.984Z",
+  "generatedAt": "2026-10-17T04:23:32.254Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [
     "onepiece"
@@ -9,8 +9,8 @@
     "harvested": 51,
     "failed": [],
     "episodes": 4550,
-    "stills": 4502,
-    "overviews": 4500
+    "stills": 4504,
+    "overviews": 4502
   },
   "titles": [
     {
@@ -540,8 +540,8 @@
         "1": 60
       },
       "episodes": 60,
-      "stills": 50,
-      "overviews": 50,
+      "stills": 51,
+      "overviews": 51,
       "ok": true
     },
     {
@@ -704,8 +704,8 @@
         "6": 12
       },
       "episodes": 202,
-      "stills": 194,
-      "overviews": 194,
+      "stills": 195,
+      "overviews": 195,
       "ok": true
     },
     {
