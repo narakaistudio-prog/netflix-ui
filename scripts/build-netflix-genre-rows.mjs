@@ -78,6 +78,9 @@ const NXSHA_PINS = {
         // Same-name duplicates out-rate-sort their way in otherwise:
         '81707950': 'tv/215720', // Queen of Tears (2024) — a 2025 low-rated namesake won
         '81716080': 'tv/218539', // My Demon (2023) — a 2024 movie namesake won
+        '81754357': 'tv/138251', // Eve (2022) — a 2003 sitcom rates higher
+        '81087764': 'tv/86640', // Possessed (2019) — the 2009 series rates higher
+        '81033645': 'tv/71347', // My Sassy Girl (2017) — the 2008 series rates higher
     },
 };
 const PRESET_ARG = process.argv.find((a) => a.startsWith('--preset='));
@@ -108,6 +111,9 @@ const NXSHA_ALIASES = {
     'Jujutsu Kaisen 0: The Movie': 'Jujutsu Kaisen 0',
     // K-Dramas: the same show under nxsha's name (checked on nxsha search).
     'Hot Stove League': 'Stove League',
+    'Inheritors': 'The Heirs',
+    'The Privileged': 'High Society',
+    'You are Beautiful': "You're Beautiful",
     'The Penthouse: War in Life': 'The Penthouse',
     'Cinderella and the Four Knights': 'Cinderella and Four Knights',
     "The Master's Sun": "Master's Sun",

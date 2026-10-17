@@ -86,6 +86,13 @@ test('the kdrama preset prefers TV and pins the two stubborn shows to verified i
     expect(script).toContain("preferType: 'tv'");
     expect(script).toContain("'81707950': 'tv/215720'"); // Queen of Tears (2024)
     expect(script).toContain("'81716080': 'tv/218539'"); // My Demon (2023)
+    expect(script).toContain("'81754357': 'tv/138251'"); // Eve (2022)
+    expect(script).toContain("'81087764': 'tv/86640'"); // Possessed (2019)
+    expect(script).toContain("'81033645': 'tv/71347'"); // My Sassy Girl (2017)
+    // Netflix names nxsha lists differently:
+    expect(script).toContain("'Inheritors': 'The Heirs'");
+    expect(script).toContain("'The Privileged': 'High Society'");
+    expect(script).toContain("'You are Beautiful': \"You're Beautiful\"");
 });
 
 test('the K-Dramas screen paints black (no white gaps between rows)', () => {
