@@ -1,7 +1,4 @@
 # Titles from data/netflix-genre-2638104.txt that nxsha did not match (not shown in the app).
-Weak Hero Class 1 | - | no-nxsha-match
 Dong Yi | - | no-nxsha-match
 Queen Seondeok | - | no-nxsha-match
-Sisyphus: The Myth | - | no-nxsha-match
 Reply 1988 | - | no-nxsha-match
-Doctor Romantic | - | no-nxsha-match

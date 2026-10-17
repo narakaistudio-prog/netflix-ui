@@ -34046,6 +34046,31 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/dMQmCThNrnlNd4bfC8iIce76bpr.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-weak-hero-class-1",
+                    "title": "Weak Hero",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/hS9VVF5ffTVWNoC9B48QNsZFGy9.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "200709",
+                    "embed_provider": "nxsha",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2022",
+                    "description": "With the aid of unexpected friends, a gifted but introverted student confronts bullies and violent foes — unaware of how dangerous his world will become.",
+                    "cast": [
+                        "Park Ji-hoon",
+                        "Choi Hyun-wook",
+                        "Hong Kyung",
+                        "Ryeoun",
+                        "Choi Min-yeong",
+                        "Yoo Su-bin",
+                        "Cha Woo-min",
+                        "Bae Na-ra",
+                        "Lee Min-jae",
+                        "Lee Jun-young"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/cLTAda6fMRirkCY1xfO4pmcHVkk.jpg"
+                },
+                {
                     "id": "netflix-kdrama-the-bequeathed",
                     "title": "The Bequeathed",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/iExLDuclzOp06ro9929UTDQRDm1.jpg",
@@ -35151,6 +35176,31 @@
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/3hXXr61RZH3Ve0pejLWPvrJv9n.jpg"
                 },
                 {
+                    "id": "netflix-kdrama-weak-hero-class-1",
+                    "title": "Weak Hero",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/hS9VVF5ffTVWNoC9B48QNsZFGy9.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "200709",
+                    "embed_provider": "nxsha",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2022",
+                    "description": "With the aid of unexpected friends, a gifted but introverted student confronts bullies and violent foes — unaware of how dangerous his world will become.",
+                    "cast": [
+                        "Park Ji-hoon",
+                        "Choi Hyun-wook",
+                        "Hong Kyung",
+                        "Ryeoun",
+                        "Choi Min-yeong",
+                        "Yoo Su-bin",
+                        "Cha Woo-min",
+                        "Bae Na-ra",
+                        "Lee Min-jae",
+                        "Lee Jun-young"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/cLTAda6fMRirkCY1xfO4pmcHVkk.jpg"
+                },
+                {
                     "id": "netflix-kdrama-business-proposal",
                     "title": "Business Proposal",
                     "imageUrl": "https://image.tmdb.org/t/p/w500/cQoQUpeOqiQNc4Ft6IzsTDkAKLj.jpg",
@@ -36195,6 +36245,23 @@
                         "Hwang Shin-hye"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/AndNIZzaDAcLlk11KjZy2TZS07Y.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-sisyphus-the-myth",
+                    "title": "Sisyphus",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/5a2GBk6isgeYLgj1fRjxz4jPyFz.jpg",
+                    "type": "FILM",
+                    "mediaType": "movie",
+                    "tmdb_id": "1683903",
+                    "embed_provider": "nxsha",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2026",
+                    "description": "A man is trapped in a psychological time loop, forced to relive the same moment again and again. With every repetition, his grip on reality weakens, turning survival into a battle against his own mind.",
+                    "duration": "6m",
+                    "cast": [
+                        "Dhruv Rawat"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w500/5a2GBk6isgeYLgj1fRjxz4jPyFz.jpg"
                 },
                 {
                     "id": "netflix-kdrama-memories-of-the-alhambra",
@@ -37664,6 +37731,31 @@
                         "Kong Seong-ha"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/bhCUn6Z509qTV4eBJZtjtQ4ennL.jpg"
+                },
+                {
+                    "id": "netflix-kdrama-doctor-romantic",
+                    "title": "Dr. Romantic",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/9fbRJgZ2zDTnSUId1bOwsllHNr7.jpg",
+                    "type": "SERIES",
+                    "mediaType": "tv",
+                    "tmdb_id": "68398",
+                    "embed_provider": "nxsha",
+                    "catalogCollection": "netflix-genre-2638104",
+                    "year": "2016",
+                    "description": "An eccentric, triple board-certified virtuoso surgeon leaves a top job in Seoul and ends up at a provincial hospital, where he mentors young doctors.",
+                    "cast": [
+                        "Asia Premium Amazon Channel",
+                        "Han Suk-kyu",
+                        "Lee Sung-kyung",
+                        "Ahn Hyo-seop",
+                        "Jin Kyung",
+                        "Im Won-hee",
+                        "Byun Woo-min",
+                        "Kim Min-jae",
+                        "Lee Kyung-young",
+                        "Yoon Na-moo"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/cmk8d1e1GxrwTaau0Tj4zm1osm0.jpg"
                 },
                 {
                     "id": "netflix-kdrama-the-world-of-the-married",
