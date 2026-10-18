@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T04:29:57.023Z",
+  "generatedAt": "2026-10-18T06:55:32.644Z",
   "titles": [
     {
       "key": "aot",
@@ -4572,12 +4572,13 @@
         "xFrameOptions": "",
         "csp": ""
       },
-      "ok": true,
+      "ok": false,
       "seasonList": {
         "seasonNumbers": [],
         "epPairs": [],
         "totalEpisodes": null
-      }
+      },
+      "hint": "expected \"The Secret World of Arrietty\""
     },
     {
       "key": "pompoko",
@@ -4662,12 +4663,13 @@
         "xFrameOptions": "",
         "csp": ""
       },
-      "ok": true,
+      "ok": false,
       "seasonList": {
         "seasonNumbers": [],
         "epPairs": [],
         "totalEpisodes": null
-      }
+      },
+      "hint": "expected \"Nausicaä of the Valley of the Wind\""
     },
     {
       "key": "ponyo",
@@ -4693,7 +4695,7 @@
       "id": "16859",
       "url": "https://nxsha.space/embed/movie/16859?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
       "status": 200,
-      "embedTitle": "Watch Kiki's Delivery Service",
+      "embedTitle": "Watch Kiki&#x27;s Delivery Service",
       "framing": {
         "xFrameOptions": "",
         "csp": ""
@@ -4986,7 +4988,7 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 87953,
+      "bytes": 87492,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
         "https://web.nxsha.app/movie/1441228",
@@ -5053,9 +5055,12 @@
     }
   ],
   "summary": {
-    "titles": 64,
-    "ok": 64,
-    "bad": [],
+    "titles": 83,
+    "ok": 81,
+    "bad": [
+      "arrietty",
+      "nausicaa"
+    ],
     "saoMovieMatch": [
       "413594"
     ]

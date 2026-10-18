@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-18T04:29:56.951Z",
+    "generatedAt": "2026-10-18T06:55:32.584Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
@@ -21995,7 +21995,7 @@
           "episode": 82,
           "title": "Natsuki Subaru",
           "overview": "With his mental state already in tatters, Subaru finds a book in the archive with his name on it.",
-          "image": "https://image.tmdb.org/t/p/w780/wurgMlhqOlCbOWnff4vxRk4L2gF.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/h8ifWfX5xrjZtb0uC1LzrK1m0AD.jpg",
           "airDate": "2026-09-09",
           "runtime": 27
         },
