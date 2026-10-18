@@ -88,13 +88,128 @@ async function fetchBuffer(target, { referer = '', timeoutMs = FETCH_TIMEOUT_MS,
   });
 }
 
+/* ---------- nxsha direct-stream resolve ----------
+ * GET /api/resolve?type=movie|tv&tmdb=&imdb=&s=&e= -> { ok, source, alternates }
+ * Same protocol as api/resolve.js (Vercel copy) — this duplicate is kept
+ * self-contained because Render deploys the server/ directory alone.
+ */
+const NXSHA_WEB_BASE = 'https://web.nxsha.app';
+const NXSHA_PASSPHRASE = 'S8x!Jk4ZP1uG8$my';
+
+function nxshaSeal(payload) {
+  const salt = require('node:crypto').randomBytes(8);
+  const { key, iv } = nxshaEvpBytesToKey(NXSHA_PASSPHRASE, salt);
+  const cipher = require('node:crypto').createCipheriv('aes-256-cbc', key, iv);
+  const body = Buffer.concat([cipher.update(Buffer.from(JSON.stringify(payload), 'utf8')), cipher.final()]);
+  return Buffer.concat([Buffer.from('Salted__', 'utf8'), salt, body])
+    .toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function nxshaEvpBytesToKey(passphrase, salt) {
+  const blocks = []; let prev = Buffer.alloc(0); let total = 0;
+  while (total < 48) {
+    prev = require('node:crypto').createHash('md5').update(Buffer.concat([prev, Buffer.from(passphrase, 'utf8'), salt])).digest();
+    blocks.push(prev); total += prev.length;
+  }
+  const all = Buffer.concat(blocks);
+  return { key: all.subarray(0, 32), iv: all.subarray(32, 48) };
+}
+function nxshaOpen(b64url) {
+  if (typeof b64url !== 'string' || !b64url) return null;
+  let text = b64url.replace(/-/g, '+').replace(/_/g, '/');
+  while (text.length % 4) text += '=';
+  let raw; try { raw = Buffer.from(text, 'base64'); } catch (e) { return null; }
+  if (raw.length < 24 || raw.subarray(0, 8).toString('utf8') !== 'Salted__') return null;
+  const { key, iv } = nxshaEvpBytesToKey(NXSHA_PASSPHRASE, raw.subarray(8, 16));
+  try {
+    const d = require('node:crypto').createDecipheriv('aes-256-cbc', key, iv);
+    return JSON.parse(Buffer.concat([d.update(raw.subarray(16)), d.final()]).toString('utf8'));
+  } catch (e) { return null; }
+}
+
+async function nxshaApiGet(path, payload, steps, label) {
+  const started = Date.now();
+  const target = checkTarget(NXSHA_WEB_BASE + path + '?q=' + encodeURIComponent(nxshaSeal(payload)));
+  const headers = { 'User-Agent': UA, Accept: 'application/json, */*', Referer: NXSHA_WEB_BASE + '/', Origin: NXSHA_WEB_BASE };
+  const { res: upstream } = await doRequest(target, { headers, timeoutMs: 6000 });
+  const st = upstream.statusCode || 0;
+  if (st < 200 || st >= 300) { upstream.resume(); throw httpErr(502, 'upstream-http-' + st); }
+  const chunks = [];
+  await new Promise((resolve, reject) => {
+    upstream.on('data', (c) => chunks.push(c));
+    upstream.on('end', resolve);
+    upstream.on('error', reject);
+  });
+  let body; try { body = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch (e) { throw httpErr(502, 'upstream-not-json'); }
+  const data = nxshaOpen(body && body._hash);
+  if (!data) throw httpErr(502, 'undecryptable');
+  steps.push({ step: label, ms: Date.now() - started });
+  return data;
+}
+
+const nxshaNameOf = (server) => String((server && (server.name || server.scraper || server.id)) || '');
+
+async function handleNxshaResolve(req, res, query) {
+  const type = query.get('type') === 'tv' ? 'tv' : 'movie';
+  const tmdbId = String(query.get('tmdb') || query.get('tmdbId') || '');
+  const imdbId = String(query.get('imdb') || '');
+  const season = String(Math.max(1, parseInt(query.get('s') || '1', 10) || 1));
+  const episode = String(Math.max(1, parseInt(query.get('e') || '1', 10) || 1));
+  const debug = query.get('debug') === '1';
+  if (!tmdbId && !imdbId) { sendJson(res, 400, { ok: false, error: 'missing-id' }, req); return; }
+  const steps = [];
+  const deadline = Date.now() + 14000;
+  try {
+    const serversData = await nxshaApiGet('/api/servers', { tmdbId, type, imdb_id: imdbId, season, episode, method: 'stream' }, steps, 'servers');
+    const servers = Array.isArray(serversData && serversData.servers) ? serversData.servers : [];
+    if (debug) steps.push({ step: 'servers-list', count: servers.length, names: servers.slice(0, 10).map(nxshaNameOf) });
+    const ordered = [...servers].sort((a, b) => Number(/hindi/i.test(nxshaNameOf(b))) - Number(/hindi/i.test(nxshaNameOf(a))));
+    const alternates = [];
+    let chosen = null;
+    for (const server of ordered.slice(0, 4)) {
+      if (Date.now() > deadline) break;
+      const provider = String((server && (server.scraper || server.id)) || '').trim();
+      if (!provider) continue;
+      let sourcesData;
+      try {
+        sourcesData = await nxshaApiGet('/api/sources', { provider, tmdbId, imdb_id: imdbId, type, season, episode, method: 'stream' }, steps, 'sources:' + provider);
+      } catch (e) {
+        if (debug) steps.push({ step: 'sources', provider, error: String((e && e.message) || e).slice(0, 80) });
+        continue;
+      }
+      const list = Array.isArray(sourcesData && sourcesData.sources) ? sourcesData.sources : [];
+      for (const item of list) {
+        if (!item || typeof item !== 'object') continue;
+        const url = String(item.url || '');
+        const kind = String(item.type || '').toLowerCase();
+        if (!url || item.isEmbed) continue;
+        if (kind !== 'm3u8' && kind !== 'mp4') continue;
+        const headers = item.headers && typeof item.headers === 'object' ? item.headers : {};
+        alternates.push({
+          name: String(server.name || provider),
+          kind: kind === 'm3u8' ? 'm3u8' : 'mp4',
+          url,
+          referer: String(headers.Referer || headers.referer || '') || undefined,
+          quality: String(item.quality || item.label || '') || undefined,
+        });
+      }
+      if (debug) steps.push({ step: 'sources-list', provider, direct: alternates.length });
+      const first = alternates.find((s) => s.kind === 'm3u8') || alternates[0];
+      if (first) { chosen = first; break; }
+    }
+    if (chosen) { sendJson(res, 200, { ok: true, source: chosen, alternates, ...(debug ? { steps } : {}) }, req); return; }
+    sendJson(res, 200, { ok: false, error: 'no-stream', ...(debug ? { steps } : {}) }, req);
+  } catch (e) {
+    sendJson(res, 200, { ok: false, error: String((e && e.message) || 'resolve-failed').slice(0, 120), ...(debug ? { steps } : {}) }, req);
+  }
+}
+
 /* ---------- nxsha API passthrough ----------
  * GET /api/nxsha-api?p=/api/servers|/api/sources&q=<encrypted query>
  * Forwards the app's encrypted nxsha API call with the Referer + UA the API
  * expects (browsers cannot send a Referer for a cross-origin fetch). The host
  * and the path are hardcoded — this endpoint is not a general proxy.
  */
-const NXSHA_WEB_BASE = 'https://web.nxsha.app';
+const NXSHA_PASSTHROUGH_BASE = 'https://web.nxsha.app';
 const NXSHA_API_PATHS = new Set(['/api/servers', '/api/sources']);
 
 async function handleNxshaApi(req, res, query) {
@@ -103,13 +218,13 @@ async function handleNxshaApi(req, res, query) {
   if (!NXSHA_API_PATHS.has(p)) { sendJson(res, 400, { ok: false, error: 'bad-path' }, req); return; }
   if (!q || q.length > 4096) { sendJson(res, 400, { ok: false, error: 'bad-q' }, req); return; }
   let u;
-  try { u = checkTarget(NXSHA_WEB_BASE + p + '?q=' + encodeURIComponent(q)); } catch (e) { sendErr(res, req, e); return; }
+  try { u = checkTarget(NXSHA_PASSTHROUGH_BASE + p + '?q=' + encodeURIComponent(q)); } catch (e) { sendErr(res, req, e); return; }
   const { res: upstream } = await doRequest(u, {
     headers: {
       'User-Agent': UA,
       Accept: 'application/json, */*',
-      Referer: NXSHA_WEB_BASE + '/',
-      Origin: NXSHA_WEB_BASE,
+      Referer: NXSHA_PASSTHROUGH_BASE + '/',
+      Origin: NXSHA_PASSTHROUGH_BASE,
     },
     timeoutMs: FETCH_TIMEOUT_MS,
   });
@@ -288,6 +403,11 @@ function createServer() {
       if (full.pathname === '/api/stream') {
         if (!rateOk(ip, 'stream', 600, 60000)) { sendJson(res, 429, { ok: false, error: 'rate-limited' }, req); return; }
         handleStream(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
+        return;
+      }
+      if (full.pathname === '/api/resolve') {
+        if (!rateOk(ip, 'nxsha', 60, 60000)) { sendJson(res, 429, { ok: false, error: 'rate-limited' }, req); return; }
+        handleNxshaResolve(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
         return;
       }
       if (full.pathname === '/api/nxsha-api') {

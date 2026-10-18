@@ -446,8 +446,7 @@ export default function MovieScreen() {
                 imdbId: movie.imdb_id,
                 season: mediaType === 'tv' ? playSeason : undefined,
                 episode: mediaType === 'tv' ? playEpisode : undefined,
-                strictHindi: true,
-                proxyBase: STREAM_PROXY,
+                    proxyBase: STREAM_PROXY,
             })
                 .then((resolved) => setDirectStream(resolved))
                 .catch(() => setDirectStream(null))

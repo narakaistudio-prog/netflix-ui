@@ -110,7 +110,6 @@ export function MovieDetailModal({
             imdbId: movie.imdb_id,
             season: ep.season,
             episode: ep.episode,
-            strictHindi: true,
             proxyBase: STREAM_PROXY,
         })
             .then((resolved) => setDirectStream(resolved))
