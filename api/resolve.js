@@ -15,10 +15,9 @@
  * hardcoded — this is not a general proxy.
  */
 
-const crypto = require('./nxsha-crypto.cjs');
 const { nxshaApiGet } = require('./nxsha-fetch.cjs');
 
-const TOTAL_BUDGET_MS = 14000;
+const TOTAL_BUDGET_MS = 20000;
 const MAX_SERVERS = 4;
 
 const RATE = new Map();
@@ -37,9 +36,10 @@ function rateOk(ip) {
 const nameOf = (server) => String((server && (server.name || server.scraper || server.id)) || '');
 const isHindi = (server) => /hindi/i.test(nameOf(server));
 
-// Seal the payload here; the shared ladder module handles profiles + retries.
+// The shared ladder module seals (adding _req_ts/_req_salt) and handles
+// profiles + retries; we just pass the raw payload through.
 const apiGet = (path, payload, steps, label, deadline) =>
-  nxshaApiGet(path, crypto.seal(payload), steps, label, deadline);
+  nxshaApiGet(path, payload, steps, label, deadline);
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');

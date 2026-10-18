@@ -134,25 +134,24 @@ function nxshaOpen(b64url) {
 function nxshaChromeHeaders() {
   return {
     'User-Agent': UA,
-    Accept: 'application/json, */*',
-    'Accept-Language': 'en-US,en;q=0.9,hi;q=0.8',
+    Accept: '*/*',
     Referer: NXSHA_WEB_BASE + '/',
-    'sec-ch-ua': '"Chromium";v="141", "Google Chrome";v="141"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
   };
 }
 const NXSHA_PROFILES = [
-  { id: 'chrome', timeoutMs: 4000, wrap: (t) => t, headers: nxshaChromeHeaders },
+  { id: 'chrome125', timeoutMs: 4000, wrap: (t) => t, headers: nxshaChromeHeaders },
   { id: 'plain', timeoutMs: 4000, wrap: (t) => t, headers: () => ({ 'User-Agent': 'Mozilla/5.0 (compatible; NxshaClient/1.0; +stream-resolve)', Accept: 'application/json, */*' }) },
   { id: 'minimal', timeoutMs: 4000, wrap: (t) => t, headers: () => ({ Accept: 'application/json, */*' }) },
-  { id: 'allorigins', timeoutMs: 6000, wrap: (t) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
-  { id: 'codetabs', timeoutMs: 6000, wrap: (t) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
+  { id: 'allorigins', timeoutMs: 7000, wrap: (t) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
+  { id: 'corsproxy', timeoutMs: 7000, wrap: (t) => 'https://corsproxy.io/?url=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
+  { id: 'codetabs', timeoutMs: 7000, wrap: (t) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
 ];
 let nxshaWinnerProfile = null;
+
+function nxshaPreview(text) {
+  const clean = String(text || '').replace(/\s+/g, ' ').trim();
+  return clean ? clean.slice(0, 140) : undefined;
+}
 
 async function nxshaLadderJson(target, headers, timeoutMs, redirects = 0) {
   const u = new URL(target);
@@ -163,19 +162,28 @@ async function nxshaLadderJson(target, headers, timeoutMs, redirects = 0) {
     if (redirects >= 3) throw new Error('too-many-redirects');
     return nxshaLadderJson(new URL(upstream.headers.location, u).href, headers, timeoutMs, redirects + 1);
   }
-  if (st < 200 || st >= 300) { upstream.resume(); throw new Error('http-' + st); }
   const chunks = [];
   await new Promise((resolve, reject) => {
     upstream.on('data', (c) => chunks.push(c));
     upstream.on('end', resolve);
     upstream.on('error', reject);
   });
-  let body; try { body = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch (e) { throw new Error('not-json'); }
-  return body;
+  const text = Buffer.concat(chunks).toString('utf8');
+  if (st < 200 || st >= 300) {
+    const e = new Error('http-' + st);
+    e.preview = nxshaPreview(text);
+    throw e;
+  }
+  let body; try { body = JSON.parse(text); } catch (e) {
+    const err = new Error('not-json');
+    err.preview = nxshaPreview(text);
+    throw err;
+  }
+  return { body, text };
 }
 
 async function nxshaApiGet(path, payload, steps, label, deadline) {
-  const q = encodeURIComponent(nxshaSeal(payload));
+  const q = encodeURIComponent(nxshaSeal({ ...payload, _req_ts: Date.now(), _req_salt: Math.random().toString(36).slice(2, 12) }));
   const target = NXSHA_WEB_BASE + path + '?q=' + q;
   const profiles = nxshaWinnerProfile
     ? [nxshaWinnerProfile, ...NXSHA_PROFILES.filter((p) => p !== nxshaWinnerProfile)]
@@ -185,15 +193,21 @@ async function nxshaApiGet(path, payload, steps, label, deadline) {
     if (deadline && Date.now() > deadline - 3000) { lastErr = 'budget-exhausted'; break; }
     const started = Date.now();
     try {
-      const body = await nxshaLadderJson(profile.wrap(target), profile.headers(), profile.timeoutMs);
-      const data = nxshaOpen(body && body._hash);
-      if (!data) throw new Error('undecryptable');
+      const { body, text } = await nxshaLadderJson(profile.wrap(target), profile.headers(), profile.timeoutMs);
+      const data = nxshaOpen(body && typeof body === 'object' ? body._hash : undefined);
+      if (!data) {
+        const err = new Error('undecryptable');
+        err.preview = nxshaPreview(text.slice(0, 400));
+        throw err;
+      }
       nxshaWinnerProfile = profile;
       steps.push({ step: label, profile: profile.id, ms: Date.now() - started });
       return data;
     } catch (e) {
       lastErr = String((e && e.message) || e).slice(0, 80);
-      steps.push({ step: label + '-attempt', profile: profile.id, error: lastErr, ms: Date.now() - started });
+      const step = { step: label + '-attempt', profile: profile.id, error: lastErr, ms: Date.now() - started };
+      if (e && e.preview) step.preview = e.preview;
+      steps.push(step);
     }
   }
   throw httpErr(502, 'upstream-' + lastErr);
@@ -210,7 +224,7 @@ async function handleNxshaResolve(req, res, query) {
   const debug = query.get('debug') === '1';
   if (!tmdbId && !imdbId) { sendJson(res, 400, { ok: false, error: 'missing-id' }, req); return; }
   const steps = [];
-  const deadline = Date.now() + 14000;
+  const deadline = Date.now() + 20000;
   try {
     const serversData = await nxshaApiGet('/api/servers', { tmdbId, type, imdb_id: imdbId, season, episode, method: 'stream' }, steps, 'servers', deadline);
     const servers = Array.isArray(serversData && serversData.servers) ? serversData.servers : [];

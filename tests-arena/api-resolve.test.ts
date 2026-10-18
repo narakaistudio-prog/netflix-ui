@@ -64,10 +64,10 @@ function mockUpstream(map: Record<string, any>) {
     return jest.fn(async (url: string) => {
         for (const [needle, body] of Object.entries(map)) {
             if (url.includes(needle)) {
-                return { ok: true, status: 200, json: async () => body } as any;
+                return { ok: true, status: 200, text: async () => JSON.stringify(body) } as any;
             }
         }
-        return { ok: false, status: 503, json: async () => ({}) } as any;
+        return { ok: false, status: 503, text: async () => 'Service Unavailable' } as any;
     });
 }
 
@@ -104,6 +104,9 @@ test('resolves the Hindi m3u8: servers + sources over the sealed protocol', asyn
     expect(payload.provider).toBe('gbru');
     expect(payload.tmdbId).toBe('1399');
     expect(payload.type).toBe('tv');
+    // Reference-client fields: the backend echoes these back.
+    expect(typeof payload._req_ts).toBe('number');
+    expect(typeof payload._req_salt).toBe('string');
     // GbruHindi was asked before MbPly despite being second in the list.
     expect(sourcesUrl.length).toBeGreaterThan(0);
     expect(calls.indexOf(sourcesUrl)).toBe(1);
@@ -155,16 +158,16 @@ test('WAF 403 on the direct hops -> the profile ladder falls through to a relay 
     const fetchMock = jest.fn(async (url: string) => {
         if (url.includes('allorigins')) {
             if (url.includes(encodeURIComponent('/api/servers'))) {
-                return { ok: true, status: 200, json: async () => SERVERS_BODY } as any;
+                return { ok: true, status: 200, text: async () => JSON.stringify(SERVERS_BODY) } as any;
             }
             if (url.includes(encodeURIComponent('/api/sources'))) {
-                return { ok: true, status: 200, json: async () => SOURCES_GBRU } as any;
+                return { ok: true, status: 200, text: async () => JSON.stringify(SOURCES_GBRU) } as any;
             }
         }
         if (String(url).startsWith('https://web.nxsha.app/')) {
-            return { ok: false, status: 403, json: async () => ({}) } as any;
+            return { ok: false, status: 403, text: async () => 'Forbidden' } as any;
         }
-        return { ok: false, status: 503, json: async () => ({}) } as any;
+        return { ok: false, status: 503, text: async () => 'Service Unavailable' } as any;
     });
     global.fetch = fetchMock as any;
 
