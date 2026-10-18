@@ -13,7 +13,6 @@ import { detectProviderFromUrl } from '@/lib/embeds';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 import {
     SEEK_NUDGE_DELAYS,
-    buildQualityMessages,
     buildSeekMessages,
     guessSeconds,
     sniffTimeEvent,
@@ -206,19 +205,6 @@ export function EmbedPlayer({
         schedulePost(buildSeekMessages(target));
     }, [schedulePost]);
 
-    /**
-     * Ask the provider player to lock 1080p.
-     *
-     * The player's own default is "Auto" (which starts as low as 240p) and
-     * the provider documents no quality parameter, so every known command
-     * spelling is sprayed on boot — the frame ignores what it does not
-     * understand. The ask repeats on the same schedule as the seek nudges,
-     * because the quality menu only exists once the player engine is up.
-     */
-    const sprayQuality = useCallback(() => {
-        schedulePost(buildQualityMessages());
-    }, [schedulePost]);
-
     useEffect(() => {
         setLoading(true);
         setTimedOut(false);
@@ -263,18 +249,14 @@ export function EmbedPlayer({
             if (timerRef.current) clearTimeout(timerRef.current);
             setLoading(false);
             setTimedOut(false);
-            // The provider player is up: replay the resume point into it and
-            // ask for 1080p again now that the engine is ready.
+            // The provider player is up: replay the resume point into it.
             if (resumeAt) spraySeek(resumeAt);
-            sprayQuality();
         };
         host.appendChild(iframe);
         iframeRef.current = iframe;
         // The resume point is sprayed as soon as the frame exists, and again
-        // once the provider finished booting (see iframe.onload above). The
-        // 1080p ask goes out on both waves too.
+        // once the provider finished booting (see iframe.onload above).
         if (resumeAt) spraySeek(resumeAt);
-        sprayQuality();
         return () => {
             killIframe();
         };

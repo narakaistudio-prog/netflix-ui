@@ -215,32 +215,3 @@ export function buildSeekMessages(seconds: number): unknown[] {
         JSON.stringify({ event: 'seek', time: s }),
     ];
 }
-
-/**
- * The picture quality the player is asked to lock on every boot (1080p).
- */
-export const DEFAULT_QUALITY_HEIGHT = 1080;
-
-/**
- * The quality commands sprayed into the player frame when it boots.
- *
- * The provider documents no quality control, so — exactly like the seek
- * commands above — every plausible spelling is sent and the frame simply
- * ignores the shapes it does not understand.
- */
-export function buildQualityMessages(height: number = DEFAULT_QUALITY_HEIGHT): unknown[] {
-    const q = Math.floor(height || 0);
-    return [
-        { type: 'quality', quality: q },
-        { type: 'quality', height: q },
-        { type: 'setQuality', quality: q },
-        { type: 'setQuality', level: q },
-        { type: 'setQuality', value: q },
-        { event: 'setQuality', quality: q },
-        { command: 'quality', value: q },
-        { action: 'quality', value: q },
-        { type: 'PLAYER_COMMAND', data: { command: 'quality', quality: q } },
-        { type: 'media-quality', quality: q },
-        JSON.stringify({ event: 'setQuality', quality: q }),
-    ];
-}
