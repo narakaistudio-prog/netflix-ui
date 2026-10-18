@@ -6,10 +6,13 @@ import { MovieDetailModal } from '@/components/MovieList/MovieDetailModal';
 import { useCatalog } from '@/hooks/useCatalog';
 import {
     getRecentlyWatched,
+    lastActivity,
     removeWatched,
     RECENTLY_WATCHED_EVENT,
     type WatchedEntry,
 } from '@/lib/recentlyWatched';
+import { buildContinueMeta } from '@/lib/continueWatching';
+import { getTvEpisode } from '@/lib/tvEpisodes';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -27,13 +30,20 @@ export function timeAgo(ts: number, now: number = Date.now()): string {
 }
 
 /**
- * "Continue Watching" row: titles the viewer pressed Play on, newest first.
- * Progress is not shown: the Nxsha player is a cross-origin iframe that does not
- * report playback position, so a progress bar or "time left" would be guesswork.
+ * "Continue Watching" row.
+ *
+ * Same feature as the one on the Crunchyroll page: every title the viewer
+ * started is kept together with the position they stopped at, so the card can
+ * show the playhead ("6:12 in · 18 min left"), a progress bar, and resume the
+ * very same episode from the very same second.
  */
 export function ContinueWatchingRow() {
     const [entries, setEntries] = useState<WatchedEntry[]>([]);
-    const [selected, setSelected] = useState<Movie | null>(null);
+    /** Title the viewer picked, plus the episode and position to resume. */
+    const [selected, setSelected] = useState<{
+        movie: Movie;
+        entry: WatchedEntry;
+    } | null>(null);
     const { rows } = useCatalog();
 
     useEffect(() => {
@@ -70,6 +80,23 @@ export function ContinueWatchingRow() {
         } as Movie;
     };
 
+    /** The card copy — same wording as the Crunchyroll Continue Watching row. */
+    const metaFor = (e: WatchedEntry) => {
+        const episodeName =
+            e.type === 'tv'
+                ? getTvEpisode(e.tmdbId, e.season, e.episode)?.name
+                : undefined;
+        return buildContinueMeta({
+            type: e.type,
+            season: e.season,
+            episode: e.episode,
+            episodeName,
+            positionSec: e.positionSec,
+            durationSec: e.durationSec,
+            at: lastActivity(e),
+        });
+    };
+
     return (
         <View style={styles.wrap}>
             <Text style={styles.title}>Continue Watching</Text>
@@ -81,10 +108,11 @@ export function ContinueWatchingRow() {
                 {entries.map((e) => {
                     const movie = toMovie(e);
                     const img = movie.backdropUrl || movie.imageUrl || '';
+                    const { label, meta, percent } = metaFor(e);
                     return (
                         <Pressable
                             key={e.id}
-                            onPress={() => setSelected(movie)}
+                            onPress={() => setSelected({ movie, entry: e })}
                             style={styles.card}
                             accessibilityLabel={`Continue ${e.title ?? ''}`}
                         >
@@ -97,21 +125,47 @@ export function ContinueWatchingRow() {
                                         loading="eager"
                                     />
                                 ) : null}
-                                <Pressable
-                                    onPress={() => removeWatched(e.id)}
-                                    style={styles.remove}
-                                    accessibilityLabel={`Remove ${e.title ?? ''} from Continue Watching`}
-                                >
-                                    <Ionicons name="close" size={16} color="#fff" />
-                                </Pressable>
                             </View>
-                            <Text style={styles.cardTitle} numberOfLines={1}>{e.title ?? ''}</Text>
-                            <Text style={styles.cardMeta}>Watched {timeAgo(e.startedAt)}</Text>
+                            <View style={styles.copy}>
+                                <Text style={styles.cardTitle} numberOfLines={1}>{e.title ?? ''}</Text>
+                                <Text style={styles.cardLabel} numberOfLines={1}>{label}</Text>
+                                <Text style={styles.cardMeta} numberOfLines={1}>{meta}</Text>
+                                {percent > 0 ? (
+                                    <View style={styles.progress}>
+                                        <View
+                                            testID="continue-progress"
+                                            style={[styles.progressFill, { width: `${percent}%` }]}
+                                        />
+                                    </View>
+                                ) : null}
+                            </View>
+                            <Pressable
+                                onPress={() => removeWatched(e.id)}
+                                style={styles.remove}
+                                accessibilityLabel={`Remove ${e.title ?? ''} from Continue Watching`}
+                            >
+                                <Ionicons name="close" size={16} color="#fff" />
+                            </Pressable>
                         </Pressable>
                     );
                 })}
             </ScrollView>
-            <MovieDetailModal movie={selected} onClose={() => setSelected(null)} />
+            {selected ? (
+                <MovieDetailModal
+                    movie={selected.movie}
+                    initialEpisode={
+                        selected.entry.type === 'tv'
+                            ? {
+                                season: selected.entry.season ?? 1,
+                                episode: selected.entry.episode ?? 1,
+                            }
+                            : null
+                    }
+                    autoPlay
+                    resumeAt={selected.entry.positionSec ?? 0}
+                    onClose={() => setSelected(null)}
+                />
+            ) : null}
         </View>
     );
 }
@@ -131,16 +185,54 @@ const styles = StyleSheet.create({
     row: {
         paddingHorizontal: IS_WEB ? 48 : 16,
         gap: 12,
+        alignItems: 'flex-start',
     },
     card: {
-        width: IS_WEB ? 280 : 220,
+        width: IS_WEB ? 380 : 300,
+        flexDirection: 'row',
+        gap: 12,
+        backgroundColor: '#15171b',
+        borderWidth: 1,
+        borderColor: '#34363b',
+        borderRadius: 4,
+        padding: 8,
     },
     thumb: {
-        width: '100%',
+        width: IS_WEB ? 150 : 120,
         aspectRatio: 16 / 9,
-        borderRadius: 6,
+        borderRadius: 4,
         overflow: 'hidden',
         backgroundColor: '#222',
+    },
+    copy: {
+        flex: 1,
+        minWidth: 0,
+        justifyContent: 'center',
+        gap: 3,
+    },
+    cardTitle: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: '700',
+    },
+    cardLabel: {
+        color: '#a9abb0',
+        fontSize: 12,
+    },
+    cardMeta: {
+        color: '#a9abb0',
+        fontSize: 12,
+    },
+    progress: {
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: '#3b3d42',
+        overflow: 'hidden',
+        marginTop: 6,
+    },
+    progressFill: {
+        height: '100%',
+        backgroundColor: '#E50914',
     },
     remove: {
         position: 'absolute',
@@ -153,16 +245,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2,
-    },
-    cardTitle: {
-        color: '#fff',
-        fontSize: 15,
-        fontWeight: '700',
-        marginTop: 8,
-    },
-    cardMeta: {
-        color: '#a3a3a3',
-        fontSize: 12,
-        marginTop: 2,
     },
 });

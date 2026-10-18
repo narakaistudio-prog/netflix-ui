@@ -26,7 +26,12 @@ import {
     buildEmbedUrl,
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
-import { markWatched } from '@/lib/recentlyWatched';
+import {
+    getRecentlyWatched,
+    markWatched,
+    updateWatchPosition,
+    watchEntryId,
+} from '@/lib/recentlyWatched';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
@@ -94,6 +99,9 @@ export default function MovieScreen() {
     const [providerIndex, setProviderIndex] = useState(0);
     const [season, setSeason] = useState(1);
     const [episode, setEpisode] = useState(1);
+    /** Continue Watching: the entry being played and the position to resume. */
+    const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
+    const [resumeAt, setResumeAt] = useState(0);
 
     useEffect(() => () => setPlayerChromeHidden(false), []);
 
@@ -404,6 +412,36 @@ export default function MovieScreen() {
         }
     }, [officialNetflixUrl]);
 
+    /**
+     * Remember the title (and the episode of a series) in the Continue
+     * Watching row, and continue from the position it was left at.
+     */
+    const rememberPlayback = useCallback((playSeason: number, playEpisode: number) => {
+        const titleId = String(movie.id);
+        const entryId = watchEntryId(
+            titleId,
+            mediaType,
+            mediaType === 'tv' ? playSeason : undefined,
+            mediaType === 'tv' ? playEpisode : undefined,
+        );
+        const saved = getRecentlyWatched().find((e) => e.id === entryId);
+        setActiveEntryId(entryId);
+        setResumeAt(saved?.positionSec ?? 0);
+        try {
+            markWatched({
+                id: entryId,
+                titleId,
+                title: movie.title,
+                type: mediaType,
+                tmdbId: parsedTmdb,
+                imdbId: movie.imdb_id,
+                provider: currentProvider,
+                season: mediaType === 'tv' ? playSeason : undefined,
+                episode: mediaType === 'tv' ? playEpisode : undefined,
+            });
+        } catch {}
+    }, [movie, parsedTmdb, mediaType, currentProvider]);
+
     const handlePlayFull = useCallback(() => {
         if (!hasPlayablePlayback) {
             openOfficialTitle();
@@ -416,20 +454,8 @@ export default function MovieScreen() {
         setSeason(initialSeason);
         setEpisode(1);
         setPlayerOpen(true);
-        try {
-            markWatched({
-                id: `${movie.id}${mediaType === 'tv' ? `-s${initialSeason}-e${1}` : ''}`,
-                titleId: String(movie.id),
-                title: movie.title,
-                type: mediaType,
-                tmdbId: parsedTmdb,
-                imdbId: movie.imdb_id,
-                provider: currentProvider,
-                season: mediaType === 'tv' ? initialSeason : undefined,
-                episode: mediaType === 'tv' ? 1 : undefined,
-            });
-        } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback, openOfficialTitle]);
+        rememberPlayback(initialSeason, 1);
+    }, [movie, hasPlayablePlayback, openOfficialTitle, rememberPlayback]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -452,7 +478,8 @@ export default function MovieScreen() {
         setSeason(selectedSeason);
         setEpisode(selectedEpisode);
         setPlayerOpen(true);
-    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle]);
+        rememberPlayback(selectedSeason, selectedEpisode);
+    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle, rememberPlayback]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
@@ -518,6 +545,11 @@ export default function MovieScreen() {
                                         onClose={handleCloseInline}
                                         onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
                                         fallbackUrl={officialNetflixUrl}
+                                        resumeAt={resumeAt}
+                                        onProgress={(info) => {
+                                            if (!activeEntryId) return;
+                                            updateWatchPosition(activeEntryId, info.seconds, info.duration);
+                                        }}
                                     />
                                 </View>
                             </View>
@@ -552,6 +584,11 @@ export default function MovieScreen() {
                                 onClose={handleCloseInline}
                                 onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
                                 fallbackUrl={officialNetflixUrl}
+                                resumeAt={resumeAt}
+                                onProgress={(info) => {
+                                    if (!activeEntryId) return;
+                                    updateWatchPosition(activeEntryId, info.seconds, info.duration);
+                                }}
                             />
                         </View>
                     </View>
