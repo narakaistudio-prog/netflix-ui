@@ -13,7 +13,7 @@ export function isPhoneWidth(width: number): boolean {
 }
 
 /** Routes that are full-screen on their own and never show the phone bottom bar. */
-const BOTTOM_BAR_HIDDEN_ROUTES = ['/movie', '/switch-profile', '/admin', '/downloads'];
+const BOTTOM_BAR_HIDDEN_ROUTES = ['/crunchyroll', '/movie', '/switch-profile', '/admin', '/downloads'];
 
 /** True when the phone bottom bar should be on screen for this route (web, phone width). */
 export function showsPhoneTabBar(pathname: string, isPhone: boolean, isWeb: boolean): boolean {

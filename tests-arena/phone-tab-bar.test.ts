@@ -17,10 +17,10 @@ describe('phone layout rules', () => {
         expect(showsPhoneTabBar('/', true, false)).toBe(false);
     });
 
-    test('the bottom bar stays off full-screen detail routes, but follows the Crunchyroll page', () => {
-        // The Crunchyroll section keeps the phone bar so Android users can
-        // hop back to Netflix without a browser back button.
-        expect(showsPhoneTabBar('/crunchyroll', true, true)).toBe(true);
+    test('the bottom bar stays off the Crunchyroll page and full-screen detail routes', () => {
+        // Crunchyroll brings its own bottom navigation, so the
+        // Netflix bar must not cover it.
+        expect(showsPhoneTabBar('/crunchyroll', true, true)).toBe(false);
         expect(showsPhoneTabBar('/movie/netflix-genre-1', true, true)).toBe(false);
         expect(showsPhoneTabBar('/switch-profile', true, true)).toBe(false);
     });

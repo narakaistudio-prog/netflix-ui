@@ -1,9 +1,15 @@
 // @ts-nocheck — jsdom test: the phone bottom tab bar carries every
-// section (K-Dramas included) and follows the user into Crunchyroll,
-// so Android phones always have a way back to Netflix.
+// section (K-Dramas included), stays off the Crunchyroll page (which
+// brings its own bottom navigation), and that navigation switches on
+// at the same phone width the app uses.
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
+
+const ROOT = join(__dirname, '..');
+const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 
 let mockPath = '/';
 
@@ -31,6 +37,7 @@ jest.mock('@/lib/layout', () => {
 });
 
 import { PhoneTabBar } from '@/components/PhoneTabBar';
+import { PHONE_MAX_WIDTH } from '@/lib/layout';
 
 const renderBar = () => {
     const host = document.createElement('div');
@@ -60,16 +67,27 @@ test('the phone bottom bar lists every section, K-Dramas included', () => {
     ]);
 });
 
-test('the bottom bar stays on the Crunchyroll page too', () => {
+test('the Netflix bar stays off the Crunchyroll page, which brings its own', () => {
     mockPath = '/crunchyroll';
     const host = renderBar();
-    expect(tabLabels(host)).toContain('Home');
-    expect(tabLabels(host)).toContain('K-Dramas');
-    expect(tabLabels(host)).toContain('Crunchyroll');
+    expect(tabLabels(host)).toEqual([]);
 });
 
 test('the bottom bar stays off full-screen detail routes', () => {
     mockPath = '/movie/netflix-genre-1';
     const host = renderBar();
     expect(tabLabels(host)).toEqual([]);
+});
+
+test('the Crunchyroll page shows its own bottom nav on every phone the app recognises', () => {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    // The page's phone breakpoint must cover the app's phone width,
+    // otherwise the embedded page keeps its desktop layout — with no
+    // bottom navigation — on phones the app already treats as phones.
+    expect(html).not.toContain('@media(max-width:620px)');
+    const phoneBlock = html.match(/@media\(max-width:700px\)\{[\s\S]*?\n    \}/);
+    expect(phoneBlock).not.toBeNull();
+    expect(phoneBlock?.[0]).toContain('.bottom-nav{position:fixed');
+    expect(phoneBlock?.[0]).toContain('display:flex');
+    expect(PHONE_MAX_WIDTH).toBeLessThanOrEqual(700);
 });
