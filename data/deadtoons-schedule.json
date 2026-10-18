@@ -1,26 +1,26 @@
 {
-  "updated": "2026-10-17",
+  "updated": "2026-10-18",
   "source": "https://deadtoons.sbs/schedule",
-  "today": "2026-10-17",
+  "today": "2026-10-18",
   "items": [
     {
-      "key": "sch-marvel-s-the-punisher-season-2-2019",
-      "title": "A Wild Last Boss Appeared!",
-      "slug": "marvel-s-the-punisher-season-2-2019",
-      "url": "https://deadtoons.sbs/posts/marvel-s-the-punisher-season-2-2019",
-      "img": "https://media.deadbase.host/w300/5166333d-0b26-43d8-a142-ffc31b3a2417.webp",
+      "key": "sch-blue-box-season-2-2026",
+      "title": "Blue Box",
+      "slug": "blue-box-season-2-2026",
+      "url": "https://deadtoons.sbs/posts/blue-box-season-2-2026",
+      "img": "https://image.tmdb.org/t/p/w300/drOaLQ4E4KlrZcz9GBCQqybHnif.jpg",
       "season": 2,
-      "episode": 1,
-      "audio": "Hindi-Eng-Jap",
-      "day": "Eng",
-      "date": "2026-10-17",
-      "time": "2:00 PM",
+      "episode": 3,
+      "audio": "",
+      "day": "Box",
+      "date": "2026-10-18",
+      "time": "7:00 AM",
       "today": true,
       "nx": {
-        "id": "280042",
+        "id": "207347",
         "kind": "tv",
         "seasons": {
-          "2": 1
+          "2": 3
         },
         "from": "wikidata-tmdb"
       }
@@ -32,10 +32,10 @@
       "url": "https://deadtoons.sbs/posts/marvel-s-the-punisher-season-2-2019",
       "img": "https://image.tmdb.org/t/p/w300/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
       "season": 2,
-      "episode": 3,
+      "episode": 4,
       "audio": "",
       "day": "The",
-      "date": "2026-10-17",
+      "date": "2026-10-18",
       "time": "2:22 PM",
       "today": true,
       "nx": {
@@ -143,111 +143,214 @@
       }
     },
     {
-      "key": "sch-jaadugar-a-witch-in-mongolia-season-1-2026",
-      "title": "Jaadugar: A Witch in Mongolia",
-      "slug": "jaadugar-a-witch-in-mongolia-season-1-2026",
-      "url": "https://deadtoons.sbs/posts/jaadugar-a-witch-in-mongolia-season-1-2026",
-      "img": "https://image.tmdb.org/t/p/w300/723NT7KY9xBFLYNNBaEEREbLaPC.jpg",
-      "season": 1,
-      "episode": 10,
-      "audio": "",
-      "day": "",
-      "date": "2026-10-17",
-      "time": "4:25 PM",
+      "key": "sch-mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
+      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "slug": "mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
+      "url": "https://deadtoons.sbs/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
+      "img": "https://image.tmdb.org/t/p/w300/tn2mxPYSSUPHgfcAe5SCga1DO0i.jpg",
+      "season": 3,
+      "episode": 8,
+      "audio": "Hindi-Eng-Jap",
+      "day": "Eng",
+      "date": "2026-10-18",
+      "time": "3:00 PM",
       "today": true,
       "nx": {
-        "id": "288971",
+        "id": "94664",
         "kind": "tv",
         "seasons": {
-          "1": 10
+          "1": 23,
+          "2": 24,
+          "3": 14
+        },
+        "from": "catalog"
+      }
+    },
+    {
+      "key": "sch-overgeared-season-1-2026",
+      "title": "Overgeared",
+      "slug": "overgeared-season-1-2026",
+      "url": "https://deadtoons.sbs/posts/overgeared-season-1-2026",
+      "img": "https://image.tmdb.org/t/p/w300/94GLmulA9qVGsuo9kLpVKi01E2Z.jpg",
+      "season": 1,
+      "episode": 4,
+      "audio": "",
+      "day": "",
+      "date": "2026-10-18",
+      "time": "3:30 PM",
+      "today": true,
+      "nx": {
+        "id": "324502",
+        "kind": "tv",
+        "seasons": {
+          "1": 4
         },
         "from": "wikidata-tmdb"
       },
       "guide": {
         "1": {
           "1": {
-            "title": "All That Is in the Heavens and All That Is in the Earth",
-            "overview": "Sitara, a young slave girl, is sold to a family of scholars, where she begins her journey of knowledge.",
-            "image": "https://image.tmdb.org/t/p/w300/8ulVow8v7B8Lrw47y4hyGPRnrJf.jpg",
-            "airDate": "2026-07-04",
+            "title": "Legendary Class",
+            "overview": "Grid hopes to strike it rich in the VR game Satisfy. While taking on an S-Ranked quest, he discovers Pagma’s Tome.",
+            "image": "https://image.tmdb.org/t/p/w300/kcuOU2FUmy2e0FDTq9YIuY6a3DW.jpg",
+            "airDate": "2026-10-02",
             "runtime": 24
           },
           "2": {
-            "title": "The Roses That Bloom in Safar",
-            "overview": "As nomads sack the city of Tun, Fatima and Sitara hide in the basement and wait for the others to return.",
-            "image": "https://image.tmdb.org/t/p/w300/xeg43pMcMll2P4MkmtKyYtTvAGP.jpg",
-            "airDate": "2026-07-04",
+            "title": "First Step Towards Being a Blacksmith",
+            "overview": "Grid has made a fresh start. With nowhere else to turn, he begins learning the fundamentals of blacksmithing.",
+            "image": "https://image.tmdb.org/t/p/w300/2aT5Nj4I5HQqh01nShth4tBpVqF.jpg",
+            "airDate": "2026-10-09",
             "runtime": 24
           },
           "3": {
-            "title": "An Undying Flame",
-            "overview": "Sitara teams up with an unexpected ally in hopes of reclaiming Fatima's book that was stolen by the Mongols.",
-            "image": "https://image.tmdb.org/t/p/w300/1LcgSvjwvG60ptgLFy05Z2MDGGc.jpg",
-            "airDate": "2026-07-11",
+            "title": "Second Class",
+            "overview": "The Mero Company sends Huroi, an Orator, to the village. There, he forcibly triggers a hidden quest...!?",
+            "image": "https://image.tmdb.org/t/p/w300/jCihvtTSgkSoEOoyPOYp6NOf7tt.jpg",
+            "airDate": "2026-10-16",
             "runtime": 24
           },
           "4": {
-            "title": "Otchigin",
-            "overview": "Sitara begins tutoring Sorghaghtani in Euclid's Elements, and learns more about Prince Tolui, the Otchigin.",
-            "image": "https://image.tmdb.org/t/p/w300/3T83I18Bh8BfjHLi3cXXyb1wCEv.jpg",
-            "airDate": "2026-07-18",
-            "runtime": 24
+            "title": "Episode 4",
+            "image": "https://image.tmdb.org/t/p/w300/qlCP7ZjYhYa8wPfyeWuUDWRVies.jpg",
+            "airDate": "2026-10-23"
           },
           "5": {
-            "title": "A Snake Shows Its Colors, Man Hides His Colors",
-            "overview": "Sitara agrees to serve as Sorghaghtani's spy, but her plans to infiltrate Chagatai's court quickly go awry.",
-            "image": "https://image.tmdb.org/t/p/w300/jmE8ln9uCMqGsZBP0IeVYkTyEzQ.jpg",
-            "airDate": "2026-07-25",
-            "runtime": 24
+            "title": "Episode 5",
+            "airDate": "2026-10-30"
           },
           "6": {
-            "title": "The Mergen People",
-            "overview": "Töregene tells the tale of her life among the Merkits, a confederation of tribes renowned for their archery.",
-            "image": "https://image.tmdb.org/t/p/w300/r2Fk2U0SrGuyA50ObrbJB10GTwp.jpg",
-            "airDate": "2026-08-01",
-            "runtime": 24
+            "title": "Episode 6",
+            "airDate": "2026-11-06"
           },
           "7": {
-            "title": "Brothers",
-            "overview": "As the Mongol Empire prepares to wage war to the east, Sitara begins to plant the seeds of political intrigue.",
-            "image": "https://image.tmdb.org/t/p/w300/tLsnfuvD1DsWcJEGwSi0FpmFYWv.jpg",
-            "airDate": "2026-08-08",
-            "runtime": 24
+            "title": "Episode 7",
+            "airDate": "2026-11-13"
           },
           "8": {
-            "title": "Great Khatun Boraqchin",
-            "overview": "After a misunderstanding, Sitara finds herself before the sickly Boraqchin, chief empress of the Mongols.",
-            "image": "https://image.tmdb.org/t/p/w300/9cRBNXOTzrEh9qqKMYdgM034HYK.jpg",
-            "airDate": "2026-08-15",
-            "runtime": 24
+            "title": "Episode 8",
+            "airDate": "2026-11-20"
           },
           "9": {
-            "title": "Tengri",
-            "overview": "Ögedei and Tolui launch their offensive to take the Jin capital Kaifeng, but tragedy strikes soon after.",
-            "image": "https://image.tmdb.org/t/p/w300/cp0CzEFVxviDz19IK0gS7uJrYYJ.jpg",
-            "airDate": "2026-08-22",
-            "runtime": 24
+            "title": "Episode 9",
+            "airDate": "2026-11-27"
           },
           "10": {
-            "title": "Wisdom",
-            "overview": "Tolui meets a shocking fate, and Sitara receives an unexpected item that shakes her to the core of her being.",
-            "image": "https://image.tmdb.org/t/p/w300/p7xkczXG7D98elP9eeTx1qTI9Ak.jpg",
-            "airDate": "2026-08-29",
-            "runtime": 24
+            "title": "Episode 10",
+            "airDate": "2026-12-04"
           },
           "11": {
-            "title": "An Ungraceful Stone",
-            "overview": "Six years in the past, Boraqchin encounters a stone with mysterious properties that would change her life.",
-            "image": "https://image.tmdb.org/t/p/w300/mjvoJgSoK6QMC9Xx5llIP3Op9bi.jpg",
-            "airDate": "2026-09-05",
-            "runtime": 24
+            "title": "Episode 11",
+            "airDate": "2026-12-11"
           },
           "12": {
-            "title": "The Steppe, Ever Unchanging",
-            "overview": "After Sorghaghtani turns down a political marriage, Sitara continues her search for Töregene's whereabouts.",
-            "image": "https://image.tmdb.org/t/p/w300/d2oMzA68TLzb6pl5reN5vekGAUG.jpg",
-            "airDate": "2026-09-12",
+            "title": "Episode 12",
+            "airDate": "2026-12-18"
+          }
+        }
+      }
+    },
+    {
+      "key": "sch-dragon-ball-super-beerus-season-1-2026",
+      "title": "Dragon Ball Super: Beerus",
+      "slug": "dragon-ball-super-beerus-season-1-2026",
+      "url": "https://deadtoons.sbs/posts/dragon-ball-super-beerus-season-1-2026",
+      "img": "https://image.tmdb.org/t/p/w300/sGuCmIy8kEmx3FWZyMj654rF6g8.jpg",
+      "season": 1,
+      "episode": 2,
+      "audio": "",
+      "day": "",
+      "date": "2026-10-18",
+      "time": "4:29 PM",
+      "today": true,
+      "nx": {
+        "id": "312359",
+        "kind": "tv",
+        "seasons": {
+          "1": 2
+        },
+        "from": "wikidata-tmdb"
+      },
+      "guide": {
+        "1": {
+          "1": {
+            "title": "The God Who Destroys",
+            "overview": "Years after the battle with Earth's greatest enemy, Majin Buu, the planet's savior Son Goku spends his days in peace. Meanwhile, on a distant planet, the God of Destruction Beerus awakens from his long slumber!",
+            "image": "https://image.tmdb.org/t/p/w300/xxAiGiQVJqJtqSbdQIAGIFPIvSD.jpg",
+            "airDate": "2026-10-11",
             "runtime": 24
+          },
+          "2": {
+            "title": "The God of Destruction Heads to the Planet of the Kai",
+            "airDate": "2026-10-18"
+          },
+          "3": {
+            "title": "Episode 3",
+            "airDate": "2026-10-25"
+          },
+          "4": {
+            "title": "Episode 4",
+            "airDate": "2026-11-01"
+          },
+          "5": {
+            "title": "Episode 5",
+            "airDate": "2026-11-08"
+          },
+          "6": {
+            "title": "Episode 6",
+            "airDate": "2026-11-15"
+          },
+          "7": {
+            "title": "Episode 7",
+            "airDate": "2026-11-22"
+          },
+          "8": {
+            "title": "Episode 8",
+            "airDate": "2026-11-29"
+          },
+          "9": {
+            "title": "Episode 9",
+            "airDate": "2026-12-06"
+          },
+          "10": {
+            "title": "Episode 10",
+            "airDate": "2026-12-13"
+          },
+          "11": {
+            "title": "Episode 11",
+            "airDate": "2026-12-20"
+          },
+          "12": {
+            "title": "Episode 12",
+            "airDate": "2026-12-27"
+          },
+          "13": {
+            "title": "Episode 13",
+            "airDate": "2027-01-03"
+          },
+          "14": {
+            "title": "Episode 14",
+            "airDate": "2027-01-10"
+          },
+          "15": {
+            "title": "Episode 15",
+            "airDate": "2027-01-17"
+          },
+          "16": {
+            "title": "Episode 16",
+            "airDate": "2027-01-24"
+          },
+          "17": {
+            "title": "Episode 17",
+            "airDate": "2027-01-31"
+          },
+          "18": {
+            "title": "Episode 18",
+            "airDate": "2027-02-07"
+          },
+          "19": {
+            "title": "Episode 19",
+            "airDate": "2027-02-14"
           }
         }
       }
@@ -259,10 +362,10 @@
       "url": "https://deadtoons.sbs/posts/jojo-s-bizarre-adventure-season-4-2018",
       "img": "https://image.tmdb.org/t/p/w300/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
       "season": 4,
-      "episode": 7,
+      "episode": 8,
       "audio": "",
       "day": "",
-      "date": "2026-10-17",
+      "date": "2026-10-18",
       "time": "5:30 PM",
       "today": true,
       "nx": {
@@ -275,184 +378,6 @@
           "4": 39,
           "5": 38,
           "6": 12
-        },
-        "from": "catalog"
-      }
-    },
-    {
-      "key": "sch-hanaori-san-still-wants-to-fight-in-the-next-life-season-1-2026",
-      "title": "Hanaori-san Still Wants to Fight in the Next Life",
-      "slug": "hanaori-san-still-wants-to-fight-in-the-next-life-season-1-2026",
-      "url": "https://deadtoons.sbs/posts/hanaori-san-still-wants-to-fight-in-the-next-life-season-1-2026",
-      "img": "https://image.tmdb.org/t/p/w300/mMckrgWZRxOMY6aUWzTUTddLOc9.jpg",
-      "season": 1,
-      "episode": 12,
-      "audio": "",
-      "day": "",
-      "date": "2026-10-17",
-      "time": "5:45 PM",
-      "today": true,
-      "nx": {
-        "id": "312266",
-        "kind": "tv",
-        "seasons": {
-          "1": 12
-        },
-        "from": "wikidata-tmdb"
-      },
-      "guide": {
-        "1": {
-          "1": {
-            "title": "When Ryusei Met Meteor...",
-            "overview": "The reincarnated Hero visits the reincarnated Demon Lord, and the former NEET becomes a teacher at her school.",
-            "image": "https://image.tmdb.org/t/p/w300/hTTUIKQcDmhZV3EFyZ9ZNjWhwtJ.jpg",
-            "airDate": "2026-07-12",
-            "runtime": 24
-          },
-          "2": {
-            "title": "The Witches of Oz",
-            "overview": "Meteor and Ryusei get to know the two new transfer students, and then their secret identities are revealed.",
-            "image": "https://image.tmdb.org/t/p/w300/xOWE4fyhg5WihG9M7PxT02Fr6zZ.jpg",
-            "airDate": "2026-07-19",
-            "runtime": 24
-          },
-          "3": {
-            "title": "Midnight Run",
-            "overview": "Meteor and Ryusei discuss the food of their old and new lives. Then they go on a dungeon date.",
-            "image": "https://image.tmdb.org/t/p/w300/b52ptCLZmTPNJOfFLi2dDK2CyCg.jpg",
-            "airDate": "2026-07-26",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Those Who Can't Be Forgiven",
-            "overview": "Ryusei fights off a Returner. Ryusei and Hanaori go through couples therapy.",
-            "image": "https://image.tmdb.org/t/p/w300/evW2QwhCYlFglv1smes6QwznK6j.jpg",
-            "airDate": "2026-08-02",
-            "runtime": 24
-          },
-          "5": {
-            "title": "Much Ado About Nothing",
-            "overview": "Ryusei resolves some of the girls' troubles. Then he goes on a not-date with Meteor.",
-            "image": "https://image.tmdb.org/t/p/w300/yGhUSvN3d93kOLG1sGnyriyVvLA.jpg",
-            "airDate": "2026-08-09",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Pulp Fiction",
-            "overview": "Hanaori gets turned into a cat. Then silenced. Then a magical girl from a parallel world attacks Ryusei.",
-            "image": "https://image.tmdb.org/t/p/w300/cj2w6M1adYEEWJtqexeWaeFKwGw.jpg",
-            "airDate": "2026-08-16",
-            "runtime": 24
-          },
-          "7": {
-            "title": "Seven",
-            "overview": "The witches gripe about their work for Oz. Hanaori gets corrupted and fights Ryusei.",
-            "image": "https://image.tmdb.org/t/p/w300/tQwdZdHZNvYbA3spJuh6fE21VBb.jpg",
-            "airDate": "2026-08-23",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Training Day",
-            "overview": "Meteor finds out the holy sword Ryusei gave her is worth 1 billion yen. Ryusei trains the witches.",
-            "image": "https://image.tmdb.org/t/p/w300/of2EWx2r8z28Qr1LH5N7j0ASacr.jpg",
-            "airDate": "2026-08-30",
-            "runtime": 24
-          },
-          "9": {
-            "title": "Scream",
-            "overview": "Ryusei deals with a robot from another world and ghosts at the cultural festival. Ayame faces her bullies.",
-            "image": "https://image.tmdb.org/t/p/w300/cQXJ5kG5I7ho6yWCuhcIZGrX6Eg.jpg",
-            "airDate": "2026-09-06",
-            "runtime": 24
-          },
-          "10": {
-            "title": "Triangle of Sadness",
-            "overview": "A mage from Earth 13 tries to fuse their dimensions together, and Ryusei's princess comes to their world.",
-            "image": "https://image.tmdb.org/t/p/w300/juLPRmiuFyTFqiMpLDi3IYRwYri.jpg",
-            "airDate": "2026-09-13",
-            "runtime": 24
-          },
-          "11": {
-            "title": "Romeo and Juliet",
-            "overview": "Ryusei and Meteor fight together to defeat the evil princess.",
-            "image": "https://image.tmdb.org/t/p/w300/gcXJu0DJ1E2Za8IKgpDb5ghK16a.jpg",
-            "airDate": "2026-09-20",
-            "runtime": 24
-          },
-          "12": {
-            "title": "Love Actually",
-            "overview": "After regaining their daily lives, Ryusei's home burns down and his cohabitation arc with Meteor begins.",
-            "image": "https://image.tmdb.org/t/p/w300/3QnybWSeIupuxzCtXqU5JyV9RxG.jpg",
-            "airDate": "2026-09-27",
-            "runtime": 24
-          }
-        }
-      }
-    },
-    {
-      "key": "sch-black-clover-season-5-2026",
-      "title": "Black Clover",
-      "slug": "black-clover-season-5-2026",
-      "url": "https://deadtoons.sbs/posts/black-clover-season-5-2026",
-      "img": "https://media.deadbase.host/w300/47649b78-39f0-435d-b971-af4b0cdc73fe.webp",
-      "season": 5,
-      "episode": 3,
-      "audio": "English Subbed",
-      "day": "",
-      "date": "2026-10-17",
-      "time": "7:10 PM",
-      "today": true,
-      "nx": {
-        "id": "tt7441658",
-        "kind": "tv",
-        "seasons": {
-          "1": 170,
-          "2": 26
-        },
-        "from": "catalog"
-      }
-    },
-    {
-      "key": "sch-black-clover-season-5-2026",
-      "title": "The Apothecary Diaries",
-      "slug": "black-clover-season-5-2026",
-      "url": "https://deadtoons.sbs/posts/black-clover-season-5-2026",
-      "img": "https://image.tmdb.org/t/p/w300/7qx7OwBZcI0dRWc8DrbtxY5IrlV.jpg",
-      "season": 3,
-      "episode": 1,
-      "audio": "Hin-Tam-Tel-Eng-Jap",
-      "day": "",
-      "date": "2026-10-23",
-      "time": "4:30 PM",
-      "today": false,
-      "nx": {
-        "id": "220542",
-        "kind": "tv",
-        "seasons": {
-          "1": 60
-        },
-        "from": "catalog"
-      }
-    },
-    {
-      "key": "sch-black-clover-season-5-2026",
-      "title": "Black Clover",
-      "slug": "black-clover-season-5-2026",
-      "url": "https://deadtoons.sbs/posts/black-clover-season-5-2026",
-      "img": "https://media.deadbase.host/w300/47649b78-39f0-435d-b971-af4b0cdc73fe.webp",
-      "season": 5,
-      "episode": 1,
-      "audio": "Hin-Tam-Tel-Eng-Jap",
-      "day": "",
-      "date": "2026-10-24",
-      "time": "7:00 AM",
-      "today": false,
-      "nx": {
-        "id": "tt7441658",
-        "kind": "tv",
-        "seasons": {
-          "1": 170,
-          "2": 26
         },
         "from": "catalog"
       }
@@ -980,6 +905,48 @@
       },
       "from": "wikidata-tmdb",
       "checked": "2026-10-17"
+    },
+    "bluebox": {
+      "id": "207347",
+      "kind": "tv",
+      "seasons": {
+        "2": 3
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-18"
+    },
+    "riseofanshaksheroesofdestiny": {
+      "checked": "2026-10-18",
+      "tried": []
+    },
+    "mushokutenseijoblessreincarnation": {
+      "id": "94664",
+      "kind": "tv",
+      "seasons": {
+        "1": 23,
+        "2": 24,
+        "3": 14
+      },
+      "from": "catalog",
+      "checked": "2026-10-18"
+    },
+    "overgeared": {
+      "id": "324502",
+      "kind": "tv",
+      "seasons": {
+        "1": 4
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-18"
+    },
+    "dragonballsuperbeerus": {
+      "id": "312359",
+      "kind": "tv",
+      "seasons": {
+        "1": 2
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-18"
     }
   },
   "skipped": [
@@ -992,7 +959,7 @@
       "reason": "schedule: no season/episode"
     },
     {
-      "title": "Ranma1/2",
+      "title": "Rise of Anshaks: Heroes of Destiny",
       "reason": "nxsha: no verified id"
     },
     {
