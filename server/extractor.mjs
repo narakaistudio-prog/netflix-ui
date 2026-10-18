@@ -10,7 +10,7 @@ import { URL } from 'node:url';
 import { pathToFileURL } from 'node:url';
 import lib from './extract-lib.cjs';
 
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
 const DEFAULT_PORT = Number(process.env.PORT || 8787);
 const ALLOW_ORIGIN = process.env.ALLOW_ORIGIN || '*';
 const FETCH_TIMEOUT_MS = 15000;
@@ -126,24 +126,77 @@ function nxshaOpen(b64url) {
   } catch (e) { return null; }
 }
 
-async function nxshaApiGet(path, payload, steps, label) {
-  const started = Date.now();
-  const target = checkTarget(NXSHA_WEB_BASE + path + '?q=' + encodeURIComponent(nxshaSeal(payload)));
-  const headers = { 'User-Agent': UA, Accept: 'application/json, */*', Referer: NXSHA_WEB_BASE + '/', Origin: NXSHA_WEB_BASE };
-  const { res: upstream } = await doRequest(target, { headers, timeoutMs: 6000 });
+/* web.nxsha.app's WAF 403s some datacenter clients (fake-Chrome UA without
+ * client hints was blocked from Vercel; plain clients pass), so every upstream
+ * call walks the same profile ladder as api/nxsha-fetch.cjs: chrome ->
+ * plain -> minimal -> two public relays. First profile that decrypts wins and
+ * is cached for warm instances. */
+function nxshaChromeHeaders() {
+  return {
+    'User-Agent': UA,
+    Accept: 'application/json, */*',
+    'Accept-Language': 'en-US,en;q=0.9,hi;q=0.8',
+    Referer: NXSHA_WEB_BASE + '/',
+    'sec-ch-ua': '"Chromium";v="141", "Google Chrome";v="141"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+  };
+}
+const NXSHA_PROFILES = [
+  { id: 'chrome', timeoutMs: 4000, wrap: (t) => t, headers: nxshaChromeHeaders },
+  { id: 'plain', timeoutMs: 4000, wrap: (t) => t, headers: () => ({ 'User-Agent': 'Mozilla/5.0 (compatible; NxshaClient/1.0; +stream-resolve)', Accept: 'application/json, */*' }) },
+  { id: 'minimal', timeoutMs: 4000, wrap: (t) => t, headers: () => ({ Accept: 'application/json, */*' }) },
+  { id: 'allorigins', timeoutMs: 6000, wrap: (t) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
+  { id: 'codetabs', timeoutMs: 6000, wrap: (t) => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(t), headers: () => ({ Accept: 'application/json, */*' }) },
+];
+let nxshaWinnerProfile = null;
+
+async function nxshaLadderJson(target, headers, timeoutMs, redirects = 0) {
+  const u = new URL(target);
+  const { res: upstream } = await doRequest(u, { headers, timeoutMs });
   const st = upstream.statusCode || 0;
-  if (st < 200 || st >= 300) { upstream.resume(); throw httpErr(502, 'upstream-http-' + st); }
+  if ([301, 302, 303, 307, 308].includes(st) && upstream.headers.location) {
+    upstream.resume();
+    if (redirects >= 3) throw new Error('too-many-redirects');
+    return nxshaLadderJson(new URL(upstream.headers.location, u).href, headers, timeoutMs, redirects + 1);
+  }
+  if (st < 200 || st >= 300) { upstream.resume(); throw new Error('http-' + st); }
   const chunks = [];
   await new Promise((resolve, reject) => {
     upstream.on('data', (c) => chunks.push(c));
     upstream.on('end', resolve);
     upstream.on('error', reject);
   });
-  let body; try { body = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch (e) { throw httpErr(502, 'upstream-not-json'); }
-  const data = nxshaOpen(body && body._hash);
-  if (!data) throw httpErr(502, 'undecryptable');
-  steps.push({ step: label, ms: Date.now() - started });
-  return data;
+  let body; try { body = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch (e) { throw new Error('not-json'); }
+  return body;
+}
+
+async function nxshaApiGet(path, payload, steps, label, deadline) {
+  const q = encodeURIComponent(nxshaSeal(payload));
+  const target = NXSHA_WEB_BASE + path + '?q=' + q;
+  const profiles = nxshaWinnerProfile
+    ? [nxshaWinnerProfile, ...NXSHA_PROFILES.filter((p) => p !== nxshaWinnerProfile)]
+    : NXSHA_PROFILES;
+  let lastErr = 'no-profiles';
+  for (const profile of profiles) {
+    if (deadline && Date.now() > deadline - 3000) { lastErr = 'budget-exhausted'; break; }
+    const started = Date.now();
+    try {
+      const body = await nxshaLadderJson(profile.wrap(target), profile.headers(), profile.timeoutMs);
+      const data = nxshaOpen(body && body._hash);
+      if (!data) throw new Error('undecryptable');
+      nxshaWinnerProfile = profile;
+      steps.push({ step: label, profile: profile.id, ms: Date.now() - started });
+      return data;
+    } catch (e) {
+      lastErr = String((e && e.message) || e).slice(0, 80);
+      steps.push({ step: label + '-attempt', profile: profile.id, error: lastErr, ms: Date.now() - started });
+    }
+  }
+  throw httpErr(502, 'upstream-' + lastErr);
 }
 
 const nxshaNameOf = (server) => String((server && (server.name || server.scraper || server.id)) || '');
@@ -159,7 +212,7 @@ async function handleNxshaResolve(req, res, query) {
   const steps = [];
   const deadline = Date.now() + 14000;
   try {
-    const serversData = await nxshaApiGet('/api/servers', { tmdbId, type, imdb_id: imdbId, season, episode, method: 'stream' }, steps, 'servers');
+    const serversData = await nxshaApiGet('/api/servers', { tmdbId, type, imdb_id: imdbId, season, episode, method: 'stream' }, steps, 'servers', deadline);
     const servers = Array.isArray(serversData && serversData.servers) ? serversData.servers : [];
     if (debug) steps.push({ step: 'servers-list', count: servers.length, names: servers.slice(0, 10).map(nxshaNameOf) });
     const ordered = [...servers].sort((a, b) => Number(/hindi/i.test(nxshaNameOf(b))) - Number(/hindi/i.test(nxshaNameOf(a))));
@@ -171,7 +224,7 @@ async function handleNxshaResolve(req, res, query) {
       if (!provider) continue;
       let sourcesData;
       try {
-        sourcesData = await nxshaApiGet('/api/sources', { provider, tmdbId, imdb_id: imdbId, type, season, episode, method: 'stream' }, steps, 'sources:' + provider);
+        sourcesData = await nxshaApiGet('/api/sources', { provider, tmdbId, imdb_id: imdbId, type, season, episode, method: 'stream' }, steps, 'sources:' + provider, deadline);
       } catch (e) {
         if (debug) steps.push({ step: 'sources', provider, error: String((e && e.message) || e).slice(0, 80) });
         continue;

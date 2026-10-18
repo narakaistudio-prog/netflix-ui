@@ -148,3 +148,33 @@ test('missing id -> 400', async () => {
     const res = await call({ type: 'movie' });
     expect(res.statusCode).toBe(400);
 });
+
+test('WAF 403 on the direct hops -> the profile ladder falls through to a relay and still resolves', async () => {
+    // web.nxsha.app behind its WAF answers 403 to the datacenter client; the
+    // allorigins relay (different egress, plain client) passes.
+    const fetchMock = jest.fn(async (url: string) => {
+        if (url.includes('allorigins')) {
+            if (url.includes(encodeURIComponent('/api/servers'))) {
+                return { ok: true, status: 200, json: async () => SERVERS_BODY } as any;
+            }
+            if (url.includes(encodeURIComponent('/api/sources'))) {
+                return { ok: true, status: 200, json: async () => SOURCES_GBRU } as any;
+            }
+        }
+        if (String(url).startsWith('https://web.nxsha.app/')) {
+            return { ok: false, status: 403, json: async () => ({}) } as any;
+        }
+        return { ok: false, status: 503, json: async () => ({}) } as any;
+    });
+    global.fetch = fetchMock as any;
+
+    const res = await call({ type: 'movie', tmdb: '550', debug: '1' });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.ok).toBe(true);
+    expect(res.body.source.url).toBe('https://cdn/hindi.m3u8');
+    // The failing direct attempts are on record for ?debug=1, and the winning
+    // hop is labelled with the relay profile.
+    const failedAttempts = res.body.steps.filter((s: any) => String(s.step).endsWith('-attempt'));
+    expect(failedAttempts.length).toBeGreaterThanOrEqual(3);
+    expect(res.body.steps.some((s: any) => s.step === 'servers' && s.profile === 'allorigins')).toBe(true);
+});

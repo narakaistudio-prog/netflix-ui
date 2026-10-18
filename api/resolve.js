@@ -16,15 +16,10 @@
  */
 
 const crypto = require('./nxsha-crypto.cjs');
+const { nxshaApiGet } = require('./nxsha-fetch.cjs');
 
-const NXSHA_WEB_BASE = 'https://web.nxsha.app';
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
-const UPSTREAM_TIMEOUT_MS = 6000;
 const TOTAL_BUDGET_MS = 14000;
 const MAX_SERVERS = 4;
-
-export const config = { maxDuration: 30 };
 
 const RATE = new Map();
 function rateOk(ip) {
@@ -39,36 +34,12 @@ function rateOk(ip) {
   return entry.count <= 30;
 }
 
-async function apiGet(path, payload, steps, label) {
-  const q = crypto.seal(payload);
-  const started = Date.now();
-  const res = await fetch(`${NXSHA_WEB_BASE}${path}?q=${encodeURIComponent(q)}`, {
-    headers: {
-      'User-Agent': UA,
-      Accept: 'application/json, */*',
-      Referer: `${NXSHA_WEB_BASE}/`,
-      Origin: NXSHA_WEB_BASE,
-    },
-    signal: timeoutSignal(UPSTREAM_TIMEOUT_MS),
-  });
-  if (!res.ok) throw new Error(`${label} http-${res.status}`);
-  const body = await res.json();
-  const data = crypto.open(body && body._hash);
-  if (!data) throw new Error(`${label} undecryptable`);
-  if (steps) steps.push({ step: label, ms: Date.now() - started });
-  return data;
-}
-
 const nameOf = (server) => String((server && (server.name || server.scraper || server.id)) || '');
 const isHindi = (server) => /hindi/i.test(nameOf(server));
 
-// AbortSignal.timeout exists on Vercel's Node 20 runtime; older hosts and the
-// jest/jsdom environment lack it, so degrade to "no signal" there (fetch still
-// goes through and its own error handling covers the failure).
-const timeoutSignal = (ms) =>
-  typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
-    ? AbortSignal.timeout(ms)
-    : undefined;
+// Seal the payload here; the shared ladder module handles profiles + retries.
+const apiGet = (path, payload, steps, label, deadline) =>
+  nxshaApiGet(path, crypto.seal(payload), steps, label, deadline);
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
@@ -112,6 +83,7 @@ export default async function handler(req, res) {
       { tmdbId, type, imdb_id: imdbId, season, episode, method: 'stream' },
       steps,
       'servers',
+      deadline,
     );
     const servers = Array.isArray(serversData && serversData.servers) ? serversData.servers : [];
     if (debug) {
@@ -143,6 +115,7 @@ export default async function handler(req, res) {
           { provider, tmdbId, imdb_id: imdbId, type, season, episode, method: 'stream' },
           steps,
           `sources:${provider}`,
+          deadline,
         );
       } catch (err) {
         if (debug) {

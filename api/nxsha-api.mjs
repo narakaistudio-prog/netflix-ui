@@ -3,16 +3,16 @@
  *
  * GET /api/nxsha-api?p=/api/servers|/api/sources&q=<sealed query>
  *
- * The browser cannot read web.nxsha.app directly (no CORS headers), so the
- * 1080p direct-stream player routes its API calls through this function,
- * which adds the Referer/Origin/User-Agent the API expects. Both the host
- * and the path whitelist are hardcoded — this is not a general proxy.
+ * The browser cannot read web.nxsha.app directly (no CORS headers), so this
+ * function fetches upstream through the shared header-profile ladder (see
+ * api/nxsha-fetch.cjs — web.nxsha.app's WAF 403s some datacenter clients),
+ * decrypts the sealed response and returns plain JSON to the same-origin app.
+ * Host and path whitelist are hardcoded — this is not a general proxy.
  */
 
-const NXSHA_WEB_BASE = 'https://web.nxsha.app';
+import { nxshaApiGet } from './nxsha-fetch.cjs';
+
 const NXSHA_API_PATHS = new Set(['/api/servers', '/api/sources']);
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
 
 const rateBuckets = new Map();
 function rateOk(ip) {
@@ -63,24 +63,13 @@ export default async function handler(req, res) {
     return;
   }
 
-  const target = `${NXSHA_WEB_BASE}${p}?q=${encodeURIComponent(q)}`;
   try {
-    const upstream = await fetch(target, {
-      headers: {
-        'User-Agent': UA,
-        Accept: 'application/json, */*',
-        Referer: `${NXSHA_WEB_BASE}/`,
-        Origin: NXSHA_WEB_BASE,
-      },
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!upstream.ok) {
-      res.status(502).json({ ok: false, error: `upstream-http-${upstream.status}` });
-      return;
-    }
-    const body = await upstream.json();
-    res.status(200).json({ ok: true, data: body });
+    const data = await nxshaApiGet(p, q, undefined, `passthrough:${p}`, Date.now() + 20000);
+    res.status(200).json({ ok: true, data });
   } catch (err) {
-    res.status(502).json({ ok: false, error: `upstream-${String(err && err.name ? err.name : 'error')}` });
+    res.status(502).json({
+      ok: false,
+      error: String((err && err.message) || 'upstream-error').slice(0, 120),
+    });
   }
 }
