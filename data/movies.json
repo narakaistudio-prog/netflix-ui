@@ -83,7 +83,7 @@
                     "tmdb_id": "1544847",
                     "embed_provider": "nxsha",
                     "year": "2026",
-                    "description": "Follows a woman constable who joins the police force through appointment after the death of her husband.",
+                    "description": "After her husband's tragic death, Aleena joins the police force through a compassionate appointment. What begins as a quiet new chapter soon turns into a high-stakes battle of wits and courage, testing everything she believes about justice, loyalty, and herself.",
                     "duration": "2h 41m",
                     "cast": [
                         "Parvathy Thiruvothu",
@@ -401,40 +401,6 @@
                         "Thriller"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/faJB8DXU0LXwq5ebMLj5drz8S4N.jpg"
-                },
-                {
-                    "id": "tudum-top10-india-pradhama-drishtiya-kuttakkar",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/zrvnu0M5NkO7aniAhfLYi3xGK7E.jpg",
-                    "title": "Pradhama Drishtiya Kuttakkar",
-                    "type": "FILM",
-                    "mediaType": "movie",
-                    "ranking_text": "#3 in Movies",
-                    "catalogSource": "tudum-top10-india",
-                    "netflixId": "83197640",
-                    "netflixUrl": "https://www.netflix.com/in/title/83197640",
-                    "tmdb_id": "1544847",
-                    "embed_provider": "nxsha",
-                    "year": "2026",
-                    "description": "Follows a woman constable who joins the police force through appointment after the death of her husband.",
-                    "duration": "2h 41m",
-                    "cast": [
-                        "Parvathy Thiruvothu",
-                        "Vijayaraghavan",
-                        "Unnimaya Prasad",
-                        "Mathew Thomas",
-                        "Sidharth Bharathan",
-                        "Azees Nedumangad",
-                        "Vinay Forrt",
-                        "R. Parthiban",
-                        "Balaji Sarma",
-                        "Vrindha Menon"
-                    ],
-                    "genres": [
-                        "Crime",
-                        "Drama",
-                        "Thriller"
-                    ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/zmfUqsFcQs6BjLJStofM5MD2l7L.jpg"
                 },
                 {
                     "id": "tudum-top10-india-epic",
