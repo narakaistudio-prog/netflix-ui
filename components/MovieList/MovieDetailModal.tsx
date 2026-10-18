@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Platform, Linking } from 'react-native';
+import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Platform, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
+import { DirectStreamPlayer } from '@/components/DirectStreamPlayer';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
+import { resolveNxshaStream, type ResolvedStream } from '@/lib/nxshaStream';
 import {
     getRecentlyWatched,
     markWatched,
@@ -19,6 +21,13 @@ import type { Movie } from '@/types/movie';
 const IS_WEB = Platform.OS === 'web';
 const PANEL_BG = '#181818';
 const MUTED = '#a3a3a3';
+
+/**
+ * Deployed extractor proxy (Referer + CORS for direct streams). Optional:
+ * without it the resolver only works when nxsha's API allows any origin, and
+ * the app simply falls back to the embed player.
+ */
+const STREAM_PROXY = process.env.EXPO_PUBLIC_STREAM_PROXY ?? '';
 
 type Props = {
     movie: Movie | null;
@@ -74,6 +83,10 @@ export function MovieDetailModal({
     const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     /** Position the media continues from — 0 means "from the beginning". */
     const [resumeSec, setResumeSec] = useState(resumeAt);
+    /** Direct 1080p stream (resolved on Play) — null plays the embed. */
+    const [directStream, setDirectStream] = useState<ResolvedStream | null>(null);
+    /** True while the direct stream is being resolved on Play. */
+    const [preparing, setPreparing] = useState(false);
 
     /** Show a short message over the player, the way the Crunchyroll page does. */
     const announce = useCallback((message: string | null) => {
@@ -90,6 +103,8 @@ export function MovieDetailModal({
         setSeason(initialEpisode?.season ?? 1);
         setSeasonMenuOpen(false);
         setResumeSec(resumeAt);
+        setDirectStream(null);
+        setPreparing(false);
         if (autoPlay && movie) {
             // Resuming from the Continue Watching row: the position of the
             // entry that is being continued is the one we keep updating.
@@ -189,6 +204,34 @@ export function MovieDetailModal({
             } catch {}
             setActiveEntry({ id: entryId, season: ep.season, episode: ep.episode });
             setPlaying(true);
+            // Prefer OUR player with the 1080p level pinned in code; the nxsha
+            // embed player cannot be told a quality. When nothing resolves
+            // (API down / changed / blocked), the embed opens as before.
+            if (IS_WEB && (movie.embed_provider || 'nxsha') === 'nxsha') {
+                setPreparing(true);
+                setDirectStream(null);
+                resolveNxshaStream({
+                    type: isSeries ? 'tv' : 'movie',
+                    tmdbId: movie.tmdb_id,
+                    imdbId: movie.imdb_id,
+                    season: ep.season,
+                    episode: ep.episode,
+                    strictHindi: true,
+                    proxyBase: STREAM_PROXY,
+                })
+                    .then((resolved) => {
+                        setDirectStream(resolved);
+                    })
+                    .catch(() => {
+                        setDirectStream(null);
+                    })
+                    .finally(() => {
+                        setPreparing(false);
+                    });
+            } else {
+                setDirectStream(null);
+                setPreparing(false);
+            }
             return;
         }
         // No playable id for this title: send the viewer to Netflix instead.
@@ -376,24 +419,48 @@ export function MovieDetailModal({
 
                 {playing && src ? (
                     <View style={styles.playerLayer}>
-                        <EmbedPlayer
-                            src={src}
-                            title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
-                            onClose={() => setPlaying(false)}
-                            fallbackUrl={officialUrlFor(movie)}
-                            resumeAt={resumeSec}
-                            onProgress={(info) => {
-                                if (!activeEntry) return;
-                                updateWatchPosition(activeEntry.id, info.seconds, info.duration);
-                            }}
-                            onEnded={() => {
-                                if (!activeEntry) return;
-                                // The media finished: it leaves the row, the
-                                // same way the Crunchyroll page does it.
-                                removeWatched(activeEntry.id);
-                                announce('Marked as watched');
-                            }}
-                        />
+                        {directStream ? (
+                            <DirectStreamPlayer
+                                source={directStream.source}
+                                alternates={directStream.alternates}
+                                proxyBase={STREAM_PROXY}
+                                title={movie.title}
+                                onClose={() => {
+                                    setDirectStream(null);
+                                    setPlaying(false);
+                                }}
+                                onFallback={() => {
+                                    // The direct stream would not play — the
+                                    // classic embed takes over.
+                                    setDirectStream(null);
+                                }}
+                            />
+                        ) : (
+                            <EmbedPlayer
+                                src={src}
+                                title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
+                                onClose={() => setPlaying(false)}
+                                fallbackUrl={officialUrlFor(movie)}
+                                resumeAt={resumeSec}
+                                onProgress={(info) => {
+                                    if (!activeEntry) return;
+                                    updateWatchPosition(activeEntry.id, info.seconds, info.duration);
+                                }}
+                                onEnded={() => {
+                                    if (!activeEntry) return;
+                                    // The media finished: it leaves the row, the
+                                    // same way the Crunchyroll page does it.
+                                    removeWatched(activeEntry.id);
+                                    announce('Marked as watched');
+                                }}
+                            />
+                        )}
+                        {preparing ? (
+                            <View style={styles.preparingOverlay} pointerEvents="none">
+                                <ActivityIndicator size="large" color="#E50914" />
+                                <Text style={styles.preparingText}>1080p stream dhoond rahe hain…</Text>
+                            </View>
+                        ) : null}
                         {playerNotice ? (
                             <View style={styles.playerNotice} pointerEvents="none">
                                 <Ionicons name="play-circle" size={16} color="#fff" />
@@ -443,6 +510,18 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 13,
         fontWeight: '600',
+    },
+    preparingOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.72)',
+        gap: 14,
+        zIndex: 25,
+    },
+    preparingText: {
+        color: '#ccc',
+        fontSize: 13,
     },
     hero: {
         width: '100%',

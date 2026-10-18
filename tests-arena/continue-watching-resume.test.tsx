@@ -4,6 +4,9 @@
 // The player frame is cross-origin, so the position is pinned by the player
 // time events it posts, with a wall-clock estimator as a fallback, and the
 // resume is sprayed back into the frame as seek commands.
+jest.mock('@/lib/nxshaStream', () => ({
+    resolveNxshaStream: () => Promise.resolve(null),
+}));
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';

@@ -1,11 +1,13 @@
 import React from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Linking, Platform, Pressable, StyleSheet, Dimensions, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Dimensions, Text, View } from 'react-native';
 import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
 import { ExpandedPlayer } from '@/components/BottomSheet/ExpandedPlayer';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
+import { DirectStreamPlayer } from '@/components/DirectStreamPlayer';
+import { resolveNxshaStream, type ResolvedStream } from '@/lib/nxshaStream';
 import { useRootScale } from '@/contexts/RootScaleContext';
 import Animated, {
     useSharedValue,
@@ -35,6 +37,8 @@ import {
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
+/** Deployed extractor proxy for direct streams (optional, see README). */
+const STREAM_PROXY = process.env.EXPO_PUBLIC_STREAM_PROXY ?? '';
 const SCALE_FACTOR = 0.83;
 const DRAG_THRESHOLD = Math.min(Dimensions.get('window').height * 0.20, 150);
 const HORIZONTAL_DRAG_THRESHOLD = Math.min(Dimensions.get('window').width * 0.51, 80);
@@ -102,6 +106,10 @@ export default function MovieScreen() {
     /** Continue Watching: the entry being played and the position to resume. */
     const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
     const [resumeAt, setResumeAt] = useState(0);
+    /** Direct 1080p stream (resolved on Play) — null plays the embed. */
+    const [directStream, setDirectStream] = useState<ResolvedStream | null>(null);
+    /** True while the direct stream is being resolved. */
+    const [preparing, setPreparing] = useState(false);
 
     useEffect(() => () => setPlayerChromeHidden(false), []);
 
@@ -427,6 +435,27 @@ export default function MovieScreen() {
         const saved = getRecentlyWatched().find((e) => e.id === entryId);
         setActiveEntryId(entryId);
         setResumeAt(saved?.positionSec ?? 0);
+        // Prefer OUR player with the 1080p level pinned in code; when nothing
+        // resolves, the embed player opens as before.
+        if (IS_WEB && currentProvider === 'nxsha' && hasPlayablePlayback) {
+            setPreparing(true);
+            setDirectStream(null);
+            resolveNxshaStream({
+                type: mediaType,
+                tmdbId: parsedTmdb,
+                imdbId: movie.imdb_id,
+                season: mediaType === 'tv' ? playSeason : undefined,
+                episode: mediaType === 'tv' ? playEpisode : undefined,
+                strictHindi: true,
+                proxyBase: STREAM_PROXY,
+            })
+                .then((resolved) => setDirectStream(resolved))
+                .catch(() => setDirectStream(null))
+                .finally(() => setPreparing(false));
+        } else {
+            setDirectStream(null);
+            setPreparing(false);
+        }
         try {
             markWatched({
                 id: entryId,
@@ -440,7 +469,7 @@ export default function MovieScreen() {
                 episode: mediaType === 'tv' ? playEpisode : undefined,
             });
         } catch {}
-    }, [movie, parsedTmdb, mediaType, currentProvider]);
+    }, [movie, parsedTmdb, mediaType, currentProvider, hasPlayablePlayback]);
 
     const handlePlayFull = useCallback(() => {
         if (!hasPlayablePlayback) {
@@ -539,18 +568,37 @@ export default function MovieScreen() {
                         {playerOpen && src ? (
                             <View style={webStyles.playerLayer} pointerEvents="box-none">
                                 <View style={StyleSheet.absoluteFill} pointerEvents="auto">
-                                    <EmbedPlayer
-                                        src={src}
-                                        title={movie.title}
-                                        onClose={handleCloseInline}
-                                        onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                        fallbackUrl={officialNetflixUrl}
-                                        resumeAt={resumeAt}
-                                        onProgress={(info) => {
-                                            if (!activeEntryId) return;
-                                            updateWatchPosition(activeEntryId, info.seconds, info.duration);
-                                        }}
-                                    />
+                                    {directStream ? (
+                                        <DirectStreamPlayer
+                                            source={directStream.source}
+                                            alternates={directStream.alternates}
+                                            proxyBase={STREAM_PROXY}
+                                            title={movie.title}
+                                            onClose={() => {
+                                                setDirectStream(null);
+                                                handleCloseInline();
+                                            }}
+                                            onFallback={() => setDirectStream(null)}
+                                        />
+                                    ) : (
+                                        <EmbedPlayer
+                                            src={src}
+                                            title={movie.title}
+                                            onClose={handleCloseInline}
+                                            onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                                            fallbackUrl={officialNetflixUrl}
+                                            resumeAt={resumeAt}
+                                            onProgress={(info) => {
+                                                if (!activeEntryId) return;
+                                                updateWatchPosition(activeEntryId, info.seconds, info.duration);
+                                            }}
+                                        />
+                                    )}
+                                    {preparing ? (
+                                        <View style={[StyleSheet.absoluteFill, webPreparingWrap]} pointerEvents="none">
+                                            <Text style={webPreparingText}>1080p stream dhoond rahe hain…</Text>
+                                        </View>
+                                    ) : null}
                                 </View>
                             </View>
                         ) : null}
@@ -578,18 +626,32 @@ export default function MovieScreen() {
                 {playerOpen && src ? (
                     <View style={styles.nativePlayerLayer} pointerEvents="box-none">
                         <View style={StyleSheet.absoluteFill} pointerEvents="auto">
-                            <EmbedPlayer
-                                src={src}
-                                title={movie.title}
-                                onClose={handleCloseInline}
-                                onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                fallbackUrl={officialNetflixUrl}
-                                resumeAt={resumeAt}
-                                onProgress={(info) => {
-                                    if (!activeEntryId) return;
-                                    updateWatchPosition(activeEntryId, info.seconds, info.duration);
-                                }}
-                            />
+                            {directStream ? (
+                                <DirectStreamPlayer
+                                    source={directStream.source}
+                                    alternates={directStream.alternates}
+                                    proxyBase={STREAM_PROXY}
+                                    title={movie.title}
+                                    onClose={() => {
+                                        setDirectStream(null);
+                                        handleCloseInline();
+                                    }}
+                                    onFallback={() => setDirectStream(null)}
+                                />
+                            ) : (
+                                <EmbedPlayer
+                                    src={src}
+                                    title={movie.title}
+                                    onClose={handleCloseInline}
+                                    onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                                    fallbackUrl={officialNetflixUrl}
+                                    resumeAt={resumeAt}
+                                    onProgress={(info) => {
+                                        if (!activeEntryId) return;
+                                        updateWatchPosition(activeEntryId, info.seconds, info.duration);
+                                    }}
+                                />
+                            )}
                         </View>
                     </View>
                 ) : null}
@@ -603,6 +665,14 @@ export default function MovieScreen() {
         setPlayerOpen(false);
     }
 }
+
+const webPreparingWrap = {
+    backgroundColor: 'rgba(0,0,0,0.72)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 30,
+} as const;
+const webPreparingText = { color: '#ccc', fontSize: 13 } as const;
 
 const styles = StyleSheet.create({
     container: {

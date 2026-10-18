@@ -1,4 +1,7 @@
 // @ts-nocheck — browser-style rendering test for deferred and windowed shelves.
+jest.mock('@/lib/nxshaStream', () => ({
+    resolveNxshaStream: () => Promise.resolve(null),
+}));
 import React from 'react';
 import { View } from 'react-native';
 import { createRoot, Root } from 'react-dom/client';

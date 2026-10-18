@@ -88,6 +88,45 @@ async function fetchBuffer(target, { referer = '', timeoutMs = FETCH_TIMEOUT_MS,
   });
 }
 
+/* ---------- nxsha API passthrough ----------
+ * GET /api/nxsha-api?p=/api/servers|/api/sources&q=<encrypted query>
+ * Forwards the app's encrypted nxsha API call with the Referer + UA the API
+ * expects (browsers cannot send a Referer for a cross-origin fetch). The host
+ * and the path are hardcoded — this endpoint is not a general proxy.
+ */
+const NXSHA_WEB_BASE = 'https://web.nxsha.app';
+const NXSHA_API_PATHS = new Set(['/api/servers', '/api/sources']);
+
+async function handleNxshaApi(req, res, query) {
+  const p = query.get('p') || '';
+  const q = query.get('q') || '';
+  if (!NXSHA_API_PATHS.has(p)) { sendJson(res, 400, { ok: false, error: 'bad-path' }, req); return; }
+  if (!q || q.length > 4096) { sendJson(res, 400, { ok: false, error: 'bad-q' }, req); return; }
+  let u;
+  try { u = checkTarget(NXSHA_WEB_BASE + p + '?q=' + encodeURIComponent(q)); } catch (e) { sendErr(res, req, e); return; }
+  const { res: upstream } = await doRequest(u, {
+    headers: {
+      'User-Agent': UA,
+      Accept: 'application/json, */*',
+      Referer: NXSHA_WEB_BASE + '/',
+      Origin: NXSHA_WEB_BASE,
+    },
+    timeoutMs: FETCH_TIMEOUT_MS,
+  });
+  const st = upstream.statusCode || 0;
+  if (st < 200 || st >= 300) { upstream.resume(); sendJson(res, 502, { ok: false, error: 'upstream-http-' + st }, req); return; }
+  const chunks = [];
+  let size = 0;
+  await new Promise((resolve, reject) => {
+    upstream.on('data', (c) => { size += c.length; if (size > PAGE_MAX_BYTES) { upstream.destroy(); reject(httpErr(502, 'upstream-too-big')); return; } chunks.push(c); });
+    upstream.on('end', resolve);
+    upstream.on('error', reject);
+  });
+  let body;
+  try { body = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch (e) { sendJson(res, 502, { ok: false, error: 'upstream-not-json' }, req); return; }
+  sendJson(res, 200, { ok: true, data: body }, req);
+}
+
 /* ---------- route handlers ---------- */
 function selfBase(req) {
   const proto = (req.headers['x-forwarded-proto'] || 'http').toString().split(',')[0].trim() || 'http';
@@ -249,6 +288,11 @@ function createServer() {
       if (full.pathname === '/api/stream') {
         if (!rateOk(ip, 'stream', 600, 60000)) { sendJson(res, 429, { ok: false, error: 'rate-limited' }, req); return; }
         handleStream(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
+        return;
+      }
+      if (full.pathname === '/api/nxsha-api') {
+        if (!rateOk(ip, 'nxsha', 120, 60000)) { sendJson(res, 429, { ok: false, error: 'rate-limited' }, req); return; }
+        handleNxshaApi(req, res, full.searchParams).catch((e) => { if (!res.writableEnded) sendErr(res, req, e); });
         return;
       }
       sendJson(res, 404, { ok: false, error: 'not-found' }, req);

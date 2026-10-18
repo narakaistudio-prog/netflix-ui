@@ -1,4 +1,7 @@
 // @ts-nocheck — jsdom test: a TV title lists its seasons and episodes in the modal; an episode plays in the player.
+jest.mock('@/lib/nxshaStream', () => ({
+    resolveNxshaStream: () => Promise.resolve(null),
+}));
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
