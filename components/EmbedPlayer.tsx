@@ -13,6 +13,7 @@ import { detectProviderFromUrl } from '@/lib/embeds';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 import {
     SEEK_NUDGE_DELAYS,
+    buildQualityMessages,
     buildSeekMessages,
     guessSeconds,
     sniffTimeEvent,
@@ -177,16 +178,8 @@ export function EmbedPlayer({
         p.baseStamp = Date.now();
     }, []);
 
-    /**
-     * Spray a seek command into the player frame.
-     *
-     * The provider boots at its own pace, so the command is repeated a few
-     * times — the same schedule the Crunchyroll page uses.
-     */
-    const spraySeek = useCallback((seconds: number) => {
-        const target = Math.floor(seconds || 0);
-        if (!target || target < 5) return;
-        const messages = buildSeekMessages(target);
+    /** Push messages into the player frame on the nudge schedule. */
+    const schedulePost = useCallback((messages: unknown[]) => {
         SEEK_NUDGE_DELAYS.forEach((delay) => {
             setTimeout(() => {
                 const frame = iframeRef.current;
@@ -200,6 +193,31 @@ export function EmbedPlayer({
             }, delay);
         });
     }, []);
+
+    /**
+     * Spray a seek command into the player frame.
+     *
+     * The provider boots at its own pace, so the command is repeated a few
+     * times — the same schedule the Crunchyroll page uses.
+     */
+    const spraySeek = useCallback((seconds: number) => {
+        const target = Math.floor(seconds || 0);
+        if (!target || target < 5) return;
+        schedulePost(buildSeekMessages(target));
+    }, [schedulePost]);
+
+    /**
+     * Ask the provider player to lock 1080p.
+     *
+     * The player's own default is "Auto" (which starts as low as 240p) and
+     * the provider documents no quality parameter, so every known command
+     * spelling is sprayed on boot — the frame ignores what it does not
+     * understand. The ask repeats on the same schedule as the seek nudges,
+     * because the quality menu only exists once the player engine is up.
+     */
+    const sprayQuality = useCallback(() => {
+        schedulePost(buildQualityMessages());
+    }, [schedulePost]);
 
     useEffect(() => {
         setLoading(true);
@@ -245,14 +263,18 @@ export function EmbedPlayer({
             if (timerRef.current) clearTimeout(timerRef.current);
             setLoading(false);
             setTimedOut(false);
-            // The provider player is up: replay the resume point into it.
+            // The provider player is up: replay the resume point into it and
+            // ask for 1080p again now that the engine is ready.
             if (resumeAt) spraySeek(resumeAt);
+            sprayQuality();
         };
         host.appendChild(iframe);
         iframeRef.current = iframe;
         // The resume point is sprayed as soon as the frame exists, and again
-        // once the provider finished booting (see iframe.onload above).
+        // once the provider finished booting (see iframe.onload above). The
+        // 1080p ask goes out on both waves too.
         if (resumeAt) spraySeek(resumeAt);
+        sprayQuality();
         return () => {
             killIframe();
         };
