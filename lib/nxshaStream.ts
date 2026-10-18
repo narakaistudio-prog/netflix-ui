@@ -6,10 +6,16 @@
  * the direct stream is resolved and played in OUR player, which pins 1080p
  * in code.
  *
- * The resolve itself runs server-side (see api/resolve.js) — the browser
- * cannot read web.nxsha.app at all (no CORS headers). This module just calls
- * the same-origin endpoint, with an optional second endpoint as a fallback.
+ * Resolve tiers, in order:
+ *   0. the user's own browser over the sealed API (see lib/nxshaClient.ts) —
+ *      their residential IP is not Cloudflare-challenged the way our
+ *      datacenter egress is;
+ *   1. the same-origin /api/resolve serverless endpoint (api/resolve.js);
+ *   2. an explicitly deployed proxy endpoint (Render fallback).
+ * Null means "embed player as before".
  */
+
+import { nxshaDirectResolve, type DirectResolved } from './nxshaClient';
 
 export type MediaType = 'movie' | 'tv';
 
@@ -81,9 +87,17 @@ function resolveUrl(params: {
     return `${base}/api/resolve?${query.toString()}`;
 }
 
+function toResolved(direct: DirectResolved): ResolvedStream {
+    return {
+        source: direct.source,
+        alternates: Array.isArray(direct.alternates) ? direct.alternates : [],
+    };
+}
+
 /**
- * Resolve the direct stream for a title: same-origin /api/resolve first,
- * an explicitly deployed proxy second. Null means "embed player as before".
+ * Resolve the direct stream for a title: the user's browser first, then
+ * same-origin /api/resolve, then an explicitly deployed proxy. Null means
+ * "embed player as before".
  */
 export async function resolveNxshaStream(params: {
     type: MediaType;
@@ -95,6 +109,10 @@ export async function resolveNxshaStream(params: {
     timeoutMs?: number;
 }): Promise<ResolvedStream | null> {
     if ((params.tmdbId == null || params.tmdbId === '') && !params.imdbId) return null;
+
+    // Tier 0: from this browser (residential IP — no datacenter challenge).
+    const direct = await nxshaDirectResolve(params);
+    if (direct && direct.source && direct.source.url) return toResolved(direct);
 
     const attempts: string[] = [resolveUrl({ ...params })];
     if (params.proxyBase) {
