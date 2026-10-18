@@ -96,6 +96,28 @@ export function MovieDetailModal({
         noticeTimer.current = setTimeout(() => setPlayerNotice(null), 4000);
     }, []);
 
+    /**
+     * Try to resolve the DIRECT 1080p stream for a title/episode. When it
+     * fails (API down / changed / blocked), the embed player opens as before.
+     */
+    const startDirectResolve = useCallback((isSeries: boolean, ep: { season: number; episode: number }) => {
+        if (!IS_WEB || !movie || (movie.embed_provider || 'nxsha') !== 'nxsha') return;
+        setPreparing(true);
+        setDirectStream(null);
+        resolveNxshaStream({
+            type: isSeries ? 'tv' : 'movie',
+            tmdbId: movie.tmdb_id,
+            imdbId: movie.imdb_id,
+            season: ep.season,
+            episode: ep.episode,
+            strictHindi: true,
+            proxyBase: STREAM_PROXY,
+        })
+            .then((resolved) => setDirectStream(resolved))
+            .catch(() => setDirectStream(null))
+            .finally(() => setPreparing(false));
+    }, [movie]);
+
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
         setPlaying(autoPlay);
@@ -115,6 +137,8 @@ export function MovieDetailModal({
                 season: ep.season,
                 episode: ep.episode,
             });
+            // The resume deserves the 1080p player too.
+            startDirectResolve(isSeries, ep);
             // Announce the resume point, exactly like the Crunchyroll page does.
             const where = isSeries ? `S${ep.season} EP${ep.episode}` : 'Movie';
             announce(resumeAt >= 30 ? `Resuming ${where} at ${formatClock(resumeAt)}` : null);
@@ -205,33 +229,8 @@ export function MovieDetailModal({
             setActiveEntry({ id: entryId, season: ep.season, episode: ep.episode });
             setPlaying(true);
             // Prefer OUR player with the 1080p level pinned in code; the nxsha
-            // embed player cannot be told a quality. When nothing resolves
-            // (API down / changed / blocked), the embed opens as before.
-            if (IS_WEB && (movie.embed_provider || 'nxsha') === 'nxsha') {
-                setPreparing(true);
-                setDirectStream(null);
-                resolveNxshaStream({
-                    type: isSeries ? 'tv' : 'movie',
-                    tmdbId: movie.tmdb_id,
-                    imdbId: movie.imdb_id,
-                    season: ep.season,
-                    episode: ep.episode,
-                    strictHindi: true,
-                    proxyBase: STREAM_PROXY,
-                })
-                    .then((resolved) => {
-                        setDirectStream(resolved);
-                    })
-                    .catch(() => {
-                        setDirectStream(null);
-                    })
-                    .finally(() => {
-                        setPreparing(false);
-                    });
-            } else {
-                setDirectStream(null);
-                setPreparing(false);
-            }
+            // embed player cannot be told a quality.
+            startDirectResolve(isSeries, ep);
             return;
         }
         // No playable id for this title: send the viewer to Netflix instead.
@@ -461,6 +460,13 @@ export function MovieDetailModal({
                                 <Text style={styles.preparingText}>1080p stream dhoond rahe hain…</Text>
                             </View>
                         ) : null}
+                        {playing && !directStream && !preparing && (movie.embed_provider || 'nxsha') === 'nxsha' ? (
+                            <View style={styles.embedBadge} pointerEvents="none">
+                                <Text style={styles.embedBadgeText}>
+                                    Nxsha embed · direct 1080p stream nahi mila
+                                </Text>
+                            </View>
+                        ) : null}
                         {playerNotice ? (
                             <View style={styles.playerNotice} pointerEvents="none">
                                 <Ionicons name="play-circle" size={16} color="#fff" />
@@ -522,6 +528,21 @@ const styles = StyleSheet.create({
     preparingText: {
         color: '#ccc',
         fontSize: 13,
+    },
+    embedBadge: {
+        position: 'absolute',
+        top: 14,
+        left: 64,
+        backgroundColor: 'rgba(0,0,0,0.65)',
+        borderRadius: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        zIndex: 30,
+    },
+    embedBadgeText: {
+        color: 'rgba(255,255,255,0.75)',
+        fontSize: 11,
+        fontWeight: '600',
     },
     hero: {
         width: '100%',

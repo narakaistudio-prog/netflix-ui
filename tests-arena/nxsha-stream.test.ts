@@ -127,6 +127,14 @@ describe('resolveNxshaStream', () => {
         const called = fetchMock.mock.calls.map((c: any[]) => c[0]);
         expect(called.some((u: string) => u.startsWith('https://web.nxsha.app/api/servers?q='))).toBe(true);
         expect(called.some((u: string) => u.startsWith('https://web.nxsha.app/api/sources?q='))).toBe(true);
+        // The sources call names the SERVER it wants sources for — without
+        // the provider field the API has nothing to answer with.
+        const sourcesUrl = called.find((u: string) => u.includes('/api/sources?q='));
+        const sealed = decodeURIComponent(sourcesUrl.split('q=')[1]);
+        const payload = decryptResponse(sealed);
+        expect(payload.provider).toBe('gbru');
+        expect(payload.tmdbId).toBe('1399');
+        expect(payload.type).toBe('tv');
     });
 
     test('a dead API resolves to null (embed player takes over)', async () => {

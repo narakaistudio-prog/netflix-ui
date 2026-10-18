@@ -54,6 +54,8 @@ interface ApiPayload {
     tmdbId: string;
     type: MediaType;
     imdb_id: string;
+    /** /api/sources resolves per server: the server's scraper/id. */
+    provider?: string;
     season: string;
     episode: string;
     method: 'stream';
@@ -218,7 +220,6 @@ export async function resolveNxshaStream(params: {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), params.timeoutMs ?? RESOLVE_TIMEOUT_MS);
     try {
-        const idPart = params.imdbId ? { imdb_id: params.imdbId } : {};
         const serversBody = await fetchJson(
             '/api/servers',
             buildPayload({
@@ -247,10 +248,12 @@ export async function resolveNxshaStream(params: {
                         tmdbId,
                         type: params.type,
                         imdb_id: params.imdbId ?? '',
+                        // The API resolves sources PER SERVER — without the
+                        // provider id it has nothing to answer with.
+                        provider,
                         season: String(Math.max(1, Math.floor(params.season || 1))),
                         episode: String(Math.max(1, Math.floor(params.episode || 1))),
                         method: 'stream',
-                        ...idPart,
                     }),
                     params.proxyBase ?? '',
                     controller.signal,
