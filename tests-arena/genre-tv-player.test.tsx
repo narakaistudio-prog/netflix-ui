@@ -1,7 +1,4 @@
 // @ts-nocheck — jsdom test: Netflix genre TV shows open the TV player (first episode), in the Netflix accent.
-jest.mock('@/lib/nxshaStream', () => ({
-    resolveNxshaStream: () => Promise.resolve(null),
-}));
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';

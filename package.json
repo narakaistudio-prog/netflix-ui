@@ -41,7 +41,6 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
-    "hls.js": "^1.7.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
@@ -54,12 +53,10 @@
     "react-native-web": "~0.19.10",
     "react-native-webview": "^13.8.6",
     "styled-components": "^6.1.13",
-    "use-debounce": "^10.0.4",
-    "crypto-js": "^4.2.0"
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
-    "@types/crypto-js": "^4.2.2",
     "@types/jest": "^29.5.12",
     "@types/react-test-renderer": "^18.0.7",
     "@types/styled-components": "^5.1.34",

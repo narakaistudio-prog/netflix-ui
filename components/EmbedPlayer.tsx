@@ -177,8 +177,16 @@ export function EmbedPlayer({
         p.baseStamp = Date.now();
     }, []);
 
-    /** Push messages into the player frame on the nudge schedule. */
-    const schedulePost = useCallback((messages: unknown[]) => {
+    /**
+     * Spray a seek command into the player frame.
+     *
+     * The provider boots at its own pace, so the command is repeated a few
+     * times — the same schedule the Crunchyroll page uses.
+     */
+    const spraySeek = useCallback((seconds: number) => {
+        const target = Math.floor(seconds || 0);
+        if (!target || target < 5) return;
+        const messages = buildSeekMessages(target);
         SEEK_NUDGE_DELAYS.forEach((delay) => {
             setTimeout(() => {
                 const frame = iframeRef.current;
@@ -192,18 +200,6 @@ export function EmbedPlayer({
             }, delay);
         });
     }, []);
-
-    /**
-     * Spray a seek command into the player frame.
-     *
-     * The provider boots at its own pace, so the command is repeated a few
-     * times — the same schedule the Crunchyroll page uses.
-     */
-    const spraySeek = useCallback((seconds: number) => {
-        const target = Math.floor(seconds || 0);
-        if (!target || target < 5) return;
-        schedulePost(buildSeekMessages(target));
-    }, [schedulePost]);
 
     useEffect(() => {
         setLoading(true);

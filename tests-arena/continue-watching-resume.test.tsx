@@ -4,9 +4,6 @@
 // The player frame is cross-origin, so the position is pinned by the player
 // time events it posts, with a wall-clock estimator as a fallback, and the
 // resume is sprayed back into the frame as seek commands.
-jest.mock('@/lib/nxshaStream', () => ({
-    resolveNxshaStream: jest.fn(() => Promise.resolve(null)),
-}));
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
@@ -25,8 +22,6 @@ jest.mock('@/hooks/useCatalog', () => ({
 
 import { ContinueWatchingRow } from '../components/ContinueWatchingRow';
 import { MovieDetailModal } from '../components/MovieList/MovieDetailModal';
-import { resolveNxshaStream } from '@/lib/nxshaStream';
-const mockResolve = jest.mocked(resolveNxshaStream);
 import {
     getRecentlyWatched,
     markWatched,
@@ -140,12 +135,6 @@ test('a series resumes the very same episode', () => {
     // S1 · E3 of the series, not the first episode.
     expect(frame.getAttribute('src')).toContain('/embed/tv/');
     expect(frame.getAttribute('src')).toContain('/1/3');
-    // And the 1080p direct player was given a chance for this episode.
-    expect(mockResolve).toHaveBeenCalledWith(expect.objectContaining({
-        type: 'tv',
-        season: 1,
-        episode: 3,
-    }));
 });
 
 test('with no player events the wall-clock estimator still records the position', () => {

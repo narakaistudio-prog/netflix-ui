@@ -1,7 +1,4 @@
 // @ts-nocheck — jsdom test: a pressed title opens its details over the row.
-jest.mock('@/lib/nxshaStream', () => ({
-    resolveNxshaStream: () => Promise.resolve(null),
-}));
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
