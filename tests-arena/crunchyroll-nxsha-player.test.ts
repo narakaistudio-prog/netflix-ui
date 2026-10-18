@@ -139,7 +139,7 @@ test('Nxsha is the sole player and the default for the Crunchyroll section', asy
     dom.window.close();
 });
 
-test('all 64 Crunchyroll catalog titles have one Nxsha mapping', async () => {
+test('all 83 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping', async () => {
     const dom = boot();
     await wait(200);
 
@@ -147,8 +147,14 @@ test('all 64 Crunchyroll catalog titles have one Nxsha mapping', async () => {
     const catalogKeys = Array.from(
         dom.window.document.querySelectorAll('#catalogGrid [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
+    const ghibliKeys = Array.from(
+        dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
+    ).map((card) => card.getAttribute('data-open') || '');
     expect(new Set(catalogKeys).size).toBe(64);
-    expect(Object.keys(nxData).sort()).toEqual([...new Set(catalogKeys)].sort());
+    expect(new Set(ghibliKeys).size).toBe(22);
+    expect(Object.keys(nxData).sort()).toEqual(
+        [...new Set([...catalogKeys, ...ghibliKeys])].sort(),
+    );
     for (const entry of Object.values(nxData)) {
         expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
         expect(['tv', 'movie']).toContain(entry.kind);

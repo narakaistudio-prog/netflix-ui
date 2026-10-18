@@ -619,5 +619,176 @@
       "4": 24
     },
     "title": "Welcome to Demon School! Iruma-kun"
+  },
+  "kaguya": {
+    "id": "149871",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "The Tale of The Princess Kaguya",
+    "verified": "2026-10-17"
+  },
+  "marnie": {
+    "id": "242828",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "When Marnie Was There",
+    "verified": "2026-10-17"
+  },
+  "fireflies": {
+    "id": "12477",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Grave of the Fireflies",
+    "verified": "2026-10-17"
+  },
+  "arrietty": {
+    "id": "51739",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "The Secret World of Arrietty",
+    "verified": "2026-10-17"
+  },
+  "pompoko": {
+    "id": "15283",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Pom Poko",
+    "verified": "2026-10-17"
+  },
+  "onlyyesterday": {
+    "id": "15080",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Only Yesterday",
+    "verified": "2026-10-17"
+  },
+  "totoro": {
+    "id": "8392",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "My Neighbor Totoro",
+    "verified": "2026-10-17"
+  },
+  "windrises": {
+    "id": "149870",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "The Wind Rises",
+    "verified": "2026-10-17"
+  },
+  "nausicaa": {
+    "id": "81",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Nausicaä of the Valley of the Wind",
+    "verified": "2026-10-17"
+  },
+  "ponyo": {
+    "id": "12429",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Ponyo",
+    "verified": "2026-10-17"
+  },
+  "kiki": {
+    "id": "16859",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Kiki's Delivery Service",
+    "verified": "2026-10-17"
+  },
+  "yamadas": {
+    "id": "16198",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "My Neighbors the Yamadas",
+    "verified": "2026-10-17"
+  },
+  "porco": {
+    "id": "11621",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Porco Rosso",
+    "verified": "2026-10-17"
+  },
+  "castleinthesky": {
+    "id": "10515",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Castle in the Sky",
+    "verified": "2026-10-17"
+  },
+  "whisper": {
+    "id": "37797",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Whisper of the Heart",
+    "verified": "2026-10-17"
+  },
+  "poppyhill": {
+    "id": "83389",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "From Up on Poppy Hill",
+    "verified": "2026-10-17"
+  },
+  "earthsea": {
+    "id": "37933",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Tales from Earthsea",
+    "verified": "2026-10-17"
+  },
+  "catreturns": {
+    "id": "15370",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "The Cat Returns",
+    "verified": "2026-10-17"
+  },
+  "oceanwaves": {
+    "id": "21057",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Ocean Waves",
+    "verified": "2026-10-17"
   }
 }
