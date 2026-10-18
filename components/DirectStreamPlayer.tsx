@@ -50,13 +50,18 @@ export function DirectStreamPlayer({
     const candidates = [source, ...alternates].filter(Boolean);
     const current = candidates[Math.min(candidateIndex, candidates.length - 1)];
 
-    /** Proxied media URL — sends the Referer the CDN expects server-side. */
+    /**
+     * Proxied media URL — sends the Referer the CDN expects server-side.
+     * Without an explicit proxy base the same-origin function that ships with
+     * the app (api/stream.mjs on Vercel) is used via a relative path.
+     */
     const mediaUrl = (src: NxshaSource, viaProxy: boolean) => {
-        if (!viaProxy || !proxyBase) return src.url;
+        if (!viaProxy) return src.url;
         const b64u = (value: string) =>
             btoa(value).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
         const referer = src.referer || 'https://web.nxsha.app/';
-        return `${proxyBase.replace(/\/+$/, '')}/api/stream?u=${b64u(src.url)}&r=${b64u(referer)}`;
+        const base = proxyBase ? proxyBase.replace(/\/+$/, '') : '';
+        return `${base}/api/stream?u=${b64u(src.url)}&r=${b64u(referer)}`;
     };
 
     /** Move to the next source (or the proxied variant) / give up to the embed. */
@@ -142,8 +147,9 @@ export function DirectStreamPlayer({
                 });
                 hls.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
                     if (cancelled || !data?.fatal) return;
-                    if (!viaProxy && proxyBase && data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                        // The CDN likely wants its Referer: retry through the proxy.
+                    if (!viaProxy && data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                        // The CDN likely wants its Referer (or blocks CORS):
+                        // retry once through the proxy (same-origin by default).
                         viaProxy = true;
                         hls.destroy();
                         hlsRef.current = null;

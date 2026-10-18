@@ -161,30 +161,40 @@ export function pickLevelIndex(heights: number[], targetHeight = 1080): number {
 
 async function fetchJson(apiPath: '/api/servers' | '/api/sources', payload: unknown, proxyBase: string, signal: AbortSignal): Promise<any> {
     const url = buildApiUrl(apiPath, payload);
-    const attempt = async (target: string, referer: boolean) => {
-        const res = await fetch(target, {
-            signal,
-            headers: referer ? { Accept: 'application/json' } : { Accept: 'application/json' },
-            referrer: referer ? `${API_BASE}/` : undefined,
-        });
+    const sealed = encryptPayload(payload);
+
+    /** Unwrap the direct body ({_hash}) or the proxy body ({ok, data}). */
+    const unwrap = async (res: Response) => {
         if (!res.ok) throw new Error(`nxsha api ${apiPath} -> ${res.status}`);
         const body = await res.json();
-        const data = body && typeof body === 'object' && '_hash' in body
-            ? decryptResponse((body as any)._hash)
-            : body;
+        const data =
+            body && typeof body === 'object' && '_hash' in body
+                ? decryptResponse((body as any)._hash)
+                : body && typeof body === 'object' && (body as any).ok && 'data' in body
+                    ? (body as any).data
+                    : body;
         if (!data) throw new Error(`nxsha api ${apiPath} -> undecryptable`);
         return data;
     };
-    // 1. Straight from the browser (works when the API allows any origin).
-    try {
-        return await attempt(url, true);
-    } catch (error) {
-        if (signal.aborted) throw error;
-        // 2. Through the deployed stream proxy (handles Referer + CORS).
-        if (!proxyBase) throw error;
-        const proxied = `${proxyBase.replace(/\/+$/, '')}/api/nxsha-api?p=${encodeURIComponent(apiPath)}&q=${encodeURIComponent(encryptPayload(payload))}`;
-        return attempt(proxied, false);
+
+    const attempts: string[] = [
+        url, // 1. Straight from the browser (works when the API allows any origin).
+        `/api/nxsha-api?p=${encodeURIComponent(apiPath)}&q=${encodeURIComponent(sealed)}`, // 2. Same-origin (the Vercel function that ships with the app).
+    ];
+    if (proxyBase) {
+        attempts.push(`${proxyBase.replace(/\/+$/, '')}/api/nxsha-api?p=${encodeURIComponent(apiPath)}&q=${encodeURIComponent(sealed)}`); // 3. An explicitly deployed proxy.
     }
+
+    let lastError: unknown = null;
+    for (const attempt of attempts) {
+        try {
+            return await unwrap(await fetch(attempt, { signal, headers: { Accept: 'application/json' } }));
+        } catch (error) {
+            lastError = error;
+            if (signal.aborted) throw error;
+        }
+    }
+    throw lastError ?? new Error(`nxsha api ${apiPath} unreachable`);
 }
 
 /**

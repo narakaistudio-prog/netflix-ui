@@ -104,7 +104,7 @@ test('without a 1080p level the highest one is pinned', () => {
     expect(hls.currentLevel).toBe(1);
 });
 
-test('a fatal network error without a proxy falls back to the embed player', () => {
+test('a fatal network error retries through the same-origin proxy, then falls back', () => {
     const onFallbackMock = jest.fn();
     act(() => root.render(
         <DirectStreamPlayer
@@ -113,7 +113,18 @@ test('a fatal network error without a proxy falls back to the embed player', () 
             onFallback={onFallbackMock}
         />,
     ));
-    const hls = hlsInstances[hlsInstances.length - 1];
+
+    // First fatal network error: one retry wave through /api/stream.
+    let hls = hlsInstances[hlsInstances.length - 1];
+    act(() => mockEmitError!(hls, { fatal: true, type: 'networkError' }));
+    expect(onFallbackMock).not.toHaveBeenCalled();
+    expect(hlsInstances.length).toBe(2);
+    hls = hlsInstances[hlsInstances.length - 1];
+    expect(hls.loadSource).toHaveBeenCalledWith(
+        expect.stringContaining('/api/stream?u='),
+    );
+
+    // A failure on the proxied source too: the embed takes over.
     act(() => mockEmitError!(hls, { fatal: true, type: 'networkError' }));
     expect(onFallbackMock).toHaveBeenCalled();
 });

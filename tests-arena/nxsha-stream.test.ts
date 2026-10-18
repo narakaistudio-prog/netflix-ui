@@ -135,6 +135,24 @@ describe('resolveNxshaStream', () => {
         expect(resolved).toBeNull();
     });
 
+    test('without an explicit proxy the same-origin function is the fallback', async () => {
+        const fetchMock = jest.fn(async (url: string) => {
+            if (url.startsWith('https://web.nxsha.app/')) throw new TypeError('Failed to fetch');
+            if (url.startsWith('/api/nxsha-api?p=%2Fapi%2Fservers')) return { ok: true, status: 200, json: async () => serversBody } as any;
+            if (url.startsWith('/api/nxsha-api?p=%2Fapi%2Fsources')) return { ok: true, status: 200, json: async () => sourcesBody } as any;
+            throw new TypeError('unexpected ' + url);
+        });
+        global.fetch = fetchMock as any;
+
+        const resolved = await resolveNxshaStream({ type: 'movie', tmdbId: '550' });
+        expect(resolved).not.toBeNull();
+        expect(resolved!.source.url).toBe('https://cdn/hindi.m3u8');
+        const called = fetchMock.mock.calls.map((c: any[]) => c[0]);
+        // Direct pehla, same-origin relative doosra — koi config nahi chahiye.
+        expect(called[0].startsWith('https://web.nxsha.app/')).toBe(true);
+        expect(called[1].startsWith('/api/nxsha-api?')).toBe(true);
+    });
+
     test('no playable source anywhere -> null', async () => {
         global.fetch = mockFetch((url) => (
             url.includes('/api/servers')
@@ -145,11 +163,13 @@ describe('resolveNxshaStream', () => {
         expect(resolved).toBeNull();
     });
 
-    test('a CORS-blocked API still resolves through the configured proxy', async () => {
+    test('the fallback chain runs direct -> same-origin -> explicit proxy', async () => {
         const fetchMock = jest.fn(async (url: string) => {
             if (url.startsWith('https://web.nxsha.app/')) throw new TypeError('Failed to fetch');
-            if (url.includes('/api/nxsha-api?p=%2Fapi%2Fservers')) return { ok: true, status: 200, json: async () => serversBody } as any;
-            if (url.includes('/api/nxsha-api?p=%2Fapi%2Fsources')) return { ok: true, status: 200, json: async () => sourcesBody } as any;
+            // The same-origin function is down too; the explicit proxy answers.
+            if (url.startsWith('/api/nxsha-api?')) return { ok: false, status: 502, json: async () => ({ ok: false }) } as any;
+            if (String(url).startsWith('https://proxy.example/api/nxsha-api?p=%2Fapi%2Fservers')) return { ok: true, status: 200, json: async () => serversBody } as any;
+            if (String(url).startsWith('https://proxy.example/api/nxsha-api?p=%2Fapi%2Fsources')) return { ok: true, status: 200, json: async () => sourcesBody } as any;
             throw new TypeError('unexpected ' + url);
         });
         global.fetch = fetchMock as any;
@@ -162,6 +182,9 @@ describe('resolveNxshaStream', () => {
         });
         expect(resolved).not.toBeNull();
         expect(resolved!.source.url).toBe('https://cdn/hindi.m3u8');
-        expect(fetchMock.mock.calls.some((c: any[]) => String(c[0]).startsWith('https://proxy.example/api/nxsha-api'))).toBe(true);
+        const called = fetchMock.mock.calls.map((c: any[]) => String(c[0]));
+        expect(called[0].startsWith('https://web.nxsha.app/')).toBe(true);
+        expect(called[1].startsWith('/api/nxsha-api?')).toBe(true);
+        expect(called[2].startsWith('https://proxy.example/api/nxsha-api')).toBe(true);
     });
 });
