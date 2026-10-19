@@ -1,0 +1,8 @@
+== my-hero-academia series 200 seasonButtons=9 articles=16
+   S8 page 200 episodes={"count":12,"first":1,"last":12} cards=12 withImg=12 missingLocal=[]
+   src=["https://image.tmdb.org/t/p/w780/9Rp19trFIKOKtMorx84LnWkkajb.jpg","https://image.tmdb.org/t/p/w780/A7tBAcy4Hv5jyWvLBRpRM6lvPio.jpg"]
+   articles=12 firstArticle="<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/9Rp19trFIKOKtMorx84LnWkkajb.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 8x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-titl"
+== trigun-stampede series 200 seasonButtons=2 articles=23
+   S2 page 200 episodes={"count":12,"first":1,"last":12} cards=12 withImg=12 missingLocal=[]
+   src=["https://image.tmdb.org/t/p/w780/rYVKGFKCtYgjigMF9Yd3q1Y0cJl.jpg","https://image.tmdb.org/t/p/w780/s1JPSH74nziXd984EOiFmNapMH8.jpg"]
+   articles=12 firstArticle="<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/rYVKGFKCtYgjigMF9Yd3q1Y0cJl.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 2x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-titl"
