@@ -109,7 +109,7 @@ export function buildNxshaEpisodeGuide(nxData, nxshaEpisodes = {}) {
         if (key.startsWith('_') || title.kind !== 'tv') continue;
         const harvested = nxshaEpisodes?.shows?.[key];
         if (!Array.isArray(harvested?.episodes)) continue;
-        const bySeason = {};
+        const grouped = {};
         for (const episode of harvested.episodes) {
             const seasonNumber = Number(episode.season);
             const episodeNumber = Number(episode.episode);
@@ -126,8 +126,19 @@ export function buildNxshaEpisodeGuide(nxData, nxshaEpisodes = {}) {
                 ...(episode.runtime ? { runtime: episode.runtime } : {}),
             };
             if (!Object.keys(metadata).length) continue;
-            bySeason[String(seasonNumber)] ||= {};
-            bySeason[String(seasonNumber)][String(episodeNumber)] = metadata;
+            (grouped[String(seasonNumber)] ||= []).push({ episodeNumber, metadata });
+        }
+        const bySeason = {};
+        for (const [season, episodes] of Object.entries(grouped)) {
+            // Nxsha numbers long-running shows absolutely (Naruto S2 = 33..53,
+            // One Piece S20 = 878..891) while its embed plays episode 1..N of
+            // that season. Re-key the guide to those local numbers so the
+            // season tabs find the still and synopsis.
+            episodes.sort((a, b) => a.episodeNumber - b.episodeNumber);
+            bySeason[season] = {};
+            episodes.forEach((episode, index) => {
+                bySeason[season][String(index + 1)] = episode.metadata;
+            });
         }
         if (Object.keys(bySeason).length) result[key] = bySeason;
     }

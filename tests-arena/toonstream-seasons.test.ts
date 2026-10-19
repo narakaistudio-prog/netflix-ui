@@ -189,7 +189,10 @@ test('an absolutely numbered dub season plays the right ToonStream episode', asy
     select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
     await wait(100);
     // Season 2 has 21 episodes, numbered 33..53 on the site.
-    expect(doc.getElementById('episodeList')!.querySelectorAll('.episode-card')).toHaveLength(21);
+    const list = doc.getElementById('episodeList')!;
+    expect(list.querySelectorAll('.episode-card')).toHaveLength(21);
+    // Nxsha numbers that season 33..53 too; the guide is re-keyed to 1..21.
+    expect(list.textContent).toContain('The New Target');
     click(dom.window, doc.querySelector('#episodeList .episode-card'));
     await wait(200);
     click(dom.window, doc.getElementById('tsServerBtn'));
@@ -220,7 +223,17 @@ test('One Piece shows every ToonStream season and its own Nxsha guide', async ()
     expect(list.querySelectorAll('.episode-card')).toHaveLength(56);
     // ToonStream's S1 starts at absolute episode 6, so the first card is Nxsha's episode 6.
     expect(list.textContent).toContain('Desperate Situation! Beast Tamer Mohji vs Luffy!');
-    const thumb = list.querySelector('.episode-card img')!;
+    // Season 2 starts at absolute episode 62 on the site and in Nxsha's guide.
+    select.value = '2';
+    select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+    await wait(100);
+    const season2 = doc.getElementById('episodeList')!;
+    expect(season2.querySelectorAll('.episode-card')).toHaveLength(16);
+    expect(season2.textContent).toContain('The First Line of Defense? The Giant Whale Laboon Appears!');
+    select.value = '1';
+    select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+    await wait(100);
+    const thumb = doc.querySelector('#episodeList .episode-card img')!;
     expect(thumb.getAttribute('data-src') || thumb.innerHTML || '').toContain('image.tmdb.org');
 
     click(dom.window, doc.querySelector('#episodeList .episode-card'));
