@@ -146,6 +146,39 @@ function extractPlayerSlots(html) {
 }
 
 /**
+ * The site's server switcher (rendered client-side) promotes three servers
+ * to the top of its sidebar: SERVER 1 "PLAY" (the default options-0 player),
+ * then the "Short" row, then the "MultiQ" row. Download row N maps to player
+ * slot N-1 (verified against live pages). We replicate that order here.
+ */
+function extractSiteServers(html) {
+  const slots = extractPlayerSlots(html);
+  const rowNames = extractServerNames(html);
+  const byRow = (row) => slots.find((x) => x.slot === row - 1) || null;
+  const findRow = (re) => {
+    for (const k of Object.keys(names())) if (re.test(names()[k])) return parseInt(k, 10);
+    return 0;
+  };
+  const names = () => rowNames;
+  const out = [];
+  const first = byRow(1);
+  if (first) out.push({ name: 'Play', url: first.url });
+  for (const re of [/^short$/i, /multi\s*q/i]) {
+    const row = findRow(re);
+    const sl = row ? byRow(row) : null;
+    if (sl && !out.some((o) => o.url === sl.url)) out.push({ name: names()[String(row)] || 'Server', url: sl.url });
+  }
+  for (const sl of slots) {
+    if (out.length >= 3) break;
+    if (sl.slot === 0 && out.some((o) => o.url === sl.url)) continue;
+    if (!out.some((o) => o.url === sl.url)) {
+      out.push({ name: names()[String(sl.slot + 1)] || `S${sl.slot + 1}`, url: sl.url });
+    }
+  }
+  return out.slice(0, 3);
+}
+
+/**
  * Sidebar row names: <span class="hex-number">01</span> ... <span class="server-name">Play</span>.
  * Returns {'1': 'Play', '2': 'Short', ...}.
  */
@@ -300,10 +333,7 @@ async function handler(req, res) {
     const embeds = extractIframes(found.html);
     // Only the site's first three servers (SERVER 1/2/3 in the sidebar),
     // named from the page's own server list - everything else is dropped.
-    const rowNames = extractServerNames(found.html);
-    let siteServers = extractPlayerSlots(found.html)
-      .slice(0, 3)
-      .map((sl) => ({ name: rowNames[String(sl.slot + 1)] || `S${sl.slot + 1}`, url: sl.url }));
+    let siteServers = extractSiteServers(found.html);
     if (!siteServers.length) {
       siteServers = embeds.slice(0, 3).map((url, i) => ({ name: `S${i + 1}`, url }));
     }
@@ -339,4 +369,4 @@ export default handler;
 export const config = { maxDuration: 30 };
 
 // Exposed for tests.
-export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractServers, matchScore, pickEmbed };
+export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractSiteServers, extractServers, matchScore, pickEmbed };
