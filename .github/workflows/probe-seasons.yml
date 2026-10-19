@@ -1,0 +1,19 @@
+name: probe-seasons
+on:
+  push:
+    paths:
+      - '.github/workflows/probe-seasons.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe the problem titles
+        env:
+          TS_SEASONS_DEBUG: '1'
+          TS_SEASONS_ONLY: 'onepiece,golden-kamuy,fate-strange-fake,to-your-eternity,blue-miburo,aot,demon,naruto'
+        run: node scripts/harvest-toonstream-seasons.mjs --dry-run | tail -80

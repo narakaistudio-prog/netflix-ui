@@ -44,6 +44,7 @@ const END = '/*TS_SEASONS_END*/';
 const FROM_STATE = process.argv.includes('--from-state');
 const CHECK = process.argv.includes('--check');
 const DRY_RUN = process.argv.includes('--dry-run');
+const DEBUG = process.env.TS_SEASONS_DEBUG === '1';
 const ONLY = String(process.env.TS_SEASONS_ONLY || '')
     .split(',')
     .map((v) => v.trim())
@@ -125,8 +126,15 @@ function pageTitle(html) {
 /** Every season of a series page with its real episode count. */
 async function seasonsOf(slug) {
     const page = await getText(`${BASE}/series/${slug}/`);
-    if (page.status !== 200) return null;
+    if (page.status !== 200) {
+        if (DEBUG) console.log(`    ${slug}: HTTP ${page.status}`);
+        return null;
+    }
     const links = parseToonSeasons(page.text);
+    if (DEBUG) {
+        const probe = parseSeasonEpisodes(page.text);
+        console.log(`    ${slug}: "${pageTitle(page.text)}" buttons=${links.length} inline=${probe.first}-${probe.last} (${probe.count})`);
+    }
     const seasons = [];
     if (links.length) {
         for (const link of links) {
@@ -144,7 +152,10 @@ async function seasonsOf(slug) {
         const info = parseSeasonEpisodes(page.text);
         if (info.count) seasons.push({ n: 1, count: info.count, start: info.first, last: info.last, missing: info.missing });
     }
-    if (!seasons.length) return null;
+    if (!seasons.length) {
+        if (DEBUG) console.log(`    ${slug}: no episodes parsed`);
+        return null;
+    }
     return { slug, title: pageTitle(page.text), seasons };
 }
 
