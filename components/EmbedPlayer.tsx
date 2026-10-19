@@ -12,6 +12,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { detectProviderFromUrl } from '@/lib/embeds';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 import {
+    enterPlayerFullscreen,
+    exitPlayerFullscreen,
+    isAndroidWeb,
+} from '@/lib/playerFullscreen';
+import {
     SEEK_NUDGE_DELAYS,
     buildSeekMessages,
     guessSeconds,
@@ -77,6 +82,7 @@ export function EmbedPlayer({
     const directVideo = isDirectVideoSource(src);
     const nxshaEmbed = !directVideo && detectProviderFromUrl(src) === 'nxsha';
     const hostRef = useRef<View | HTMLDivElement | null>(null);
+    const containerRef = useRef<View | HTMLDivElement | null>(null);
     const iframeRef = useRef<HTMLIFrameElement | null>(null);
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -470,6 +476,21 @@ export function EmbedPlayer({
         onClose?.();
     }, [killIframe, onClose]);
 
+    /* ------------------------------------------------------------------ */
+    /* Android phones: full-screen landscape the moment the player opens   */
+    /* ------------------------------------------------------------------ */
+
+    // Auto mode runs inside the play tap's user activation (the player is
+    // always mounted by a click). If the browser refuses — e.g. the player
+    // auto-opened on resume — the manual button in the top bar is the fallback.
+    const canAutoFullscreen = IS_WEB && isAndroidWeb();
+    useEffect(() => {
+        enterPlayerFullscreen(containerRef.current as any);
+        return () => {
+            exitPlayerFullscreen();
+        };
+    }, []);
+
     useTvBackHandler(() => {
         handleClose();
         return true;
@@ -521,6 +542,7 @@ export function EmbedPlayer({
 
     return (
         <View
+            ref={(r: any) => { containerRef.current = r; }}
             style={styles.container}
             testID="embed-player"
             {...({ dataSet: { tvScope: 'player' } } as any)}
@@ -646,6 +668,16 @@ export function EmbedPlayer({
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
 
+                {canAutoFullscreen ? (
+                    <Pressable
+                        style={styles.iconButton}
+                        onPress={() => enterPlayerFullscreen(containerRef.current as any)}
+                        accessibilityLabel="Full screen"
+                        accessibilityRole="button"
+                    >
+                        <Ionicons name="scan" size={20} color="#fff" />
+                    </Pressable>
+                ) : null}
             </View>
 
         </View>
