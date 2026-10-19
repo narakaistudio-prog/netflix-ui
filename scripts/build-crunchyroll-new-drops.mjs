@@ -59,6 +59,11 @@ const HTML_FILE = path.resolve(
 const START = '/*CR_DROPS_START*/';
 const END = '/*CR_DROPS_END*/';
 const MAX_ROWS = 12;
+// The Drops Library keeps every title the Fresh Drops pool has ever seen
+// (the nxsha state never shrinks), capped only as a safety valve.
+const ARCHIVE_MAX = 200;
+const LIBRARY_ROW_TITLE = 'Drops Library';
+const LIBRARY_ROW_SUBTITLE = 'Everything Fresh Drops ever featured - searchable too';
 const PAGES = 3;
 const DRY_RUN = process.argv.includes('--dry-run');
 const FROM_STATE = process.argv.includes('--from-state');
@@ -312,28 +317,51 @@ export function selectRailItems(pool, limit = MAX_ROWS, knownTitles = new Set())
   return { mode, items: rail };
 }
 
+/**
+ * The Drops Library: every playable drop the pool has ever seen, minus what
+ * today's rail already shows. Newest sightings first - this is what keeps a
+ * title around (and searchable) after it rotates out of the Fresh Drops row.
+ */
+export function selectArchiveItems(pool, railItems, limit = ARCHIVE_MAX) {
+  const railKeys = new Set((railItems || []).map((item) => item.stateKey));
+  const seen = new Set();
+  return (pool || [])
+    .filter((item) => item.title && item.kind && item.id)
+    .filter((item) => !RAIL_BLOCKED_IDS.has(item.stateKey) && !RAIL_BLOCKED_TITLE.test(item.title))
+    .filter((item) => !railKeys.has(item.stateKey))
+    .filter((item) => {
+      if (seen.has(item.key)) return false;
+      seen.add(item.key);
+      return true;
+    })
+    .sort((a, b) =>
+      a.firstSeen < b.firstSeen ? 1 : a.firstSeen > b.firstSeen ? -1 : a.title < b.title ? -1 : 1,
+    )
+    .slice(0, limit);
+}
+
 /** The page block between the CR_DROPS markers. */
-export function dropsBlock({ mode, items }) {
+export function dropsBlock({ mode, items }, archive = []) {
   // Data is embedded as JSON; escape "</" so it can't close the script tag early.
-  const data = JSON.stringify(
-    items.map((item) => ({
-      key: item.key,
-      kind: item.kind,
-      id: item.id,
-      title: item.title,
-      img: item.img || '',
-      rating: item.rating || '',
-      year: item.year || '',
-      firstSeen: item.firstSeen || '',
-      fresh: !!item.fresh,
-      src: item.source,
-      seasons: item.seasons || {},
-      verb: item.verb || '',
-      season: item.season ?? null,
-      episode: item.episode ?? null,
-      ...(item.guide ? { guide: item.guide } : {}),
-    })),
-  ).replace(/<\//g, '<\\/');
+  const dropJson = (item) => ({
+    key: item.key,
+    kind: item.kind,
+    id: item.id,
+    title: item.title,
+    img: item.img || '',
+    rating: item.rating || '',
+    year: item.year || '',
+    firstSeen: item.firstSeen || '',
+    fresh: !!item.fresh,
+    src: item.source,
+    seasons: item.seasons || {},
+    verb: item.verb || '',
+    season: item.season ?? null,
+    episode: item.episode ?? null,
+    ...(item.guide ? { guide: item.guide } : {}),
+  });
+  const data = JSON.stringify(items.map(dropJson)).replace(/<\//g, '<\\/');
+  const archiveData = JSON.stringify(archive.map(dropJson)).replace(/<\//g, '<\\/');
   const subtitle =
     mode === 'today' ? "Today's DeadToons releases"
       : mode === 'upcoming' ? 'Coming up on DeadToons'
@@ -344,6 +372,7 @@ export function dropsBlock({ mode, items }) {
     START,
     '/* Written by scripts/build-crunchyroll-new-drops.mjs — do not edit by hand. */',
     `var CR_NEW_DROPS=${data};`,
+    `var CR_DROPS_ARCHIVE=${archiveData};`,
     `var CR_NEW_DROPS_MODE='${mode}';`,
     '(function(){',
     '  if(!CR_NEW_DROPS.length)return;',
@@ -361,6 +390,21 @@ export function dropsBlock({ mode, items }) {
     '  }',
     '  if(!freshKeys.length)return;',
     `  rows.unshift({title:'${ROW_TITLE}',subtitle:'${subtitle.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}',fresh:true,ranked:false,keys:freshKeys});`,
+    '})();',
+    '/* The Drops Library: past drops stay on the page and searchable. */',
+    '(function(){',
+    '  var libKeys=[],i,d,fresh=Object.create(null);',
+    '  for(i=0;i<CR_NEW_DROPS.length;i++){d=CR_NEW_DROPS[i];if(d&&d.key)fresh[d.key]=1}',
+    '  for(i=0;i<CR_DROPS_ARCHIVE.length;i++){',
+    '    d=CR_DROPS_ARCHIVE[i];',
+    '    if(!d||!d.key||!d.title||fresh[d.key])continue;',
+    "    if(!shows[d.key])shows[d.key]={title:d.title,year:d.year||'',rating:d.rating||'-',genres:['anime'],audio:'Sub & Dub',img:d.img||'',type:d.kind==='movie'?'Movie':'TV',drop:true};",
+    "    if(!window.CR_NX_DROPS[d.key])window.CR_NX_DROPS[d.key]={id:d.id,kind:d.kind,seasons:d.seasons||{},added:d.firstSeen||'',fresh:false,src:d.src||'',verb:'',season:d.season||null,episode:d.episode||null,guide:null};",
+    '    libKeys.push(d.key);',
+    '  }',
+    '  if(!libKeys.length)return;',
+    `  var library={title:'${LIBRARY_ROW_TITLE}',subtitle:'${LIBRARY_ROW_SUBTITLE}',fresh:false,ranked:false,keys:libKeys};`,
+    '  if(rows.length&&rows[0].fresh)rows.splice(1,0,library);else rows.unshift(library);',
     '})();',
     END,
   ].join('\n');
@@ -407,7 +451,9 @@ function readDropStates() {
 
 /** The block the current state files should produce. */
 function blockFromState(states) {
-  return dropsBlock(selectRailItems(collectRailPool(states.nxsha, states.schedule, catalogKeys()), MAX_ROWS, catalogTitles()));
+  const pool = collectRailPool(states.nxsha, states.schedule, catalogKeys());
+  const rail = selectRailItems(pool, MAX_ROWS, catalogTitles());
+  return dropsBlock(rail, selectArchiveItems(pool, rail.items));
 }
 
 function currentBlock(html) {
@@ -450,7 +496,7 @@ async function main() {
       process.exit(1);
     }
     const rail = selectRailItems(pool, MAX_ROWS, catalogTitles());
-    const block = dropsBlock({ mode: rail.mode, items: rail.items });
+    const block = dropsBlock(rail, selectArchiveItems(pool, rail.items));
     const html = readHtml();
 
     if (DRY_RUN) {
@@ -517,14 +563,17 @@ async function main() {
 
   const newCount = Object.values(items).filter((i) => !i.baseline && i.firstSeen === day).length;
   const schedule = readJson(SCHEDULE_FILE, null);
-  const rail = selectRailItems(collectRailPool({ items }, schedule, catalogKeys()), MAX_ROWS, catalogTitles());
+  const pool = collectRailPool({ items }, schedule, catalogKeys());
+  const rail = selectRailItems(pool, MAX_ROWS, catalogTitles());
+  const archive = selectArchiveItems(pool, rail.items);
   const sources = rail.items.reduce((acc, item) => ({ ...acc, [item.source]: (acc[item.source] || 0) + 1 }), {});
   const nextState = { updated: day, items };
   console.log(
     `baseline run: ${baselineRun}; new today: ${newCount}; rail: ${rail.items.length} cards ` +
       `(${rail.items.filter((item) => item.fresh).length} new, mode: ${rail.mode}; ` +
       `sources ${Object.entries(sources).map(([k, v]) => `${k}:${v}`).join(' ') || 'none'}); ` +
-      `pool: ${Object.values(items).length} nxsha + ${(schedule?.items || []).length} scheduled`,
+      `pool: ${Object.values(items).length} nxsha + ${(schedule?.items || []).length} scheduled; ` +
+      `library: ${archive.length} past drops`,
   );
 
   if (DRY_RUN) {
@@ -536,7 +585,7 @@ async function main() {
   fs.writeFileSync(STATE_FILE, JSON.stringify(nextState, null, 2) + '\n');
 
   const html = readHtml();
-  const block = dropsBlock({ mode: rail.mode, items: rail.items });
+  const block = dropsBlock(rail, archive);
   const next = replaceDropsBlock(html, block);
   if (next === null) throw new Error('CR_DROPS markers not found in crunchyroll.html');
   fs.writeFileSync(HTML_FILE, next);

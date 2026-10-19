@@ -43,6 +43,12 @@ function callHarvester(expression: string): any {
 // One still from Nxsha's episode API, baked for the guided card below.
 const EPISODE_STILL = 'https://image.tmdb.org/t/p/w300/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg';
 
+// The drops builder is ESM too — same child-process trick as callHarvester.
+function callBuilder(expression: string): any {
+    const code = `const m = await import(${JSON.stringify(pathToFileURL(SCRIPT).href)});\nconsole.log(JSON.stringify(await (${expression})));`;
+    return JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
+}
+
 function nxshaCard(overrides: Record<string, unknown> = {}) {
     return {
         kind: 'tv', id: '1', title: 'Show', img: POSTER, rating: '8.1', year: '2021',
@@ -606,4 +612,91 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
 
         dom.window.close();
     }, 60000);
+});
+
+
+describe('Drops Library — past drops stay on the page and searchable', () => {
+    const state = (n: number) => {
+        const items: Record<string, unknown> = {};
+        for (let i = 1; i <= n; i += 1) {
+            items[`tv:${i}`] = {
+                kind: 'tv', id: String(i), title: `Show ${String(i).padStart(2, '0')}`,
+                img: POSTER, rating: '', year: '2026',
+                firstSeen: `2026-09-${String(i).padStart(2, '0')}`, baseline: true,
+            };
+        }
+        return { items };
+    };
+
+    test('selectArchiveItems: rail ke bahar ke saare past drops, newest first, rail wale dobara nahi', async () => {
+        const r = await callBuilder(`(function(){
+            const state = ${JSON.stringify(state(3))};
+            const pool = m.collectRailPool(state, { items: [] }, new Map());
+            const rail = [pool[0]];
+            const archive = m.selectArchiveItems(pool, rail);
+            return { poolKeys: pool.map(p => p.title), archive: archive.map(a => a.title) };
+        })()`);
+        // Rail me jo hai wo archive me nahi; baaki newest (highest firstSeen) pehle.
+        expect(r.poolKeys).toEqual(['Show 01', 'Show 02', 'Show 03']);
+        expect(r.archive).toEqual(['Show 03', 'Show 02']);
+    });
+
+    test('selectArchiveItems: capped aur blocked titles se saaf', async () => {
+        const r = await callBuilder(`(function(){
+            const state = ${JSON.stringify(state(20))};
+            const pool = m.collectRailPool(state, { items: [] }, new Map());
+            const archive = m.selectArchiveItems(pool, [], 5);
+            return { n: archive.length, titles: archive.map(a => a.title) };
+        })()`);
+        expect(r.n).toBe(5);
+        // 20 items, firstSeen 09-01..09-20 — newest 5, descending.
+        expect(r.titles).toEqual(['Show 20', 'Show 19', 'Show 18', 'Show 17', 'Show 16']);
+    });
+
+    test('the checked-in page searches drops too (no drop filter left in searchKeys)', () => {
+        const html = readFileSync(HTML_PATH, 'utf8');
+        expect(html).toContain('function searchKeys(){return keysOf(shows)}');
+        expect(html).not.toContain('return !shows[key].drop})');
+    });
+
+    test('a full rail leaves the older drops to the library rail, right below Fresh Drops', async () => {
+        // 14 pool titles: 12 fill the Fresh Drops rail, 2 land in the library.
+        const { page } = bakeFor({ nxsha: state(14).items });
+
+        const virtualConsole = new VirtualConsole();
+        virtualConsole.on('jsdomError', (error: Error) => {
+            if (/Not implemented/.test(error.message)) return;
+            throw error;
+        });
+        const dom = new JSDOM(readFileSync(page, 'utf8'), { runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole, url: 'https://app.local/crunchyroll' });
+        const doc = dom.window.document;
+
+        const rails = Array.from(doc.querySelectorAll('#homeRows .anime-rail'));
+        expect(rails[0].querySelector('.rail-head h2')?.textContent).toBe('Fresh Drops');
+        expect(rails[1].querySelector('.rail-head h2')?.textContent).toBe('Drops Library');
+
+        const freshKeys = Array.from(rails[0].querySelectorAll('[data-open]')).map((n) => n.getAttribute('data-open'));
+        const libKeys = Array.from(rails[1].querySelectorAll('[data-open]')).map((n) => n.getAttribute('data-open'));
+        expect(freshKeys).toHaveLength(12);
+        // The two titles that missed the rail live in the library — newest first.
+        expect(libKeys).toEqual(['drop-tv-2', 'drop-tv-1']);
+        // A library title is a real card: it registered its Nxsha playback route.
+        expect(libKeys.every((k) => !!(dom.window as any).CR_NX_DROPS[String(k)])).toBe(true);
+        // ...and no title is in both rails.
+        expect(libKeys.some((k) => freshKeys.includes(k))).toBe(false);
+    });
+
+    test('a small pool keeps the library out instead of rendering an empty rail', async () => {
+        const { page } = bakeFor({ nxsha: state(3).items });
+        const virtualConsole = new VirtualConsole();
+        virtualConsole.on('jsdomError', (error: Error) => {
+            if (/Not implemented/.test(error.message)) return;
+            throw error;
+        });
+        const dom = new JSDOM(readFileSync(page, 'utf8'), { runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole, url: 'https://app.local/crunchyroll' });
+        const doc = dom.window.document;
+        const heads = Array.from(doc.querySelectorAll('#homeRows .anime-rail .rail-head h2')).map((n) => n.textContent);
+        expect(heads).toContain('Fresh Drops');
+        expect(heads).not.toContain('Drops Library');
+    });
 });
