@@ -50,6 +50,12 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
             { season: { season_number: 3 }, count: 11 },
           ],
         );
+        // One Piece's ToonStream S1 starts at absolute episode 6, so its first
+        // card is Nxsha's episode 6 (base 5), not episode 1.
+        const offset = buildSeasonMap(
+          [{ n: 1, count: 56, start: 6 }, { n: 2, count: 16, start: 62 }],
+          [{ season: { season_number: 1 }, count: 61 }, { season: { season_number: 2 }, count: 16 }],
+        );
         // A Hindi-dub season numbers episodes absolutely: S2 starts at 33.
         const absolute = parseSeasonEpisodes(
           Array.from({ length: 21 }, (_, i) => '<a href="/episode/naruto-shippuden-hindi-dub-2x' + (33 + i) + '/">x</a>').join(''),
@@ -58,6 +64,7 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           merged: { map: merged.map, flat: merged.flat.length },
           split: { map: split.map },
           cross: { map: cross.map, compact: compactPlan(cross.map['2']) },
+          offset: offset.map,
           absolute,
         }));
     `;
@@ -73,6 +80,8 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
         { season: 3, from: 1, count: 11 },
     ]);
     expect(parsed.cross.compact).toEqual({ seg: [[2, 1, 7], [3, 1, 11]] });
+    expect(parsed.offset['1']).toMatchObject({ season: 1, base: 5, start: 5, count: 56 });
+    expect(parsed.offset['2']).toMatchObject({ season: 2, base: 0, start: 61, count: 16 });
     // Absolute numbering: 21 episodes starting at 33, not 53.
     expect(parsed.absolute).toEqual({ count: 21, first: 33, last: 53, missing: [] });
 });
