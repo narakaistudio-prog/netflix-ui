@@ -1156,7 +1156,8 @@ var CR_NEW_DROPS_MODE='today';
         var info=tsKey(),cached=TS.cache[info];
         TS_MODE=true;tsSetButtons();
         if(cached&&cached.embed){tsList=cached.embeds||[cached.embed];tsIdx=0;tsSetButtons();tsInject(cached.embed);showToast('ToonStream player');return}
-        var q='title='+encodeURIComponent(tsTitle())+'&s='+(playState.season||1)+'&e='+(playState.ep||1);
+        var epSlug=(EP_DATA[playState.key]||{}).slug||'';
+        var q='title='+encodeURIComponent(tsTitle())+(epSlug?'&slug='+encodeURIComponent(epSlug):'')+'&s='+(playState.season||1)+'&e='+(playState.ep||1);
         TS.loading=true;setHidden(frameLoader,false);setHidden(stagePoster,true);
         var ctl=null;try{ctl=new AbortController();setTimeout(function(){try{ctl.abort()}catch(e){}},20000)}catch(e){}
         try{

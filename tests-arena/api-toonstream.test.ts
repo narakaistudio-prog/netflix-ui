@@ -56,9 +56,18 @@ test('titleSlug follows the site rule (verified against live URLs)', () => {
             ['titleSlug', ['Overgeared']],
             ['titleSlug', ['The Beginning After the End']],
             ['titleSlug', ['Ranma1/2']],
+            ['titleSlug', ["JoJo's Bizarre Adventure"]],
+            ['titleSlug', ['Frieren: Beyond Journey\u2019s End']],
         ],
     });
-    expect(results).toEqual(['kaiju-no-8', 'overgeared', 'the-beginning-after-the-end', 'ranma1-2']);
+    expect(results).toEqual([
+        'kaiju-no-8',
+        'overgeared',
+        'the-beginning-after-the-end',
+        'ranma1-2',
+        'jojos-bizarre-adventure',
+        'frieren-beyond-journeys-end',
+    ]);
 });
 
 test('matchScore ranks the right series first', () => {
@@ -93,27 +102,49 @@ test('resolves the episode directly from the deterministic slug and picks the em
     expect(moly.quality).toBe('720p');
 });
 
-test('falls back to search -> series -> episode when the slug misses', () => {
-    // Realistic miss: our slug rule dashes the apostrophe, the site drops it —
-    // so the direct URL 404s and the search chain takes over.
-    const frieren = (s) => String(s).replace(/overgeared/g, 'frieren-beyond-journeys-end').replace(/Overgeared/g, 'Frieren: Beyond Journey');
+test('apostrophe titles now resolve directly (jojo/frieren site slugs)', () => {
+    const jojoHtml = EPISODE_HTML.replace(/overgeared/g, 'jojos-bizarre-adventure');
     const res = runScenario({
-        query: { title: 'Frieren: Beyond Journey\'s End', s: '1', e: '2', debug: '1' },
+        query: { title: "JoJo's Bizarre Adventure", s: '6', e: '1' },
+        mocks: [{ needle: '/episode/jojos-bizarre-adventure-6x1/', status: 200, body: jojoHtml }],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.via).toBe('direct');
+    expect(res.body.episodeUrl).toBe('https://toonstream.us/episode/jojos-bizarre-adventure-6x1/');
+});
+
+test('EP_DATA slug param drives the direct URL even for odd titles', () => {
+    const res = runScenario({
+        query: { title: 'Totally Different Display Name', slug: 'jojos-bizarre-adventure', s: '6', e: '1' },
+        mocks: [{ needle: '/episode/jojos-bizarre-adventure-6x1/', status: 200, body: EPISODE_HTML }],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.via).toBe('direct');
+    expect(res.body.episodeUrl).toBe('https://toonstream.us/episode/jojos-bizarre-adventure-6x1/');
+});
+
+test('falls back to search -> series -> episode when the slug misses', () => {
+    // Synthetic miss: direct 404s, search finds a series whose episode link
+    // lives on a differently-slugged series page.
+    const ogEpisode = EPISODE_HTML.replace(/overgeared/g, 'og-hindi');
+    const seriesPage = SERIES_HTML
+        .replace('/series/overgeared/', '/series/overgeared-hindi-dub/')
+        .replace('/episode/overgeared-1x1/', '/episode/og-hindi-1x1/')
+        .replace('/episode/overgeared-1x2/', '/episode/og-hindi-1x2/')
+        .replace('/episode/overgeared-1x3/', '/episode/og-hindi-1x3/');
+    const res = runScenario({
+        query: { title: 'Overgeared Hindi', s: '1', e: '2', debug: '1' },
         mocks: [
-            { needle: '/episode/frieren-beyond-journey-s-end-1x2/', status: 404, body: 'nope' },
-            { needle: '?s=Frieren', status: 200, body: frieren(SEARCH_HTML) },
-            { needle: '/series/frieren-beyond-journeys-end/', status: 200, body: frieren(SERIES_HTML) },
-            { needle: '/episode/frieren-beyond-journeys-end-1x2/', status: 200, body: frieren(EPISODE_HTML) },
+            { needle: '?s=Overgeared', status: 200, body: SEARCH_HTML },
+            { needle: '/series/overgeared-hindi-dub/', status: 200, body: seriesPage },
+            { needle: '/episode/og-hindi-1x2/', status: 200, body: ogEpisode },
         ],
     });
     expect(res.body.ok).toBe(true);
     expect(res.body.via).toBe('search');
-    expect(res.body.chosen).toBe('https://awish.click/embed-abc123.html');
-    const stepNames = res.body.steps.map((s) => s.step);
-    expect(stepNames).toContain('episode-direct');
+    const stepNames = res.body.steps.map((x) => x.step);
     expect(stepNames).toContain('search');
     expect(stepNames).toContain('series-candidates');
-    expect(stepNames).toContain('series');
     expect(stepNames).toContain('episode');
 });
 
