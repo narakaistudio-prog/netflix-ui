@@ -28,7 +28,9 @@ jobs:
           TS_SEASONS_DEBUG: '1'
           TS_SEASONS_STATE_FILE: /tmp/probe-state.json
           TS_SEASONS_HTML_FILE: /tmp/probe-page.html
-        run: node scripts/harvest-toonstream-seasons.mjs
+        run: |
+          cp assets/crunchyroll/crunchyroll.html /tmp/probe-page.html
+          node scripts/harvest-toonstream-seasons.mjs
       - name: Summarise the result
         run: |
           node -e "
