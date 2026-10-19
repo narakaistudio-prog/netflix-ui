@@ -58,14 +58,17 @@ const clean = (s, max) => {
     return t.length > max ? `${t.slice(0, max - 1).trimEnd()}…` : t;
 };
 
+/** nxsha serves the literal "TBD" for unaired/unnamed episodes — viewers get a proper label instead. */
+const isTbd = (v) => /^tbd\.?$/i.test(String(v || '').trim());
+
 /** One season in the shape the app reads: { season_number, name, overview, episodes[] }. */
 export function toSeason(json) {
     const s = json.season || {};
     const episodes = (json.episodes || []).map((e) => ({
         season: Number(e.season_number ?? s.season_number),
         episode: Number(e.episode_number),
-        name: clean(e.name, 160),
-        overview: clean(e.overview, 260),
+        name: isTbd(e.name) ? `Episode ${Number(e.episode_number)}` : clean(e.name, 160),
+        overview: isTbd(e.overview) ? '' : clean(e.overview, 260),
         ...(e.runtime ? { runtime: Number(e.runtime) } : {}),
         ...(e.still_path ? { still: `https://image.tmdb.org/t/p/w500${e.still_path}` } : {}),
         ...(e.air_date ? { air_date: e.air_date } : {}),

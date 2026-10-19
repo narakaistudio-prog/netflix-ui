@@ -7,6 +7,10 @@ name: Fill Netflix genre rows from Nxsha
 # writes the Crunchyroll data (data/nxsha-*, crunchyroll.html), and it leaves
 # the Trending row alone.
 on:
+  schedule:
+    # Daily 06:30 IST: refresh the catalog rows from nxsha (new shows in),
+    # then the chained episode-fill job gives them their episode lists.
+    - cron: '0 1 * * *'
   push:
     branches:
       - main
