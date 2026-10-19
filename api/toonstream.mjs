@@ -150,8 +150,13 @@ function extractServers(html) {
 }
 
 function pickEmbed(embeds) {
-  // Prefer a player that is not an obvious ad frame; keep site order.
-  return embeds.find((src) => VIDEO_HOST.test(src)) || embeds[0] || null;
+  // Toonstream's own Server 1 ("PLAY") is the first iframe on the episode
+  // page and the only one the site itself autoplays - always pick it. Just
+  // skip obvious non-player frames (trailers). Host-regex guesses come last:
+  // named rows like "Ruby" are often dead even on toonstream itself.
+  const players = embeds.filter((src) => !/(youtube|youtu\.be|dailymotion)/i.test(src));
+  const list = players.length ? players : embeds;
+  return list[0] || embeds.find((src) => VIDEO_HOST.test(src)) || null;
 }
 
 async function resolveEpisode({ title, season, episode }, steps) {
@@ -267,4 +272,4 @@ export default handler;
 export const config = { maxDuration: 30 };
 
 // Exposed for tests.
-export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractServers, matchScore };
+export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractServers, matchScore, pickEmbed };

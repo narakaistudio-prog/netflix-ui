@@ -116,7 +116,9 @@ test('player has Nxsha failure handling with retry and no fallback tab', () => {
     expect(html).not.toContain('id="noticeAlt"');
     expect(html).toContain('Retry the player or open it in a new tab.');
     expect(html).toContain("setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
-    expect(html).not.toContain('allow-popups');
+    // Popups stay out of the NXSHA inject path; only the ToonStream iframe
+    // allows them (its hosts need their own play click to work).
+    expect(html).toMatch(/function injectServer\(i\)\{(?:(?!allow-popups).)*?sandbox/s);
     expect(html).toContain("function serverAvailable(i){return i===0&&!!nxFor(playState.key)}");
     expect(html).not.toContain('function nextServer(');
 });
@@ -148,7 +150,8 @@ test('Nxsha iframe sandbox and fullscreen permissions are consistent', () => {
     expect(html).toContain("serverFrame.setAttribute('allow','autoplay; fullscreen; encrypted-media; picture-in-picture')");
     expect(html).toContain("setClass(videoStage,'s16x9',true)");
     expect(html).toContain('<iframe id="serverFrame" title="Anime server player" allowfullscreen webkitallowfullscreen mozallowfullscreen>');
-    expect(html).not.toContain('allow-popups');
+    // Nxsha sandbox stays popup-free; ToonStream's iframe opts into popups.
+    expect(html).toMatch(/function injectServer\(i\)\{(?:(?!allow-popups).)*?sandbox/s);
     expect(html).not.toContain('sandbox="allow-scripts');
 });
 
