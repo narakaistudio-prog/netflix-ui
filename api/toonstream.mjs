@@ -264,7 +264,7 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
     const seriesPage = await getText(`${BASE}${candidate.slug}/`, steps, 'series');
     if (seriesPage.status !== 200) continue;
     let epLink = findEpisodeLink(seriesPage.text, season, episode);
-    if (!epLink && /-(season-\d+|\d+(?:st|nd|rd|th)-season)$/.test(series.slug)) {
+    if (!epLink && /-(season-\d+|\d+(?:st|nd|rd|th)-season)$/.test(candidate.slug)) {
       // Season-scoped series pages number episodes relative to that season.
       epLink = findEpisodeLink(seriesPage.text, '1', episode);
     }
