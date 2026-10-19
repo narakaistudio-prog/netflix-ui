@@ -1,8 +1,15 @@
-== my-hero-academia series 200 seasonButtons=9 articles=16
-   S8 page 200 episodes={"count":12,"first":1,"last":12} cards=12 withImg=12 missingLocal=[]
-   src=["https://image.tmdb.org/t/p/w780/9Rp19trFIKOKtMorx84LnWkkajb.jpg","https://image.tmdb.org/t/p/w780/A7tBAcy4Hv5jyWvLBRpRM6lvPio.jpg"]
-   articles=12 firstArticle="<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/9Rp19trFIKOKtMorx84LnWkkajb.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 8x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-titl"
-== trigun-stampede series 200 seasonButtons=2 articles=23
-   S2 page 200 episodes={"count":12,"first":1,"last":12} cards=12 withImg=12 missingLocal=[]
-   src=["https://image.tmdb.org/t/p/w780/rYVKGFKCtYgjigMF9Yd3q1Y0cJl.jpg","https://image.tmdb.org/t/p/w780/s1JPSH74nziXd984EOiFmNapMH8.jpg"]
-   articles=12 firstArticle="<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/rYVKGFKCtYgjigMF9Yd3q1Y0cJl.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 2x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-titl"
+== my-hero-academia series 200 links=[{"n":0,"url":"/series/my-hero-academia/season/0"},{"n":1,"url":"/series/my-hero-academia/season/1"},{"n":2,"url":"/series/my-hero-academia/season/2"},{"n":3,"url":"/series/my-hero-academia/season/3"},{"n":4,"url":"/series/my-hero-academia/season/4"},{"n":5,"url":"/series/my-hero-academia/season/5"},{"n":6,"url":"/series/my-hero-academia/season/6"},{"n":7,"url":"/series/my-hero-academia/season/7"},{"n":8,"url":"/series/my-hero-academia/season/8"}]
+   S0 200 eps=5 first=4 cards=5
+   S1 200 eps=13 first=1 cards=13
+   S2 200 eps=25 first=1 cards=25
+   S3 200 eps=25 first=1 cards=25
+   S4 200 eps=25 first=1 cards=25
+   S5 200 eps=25 first=1 cards=25
+   S6 200 eps=25 first=1 cards=25
+   S7 200 eps=21 first=1 cards=21
+   S8 200 eps={"count":12,"first":1,"last":12,"missing":[]} cards=11 articles=12 imgs=12
+   local=[[1,"https://image.tmdb.org/t/p/w780/9Rp19trFIKOKtMorx84LnWkkajb."],[2,"https://image.tmdb.org/t/p/w780/A7tBAcy4Hv5jyWvLBRpRM6lvPio."],[3,"https://image.tmdb.org/t/p/w780/mWR2V9gSbl78cjaYsxQHFhznWQb."],[4,"https://image.tmdb.org/t/p/w780/tQ9kLKWIDNb0puDBt1ZnWGvxeBm."],[5,"https://image.tmdb.org/t/p/w780/haM6c6whayuTVrIWky6ZEjIzuM.j"],[6,"https://image.tmdb.org/t/p/w780/e5bFbT7pCCKDXsor7ZP94nUsABc."],[7,"https://image.tmdb.org/t/p/w780/sshwYRHWfSKt35dbiLacBrpkfMa."],[8,"https://image.tmdb.org/t/p/w780/l31jtqoy9WHhcw35CFFTG5HI10D."],[9,"https://image.tmdb.org/t/p/w780/7Slp5jjSOhZrWb7KFAiXI5aceJN."],[10,"https://image.tmdb.org/t/p/w780/rYkrF1mUvIqqmbCTGT8EfoKtIpP."],[11,"https://image.tmdb.org/t/p/w780/2ujDRL4aVKhCASVXMawPNsYgxOD."]]
+== trigun-stampede series 200 links=[{"n":1,"url":"/series/trigun-stampede/season/1"},{"n":2,"url":"/series/trigun-stampede/season/2"}]
+   S1 200 eps=12 first=1 cards=11
+   S2 200 eps={"count":12,"first":1,"last":12,"missing":[]} cards=12 articles=12 imgs=12
+   local=[[1,"https://image.tmdb.org/t/p/w780/rYVKGFKCtYgjigMF9Yd3q1Y0cJl."],[2,"https://image.tmdb.org/t/p/w780/s1JPSH74nziXd984EOiFmNapMH8."],[3,"https://image.tmdb.org/t/p/w780/q0koQFqeitI2BGUfy2sjPu6MAQL."],[4,"https://image.tmdb.org/t/p/w780/bPMGixMMtfJkShzUZqDAht7wF1P."],[5,"https://image.tmdb.org/t/p/w780/r6suqeR7azlakVQFEkC7VWB3QzE."],[6,"https://image.tmdb.org/t/p/w780/bNHBtHWdc7CFAmVLootR1av38MF."],[7,"https://image.tmdb.org/t/p/w780/k1AGgC5PcpaEi2ljT1HaalP1yGQ."],[8,"https://image.tmdb.org/t/p/w780/6ZoyAhDg9REdi6ShnKUvPYh1ETH."],[9,"https://image.tmdb.org/t/p/w780/98meoXRA9VdcmqKF9HOpdNCgne5."],[10,"https://image.tmdb.org/t/p/w780/Ts2Y5iOztnGcvXLUokeOzphv1B.j"],[11,"https://image.tmdb.org/t/p/w780/nvT3O7pj26pl8WOG4f2pMmyWadk."],[12,"https://image.tmdb.org/t/p/w780/wXuCv5ws9gfTdU4B9WFSn3zJmpU."]]
