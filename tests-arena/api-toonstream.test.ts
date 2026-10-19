@@ -170,6 +170,30 @@ test("returns exactly the sidebar trio: Play, Short, MultiQ", () => {
     expect(res.body.chosen).toBe('https://ravok.buzz/video/ec4de54f2f3afa14175e5eabfc16ce1f');
 });
 
+test('colon-kept slugs resolve directly (Mushoku S3 live shape)', () => {
+    // The site keeps ':' in newer posts:
+    //   /episode/mushoku-tensei:-jobless-reincarnation-3x1/
+    const res = runScenario({
+        query: { title: 'Mushoku Tensei: Jobless Reincarnation', s: '3', e: '1', debug: '1' },
+        mocks: [
+            {
+                needle: 'mushoku-tensei:-jobless-reincarnation-3x1',
+                status: 200,
+                body: EPISODE_HTML,
+            },
+        ],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.via).toBe('direct');
+    expect(res.body.episodeUrl).toBe(
+        'https://toonstream.us/episode/mushoku-tensei:-jobless-reincarnation-3x1/',
+    );
+    expect(res.body.servers).toHaveLength(3);
+    // Both slug spellings are probed: plain first, then the colon-kept one.
+    const directSteps = res.body.steps.filter((x: { step: string }) => x.step === 'episode-direct');
+    expect(directSteps).toHaveLength(2);
+});
+
 test('apostrophe titles now resolve directly (jojo/frieren site slugs)', () => {
     const jojoHtml = EPISODE_HTML.replace(/\/episode\/x-/g, '/episode/jojos-bizarre-adventure-');
     const res = runScenario({

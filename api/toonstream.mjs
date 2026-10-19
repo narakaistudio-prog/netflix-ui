@@ -229,10 +229,16 @@ function pickEmbed(embeds) {
 
 async function resolveEpisode({ title, slug, season, episode }, steps) {
   // EP_DATA slugs are copied from toonstream URLs, so they beat any guess.
-  const direct = `${BASE}/episode/${titleSlug(slug || title)}-${season}x${episode}/`;
-  let page = await getText(direct, steps, 'episode-direct');
-  if (page.status === 200) {
-    return { episodeUrl: direct, html: page.text, via: 'direct', frameBlocked: !!page.frameBlocked };
+  // Probe both the plain slug and the colon-kept one — newer posts keep ':'
+  // (mushoku-tensei:-jobless-reincarnation-3x1), older ones drop it.
+  const exact = slug ? String(slug).trim().replace(/^\/+|\/+$/g, '') : '';
+  const bases = [...new Set([exact, titleSlug(slug || title), titleSlug(title, true)].filter(Boolean))];
+  for (const base of bases) {
+    const direct = `${BASE}/episode/${base}-${season}x${episode}/`;
+    const page = await getText(direct, steps, 'episode-direct');
+    if (page.status === 200) {
+      return { episodeUrl: direct, html: page.text, via: 'direct', frameBlocked: !!page.frameBlocked };
+    }
   }
   // Sequel seasons often live on "-season-N" (or "-3rd-season") series
   // pages, so probe the season-qualified slugs before searching.
@@ -271,9 +277,9 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
     }
     if (epLink) {
       const epUrl = epLink.startsWith('http') ? epLink : `${BASE}${epLink}/`;
-      page = await getText(epUrl, steps, 'episode');
-      if (page.status === 200) {
-        return { episodeUrl: epUrl, html: page.text, via: 'search' };
+      const epPage = await getText(epUrl, steps, 'episode');
+      if (epPage.status === 200) {
+        return { episodeUrl: epUrl, html: epPage.text, via: 'search' };
       }
     }
   }
