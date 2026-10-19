@@ -316,6 +316,16 @@ async function handler(req, res) {
     if (Date.now() > deadline) throw new Error('budget-exhausted');
     const found = await resolveEpisode({ title, slug, season, episode }, steps);
     if (!found) {
+      if (String(req.query.raw || '') === '1') {
+        // Debug: dump the episode links the series page actually exposes.
+        const sp = await getText(`${BASE}/series/${titleSlug(slug || title)}/`, [], 'raw-series');
+        const eps = [];
+        for (const m of sp.text.matchAll(/\/episode\/[a-z0-9-]*/gi)) {
+          if (!eps.includes(m[0])) eps.push(m[0]);
+          if (eps.length >= 60) break;
+        }
+        return res.status(200).json({ ok: true, status: sp.status, eps });
+      }
       res.status(200).json({
         ok: false,
         error: 'no-episode',
