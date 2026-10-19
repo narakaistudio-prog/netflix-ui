@@ -1,5 +1,8 @@
 name: probe-toonstream
-on: workflow_dispatch
+on:
+  push:
+    paths:
+      - '.github/workflows/probe-toonstream.yml'
 
 jobs:
   probe:
