@@ -237,10 +237,12 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   // pages, so probe the season-qualified slugs before searching.
   const ord = season === '1' ? 'st' : season === '2' ? 'nd' : season === '3' ? 'rd' : 'th';
   for (const suffix of [`-season-${season}`, `-${season}${ord}-season`]) {
-    const vu = `${BASE}/episode/${titleSlug(title)}${suffix}x${episode}/`;
-    const vp = await getText(vu, steps, 'episode-variant');
-    if (vp.status === 200) {
-      return { episodeUrl: vu, html: vp.text, via: 'direct', frameBlocked: !!vp.frameBlocked };
+    for (const sKey of [season, '1']) {
+      const vu = `${BASE}/episode/${titleSlug(title)}${suffix}-${sKey}x${episode}/`;
+      const vp = await getText(vu, steps, 'episode-variant');
+      if (vp.status === 200) {
+        return { episodeUrl: vu, html: vp.text, via: 'direct', frameBlocked: !!vp.frameBlocked };
+      }
     }
   }
 
@@ -261,7 +263,11 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   for (const candidate of ranked.filter((c) => c.score > 0).slice(0, 3)) {
     const seriesPage = await getText(`${BASE}${candidate.slug}/`, steps, 'series');
     if (seriesPage.status !== 200) continue;
-    const epLink = findEpisodeLink(seriesPage.text, season, episode);
+    let epLink = findEpisodeLink(seriesPage.text, season, episode);
+    if (!epLink && /-(season-\d+|\d+(?:st|nd|rd|th)-season)$/.test(series.slug)) {
+      // Season-scoped series pages number episodes relative to that season.
+      epLink = findEpisodeLink(seriesPage.text, '1', episode);
+    }
     if (epLink) {
       const epUrl = epLink.startsWith('http') ? epLink : `${BASE}${epLink}/`;
       page = await getText(epUrl, steps, 'episode');
@@ -323,7 +329,7 @@ async function handler(req, res) {
       // markdown fetchers cannot mangle the tags.
       const html = found.html;
       const wins = [];
-      const re = /iframe|player|data-litespeed|server-|epsdsnv| Watching |serverList/gi;
+      const re = /iframe|player|data-litespeed|server-|epsdsnv| Watching |serverList|\/episode\//gi;
       for (const m of html.matchAll(re)) {
         const at = m.index || 0;
         wins.push(html.slice(Math.max(0, at - 250), at + 700));
