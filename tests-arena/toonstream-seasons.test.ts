@@ -30,7 +30,7 @@ test('the committed TS_SEASONS block matches the state file', () => {
 
 test('Nxsha is mapped by cumulative position, not by season number', () => {
     const code = `
-        const { buildSeasonMap, parseSeasonEpisodes } = await import(${JSON.stringify(
+        const { buildSeasonMap, compactPlan, parseSeasonEpisodes } = await import(${JSON.stringify(
             new URL(`file://${join(ROOT, 'scripts', 'lib', 'seasons.mjs')}`).href,
         )});
         const merged = buildSeasonMap(
@@ -41,6 +41,15 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           [{ n: 1, count: 24 }, { n: 2, count: 24 }],
           [{ season: { season_number: 1 }, count: 24 }, { season: { season_number: 2 }, count: 36 }],
         );
+        // Demon Slayer's ToonStream S2 (18) is Nxsha S2 (7) + S3 (11).
+        const cross = buildSeasonMap(
+          [{ n: 1, count: 26 }, { n: 2, count: 18 }, { n: 3, count: 11 }],
+          [
+            { season: { season_number: 1 }, count: 26 },
+            { season: { season_number: 2 }, count: 7 },
+            { season: { season_number: 3 }, count: 11 },
+          ],
+        );
         // A Hindi-dub season numbers episodes absolutely: S2 starts at 33.
         const absolute = parseSeasonEpisodes(
           Array.from({ length: 21 }, (_, i) => '<a href="/episode/naruto-shippuden-hindi-dub-2x' + (33 + i) + '/">x</a>').join(''),
@@ -48,15 +57,22 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
         console.log(JSON.stringify({
           merged: { map: merged.map, flat: merged.flat.length },
           split: { map: split.map },
+          cross: { map: cross.map, compact: compactPlan(cross.map['2']) },
           absolute,
         }));
     `;
     const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
     // JJK: ToonStream 24 + 23 + 12, Nxsha merged all 59 into season 1.
-    expect(parsed.merged.map['2']).toEqual({ season: 1, base: 24, start: 24, count: 23 });
-    expect(parsed.merged.map['3']).toEqual({ season: 1, base: 47, start: 47, count: 12 });
+    expect(parsed.merged.map['2']).toMatchObject({ season: 1, base: 24, start: 24, count: 23 });
+    expect(parsed.merged.map['3']).toMatchObject({ season: 1, base: 47, start: 47, count: 12 });
     // Apothecary/JJK-style split: S2 starts at the 25th Nxsha episode.
-    expect(parsed.split.map['2']).toEqual({ season: 2, base: 0, start: 24, count: 24 });
+    expect(parsed.split.map['2']).toMatchObject({ season: 2, base: 0, start: 24, count: 24 });
+    // A season crossing an Nxsha boundary keeps both segments.
+    expect(parsed.cross.map['2'].segments).toEqual([
+        { season: 2, from: 1, count: 7 },
+        { season: 3, from: 1, count: 11 },
+    ]);
+    expect(parsed.cross.compact).toEqual({ seg: [[2, 1, 7], [3, 1, 11]] });
     // Absolute numbering: 21 episodes starting at 33, not 53.
     expect(parsed.absolute).toEqual({ count: 21, first: 33, last: 53, missing: [] });
 });
@@ -86,7 +102,7 @@ test('the bake writes epStart and the Nxsha map for every found show', () => {
     expect(baked).toContain('"jujutsu-kaisen"');
     expect(baked).toContain('"epStart":{"2":33}');
     expect(run(['--from-state', '--check'], { TS_SEASONS_STATE_FILE: state, TS_SEASONS_HTML_FILE: html })).toContain(
-        'in sync (2 shows)',
+        'in sync (2 shows',
     );
 });
 
@@ -105,8 +121,8 @@ test('DeadToons is gone from the daily rail', () => {
 
 type Boot = { dom: JSDOM; calls: string[] };
 
-function boot(): Boot {
-    const html = readFileSync(HTML_PATH, 'utf8');
+function boot(htmlOverride?: string): Boot {
+    const html = htmlOverride || readFileSync(HTML_PATH, 'utf8');
     const calls: string[] = [];
     const virtualConsole = new VirtualConsole();
     virtualConsole.on('jsdomError', () => {});
@@ -252,5 +268,49 @@ test('One Piece shows every ToonStream season and its own Nxsha guide', async ()
     const request = decodeURIComponent(calls.find((url) => url.indexOf('/api/toonstream?') !== -1) || '');
     expect(request).toContain('slug=one-piece-dub-sub');
     expect(request).toContain('s=1&e=6');
+    dom.window.close();
+});
+
+test('a ToonStream season that crosses an Nxsha boundary keeps every episode', async () => {
+    const { dom } = boot();
+    const doc = dom.window.document;
+    await wait(300);
+    await openCard(dom.window, 'demon');
+    const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
+    select.value = '2';
+    select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+    await wait(120);
+    const cards = Array.from(doc.querySelectorAll('#episodeList .episode-card'));
+    expect(cards).toHaveLength(18);
+    // ToonStream S2E8 is Nxsha S3E1 (its S2 only has the 7 Mugen Train episodes).
+    expect(cards[7].querySelector('strong')?.textContent).toBe('Sound Hashira: Tengen Uzui');
+    expect(cards[7].querySelector('img')?.getAttribute('data-src')).toContain('image.tmdb.org');
+    click(dom.window, cards[7]);
+    await wait(150);
+    click(dom.window, doc.getElementById('stagePoster'));
+    await wait(250);
+    expect(doc.getElementById('serverFrame')!.getAttribute('src')).toContain('/embed/tv/tt9335498/3/1?');
+    dom.window.close();
+});
+
+test('a missing Nxsha still falls back to the ToonStream episode image', async () => {
+    // MHA S8E12 has Nxsha metadata but no still; ToonStream has the card image.
+    const baked = readFileSync(HTML_PATH, 'utf8').replace(
+        /var TS_EP_IMAGES=\{.*?\};\n/,
+        'var TS_EP_IMAGES={"mha":{"8":{"12":"https://image.tmdb.org/t/p/w780/toonstream-still.jpg"}}};\n',
+    );
+    const { dom } = boot(baked);
+    const doc = dom.window.document;
+    await wait(300);
+    await openCard(dom.window, 'mha');
+    const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
+    select.value = '8';
+    select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+    await wait(120);
+    const cards = Array.from(doc.querySelectorAll('#episodeList .episode-card'));
+    expect(cards).toHaveLength(12);
+    expect(cards[11].querySelector('img')?.getAttribute('data-src')).toBe(
+        'https://image.tmdb.org/t/p/w780/toonstream-still.jpg',
+    );
     dom.window.close();
 });

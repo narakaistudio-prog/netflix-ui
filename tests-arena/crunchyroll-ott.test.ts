@@ -103,7 +103,8 @@ test('episode guide bakes Nxsha-only images and details separately from playback
     expect(html).toContain('meta.overview');
     expect(html).toContain('meta.airDate');
     expect(html).toContain('episodePlaceholderImage(title,season,i)');
-    expect(html).toContain("meta.image||(key==='onepiece'?show.img:episodePlaceholderImage(title,season,i))");
+    expect(html).toContain("meta.image||tsImage(key,season,i)||(key==='onepiece'?show.img:episodePlaceholderImage(title,season,i))");
+    expect(html).toContain('var TS_EP_IMAGES=');
     expect(html).toContain("(ep.desc?'<span class=\"episode-desc\">'");
     expect(html).toContain("(ep.runtime?'<span class=\"episode-runtime\">'");
     expect(html).toContain('.episode-copy .episode-air-date');

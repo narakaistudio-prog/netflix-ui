@@ -39,14 +39,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
 import { decodeEntities, titleKey, titleVariants } from './lib/text.mjs';
-import {
-    buildSeasonMap,
-    nxEpisodes,
-    nxSeasonNumber,
-    parseSeasonEpisodes,
-    parseToonSeasons,
-    seriesSlugFromEpisode,
-} from './lib/seasons.mjs';
+import { buildSeasonMap, compactPlan, nxEpisodes, nxSeasonNumber, parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode } from './lib/seasons.mjs';
 export { parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode };
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -321,7 +314,7 @@ export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overvi
         if (Object.keys(seasonGuide).length) {
             guide[Number(ts.n)] = seasonGuide;
             seasons[Number(ts.n)] = plan.count;
-            nxMap[Number(ts.n)] = { season: plan.season, base: plan.base };
+            nxMap[Number(ts.n)] = compactPlan(plan);
         }
     }
     if (!Object.keys(guide).length) return { guide: null, seasons: null, nxMap: null };
