@@ -138,6 +138,24 @@ test('an unreachable site stays ok:false, never a 5xx', () => {
     expect(res.body.ok).toBe(false);
 });
 
+test('pickEmbed chooses the site\'s own Server 1 player, not a named host row', () => {
+    const { results } = runScenario({
+        mode: 'unit',
+        calls: [
+            // Ruby iframe later in DOM must lose to the page's own player.
+            ['pickEmbed', [['https://vidmoly.net/embed-a.html', 'https://rubystm.com/e/1.html']]],
+            // Trailer/promo frames are skipped for `chosen`.
+            ['pickEmbed', [['https://www.youtube.com/embed/X', 'https://rubystm.com/e/1.html']]],
+            ['pickEmbed', [['https://awish.click/embed-abc123.html']]],
+        ],
+    });
+    expect(results).toEqual([
+        'https://vidmoly.net/embed-a.html',
+        'https://rubystm.com/e/1.html',
+        'https://awish.click/embed-abc123.html',
+    ]);
+});
+
 test('parsing helpers are conservative (only real player hosts, no site frames)', () => {
     const { results } = runScenario({
         mode: 'unit',
