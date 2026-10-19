@@ -1,4 +1,5 @@
 name: Probe MHA cards
+# rerun marker: Nxsha guide refreshed
 # Temporary: why do MHA S8E12 / Trigun S2E12 still lack a ToonStream still?
 # Runs the harvester for just those two shows into /tmp so main state is untouched.
 
