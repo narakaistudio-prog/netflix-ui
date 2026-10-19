@@ -305,3 +305,51 @@ test('a stale bake (anime already dropped on the page) renders no duplicate', as
     expect((dom.window as any).TS_SLUGS.solo).toBe('solo-leveling');
     dom.window.close();
 });
+
+test('a season-number mismatch still shows the real Nxsha episode guide', async () => {
+    // ToonStream calls the current run "S3"; Nxsha merged everything into one
+    // 36-episode season. The card must still open a guide full of real names,
+    // stills and runtimes instead of 12 placeholders.
+    const guide: Record<string, any> = {};
+    for (let i = 1; i <= 36; i += 1) {
+        guide[String(i)] = {
+            title: i === 15 ? 'Chestnuts Roasting on an Open Fire' : `Episode ${i}`,
+            overview: `Story ${i}`,
+            image: `https://image.tmdb.org/t/p/w300/e${i}.jpg`,
+            airDate: '2025-10-19',
+            runtime: 23,
+        };
+    }
+    const { dom } = bootWithBake([
+        {
+            title: 'Ranma1/2',
+            slug: 'ranma1-2',
+            img: 'https://image.tmdb.org/t/p/w780/ranma.jpg',
+            season: 3,
+            episode: 3,
+            nxId: '259140',
+            mappedSeason: 1,
+            seasons: { 1: 36 },
+            firstSeen: '2026-10-19',
+            guide: { 1: guide },
+        },
+    ]);
+    await wait(400);
+    const doc = dom.window.document;
+    const card = Array.from(doc.querySelectorAll('#homeRows .rail-card')).find((node) =>
+        (node.textContent || '').includes('Ranma1/2'),
+    );
+    expect(card).toBeTruthy();
+    click(dom.window, card || null);
+    await wait(250);
+
+    const seasonSelect = doc.getElementById('seasonSelect') as HTMLSelectElement;
+    expect(seasonSelect.value).toBe('1');
+    const episodeList = doc.getElementById('episodeList')!;
+    expect(episodeList.querySelectorAll('.episode-card')).toHaveLength(36);
+    expect(episodeList.textContent).toContain('Chestnuts Roasting on an Open Fire');
+    expect(episodeList.innerHTML).toContain('e15.jpg');
+    // The list itself carries no placeholder-only cards.
+    expect(episodeList.innerHTML).not.toContain('Episode still unavailable');
+    dom.window.close();
+});

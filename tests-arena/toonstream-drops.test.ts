@@ -130,3 +130,42 @@ test('Nxsha search results parse and match by full title only', () => {
     expect(parsed.block.startsWith('/*TS_DROPS_START*/')).toBe(true);
     expect(parsed.block).toContain('"season":2');
 });
+
+test('the whole Nxsha guide is baked when the season numbers disagree (Ranma case)', () => {
+    const code = `
+        const mod = await import(${JSON.stringify(new URL(`file://${join(ROOT, 'scripts', 'harvest-toonstream-drops.mjs')}`).href)});
+        const season1 = {
+          season: { season_number: 1, episode_count: 36, name: 'Season 1' },
+          episodes: Array.from({ length: 36 }, (_, i) => ({
+            episode_number: i + 1,
+            name: i === 14 ? 'Chestnuts Roasting on an Open Fire' : 'Episode ' + (i + 1),
+            overview: 'Over ' + (i + 1),
+            still_path: '/still' + (i + 1) + '.jpg',
+            air_date: i < 12 ? '2024-10-' + String(i + 1).padStart(2, '0') : '2025-10-' + String(i - 11).padStart(2, '0'),
+            runtime: 23,
+          })),
+        };
+        const season2 = { season: { season_number: 2, episode_count: 50, name: 'Season 2' }, episodes: Array.from({ length: 50 }, (_, i) => ({ episode_number: i + 1, name: 'B' + (i + 1), still_path: '/b' + i + '.jpg', air_date: '2022-01-01', runtime: 24 })) };
+        // Ranma's ToonStream drop is "S3"; Nxsha only has one merged season.
+        const ranma = mod.buildShowGuide([season1], mod.pickGuideSeason([season1], 3, 'Ranma1/2'));
+        // A dub of a long-running show must not jump to its newest spin-off season.
+        const dub = mod.buildShowGuide([season2, season1], mod.pickGuideSeason([season2, season1], 2, 'Bleach Dub'));
+        console.log(JSON.stringify({
+          variants: mod.titleVariants('Bleach Dub'),
+          ranma,
+          dubSeason: Object.keys(dub.guide || {}),
+          ranmaEp15: ranma.guide['1']['15'],
+          ranmaCount: ranma.seasons['1'],
+        }));
+    `;
+    const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
+    expect(parsed.variants).toEqual(['Bleach Dub', 'Bleach']);
+    // The merged Nxsha season carries all 36 episodes, with the real stills.
+    expect(parsed.ranmaCount).toBe(36);
+    expect(parsed.ranma.mappedSeason).toBe(1);
+    expect(parsed.ranmaEp15.title).toBe('Chestnuts Roasting on an Open Fire');
+    expect(parsed.ranmaEp15.image).toContain('still15.jpg');
+    // A "Dub" drop opens season 1 even though ToonStream calls it season 2.
+    expect(parsed.dubSeason[0]).toBe('1');
+    expect(parsed.dubSeason).toContain('2');
+});

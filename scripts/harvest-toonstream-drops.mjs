@@ -31,12 +31,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
-import {
-    buildSeasonGuide,
-    catalogGuideCovers,
-    decodeEntities,
-    titleKey,
-} from './harvest-deadtoons-schedule.mjs';
+import { buildSeasonGuide, decodeEntities, titleKey } from './harvest-deadtoons-schedule.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const STATE_FILE = resolve(process.env.TS_DROPS_STATE_FILE || resolve(ROOT, 'data', 'toonstream-drops.json'));
@@ -178,38 +173,132 @@ export function buildSiteIndex() {
     return index;
 }
 
-/** Guide the catalog already ships (NX_EPISODE_DATA) for this key/season. */
-function catalogGuideFor(indexHit, season) {
-    if (!indexHit || indexHit.from !== 'catalog' || !indexHit.key) return null;
-    if (!catalogGuideCovers(readJson(EPISODES_FILE, {}), indexHit.key, season)) return null;
-    return { covered: true };
+/** Titles on Nxsha differ slightly: strip dub tags, spacing and punctuation. */
+export function titleVariants(title) {
+    const raw = String(title || '').trim();
+    const stripped = raw
+        .replace(/\s*[\(\[]?(hindi|english|tamil|telugu|japanese|multi|dual)?\s*(dub|dubbed)[\)\]]?\s*$/i, '')
+        .trim();
+    return [...new Set([raw, stripped].filter(Boolean))];
 }
 
-/** Nxsha episode guide for one season, in the page's CR_NX_DROPS.guide shape. */
-async function fetchGuide(id, season, report) {
-    for (let attempt = 1; attempt <= 3; attempt += 1) {
+/**
+ * One Nxsha season, exactly as the site returns it, or null when that season
+ * number does not exist. Nxsha's season numbering is not ToonStream's: seasons
+ * are regularly merged into one (Ranma's 2024 + 2025 runs live in "Season 1"
+ * with 36 episodes), so callers must not assume the numbers line up.
+ */
+async function fetchSeason(id, season, report) {
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
         try {
             const res = await getText(`${NX_BASE}/api/tv/${id}/season/${season}`, { json: true, retries: 0 });
             if (res.status !== 200) return null;
             const body = JSON.parse(res.text);
-            if (!body || body.success !== true) return null;
-            return buildSeasonGuide(body, season);
+            if (!body || body.success !== true || !Array.isArray(body.episodes) || !body.episodes.length) return null;
+            return body;
         } catch (error) {
             report.push({ step: 'guide', id, season, attempt, error: String(error?.message || error) });
-            await sleep(500 * attempt);
+            await sleep(400 * attempt);
         }
     }
     return null;
 }
 
+/** Every season Nxsha carries for the show (stops after two empty numbers). */
+async function fetchNxshaSeasons(id, report) {
+    const seasons = [];
+    let misses = 0;
+    for (let n = 1; n <= 14; n += 1) {
+        const body = await fetchSeason(id, n, report);
+        if (!body) {
+            misses += 1;
+            if (misses >= 2 && seasons.length) break;
+            if (misses >= 3) break;
+            continue;
+        }
+        misses = 0;
+        seasons.push(body);
+        await sleep(120);
+    }
+    return seasons;
+}
+
+const latestAirDate = (body) => {
+    let latest = '';
+    for (const ep of body.episodes || []) {
+        const day = String(ep?.air_date || '');
+        if (day > latest) latest = day;
+    }
+    return latest;
+};
+
+/**
+ * Which Nxsha season should the guide open on? The exact ToonStream number when
+ * Nxsha has it; a dub drop prefers season 1 (a dub of the original run); every
+ * other mismatch falls back to the season that aired most recently, because a
+ * Fresh Drop is by definition the newest episode.
+ */
+export function pickGuideSeason(seasons, dropSeason, title = '') {
+    if (!Array.isArray(seasons) || !seasons.length) return null;
+    const number = (body) => Number(body?.season?.season_number) || 0;
+    const exact = seasons.find((body) => number(body) === Number(dropSeason));
+    if (exact) return exact;
+    if (/\bdub(bed)?\b/i.test(String(title))) {
+        return seasons.slice().sort((a, b) => number(a) - number(b))[0];
+    }
+    return seasons
+        .slice()
+        .sort((a, b) => latestAirDate(b).localeCompare(latestAirDate(a)) || number(b) - number(a))[0];
+}
+
+/**
+ * Guide for the whole show in CR_NX_DROPS.guide shape: every Nxsha season, the
+ * chosen one first, capped so a 300-episode backlog cannot bloat the page.
+ * `seasons` carries the baked episode count per season, never a fake count.
+ */
+export function buildShowGuide(seasons, preferred, { maxEpisodes = 150, overviewLimit = 200 } = {}) {
+    if (!Array.isArray(seasons) || !seasons.length) return { guide: null, seasons: null, mappedSeason: null };
+    const number = (body) => Number(body?.season?.season_number) || 0;
+    const preferredNumber = Number(preferred?.season?.season_number) || number(seasons[0]);
+    const ordered = [
+        ...seasons.filter((body) => number(body) === preferredNumber),
+        ...seasons
+            .filter((body) => number(body) !== preferredNumber)
+            .sort((a, b) => latestAirDate(b).localeCompare(latestAirDate(a)) || number(b) - number(a)),
+    ];
+    const guide = {};
+    const counts = {};
+    let budget = maxEpisodes;
+    for (const body of ordered) {
+        if (budget <= 0) break;
+        const seasonNumber = number(body);
+        const episodes = [...(body.episodes || [])]
+            .filter((ep) => Number.isInteger(Number(ep?.episode_number)) && Number(ep.episode_number) > 0)
+            .sort((a, b) => Number(a.episode_number) - Number(b.episode_number))
+            .slice(0, budget);
+        if (!episodes.length) continue;
+        const built = buildSeasonGuide({ ...body, episodes }, seasonNumber, { overviewLimit });
+        const seasonGuide = built?.[String(seasonNumber)];
+        if (!seasonGuide || !Object.keys(seasonGuide).length) continue;
+        guide[seasonNumber] = seasonGuide;
+        counts[seasonNumber] = Object.keys(seasonGuide).length;
+        budget -= counts[seasonNumber];
+    }
+    if (!Object.keys(guide).length) return { guide: null, seasons: null, mappedSeason: null };
+    return { guide, seasons: counts, mappedSeason: preferredNumber };
+}
+
 async function resolveNxsha(title, indexHit, report) {
     if (indexHit && indexHit.id) return { id: indexHit.id, from: indexHit.from };
-    try {
-        const res = await getText(`${NX_BASE}/search/tv?q=${encodeURIComponent(title)}`);
-        const hit = pickSearchHit(parseNxshaSearchTv(res.text), title);
-        if (hit) return { id: hit.id, from: 'search' };
-    } catch (error) {
-        report.push({ step: 'search', title, error: String(error?.message || error) });
+    for (const variant of titleVariants(title)) {
+        try {
+            const res = await getText(`${NX_BASE}/search/tv?q=${encodeURIComponent(variant)}`);
+            const hit = pickSearchHit(parseNxshaSearchTv(res.text), variant);
+            if (hit) return { id: hit.id, from: 'search' };
+        } catch (error) {
+            report.push({ step: 'search', title: variant, error: String(error?.message || error) });
+        }
+        await sleep(120);
     }
     return null;
 }
@@ -226,6 +315,7 @@ function toBlockItem(record) {
         ...(record.nxId ? { nxId: record.nxId } : {}),
         ...(record.seasons && Object.keys(record.seasons).length ? { seasons: record.seasons } : {}),
         ...(record.guide && Object.keys(record.guide).length ? { guide: record.guide } : {}),
+        ...(record.mappedSeason ? { mappedSeason: record.mappedSeason } : {}),
         ...(record.firstSeen ? { firstSeen: record.firstSeen } : {}),
         ...(record.onSite ? { onSite: true } : {}),
     };
@@ -264,12 +354,15 @@ function mergeState(previous, incoming, updated) {
             ...(old?.guide || {}),
             ...(record.guide || {}),
         };
-        items[slug] = {
+        const merged = {
             ...old,
             ...record,
             firstSeen: old?.firstSeen || record.firstSeen,
             ...(Object.keys(guide).length ? { guide } : {}),
         };
+        // A remap only describes today's drop; never carry a stale one forward.
+        if (!record.mappedSeason) delete merged.mappedSeason;
+        items[slug] = merged;
     }
     return { updated, source: BASE + '/home', items };
 }
@@ -300,42 +393,66 @@ async function harvest() {
 
     const incoming = {};
     for (const drop of byTitle.values()) {
-        const hit = index.get(titleKey(drop.title)) || null;
+        const title = drop.title;
+        // Nxsha files titles slightly differently ("Ranma1/2", "Bleach" vs a
+        // "- Hindi Dub" post), so try the plain title and its cleaned variants.
+        let hit = null;
+        for (const variant of titleVariants(title)) {
+            hit = index.get(titleKey(variant)) || null;
+            if (hit) break;
+        }
         const season = Number(drop.season || 0) || null;
         const episode = Number(drop.ep || 0) || null;
         const old = previous.items?.[drop.slug] || {};
         const record = {
-            title: drop.title,
+            title,
             slug: drop.slug,
             img: drop.img || '',
             season,
             episode,
             episodeUrl: drop.episode || drop.url || '',
             firstSeen: old.firstSeen || day,
-            ...(hit?.key ? { onSite: true } : {}),
+            ...(hit && hit.from !== 'nxsha-drop' ? { onSite: true } : {}),
         };
 
-        // The catalog guide already rides in NX_EPISODE_DATA — do not bake a twin.
-        const covered = season ? catalogGuideFor(hit, season) : null;
-        let nxId = hit?.id || '';
-        if (!covered) {
-            const resolved = await resolveNxsha(drop.title, hit, report);
-            nxId = resolved?.id || '';
+        // A catalog title already ships NX_EPISODE_DATA — do not bake a twin.
+        if (hit?.key) {
+            record.nxId = hit.id || '';
+            incoming[drop.slug] = record;
+            continue;
         }
-        if (nxId) {
-            record.nxId = nxId;
-            if (season) {
-                // Reuse the previous day's guide for the same id+season, else fetch.
-                const cached = old.guide?.[String(season)] && old.nxId === nxId ? old.guide : null;
-                const guide = covered ? null : cached || (await fetchGuide(nxId, season, report));
-                if (guide) {
-                    record.guide = { [String(season)]: guide[String(season)] || {} };
-                    record.seasons = { [String(season)]: Object.keys(record.guide[String(season)]).length };
-                    if (!record.guide[String(season)] || !Object.keys(record.guide[String(season)]).length) delete record.guide;
-                }
-                await sleep(120);
+
+        const resolved = await resolveNxsha(title, hit, report);
+        const nxId = resolved?.id || hit?.id || '';
+        if (!nxId) {
+            incoming[drop.slug] = record;
+            continue;
+        }
+        record.nxId = nxId;
+
+        // Fetch the show's whole Nxsha guide, not just the dropped season: the
+        // season numbers rarely line up (Nxsha merges split cours), and a guide
+        // with real stills/names matters more than a matching season label.
+        const seasons = await fetchNxshaSeasons(nxId, report);
+        const preferred = pickGuideSeason(seasons, season, title);
+        const built = buildShowGuide(seasons, preferred);
+        if (built.guide) {
+            record.guide = built.guide;
+            record.seasons = built.seasons;
+            if (built.mappedSeason && Number(built.mappedSeason) !== Number(season)) {
+                // ToonStream's season does not exist on Nxsha; the guide is the
+                // closest real season (newest, or S1 for a dub). Playback keeps
+                // ToonStream's own S/E — only the guide is remapped.
+                record.mappedSeason = built.mappedSeason;
             }
         }
+        if (report.length > 40) report.length = 40;
+        const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);
+        console.log(
+            `  ${title.slice(0, 44).padEnd(46)} nx=${nxId} (${resolved?.from || hit?.from || '-'}) ` +
+                `s${season ?? '?'}e${episode ?? '?'} -> guide ${guideCount} eps` +
+                (record.mappedSeason ? ` (season ${record.mappedSeason})` : ''),
+        );
         incoming[drop.slug] = record;
     }
 
@@ -402,7 +519,10 @@ async function main() {
         `toonstream: ${count} fresh drops · ${withGuide} with an Nxsha episode guide · ` +
             `${Object.values(state.items).filter((item) => item.onSite).length} already on the page (no twin card)`,
     );
-    if (report.length) console.log(`warnings: ${report.length} (see the run log)`);
+    if (report.length) {
+        console.log(`warnings: ${report.length}`);
+        for (const warning of report.slice(0, 20)) console.log(`  ! ${JSON.stringify(warning)}`);
+    }
 }
 
 const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
