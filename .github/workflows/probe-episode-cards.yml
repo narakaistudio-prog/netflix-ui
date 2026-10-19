@@ -1,0 +1,34 @@
+name: Probe episode cards
+# Temporary: inspect ToonStream season markup for the two episodes whose cards
+# still fall back to the placeholder. Removed before the branch merges.
+
+on:
+  push:
+    branches:
+      - arena/90e9ce59-netflix-ui
+    paths:
+      - '.github/workflows/probe-episode-cards.yml'
+      - 'tmp-probe/cards.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tmp-probe/cards.mjs
+      - name: Commit the probe notes
+        run: |
+          git config user.name 'toonstream-bot'
+          git config user.email 'toonstream-bot@users.noreply.github.com'
+          git add probe-cards.txt
+          git diff --cached --quiet && exit 0
+          git commit -m 'chore: probe episode card markup'
+          git push
