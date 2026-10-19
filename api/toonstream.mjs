@@ -152,30 +152,27 @@ function extractPlayerSlots(html) {
  * slot N-1 (verified against live pages). We replicate that order here.
  */
 function extractSiteServers(html) {
+  // Ground truth from toonstream's own /public/servers config: the sidebar
+  // labels three promoted hosts - SERVER 1 "Play" (ravok.buzz, the site's
+  // default player), SERVER 2 "Short" (abyssplayer.com), SERVER 3 "MultiQ"
+  // (blakiteapi.xyz). Ruby/StreamRuby is server #14 there and must never be
+  // used for the Play chip.
+  const PROMOTED = [
+    { label: 'Play', hosts: ['ravok.buzz', 'as-cdn26.top'] },
+    { label: 'Short', hosts: ['abyssplayer.com'] },
+    { label: 'MultiQ', hosts: ['blakiteapi.xyz'] },
+  ];
   const slots = extractPlayerSlots(html);
-  const rowNames = extractServerNames(html);
-  const byRow = (row) => slots.find((x) => x.slot === row - 1) || null;
-  const findRow = (re) => {
-    for (const k of Object.keys(names())) if (re.test(names()[k])) return parseInt(k, 10);
-    return 0;
-  };
-  const names = () => rowNames;
   const out = [];
-  const first = byRow(1);
-  if (first) out.push({ name: 'Play', url: first.url });
-  for (const re of [/^short$/i, /multi\s*q/i]) {
-    const row = findRow(re);
-    const sl = row ? byRow(row) : null;
-    if (sl && !out.some((o) => o.url === sl.url)) out.push({ name: names()[String(row)] || 'Server', url: sl.url });
+  for (const { label, hosts } of PROMOTED) {
+    const sl = slots.find((x) => hosts.some((h) => x.url.includes(h)));
+    if (sl) out.push({ name: label, url: sl.url });
   }
-  for (const sl of slots) {
-    if (out.length >= 3) break;
-    if (sl.slot === 0 && out.some((o) => o.url === sl.url)) continue;
-    if (!out.some((o) => o.url === sl.url)) {
-      out.push({ name: names()[String(sl.slot + 1)] || `S${sl.slot + 1}`, url: sl.url });
-    }
+  if (!out.length) {
+    // Hosts rotated someday: degrade to the page's first three players.
+    return slots.slice(0, 3).map((x, i) => ({ name: `S${i + 1}`, url: x.url }));
   }
-  return out.slice(0, 3);
+  return out;
 }
 
 /**

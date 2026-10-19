@@ -21,7 +21,7 @@ function runScenario(scenario) {
     return JSON.parse(out.slice(marker + '__RESULT__'.length));
 }
 
-/** Solo Leveling-style page: 8 player slots + 8 named download rows. */
+/** Solo Leveling E1 - exact live structure (11 slots, 8 named rows). */
 const EPISODE_HTML = `
 <html><body>
   <aside class="video-player" id="aa-options">
@@ -30,11 +30,14 @@ const EPISODE_HTML = `
     </div>
     <div id="options-1" class="video hdd"><iframe data-src="https://filesforever.link/embed/hdoyuqt" loading="lazy"></iframe></div>
     <div id="options-2" class="video hdd"><iframe data-src="https://filesforever.link/embed/x7kv57a" loading="lazy"></iframe></div>
-    <div id="options-3" class="video hdd"><iframe data-src="https://filesforever.link/embed/c3slot" loading="lazy"></iframe></div>
-    <div id="options-4" class="video hdd"><iframe data-src="https://cloudy.upns.one/#slot4" loading="lazy"></iframe></div>
-    <div id="options-5" class="video hdd"><iframe data-src="https://vidmoly.net/embed-slot5" loading="lazy"></iframe></div>
-    <div id="options-6" class="video hdd"><iframe data-src="https://filesforever.link/embed/shortslot" loading="lazy"></iframe></div>
-    <div id="options-7" class="video hdd"><iframe data-src="https://filesforever.link/embed/mqslot" loading="lazy"></iframe></div>
+    <div id="options-3" class="video hdd"><iframe data-src="https://filesforever.link/embed/o4m5b3o" loading="lazy"></iframe></div>
+    <div id="options-4" class="video hdd"><iframe data-src="https://cloudy.upns.one/#krga1o" loading="lazy"></iframe></div>
+    <div id="options-5" class="video hdd"><iframe data-src="https://vidmoly.net/embed-c04lu1yyy8i3.html" loading="lazy"></iframe></div>
+    <div id="options-6" class="video hdd"><iframe data-src="https://abyssplayer.com/LR0L1Adhn" loading="lazy"></iframe></div>
+    <div id="options-7" class="video hdd"><iframe data-src="https://blakiteapi.xyz/embed/127532/1-1" loading="lazy"></iframe></div>
+    <div id="options-8" class="video hdd"><iframe data-src="https://ravok.buzz/video/ec4de54f2f3afa14175e5eabfc16ce1f" loading="lazy"></iframe></div>
+    <div id="options-9" class="video hdd"><iframe data-src="https://strmup.to/PhZJCk0DRSitMN" loading="lazy"></iframe></div>
+    <div id="options-10" class="video hdd"><iframe data-src="https://turbonewvid.com/t/68bfab1aa350e" loading="lazy"></iframe></div>
   </aside>
   <div class="server-row"><div class="hex-badge t-1"><span class="hex-number">01</span></div>
     <span class="server-name">Ruby</span><span class="tag1">1080p</span>
@@ -47,19 +50,19 @@ const EPISODE_HTML = `
     <a href="https://filesforever.link/file/x7kv57a">Download</a></div>
   <div class="server-row"><div class="hex-badge t-4"><span class="hex-number">04</span></div>
     <span class="server-name">filesforever</span><span class="tag1">1080p</span>
-    <a href="https://filesforever.link/file/c3slot">Download</a></div>
+    <a href="https://filesforever.link/file/o4m5b3o">Download</a></div>
   <div class="server-row"><div class="hex-badge t-5"><span class="hex-number">05</span></div>
     <span class="server-name">Cloudy</span><span class="tag1">1080p</span>
-    <a href="https://cloudy.upns.one/#slot4">Download</a></div>
+    <a href="https://cloudy.upns.one/#krga1o">Download</a></div>
   <div class="server-row"><div class="hex-badge t-6"><span class="hex-number">06</span></div>
     <span class="server-name">Moly</span><span class="tag1">720p</span>
-    <a href="https://vidmoly.me/dl/slot5">Download</a></div>
+    <a href="https://vidmoly.me/dl/c04lu1y">Download</a></div>
   <div class="server-row"><div class="hex-badge t-7"><span class="hex-number">07</span></div>
     <span class="server-name">Short</span><span class="tag1">1080p</span>
-    <a href="https://download.openx.xyz/?v=shortslot">Download</a></div>
+    <a href="https://abyssplayer.com/dl/LR0L1Adhn">Download</a></div>
   <div class="server-row"><div class="hex-badge t-8"><span class="hex-number">08</span></div>
     <span class="server-name">MultiQ</span><span class="tag1">1080p</span>
-    <a href="https://blakiteapi.xyz/download/1/1-2">Download</a></div>
+    <a href="https://blakiteapi.xyz/download/127532/1-1">Download</a></div>
   <a href="/episode/x-1x1/">prev</a> <a href="/episode/x-1x3/">next</a>
 </body></html>`;
 
@@ -124,11 +127,14 @@ test('player slots + sidebar names parse from the live markup shapes', () => {
         { slot: 0, url: 'https://rubystm.com/e/mvybg38ttztw.html' },
         { slot: 1, url: 'https://filesforever.link/embed/hdoyuqt' },
         { slot: 2, url: 'https://filesforever.link/embed/x7kv57a' },
-        { slot: 3, url: 'https://filesforever.link/embed/c3slot' },
-        { slot: 4, url: 'https://cloudy.upns.one/#slot4' },
-        { slot: 5, url: 'https://vidmoly.net/embed-slot5' },
-        { slot: 6, url: 'https://filesforever.link/embed/shortslot' },
-        { slot: 7, url: 'https://filesforever.link/embed/mqslot' },
+        { slot: 3, url: 'https://filesforever.link/embed/o4m5b3o' },
+        { slot: 4, url: 'https://cloudy.upns.one/#krga1o' },
+        { slot: 5, url: 'https://vidmoly.net/embed-c04lu1yyy8i3.html' },
+        { slot: 6, url: 'https://abyssplayer.com/LR0L1Adhn' },
+        { slot: 7, url: 'https://blakiteapi.xyz/embed/127532/1-1' },
+        { slot: 8, url: 'https://ravok.buzz/video/ec4de54f2f3afa14175e5eabfc16ce1f' },
+        { slot: 9, url: 'https://strmup.to/PhZJCk0DRSitMN' },
+        { slot: 10, url: 'https://turbonewvid.com/t/68bfab1aa350e' },
     ]);
     expect(results[1]).toEqual({
         '1': 'Ruby', '2': 'filesforever', '3': 'filesforever', '4': 'filesforever',
@@ -145,16 +151,19 @@ test("returns exactly the sidebar trio: Play, Short, MultiQ", () => {
     expect(res.body.ok).toBe(true);
     expect(res.body.via).toBe('direct');
     expect(res.body.episodeUrl).toBe('https://toonstream.us/episode/overgeared-1x2/');
-    // Exactly the sidebar's promoted three: PLAY, SHORT, MULTIQ.
+    // Exactly the sidebar's promoted three, by host (from /public/servers):
+    // SERVER 1 Play = ravok.buzz, 2 Short = abyssplayer, 3 MultiQ = blakite.
     expect(res.body.servers).toEqual([
-        { name: 'Play', url: 'https://rubystm.com/e/mvybg38ttztw.html' },
-        { name: 'Short', url: 'https://filesforever.link/embed/shortslot' },
-        { name: 'MultiQ', url: 'https://filesforever.link/embed/mqslot' },
+        { name: 'Play', url: 'https://ravok.buzz/video/ec4de54f2f3afa14175e5eabfc16ce1f' },
+        { name: 'Short', url: 'https://abyssplayer.com/LR0L1Adhn' },
+        { name: 'MultiQ', url: 'https://blakiteapi.xyz/embed/127532/1-1' },
     ]);
     expect(res.body.embeds).toHaveLength(3);
+    // StreamRuby must NEVER be the Play chip (it is server #14 on the site).
+    expect(JSON.stringify(res.body.servers)).not.toContain('rubystm');
     expect(JSON.stringify(res.body.embeds)).not.toContain('youtube');
     // chosen = the site's own SERVER 1 PLAY player.
-    expect(res.body.chosen).toBe('https://rubystm.com/e/mvybg38ttztw.html');
+    expect(res.body.chosen).toBe('https://ravok.buzz/video/ec4de54f2f3afa14175e5eabfc16ce1f');
 });
 
 test('apostrophe titles now resolve directly (jojo/frieren site slugs)', () => {
