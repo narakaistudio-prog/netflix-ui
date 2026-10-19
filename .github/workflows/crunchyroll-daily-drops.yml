@@ -1,32 +1,21 @@
-name: Crunchyroll daily Fresh Drops
+name: Crunchyroll daily Fresh Toon
 
-# Once a day this keeps the "Fresh Drops" row on the Crunchyroll page current:
+# Once a day this keeps the Crunchyroll page's anime rails current:
 #
-#   1. nxsha anime listings  -> titles the catalog has no route for
-#      (data/crunchyroll-new-drops.json + bell notifications, lib/notifications.ts)
-#   2. DeadToons schedule    -> today's + upcoming anime episodes, each with the
-#      Nxsha id the harvester verified, so every card in the row plays
-#      (data/deadtoons-schedule.json; scripts/harvest-deadtoons-schedule.mjs)
-#   3. ToonStream home rail  -> the "Fresh Drop Toon" row, with each drop's
-#      episode guide (stills, synopsis, runtime) from Nxsha and one card per
-#      anime only (scripts/harvest-toonstream-drops.mjs)
-#   4. all of the above     -> the rail blocks in assets/crunchyroll/crunchyroll.html
-#      (scripts/build-crunchyroll-new-drops.mjs, scripts/harvest-toonstream-drops.mjs)
+#   1. ToonStream season layout -> the season numbers/counts every anime card
+#      shows (data/toonstream-seasons.json; scripts/harvest-toonstream-seasons.mjs)
+#   2. ToonStream home rail     -> the "Fresh Drop Toon" row, one card per anime,
+#      with the Nxsha episode metadata mapped onto ToonStream's seasons
+#      (data/toonstream-drops.json; scripts/harvest-toonstream-drops.mjs)
+#   3. both bakes               -> TS_SEASONS + TS_DROPS in
+#      assets/crunchyroll/crunchyroll.html, verified with --check.
 #
-# Every step degrades safely: a schedule harvest that finds nothing (site down or
-# changed shape) leaves the previous state in place, and the bake is verified
-# with --check, so the row is never blanked.
+# DeadToons is no longer part of the daily rail: ToonStream is the source for
+# both the drop and the season layout. Every step degrades safely — a failed
+# harvest leaves yesterday's block in place rather than blanking the page.
 #
-# The first run of a source is a baseline: everything found then is marked and
-# never counts as "new".
-#
-# GitHub runs a "schedule" trigger only from the repository's default branch, so
-# until this branch is merged the daily run has to be started manually
-# (`gh workflow run "Crunchyroll daily Fresh Drops" --ref <branch>`).
-#
-# Manual runs can pass probe=true to only write the diagnostics report for
-# deadtoons.sbs/schedule (the state is left untouched) — use it when the site
-# changes shape.
+# GitHub runs a "schedule" trigger only from the default branch, so until this
+# branch is merged the daily run has to be started by a push to a listed branch.
 #
 # Commits made with GITHUB_TOKEN do not start other workflows.
 on:
@@ -35,20 +24,16 @@ on:
     - cron: '0 4 * * *'
   push:
     branches:
-      - arena/598565e9-netflix-ui
+      - arena/167ea7f6-netflix-ui
       - main
     paths:
       - '.github/workflows/crunchyroll-daily-drops.yml'
-      - 'scripts/build-crunchyroll-new-drops.mjs'
-      - 'scripts/harvest-deadtoons-schedule.mjs'
+      - 'scripts/harvest-toonstream-seasons.mjs'
       - 'scripts/harvest-toonstream-drops.mjs'
+      - 'scripts/lib/seasons.mjs'
+      - 'scripts/lib/text.mjs'
       - 'api/toonstream.mjs'
   workflow_dispatch:
-    inputs:
-      probe:
-        description: 'Only probe deadtoons.sbs/schedule (write the report, no state)'
-        type: boolean
-        default: false
 
 concurrency:
   group: crunchyroll-drops-${{ github.ref }}
@@ -60,7 +45,7 @@ permissions:
 jobs:
   drops:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - name: Checkout the requested branch
         uses: actions/checkout@v4
@@ -72,102 +57,74 @@ jobs:
         with:
           node-version: 20
 
-      - name: Probe deadtoons.sbs/schedule only
-        if: inputs.probe == true
-        run: node scripts/harvest-deadtoons-schedule.mjs --probe --verbose --out=data/deadtoons-schedule-probe.json
-
-      - name: Build the nxsha drops state
-        if: inputs.probe != true
-        run: node scripts/build-crunchyroll-new-drops.mjs
-
-      - name: Harvest the DeadToons release schedule
-        id: deadtoons
-        if: inputs.probe != true
+      - name: Harvest the ToonStream season layout for the catalog
+        id: seasons
         continue-on-error: true
-        env:
-          # Repo Settings → Variables → DEADTOONS_BASE wins; default is deadtoons.sbs
-          DEADTOONS_BASE: ${{ vars.DEADTOONS_BASE }}
-        run: node scripts/harvest-deadtoons-schedule.mjs
+        run: node scripts/harvest-toonstream-seasons.mjs
 
-      - name: Harvest the ToonStream Fresh Drop rail (Nxsha episode guides)
+      - name: Harvest the ToonStream Fresh Drop rail (Nxsha episode metadata)
         id: toonstream
-        if: inputs.probe != true
         continue-on-error: true
         run: node scripts/harvest-toonstream-drops.mjs
 
-      # Probe runs — and harvests that found nothing — commit the diagnostics
-      # file so the site's shape is reviewable from the repository, not just the
-      # (short-lived) run log.
-      - name: Commit the probe report
-        if: inputs.probe == true || steps.deadtoons.outcome == 'failure'
+      - name: Bake the states into the page and verify
         run: |
-          git config user.name "netflix-catalog-bot"
-          git config user.email "netflix-catalog-bot@users.noreply.github.com"
-          git add data/deadtoons-schedule-probe.json
-          if git diff --cached --quiet; then
-            echo "Probe report unchanged."
+          # A failed harvest keeps yesterday's block untouched.
+          if [ -f data/toonstream-seasons.json ]; then
+            node scripts/harvest-toonstream-seasons.mjs --from-state
+            node scripts/harvest-toonstream-seasons.mjs --check
           else
-            git commit -m "chore(crunchyroll): record the deadtoons.sbs schedule probe report"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin HEAD:"${{ github.ref_name }}"
+            echo "No ToonStream season state yet (harvest did not complete)."
           fi
-
-      - name: Bake all states into the rails
-        if: inputs.probe != true
-        run: |
-          node scripts/build-crunchyroll-new-drops.mjs --from-state
-          node scripts/build-crunchyroll-new-drops.mjs --check
-          # A failed ToonStream harvest keeps yesterday's block untouched.
           if [ -f data/toonstream-drops.json ]; then
             node scripts/harvest-toonstream-drops.mjs --from-state
             node scripts/harvest-toonstream-drops.mjs --check
+          else
+            echo "No ToonStream drop state yet (harvest did not complete)."
           fi
 
-      - name: Summarize the row
-        if: inputs.probe != true
+      - name: Summarize the rails
         run: |
-          node scripts/build-crunchyroll-new-drops.mjs --from-state --dry-run > row.json
           node -e "
-            const rail = require('./row.json');
-            const lines = rail.items.map(i => '- ' + (i.fresh ? 'NEW ' : '') + i.title + ' (' + i.source + ', ' + i.firstSeen + ', nxsha:' + i.id + ')');
-            console.log('Fresh Drops (' + rail.mode + '):', lines.length + ' cards');
-            console.log(lines.join('\n'));
+            const seasons = require('./data/toonstream-seasons.json');
+            const drops = require('./data/toonstream-drops.json');
+            const shows = Object.values(seasons.shows || {});
+            const layouts = shows.reduce((n, s) => n + Object.keys(s.seasons || {}).length, 0);
+            console.log('ToonStream seasons: ' + shows.length + ' anime, ' + layouts + ' seasons baked');
+            if (seasons.misses && seasons.misses.length) {
+              console.log('Not found on ToonStream: ' + seasons.misses.map(m => m.title).join(', '));
+            }
+            console.log('Fresh Drop Toon: ' + Object.keys(drops.items || {}).length + ' cards');
+            console.log('Episode guides: ' + Object.values(drops.items || {}).filter(i => i.guide).length);
           " | tee -a "$GITHUB_STEP_SUMMARY"
-          if [ "${{ steps.deadtoons.outcome }}" != "success" ]; then
-            echo "" | tee -a "$GITHUB_STEP_SUMMARY"
-            echo "DeadToons schedule harvest did not complete (site unreachable or changed) — the row kept the previous titles." | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.seasons.outcome }}" != "success" ]; then
+            echo "ToonStream season harvest did not complete — previous layouts kept." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ "${{ steps.toonstream.outcome }}" != "success" ]; then
+            echo "ToonStream drop harvest did not complete — previous rail kept." | tee -a "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Commit the drops states and the page block
-        if: inputs.probe != true
         run: |
           git config user.name "netflix-catalog-bot"
           git config user.email "netflix-catalog-bot@users.noreply.github.com"
-          git add data/crunchyroll-new-drops.json assets/crunchyroll/crunchyroll.html
+          git add assets/crunchyroll/crunchyroll.html
+          if [ -f data/toonstream-seasons.json ]; then
+            git add data/toonstream-seasons.json
+          fi
           if [ -f data/toonstream-drops.json ]; then
             git add data/toonstream-drops.json
-          fi
-          # The schedule state only exists once a harvest has succeeded.
-          if [ -f data/deadtoons-schedule.json ]; then
-            git add data/deadtoons-schedule.json
-          else
-            echo "No DeadToons schedule state yet (harvest did not complete)."
-          fi
-          # The harvest always writes what the page looked like; keeping it in the
-          # repository is how a markup change is debugged without a fresh CI run.
-          if [ -f data/deadtoons-schedule-probe.json ]; then
-            git add data/deadtoons-schedule-probe.json
           fi
           if git diff --cached --quiet; then
             echo "No change."
           else
-            git commit -m "chore(crunchyroll): refresh Fresh Drops from nxsha + the DeadToons schedule"
+            git commit -m "chore(crunchyroll): refresh ToonStream seasons + the Fresh Drop rail"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin HEAD:"${{ github.ref_name }}"
           fi
 
       - name: Trigger the production Vercel deploy hook when configured
-        if: inputs.probe != true && github.ref_name == 'main'
+        if: github.ref_name == 'main'
         env:
           VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
         run: |

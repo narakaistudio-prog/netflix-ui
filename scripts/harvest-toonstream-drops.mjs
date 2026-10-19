@@ -38,7 +38,16 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
-import { decodeEntities, titleKey } from './harvest-deadtoons-schedule.mjs';
+import { decodeEntities, titleKey, titleVariants } from './lib/text.mjs';
+import {
+    buildSeasonMap,
+    nxEpisodes,
+    nxSeasonNumber,
+    parseSeasonEpisodes,
+    parseToonSeasons,
+    seriesSlugFromEpisode,
+} from './lib/seasons.mjs';
+export { parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode };
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const STATE_FILE = resolve(process.env.TS_DROPS_STATE_FILE || resolve(ROOT, 'data', 'toonstream-drops.json'));
@@ -47,8 +56,6 @@ const HTML_FILE = resolve(
 );
 const REGISTRY_FILE = resolve(ROOT, 'data', 'nxsha-titles.json');
 const EPISODES_FILE = resolve(ROOT, 'data', 'nxsha-episodes.json');
-const NX_DROPS_FILE = resolve(ROOT, 'data', 'crunchyroll-new-drops.json');
-const SCHEDULE_FILE = resolve(ROOT, 'data', 'deadtoons-schedule.json');
 
 const BASE = 'https://toonstream.us';
 const NX_BASE = 'https://nxsha.space';
@@ -105,6 +112,8 @@ async function getText(url, { json = false, retries = 2 } = {}) {
  * The search page prints rating and year around the poster, so the alt text is
  * the trustworthy title; the visible text is the fallback.
  */
+export { titleVariants };
+
 export function parseNxshaSearchTv(html) {
     const out = [];
     const seen = new Set();
@@ -162,31 +171,7 @@ export function buildSiteIndex() {
         if (!entry || typeof entry !== 'object' || !entry.title) continue;
         index.set(titleKey(entry.title), { key, id: String(entry.id || ''), kind: entry.kind || 'tv', from: 'catalog' });
     }
-    for (const [stateKey, entry] of Object.entries(readJson(NX_DROPS_FILE, {}).items || {})) {
-        if (!entry?.title) continue;
-        const key = `drop-${entry.kind}-${entry.id}`;
-        if (!index.has(titleKey(entry.title))) {
-            index.set(titleKey(entry.title), { key, id: String(entry.id || ''), kind: entry.kind || 'tv', from: 'nxsha-drop' });
-        }
-        void stateKey;
-    }
-    for (const entry of readJson(SCHEDULE_FILE, {}).items || []) {
-        if (!entry?.title) continue;
-        const id = String(entry?.nx?.id || '');
-        if (!index.has(titleKey(entry.title))) {
-            index.set(titleKey(entry.title), { key: '', id, kind: 'tv', from: 'deadtoons' });
-        }
-    }
     return index;
-}
-
-/** Titles on Nxsha differ slightly: strip dub tags, spacing and punctuation. */
-export function titleVariants(title) {
-    const raw = String(title || '').trim();
-    const stripped = raw
-        .replace(/\s*[\(\[]?(hindi|english|tamil|telugu|japanese|multi|dual)?\s*(dub|dubbed)[\)\]]?\s*$/i, '')
-        .trim();
-    return [...new Set([raw, stripped].filter(Boolean))];
 }
 
 /**
@@ -230,36 +215,6 @@ async function fetchNxshaSeasons(id, report) {
     return seasons;
 }
 
-/** Series slug from an episode URL: /episode/<slug>-<s>x<e>/ -> <slug>. */
-export function seriesSlugFromEpisode(url) {
-    const m = String(url || '').match(/\/episode\/(.+?)-(\d+)x(\d+)\/?$/i);
-    return m ? m[1] : '';
-}
-
-/** The season buttons on a ToonStream series page, in order. */
-export function parseToonSeasons(html) {
-    const out = new Map();
-    for (const tag of String(html || '').matchAll(/<a\b[^>]*>/g)) {
-        const hit = /data-url="([^"]*\/season\/(\d+))"/.exec(tag[0]);
-        if (!hit) continue;
-        out.set(Number(hit[2]), hit[1]);
-    }
-    return [...out.entries()].sort((a, b) => a[0] - b[0]).map(([n, url]) => ({ n, url }));
-}
-
-/** Episode numbers a season page links to: count + any gaps. */
-export function parseSeasonEpisodes(html) {
-    const nums = new Set();
-    for (const m of String(html || '').matchAll(/\/episode\/[^"'#]*?-(\d+)x(\d+)\/?(?=["'#])/g)) {
-        nums.add(Number(m[2]));
-    }
-    const sorted = [...nums].filter((n) => n > 0).sort((a, b) => a - b);
-    return {
-        count: sorted.length ? sorted[sorted.length - 1] : 0,
-        missing: sorted.filter((n, i) => n !== i + 1).slice(0, 5),
-    };
-}
-
 /**
  * ToonStream's own season structure. The series page lists its seasons and
  * every season page lists that season's episodes, so the numbers here are the
@@ -292,8 +247,11 @@ async function fetchToonSeasons(seriesSlug, report) {
         }
         for (const n of [...bySeason.keys()].sort((a, b) => a - b)) {
             const eps = [...bySeason.get(n)].sort((a, b) => a - b);
-            const count = eps[eps.length - 1] || 0;
-            if (count) seasons.push({ n, count, missing: eps.filter((e, i) => e !== i + 1).slice(0, 5) });
+            if (eps.length) {
+                const first = eps[0];
+                const last = eps[eps.length - 1];
+                seasons.push({ n, count: last - first + 1, first, last, missing: eps.filter((e, i) => e !== first + i).slice(0, 5) });
+            }
         }
     }
     if (!seasons.length) {
@@ -302,14 +260,6 @@ async function fetchToonSeasons(seriesSlug, report) {
     }
     return { slug: seriesSlug, seasons };
 }
-
-const nxSeasonNumber = (body) => Number(body?.season?.season_number) || 0;
-
-/** Nxsha episodes of one season, in order, numbered from 1. */
-const nxEpisodes = (body) =>
-    [...((body && body.episodes) || [])]
-        .filter((ep) => Number.isInteger(Number(ep?.episode_number)) && Number(ep.episode_number) > 0)
-        .sort((a, b) => Number(a.episode_number) - Number(b.episode_number));
 
 /** One Nxsha episode as a guide entry (the shape CR_NX_DROPS.guide already uses). */
 function guideEpisode(episode, overviewLimit) {
@@ -349,44 +299,30 @@ export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overvi
     if (!Array.isArray(tsSeasons) || !tsSeasons.length || !Array.isArray(nxSeasons) || !nxSeasons.length) {
         return { guide: null, seasons: null, nxMap: null };
     }
-    const flat = [];
-    for (const body of nxSeasons.slice().sort((a, b) => nxSeasonNumber(a) - nxSeasonNumber(b))) {
-        for (const episode of nxEpisodes(body)) {
-            flat.push({ season: nxSeasonNumber(body), ep: Number(episode.episode_number), data: episode });
-        }
-    }
+    const { flat, map } = buildSeasonMap(tsSeasons, nxSeasons);
     if (!flat.length) return { guide: null, seasons: null, nxMap: null };
 
     const guide = {};
     const seasons = {};
     const nxMap = {};
-    let offset = 0;
     let budget = maxEpisodes;
     for (const ts of tsSeasons) {
-        const count = Number(ts?.count) || 0;
-        if (!count) continue;
-        const same = nxSeasons.find((body) => nxSeasonNumber(body) === Number(ts.n));
-        const sameEps = same ? nxEpisodes(same) : [];
-        // Direct when Nxsha really carries this season number with a similar
-        // count; a merged 36-episode season must never swallow a 12-ep batch.
-        const direct = sameEps.length > 0 && Math.abs(sameEps.length - count) <= 2;
-        const base = direct ? { season: Number(ts.n), base: 0 } : { season: flat[offset]?.season, base: Math.max(0, (flat[offset]?.ep || 1) - 1) };
+        const plan = map[Number(ts.n)];
+        if (!plan) continue;
         const seasonGuide = {};
-        for (let ep = 1; ep <= count && budget > 0; ep += 1) {
-            const hit = direct ? sameEps[ep - 1] : flat[offset + ep - 1];
-            if (!hit) continue;
-            if (!direct && hit.season !== base.season) continue; // never leak across an Nxsha season boundary
-            const meta = guideEpisode(direct ? hit : hit.data, overviewLimit);
+        for (let ep = 1; ep <= plan.count && budget > 0; ep += 1) {
+            const hit = flat[plan.start + ep - 1];
+            if (!hit || hit.season !== plan.season) continue; // never leak across an Nxsha season boundary
+            const meta = guideEpisode(hit.data, overviewLimit);
             if (!Object.keys(meta).length) continue;
             seasonGuide[ep] = meta;
             budget -= 1;
         }
         if (Object.keys(seasonGuide).length) {
             guide[Number(ts.n)] = seasonGuide;
-            seasons[Number(ts.n)] = count;
-            nxMap[Number(ts.n)] = base;
+            seasons[Number(ts.n)] = plan.count;
+            nxMap[Number(ts.n)] = { season: plan.season, base: plan.base };
         }
-        offset += count;
     }
     if (!Object.keys(guide).length) return { guide: null, seasons: null, nxMap: null };
     return { guide, seasons, nxMap };
@@ -419,6 +355,7 @@ function toBlockItem(record) {
         ...(record.nxId ? { nxId: record.nxId } : {}),
         ...(record.tsSlug ? { tsSlug: record.tsSlug } : {}),
         ...(record.seasons && Object.keys(record.seasons).length ? { seasons: record.seasons } : {}),
+        ...(record.epStart && Object.keys(record.epStart).length ? { epStart: record.epStart } : {}),
         ...(record.nxMap && Object.keys(record.nxMap).length ? { nxMap: record.nxMap } : {}),
         ...(record.guide && Object.keys(record.guide).length ? { guide: record.guide } : {}),
         ...(record.firstSeen ? { firstSeen: record.firstSeen } : {}),
@@ -457,7 +394,7 @@ function mergeState(previous, incoming, updated) {
         const old = previous.items?.[slug];
         // A fresh guide covers every ToonStream season, so it replaces the old
         // one outright. A failed fetch keeps yesterday's so cards never go blank.
-        for (const field of ['guide', 'seasons', 'nxMap', 'tsSlug']) {
+        for (const field of ['guide', 'seasons', 'epStart', 'nxMap', 'tsSlug']) {
             if (!record[field] && old?.[field]) record[field] = old[field];
         }
         const merged = {
@@ -552,6 +489,11 @@ async function harvest() {
             record.seasons = built.seasons;
             record.nxMap = built.nxMap;
         }
+        const epStart = {};
+        for (const ts of tsSeasons) {
+            if (Number(ts.first) > 1) epStart[String(ts.n)] = Number(ts.first);
+        }
+        if (Object.keys(epStart).length) record.epStart = epStart;
         if (report.length > 40) report.length = 40;
         const layout = tsSeasons.map((s) => `S${s.n}:${s.count}`).join(' ');
         const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);
