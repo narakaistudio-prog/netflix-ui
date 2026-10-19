@@ -266,6 +266,31 @@ function replaceBlock(html) {
     return { start, end };
 }
 
+/** Rebuild nxMap for every saved show from its own season layout. */
+function remapNx(shows) {
+    const nxEpisodesData = readJson(EPISODES_FILE, {}).shows || {};
+    const registry = readJson(REGISTRY_FILE, {});
+    const out = {};
+    for (const [key, entry] of Object.entries(shows)) {
+        const counts = entry?.seasons || {};
+        if (!entry?.slug || !Object.keys(counts).length) continue;
+        const nxCounts = (nxEpisodesData[key] && nxEpisodesData[key].seasons) || registry[key]?.seasons || {};
+        const nxSeasons = Object.entries(nxCounts)
+            .map(([season, count]) => ({ season: { season_number: Number(season) }, count: Number(count) }))
+            .filter((body) => body.count > 0);
+        const tsSeasons = Object.entries(counts).map(([n, count]) => ({
+            n: Number(n),
+            count: Number(count),
+            start: Number(entry.epStart?.[n]) || 0,
+        }));
+        const { map } = buildSeasonMap(tsSeasons, nxSeasons);
+        const nxMap = {};
+        for (const [season, plan] of Object.entries(map)) nxMap[season] = { season: plan.season, base: plan.base };
+        out[key] = { ...entry, ...(Object.keys(nxMap).length ? { nxMap } : {}) };
+    }
+    return out;
+}
+
 async function harvest() {
     const registry = readJson(REGISTRY_FILE, {});
     const nxEpisodesData = readJson(EPISODES_FILE, {}).shows || {};
@@ -332,6 +357,11 @@ async function main() {
     if (FROM_STATE) {
         state = readJson(STATE_FILE, null);
         if (!state) throw new Error(`no state file at ${STATE_FILE}`);
+        // Recompute the Nxsha coordinates from the saved layout, so a refreshed
+        // Nxsha guide (One Piece finally has one) is picked up without a full
+        // ToonStream crawl.
+        state.shows = remapNx(state.shows || {});
+        if (!DRY_RUN) writeFileSync(STATE_FILE, `${JSON.stringify(state, null, 2)}\n`);
     } else {
         state = (await harvest()).state;
         if (!Object.keys(state.shows).length) throw new Error('no ToonStream seasons found — site down or markup changed');
@@ -359,4 +389,4 @@ if (isMain) {
     });
 }
 
-export { stateBlock, pageVar, tokens, slugify, titleKey };
+export { stateBlock, pageVar, tokens, slugify, titleKey, remapNx };

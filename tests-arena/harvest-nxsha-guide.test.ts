@@ -13,7 +13,7 @@ test('Nxsha guide harvester parses a title route and episode metadata offline', 
     expect(out).toContain('harvest-nxsha-guide self-tests passed');
 });
 
-test('Nxsha guide refresh is scheduled daily, bakes the page, and does not touch One Piece', () => {
+test('Nxsha guide refresh is scheduled daily, bakes the page, and covers every catalog title', () => {
     const workflow = readFileSync(join(ROOT, '.github', 'workflows', 'harvest-nxsha-guide.yml'), 'utf8');
     const script = readFileSync(join(ROOT, 'scripts', 'harvest-nxsha-guide.mjs'), 'utf8');
     expect(workflow).toContain("cron: '17 0 * * *'");
@@ -27,7 +27,9 @@ test('Nxsha guide refresh is scheduled daily, bakes the page, and does not touch
     expect(workflow).toContain('VERCEL_DEPLOY_HOOK_URL');
     expect(workflow).toContain("github.ref_name == 'main'");
     expect(workflow).toContain('data/nxsha-verify.json');
-    expect(script).toContain("const SKIP_KEYS = new Set(['onepiece'])");
+    expect(script).not.toContain("SKIP_KEYS");
+    expect(script).toContain('NX_GUIDE_ONLY');
+    expect(script).toContain('NX_GUIDE_MERGE');
     expect(script).toContain('parseCrunchyrollCatalog(readFileSync(CATALOG_PATH');
     expect(script).toContain('syncPlan(plan, manifest)');
     expect(script).toContain("source: 'https://nxsha.space/api/tv/{tmdbId}/season/{season}'");

@@ -36,6 +36,11 @@ export const nxEpisodes = (body) => {
  *   {season, base, start, count}
  * `base + episode` is the Nxsha episode inside `season`; `start` is the index
  * into `flat`.
+ *
+ * ToonStream seasons may carry an absolute `start` (One Piece's first season
+ * begins at episode 6, Naruto's second at 33). That absolute number — not the
+ * count of earlier seasons — decides the Nxsha position, otherwise the guide
+ * and the embed would point at the wrong episode.
  */
 export function buildSeasonMap(tsSeasons, nxSeasons) {
     const flat = [];
@@ -51,18 +56,22 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
 
     const map = {};
     let offset = 0;
-    for (const ts of tsSeasons || []) {
+    let absolute = 0;
+    for (const ts of (tsSeasons || []).slice().sort((a, b) => Number(a?.n) - Number(b?.n))) {
         const count = Number(ts?.count) || 0;
         if (!count) continue;
-        const at = flat[offset];
+        const first = Number(ts?.start) || 0;
+        const startAbs = first > 0 ? first : absolute + 1;
+        const at = flat[startAbs - 1];
         if (at) {
             map[Number(ts.n)] = {
                 season: at.season,
                 base: Math.max(0, at.ep - 1),
-                start: offset,
+                start: startAbs - 1,
                 count,
             };
         }
+        absolute = startAbs + count - 1;
         offset += count;
     }
     return { flat, map, byNumber };

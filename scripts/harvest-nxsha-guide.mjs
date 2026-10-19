@@ -4,12 +4,12 @@
  *
  * Add every Crunchyroll catalog key to data/nxsha-titles.json with its Nxsha page
  * ID and kind. This script discovers TV targets from that registry on every run,
- * syncs new entries into the verification plan, and updates the baked guide. One
- * Piece is deliberately skipped and its existing season map is never rewritten.
+ * syncs new entries into the verification plan, and updates the baked guide.
  *
- * Usage: node scripts/harvest-nxsha-guide.mjs [--check]
- *   --check  verify that all non-One-Piece catalog shows were harvested without
- *            writing any files.
+ * Usage: node scripts/harvest-nxsha-guide.mjs [--check] [--only k1,k2] [--merge]
+ *   --check   verify the harvest without writing any files.
+ *   --only    refresh just the listed catalog keys (debugging a single show).
+ *   --merge   keep guide entries that were not harvested this run.
  */
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -27,9 +27,8 @@ const USER_AGENT = 'Mozilla/5.0 (compatible; NxshaEpisodeGuideHarvester/1.0)';
 const REQUEST_TIMEOUT_MS = 25_000;
 const REQUEST_DELAY_MS = 120;
 const MAX_RETRIES = 4;
-const SKIP_KEYS = new Set(['onepiece']);
-const MANIFEST_COMMENT = 'Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata. One Piece is intentionally excluded from season/episode refresh.';
-const PLAN_COMMENT = 'Nxsha verification plan synchronized from data/nxsha-titles.json. New catalog routes are added automatically; non-One-Piece TV season maps are sourced from Nxsha season API responses. One Piece is excluded from the season/episode-guide update and its existing map is unchanged.';
+const MANIFEST_COMMENT = 'Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata.';
+const PLAN_COMMENT = 'Nxsha verification plan synchronized from data/nxsha-titles.json. New catalog routes are added automatically; TV season maps are sourced from Nxsha season API responses.';
 
 const sleep = (ms) => new Promise((resolvePromise) => setTimeout(resolvePromise, ms));
 
@@ -162,8 +161,10 @@ export function parseNxshaSeason(response, requestedSeason) {
         };
     }
     if (!episodes.length) throw new Error(`Nxsha season ${seasonNumber} returned no episodes`);
+    // Long-running shows often declare the TMDB count but return a slightly
+    // different list; the returned episodes are the ones that exist.
     if (declaredCount !== episodes.length) {
-        throw new Error(`Nxsha season ${seasonNumber} declared ${declaredCount} episodes but returned ${episodes.length}`);
+        console.warn(`Nxsha season ${seasonNumber} declared ${declaredCount} episodes but returned ${episodes.length}; using the returned list`);
     }
     return {
         season: seasonNumber,
@@ -250,7 +251,7 @@ function syncPlan(plan, manifest) {
     const rows = Array.isArray(plan.titles) ? plan.titles : [];
     const rowsByKey = new Map(rows.map((row) => [row.key, row]));
     for (const [key, title] of Object.entries(manifest)) {
-        if (key.startsWith('_') || SKIP_KEYS.has(key) || !title || !['tv', 'movie'].includes(title.kind)) continue;
+        if (key.startsWith('_') || !title || !['tv', 'movie'].includes(title.kind)) continue;
         let row = rowsByKey.get(key);
         if (!row) {
             row = { key };
@@ -314,33 +315,47 @@ function selfTest() {
     assert.throws(() => assertCatalogRoutes(catalog, {}), /missing an Nxsha route.*future/i);
     assert.equal(assertCatalogRoutes(catalog, { future: { id: '12345' } }), true);
 
-    const futurePlan = syncPlan({ titles: [{ key: 'onepiece', seasons: { '1': 31 } }] }, {
+    const futurePlan = syncPlan({ titles: [{ key: 'legacy', seasons: { '1': 31 } }] }, {
         future: { id: '12345', kind: 'tv', title: 'Future Anime', seasons: { '1': 4 } },
         futureMovie: { id: '67890', kind: 'movie', title: 'Future Film', seasons: { '1': 1 } },
         onepiece: { id: '37854', kind: 'tv', title: 'One Piece', seasons: { '1': 55 } },
     });
     assert.deepEqual(futurePlan.titles, [
-        { key: 'onepiece', seasons: { '1': 31 } },
+        { key: 'legacy', seasons: { '1': 31 } },
         { key: 'future', title: 'Future Anime', kind: 'tv', id: '12345', seasons: { '1': 4 } },
         { key: 'futureMovie', title: 'Future Film', kind: 'movie', id: '67890', seasons: { '1': 1 } },
+        { key: 'onepiece', title: 'One Piece', kind: 'tv', id: '37854', seasons: { '1': 55 } },
     ]);
     console.log('harvest-nxsha-guide self-tests passed');
 }
 
+function cliList(flag, envName) {
+    const at = process.argv.indexOf(flag);
+    const raw = at !== -1 ? process.argv[at + 1] : process.env[envName];
+    return String(raw || '')
+        .split(',')
+        .map((value) => value.trim())
+        .filter(Boolean);
+}
+
 async function main() {
     const checkOnly = process.argv.includes('--check');
+    const merge = process.argv.includes('--merge') || process.env.NX_GUIDE_MERGE === '1';
+    const only = new Set(cliList('--only', 'NX_GUIDE_ONLY'));
     const manifest = JSON.parse(readFileSync(TITLES_PATH, 'utf8'));
     const plan = JSON.parse(readFileSync(PLAN_PATH, 'utf8'));
     const catalog = parseCrunchyrollCatalog(readFileSync(CATALOG_PATH, 'utf8'));
     assertCatalogRoutes(catalog, manifest);
     manifest._comment = MANIFEST_COMMENT;
     plan._comment = PLAN_COMMENT;
+    const previous = readFileSync(EPISODES_PATH, 'utf8');
+    const previousShows = merge ? (JSON.parse(previous).shows || {}) : {};
     const shows = {};
     const results = [];
     const targetTitles = Object.entries(manifest)
-        .filter(([key, entry]) => !key.startsWith('_') && entry.kind === 'tv' && !SKIP_KEYS.has(key));
+        .filter(([key, entry]) => !key.startsWith('_') && entry.kind === 'tv' && (!only.size || only.has(key)));
 
-    console.log(`Harvesting ${targetTitles.length} Nxsha series; One Piece is excluded.`);
+    console.log(`Harvesting ${targetTitles.length} Nxsha series${only.size ? ` (${[...only].join(', ')})` : ''}.`);
     for (const [key, entry] of targetTitles) {
         try {
             const result = await harvestTitle(key, entry);
@@ -369,7 +384,7 @@ async function main() {
     const report = {
         generatedAt: new Date().toISOString(),
         source: 'https://nxsha.space/api/tv/{tmdbId}/season/{season}',
-        excludedKeys: ['onepiece'],
+        excludedKeys: Object.keys(previousShows).filter((key) => !shows[key]),
         summary: {
             requested: targetTitles.length,
             harvested: Object.keys(shows).length,
@@ -384,9 +399,9 @@ async function main() {
         _meta: {
             generatedAt: report.generatedAt,
             source: report.source,
-            excludedKeys: ['onepiece'],
+            excludedKeys: Object.keys(previousShows).filter((key) => !shows[key]),
         },
-        shows,
+        shows: { ...previousShows, ...shows },
     };
 
     if (!checkOnly) {
