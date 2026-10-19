@@ -193,9 +193,15 @@
     },
     "onepiece": {
       "title": "One Piece",
-      "slug": "one-piece",
+      "slug": "one-piece-wano-arc",
       "seasons": {
-        "1": 2
+        "1": 61,
+        "21": 85,
+        "22": 67
+      },
+      "epStart": {
+        "21": 892,
+        "22": 1089
       },
       "nxMap": {
         "1": {
@@ -744,19 +750,6 @@
         }
       }
     },
-    "toyour": {
-      "title": "To Your Eternity",
-      "slug": "an-archdemons-dilemma-how-to-love-your-elf-bride",
-      "seasons": {
-        "1": 12
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
     "slime": {
       "title": "That Time I Got Reincarnated as a Slime",
       "slug": "that-time-i-got-reincarnated-as-a-slime",
@@ -1111,6 +1104,10 @@
     {
       "key": "fatestrange",
       "title": "Fate/strange Fake"
+    },
+    {
+      "key": "toyour",
+      "title": "To Your Eternity"
     },
     {
       "key": "bluemiburo",
