@@ -79,7 +79,10 @@ test('episode guide bakes Nxsha-only images and details separately from playback
     expect(dataStart).toBeGreaterThan(-1);
     expect(dataEnd).toBeGreaterThan(dataStart);
     const guide = JSON.parse(html.slice(dataStart + 'var NX_EPISODE_DATA='.length, dataEnd));
-    expect(guide.onepiece).toBeUndefined();
+    // One Piece is harvested like every other catalog title now.
+    expect(Object.keys(guide.onepiece)).toHaveLength(23);
+    expect(guide.onepiece['1']['6'].title).toBeTruthy();
+    expect(guide.onepiece['1']['6'].image).toMatch(/^https:\/\/image\.tmdb\.org\//);
     if (existsSync(join(ROOT, 'data', 'nxsha-episodes.json'))) {
         const snapshot = JSON.parse(readFileSync(join(ROOT, 'data', 'nxsha-episodes.json'), 'utf8'));
         const firstEpisode = snapshot.shows.vinland.episodes.find(

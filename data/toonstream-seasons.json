@@ -246,6 +246,90 @@
         "1": {
           "season": 1,
           "base": 5
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        },
+        "5": {
+          "season": 5,
+          "base": 0
+        },
+        "6": {
+          "season": 6,
+          "base": 0
+        },
+        "7": {
+          "season": 7,
+          "base": 0
+        },
+        "8": {
+          "season": 8,
+          "base": 0
+        },
+        "9": {
+          "season": 9,
+          "base": 0
+        },
+        "10": {
+          "season": 10,
+          "base": 0
+        },
+        "11": {
+          "season": 11,
+          "base": 0
+        },
+        "12": {
+          "season": 12,
+          "base": 0
+        },
+        "13": {
+          "season": 13,
+          "base": 0
+        },
+        "14": {
+          "season": 14,
+          "base": 0
+        },
+        "15": {
+          "season": 15,
+          "base": 0
+        },
+        "16": {
+          "season": 16,
+          "base": 0
+        },
+        "17": {
+          "season": 17,
+          "base": 0
+        },
+        "18": {
+          "season": 18,
+          "base": 0
+        },
+        "19": {
+          "season": 19,
+          "base": 0
+        },
+        "20": {
+          "season": 20,
+          "base": 0
+        },
+        "21": {
+          "season": 21,
+          "base": 0
+        },
+        "22": {
+          "season": 22,
+          "base": 0
         }
       }
     },

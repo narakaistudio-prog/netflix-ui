@@ -163,9 +163,11 @@ test('all 83 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping',
     dom.window.close();
 });
 
-test('all non-One-Piece season maps match the harvested Nxsha episode guide when available', () => {
+test('every season map matches the harvested Nxsha episode guide when available', () => {
     const nxData = readNxData();
-    expect(nxData.onepiece.seasons).toEqual({ '1': 31, '20': 10 });
+    expect(Object.keys(nxData.onepiece.seasons)).toHaveLength(23);
+    expect(nxData.onepiece.seasons['1']).toBe(61);
+    expect(nxData.onepiece.seasons['23']).toBe(25);
     expect(nxData.tokyo.seasons).toEqual({ '1': 55 });
     const snapshotPath = join(ROOT, 'data', 'nxsha-episodes.json');
     if (!existsSync(snapshotPath)) {
@@ -175,7 +177,7 @@ test('all non-One-Piece season maps match the harvested Nxsha episode guide when
     }
     const snapshot = readNxEpisodeSnapshot();
     const animeKeys = Object.entries(nxData)
-        .filter(([key, entry]) => entry.kind === 'tv' && key !== 'onepiece')
+        .filter(([, entry]) => entry.kind === 'tv')
         .map(([key]) => key)
         .sort();
     expect(Object.keys(snapshot.shows).sort()).toEqual(animeKeys);
@@ -192,9 +194,10 @@ test('all non-One-Piece season maps match the harvested Nxsha episode guide when
     }
 });
 
-test('episode cards use Nxsha stills, titles, and synopsis, without changing One Piece metadata', async () => {
+test('episode cards use Nxsha stills, titles, and synopsis, including One Piece', async () => {
     const guide = readNxEpisodeGuide();
-    expect(guide.onepiece).toBeUndefined();
+    expect(Object.keys(guide.onepiece)).toHaveLength(23);
+    expect(guide.onepiece['1']['6'].title).toBeTruthy();
     const snapshotPath = join(ROOT, 'data', 'nxsha-episodes.json');
     const snapshot = existsSync(snapshotPath) ? readNxEpisodeSnapshot() : null;
     const firstEpisode = snapshot
@@ -261,13 +264,14 @@ test('episode cards use Nxsha stills, titles, and synopsis, without changing One
         click(dom.window, await waitForElement(dom.window, '#catalogGrid [data-open="tokyo"]'));
         await wait(80);
         const tokyoCards = Array.from(doc.querySelectorAll('#episodeList .episode-card'));
-        expect(tokyoCards).toHaveLength(55);
-        const episode55 = snapshot.shows.tokyo.episodes.find((episode) => episode.season === 1 && episode.episode === 55)!;
-        expect(tokyoCards[54].querySelector('strong')?.textContent).toBe(episode55.title);
-        expect(tokyoCards[54].querySelector('img')?.getAttribute('data-src')).toMatch(/^data:image\/svg\+xml/);
-        expect(tokyoCards[54].querySelector('.episode-desc')).toBeNull();
-        expect(tokyoCards[54].querySelector('.episode-air-date')?.textContent).toBe(episode55.airDate);
-        expect(tokyoCards[54].querySelector('.episode-runtime')).toBeNull();
+        // ToonStream's own season layout (50 episodes) wins over Nxsha's 55.
+        expect(tokyoCards).toHaveLength(50);
+        const episode50 = snapshot.shows.tokyo.episodes.find((episode) => episode.season === 1 && episode.episode === 50)!;
+        expect(tokyoCards[49].querySelector('strong')?.textContent).toBe(episode50.title);
+        expect(tokyoCards[49].querySelector('img')?.getAttribute('data-src')).toBe(episode50.image);
+        expect(tokyoCards[49].querySelector('.episode-desc')?.textContent).toBe(episode50.overview);
+        expect(tokyoCards[49].querySelector('.episode-air-date')?.textContent).toBe(episode50.airDate);
+        expect(tokyoCards[49].querySelector('.episode-runtime')?.textContent).toBe('24m');
     }
     dom.window.close();
 });

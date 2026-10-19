@@ -350,6 +350,7 @@ async function main() {
     plan._comment = PLAN_COMMENT;
     const previous = readFileSync(EPISODES_PATH, 'utf8');
     const previousShows = merge ? (JSON.parse(previous).shows || {}) : {};
+    const merged = { ...previousShows };
     const shows = {};
     const results = [];
     const targetTitles = Object.entries(manifest)
@@ -381,10 +382,11 @@ async function main() {
         }
     }
 
+    Object.assign(merged, shows);
     const report = {
         generatedAt: new Date().toISOString(),
         source: 'https://nxsha.space/api/tv/{tmdbId}/season/{season}',
-        excludedKeys: Object.keys(previousShows).filter((key) => !shows[key]),
+        excludedKeys: Object.keys(previousShows).filter((key) => !shows[key] && !merged[key]),
         summary: {
             requested: targetTitles.length,
             harvested: Object.keys(shows).length,
@@ -399,9 +401,9 @@ async function main() {
         _meta: {
             generatedAt: report.generatedAt,
             source: report.source,
-            excludedKeys: Object.keys(previousShows).filter((key) => !shows[key]),
+            excludedKeys: Object.keys(previousShows).filter((key) => !shows[key] && !merged[key]),
         },
-        shows: { ...previousShows, ...shows },
+        shows: merged,
     };
 
     if (!checkOnly) {

@@ -205,3 +205,39 @@ function click(window: JSDOM['window'], element: Element | null) {
     if (!element) throw new Error('missing element');
     element.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
 }
+
+test('One Piece shows every ToonStream season and its own Nxsha guide', async () => {
+    const { dom, calls } = boot();
+    const doc = dom.window.document;
+    await wait(300);
+    await openCard(dom.window, 'onepiece');
+    const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
+    const options = Array.from(select.options).map((option) => (option.textContent || '').trim());
+    expect(options).toHaveLength(22);
+    expect(options[0]).toBe('Season 1 (56)');
+    expect(options[21]).toBe('Season 22 (64)');
+    const list = doc.getElementById('episodeList')!;
+    expect(list.querySelectorAll('.episode-card')).toHaveLength(56);
+    // ToonStream's S1 starts at absolute episode 6, so the first card is Nxsha's episode 6.
+    expect(list.textContent).toContain('Desperate Situation! Beast Tamer Mohji vs Luffy!');
+    const thumb = list.querySelector('.episode-card img')!;
+    expect(thumb.getAttribute('data-src') || thumb.innerHTML || '').toContain('image.tmdb.org');
+
+    click(dom.window, doc.querySelector('#episodeList .episode-card'));
+    await wait(120);
+    click(dom.window, doc.getElementById('demoPlay'));
+    await wait(80);
+    click(dom.window, doc.getElementById('stagePoster'));
+    await wait(250);
+    expect(doc.getElementById('serverFrame')!.getAttribute('src')).toContain(
+        'https://nxsha.space/embed/tv/37854/1/6?server=GbruHindi',
+    );
+
+    click(dom.window, doc.getElementById('tsServerBtn'));
+    const deadline = Date.now() + 5000;
+    while (!calls.some((url) => url.indexOf('/api/toonstream?') !== -1) && Date.now() < deadline) await wait(60);
+    const request = decodeURIComponent(calls.find((url) => url.indexOf('/api/toonstream?') !== -1) || '');
+    expect(request).toContain('slug=one-piece-dub-sub');
+    expect(request).toContain('s=1&e=6');
+    dom.window.close();
+});

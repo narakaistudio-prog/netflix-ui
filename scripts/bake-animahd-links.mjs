@@ -102,12 +102,11 @@ export function validateNxsha(data) {
  * Bake only metadata harvested from Nxsha. Local catalogue episode data is not
  * an Nxsha-confirmed source, so missing fields remain absent for the UI to
  * represent as an episode-specific placeholder rather than show art/text.
- * One Piece is deliberately skipped because its guide must stay unchanged.
  */
 export function buildNxshaEpisodeGuide(nxData, nxshaEpisodes = {}) {
     const result = {};
     for (const [key, title] of Object.entries(nxData || {})) {
-        if (key.startsWith('_') || key === 'onepiece' || title.kind !== 'tv') continue;
+        if (key.startsWith('_') || title.kind !== 'tv') continue;
         const harvested = nxshaEpisodes?.shows?.[key];
         if (!Array.isArray(harvested?.episodes)) continue;
         const bySeason = {};
