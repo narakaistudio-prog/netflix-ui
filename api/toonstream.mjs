@@ -289,8 +289,13 @@ async function handler(req, res) {
         wins.push(html.slice(Math.max(0, at - 250), at + 700));
         if (wins.length >= 30) break;
       }
+      // The right-sidebar switcher ("SERVER 1 PLAY / 2 SHORT / ...") sits
+      // after the download rows - dump that region explicitly.
+      const si = html.search(/SERVER\s*1/i);
+      const side = si === -1 ? 'NO-SERVER-1-MARKER' : html.slice(Math.max(0, si - 2000), si + 7000);
+      const sB64 = Buffer.from(side).toString('base64');
       const b64 = Buffer.from([...new Set(wins)].join('\n~~~\n')).toString('base64');
-      return res.status(200).json({ ok: true, frameBlocked: !!found.frameBlocked, b64 });
+      return res.status(200).json({ ok: true, frameBlocked: !!found.frameBlocked, sB64, b64 });
     }
     const embeds = extractIframes(found.html);
     // Only the site's first three servers (SERVER 1/2/3 in the sidebar),
