@@ -52,6 +52,19 @@ const ONLY = String(process.env.TS_SEASONS_ONLY || '')
 
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
 const tokens = (value) => String(value || '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+const normTitle = (value) =>
+    decodeEntities(value)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/^the\s+/i, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '');
+/** The page must be the same show: equal, or the query with a site suffix. */
+const titleMatches = (wanted, found) => {
+    const a = normTitle(wanted);
+    const b = normTitle(found);
+    return !!a && !!b && (b === a || b.startsWith(a));
+};
 const slugify = (value) =>
     decodeEntities(value)
         .toLowerCase()
@@ -174,9 +187,10 @@ async function findSeries(key, title) {
         guesses.push(`${base}-hindi-dub`, `${base}-dub`, `${base}-english-dub`);
     }
 
-    for (const slug of guesses.slice(0, 4)) {
+    for (const slug of [...new Set(guesses)].slice(0, 10)) {
         const found = await seasonsOf(slug);
-        if (found && _internal.matchScore(tokens(title), found.title || slug) >= 0.5) return found;
+        if (found && titleMatches(title, found.title || slug)) return found;
+        if (found && DEBUG) console.log(`    ${slug}: rejected "${found.title}" for "${title}"`);
         await sleep(120);
     }
 
@@ -187,6 +201,10 @@ async function findSeries(key, title) {
             const page = await getText(`${BASE}${suffix}${query}`);
             if (page.status !== 200) continue;
             const links = _internal.extractSeriesLinks(page.text);
+            if (DEBUG) {
+                console.log(`  search "${variant}"${suffix}: ${links.length} series links`);
+                for (const link of links.slice(0, 6)) console.log(`    - ${link.slug} "${String(link.text || '').replace(/\s+/g, ' ').trim().slice(0, 50)}"`);
+            }
             const ranked = links
                 .map((link) => ({
                     slug: String(link.slug).replace(/^\/series\//, '').replace(/\/+$/, ''),
@@ -197,7 +215,8 @@ async function findSeries(key, title) {
             for (const candidate of ranked.slice(0, 2)) {
                 seen.add(candidate.slug);
                 const found = await seasonsOf(candidate.slug);
-                if (found) return found;
+                if (found && titleMatches(title, found.title || candidate.slug)) return found;
+                if (found && DEBUG) console.log(`    ${candidate.slug}: rejected "${found.title}" for "${title}"`);
                 await sleep(120);
             }
         }

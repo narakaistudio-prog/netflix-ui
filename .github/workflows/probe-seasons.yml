@@ -18,7 +18,7 @@ jobs:
       - name: Probe the problem titles
         env:
           TS_SEASONS_DEBUG: '1'
-          TS_SEASONS_ONLY: 'onepiece,golden-kamuy,fate-strange-fake,to-your-eternity,blue-miburo,aot,demon,naruto'
+          TS_SEASONS_ONLY: 'onepiece,golden-kamuy,fate-strange-fake,to-your-eternity,blue-miburo'
         run: node scripts/harvest-toonstream-seasons.mjs --dry-run 2>&1 | tail -120 | tee probe.log
       - name: Commit the probe log
         run: |
