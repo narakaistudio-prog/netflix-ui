@@ -11,6 +11,17 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { detectProviderFromUrl } from '@/lib/embeds';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
+import {
+    enterPlayerFullscreen,
+    exitPlayerFullscreen,
+    isAndroidWeb,
+} from '@/lib/playerFullscreen';
+import {
+    SEEK_NUDGE_DELAYS,
+    buildSeekMessages,
+    guessSeconds,
+    sniffTimeEvent,
+} from '@/lib/continueWatching';
 
 /**
  * Third-party iframe embed player.
@@ -19,8 +30,15 @@ import { useTvBackHandler } from '@/hooks/useTvNavigation';
  *   - The iframe sandbox blocks ad popups and top-level redirects while keeping
  *     the capabilities a video provider needs to play in-frame.
  *   - NO contentWindow/document access (cross-origin → SecurityError).
- *   - NO postMessage listeners — providers don't emit them.
  *   - Player MUST open after a user click — never auto-open.
+ *
+ * PLAYBACK POSITION (Continue Watching):
+ *   - The player frame is asked for its playhead through postMessage. When the
+ *     provider answers, the position is exact.
+ *   - When it stays silent, a wall-clock estimator keeps the position roughly
+ *     right (same fallback the Crunchyroll page uses).
+ *   - `resumeAt` replays that position into the frame so a title continues
+ *     exactly where it was left.
  */
 
 export interface EmbedPlayerProps {
@@ -31,6 +49,12 @@ export interface EmbedPlayerProps {
     /** Official title page to offer if the third-party player cannot load. */
     fallbackUrl?: string;
     timeoutMs?: number;
+    /** Live playback position of the media, in seconds. */
+    onProgress?: (info: { seconds: number; duration: number; ended: boolean }) => void;
+    /** Position (seconds) the media should continue from. */
+    resumeAt?: number;
+    /** The player reported that the media finished. */
+    onEnded?: () => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -48,6 +72,9 @@ export function EmbedPlayer({
     onSwitchProvider,
     fallbackUrl,
     timeoutMs = 12000,
+    onProgress,
+    resumeAt,
+    onEnded,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
@@ -55,8 +82,130 @@ export function EmbedPlayer({
     const directVideo = isDirectVideoSource(src);
     const nxshaEmbed = !directVideo && detectProviderFromUrl(src) === 'nxsha';
     const hostRef = useRef<View | HTMLDivElement | null>(null);
+    const containerRef = useRef<View | HTMLDivElement | null>(null);
     const iframeRef = useRef<HTMLIFrameElement | null>(null);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    /* ------------------------------------------------------------------ */
+    /* Playback position (Continue Watching)                              */
+    /* ------------------------------------------------------------------ */
+
+    /**
+     * The playhead we know about:
+     *   baseSec  — the last position reported by the player (or the resume
+     *              point we started from),
+     *   baseStamp— when that position was true,
+     *   dur      — media duration, when the player reports one,
+     *   started  — the media is actually rolling (the viewer pressed play),
+     *   paused   — the player said it is paused,
+     *   ended    — the media finished.
+     */
+    const playRef = useRef({
+        baseSec: 0,
+        baseStamp: 0,
+        dur: 0,
+        started: false,
+        paused: false,
+        ended: false,
+    });
+    const progressCbRef = useRef(onProgress);
+    progressCbRef.current = onProgress;
+    const endedCbRef = useRef(onEnded);
+    endedCbRef.current = onEnded;
+    // The window losing focus pauses the wall-clock estimator: the video may
+    // keep playing in the background, but we must not count that time.
+    const blurredRef = useRef(false);
+    /** Last position handed to the tracker — keeps the writes sane. */
+    const lastFlushSec = useRef(-10);
+
+    /** Is the media really playing right now? */
+    const isRunning = useCallback(() => {
+        const p = playRef.current;
+        if (!p.started || p.paused || p.ended) return false;
+        if (blurredRef.current) return false;
+        if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return false;
+        return true;
+    }, []);
+
+    /** The playhead right now, in seconds. */
+    const positionSec = useCallback(() => {
+        const p = playRef.current;
+        const extra = isRunning() && p.baseStamp ? (Date.now() - p.baseStamp) / 1000 : 0;
+        return Math.max(0, p.baseSec + extra);
+    }, [isRunning]);
+
+    /** Freeze the current position so the clock can start again from it. */
+    const rebase = useCallback(() => {
+        const p = playRef.current;
+        if (!p.baseStamp) return;
+        if (isRunning()) p.baseSec = Math.max(0, p.baseSec + (Date.now() - p.baseStamp) / 1000);
+        p.baseStamp = Date.now();
+    }, [isRunning]);
+
+    /** Hand the current position to whoever is tracking it. */
+    const flushProgress = useCallback((force = false) => {
+        const p = playRef.current;
+        if (!p.started) return;
+        const seconds = Math.max(0, Math.floor(positionSec()));
+        // A brand new title has no position worth storing yet.
+        if (!force && seconds <= 3) return;
+        progressCbRef.current?.({
+            seconds,
+            duration: Math.floor(p.dur || 0),
+            ended: p.ended,
+        });
+    }, [positionSec]);
+
+    /** Pin the playhead to a position the player reported. */
+    const setPosition = useCallback((seconds: number, duration?: number | null) => {
+        const p = playRef.current;
+        rebase();
+        p.baseSec = Math.max(0, Math.floor(seconds || 0));
+        p.baseStamp = Date.now();
+        if (duration && duration > 0) p.dur = duration;
+        // A media that is still running is not finished, whatever an old
+        // "ended" flag said.
+        if (p.dur && p.baseSec < p.dur * 0.9) p.ended = false;
+        // The player reports a time event several times per second: only the
+        // meaningful steps are worth storing.
+        if (Math.abs(p.baseSec - lastFlushSec.current) < 2) return;
+        lastFlushSec.current = p.baseSec;
+        flushProgress(true);
+    }, [rebase, flushProgress]);
+
+    /** The viewer pressed play inside the frame: the media starts rolling. */
+    const markStarted = useCallback(() => {
+        const p = playRef.current;
+        if (p.started) return;
+        p.started = true;
+        p.paused = false;
+        p.baseStamp = Date.now();
+    }, []);
+
+    /**
+     * Spray a seek command into the player frame.
+     *
+     * The provider boots at its own pace, so the command is repeated a few
+     * times — the same schedule the Crunchyroll page uses.
+     */
+    const spraySeek = useCallback((seconds: number) => {
+        const target = Math.floor(seconds || 0);
+        if (!target || target < 5) return;
+        const messages = buildSeekMessages(target);
+        SEEK_NUDGE_DELAYS.forEach((delay) => {
+            setTimeout(() => {
+                const frame = iframeRef.current;
+                const target = frame?.contentWindow;
+                if (!target) return;
+                messages.forEach((message) => {
+                    try {
+                        target.postMessage(message as any, '*');
+                    } catch {}
+                });
+            }, delay);
+        });
+    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -102,14 +251,153 @@ export function EmbedPlayer({
             if (timerRef.current) clearTimeout(timerRef.current);
             setLoading(false);
             setTimedOut(false);
+            // The provider player is up: replay the resume point into it.
+            if (resumeAt) spraySeek(resumeAt);
         };
         host.appendChild(iframe);
         iframeRef.current = iframe;
+        // The resume point is sprayed as soon as the frame exists, and again
+        // once the provider finished booting (see iframe.onload above).
+        if (resumeAt) spraySeek(resumeAt);
         return () => {
             killIframe();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [src, title, directVideo]);
+
+    // A new source is a new media: start from a clean playhead, seeded with
+    // the position the viewer wants to continue from.
+    useEffect(() => {
+        const from = Math.max(0, Math.floor(resumeAt || 0));
+        playRef.current = {
+            baseSec: from,
+            baseStamp: Date.now(),
+            dur: 0,
+            started: false,
+            paused: false,
+            ended: false,
+        };
+        lastFlushSec.current = -10;
+    }, [src, resumeAt]);
+
+    // A direct video file can be seeked precisely — no guessing needed.
+    useEffect(() => {
+        if (!directVideo) return;
+        const from = Math.max(0, Math.floor(resumeAt || 0));
+        if (!from) return;
+        const video = videoRef.current;
+        if (!video) return;
+        try {
+            video.currentTime = from;
+        } catch {}
+    }, [directVideo, resumeAt, src]);
+
+    // The provider player reports its playhead through postMessage. When it
+    // does, the position is exact; when it stays silent the wall-clock
+    // estimator keeps it roughly right.
+    useEffect(() => {
+        if (!IS_WEB || typeof window === 'undefined') return;
+        const onMessage = (event: MessageEvent) => {
+            const data = event?.data;
+            if (data && typeof data === 'object') {
+                const body: any =
+                    data.data && typeof data.data === 'object' ? data.data : {};
+                const name = [
+                    data.event,
+                    data.type,
+                    data.name,
+                    body.event,
+                    body.type,
+                    body.name,
+                ]
+                    .join(' ')
+                    .toLowerCase();
+                if (/ended|finish|complete/.test(name)) {
+                    // The player says the media finished — that is unambiguous,
+                    // even when it does not report the duration.
+                    const duration =
+                        guessSeconds(data.duration) ??
+                        guessSeconds(body.duration) ??
+                        playRef.current.dur;
+                    const p = playRef.current;
+                    markStarted();
+                    p.ended = true;
+                    if (duration) {
+                        p.baseSec = duration;
+                        p.baseStamp = Date.now();
+                    }
+                    flushProgress(true);
+                    endedCbRef.current?.();
+                    return;
+                }
+                if (/pause|paused/.test(name)) {
+                    const p = playRef.current;
+                    if (p.started && !p.paused) {
+                        rebase();
+                        p.paused = true;
+                    }
+                } else if (/\bplay\b|playing|player_progress|timeupdate/.test(name)) {
+                    const p = playRef.current;
+                    markStarted();
+                    if (p.paused) {
+                        p.paused = false;
+                        p.baseStamp = Date.now();
+                    }
+                }
+            }
+            const hit = sniffTimeEvent(data);
+            if (hit) {
+                markStarted();
+                setPosition(hit.t, hit.dur);
+            }
+        };
+        window.addEventListener('message', onMessage);
+        return () => window.removeEventListener('message', onMessage);
+    }, [flushProgress, markStarted, rebase, setPosition]);
+
+    // Keep the stored position fresh while the media rolls, and store it one
+    // last time when the tab is hidden or the player goes away.
+    useEffect(() => {
+        if (!IS_WEB) return;
+        const tick = setInterval(() => flushProgress(false), 5000);
+        const onVisibility = () => {
+            if (document.visibilityState === 'hidden') {
+                rebase();
+                flushProgress(true);
+            } else if (playRef.current.started) {
+                playRef.current.baseStamp = Date.now();
+            }
+        };
+        const onBlur = () => {
+            blurredRef.current = true;
+            rebase();
+            flushProgress(false);
+        };
+        const onFocus = () => {
+            blurredRef.current = false;
+            if (playRef.current.started) playRef.current.baseStamp = Date.now();
+        };
+        const onHide = () => {
+            rebase();
+            flushProgress(true);
+        };
+        document.addEventListener('visibilitychange', onVisibility);
+        window.addEventListener('blur', onBlur);
+        window.addEventListener('focus', onFocus);
+        window.addEventListener('pagehide', onHide);
+        window.addEventListener('beforeunload', onHide);
+        return () => {
+            clearInterval(tick);
+            document.removeEventListener('visibilitychange', onVisibility);
+            window.removeEventListener('blur', onBlur);
+            window.removeEventListener('focus', onFocus);
+            window.removeEventListener('pagehide', onHide);
+            window.removeEventListener('beforeunload', onHide);
+            // The player is going away: do not lose the position.
+            rebase();
+            flushProgress(true);
+        };
+    }, [flushProgress, rebase]);
 
     // Clicking the red Play button happens inside Nxsha's cross-origin frame;
     // the parent does not receive that click. Focus moving into the iframe is
@@ -148,6 +436,23 @@ export function EmbedPlayer({
         };
     }, [src, title, nxshaEmbed]);
 
+    // The viewer pressed play inside the provider frame: from now on the
+    // media is rolling, so the wall-clock estimator may follow it.
+    useEffect(() => {
+        if (!IS_WEB) return;
+        const onFocusIn = () => markStarted();
+        const onWindowBlur = () => {
+            if (document.activeElement === iframeRef.current) markStarted();
+        };
+        const iframe = iframeRef.current;
+        window.addEventListener('blur', onWindowBlur);
+        iframe?.addEventListener('focus', onFocusIn);
+        return () => {
+            window.removeEventListener('blur', onWindowBlur);
+            iframe?.removeEventListener('focus', onFocusIn);
+        };
+    }, [src, title, markStarted]);
+
     /**
      * Kill the playing iframe HARD: navigating it to about:blank tears down
      * the embed's document (and any playing media/audio) immediately, then we
@@ -170,6 +475,21 @@ export function EmbedPlayer({
         killIframe();
         onClose?.();
     }, [killIframe, onClose]);
+
+    /* ------------------------------------------------------------------ */
+    /* Android phones: full-screen landscape the moment the player opens   */
+    /* ------------------------------------------------------------------ */
+
+    // Auto mode runs inside the play tap's user activation (the player is
+    // always mounted by a click). If the browser refuses — e.g. the player
+    // auto-opened on resume — the manual button in the top bar is the fallback.
+    const canAutoFullscreen = IS_WEB && isAndroidWeb();
+    useEffect(() => {
+        enterPlayerFullscreen(containerRef.current as any);
+        return () => {
+            exitPlayerFullscreen();
+        };
+    }, []);
 
     useTvBackHandler(() => {
         handleClose();
@@ -222,12 +542,14 @@ export function EmbedPlayer({
 
     return (
         <View
+            ref={(r: any) => { containerRef.current = r; }}
             style={styles.container}
             testID="embed-player"
             {...({ dataSet: { tvScope: 'player' } } as any)}
         >
             {directVideo ? (
                 React.createElement('video', {
+                    ref: (node: any) => { videoRef.current = node; },
                     src,
                     autoPlay: true,
                     controls: true,
@@ -240,6 +562,26 @@ export function EmbedPlayer({
                     onError: () => {
                         setLoading(false);
                         setTimedOut(true);
+                    },
+                    onPlay: () => markStarted(),
+                    onPause: () => {
+                        const p = playRef.current;
+                        if (p.started && !p.paused) {
+                            rebase();
+                            p.paused = true;
+                        }
+                    },
+                    onTimeUpdate: (event: any) => {
+                        const video = event?.target as HTMLVideoElement | undefined;
+                        if (!video) return;
+                        markStarted();
+                        setPosition(video.currentTime, Number.isFinite(video.duration) ? video.duration : null);
+                    },
+                    onEnded: () => {
+                        const p = playRef.current;
+                        p.ended = true;
+                        flushProgress(true);
+                        endedCbRef.current?.();
                     },
                     style: {
                         position: 'absolute',
@@ -326,6 +668,16 @@ export function EmbedPlayer({
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
 
+                {canAutoFullscreen ? (
+                    <Pressable
+                        style={styles.iconButton}
+                        onPress={() => enterPlayerFullscreen(containerRef.current as any)}
+                        accessibilityLabel="Full screen"
+                        accessibilityRole="button"
+                    >
+                        <Ionicons name="scan" size={20} color="#fff" />
+                    </Pressable>
+                ) : null}
             </View>
 
         </View>

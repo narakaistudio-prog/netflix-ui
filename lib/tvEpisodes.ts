@@ -29,6 +29,19 @@ export function getTvSeasons(tmdbId?: string | number | null): TvSeason[] {
     return DATA[String(tmdbId)]?.seasons ?? [];
 }
 
+/** One episode of a season, or null when the guide has no such entry. */
+export function getTvEpisode(
+    tmdbId?: string | number | null,
+    season?: number,
+    episode?: number,
+): TvEpisode | null {
+    if (!season || !episode) return null;
+    const seasons = getTvSeasons(tmdbId);
+    const found = seasons.find((s) => s.season_number === season);
+    if (!found) return null;
+    return found.episodes?.find((e) => e.episode === episode) ?? null;
+}
+
 /** "56m", or "1h 6m" from minutes. */
 export function formatRuntime(minutes?: number): string {
     if (!minutes || minutes <= 0) return '';

@@ -1,11 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Platform, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
-import { markWatched } from '@/lib/recentlyWatched';
+import {
+    getRecentlyWatched,
+    markWatched,
+    removeWatched,
+    updateWatchPosition,
+    watchEntryId,
+} from '@/lib/recentlyWatched';
+import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
 import type { Movie } from '@/types/movie';
 
@@ -20,6 +27,12 @@ type Props = {
     onClose: () => void;
     /** Opens another title's details inside this modal. */
     onSelect?: (movie: Movie) => void;
+    /** Episode to open with — Continue Watching resumes the exact episode. */
+    initialEpisode?: { season: number; episode: number } | null;
+    /** Start playing as soon as the modal opens (Continue Watching resume). */
+    autoPlay?: boolean;
+    /** Position (seconds) the media continues from. */
+    resumeAt?: number;
 };
 
 /** Official Netflix title page, used when no player source can be built. */
@@ -35,21 +48,66 @@ function officialUrlFor(movie: Movie): string {
  * description, cast and genres. Play starts the player inside this modal, and
  * closing the player returns to these details.
  */
-export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Props) {
+export function MovieDetailModal({
+    movie,
+    related = [],
+    onClose,
+    onSelect,
+    initialEpisode = null,
+    autoPlay = false,
+    resumeAt = 0,
+}: Props) {
     const { width, height } = useWindowDimensions();
     const [playing, setPlaying] = useState(false);
     /** Episode chosen from the list (TV). Null plays the first episode. */
     const [episodeRef, setEpisodeRef] = useState<{ season: number; episode: number } | null>(null);
     const [season, setSeason] = useState(1);
     const [seasonMenuOpen, setSeasonMenuOpen] = useState(false);
+    /** Continue Watching entry of the media that is playing right now. */
+    const [activeEntry, setActiveEntry] = useState<{
+        id: string;
+        season: number;
+        episode: number;
+    } | null>(null);
+    /** Short message shown over the player ("Resuming S1 EP3 at 6:12"). */
+    const [playerNotice, setPlayerNotice] = useState<string | null>(null);
+    const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    /** Position the media continues from — 0 means "from the beginning". */
+    const [resumeSec, setResumeSec] = useState(resumeAt);
+
+    /** Show a short message over the player, the way the Crunchyroll page does. */
+    const announce = useCallback((message: string | null) => {
+        if (noticeTimer.current) clearTimeout(noticeTimer.current);
+        setPlayerNotice(message);
+        if (!message) return;
+        noticeTimer.current = setTimeout(() => setPlayerNotice(null), 4000);
+    }, []);
 
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
-        setPlaying(false);
-        setEpisodeRef(null);
-        setSeason(1);
+        setPlaying(autoPlay);
+        setEpisodeRef(initialEpisode ?? null);
+        setSeason(initialEpisode?.season ?? 1);
         setSeasonMenuOpen(false);
-    }, [movie?.id]);
+        setResumeSec(resumeAt);
+        if (autoPlay && movie) {
+            // Resuming from the Continue Watching row: the position of the
+            // entry that is being continued is the one we keep updating.
+            const isSeries = movie.mediaType === 'tv';
+            const ep = initialEpisode ?? { season: 1, episode: 1 };
+            setActiveEntry({
+                id: watchEntryId(movie.id, isSeries ? 'tv' : 'movie', ep.season, ep.episode),
+                season: ep.season,
+                episode: ep.episode,
+            });
+            // Announce the resume point, exactly like the Crunchyroll page does.
+            const where = isSeries ? `S${ep.season} EP${ep.episode}` : 'Movie';
+            announce(resumeAt >= 30 ? `Resuming ${where} at ${formatClock(resumeAt)}` : null);
+        } else {
+            setActiveEntry(null);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [movie?.id, autoPlay, initialEpisode?.season, initialEpisode?.episode]);
 
     const seasons = useMemo(
         () => (movie?.mediaType === 'tv' ? getTvSeasons(movie.tmdb_id) : []),
@@ -100,21 +158,36 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
 
     const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
+            const isSeries = movie.mediaType === 'tv';
+            const ep = episode ?? episodeRef ?? { season: 1, episode: 1 };
             if (episode) setEpisodeRef(episode);
+            // A series is remembered per episode, so resuming never lands on
+            // the wrong one.
+            const entryId = watchEntryId(movie.id, isSeries ? 'tv' : 'movie', ep.season, ep.episode);
+            // A title that was started before continues from where it was
+            // left — the same rule the Crunchyroll page follows.
+            const saved = getRecentlyWatched().find((e) => e.id === entryId);
+            const from = saved?.positionSec ?? 0;
+            setResumeSec(from);
+            const where = isSeries ? `S${ep.season} EP${ep.episode}` : 'Movie';
+            announce(from >= 30 ? `Resuming ${where} at ${formatClock(from)}` : null);
             try {
                 markWatched({
-                    id: movie.id,
+                    id: entryId,
                     titleId: movie.id,
                     title: movie.title,
-                    type: movie.mediaType === 'tv' ? 'tv' : 'movie',
+                    type: isSeries ? 'tv' : 'movie',
                     tmdbId: movie.tmdb_id,
                     imdbId: movie.imdb_id,
+                    season: isSeries ? ep.season : undefined,
+                    episode: isSeries ? ep.episode : undefined,
                     provider: movie.embed_provider || 'nxsha',
                     imageUrl: movie.imageUrl,
                     backdropUrl: movie.backdropUrl,
                     year: movie.year,
                 });
             } catch {}
+            setActiveEntry({ id: entryId, season: ep.season, episode: ep.episode });
             setPlaying(true);
             return;
         }
@@ -308,7 +381,25 @@ export function MovieDetailModal({ movie, related = [], onClose, onSelect }: Pro
                             title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
                             onClose={() => setPlaying(false)}
                             fallbackUrl={officialUrlFor(movie)}
+                            resumeAt={resumeSec}
+                            onProgress={(info) => {
+                                if (!activeEntry) return;
+                                updateWatchPosition(activeEntry.id, info.seconds, info.duration);
+                            }}
+                            onEnded={() => {
+                                if (!activeEntry) return;
+                                // The media finished: it leaves the row, the
+                                // same way the Crunchyroll page does it.
+                                removeWatched(activeEntry.id);
+                                announce('Marked as watched');
+                            }}
                         />
+                        {playerNotice ? (
+                            <View style={styles.playerNotice} pointerEvents="none">
+                                <Ionicons name="play-circle" size={16} color="#fff" />
+                                <Text style={styles.playerNoticeText}>{playerNotice}</Text>
+                            </View>
+                        ) : null}
                     </View>
                 ) : null}
             </View>
@@ -334,6 +425,24 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#000',
         zIndex: 20,
+    },
+    playerNotice: {
+        position: 'absolute',
+        top: 64,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        backgroundColor: 'rgba(0,0,0,0.72)',
+        borderRadius: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        zIndex: 30,
+    },
+    playerNoticeText: {
+        color: '#fff',
+        fontSize: 13,
+        fontWeight: '600',
     },
     hero: {
         width: '100%',

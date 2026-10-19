@@ -9,7 +9,14 @@ jest.mock('@expo/vector-icons', () => {
 });
 jest.mock('@/components/EmbedPlayer', () => {
     const ReactLocal = require('react');
-    return { EmbedPlayer: ({ src }: any) => ReactLocal.createElement('div', { 'data-testid': 'embed-player', 'data-src': src }) };
+    return {
+        EmbedPlayer: ({ src, resumeAt }: any) =>
+            ReactLocal.createElement('div', {
+                'data-testid': 'embed-player',
+                'data-src': src,
+                'data-resume': String(resumeAt ?? 0),
+            }),
+    };
 });
 jest.mock('expo-linear-gradient', () => {
     const ReactLocal = require('react');
@@ -20,7 +27,13 @@ jest.mock('@/hooks/useCatalog', () => ({
 }));
 
 import { ContinueWatchingRow, timeAgo } from '../components/ContinueWatchingRow';
-import { markWatched, getRecentlyWatched, removeWatched } from '../lib/recentlyWatched';
+import {
+    markWatched,
+    getRecentlyWatched,
+    removeWatched,
+    updateWatchPosition,
+    type WatchedEntry,
+} from '../lib/recentlyWatched';
 
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 let container: HTMLDivElement;
@@ -37,7 +50,7 @@ afterEach(() => {
     container.remove();
 });
 
-function entry(id: string, title: string) {
+function entry(id: string, title: string, extra: Partial<WatchedEntry> = {}) {
     markWatched({
         id,
         titleId: id,
@@ -48,6 +61,7 @@ function entry(id: string, title: string) {
         imageUrl: 'https://image.tmdb.org/t/p/w500/x.jpg',
         backdropUrl: 'https://image.tmdb.org/t/p/w780/x.jpg',
         year: '2026',
+        ...extra,
     });
 }
 
@@ -65,13 +79,43 @@ test('shows played titles newest first, with a remove button per card', () => {
     const text = container.textContent;
     expect(text.indexOf('Dhamaal 4')).toBeLessThan(text.indexOf('Irumudi'));
     expect(container.querySelectorAll('[aria-label^="Remove "]').length).toBe(2);
-    expect(container.textContent).toContain('Watched just now');
+    expect(text).toContain('just now');
 });
 
-test('no progress bar or time-left label is shown (not measurable from the iframe)', () => {
+test('a title with a known position shows the playhead, the time left and a progress bar', () => {
     entry('a', 'Irumudi');
+    updateWatchPosition('a', 372, 1440);
     act(() => root.render(<ContinueWatchingRow />));
-    expect(container.textContent).not.toMatch(/left/i);
+
+    const text = container.textContent;
+    expect(text).toContain('6:12 in');
+    expect(text).toContain('18 min left');
+    expect(text).toContain('just now');
+    // 372s of a 24m episode is a quarter of the way through.
+    const bar = container.querySelector('[data-testid="continue-progress"]') as HTMLElement;
+    expect(bar).not.toBeNull();
+    expect(bar.style.width).toBe('26%');
+});
+
+test('a series entry names the episode it continues', () => {
+    entry('tv-1399-s1-e3', 'Irumudi', { type: 'tv', season: 1, episode: 3 });
+    updateWatchPosition('tv-1399-s1-e3', 372, 1440);
+    act(() => root.render(<ContinueWatchingRow />));
+
+    const text = container.textContent;
+    expect(text).toContain('Episode 3');
+    expect(text).toContain('S1 · EP3 · 6:12 in · 18 min left');
+});
+
+test('a nearly finished title says "Almost done" instead of a time left', () => {
+    entry('a', 'Irumudi');
+    updateWatchPosition('a', 1400, 1440);
+    act(() => root.render(<ContinueWatchingRow />));
+
+    const text = container.textContent;
+    expect(text).toContain('23:20 in');
+    expect(text).toContain('Almost done');
+    expect(text).not.toContain('min left');
 });
 
 test('remove X drops the title and hides the row when empty', () => {
@@ -99,7 +143,8 @@ test('clicking a card opens the title modal, not a detail page', () => {
     const card = container.querySelector('[aria-label="Continue Irumudi"]');
     act(() => { card.click(); });
     expect(container.textContent).toContain('Irumudi');
-    expect(container.querySelector('[data-testid="embed-player"]')).toBeNull();
+    // The player is opened over the modal — the app never navigates away.
+    expect(document.querySelector('[data-testid="embed-player"]')).not.toBeNull();
 });
 
 test('timeAgo formats minutes, hours and days', () => {
