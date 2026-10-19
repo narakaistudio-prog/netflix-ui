@@ -399,6 +399,7 @@
           },
           "3": {
             "title": "PSI",
+            "image": "https://image.tmdb.org/t/p/w300/dwbx24j019r1trCqZZX0aCt8P6S.jpg",
             "airDate": "2026-10-19"
           },
           "4": {
@@ -957,6 +958,10 @@
     {
       "title": "Join us on Telegram",
       "reason": "schedule: no season/episode"
+    },
+    {
+      "title": "Rise of Anshaks: Heroes of Destiny",
+      "reason": "nxsha: no verified id"
     },
     {
       "title": "Attack on Titan [Muse Dub]",
