@@ -967,7 +967,7 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
             if(key==='tsd-'||seenKey[key]||used[key]||shows[key])continue;
             seenKey[key]=1;
             shows[key]={title:it.title,year:'',rating:'-',genres:['anime'],audio:'Sub & Dub',img:it.img||'',type:'TV',drop:true};
-            window.CR_NX_DROPS[key]={id:it.nxId||null,kind:'tv',seasons:it.seasons||{},added:it.firstSeen||'',fresh:true,src:'toonstream',verb:'Fresh',season:it.season||null,episode:(typeof it.episode==='number'?it.episode:null),nxMap:it.nxMap||null,guide:it.guide||null,tsSlug:it.tsSlug||it.slug||''};
+            window.CR_NX_DROPS[key]={id:it.nxId||null,kind:'tv',seasons:it.seasons||{},epStart:it.epStart||null,added:it.firstSeen||'',fresh:true,src:'toonstream',verb:'Fresh',season:it.season||null,episode:(typeof it.episode==='number'?it.episode:null),nxMap:it.nxMap||null,guide:it.guide||null,tsSlug:it.tsSlug||it.slug||''};
             if(it.tsSlug||it.slug)window.TS_SLUGS[key]=it.tsSlug||it.slug;
             keys.push(key);
           }
@@ -1000,7 +1000,7 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
       function syncSaved(key){each(all('[data-save-key="'+key+'"]'),function(el){setClass(el,'saved',!!saved[key]);el.setAttribute('aria-pressed',saved[key]?'true':'false');if(hasClass(el,'secondary')){el.innerHTML=saved[key]?'− Remove from watchlist':'+ Add to watchlist'}});if(activeKey===key){setClass(byId('detailSave'),'active',!!saved[key]);byId('detailSave').setAttribute('aria-pressed',saved[key]?'true':'false')}}
       function toggleSave(key){saved[key]=!saved[key];syncSaved(key);showToast(saved[key]?'Added to watchlist for this session':'Removed from watchlist')}
       function nxFor(key){return (typeof NX_DATA!=='undefined'&&NX_DATA[key])?NX_DATA[key]:((window.CR_NX_DROPS&&CR_NX_DROPS[key])||null)}
-      function tsLayout(key){var drop=(typeof CR_NX_DROPS!=='undefined'&&CR_NX_DROPS[key])||null;if(drop&&drop.seasons&&Object.keys(drop.seasons).length)return {slug:drop.tsSlug||'',seasons:drop.seasons,nxMap:drop.nxMap||null};var all=(typeof TS_SEASONS!=='undefined'&&TS_SEASONS)||{},m=all[key];if(m&&m.seasons&&Object.keys(m.seasons).length)return m;return null}
+      function tsLayout(key){var drop=(typeof CR_NX_DROPS!=='undefined'&&CR_NX_DROPS[key])||null;if(drop&&drop.seasons&&Object.keys(drop.seasons).length)return {slug:drop.tsSlug||'',seasons:drop.seasons,epStart:drop.epStart||null,nxMap:drop.nxMap||null};var all=(typeof TS_SEASONS!=='undefined'&&TS_SEASONS)||{},m=all[key];if(m&&m.seasons&&Object.keys(m.seasons).length)return m;return null}
       function epSource(key){var n=nxFor(key);if(!n||!n.id)return null;var legacy=(typeof EP_DATA!=='undefined')?EP_DATA[key]:null;var labels=(legacy&&legacy.labels)||[],layout=tsLayout(key),seasons=(layout&&layout.seasons)||n.seasons||{'1':1};return {kind:'nx',data:{seasons:seasons,labels:labels},nx:n,labels:labels,layout:layout}}
       function epSeasons(key){var src=epSource(key);return src?src.data.seasons:null}
       function serverAvailable(i){return i===0&&!!nxFor(playState.key)}
@@ -1197,7 +1197,8 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
            the site uses (jojo's-bizarre-adventure); EP_DATA is the fallback. */
         var tsDrop=dropInfo(playState.key)||{};
         var epSlug=(window.TS_SLUGS&&TS_SLUGS[playState.key])||tsDrop.tsSlug||(EP_DATA[playState.key]||{}).slug||'';
-        var q='title='+encodeURIComponent(tsTitle())+(epSlug?'&slug='+encodeURIComponent(epSlug):'')+'&s='+(playState.season||1)+'&e='+(playState.ep||1);
+        var lay=tsLayout(playState.key)||{},starts=lay.epStart||{},startEp=Number(starts[String(playState.season)])||1;
+        var q='title='+encodeURIComponent(tsTitle())+(epSlug?'&slug='+encodeURIComponent(epSlug):'')+'&s='+(playState.season||1)+'&e='+(startEp+(Number(playState.ep||1)-1));
         TS.loading=true;setHidden(frameLoader,false);setHidden(stagePoster,true);
         var ctl=null;try{ctl=new AbortController();setTimeout(function(){try{ctl.abort()}catch(e){}},20000)}catch(e){}
         try{

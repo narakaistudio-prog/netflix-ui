@@ -135,12 +135,14 @@ async function seasonsOf(slug) {
             // to whichever season the site considers active, not necessarily 1.
             const body = await getText(url.endsWith('/') ? url : `${url}/`);
             const info = parseSeasonEpisodes(body.text || '');
-            if (info.count) seasons.push({ n: link.n, count: info.count, missing: info.missing });
+            if (info.count && link.n > 0) {
+                seasons.push({ n: link.n, count: info.count, start: info.first, last: info.last, missing: info.missing });
+            }
             await sleep(120);
         }
     } else {
         const info = parseSeasonEpisodes(page.text);
-        if (info.count) seasons.push({ n: 1, count: info.count, missing: info.missing });
+        if (info.count) seasons.push({ n: 1, count: info.count, start: info.first, last: info.last, missing: info.missing });
     }
     if (!seasons.length) return null;
     return { slug, title: pageTitle(page.text), seasons };
@@ -157,6 +159,9 @@ async function findSeries(key, title) {
     add(title);
     add(title.split(/[:–—]/)[0]);
     for (const variant of titleVariants(title)) add(variant);
+    for (const base of guesses.slice()) {
+        guesses.push(`${base}-hindi-dub`, `${base}-dub`, `${base}-english-dub`);
+    }
 
     for (const slug of guesses.slice(0, 4)) {
         const found = await seasonsOf(slug);
@@ -196,6 +201,7 @@ function stateBlock(shows) {
         payload[key] = {
             slug: entry.slug,
             seasons: entry.seasons,
+            ...(entry.epStart && Object.keys(entry.epStart).length ? { epStart: entry.epStart } : {}),
             ...(entry.nxMap && Object.keys(entry.nxMap).length ? { nxMap: entry.nxMap } : {}),
         };
     }
@@ -243,11 +249,15 @@ async function harvest() {
             nxMap[season] = { season: plan.season, base: plan.base };
         }
         const seasonsMap = {};
-        for (const season of found.seasons) seasonsMap[String(season.n)] = season.count;
-        shows[key] = { title: entry.title, slug: found.slug, seasons: seasonsMap, nxMap };
+        const epStart = {};
+        for (const season of found.seasons) {
+            seasonsMap[String(season.n)] = season.count;
+            if (Number(season.start) > 1) epStart[String(season.n)] = Number(season.start);
+        }
+        shows[key] = { title: entry.title, slug: found.slug, seasons: seasonsMap, ...(Object.keys(epStart).length ? { epStart } : {}), nxMap };
         console.log(
-            `  ${String(index).padStart(2)} ${entry.title.slice(0, 42).padEnd(44)} ${found.slug.slice(0, 34).padEnd(36)} ` +
-                found.seasons.map((s) => `S${s.n}:${s.count}`).join(' '),
+            `  ${String(index).padStart(2)} ${entry.title.slice(0, 38).padEnd(40)} ${found.slug.slice(0, 32).padEnd(34)} ` +
+                found.seasons.map((s) => `S${s.n}:${s.count}${s.start > 1 ? `@${s.start}` : ''}`).join(' '),
         );
     }
     return { state: { updated: new Date().toISOString().slice(0, 10), source: `${BASE}/home`, shows, misses }, report: misses };

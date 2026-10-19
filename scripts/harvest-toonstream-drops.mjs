@@ -247,8 +247,11 @@ async function fetchToonSeasons(seriesSlug, report) {
         }
         for (const n of [...bySeason.keys()].sort((a, b) => a - b)) {
             const eps = [...bySeason.get(n)].sort((a, b) => a - b);
-            const count = eps[eps.length - 1] || 0;
-            if (count) seasons.push({ n, count, missing: eps.filter((e, i) => e !== i + 1).slice(0, 5) });
+            if (eps.length) {
+                const first = eps[0];
+                const last = eps[eps.length - 1];
+                seasons.push({ n, count: last - first + 1, first, last, missing: eps.filter((e, i) => e !== first + i).slice(0, 5) });
+            }
         }
     }
     if (!seasons.length) {
@@ -296,7 +299,7 @@ export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overvi
     if (!Array.isArray(tsSeasons) || !tsSeasons.length || !Array.isArray(nxSeasons) || !nxSeasons.length) {
         return { guide: null, seasons: null, nxMap: null };
     }
-    const { flat, map, byNumber } = buildSeasonMap(tsSeasons, nxSeasons);
+    const { flat, map } = buildSeasonMap(tsSeasons, nxSeasons);
     if (!flat.length) return { guide: null, seasons: null, nxMap: null };
 
     const guide = {};
@@ -308,12 +311,9 @@ export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overvi
         if (!plan) continue;
         const seasonGuide = {};
         for (let ep = 1; ep <= plan.count && budget > 0; ep += 1) {
-            const hit = plan.direct
-                ? (byNumber.get(plan.season) || [])[ep - 1]
-                : flat[plan.start + ep - 1];
-            if (!hit) continue;
-            if (!plan.direct && hit.season !== plan.season) continue; // never leak across an Nxsha season boundary
-            const meta = guideEpisode(plan.direct ? hit : hit.data, overviewLimit);
+            const hit = flat[plan.start + ep - 1];
+            if (!hit || hit.season !== plan.season) continue; // never leak across an Nxsha season boundary
+            const meta = guideEpisode(hit.data, overviewLimit);
             if (!Object.keys(meta).length) continue;
             seasonGuide[ep] = meta;
             budget -= 1;
@@ -355,6 +355,7 @@ function toBlockItem(record) {
         ...(record.nxId ? { nxId: record.nxId } : {}),
         ...(record.tsSlug ? { tsSlug: record.tsSlug } : {}),
         ...(record.seasons && Object.keys(record.seasons).length ? { seasons: record.seasons } : {}),
+        ...(record.epStart && Object.keys(record.epStart).length ? { epStart: record.epStart } : {}),
         ...(record.nxMap && Object.keys(record.nxMap).length ? { nxMap: record.nxMap } : {}),
         ...(record.guide && Object.keys(record.guide).length ? { guide: record.guide } : {}),
         ...(record.firstSeen ? { firstSeen: record.firstSeen } : {}),
@@ -393,7 +394,7 @@ function mergeState(previous, incoming, updated) {
         const old = previous.items?.[slug];
         // A fresh guide covers every ToonStream season, so it replaces the old
         // one outright. A failed fetch keeps yesterday's so cards never go blank.
-        for (const field of ['guide', 'seasons', 'nxMap', 'tsSlug']) {
+        for (const field of ['guide', 'seasons', 'epStart', 'nxMap', 'tsSlug']) {
             if (!record[field] && old?.[field]) record[field] = old[field];
         }
         const merged = {
@@ -488,6 +489,11 @@ async function harvest() {
             record.seasons = built.seasons;
             record.nxMap = built.nxMap;
         }
+        const epStart = {};
+        for (const ts of tsSeasons) {
+            if (Number(ts.first) > 1) epStart[String(ts.n)] = Number(ts.first);
+        }
+        if (Object.keys(epStart).length) record.epStart = epStart;
         if (report.length > 40) report.length = 40;
         const layout = tsSeasons.map((s) => `S${s.n}:${s.count}`).join(' ');
         const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);

@@ -27,18 +27,19 @@ export const nxEpisodes = (body) => {
 };
 
 /**
- * Map each ToonStream season onto Nxsha: the same season number when Nxsha
- * carries it with a matching count, otherwise a slice of the flat Nxsha
- * episode list at the cumulative ToonStream offset.
+ * Map each ToonStream season onto Nxsha by cumulative position: the first
+ * episode of a ToonStream season is the (sum of previous season lengths + 1)th
+ * episode of the show, which lands on exactly one Nxsha season/episode. That
+ * works whether Nxsha kept the seasons split or merged them (JJK/Ranma).
  *
- * Returns the flat list and, per ToonStream season:
- *   {season, base, direct, start, count}
+ * Returns the flat Nxsha list and, per ToonStream season:
+ *   {season, base, start, count}
  * `base + episode` is the Nxsha episode inside `season`; `start` is the index
- * into `flat` for the non-direct case.
+ * into `flat`.
  */
 export function buildSeasonMap(tsSeasons, nxSeasons) {
-    const byNumber = new Map();
     const flat = [];
+    const byNumber = new Map();
     for (const body of (nxSeasons || []).slice().sort((a, b) => nxSeasonNumber(a) - nxSeasonNumber(b))) {
         const number = nxSeasonNumber(body);
         const episodes = nxEpisodes(body);
@@ -53,16 +54,11 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
     for (const ts of tsSeasons || []) {
         const count = Number(ts?.count) || 0;
         if (!count) continue;
-        const sameEps = byNumber.get(Number(ts.n)) || [];
-        // A merged 36-episode Nxsha season must never swallow a 12-episode batch.
-        const direct = sameEps.length > 0 && Math.abs(sameEps.length - count) <= 2;
-        if (direct) {
-            map[Number(ts.n)] = { season: Number(ts.n), base: 0, direct: true, start: 0, count };
-        } else if (flat[offset]) {
+        const at = flat[offset];
+        if (at) {
             map[Number(ts.n)] = {
-                season: flat[offset].season,
-                base: Math.max(0, flat[offset].ep - 1),
-                direct: false,
+                season: at.season,
+                base: Math.max(0, at.ep - 1),
                 start: offset,
                 count,
             };
@@ -96,8 +92,15 @@ export function parseSeasonEpisodes(html) {
         nums.add(Number(m[2]));
     }
     const sorted = [...nums].filter((n) => n > 0).sort((a, b) => a - b);
+    if (!sorted.length) return { count: 0, first: 0, last: 0, missing: [] };
+    const first = sorted[0];
+    const last = sorted[sorted.length - 1];
     return {
-        count: sorted.length ? sorted[sorted.length - 1] : 0,
-        missing: sorted.filter((n, i) => n !== i + 1).slice(0, 5),
+        // Hindi-dub pages number episodes absolutely (season 2 starts at 33),
+        // so the season length is the span, not the largest number.
+        count: last - first + 1,
+        first,
+        last,
+        missing: sorted.filter((n, i) => n !== first + i).slice(0, 5),
     };
 }

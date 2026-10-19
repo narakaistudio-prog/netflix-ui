@@ -172,7 +172,7 @@ test('ToonStream decides the seasons; Nxsha only fills the metadata', () => {
     expect(parsed.slug).toBe('ranma1-2');
     expect(parsed.jojo).toBe("jojo's-bizarre-adventure");
     expect(parsed.seasons.map((s: any) => s.n)).toEqual([1, 2, 3]);
-    expect(parsed.eps).toEqual({ count: 12, missing: [] });
+    expect(parsed.eps).toEqual({ count: 12, first: 1, last: 12, missing: [] });
 
     // ToonStream's own counts, never Nxsha's merged 36.
     expect(parsed.merged.seasons).toEqual({ 1: 12, 2: 12, 3: 3 });
