@@ -58,7 +58,8 @@ const RESOLVE_BODY = {
 type FetchCall = { url: string; body: any };
 
 function boot(): { dom: JSDOM; calls: FetchCall[] } {
-    const html = readFileSync(HTML_PATH, 'utf8');
+    // Force the live-fallback path: the committed page normally carries a bake.
+    const html = readFileSync(HTML_PATH, 'utf8').replace(/var TS_DROPS=\[.*?\];/, 'var TS_DROPS=[];');
     const calls: FetchCall[] = [];
     const virtualConsole = new VirtualConsole();
     virtualConsole.on('jsdomError', () => {});
@@ -220,7 +221,7 @@ test('Fresh Drop Toon rail renders from the home API and plays the exact drop ep
 });
 
 test('keeps an empty rail off the page when the home API has nothing', async () => {
-    const html = readFileSync(HTML_PATH, 'utf8');
+    const html = readFileSync(HTML_PATH, 'utf8').replace(/var TS_DROPS=\[.*?\];/, 'var TS_DROPS=[];');
     const virtualConsole = new VirtualConsole();
     virtualConsole.on('jsdomError', () => {});
     virtualConsole.on('error', () => {});

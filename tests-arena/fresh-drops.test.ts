@@ -428,11 +428,13 @@ describe('Fresh Drops row on the Crunchyroll page', () => {
         const dom = new JSDOM(readFileSync(page, 'utf8'), { runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole, url: 'https://app.local/crunchyroll' });
         const doc = dom.window.document;
 
-        // The row rendered at the top of the home rails.
-        const railHead = doc.querySelector('#homeRows .anime-rail .rail-head h2');
-        expect(railHead?.textContent).toBe('Fresh Drops');
+        // The row renders in the home rails (the ToonStream rail may sit above it).
+        const rail = (Array.from(doc.querySelectorAll('#homeRows .anime-rail')) as HTMLElement[]).find(
+            (node) => node.querySelector('.rail-head h2')?.textContent === 'Fresh Drops',
+        );
+        expect(rail).toBeTruthy();
 
-        const cards = Array.from(doc.querySelectorAll('#homeRows .anime-rail:first-child .rail-card')) as HTMLElement[];
+        const cards = Array.from(rail!.querySelectorAll('.rail-card')) as HTMLElement[];
         expect(cards.length).toBe(baked.length);
         expect(cards.length).toBeGreaterThan(0);
 
@@ -672,11 +674,14 @@ describe('Drops Library — past drops stay on the page and searchable', () => {
         const doc = dom.window.document;
 
         const rails = Array.from(doc.querySelectorAll('#homeRows .anime-rail'));
-        expect(rails[0].querySelector('.rail-head h2')?.textContent).toBe('Fresh Drops');
-        expect(rails[1].querySelector('.rail-head h2')?.textContent).toBe('Drops Library');
+        const freshIdx = rails.findIndex((node) => node.querySelector('.rail-head h2')?.textContent === 'Fresh Drops');
+        const libIdx = rails.findIndex((node) => node.querySelector('.rail-head h2')?.textContent === 'Drops Library');
+        expect(freshIdx).toBeGreaterThanOrEqual(0);
+        // The library follows Fresh Drops directly (the ToonStream rail may lead).
+        expect(libIdx).toBe(freshIdx + 1);
 
-        const freshKeys = Array.from(rails[0].querySelectorAll('[data-open]')).map((n) => n.getAttribute('data-open'));
-        const libKeys = Array.from(rails[1].querySelectorAll('[data-open]')).map((n) => n.getAttribute('data-open'));
+        const freshKeys = Array.from(rails[freshIdx].querySelectorAll('[data-open]')).map((n) => n.getAttribute('data-open'));
+        const libKeys = Array.from(rails[libIdx].querySelectorAll('[data-open]')).map((n) => n.getAttribute('data-open'));
         expect(freshKeys).toHaveLength(12);
         // The two titles that missed the rail live in the library — newest first.
         expect(libKeys).toEqual(['drop-tv-2', 'drop-tv-1']);
