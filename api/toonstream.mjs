@@ -62,6 +62,7 @@ async function getText(url, steps, label) {
 function titleSlug(title) {
   return String(title || '')
     .toLowerCase()
+    .replace(/[\u2019'\u2032`]/g, '') // the site drops apostrophes: jojo's -> jojos
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
@@ -159,8 +160,9 @@ function pickEmbed(embeds) {
   return list[0] || embeds.find((src) => VIDEO_HOST.test(src)) || null;
 }
 
-async function resolveEpisode({ title, season, episode }, steps) {
-  const direct = `${BASE}/episode/${titleSlug(title)}-${season}x${episode}/`;
+async function resolveEpisode({ title, slug, season, episode }, steps) {
+  // EP_DATA slugs are copied from toonstream URLs, so they beat any guess.
+  const direct = `${BASE}/episode/${titleSlug(slug || title)}-${season}x${episode}/`;
   let page = await getText(direct, steps, 'episode-direct');
   if (page.status === 200) {
     return { episodeUrl: direct, html: page.text, via: 'direct' };
@@ -217,6 +219,7 @@ async function handler(req, res) {
   }
 
   const title = String(req.query.title || '').trim();
+  const slug = String(req.query.slug || '').trim();
   const season = String(Math.max(1, parseInt(String(req.query.s || '1'), 10) || 1));
   const episode = String(Math.max(1, parseInt(String(req.query.e || '1'), 10) || 1));
   const debug = req.query.debug === '1';
@@ -229,7 +232,7 @@ async function handler(req, res) {
   const deadline = Date.now() + TOTAL_BUDGET_MS;
   try {
     if (Date.now() > deadline) throw new Error('budget-exhausted');
-    const found = await resolveEpisode({ title, season, episode }, steps);
+    const found = await resolveEpisode({ title, slug, season, episode }, steps);
     if (!found) {
       res.status(200).json({
         ok: false,
