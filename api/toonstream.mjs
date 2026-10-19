@@ -436,7 +436,19 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   const ranked = seriesLinks
     .map((link) => ({ ...link, score: matchScore(q, link.text || link.slug) }))
     .sort((a, b) => b.score - a.score);
-  for (const candidate of ranked.filter((c) => c.score > 0).slice(0, 4)) {
+  // A single shared word is not a match: "Black Clover" must never fall through
+  // to "Darker than Black" (which scores 0.5) just because that page happens to
+  // host the requested season/episode. Require most of the query's tokens.
+  const MIN_MATCH = 0.6;
+  const viable = ranked.filter((c) => c.score >= MIN_MATCH);
+  if (steps) {
+    steps.push({
+      step: 'series-ranked',
+      top: ranked.slice(0, 4).map((c) => [c.slug, Math.round(c.score * 100) / 100]),
+      min: MIN_MATCH,
+    });
+  }
+  for (const candidate of viable.slice(0, 4)) {
     // The site's own search slug is the ground truth for this show — it beats
     // any guess from the display title ("Re:ZERO" lives on
     // /series/rezero-starting-life-in-another-world, not re-zero-...).
