@@ -114,9 +114,38 @@ test('matchScore ranks the right series first', () => {
             ['matchScore', [['kaiju', 'no', '8'], 'Kaiju No. 8 Hindi Dub']],
             ['matchScore', [['overgeared'], 'Overgeared (2026)']],
             ['matchScore', [['overgeared'], 'Totally Different Show']],
+            // Punctuation-split query still matches the site's compact slug.
+            ['matchScore', [['re', 'zero'], 'rezero-starting-life-in-another-world']],
+            ['matchScore', [['golden', 'kamuy'], 'fruits-basket-eng-jap']],
         ],
     });
-    expect(results).toEqual([1, 1, 1, 0]);
+    expect(results).toEqual([1, 1, 1, 0, 0.9, 0]);
+});
+
+test('search candidate slug drives the episode probe (Re:ZERO shape)', () => {
+    // The display title is "Re:ZERO" (titleSlug -> re-zero) but the site's
+    // series is /series/rezero-starting-life-in-another-world, and its
+    // episodes live under that slug. The search page is the ground truth.
+    const searchHtml = `<html><body>
+      <a href="/series/rezero-starting-life-in-another-world/">Re:ZERO -Starting Life in Another World-</a>
+    </body></html>`;
+    const res = runScenario({
+        query: { title: 'Re:ZERO', s: '1', e: '1', debug: '1' },
+        mocks: [
+            { needle: '/s?q=Re%3AZERO', status: 200, body: searchHtml },
+            {
+                needle: '/episode/rezero-starting-life-in-another-world-1x1/',
+                status: 200,
+                body: EPISODE_HTML,
+            },
+        ],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.via).toBe('series-slug');
+    expect(res.body.episodeUrl).toBe(
+        'https://toonstream.us/episode/rezero-starting-life-in-another-world-1x1/',
+    );
+    expect(res.body.servers).toHaveLength(3);
 });
 
 test('player slots + sidebar names parse from the live markup shapes', () => {
