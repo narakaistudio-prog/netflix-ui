@@ -45,6 +45,9 @@ jobs:
           echo '--- scripts ---'
           grep -oE '<script[^>]+src="[^"]+"' ep.html | head -20
 
+      - name: Summarise seasons
+        run: node tmp-probe/probe.mjs
+
       - name: Commit the raw pages for local parsing
         run: |
           mkdir -p tmp-probe
