@@ -953,31 +953,64 @@ var CR_NEW_DROPS_MODE='today';
   if(rows.length&&rows[0].fresh)rows.splice(1,0,library);else rows.unshift(library);
 })();
 /*CR_DROPS_END*/
-      /* Fresh Drop Toon: the toonstream.us home page's own "Fresh Drops" rail,
-         fetched live from /api/toonstream?home=1 so the row mirrors the site
-         instead of a hand-kept list. Every card plays through the ToonStream
-         resolver (Play/Short/MultiQ), and episode links keep their S/E. */
+      /*TS_DROPS_START*/
+/* Written by scripts/harvest-toonstream-drops.mjs — do not edit by hand. */
+var TS_DROPS=[];
+/*TS_DROPS_END*/
+      /* Fresh Drop Toon: toonstream.us's own Fresh Drop rail, baked daily by
+         scripts/harvest-toonstream-drops.mjs with an Nxsha episode guide
+         (stills, synopsis, runtime) for the dropped season. Playback stays on
+         ToonStream. One anime appears once: a title the page already carries
+         keeps its existing card and only remembers the site's own slug, so the
+         ToonStream server opens the exact drop. Only genuinely new anime get a
+         card here. When the bake is empty (first deploy), the live home API
+         fills the row without guides. */
+      window.TS_SLUGS={};
       (function(){
+        var seenKey={};
+        function tnorm(value){return String(value||'').toLowerCase().replace(/[^a-z0-9]+/g,'')}
+        function siteKeyForTitle(title){
+          var want=tnorm(title),k;
+          for(k in shows){if(shows.hasOwnProperty(k)&&tnorm(shows[k].title)===want)return k}
+          return '';
+        }
         function paint(items){
-          if(!items||!items.length)return;
-          var keys=[],seen={},i,it,key;
+          if(!items||!items.length)return 0;
+          var keys=[],used={},i,it,key,existing,rec;
+          each(rows,function(row){each(row.keys||[],function(k){used[k]=1})});
           for(i=0;i<items.length;i++){
             it=items[i];
             if(!it||!it.title)continue;
-            key='tsd-'+(it.slug||('t'+i)).replace(/[^a-z0-9]+/g,'-');
-            if(seen[key]||shows[key])continue;
-            seen[key]=1;
+            existing=siteKeyForTitle(it.title);
+            if(existing){
+              /* Same anime, already on the page: no twin card. Keep its poster
+                 and episode guide, just point ToonStream at the site's slug. */
+              if(it.slug&&!window.TS_SLUGS[existing])window.TS_SLUGS[existing]=it.slug;
+              rec=window.CR_NX_DROPS[existing];
+              if(rec&&it.guide&&it.guide[String(it.season)]&&rec.guide&&!rec.guide[String(it.season)]){
+                rec.guide[String(it.season)]=it.guide[String(it.season)];
+              }
+              continue;
+            }
+            key='tsd-'+String(it.slug||it.title||('t'+i)).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+            if(key==='tsd-'||seenKey[key]||used[key]||shows[key])continue;
+            seenKey[key]=1;
             shows[key]={title:it.title,year:'',rating:'-',genres:['anime'],audio:'Sub & Dub',img:it.img||'',type:'TV',drop:true};
-            window.CR_NX_DROPS[key]={id:null,kind:'tv',seasons:{},added:'',fresh:true,src:'toonstream',verb:'Fresh',season:it.season||null,episode:(typeof it.ep==='number'?it.ep:null),guide:null};
+            window.CR_NX_DROPS[key]={id:it.nxId||null,kind:'tv',seasons:it.seasons||{},added:it.firstSeen||'',fresh:true,src:'toonstream',verb:'Fresh',season:it.season||null,episode:(typeof it.episode==='number'?it.episode:null),guide:it.guide||null,tsSlug:it.slug||''};
+            if(it.slug)window.TS_SLUGS[key]=it.slug;
             keys.push(key);
           }
-          if(!keys.length)return;
+          if(!keys.length)return 0;
           rows.unshift({title:'Fresh Drop Toon',subtitle:'New on toonstream.us right now',fresh:true,ranked:false,keys:keys});
           renderHomeRows();
+          return keys.length;
         }
+        var baked=(typeof TS_DROPS!=='undefined'&&TS_DROPS.length)?TS_DROPS:[];
+        if(baked.length){paint(baked);return}
         try{
           fetch('/api/toonstream?home=1').then(function(r){return r.json()}).then(function(b){
-            if(b&&b.ok&&b.items)paint(b.items);
+            if(!b||!b.ok||!b.items)return;
+            paint(b.items.map(function(it){return {title:it.title,slug:it.slug,img:it.img,season:it.season,episode:it.ep}}));
           }).catch(function(){});
         }catch(e){}
       })();
@@ -1186,7 +1219,10 @@ var CR_NEW_DROPS_MODE='today';
         var info=tsKey(),cached=TS.cache[info];
         TS_MODE=true;tsSetButtons();
         if(cached&&cached.embed){tsSites=cached.sites||[{name:'S1',url:cached.embed}];tsSetButtons();tsInject(cached.embed);showToast('ToonStream player');return}
-        var epSlug=(EP_DATA[playState.key]||{}).slug||'';
+        /* ToonStream's own slug (baked with the fresh drops) keeps punctuation
+           the site uses (jojo's-bizarre-adventure); EP_DATA is the fallback. */
+        var tsDrop=dropInfo(playState.key)||{};
+        var epSlug=(window.TS_SLUGS&&TS_SLUGS[playState.key])||tsDrop.tsSlug||(EP_DATA[playState.key]||{}).slug||'';
         var q='title='+encodeURIComponent(tsTitle())+(epSlug?'&slug='+encodeURIComponent(epSlug):'')+'&s='+(playState.season||1)+'&e='+(playState.ep||1);
         TS.loading=true;setHidden(frameLoader,false);setHidden(stagePoster,true);
         var ctl=null;try{ctl=new AbortController();setTimeout(function(){try{ctl.abort()}catch(e){}},20000)}catch(e){}
