@@ -113,7 +113,9 @@ export function parseNxshaSeriesPage(html, expectedTitle) {
         throw new Error(`Nxsha title mismatch: expected "${expectedTitle}", got "${actualTitle || 'unknown'}"`);
     }
     if (!tmdbId) throw new Error(`Could not resolve Nxsha TMDB id for "${expectedTitle}"`);
-    if (!seasonCount || seasonCount > 50) {
+    // Long runners like One Piece carry 20+ seasons on their Nxsha page; the
+    // cap only exists to reject a stray "1 season"-style match.
+    if (!seasonCount || seasonCount > 100) {
         throw new Error(`Could not read a valid season count for "${expectedTitle}" (found ${seasonCount || 'none'})`);
     }
     return { title: actualTitle, tmdbId, seasonCount };
@@ -309,6 +311,13 @@ function selfTest() {
         overview: '',
         episodes: [],
     });
+
+    assert.deepEqual(parseNxshaSeriesPage(
+        '<title>One Piece (1999) - Watch TV Series Online Free | Nxsha</title>'
+        + '<div>Series 8.7 Oct 20, 1999 23 seasons Returning Series</div>'
+        + '<a href="/watch/tv/37854/1/1">Play Episode 1</a>',
+        'One Piece',
+    ), { title: 'One Piece', tmdbId: '37854', seasonCount: 23 });
 
     const catalog = parseCrunchyrollCatalog(`var shows={\n        future:{title:'Future Anime',year:2030},\n      };`);
     assert.deepEqual(catalog, [{ key: 'future', title: 'Future Anime' }]);
