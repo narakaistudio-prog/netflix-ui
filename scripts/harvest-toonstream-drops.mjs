@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 /**
  * Bake the "Fresh Drop Toon" rail: toonstream.us's own Fresh Drop list, with
- * the episode guide (titles, stills, synopsis, dates, runtimes) pulled from
- * Nxsha, and one card per anime only.
+ * ToonStream's own season layout (series page -> season pages -> episode
+ * numbers) and Nxsha's episode metadata (titles, stills, synopsis, dates,
+ * runtimes) mapped onto it, and one card per anime only.
+ *
+ * Nxsha merges split cours (Ranma's 12 + 12 + 3 ToonStream batches are one
+ * 36-episode Nxsha season), so a ToonStream season maps either onto the Nxsha
+ * season with the same number (when the counts agree) or onto a slice of the
+ * flat Nxsha list at the cumulative ToonStream offset. The page then builds the
+ * Nxsha embed from `nxMap`, while ToonStream playback uses the series slug.
  *
  * The row used to be fetched in the browser from /api/toonstream?home=1, which
  * meant no episode guide and no memory of what the page already carried. This
@@ -11,8 +18,8 @@
  *   1. GET toonstream.us/home -> the Fresh Drop rail (api/toonstream.mjs's parser)
  *   2. Resolve each title to an Nxsha id: the catalog registry, the existing
  *      drop states, then Nxsha's own /search/tv results.
- *   3. Episode guide for the dropped season from Nxsha's
- *      /api/tv/<id>/season/<n> JSON (the same source the catalog guide uses).
+ *   3. Season layout from ToonStream's /series/<slug>/ season pages, and the
+ *      Nxsha guide for those seasons from /api/tv/<id>/season/<n> JSON.
  *   4. Titles the page already shows (catalog or an older drop) are marked
  *      `onSite`: the page must not render a second card for them.
  *   5. Write data/toonstream-drops.json and bake it into crunchyroll.html
