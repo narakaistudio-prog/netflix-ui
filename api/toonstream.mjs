@@ -62,12 +62,13 @@ async function getText(url, steps, label) {
 }
 
 /** "Kaiju No. 8!" -> "kaiju-no-8" — the site's own slug rule. */
-function titleSlug(title) {
+function titleSlug(title, keepColon = false) {
   return String(title || '')
     .toLowerCase()
     .replace(/[\u2019'\u2032`]/g, '') // the site drops apostrophes: jojo's -> jojos
     .replace(/&/g, ' and ')
-    .replace(/[^a-z0-9]+/g, '-')
+    // The site KEEPS ':' in some slugs: "Mushoku Tensei: ..." -> "mushoku-tensei:-..."
+    .replace(keepColon ? /[^a-z0-9:]+/g : /[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 }
 
