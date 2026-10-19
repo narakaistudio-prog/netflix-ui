@@ -256,7 +256,7 @@ function currentBlock(html) {
 }
 
 /** Fold the previous state into the fresh one: firstSeen survives, guides persist. */
-function mergeState(previous, incoming) {
+function mergeState(previous, incoming, updated) {
     const items = {};
     for (const [slug, record] of Object.entries(incoming)) {
         const old = previous.items?.[slug];
@@ -271,7 +271,7 @@ function mergeState(previous, incoming) {
             ...(Object.keys(guide).length ? { guide } : {}),
         };
     }
-    return { updated: incoming.__updated, source: BASE + '/home', items };
+    return { updated, source: BASE + '/home', items };
 }
 
 async function harvest() {
@@ -338,9 +338,13 @@ async function harvest() {
         }
         incoming[drop.slug] = record;
     }
-    incoming.__updated = day;
 
-    return { state: mergeState(previous, incoming), report, count: byTitle.size, matched: report.length };
+    return {
+        state: mergeState(previous, incoming, day),
+        report,
+        count: byTitle.size,
+        matched: report.length,
+    };
 }
 
 function orderedItems(state) {
