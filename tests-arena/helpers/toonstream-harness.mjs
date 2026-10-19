@@ -12,8 +12,9 @@ if (scenario.crashFetch) {
         const hit = entries
             .filter((m) => String(url).includes(m.needle))
             .sort((a, b) => b.needle.length - a.needle.length)[0];
-        if (hit) return { status: hit.status, text: async () => hit.body };
-        return { status: 404, text: async () => 'not found' };
+        const headers = new Map([['content-security-policy', '']]);
+        if (hit) return { status: hit.status, text: async () => hit.body, headers };
+        return { status: 404, text: async () => 'not found', headers };
     };
 }
 
