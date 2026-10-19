@@ -21,35 +21,45 @@ function runScenario(scenario) {
     return JSON.parse(out.slice(marker + '__RESULT__'.length));
 }
 
-/** Live page shape: options-0 eager (SERVER 1 "PLAY"), lazy slots after. */
+/** Solo Leveling-style page: 8 player slots + 8 named download rows. */
 const EPISODE_HTML = `
 <html><body>
   <aside class="video-player" id="aa-options">
-    <div id="options-0" class="video aa-tb hdd on">
-      <iframe src="https://rubystm.com/e/lcwyoy23xi5n.html" frameborder="0" allowfullscreen loading="eager"></iframe>
+    <div id="options-0" class="video hdd on">
+      <iframe src="https://rubystm.com/e/mvybg38ttztw.html" loading="eager"></iframe>
     </div>
-    <div id="options-1" class="video aa-tb hdd">
-      <iframe data-src="https://filesforever.link/embed/lfer7w0" loading="lazy"></iframe>
-    </div>
-    <div id="options-2" class="video aa-tb hdd">
-      <iframe data-src="https://filesforever.link/embed/ycuu3ma" loading="lazy"></iframe>
-    </div>
-    <div id="options-3" class="video aa-tb hdd">
-      <iframe data-src="https://filesforever.link/embed/jba6kcn" loading="lazy"></iframe>
-    </div>
+    <div id="options-1" class="video hdd"><iframe data-src="https://filesforever.link/embed/hdoyuqt" loading="lazy"></iframe></div>
+    <div id="options-2" class="video hdd"><iframe data-src="https://filesforever.link/embed/x7kv57a" loading="lazy"></iframe></div>
+    <div id="options-3" class="video hdd"><iframe data-src="https://filesforever.link/embed/c3slot" loading="lazy"></iframe></div>
+    <div id="options-4" class="video hdd"><iframe data-src="https://cloudy.upns.one/#slot4" loading="lazy"></iframe></div>
+    <div id="options-5" class="video hdd"><iframe data-src="https://vidmoly.net/embed-slot5" loading="lazy"></iframe></div>
+    <div id="options-6" class="video hdd"><iframe data-src="https://filesforever.link/embed/shortslot" loading="lazy"></iframe></div>
+    <div id="options-7" class="video hdd"><iframe data-src="https://filesforever.link/embed/mqslot" loading="lazy"></iframe></div>
   </aside>
   <div class="server-row"><div class="hex-badge t-1"><span class="hex-number">01</span></div>
-    <span class="server-name">Play</span><span class="tag1">1080p</span>
-    <a href="https://rubystm.com/d/lcwyoy23xi5n.html">Download</a></div>
+    <span class="server-name">Ruby</span><span class="tag1">1080p</span>
+    <a href="https://rubystm.com/d/mvybg38ttztw.html">Download</a></div>
   <div class="server-row"><div class="hex-badge t-2"><span class="hex-number">02</span></div>
-    <span class="server-name">Short</span><span class="tag1">720p</span>
-    <a href="https://download.openx.xyz/?v=zzz">Download</a></div>
+    <span class="server-name">filesforever</span><span class="tag1">480p</span>
+    <a href="https://filesforever.link/file/hdoyuqt">Download</a></div>
   <div class="server-row"><div class="hex-badge t-3"><span class="hex-number">03</span></div>
+    <span class="server-name">filesforever</span><span class="tag1">720p</span>
+    <a href="https://filesforever.link/file/x7kv57a">Download</a></div>
+  <div class="server-row"><div class="hex-badge t-4"><span class="hex-number">04</span></div>
+    <span class="server-name">filesforever</span><span class="tag1">1080p</span>
+    <a href="https://filesforever.link/file/c3slot">Download</a></div>
+  <div class="server-row"><div class="hex-badge t-5"><span class="hex-number">05</span></div>
+    <span class="server-name">Cloudy</span><span class="tag1">1080p</span>
+    <a href="https://cloudy.upns.one/#slot4">Download</a></div>
+  <div class="server-row"><div class="hex-badge t-6"><span class="hex-number">06</span></div>
+    <span class="server-name">Moly</span><span class="tag1">720p</span>
+    <a href="https://vidmoly.me/dl/slot5">Download</a></div>
+  <div class="server-row"><div class="hex-badge t-7"><span class="hex-number">07</span></div>
+    <span class="server-name">Short</span><span class="tag1">1080p</span>
+    <a href="https://download.openx.xyz/?v=shortslot">Download</a></div>
+  <div class="server-row"><div class="hex-badge t-8"><span class="hex-number">08</span></div>
     <span class="server-name">MultiQ</span><span class="tag1">1080p</span>
     <a href="https://blakiteapi.xyz/download/1/1-2">Download</a></div>
-  <div class="server-row"><div class="hex-badge t-4"><span class="hex-number">04</span></div>
-    <span class="server-name">Moly</span><span class="tag1">720p</span>
-    <a href="https://vidmoly.me/dl/abc">Download</a></div>
   <a href="/episode/x-1x1/">prev</a> <a href="/episode/x-1x3/">next</a>
 </body></html>`;
 
@@ -111,15 +121,22 @@ test('player slots + sidebar names parse from the live markup shapes', () => {
         ],
     });
     expect(results[0]).toEqual([
-        { slot: 0, url: 'https://rubystm.com/e/lcwyoy23xi5n.html' },
-        { slot: 1, url: 'https://filesforever.link/embed/lfer7w0' },
-        { slot: 2, url: 'https://filesforever.link/embed/ycuu3ma' },
-        { slot: 3, url: 'https://filesforever.link/embed/jba6kcn' },
+        { slot: 0, url: 'https://rubystm.com/e/mvybg38ttztw.html' },
+        { slot: 1, url: 'https://filesforever.link/embed/hdoyuqt' },
+        { slot: 2, url: 'https://filesforever.link/embed/x7kv57a' },
+        { slot: 3, url: 'https://filesforever.link/embed/c3slot' },
+        { slot: 4, url: 'https://cloudy.upns.one/#slot4' },
+        { slot: 5, url: 'https://vidmoly.net/embed-slot5' },
+        { slot: 6, url: 'https://filesforever.link/embed/shortslot' },
+        { slot: 7, url: 'https://filesforever.link/embed/mqslot' },
     ]);
-    expect(results[1]).toEqual({ '1': 'Play', '2': 'Short', '3': 'MultiQ', '4': 'Moly' });
+    expect(results[1]).toEqual({
+        '1': 'Ruby', '2': 'filesforever', '3': 'filesforever', '4': 'filesforever',
+        '5': 'Cloudy', '6': 'Moly', '7': 'Short', '8': 'MultiQ',
+    });
 });
 
-test("returns ONLY the site's first three servers, named from the sidebar", () => {
+test("returns exactly the sidebar trio: Play, Short, MultiQ", () => {
     const res = runScenario({
         query: { title: 'Overgeared', s: '1', e: '2' },
         mocks: [{ needle: '/episode/overgeared-1x2/', status: 200, body: EPISODE_HTML }],
@@ -128,18 +145,16 @@ test("returns ONLY the site's first three servers, named from the sidebar", () =
     expect(res.body.ok).toBe(true);
     expect(res.body.via).toBe('direct');
     expect(res.body.episodeUrl).toBe('https://toonstream.us/episode/overgeared-1x2/');
-    // Exactly three servers: SERVER 1/2/3 with the sidebar's own names.
+    // Exactly the sidebar's promoted three: PLAY, SHORT, MULTIQ.
     expect(res.body.servers).toEqual([
-        { name: 'Play', url: 'https://rubystm.com/e/lcwyoy23xi5n.html' },
-        { name: 'Short', url: 'https://filesforever.link/embed/lfer7w0' },
-        { name: 'MultiQ', url: 'https://filesforever.link/embed/ycuu3ma' },
+        { name: 'Play', url: 'https://rubystm.com/e/mvybg38ttztw.html' },
+        { name: 'Short', url: 'https://filesforever.link/embed/shortslot' },
+        { name: 'MultiQ', url: 'https://filesforever.link/embed/mqslot' },
     ]);
-    // Slot 3 (Moly's filesforever mirror) and the trailer must be gone.
     expect(res.body.embeds).toHaveLength(3);
-    expect(JSON.stringify(res.body.embeds)).not.toContain('jba6kcn');
     expect(JSON.stringify(res.body.embeds)).not.toContain('youtube');
-    // chosen = the site's own SERVER 1 player.
-    expect(res.body.chosen).toBe('https://rubystm.com/e/lcwyoy23xi5n.html');
+    // chosen = the site's own SERVER 1 PLAY player.
+    expect(res.body.chosen).toBe('https://rubystm.com/e/mvybg38ttztw.html');
 });
 
 test('apostrophe titles now resolve directly (jojo/frieren site slugs)', () => {
