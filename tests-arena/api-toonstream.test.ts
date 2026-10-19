@@ -170,6 +170,22 @@ test("returns exactly the sidebar trio: Play, Short, MultiQ", () => {
     expect(res.body.chosen).toBe('https://ravok.buzz/video/ec4de54f2f3afa14175e5eabfc16ce1f');
 });
 
+test('audit mode reports pass/fail per title', () => {
+    const res = runScenario({
+        query: { audit: '1', titles: 'Solo Leveling|Ghost Show', s: '1', e: '1' },
+        mocks: [{ needle: '/episode/solo-leveling-1x1/', status: 200, body: EPISODE_HTML }],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.total).toBe(2);
+    expect(res.body.passed).toBe(1);
+    const solo = res.body.results.find((r: { title: string }) => r.title === 'Solo Leveling');
+    const ghost = res.body.results.find((r: { title: string }) => r.title === 'Ghost Show');
+    expect(solo.ok).toBe(true);
+    expect(solo.servers).toBe(3);
+    expect(ghost.ok).toBe(false);
+    expect(ghost.error).toBe('no-episode');
+});
+
 test('colon-kept slugs resolve directly (Mushoku S3 live shape)', () => {
     // The site keeps ':' in newer posts:
     //   /episode/mushoku-tensei:-jobless-reincarnation-3x1/

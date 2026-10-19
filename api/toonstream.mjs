@@ -312,6 +312,54 @@ async function handler(req, res) {
   const season = String(Math.max(1, parseInt(String(req.query.s || '1'), 10) || 1));
   const episode = String(Math.max(1, parseInt(String(req.query.e || '1'), 10) || 1));
   const debug = req.query.debug === '1';
+  if (String(req.query.audit || '') === '1') {
+    // Catalog audit: resolve one episode for many titles in parallel and
+    // report a compact pass/fail list. Used to find anime the site has but
+    // our chain misses, so regressions show up as data instead of guesses.
+    const list = String(req.query.titles || '')
+      .split('|')
+      .map((t) => t.trim())
+      .filter(Boolean)
+      .slice(0, 40);
+    if (!list.length) {
+      res.status(400).json({ ok: false, error: 'missing-titles' });
+      return;
+    }
+    const results = [];
+    let cursor = 0;
+    const worker = async () => {
+      while (cursor < list.length) {
+        const t = list[cursor++];
+        try {
+          const f = await resolveEpisode({ title: t, slug: '', season, episode }, []);
+          if (!f) {
+            results.push({ title: t, ok: false, error: 'no-episode' });
+            continue;
+          }
+          const srv = extractSiteServers(f.html);
+          results.push({
+            title: t,
+            ok: srv.length > 0,
+            ...(srv.length ? { via: f.via, servers: srv.length } : { error: 'no-servers' }),
+            ...(srv.length ? {} : { url: f.episodeUrl }),
+          });
+        } catch (err) {
+          results.push({ title: t, ok: false, error: String((err && err.message) || 'failed').slice(0, 60) });
+        }
+      }
+    };
+    await Promise.all([worker(), worker(), worker(), worker(), worker()]);
+    results.sort((a, b) => list.indexOf(a.title) - list.indexOf(b.title));
+    res.status(200).json({
+      ok: true,
+      s: Number(season),
+      e: Number(episode),
+      passed: results.filter((r) => r.ok).length,
+      total: results.length,
+      results,
+    });
+    return;
+  }
   if (!title) {
     res.status(400).json({ ok: false, error: 'missing-title' });
     return;
