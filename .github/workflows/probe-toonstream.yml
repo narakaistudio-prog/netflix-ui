@@ -48,6 +48,11 @@ jobs:
       - name: Summarise seasons
         run: node tmp-probe/probe.mjs
 
+      - name: Harvest with ToonStream season layout
+        run: |
+          node scripts/harvest-toonstream-drops.mjs
+          node scripts/harvest-toonstream-drops.mjs --from-state --check
+
       - name: Commit the raw pages for local parsing
         run: |
           mkdir -p tmp-probe
@@ -60,7 +65,7 @@ jobs:
           ls -l tmp-probe
           git config user.name 'netflix-catalog-bot'
           git config user.email 'netflix-catalog-bot@users.noreply.github.com'
-          git add tmp-probe
+          git add tmp-probe data/toonstream-drops.json assets/crunchyroll/crunchyroll.html
           git commit -m 'chore: capture toonstream pages' || true
           git pull --rebase origin ${GITHUB_REF_NAME}
           git push origin HEAD:${GITHUB_REF_NAME}

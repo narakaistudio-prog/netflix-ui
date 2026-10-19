@@ -131,41 +131,58 @@ test('Nxsha search results parse and match by full title only', () => {
     expect(parsed.block).toContain('"season":2');
 });
 
-test('the whole Nxsha guide is baked when the season numbers disagree (Ranma case)', () => {
+test('ToonStream decides the seasons; Nxsha only fills the metadata', () => {
     const code = `
         const mod = await import(${JSON.stringify(new URL(`file://${join(ROOT, 'scripts', 'harvest-toonstream-drops.mjs')}`).href)});
-        const season1 = {
-          season: { season_number: 1, episode_count: 36, name: 'Season 1' },
+        const seriesHtml = [
+          '<a class="season-btn active" data-season="1" data-url="/series/ranma1-2/season/1">Season 1</a>',
+          '<a class="season-btn" data-season="2" data-url="/series/ranma1-2/season/2">Season 2</a>',
+          '<a class="season-btn" data-season="3" data-url="/series/ranma1-2/season/3">Season 3</a>',
+        ].join('');
+        const seasonPage = Array.from({ length: 12 }, (_, i) => '<a href="/episode/ranma1-2-2x' + (i + 1) + '/">x</a>').join('');
+        const nxMerged = {
+          season: { season_number: 1, episode_count: 36 },
           episodes: Array.from({ length: 36 }, (_, i) => ({
             episode_number: i + 1,
-            name: i === 14 ? 'Chestnuts Roasting on an Open Fire' : 'Episode ' + (i + 1),
+            name: i === 24 ? 'Kunoichi and the Pig' : 'Episode ' + (i + 1),
             overview: 'Over ' + (i + 1),
             still_path: '/still' + (i + 1) + '.jpg',
-            air_date: i < 12 ? '2024-10-' + String(i + 1).padStart(2, '0') : '2025-10-' + String(i - 11).padStart(2, '0'),
+            air_date: '2025-10-' + String((i % 28) + 1).padStart(2, '0'),
             runtime: 23,
           })),
         };
-        const season2 = { season: { season_number: 2, episode_count: 50, name: 'Season 2' }, episodes: Array.from({ length: 50 }, (_, i) => ({ episode_number: i + 1, name: 'B' + (i + 1), still_path: '/b' + i + '.jpg', air_date: '2022-01-01', runtime: 24 })) };
-        // Ranma's ToonStream drop is "S3"; Nxsha only has one merged season.
-        const ranma = mod.buildShowGuide([season1], mod.pickGuideSeason([season1], 3, 'Ranma1/2'));
-        // A dub of a long-running show must not jump to its newest spin-off season.
-        const dub = mod.buildShowGuide([season2, season1], mod.pickGuideSeason([season2, season1], 2, 'Bleach Dub'));
+        const nxSplit = [
+          { season: { season_number: 1 }, episodes: Array.from({ length: 12 }, (_, i) => ({ episode_number: i + 1, name: 'S1E' + (i + 1) })) },
+          { season: { season_number: 2 }, episodes: Array.from({ length: 12 }, (_, i) => ({ episode_number: i + 1, name: 'S2E' + (i + 1) })) },
+        ];
+        // Ranma: ToonStream 12 + 12 + 3, Nxsha one merged 36-episode season.
+        const merged = mod.buildShowGuide([{ n: 1, count: 12 }, { n: 2, count: 12 }, { n: 3, count: 3 }], [nxMerged]);
+        // Elusive Samurai: both carry real seasons with matching counts.
+        const split = mod.buildShowGuide([{ n: 1, count: 12 }, { n: 2, count: 11 }], nxSplit);
         console.log(JSON.stringify({
-          variants: mod.titleVariants('Bleach Dub'),
-          ranma,
-          dubSeason: Object.keys(dub.guide || {}),
-          ranmaEp15: ranma.guide['1']['15'],
-          ranmaCount: ranma.seasons['1'],
+          slug: mod.seriesSlugFromEpisode('https://toonstream.us/episode/ranma1-2-3x3/'),
+          jojo: mod.seriesSlugFromEpisode("https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/"),
+          seasons: mod.parseToonSeasons(seriesHtml),
+          eps: mod.parseSeasonEpisodes(seasonPage),
+          merged,
+          split,
         }));
     `;
     const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
-    expect(parsed.variants).toEqual(['Bleach Dub', 'Bleach']);
-    // The merged Nxsha season carries all 36 episodes, with the real stills.
-    expect(parsed.ranmaCount).toBe(36);
-    expect(parsed.ranma.mappedSeason).toBe(1);
-    expect(parsed.ranmaEp15.title).toBe('Chestnuts Roasting on an Open Fire');
-    expect(parsed.ranmaEp15.image).toContain('still15.jpg');
-    // A "Dub" drop opens season 1 even though ToonStream calls it season 2.
-    expect(parsed.dubSeason[0]).toBe('1');
-    expect(parsed.dubSeason).toContain('2');
+    expect(parsed.slug).toBe('ranma1-2');
+    expect(parsed.jojo).toBe("jojo's-bizarre-adventure");
+    expect(parsed.seasons.map((s: any) => s.n)).toEqual([1, 2, 3]);
+    expect(parsed.eps).toEqual({ count: 12, missing: [] });
+
+    // ToonStream's own counts, never Nxsha's merged 36.
+    expect(parsed.merged.seasons).toEqual({ 1: 12, 2: 12, 3: 3 });
+    // S3 of ToonStream starts at Nxsha episode 25 (12 + 12 offset).
+    expect(parsed.merged.nxMap['3']).toEqual({ season: 1, base: 24 });
+    expect(parsed.merged.guide['3']['1'].title).toBe('Kunoichi and the Pig');
+    expect(parsed.merged.guide['3']['1'].image).toContain('still25.jpg');
+    expect(parsed.merged.guide['2']['12'].title).toBe('Episode 24');
+
+    // When Nxsha carries the same seasons, the numbers map one-to-one.
+    expect(parsed.split.nxMap['2']).toEqual({ season: 2, base: 0 });
+    expect(parsed.split.guide['2']['11'].title).toBe('S2E11');
 });
