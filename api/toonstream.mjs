@@ -55,7 +55,10 @@ async function getText(url, steps, label) {
   });
   const text = await res.text();
   if (steps) steps.push({ step: label, status: res.status, ms: Date.now() - started });
-  return { status: res.status, text };
+  const frameBlocked =
+    res.headers.has('x-frame-options') ||
+    /frame-ancestors/i.test(String(res.headers.get('content-security-policy') || ''));
+  return { status: res.status, text, frameBlocked };
 }
 
 /** "Kaiju No. 8!" -> "kaiju-no-8" — the site's own slug rule. */
@@ -165,7 +168,7 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   const direct = `${BASE}/episode/${titleSlug(slug || title)}-${season}x${episode}/`;
   let page = await getText(direct, steps, 'episode-direct');
   if (page.status === 200) {
-    return { episodeUrl: direct, html: page.text, via: 'direct' };
+    return { episodeUrl: direct, html: page.text, via: 'direct', frameBlocked: !!page.frameBlocked };
   }
 
   const search = await getText(`${BASE}/?s=${encodeURIComponent(title)}`, steps, 'search');
@@ -242,6 +245,9 @@ async function handler(req, res) {
       return;
     }
 
+    if (String(req.query.raw || '') === '1') {
+      return res.status(200).json({ ok: true, raw: found.html.slice(0, 300000) });
+    }
     const embeds = extractIframes(found.html);
     const servers = extractServers(found.html);
     const chosen = pickEmbed(embeds);
