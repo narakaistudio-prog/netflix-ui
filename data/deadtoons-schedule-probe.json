@@ -1,24 +1,24 @@
 {
-  "generated": "2026-10-19T13:49:10.126Z",
+  "generated": "2026-10-19T14:23:40.133Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
       "url": "https://deadtoons.sbs/schedule",
       "status": 200,
-      "bytes": 133453,
+      "bytes": 133922,
       "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792417748387",
+      "url": "https://deadtoons.sbs/schedule?v=1792419818634",
       "status": 200,
-      "bytes": 133453,
+      "bytes": 133922,
       "label": "fresh"
     }
   ],
   "site": {
     "url": "https://deadtoons.sbs/schedule",
     "status": 200,
-    "bytes": 133453,
+    "bytes": 133922,
     "markers": [
       "S1 · Episode",
       "Episode",
@@ -39,8 +39,8 @@
       "/completed",
       "/request",
       "/posts/rise-of-anshaks-heroes-of-destiny-season-1-2026",
-      "/posts/marvel-s-the-punisher-season-2-2019",
       "/posts/grand-blue-dreaming-season-3-2026",
+      "/posts/marvel-s-the-punisher-season-2-2019",
       "/posts/liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
       "/posts/jojo-s-bizarre-adventure-season-4-2018",
       "/posts/attack-on-titan-season-3-2018",
@@ -62,8 +62,8 @@
     "images": [
       "/logo.png",
       "https://media.deadbase.host/w154/61f9b425-9739-4ed8-abad-85a09e039dfc.webp",
-      "https://image.tmdb.org/t/p/w154/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
       "https://image.tmdb.org/t/p/w154/1eZ3m7ByxNHoCEuF9sB2TVb7wDf.jpg",
+      "https://image.tmdb.org/t/p/w154/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
       "https://image.tmdb.org/t/p/w154/gbZmmfrAPhKw7buPq2IInJQRxPb.jpg",
       "https://image.tmdb.org/t/p/w154/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
       "https://image.tmdb.org/t/p/w154/ynow2o9v0G341PLv1chCRDufCgc.jpg",
@@ -75,10 +75,10 @@
       "/join-telegram.png"
     ],
     "episodeHits": 12,
-    "upcomingAt": 37289,
+    "upcomingAt": 37752,
     "rawHead": "<!DOCTYPE html><html lang=\"en\" class=\"changa_636d5c62-module__VB_YLW__variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/logo.png\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/40c3zvtsqh2jc.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/0iq1i69206cyl.js\"/><script src=\"/_next/static/chunks/27jktro2p5rq9.js\" async=\"\"></script><script src=\"/_next/static/chunks/07u_h6i539_wj.js\" async=\"\"></script><script src=\"/_next/static/chunks/0iec5q4ack_04.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-12dm4pjgasbr9.js\" async=\"\"></script><script src=\"/_next/static/chunks/0-jgp_eix67-2.js\" async=\"\"></script><script src=\"/_next/static/chunks/14mrh2-p_w84d.js\" async=\"\"></script><script src=\"/_next/static/chunks/11utg6uw0p4sh.js\" async=\"\"></script><script src=\"/_next/static/chunks/02fdl-fsfzdvm.js\" async=\"\"></script><meta name=\"next-size-adjust\" content=\"\"/><title>Release Schedule | Deadtoons | Deadtoons</title><meta name=\"description\" content=\"Deadtoons — anime and cartoons dubbed in Hindi, Tamil, Telugu.\"/><link rel=\"icon\" href=\"/favicon.ico?favicon.12dnovj88pkao.ico\" sizes=\"48x48\" type=\"image/x-icon\"/><link rel=\"icon\" href=\"/icon.png?icon.1iqhzz-cn-5js.png\" sizes=\"180x180\" type=\"image/p",
     "rawBody": " , 720p \\u0026 1080p | 10Bit\\\"}]}],[\\\"$\\\",\\\"li\\\",\\\"bleach-season-2-2004\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/bleach-season-2-2004\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Bleach Season 2 (2005) Dual Audio [Hindi-Japanese] WEB-DL 720p | 10Bit HEVC\\\"}]}],\\\"$L36\\\",\\\"$L37\\\",\\\"$L38\\\"]}]]}]]}]\\n\"])</script><script>self.__next_f.push([1,\"36:[\\\"$\\\",\\\"li\\\",\\\"black-clover-2017-season-02-hindi-dubbed-by-anime-booth\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Black Clover (2017) Season 02 - 04 Dual Audio [English-Japanese] 1080p 10Bit WEB-DL HD\\\"}]}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Doraemon the Movie: New Nobita and the Castle of the Undersea Devil (2026) Dual Audio [HIndi \\u0026 Tamil line - Japanese 5.1] BluRay 480p , 720p \\u0026 1080p | 10Bit\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"overgeared-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/overgeared-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Overgeared Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-English-Japanese]  480p, 720p \\u0026 1080p HD | 10bit HEVC\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092\" integrity=\"sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
-    "payloadAt": 47674,
+    "payloadAt": 48137,
     "payloadKeys": [
       "crossOrigin",
       "type",
@@ -139,7 +139,7 @@
     },
     {
       "label": "fresh",
-      "url": "https://deadtoons.sbs/schedule?v=1792417748387",
+      "url": "https://deadtoons.sbs/schedule?v=1792419818634",
       "cards": 14,
       "today": 8,
       "first": "",
@@ -156,18 +156,18 @@
   "unresolved": 3,
   "guides": [
     {
-      "title": "Marvel's The Punisher",
-      "key": "marvelsthepunisher",
-      "id": "67178",
-      "season": 2,
-      "episodes": 13
-    },
-    {
       "title": "Grand Blue Dreaming",
       "key": "grandbluedreaming",
       "id": "79166",
       "season": 3,
       "episodes": 12
+    },
+    {
+      "title": "Marvel's The Punisher",
+      "key": "marvelsthepunisher",
+      "id": "67178",
+      "season": 2,
+      "episodes": 13
     },
     {
       "title": "LIAR GAME",
@@ -208,20 +208,6 @@
   "guidesSkipped": 1,
   "items": [
     {
-      "title": "Marvel's The Punisher",
-      "season": 2,
-      "episode": 5,
-      "today": true,
-      "nx": {
-        "id": "67178",
-        "kind": "tv",
-        "seasons": {
-          "2": 2
-        },
-        "from": "wikidata-tmdb"
-      }
-    },
-    {
       "title": "Grand Blue Dreaming",
       "season": 3,
       "episode": 8,
@@ -231,6 +217,20 @@
         "kind": "tv",
         "seasons": {
           "3": 8
+        },
+        "from": "wikidata-tmdb"
+      }
+    },
+    {
+      "title": "Marvel's The Punisher",
+      "season": 2,
+      "episode": 5,
+      "today": true,
+      "nx": {
+        "id": "67178",
+        "kind": "tv",
+        "seasons": {
+          "2": 2
         },
         "from": "wikidata-tmdb"
       }
@@ -354,6 +354,19 @@
     },
     {
       "poster": true,
+      "alt": "Grand Blue Dreaming",
+      "href": "/posts/grand-blue-dreaming-season-3-2026",
+      "slug": "grand-blue-dreaming-season-3-2026",
+      "title": "Grand Blue Dreaming",
+      "today": true,
+      "season": 3,
+      "episode": 8,
+      "time": "",
+      "date": "2026-10-19",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
       "alt": "Marvel's The Punisher",
       "href": "/posts/marvel-s-the-punisher-season-2-2019",
       "slug": "marvel-s-the-punisher-season-2-2019",
@@ -362,19 +375,6 @@
       "season": 2,
       "episode": 5,
       "time": "2:22 PM",
-      "date": "2026-10-19",
-      "reason": "ok"
-    },
-    {
-      "poster": true,
-      "alt": "Grand Blue Dreaming",
-      "href": "/posts/grand-blue-dreaming-season-3-2026",
-      "slug": "grand-blue-dreaming-season-3-2026",
-      "title": "Grand Blue Dreaming",
-      "today": true,
-      "season": 3,
-      "episode": 8,
-      "time": "3:23 PM",
       "date": "2026-10-19",
       "reason": "ok"
     },
