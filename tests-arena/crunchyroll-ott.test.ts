@@ -35,8 +35,8 @@ test('Crunchyroll player exposes Nxsha as its only playback source', () => {
     expect(html).toContain('id="noticeList"');
     expect(html).toContain('RESUME_KEY');
     expect(html).toContain('var PLAYER_DEFAULT_SERVER=0;');
-    expect(html).not.toContain('Server 1');
-    expect(html).not.toContain('Server 2');
+    // Server 2 (ToonStream) is now a feature (user-requested); Server 3 and the
+    // old dead providers stay out.
     expect(html).not.toContain('Server 3');
     expect(html).not.toContain('animahd.com');
     expect(html).not.toContain('drive.google.com');
@@ -258,8 +258,12 @@ test('Nxsha remains sandboxed, fullscreen-enabled, and has no alternate server c
     expect(html).toContain('Player frozen? Tap here to reload');
     expect(html).toContain('fsExitWatch');
     expect(html).toContain('fsExitArmed');
-    expect(html).not.toContain('Server 1');
-    expect(html).not.toContain('Server 2');
+    // Server 2 (ToonStream) is the user-requested second source: one switch
+    // button in the watch row plus the Nxsha way back — still no fullscreen
+    // tampering and no pill strip.
+    expect(html).toContain('id="tsServerBtn"');
+    expect(html).toContain('id="nxServerBtn"');
+    expect(html).toContain("serverName.textContent='ToonStream \u00b7 toonstream.us'");
 });
 
 test('fullscreen support is unchanged for the driver shell', () => {

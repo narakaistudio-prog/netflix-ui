@@ -18,8 +18,10 @@ test('Nxsha is the sole locked provider and the default player', () => {
     expect(html).toContain("https://nxsha.space/embed/");
     expect(html).not.toContain('animahd.com');
     expect(html).not.toContain('drive.google.com');
-    expect(html).not.toContain('Server 1');
-    expect(html).not.toContain('Server 2');
+    // Server 2 (ToonStream) is the user-requested second source now; Nxsha
+    // stays the locked default (SERVERS/PLAYER_DEFAULT_SERVER above).
+    expect(html).toContain('id="tsServerBtn"');
+    expect(html).toContain('id="nxServerBtn"');
     expect(html).not.toContain('Server 3');
     expect(html).not.toContain('nextServer(');
     expect(html).not.toContain('noticeAlt');
