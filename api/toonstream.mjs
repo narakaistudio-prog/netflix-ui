@@ -330,6 +330,30 @@ async function handler(req, res) {
       const b64 = Buffer.from([...new Set(wins)].join('\n~~~\n')).toString('base64');
       return res.status(200).json({ ok: true, frameBlocked: !!found.frameBlocked, sB64, b64 });
     }
+    if (String(req.query.raw || '') === '1x') {
+      // Structured debug: every player slot, every named row, every script
+      // that could build the client-side sidebar, plus our own picks.
+      const opts = [];
+      for (const m of found.html.matchAll(/<div[^>]*id="options-(\d+)"[^>]*>/gi)) {
+        const seg = found.html.slice(m.index, Math.min(found.html.length, m.index + 2500));
+        const f = seg.match(/(?:data-src|src)="(https?:\/\/[^"]+)"/i);
+        opts.push({ s: parseInt(m[1], 10), on: /class="[^"]*\bon\b/.test(m[0]), u: f ? f[1] : null });
+      }
+      const rows = extractServerNames(found.html);
+      const scripts = [];
+      for (const m of found.html.matchAll(/<script([^>]*)>([\s\S]{0,80000}?)<\/script>/gi)) {
+        const attrs = m[1] || '';
+        const body = m[2] || '';
+        if (attrs.includes('src=')) {
+          const sm = attrs.match(/src="([^"]+)"/);
+          if (sm && /custom|server|player|torofill|single/i.test(sm[1])) scripts.push({ ext: sm[1] });
+        } else if (/options-|SERVER 1|aa-tb|switchS|playS|serverList|hex-number/i.test(body)) {
+          scripts.push({ inline: body.slice(0, 9000) });
+        }
+      }
+      const b64 = Buffer.from(JSON.stringify({ opts, rows, scripts: scripts.slice(0, 8), mine: extractSiteServers(found.html) })).toString('base64');
+      return res.status(200).json({ ok: true, b64 });
+    }
     const embeds = extractIframes(found.html);
     // Only the site's first three servers (SERVER 1/2/3 in the sidebar),
     // named from the page's own server list - everything else is dropped.
