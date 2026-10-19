@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T10:49:56.884Z",
+  "generatedAt": "2026-10-19T04:40:17.965Z",
   "titles": [
     {
       "key": "aot",
@@ -4943,11 +4943,11 @@
       "label": "robots",
       "url": "https://nxsha.space/robots.txt",
       "status": 200,
-      "bytes": 1248,
+      "bytes": 2676,
       "docTitle": "",
       "sample": [],
       "ordinals": [],
-      "snippet": "# As a condition of accessing this website, you agree to abide by the following # content signals: # (a) If a content-signal = yes, you may collect content for the corresponding # use. # (b) If a content-signal = no, you may not collect content for the # corresponding use. # (c) If the website opera"
+      "snippet": "# As a condition of accessing this website, you agree to abide by the following # content signals: # (a) If a Content-Signal = yes, you may collect content for the corresponding # use. # (b) If a Content-Signal = no, you may not collect content for the # corresponding use. # (c) If the website opera"
     },
     {
       "label": "sitemap",
@@ -4988,7 +4988,7 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 87492,
+      "bytes": 87991,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
         "https://web.nxsha.app/movie/1441228",

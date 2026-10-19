@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-18T10:49:56.810Z",
+    "generatedAt": "2026-10-19T04:40:17.885Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
@@ -21437,7 +21437,7 @@
           "episode": 20,
           "title": "Wilhelm van Astrea",
           "overview": "Subaru has devoted everything he had, and done all he could do. His passion has captured Crusch’s heart, as well as Anastasia’s cooperation, and they all enter into the battle against the White Whale together.",
-          "image": "https://image.tmdb.org/t/p/w780/bOZawhtbkDPrHfN3Lf04yPsDEJL.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/ctSXTUu8BFvibyAryGG1u8mRKU3.jpg",
           "airDate": "2016-08-15",
           "runtime": 25
         },
@@ -21995,7 +21995,7 @@
           "episode": 82,
           "title": "Natsuki Subaru",
           "overview": "With his mental state already in tatters, Subaru finds a book in the archive with his name on it.",
-          "image": "https://image.tmdb.org/t/p/w780/h8ifWfX5xrjZtb0uC1LzrK1m0AD.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/wurgMlhqOlCbOWnff4vxRk4L2gF.jpg",
           "airDate": "2026-09-09",
           "runtime": 27
         },
