@@ -90,6 +90,8 @@ test('titleSlug follows the site rule (verified against live URLs)', () => {
             ['titleSlug', ['Ranma1/2']],
             ['titleSlug', ["JoJo's Bizarre Adventure"]],
             ['titleSlug', ['Frieren: Beyond Journey\u2019s End']],
+            ['titleSlug', ['Mushoku Tensei: Jobless Reincarnation']],
+            ['titleSlug', ['Mushoku Tensei: Jobless Reincarnation', true]],
         ],
     });
     expect(results).toEqual([
@@ -99,6 +101,8 @@ test('titleSlug follows the site rule (verified against live URLs)', () => {
         'ranma1-2',
         'jojos-bizarre-adventure',
         'frieren-beyond-journeys-end',
+        'mushoku-tensei-jobless-reincarnation',
+        'mushoku-tensei:-jobless-reincarnation',
     ]);
 });
 
