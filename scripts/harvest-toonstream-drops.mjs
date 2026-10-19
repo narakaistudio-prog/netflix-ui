@@ -39,14 +39,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
 import { decodeEntities, titleKey, titleVariants } from './lib/text.mjs';
-import {
-    buildSeasonMap,
-    nxEpisodes,
-    nxSeasonNumber,
-    parseSeasonEpisodes,
-    parseToonSeasons,
-    seriesSlugFromEpisode,
-} from './lib/seasons.mjs';
+import { buildSeasonMap, compactPlan, nxEpisodes, nxSeasonNumber, parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode } from './lib/seasons.mjs';
 export { parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode };
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
