@@ -1,24 +1,24 @@
 {
-  "generated": "2026-10-18T08:26:13.488Z",
+  "generated": "2026-10-19T04:36:39.780Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
       "url": "https://deadtoons.sbs/schedule",
       "status": 200,
-      "bytes": 126379,
+      "bytes": 132426,
       "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792311971733",
+      "url": "https://deadtoons.sbs/schedule?v=1792384598581",
       "status": 200,
-      "bytes": 126379,
+      "bytes": 132426,
       "label": "fresh"
     }
   ],
   "site": {
     "url": "https://deadtoons.sbs/schedule",
     "status": 200,
-    "bytes": 126379,
+    "bytes": 132426,
     "markers": [
       "S1 · Episode",
       "Episode",
@@ -38,21 +38,21 @@
       "/schedule",
       "/completed",
       "/request",
-      "/posts/blue-box-season-2-2026",
-      "/posts/rise-of-anshaks-heroes-of-destiny-season-1-2026",
       "/posts/marvel-s-the-punisher-season-2-2019",
-      "/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
-      "/posts/overgeared-season-1-2026",
-      "/posts/dragon-ball-super-beerus-season-1-2026",
+      "/posts/grand-blue-dreaming-season-3-2026",
+      "/posts/liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
       "/posts/jojo-s-bizarre-adventure-season-4-2018",
+      "/posts/attack-on-titan-season-3-2018",
       "https://t.me/+jZNbckjV9xE0NWM0",
       "/posts/tomb-raider-king-season-1-multi-audio-hindi-tamil-telugu-eng-kor-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
       "/posts/black-clover-season-5-2026",
       "/posts/that-time-i-got-reincarnated-as-a-slime-2026-season-04-dubbed-by-muse-india-multi-audio-hindi-english-japanese",
       "/posts/black-torch-season-1-2026",
-      "/posts/doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie",
-      "/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth",
       "/posts/bleach-season-2-2004",
+      "/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth",
+      "/posts/dragon-ball-super-beerus-season-1-2026",
+      "/posts/doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie",
       "/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026",
       "/dmca",
       "/about",
@@ -60,13 +60,11 @@
     ],
     "images": [
       "/logo.png",
-      "https://image.tmdb.org/t/p/w154/drOaLQ4E4KlrZcz9GBCQqybHnif.jpg",
-      "https://media.deadbase.host/w154/61f9b425-9739-4ed8-abad-85a09e039dfc.webp",
       "https://image.tmdb.org/t/p/w154/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
-      "https://image.tmdb.org/t/p/w154/tn2mxPYSSUPHgfcAe5SCga1DO0i.jpg",
-      "https://image.tmdb.org/t/p/w154/94GLmulA9qVGsuo9kLpVKi01E2Z.jpg",
-      "https://image.tmdb.org/t/p/w154/sGuCmIy8kEmx3FWZyMj654rF6g8.jpg",
+      "https://image.tmdb.org/t/p/w154/1eZ3m7ByxNHoCEuF9sB2TVb7wDf.jpg",
+      "https://image.tmdb.org/t/p/w154/gbZmmfrAPhKw7buPq2IInJQRxPb.jpg",
       "https://image.tmdb.org/t/p/w154/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
+      "https://image.tmdb.org/t/p/w154/ynow2o9v0G341PLv1chCRDufCgc.jpg",
       "https://image.tmdb.org/t/p/w154/qHyvpoxaJKpYRlYPfD8hg8pOvhP.jpg",
       "https://image.tmdb.org/t/p/w154/3imj2VLU77bLOyJ4aPnEUlpJZDX.jpg",
       "https://image.tmdb.org/t/p/w154/gob5oouCFv74rO3MaVAm3hKqc7r.jpg",
@@ -74,11 +72,11 @@
       "https://image.tmdb.org/t/p/w154/Auw2NxgGThu6XAO2pyRoipMIDHG.jpg",
       "/join-telegram.png"
     ],
-    "episodeHits": 12,
-    "upcomingAt": 36852,
+    "episodeHits": 11,
+    "upcomingAt": 35998,
     "rawHead": "<!DOCTYPE html><html lang=\"en\" class=\"changa_636d5c62-module__VB_YLW__variable\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/1d1eb858b80e72fc-s.p.3afc2xcr41qo7.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" href=\"/logo.png\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/40c3zvtsqh2jc.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/0iq1i69206cyl.js\"/><script src=\"/_next/static/chunks/27jktro2p5rq9.js\" async=\"\"></script><script src=\"/_next/static/chunks/07u_h6i539_wj.js\" async=\"\"></script><script src=\"/_next/static/chunks/0iec5q4ack_04.js\" async=\"\"></script><script src=\"/_next/static/chunks/turbopack-12dm4pjgasbr9.js\" async=\"\"></script><script src=\"/_next/static/chunks/0-jgp_eix67-2.js\" async=\"\"></script><script src=\"/_next/static/chunks/14mrh2-p_w84d.js\" async=\"\"></script><script src=\"/_next/static/chunks/11utg6uw0p4sh.js\" async=\"\"></script><script src=\"/_next/static/chunks/02fdl-fsfzdvm.js\" async=\"\"></script><meta name=\"next-size-adjust\" content=\"\"/><title>Release Schedule | Deadtoons | Deadtoons</title><meta name=\"description\" content=\"Deadtoons — anime and cartoons dubbed in Hindi, Tamil, Telugu.\"/><link rel=\"icon\" href=\"/favicon.ico?favicon.12dnovj88pkao.ico\" sizes=\"48x48\" type=\"image/x-icon\"/><link rel=\"icon\" href=\"/icon.png?icon.1iqhzz-cn-5js.png\" sizes=\"180x180\" type=\"image/p",
-    "rawBody": "0p | 10Bit\\\"}]}],[\\\"$\\\",\\\"li\\\",\\\"black-clover-2017-season-02-hindi-dubbed-by-anime-booth\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/black-clover-2017-season-02-hindi-dubbed-by-anime-booth\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Black Clover (2017) Season 02 - 04 Dual Audio [English-Japanese] 1080p 10Bit WEB-DL HD\\\"}]}],\\\"$L36\\\",\\\"$L37\\\",\\\"$L38\\\"]}]]}]]}]\\n\"])</script><script>self.__next_f.push([1,\"36:[\\\"$\\\",\\\"li\\\",\\\"bleach-season-2-2004\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/bleach-season-2-2004\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Bleach Season 2 (2005) Dual Audio [Hindi-Japanese] WEB-DL 720p | 10Bit HEVC\\\"}]}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"dragon-ball-super-beerus-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/dragon-ball-super-beerus-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Dragon Ball Super: Beerus Season 1 (2026) Japanese Audio English Subbed 480p , 720p \\u0026 1080p | 10Bit\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092\" integrity=\"sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
-    "payloadAt": 47343,
+    "rawBody": "className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Black Clover (2017) Season 02 - 04 Dual Audio [English-Japanese] 1080p 10Bit WEB-DL HD\\\"}]}],\\\"$L36\\\",\\\"$L37\\\",\\\"$L38\\\"]}]]}]]}]\\n\"])</script><script>self.__next_f.push([1,\"36:[\\\"$\\\",\\\"li\\\",\\\"dragon-ball-super-beerus-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/dragon-ball-super-beerus-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Dragon Ball Super: Beerus Season 1 (2026) Japanese Audio English Subbed 480p , 720p \\u0026 1080p | 10Bit\\\"}]}]\\n37:[\\\"$\\\",\\\"li\\\",\\\"doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/doraemon-the-movie-new-nobita-and-the-castle-of-the-undersea-devil-2026-movie\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"Doraemon the Movie: New Nobita and the Castle of the Undersea Devil (2026) Dual Audio [HIndi \\u0026 Tamil line - Japanese 5.1] BluRay 480p , 720p \\u0026 1080p | 10Bit\\\"}]}]\\n38:[\\\"$\\\",\\\"li\\\",\\\"the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",{\\\"children\\\":[\\\"$\\\",\\\"$L2d\\\",null,{\\\"href\\\":\\\"/posts/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-season-1-2026\\\",\\\"className\\\":\\\"text-sm text-accent hover:underline leading-snug block\\\",\\\"children\\\":\\\"The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life Season 1 (2026) Multi Audio [Hindi-Tamil-Telugu-Eng-Jap] 480p, 720p \\u0026 1080p HD WEB-DL | 10bit HEVC ESub\\\"}]}]\\n\"])</script><script type=\"module\" src=\"https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092\" integrity=\"sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4b824c1ae11d46888df1efd63940a9be\",\"r\":1,\"spa\":2}' crossorigin=\"anonymous\"></script>\n</body></html>",
+    "payloadAt": 46489,
     "payloadKeys": [
       "crossOrigin",
       "type",
@@ -126,10 +124,10 @@
     {
       "label": "plain",
       "url": "https://deadtoons.sbs/schedule",
-      "cards": 14,
-      "today": 8,
+      "cards": 13,
+      "today": 7,
       "first": "",
-      "last": "5:30 PM",
+      "last": "6:16 PM",
       "headers": [
         [
           "vary",
@@ -139,11 +137,11 @@
     },
     {
       "label": "fresh",
-      "url": "https://deadtoons.sbs/schedule?v=1792311971733",
-      "cards": 14,
-      "today": 8,
+      "url": "https://deadtoons.sbs/schedule?v=1792384598581",
+      "cards": 13,
+      "today": 7,
       "first": "",
-      "last": "5:30 PM",
+      "last": "6:16 PM",
       "headers": [
         [
           "vary",
@@ -153,16 +151,9 @@
     }
   ],
   "resolution": [],
-  "resolved": 10,
+  "resolved": 8,
   "unresolved": 2,
   "guides": [
-    {
-      "title": "Blue Box",
-      "key": "bluebox",
-      "id": "207347",
-      "season": 2,
-      "error": "HTTP 404"
-    },
     {
       "title": "Marvel's The Punisher",
       "key": "marvelsthepunisher",
@@ -171,18 +162,18 @@
       "episodes": 13
     },
     {
-      "title": "Overgeared",
-      "key": "overgeared",
-      "id": "324502",
-      "season": 1,
+      "title": "Grand Blue Dreaming",
+      "key": "grandbluedreaming",
+      "id": "79166",
+      "season": 3,
       "episodes": 12
     },
     {
-      "title": "Dragon Ball Super: Beerus",
-      "key": "dragonballsuperbeerus",
-      "id": "312359",
+      "title": "LIAR GAME",
+      "key": "liargame",
+      "id": "13967",
       "season": 1,
-      "episodes": 19
+      "episodes": 11
     },
     {
       "title": "PSYREN",
@@ -213,26 +204,12 @@
       "episodes": 12
     }
   ],
-  "guidesSkipped": 2,
+  "guidesSkipped": 1,
   "items": [
-    {
-      "title": "Blue Box",
-      "season": 2,
-      "episode": 3,
-      "today": true,
-      "nx": {
-        "id": "207347",
-        "kind": "tv",
-        "seasons": {
-          "2": 3
-        },
-        "from": "wikidata-tmdb"
-      }
-    },
     {
       "title": "Marvel's The Punisher",
       "season": 2,
-      "episode": 4,
+      "episode": 5,
       "today": true,
       "nx": {
         "id": "67178",
@@ -244,45 +221,29 @@
       }
     },
     {
-      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "title": "Grand Blue Dreaming",
       "season": 3,
       "episode": 8,
       "today": true,
       "nx": {
-        "id": "94664",
+        "id": "79166",
         "kind": "tv",
         "seasons": {
-          "1": 23,
-          "2": 24,
-          "3": 14
-        },
-        "from": "catalog"
-      }
-    },
-    {
-      "title": "Overgeared",
-      "season": 1,
-      "episode": 4,
-      "today": true,
-      "nx": {
-        "id": "324502",
-        "kind": "tv",
-        "seasons": {
-          "1": 4
+          "3": 8
         },
         "from": "wikidata-tmdb"
       }
     },
     {
-      "title": "Dragon Ball Super: Beerus",
+      "title": "LIAR GAME",
       "season": 1,
-      "episode": 2,
+      "episode": 26,
       "today": true,
       "nx": {
-        "id": "312359",
+        "id": "13967",
         "kind": "tv",
         "seasons": {
-          "1": 2
+          "1": 26
         },
         "from": "wikidata-tmdb"
       }
@@ -290,7 +251,7 @@
     {
       "title": "JoJo's Bizarre Adventure",
       "season": 4,
-      "episode": 8,
+      "episode": 9,
       "today": true,
       "nx": {
         "id": "45790",
@@ -374,34 +335,8 @@
       "season": null,
       "episode": null,
       "time": "",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "reason": "no season/episode"
-    },
-    {
-      "poster": true,
-      "alt": "Blue Box",
-      "href": "/posts/blue-box-season-2-2026",
-      "slug": "blue-box-season-2-2026",
-      "title": "Blue Box",
-      "today": true,
-      "season": 2,
-      "episode": 3,
-      "time": "7:00 AM",
-      "date": "2026-10-18",
-      "reason": "ok"
-    },
-    {
-      "poster": true,
-      "alt": "Rise of Anshaks: Heroes of Destiny",
-      "href": "/posts/rise-of-anshaks-heroes-of-destiny-season-1-2026",
-      "slug": "rise-of-anshaks-heroes-of-destiny-season-1-2026",
-      "title": "Rise of Anshaks: Heroes of Destiny",
-      "today": true,
-      "season": 1,
-      "episode": 2,
-      "time": "9:01 AM",
-      "date": "2026-10-18",
-      "reason": "ok"
     },
     {
       "poster": true,
@@ -411,48 +346,35 @@
       "title": "Marvel's The Punisher",
       "today": true,
       "season": 2,
-      "episode": 4,
+      "episode": 5,
       "time": "2:22 PM",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "reason": "ok"
     },
     {
       "poster": true,
-      "alt": "Mushoku Tensei: Jobless Reincarnation",
-      "href": "/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
-      "slug": "mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
-      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "alt": "Grand Blue Dreaming",
+      "href": "/posts/grand-blue-dreaming-season-3-2026",
+      "slug": "grand-blue-dreaming-season-3-2026",
+      "title": "Grand Blue Dreaming",
       "today": true,
       "season": 3,
       "episode": 8,
-      "time": "3:00 PM",
-      "date": "2026-10-18",
+      "time": "3:23 PM",
+      "date": "2026-10-19",
       "reason": "ok"
     },
     {
       "poster": true,
-      "alt": "Overgeared",
-      "href": "/posts/overgeared-season-1-2026",
-      "slug": "overgeared-season-1-2026",
-      "title": "Overgeared",
+      "alt": "LIAR GAME",
+      "href": "/posts/liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "slug": "liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "title": "LIAR GAME",
       "today": true,
       "season": 1,
-      "episode": 4,
-      "time": "3:30 PM",
-      "date": "2026-10-18",
-      "reason": "ok"
-    },
-    {
-      "poster": true,
-      "alt": "Dragon Ball Super: Beerus",
-      "href": "/posts/dragon-ball-super-beerus-season-1-2026",
-      "slug": "dragon-ball-super-beerus-season-1-2026",
-      "title": "Dragon Ball Super: Beerus",
-      "today": true,
-      "season": 1,
-      "episode": 2,
-      "time": "4:29 PM",
-      "date": "2026-10-18",
+      "episode": 26,
+      "time": "5:21 PM",
+      "date": "2026-10-19",
       "reason": "ok"
     },
     {
@@ -463,10 +385,36 @@
       "title": "JoJo's Bizarre Adventure",
       "today": true,
       "season": 4,
-      "episode": 8,
+      "episode": 9,
       "time": "5:30 PM",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Attack on Titan [Muse Dub]",
+      "href": "/posts/attack-on-titan-season-3-2018",
+      "slug": "attack-on-titan-season-3-2018",
+      "title": "Attack on Titan [Muse Dub]",
+      "today": true,
+      "season": 3,
+      "episode": 7,
+      "time": "6:16 PM",
+      "date": "2026-10-19",
+      "reason": "ok"
+    },
+    {
+      "poster": true,
+      "alt": "Attack on Titan [Muse Dub]",
+      "href": "/posts/attack-on-titan-season-3-2018",
+      "slug": "attack-on-titan-season-3-2018",
+      "title": "Attack on Titan [Muse Dub]",
+      "today": true,
+      "season": 3,
+      "episode": 8,
+      "time": "6:16 PM",
+      "date": "2026-10-19",
+      "reason": "duplicate"
     },
     {
       "poster": true,

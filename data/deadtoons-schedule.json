@@ -1,30 +1,8 @@
 {
-  "updated": "2026-10-18",
+  "updated": "2026-10-19",
   "source": "https://deadtoons.sbs/schedule",
-  "today": "2026-10-18",
+  "today": "2026-10-19",
   "items": [
-    {
-      "key": "sch-blue-box-season-2-2026",
-      "title": "Blue Box",
-      "slug": "blue-box-season-2-2026",
-      "url": "https://deadtoons.sbs/posts/blue-box-season-2-2026",
-      "img": "https://image.tmdb.org/t/p/w300/drOaLQ4E4KlrZcz9GBCQqybHnif.jpg",
-      "season": 2,
-      "episode": 3,
-      "audio": "",
-      "day": "Box",
-      "date": "2026-10-18",
-      "time": "7:00 AM",
-      "today": true,
-      "nx": {
-        "id": "207347",
-        "kind": "tv",
-        "seasons": {
-          "2": 3
-        },
-        "from": "wikidata-tmdb"
-      }
-    },
     {
       "key": "sch-marvel-s-the-punisher-season-2-2019",
       "title": "Marvel's The Punisher",
@@ -32,10 +10,10 @@
       "url": "https://deadtoons.sbs/posts/marvel-s-the-punisher-season-2-2019",
       "img": "https://image.tmdb.org/t/p/w300/agNYq5XZnGfmYetUMyyM2RdPY70.jpg",
       "season": 2,
-      "episode": 4,
+      "episode": 5,
       "audio": "",
       "day": "The",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "time": "2:22 PM",
       "today": true,
       "nx": {
@@ -143,214 +121,214 @@
       }
     },
     {
-      "key": "sch-mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
-      "title": "Mushoku Tensei: Jobless Reincarnation",
-      "slug": "mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
-      "url": "https://deadtoons.sbs/posts/mushoku-tensei-jobless-reincarnation-season-3-japanese-org-esubs1080p-hevc-hd",
-      "img": "https://image.tmdb.org/t/p/w300/tn2mxPYSSUPHgfcAe5SCga1DO0i.jpg",
+      "key": "sch-grand-blue-dreaming-season-3-2026",
+      "title": "Grand Blue Dreaming",
+      "slug": "grand-blue-dreaming-season-3-2026",
+      "url": "https://deadtoons.sbs/posts/grand-blue-dreaming-season-3-2026",
+      "img": "https://image.tmdb.org/t/p/w300/1eZ3m7ByxNHoCEuF9sB2TVb7wDf.jpg",
       "season": 3,
       "episode": 8,
-      "audio": "Hindi-Eng-Jap",
-      "day": "Eng",
-      "date": "2026-10-18",
-      "time": "3:00 PM",
-      "today": true,
-      "nx": {
-        "id": "94664",
-        "kind": "tv",
-        "seasons": {
-          "1": 23,
-          "2": 24,
-          "3": 14
-        },
-        "from": "catalog"
-      }
-    },
-    {
-      "key": "sch-overgeared-season-1-2026",
-      "title": "Overgeared",
-      "slug": "overgeared-season-1-2026",
-      "url": "https://deadtoons.sbs/posts/overgeared-season-1-2026",
-      "img": "https://image.tmdb.org/t/p/w300/94GLmulA9qVGsuo9kLpVKi01E2Z.jpg",
-      "season": 1,
-      "episode": 4,
       "audio": "",
       "day": "",
-      "date": "2026-10-18",
-      "time": "3:30 PM",
+      "date": "2026-10-19",
+      "time": "3:23 PM",
       "today": true,
       "nx": {
-        "id": "324502",
+        "id": "79166",
         "kind": "tv",
         "seasons": {
-          "1": 4
+          "3": 8
         },
         "from": "wikidata-tmdb"
       },
       "guide": {
-        "1": {
+        "3": {
           "1": {
-            "title": "Legendary Class",
-            "overview": "Grid hopes to strike it rich in the VR game Satisfy. While taking on an S-Ranked quest, he discovers Pagma’s Tome.",
-            "image": "https://image.tmdb.org/t/p/w300/kcuOU2FUmy2e0FDTq9YIuY6a3DW.jpg",
-            "airDate": "2026-10-02",
+            "title": "Unfinished Business",
+            "overview": "Summer is coming to an end, and the older kids at the club want to do the things they still have left to do.",
+            "image": "https://image.tmdb.org/t/p/w300/gvv6xQ7yZUwwuJfePDNKAG8ORhb.jpg",
+            "airDate": "2026-07-07",
             "runtime": 24
           },
           "2": {
-            "title": "First Step Towards Being a Blacksmith",
-            "overview": "Grid has made a fresh start. With nowhere else to turn, he begins learning the fundamentals of blacksmithing.",
-            "image": "https://image.tmdb.org/t/p/w300/2aT5Nj4I5HQqh01nShth4tBpVqF.jpg",
-            "airDate": "2026-10-09",
+            "title": "Homecoming",
+            "overview": "Iori and the gang head to his family home to grab his passport for the upcoming trip.",
+            "image": "https://image.tmdb.org/t/p/w300/gA14c0SGmpPx8covIQAeNsgULal.jpg",
+            "airDate": "2026-07-14",
             "runtime": 24
           },
           "3": {
-            "title": "Second Class",
-            "overview": "The Mero Company sends Huroi, an Orator, to the village. There, he forcibly triggers a hidden quest...!?",
-            "image": "https://image.tmdb.org/t/p/w300/jCihvtTSgkSoEOoyPOYp6NOf7tt.jpg",
-            "airDate": "2026-10-16",
+            "title": "Saving Private Passport",
+            "overview": "Iori must navigate Shiori, the tourists, and the stalker on the loose to get his hands on his passport.",
+            "image": "https://image.tmdb.org/t/p/w300/rVTpUqFxJYBRfSgzM8M5WVVRO7Y.jpg",
+            "airDate": "2026-07-21",
             "runtime": 24
           },
           "4": {
-            "title": "Episode 4",
-            "image": "https://image.tmdb.org/t/p/w300/qlCP7ZjYhYa8wPfyeWuUDWRVies.jpg",
-            "airDate": "2026-10-23"
+            "title": "The Oceans of Palau",
+            "overview": "The group eagerly arrives in Palau, where someone they know well is waiting for them.",
+            "image": "https://image.tmdb.org/t/p/w300/6STt4f7pCSMSiUPndBjPQowxiD9.jpg",
+            "airDate": "2026-07-28",
+            "runtime": 24
           },
           "5": {
-            "title": "Episode 5",
-            "airDate": "2026-10-30"
+            "title": "TV Special",
+            "overview": "A TV crew has arrived to film a special at Dolphin, and the gang gets roped into it!",
+            "image": "https://image.tmdb.org/t/p/w300/x79wNGc845v7aNqsDTKoHoAk4vM.jpg",
+            "airDate": "2026-08-04",
+            "runtime": 24
           },
           "6": {
-            "title": "Episode 6",
-            "airDate": "2026-11-06"
+            "title": "Assist",
+            "overview": "Kohei has figured out that Aina is into Iori and decides to help her in a way only he can.",
+            "image": "https://image.tmdb.org/t/p/w300/oxd8NMs67eRxABMcPbamYQDMXd0.jpg",
+            "airDate": "2026-08-11",
+            "runtime": 24
           },
           "7": {
-            "title": "Episode 7",
-            "airDate": "2026-11-13"
+            "title": "Mother",
+            "overview": "Tensions between Chisa and her mom come to a head as they clash over her life goals.",
+            "image": "https://image.tmdb.org/t/p/w300/gDTDzXVsPJldeSZMcgXgyKeVTnm.jpg",
+            "airDate": "2026-08-18",
+            "runtime": 24
           },
           "8": {
-            "title": "Episode 8",
-            "airDate": "2026-11-20"
+            "title": "Mixer, Round 2",
+            "overview": "Back home, Iori gets caught up in the scumbros' shenanigans again, and ends up having to set up a mixer.",
+            "image": "https://image.tmdb.org/t/p/w300/dpa9v6fmfiHuowESmWdJqrz8zUa.jpg",
+            "airDate": "2026-08-25",
+            "runtime": 24
           },
           "9": {
-            "title": "Episode 9",
-            "airDate": "2026-11-27"
+            "title": "Ordeals",
+            "overview": "The boys have run into several issues over the summer, and they need the collective think tank to resolve them!",
+            "image": "https://image.tmdb.org/t/p/w300/6avl59XLHmRZ4DT9KHrZBRs7sRc.jpg",
+            "airDate": "2026-09-01",
+            "runtime": 24
           },
           "10": {
-            "title": "Episode 10",
-            "airDate": "2026-12-04"
+            "title": "Lottery",
+            "overview": "Iori has a craving for his favorite food, and he also receives a lottery ticket.",
+            "image": "https://image.tmdb.org/t/p/w300/9NS0k3UEQzOvzW79gJFLNVMtwMo.jpg",
+            "airDate": "2026-09-08",
+            "runtime": 24
           },
           "11": {
-            "title": "Episode 11",
-            "airDate": "2026-12-11"
+            "title": "Back in Okinawa (A-Side)",
+            "overview": "Aina wants to stop Iori and Chisa from going on a trip, and enlists Kohei's help. Will she be successful?",
+            "image": "https://image.tmdb.org/t/p/w300/yD4igp40qvKIr1ia8T6UiRLoO0L.jpg",
+            "airDate": "2026-09-15",
+            "runtime": 24
           },
           "12": {
-            "title": "Episode 12",
-            "airDate": "2026-12-18"
+            "title": "Back in Okinawa (B-Side)",
+            "overview": "While Iori and Chisa enjoyed their first day in Okinawa, there was chaos unfolding behind the scenes!",
+            "image": "https://image.tmdb.org/t/p/w300/f52N872f1o7dInRmaWiJOOEEe8r.jpg",
+            "airDate": "2026-09-22",
+            "runtime": 24
           }
         }
       }
     },
     {
-      "key": "sch-dragon-ball-super-beerus-season-1-2026",
-      "title": "Dragon Ball Super: Beerus",
-      "slug": "dragon-ball-super-beerus-season-1-2026",
-      "url": "https://deadtoons.sbs/posts/dragon-ball-super-beerus-season-1-2026",
-      "img": "https://image.tmdb.org/t/p/w300/sGuCmIy8kEmx3FWZyMj654rF6g8.jpg",
+      "key": "sch-liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "title": "LIAR GAME",
+      "slug": "liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "url": "https://deadtoons.sbs/posts/liar-game-season-1-multi-audio-hindi-tamil-telugu-eng-jap-480p-720p-1080p-hd-web-dl-10bit-hevc-esub",
+      "img": "https://image.tmdb.org/t/p/w300/gbZmmfrAPhKw7buPq2IInJQRxPb.jpg",
       "season": 1,
-      "episode": 2,
+      "episode": 26,
       "audio": "",
       "day": "",
-      "date": "2026-10-18",
-      "time": "4:29 PM",
+      "date": "2026-10-19",
+      "time": "5:21 PM",
       "today": true,
       "nx": {
-        "id": "312359",
+        "id": "13967",
         "kind": "tv",
         "seasons": {
-          "1": 2
+          "1": 26
         },
         "from": "wikidata-tmdb"
       },
       "guide": {
         "1": {
           "1": {
-            "title": "The God Who Destroys",
-            "overview": "Years after the battle with Earth's greatest enemy, Majin Buu, the planet's savior Son Goku spends his days in peace. Meanwhile, on a distant planet, the God of Destruction Beerus awakens from his long slumber!",
-            "image": "https://image.tmdb.org/t/p/w300/xxAiGiQVJqJtqSbdQIAGIFPIvSD.jpg",
-            "airDate": "2026-10-11",
-            "runtime": 24
+            "title": "Episode 1",
+            "overview": "A fierce battle of the wits begins over one million dollars. Heart pounding psychological tricks keep the audience on the edge of their seats.",
+            "image": "https://image.tmdb.org/t/p/w300/h4zbKexddEvry8S0mPPH6lGKrXo.jpg",
+            "airDate": "2007-04-14",
+            "runtime": 36
           },
           "2": {
-            "title": "The God of Destruction Heads to the Planet of the Kai",
-            "airDate": "2026-10-18"
+            "title": "Episode 2",
+            "overview": "What will be the conclusion of the great struggle? What secret plan could Akiyama have up his sleeve to turn the tables?",
+            "image": "https://image.tmdb.org/t/p/w300/iXsbh843t5jm4F6UHOZfjQa2uq7.jpg",
+            "airDate": "2007-04-21",
+            "runtime": 36
           },
           "3": {
             "title": "Episode 3",
-            "airDate": "2026-10-25"
+            "overview": "A competition for 22 million dollars, decided by minority vote, begins. Could you survive on this new stage?",
+            "image": "https://image.tmdb.org/t/p/w300/qK01vvLeNQDiyEpKvnQ67ChKtzk.jpg",
+            "airDate": "2007-04-28",
+            "runtime": 36
           },
           "4": {
             "title": "Episode 4",
-            "airDate": "2026-11-01"
+            "overview": "X’s identity is revealed at last! In this twist-filled drama, who will come out on top, X or Akiyama?",
+            "image": "https://image.tmdb.org/t/p/w300/iHt8PfoxAXujRKE9jYJx7cc7eN0.jpg",
+            "airDate": "2007-05-05",
+            "runtime": 35
           },
           "5": {
             "title": "Episode 5",
-            "airDate": "2026-11-08"
+            "overview": "Who will claim the $21 million prize in this shocking conclusion? What is the true aim of the Liar Game Tournament? The fight shifts to a new arena.",
+            "image": "https://image.tmdb.org/t/p/w300/jRhP09xTsCeNmL5nLS9aQyGfWss.jpg",
+            "airDate": "2007-05-12",
+            "runtime": 36
           },
           "6": {
             "title": "Episode 6",
-            "airDate": "2026-11-15"
+            "overview": "The surprising revival round begins: Restructuring Game! The ensnared Nao suffers alone, with nowhere to turn.",
+            "image": "https://image.tmdb.org/t/p/w300/sXNLSsRvr9uScRUyjscQWdW2gdC.jpg",
+            "airDate": "2007-05-19",
+            "runtime": 36
           },
           "7": {
             "title": "Episode 7",
-            "airDate": "2026-11-22"
+            "overview": "Driven into a corner, Nao has fallen into despair. Could a miracle turn things around? Where is Akiyama?",
+            "image": "https://image.tmdb.org/t/p/w300/1xp8wgklqup4v8YWi39aSwX0QM.jpg",
+            "airDate": "2007-05-26",
+            "runtime": 36
           },
           "8": {
             "title": "Episode 8",
-            "airDate": "2026-11-29"
+            "overview": "Akiyama works wonders at the Restructuring Game’s conclusion. Onward to the next stage!",
+            "image": "https://image.tmdb.org/t/p/w300/kRcl6k0xTytqECYJd6OwmEERt8z.jpg",
+            "airDate": "2007-06-02",
+            "runtime": 36
           },
           "9": {
             "title": "Episode 9",
-            "airDate": "2026-12-06"
+            "overview": "A formidable new enemy appears in the Smuggling Game! Is victory possible? Nao and Akiyama begin to fight in this next round.",
+            "image": "https://image.tmdb.org/t/p/w300/8Asfg1zElwWM7uiQaWpp5S1Wvt7.jpg",
+            "airDate": "2007-06-09",
+            "runtime": 36
           },
           "10": {
             "title": "Episode 10",
-            "airDate": "2026-12-13"
+            "overview": "Yokoya’s terrifying true nature is revealed in a shocking development. Akiyama is enraged and Nao is devastated in this tumultuous round.",
+            "image": "https://image.tmdb.org/t/p/w300/5uv6WI1d6VSgQ9JtOehOECOoI9E.jpg",
+            "airDate": "2007-06-16",
+            "runtime": 36
           },
           "11": {
             "title": "Episode 11",
-            "airDate": "2026-12-20"
-          },
-          "12": {
-            "title": "Episode 12",
-            "airDate": "2026-12-27"
-          },
-          "13": {
-            "title": "Episode 13",
-            "airDate": "2027-01-03"
-          },
-          "14": {
-            "title": "Episode 14",
-            "airDate": "2027-01-10"
-          },
-          "15": {
-            "title": "Episode 15",
-            "airDate": "2027-01-17"
-          },
-          "16": {
-            "title": "Episode 16",
-            "airDate": "2027-01-24"
-          },
-          "17": {
-            "title": "Episode 17",
-            "airDate": "2027-01-31"
-          },
-          "18": {
-            "title": "Episode 18",
-            "airDate": "2027-02-07"
-          },
-          "19": {
-            "title": "Episode 19",
-            "airDate": "2027-02-14"
+            "overview": "The final game has been prepared. Despair, deception, betrayal, lies… and hope. Each player’s true nature will be revealed, and all of Liar Game’s secrets will become clear in this final encounter. Saturday's Premium Special Project: 3 Hour Special.",
+            "image": "https://image.tmdb.org/t/p/w300/qMfcAotHzeS9TOCjf3L1GTkql7A.jpg",
+            "airDate": "2007-06-23",
+            "runtime": 142
           }
         }
       }
@@ -362,10 +340,10 @@
       "url": "https://deadtoons.sbs/posts/jojo-s-bizarre-adventure-season-4-2018",
       "img": "https://image.tmdb.org/t/p/w300/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
       "season": 4,
-      "episode": 8,
+      "episode": 9,
       "audio": "",
       "day": "",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "time": "5:30 PM",
       "today": true,
       "nx": {
@@ -947,6 +925,28 @@
       },
       "from": "wikidata-tmdb",
       "checked": "2026-10-18"
+    },
+    "grandbluedreaming": {
+      "id": "79166",
+      "kind": "tv",
+      "seasons": {
+        "3": 8
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-19"
+    },
+    "liargame": {
+      "id": "13967",
+      "kind": "tv",
+      "seasons": {
+        "1": 26
+      },
+      "from": "wikidata-tmdb",
+      "checked": "2026-10-19"
+    },
+    "attackontitanmusedub": {
+      "checked": "2026-10-19",
+      "tried": []
     }
   },
   "skipped": [
@@ -959,7 +959,7 @@
       "reason": "schedule: no season/episode"
     },
     {
-      "title": "Rise of Anshaks: Heroes of Destiny",
+      "title": "Attack on Titan [Muse Dub]",
       "reason": "nxsha: no verified id"
     },
     {
