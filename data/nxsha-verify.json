@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T10:13:24.642Z",
+  "generatedAt": "2026-10-19T16:16:13.041Z",
   "titles": [
     {
       "key": "aot",
@@ -892,14 +892,410 @@
         },
         {
           "season": 1,
-          "episode": 31,
-          "url": "https://nxsha.space/embed/tv/37854/1/31?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "episode": 61,
+          "url": "https://nxsha.space/embed/tv/37854/1/61?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
           "status": 200,
-          "embedTitle": "Watch One Piece - S1:E31",
+          "embedTitle": "Watch One Piece - S1:E61",
           "ok": true,
           "foundName": "One Piece",
           "foundSeason": 1,
-          "foundEpisode": 31
+          "foundEpisode": 61
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/2/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S2:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 2,
+          "foundEpisode": 1
+        },
+        {
+          "season": 2,
+          "episode": 16,
+          "url": "https://nxsha.space/embed/tv/37854/2/16?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S2:E16",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 2,
+          "foundEpisode": 16
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/3/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S3:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 3,
+          "foundEpisode": 1
+        },
+        {
+          "season": 3,
+          "episode": 14,
+          "url": "https://nxsha.space/embed/tv/37854/3/14?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S3:E14",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 3,
+          "foundEpisode": 14
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/4/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S4:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 4,
+          "foundEpisode": 1
+        },
+        {
+          "season": 4,
+          "episode": 39,
+          "url": "https://nxsha.space/embed/tv/37854/4/39?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S4:E39",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 4,
+          "foundEpisode": 39
+        },
+        {
+          "season": 5,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/5/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S5:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 5,
+          "foundEpisode": 1
+        },
+        {
+          "season": 5,
+          "episode": 13,
+          "url": "https://nxsha.space/embed/tv/37854/5/13?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S5:E13",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 5,
+          "foundEpisode": 13
+        },
+        {
+          "season": 6,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/6/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S6:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 6,
+          "foundEpisode": 1
+        },
+        {
+          "season": 6,
+          "episode": 52,
+          "url": "https://nxsha.space/embed/tv/37854/6/52?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S6:E52",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 6,
+          "foundEpisode": 52
+        },
+        {
+          "season": 7,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/7/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S7:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 7,
+          "foundEpisode": 1
+        },
+        {
+          "season": 7,
+          "episode": 33,
+          "url": "https://nxsha.space/embed/tv/37854/7/33?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S7:E33",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 7,
+          "foundEpisode": 33
+        },
+        {
+          "season": 8,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/8/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S8:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 8,
+          "foundEpisode": 1
+        },
+        {
+          "season": 8,
+          "episode": 35,
+          "url": "https://nxsha.space/embed/tv/37854/8/35?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S8:E35",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 8,
+          "foundEpisode": 35
+        },
+        {
+          "season": 9,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/9/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S9:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 9,
+          "foundEpisode": 1
+        },
+        {
+          "season": 9,
+          "episode": 73,
+          "url": "https://nxsha.space/embed/tv/37854/9/73?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S9:E73",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 9,
+          "foundEpisode": 73
+        },
+        {
+          "season": 10,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/10/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S10:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 10,
+          "foundEpisode": 1
+        },
+        {
+          "season": 10,
+          "episode": 45,
+          "url": "https://nxsha.space/embed/tv/37854/10/45?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S10:E45",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 10,
+          "foundEpisode": 45
+        },
+        {
+          "season": 11,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/11/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S11:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 11,
+          "foundEpisode": 1
+        },
+        {
+          "season": 11,
+          "episode": 26,
+          "url": "https://nxsha.space/embed/tv/37854/11/26?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S11:E26",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 11,
+          "foundEpisode": 26
+        },
+        {
+          "season": 12,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/12/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S12:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 12,
+          "foundEpisode": 1
+        },
+        {
+          "season": 12,
+          "episode": 14,
+          "url": "https://nxsha.space/embed/tv/37854/12/14?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S12:E14",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 12,
+          "foundEpisode": 14
+        },
+        {
+          "season": 13,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/13/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S13:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 13,
+          "foundEpisode": 1
+        },
+        {
+          "season": 13,
+          "episode": 101,
+          "url": "https://nxsha.space/embed/tv/37854/13/101?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S13:E101",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 13,
+          "foundEpisode": 101
+        },
+        {
+          "season": 14,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/14/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S14:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 14,
+          "foundEpisode": 1
+        },
+        {
+          "season": 14,
+          "episode": 58,
+          "url": "https://nxsha.space/embed/tv/37854/14/58?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S14:E58",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 14,
+          "foundEpisode": 58
+        },
+        {
+          "season": 15,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/15/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S15:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 15,
+          "foundEpisode": 1
+        },
+        {
+          "season": 15,
+          "episode": 62,
+          "url": "https://nxsha.space/embed/tv/37854/15/62?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S15:E62",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 15,
+          "foundEpisode": 62
+        },
+        {
+          "season": 16,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/16/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S16:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 16,
+          "foundEpisode": 1
+        },
+        {
+          "season": 16,
+          "episode": 50,
+          "url": "https://nxsha.space/embed/tv/37854/16/50?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S16:E50",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 16,
+          "foundEpisode": 50
+        },
+        {
+          "season": 17,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/17/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S17:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 17,
+          "foundEpisode": 1
+        },
+        {
+          "season": 17,
+          "episode": 56,
+          "url": "https://nxsha.space/embed/tv/37854/17/56?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S17:E56",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 17,
+          "foundEpisode": 56
+        },
+        {
+          "season": 18,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/18/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S18:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 18,
+          "foundEpisode": 1
+        },
+        {
+          "season": 18,
+          "episode": 55,
+          "url": "https://nxsha.space/embed/tv/37854/18/55?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S18:E55",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 18,
+          "foundEpisode": 55
+        },
+        {
+          "season": 19,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/19/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S19:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 19,
+          "foundEpisode": 1
+        },
+        {
+          "season": 19,
+          "episode": 74,
+          "url": "https://nxsha.space/embed/tv/37854/19/74?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S19:E74",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 19,
+          "foundEpisode": 74
         },
         {
           "season": 20,
@@ -914,14 +1310,80 @@
         },
         {
           "season": 20,
-          "episode": 10,
-          "url": "https://nxsha.space/embed/tv/37854/20/10?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "episode": 14,
+          "url": "https://nxsha.space/embed/tv/37854/20/14?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
           "status": 200,
-          "embedTitle": "Watch One Piece - S20:E10",
+          "embedTitle": "Watch One Piece - S20:E14",
           "ok": true,
           "foundName": "One Piece",
           "foundSeason": 20,
-          "foundEpisode": 10
+          "foundEpisode": 14
+        },
+        {
+          "season": 21,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/21/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S21:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 21,
+          "foundEpisode": 1
+        },
+        {
+          "season": 21,
+          "episode": 197,
+          "url": "https://nxsha.space/embed/tv/37854/21/197?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S21:E197",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 21,
+          "foundEpisode": 197
+        },
+        {
+          "season": 22,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/22/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S22:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 22,
+          "foundEpisode": 1
+        },
+        {
+          "season": 22,
+          "episode": 67,
+          "url": "https://nxsha.space/embed/tv/37854/22/67?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S22:E67",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 22,
+          "foundEpisode": 67
+        },
+        {
+          "season": 23,
+          "episode": 1,
+          "url": "https://nxsha.space/embed/tv/37854/23/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S23:E1",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 23,
+          "foundEpisode": 1
+        },
+        {
+          "season": 23,
+          "episode": 25,
+          "url": "https://nxsha.space/embed/tv/37854/23/25?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+          "status": 200,
+          "embedTitle": "Watch One Piece - S23:E25",
+          "ok": true,
+          "foundName": "One Piece",
+          "foundSeason": 23,
+          "foundEpisode": 25
         }
       ],
       "seasonList": {
@@ -931,7 +1393,7 @@
           7
         ],
         "epPairs": [
-          "20:1"
+          "23:1"
         ],
         "totalEpisodes": null
       }
@@ -4978,7 +5440,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13638,
+      "bytes": 13552,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -4988,7 +5450,7 @@
       "label": "detail-tmdb-movie",
       "url": "https://nxsha.space/movie/1441228",
       "status": 200,
-      "bytes": 87991,
+      "bytes": 87109,
       "docTitle": "Irumudi (2026) - Watch Online Free | Nxsha",
       "sample": [
         "https://web.nxsha.app/movie/1441228",
