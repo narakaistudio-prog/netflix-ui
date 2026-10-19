@@ -1,0 +1,13 @@
+    attack-on-titan: "Attack on Titan" buttons=6 inline=1-8 (8)
+   1 Attack on Titan                          attack-on-titan                    S1:25 S2:12 S3:22 S4:28 S5:2
+    demon-slayer-kimetsu-no-yaiba: "Demon Slayer: Kimetsu no Yaiba" buttons=5 inline=1-26 (26)
+   2 Demon Slayer: Kimetsu no Yaiba           demon-slayer-kimetsu-no-yaiba      S1:26 S2:18 S3:11 S4:8 S5:1
+    one-piece: "LEGO ONE PIECE" buttons=1 inline=1-2 (2)
+   3 One Piece                                one-piece                          S1:2
+    naruto-shippuden: HTTP 500
+    naruto-shippuden-hindi-dub: "Naruto Shippūden" buttons=16 inline=1-32 (32)
+   4 Naruto Shippuden                         naruto-shippuden-hindi-dub         S1:32 S2:21@33 S3:18@54 S4:17@72 S5:24@89 S6:31@113 S7:8@144 S8:24@152 S9:21@176 S10:25@197 S11:21@222 S12:33@243 S13:20@276 S14:25@296 S15:28@321 S16:12@349
+/*TS_SEASONS_START*/
+/* Written by scripts/harvest-toonstream-seasons.mjs — do not edit by hand. */
+var TS_SEASONS={"aot":{"slug":"attack-on-titan","seasons":{"1":25,"2":12,"3":22,"4":28,"5":2},"nxMap":{"1":{"season":1,"base":0},"2":{"season":2,"base":0},"3":{"season":3,"base":0},"4":{"season":4,"base":0}}},"demon":{"slug":"demon-slayer-kimetsu-no-yaiba","seasons":{"1":26,"2":18,"3":11,"4":8,"5":1},"nxMap":{"1":{"season":1,"base":0},"2":{"season":2,"base":0},"3":{"season":4,"base":0},"4":{"season":5,"base":0}}},"onepiece":{"slug":"one-piece","seasons":{"1":2},"nxMap":{"1":{"season":1,"base":0}}},"naruto":{"slug":"naruto-shippuden-hindi-dub","seasons":{"1":32,"2":21,"3":18,"4":17,"5":24,"6":31,"7":8,"8":24,"9":21,"10":25,"11":21,"12":33,"13":20,"14":25,"15":28,"16":12},"epStart":{"2":33,"3":54,"4":72,"5":89,"6":113,"7":144,"8":152,"9":176,"10":197,"11":222,"12":243,"13":276,"14":296,"15":321,"16":349},"nxMap":{"1":{"season":1,"base":0},"2":{"season":2,"base":0},"3":{"season":3,"base":0},"4":{"season":4,"base":0},"5":{"season":5,"base":0},"6":{"season":6,"base":0},"7":{"season":7,"base":0},"8":{"season":8,"base":0},"9":{"season":9,"base":0},"10":{"season":10,"base":0},"11":{"season":11,"base":0},"12":{"season":12,"base":0},"13":{"season":13,"base":0},"14":{"season":14,"base":0},"15":{"season":15,"base":0},"16":{"season":16,"base":0}}}};
+/*TS_SEASONS_END*/
