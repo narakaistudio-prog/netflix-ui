@@ -1,5 +1,5 @@
 {
-  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata. One Piece is intentionally excluded from season/episode refresh.",
+  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata.",
   "aot": {
     "id": "tt2560140",
     "kind": "tv",
@@ -192,8 +192,29 @@
     "id": "37854",
     "kind": "tv",
     "seasons": {
-      "1": 31,
-      "20": 10
+      "1": 61,
+      "2": 16,
+      "3": 14,
+      "4": 39,
+      "5": 13,
+      "6": 52,
+      "7": 33,
+      "8": 35,
+      "9": 73,
+      "10": 45,
+      "11": 26,
+      "12": 14,
+      "13": 101,
+      "14": 58,
+      "15": 62,
+      "16": 50,
+      "17": 56,
+      "18": 55,
+      "19": 74,
+      "20": 14,
+      "21": 197,
+      "22": 67,
+      "23": 25
     },
     "title": "One Piece"
   },

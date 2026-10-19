@@ -1,5 +1,5 @@
 {
-  "_comment": "Nxsha verification plan synchronized from data/nxsha-titles.json. New catalog routes are added automatically; non-One-Piece TV season maps are sourced from Nxsha season API responses. One Piece is excluded from the season/episode-guide update and its existing map is unchanged.",
+  "_comment": "Nxsha verification plan synchronized from data/nxsha-titles.json. New catalog routes are added automatically; TV season maps are sourced from Nxsha season API responses.",
   "titles": [
     {
       "key": "aot",
@@ -210,8 +210,29 @@
       "kind": "tv",
       "id": "37854",
       "seasons": {
-        "1": 31,
-        "20": 10
+        "1": 61,
+        "2": 16,
+        "3": 14,
+        "4": 39,
+        "5": 13,
+        "6": 52,
+        "7": 33,
+        "8": 35,
+        "9": 73,
+        "10": 45,
+        "11": 26,
+        "12": 14,
+        "13": 101,
+        "14": 58,
+        "15": 62,
+        "16": 50,
+        "17": 56,
+        "18": 55,
+        "19": 74,
+        "20": 14,
+        "21": 197,
+        "22": 67,
+        "23": 25
       }
     },
     {
