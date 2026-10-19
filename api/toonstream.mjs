@@ -61,15 +61,27 @@ async function getText(url, steps, label) {
   return { status: res.status, text, frameBlocked };
 }
 
-/** "Kaiju No. 8!" -> "kaiju-no-8" — the site's own slug rule. */
-function titleSlug(title, keepColon = false) {
-  return String(title || '')
+/**
+ * "Kaiju No. 8!" -> "kaiju-no-8" — the site's own slug rule.
+ *
+ * The site is inconsistent about punctuation: older posts drop it
+ * ("jojos-bizarre-adventure-6x1"), newer ones keep it
+ * ("jojo's-bizarre-adventure-4x1", "mushoku-tensei:-jobless-reincarnation-3x1").
+ * `keep` selects the characters to preserve: true means ':' (back-compat),
+ * or pass a string such as ":'".
+ */
+function titleSlug(title, keep = false) {
+  const keepSet = keep === true ? ':' : String(keep || '');
+  const keepsApos = keepSet.includes("'");
+  let s = String(title || '')
     .toLowerCase()
-    .replace(/[\u2019'\u2032`]/g, '') // the site drops apostrophes: jojo's -> jojos
-    .replace(/&/g, ' and ')
-    // The site KEEPS ':' in some slugs: "Mushoku Tensei: ..." -> "mushoku-tensei:-..."
-    .replace(keepColon ? /[^a-z0-9:]+/g : /[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .replace(/[\u2019\u2032`]/g, "'"); // curly/backtick apostrophes -> straight
+  if (!keepsApos) s = s.replace(/'/g, ''); // older slugs: jojo's -> jojos
+  s = s.replace(/&/g, ' and ');
+  s = keepSet
+    ? s.replace(new RegExp(`[^a-z0-9${keepSet.replace(/[^\s]/g, (c) => (c === ':' || c === "'" ? c : ''))}]+`, 'g'), '-')
+    : s.replace(/[^a-z0-9]+/g, '-');
+  return s.replace(/^-+|-+$/g, '');
 }
 
 const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -223,6 +235,95 @@ function extractServers(html) {
   return out;
 }
 
+const stripTags = (s) =>
+  String(s || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&#0?39;|&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/**
+ * The home page's "Fresh Drops" rail: whatever the section links (series or
+ * episode pages), one card per target, with its poster and label. Returns
+ * [{title, slug, img, url, episode}] — episode is set when the card pointed
+ * straight at an episode page (so the app can play that exact episode).
+ */
+function parseFreshDrops(html) {
+  if (!html) return [];
+  const headings = [...html.matchAll(/<h[1-6][^>]*>([\s\S]{0,300}?)<\/h[1-6]>/gi)];
+  let start = -1;
+  let end = html.length;
+  for (let i = 0; i < headings.length; i++) {
+    if (!/fresh\s*drops?/i.test(stripTags(headings[i][1]))) continue;
+    start = (headings[i].index || 0) + headings[i][0].length;
+    if (headings[i + 1]) end = headings[i + 1].index || html.length;
+    break;
+  }
+  if (start === -1) {
+    // No heading found: scan the first occurrence and the markup after it.
+    const at = html.search(/fresh\s*drops?/i);
+    if (at === -1) return [];
+    start = at;
+  }
+  end = Math.min(end, start + 120000);
+  const seg = html.slice(start, end);
+  const out = new Map();
+  // Hrefs may contain an apostrophe (jojo's-bizarre-adventure), so quoted
+  // attributes must be matched per quote style instead of a ["'] class.
+  const anchors = [...seg.matchAll(/<a\b[^>]*href=(?:"([^"]+)"|'([^']+)')[^>]*>([\s\S]*?)<\/a>/gi)];
+  for (const m of anchors) {
+    let href = String(m[1] || m[2] || '').trim();
+    if (!href.startsWith('/')) {
+      const abs = href.match(/^https?:\/\/toonstream\.us(\/[^?#]*)/i);
+      if (!abs) continue;
+      href = abs[1];
+    }
+    href = href.replace(/[?#].*$/, '').replace(/\/+$/, '');
+    if (!/^\/(series|episode)\//.test(href)) continue;
+    const inner = m[3];
+    const imgMatch = inner.match(/<img\b[^>]*src=["']([^"']+)["']/i);
+    const img = imgMatch ? imgMatch[1].trim() : '';
+    const label = stripTags(inner);
+    const cur = out.get(href) || { href, title: '', img: '' };
+    if (img && !cur.img) cur.img = img;
+    if (label && label.length > cur.title.length && !/^(play|watch|view|download|episode|series)$/i.test(label)) {
+      cur.title = label;
+    }
+    out.set(href, cur);
+  }
+  const items = [];
+  for (const c of out.values()) {
+    if (!c.title && !c.img) continue;
+    let slug = '';
+    let episode = '';
+    let season = null;
+    let ep = null;
+    if (c.href.startsWith('/series/')) slug = c.href.slice('/series/'.length);
+    else {
+      episode = `${BASE}${c.href}/`;
+      slug = c.href.slice('/episode/'.length).replace(/-\d+x\d+$/, '');
+      const m2 = c.href.match(/-(\d+)x(\d+)$/);
+      if (m2) {
+        season = Number(m2[1]);
+        ep = Number(m2[2]);
+      }
+    }
+    items.push({
+      title: c.title || slug.replace(/-/g, ' '),
+      slug,
+      ...(c.img ? { img: c.img } : {}),
+      url: `${BASE}${c.href}/`,
+      ...(episode ? { episode } : {}),
+      ...(season ? { season, ep } : {}),
+    });
+    if (items.length >= 40) break;
+  }
+  return items;
+}
+
 function pickEmbed(embeds) {
   // Toonstream's own Server 1 ("PLAY") is the first iframe on the episode
   // page and the only one the site itself autoplays - always pick it. Just
@@ -238,7 +339,20 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   // Probe both the plain slug and the colon-kept one — newer posts keep ':'
   // (mushoku-tensei:-jobless-reincarnation-3x1), older ones drop it.
   const exact = slug ? String(slug).trim().replace(/^\/+|\/+$/g, '') : '';
-  const bases = [...new Set([exact, titleSlug(slug || title), titleSlug(title, true)].filter(Boolean))];
+  // Every punctuation policy the site has shipped so far: strip it all
+  // ("jojos-bizarre-adventure"), keep ':' ("mushoku-tensei:-..."), keep the
+  // apostrophe ("jojo's-bizarre-adventure"), or keep both.
+  const bases = [
+    ...new Set(
+      [
+        exact,
+        titleSlug(slug || title),
+        titleSlug(title, ':'),
+        titleSlug(title, "'"),
+        titleSlug(title, ":'"),
+      ].filter(Boolean),
+    ),
+  ];
   for (const base of bases) {
     const direct = `${BASE}/episode/${base}-${season}x${episode}/`;
     const page = await getText(direct, steps, 'episode-direct');
@@ -335,6 +449,24 @@ async function handler(req, res) {
   const season = String(Math.max(1, parseInt(String(req.query.s || '1'), 10) || 1));
   const episode = String(Math.max(1, parseInt(String(req.query.e || '1'), 10) || 1));
   const debug = req.query.debug === '1';
+  if (String(req.query.home || '') === '1') {
+    // Home-page Fresh Drops: the site's own new-episode rail, parsed into
+    // plain cards so the app can mirror it. `homeVerbatim=1` also returns a
+    // base64 window around the section so the parser can be verified against
+    // whatever markup the site ships today.
+    const home = await getText(`${BASE}/home`, [], 'home');
+    const html = home.text || '';
+    const items = parseFreshDrops(html);
+    const payload = { ok: true, status: home.status, count: items.length, items };
+    if (String(req.query.homeVerbatim || '') === '1') {
+      const at = html.search(/fresh\s*drops?/i);
+      const win = at === -1 ? html.slice(0, 6000) : html.slice(Math.max(0, at - 1200), at + 6000);
+      payload.sample = Buffer.from(win).toString('base64');
+      payload.marker = at;
+    }
+    res.status(200).json(payload);
+    return;
+  }
   if (String(req.query.audit || '') === '1') {
     // Catalog audit: resolve one episode for many titles in parallel and
     // report a compact pass/fail list. Used to find anime the site has but
@@ -513,4 +645,4 @@ export default handler;
 export const config = { maxDuration: 30 };
 
 // Exposed for tests.
-export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractSiteServers, extractServers, matchScore, pickEmbed };
+export const _internal = { titleSlug, parseFreshDrops, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractSiteServers, extractServers, matchScore, pickEmbed };
