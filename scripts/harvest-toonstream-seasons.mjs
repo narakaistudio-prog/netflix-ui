@@ -14,6 +14,8 @@
  *
  * The page then renders ToonStream's seasons, reads NX_EPISODE_DATA with the
  * mapped coordinates, and builds both players (ToonStream slug + Nxsha embed).
+ * Hindi-dub series number episodes absolutely (Naruto S2 = 33..53); those keep
+ * their real numbers in `epStart` so playback asks for the right episode.
  *
  * Usage:
  *   node scripts/harvest-toonstream-seasons.mjs              harvest + bake
