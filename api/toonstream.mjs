@@ -246,7 +246,18 @@ async function handler(req, res) {
     }
 
     if (String(req.query.raw || '') === '1') {
-      return res.status(200).json({ ok: true, raw: found.html.slice(0, 300000) });
+      // Debug aid: windows around player/server-relevant markup, base64 so
+      // markdown fetchers cannot mangle the tags.
+      const html = found.html;
+      const wins = [];
+      const re = /iframe|player|data-litespeed|server-|epsdsnv| Watching |serverList/gi;
+      for (const m of html.matchAll(re)) {
+        const at = m.index || 0;
+        wins.push(html.slice(Math.max(0, at - 250), at + 700));
+        if (wins.length >= 30) break;
+      }
+      const b64 = Buffer.from([...new Set(wins)].join('\n~~~\n')).toString('base64');
+      return res.status(200).json({ ok: true, frameBlocked: !!found.frameBlocked, b64 });
     }
     const embeds = extractIframes(found.html);
     const servers = extractServers(found.html);
