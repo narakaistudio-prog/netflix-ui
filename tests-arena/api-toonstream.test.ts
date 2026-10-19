@@ -475,3 +475,55 @@ test('parsing helpers are conservative (only real player hosts, no site frames)'
     expect(results[1]).toBe('/episode/overgeared-1x2');
     expect(results[2]).toBe(null);
 });
+
+test('a shared word is not a match: Black Clover never falls through to Darker than Black', () => {
+    // Live 2026-10: /s?q=Black+Clover ranks /series/black-clover first, but its
+    // episode page 404s. The next candidate shares only "black", so the old
+    // score>0 filter accepted darker-than-black-english-dub-2x1 and reported
+    // "no player servers yet" for a different anime.
+    const search = `<html><body>
+      <a href="/series/black-clover/">Black Clover</a>
+      <a href="/series/darker-than-black-english-dub/">Darker than Black English Dub</a>
+    </body></html>`;
+    const blackCloverSeries = `<html><body>
+      <a href="/series/black-clover/">Black Clover</a>
+      <h1>Black Clover</h1>
+      <div class="poster-grid"><img src="https://image.tmdb.org/t/p/w780/a.jpg"></div>
+    </body></html>`;
+    const res = runScenario({
+        query: { title: 'Black Clover', s: '2', e: '1', debug: '1' },
+        mocks: [
+            { needle: '/s?q=', status: 200, body: search },
+            { needle: '/series/black-clover/', status: 200, body: blackCloverSeries },
+            { needle: '/series/darker-than-black', status: 200, body: '<html><body>Darker than Black</body></html>' },
+            { needle: '/episode/darker-than-black-english-dub-2x1/', status: 200, body: EPISODE_HTML },
+        ],
+    });
+    expect(res.body.ok).toBe(false);
+    expect(res.body.error).toBe('no-episode');
+    // The unrelated page must not leak into the response.
+    expect(String(res.body.episodeUrl || '')).not.toContain('darker-than-black');
+    const ranked = (res.body.steps || []).find((s: any) => s.step === 'series-ranked');
+    expect(ranked.min).toBe(0.6);
+    expect(ranked.top[0][0]).toBe('/series/black-clover');
+});
+
+test('an exact search hit still resolves through the series slug', () => {
+    // The site files the show under a dub page the plain slug cannot guess.
+    const search = `<html><body>
+      <a href="/series/black-clover-hindi-dub/">Black Clover Hindi Dub</a>
+    </body></html>`;
+    const res = runScenario({
+        query: { title: 'Black Clover', s: '2', e: '1', debug: '1' },
+        mocks: [
+            { needle: '/s?q=', status: 200, body: search },
+            { needle: '/episode/black-clover-hindi-dub-2x1/', status: 200, body: EPISODE_HTML },
+        ],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.via).toBe('series-slug');
+    expect(res.body.episodeUrl).toBe(
+        'https://toonstream.us/episode/black-clover-hindi-dub-2x1/',
+    );
+    expect(res.body.servers.length).toBe(3);
+});
