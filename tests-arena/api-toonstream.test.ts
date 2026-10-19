@@ -92,6 +92,8 @@ test('titleSlug follows the site rule (verified against live URLs)', () => {
             ['titleSlug', ['Frieren: Beyond Journey\u2019s End']],
             ['titleSlug', ['Mushoku Tensei: Jobless Reincarnation']],
             ['titleSlug', ['Mushoku Tensei: Jobless Reincarnation', true]],
+            // Newer posts keep the apostrophe: /episode/jojo's-bizarre-adventure-4x1/
+            ['titleSlug', ["JoJo's Bizarre Adventure", "'"]],
         ],
     });
     expect(results).toEqual([
@@ -103,6 +105,7 @@ test('titleSlug follows the site rule (verified against live URLs)', () => {
         'frieren-beyond-journeys-end',
         'mushoku-tensei-jobless-reincarnation',
         'mushoku-tensei:-jobless-reincarnation',
+        "jojo's-bizarre-adventure",
     ]);
 });
 
@@ -213,6 +216,67 @@ test('audit mode reports pass/fail per title', () => {
     expect(solo.servers).toBe(3);
     expect(ghost.ok).toBe(false);
     expect(ghost.error).toBe('no-episode');
+});
+
+test("apostrophe-kept slugs resolve directly (JoJo S4 live shape)", () => {
+    // Newer posts keep the apostrophe:
+    //   /episode/jojo's-bizarre-adventure-4x1/  (S6 lives on the old jojos- form)
+    const res = runScenario({
+        query: { title: "JoJo's Bizarre Adventure", s: '4', e: '1', debug: '1' },
+        mocks: [
+            {
+                needle: "/episode/jojo's-bizarre-adventure-4x1",
+                status: 200,
+                body: EPISODE_HTML,
+            },
+        ],
+    });
+    expect(res.body.ok).toBe(true);
+    expect(res.body.via).toBe('direct');
+    expect(res.body.episodeUrl).toBe(
+        "https://toonstream.us/episode/jojo's-bizarre-adventure-4x1/",
+    );
+    expect(res.body.servers).toHaveLength(3);
+});
+
+test('fresh drops parse from the home page markup', () => {
+    const home = `<html><body>
+      <section><h2>Latest Episodes</h2>
+        <a href="/series/other-show/"><img src="https://img/other.jpg" alt="">Other Show</a>
+      </section>
+      <section>
+        <h2>Fresh Drops</h2>
+        <div class="grid">
+          <a href="/episode/jojo's-bizarre-adventure-4x1/">
+            <img src="https://img/jojo.jpg" alt="">
+            <span class="title">JoJo's Bizarre Adventure</span>
+          </a>
+          <a href="/series/dandadan/">
+            <img src="https://img/dan.jpg" alt="">
+            <span class="title">DAN DA DAN</span>
+          </a>
+        </div>
+      </section>
+      <section><h2>Popular</h2>
+        <a href="/series/popular-one/">Popular One</a>
+      </section>
+    </body></html>`;
+    const { results } = runScenario({
+        mode: 'unit',
+        calls: [['parseFreshDrops', [home]]],
+    });
+    const items = results[0];
+    expect(items).toHaveLength(2);
+    expect(items[0].title).toBe("JoJo's Bizarre Adventure");
+    expect(items[0].slug).toBe("jojo's-bizarre-adventure");
+    expect(items[0].season).toBe(4);
+    expect(items[0].ep).toBe(1);
+    expect(items[0].episode).toBe(
+        "https://toonstream.us/episode/jojo's-bizarre-adventure-4x1/",
+    );
+    expect(items[1].title).toBe('DAN DA DAN');
+    expect(items[1].slug).toBe('dandadan');
+    expect(items[1].season).toBeUndefined();
 });
 
 test('colon-kept slugs resolve directly (Mushoku S3 live shape)', () => {

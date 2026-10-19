@@ -893,7 +893,7 @@
       function shortDropDate(value){var parts=String(value||'').split('-');if(parts.length!==3)return '';var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];var month=Number(parts[1]);if(!month||month>12)return '';return Number(parts[2])+' '+months[month-1]}
       function dropInfo(key){var drops=window.CR_NX_DROPS||{};return drops[key]||null}
       function dropDate(key){var drop=dropInfo(key);if(!drop)return '';return shortDropDate(drop.added)||'just now'}
-      function railCard(key){var a=shows[key],drop=dropInfo(key),dropAdded=drop?dropDate(key):'',dropEpisode=(drop&&drop.season)?('S'+drop.season+' · E'+drop.episode+' · '):'',dropType=a.type==='Movie'?'Movie':'Series',dropArt=drop?(a.img||dropPlaceholderImage(a.title)):a.img;return '<article class="rail-card" data-open="'+key+'" tabindex="0" role="button"><div class="rail-poster">'+(drop&&drop.fresh?'<span class="fresh-flag">New</span>':'')+posterImage(dropArt,a.title+' anime poster',true,drop?dropPlaceholderImage(a.title):'')+'<div class="quick-info"><h3>'+a.title+'</h3>'+(drop?'<div class="quick-meta">'+(drop.verb||'Added')+' '+dropAdded+'<br>'+dropEpisode+dropType+' · '+(drop.src==='deadtoons'?'via DeadToons':'fresh drop')+'</div>':'<div class="quick-meta"><span class="rating">★ '+a.rating+'</span> · '+a.year+'<br>'+genreText(a)+'</div>')+'<div class="quick-actions"><button data-quick-play="'+key+'">▶ Play</button><button class="quick-save" data-save-key="'+key+'">＋ My List</button></div></div></div><div class="rail-copy"><h3>'+a.title+'</h3><p>'+(drop?dropEpisode+(drop.verb||'Added')+' '+dropAdded+(drop.fresh?' · New':'')+' · '+dropType:'★ '+a.rating+' · '+genreText(a))+'</p></div></article>'}
+      function railCard(key){var a=shows[key],drop=dropInfo(key),dropAdded=drop?dropDate(key):'',dropEpisode=(drop&&drop.season)?('S'+drop.season+' · E'+drop.episode+' · '):'',dropType=a.type==='Movie'?'Movie':'Series',dropArt=drop?(a.img||dropPlaceholderImage(a.title)):a.img;return '<article class="rail-card" data-open="'+key+'" tabindex="0" role="button"><div class="rail-poster">'+(drop&&drop.fresh?'<span class="fresh-flag">New</span>':'')+posterImage(dropArt,a.title+' anime poster',true,drop?dropPlaceholderImage(a.title):'')+'<div class="quick-info"><h3>'+a.title+'</h3>'+(drop?'<div class="quick-meta">'+(drop.verb||'Added')+' '+dropAdded+'<br>'+dropEpisode+dropType+' · '+(drop.src==='deadtoons'?'via DeadToons':(drop.src==='toonstream'?'via ToonStream':'fresh drop'))+'</div>':'<div class="quick-meta"><span class="rating">★ '+a.rating+'</span> · '+a.year+'<br>'+genreText(a)+'</div>')+'<div class="quick-actions"><button data-quick-play="'+key+'">▶ Play</button><button class="quick-save" data-save-key="'+key+'">＋ My List</button></div></div></div><div class="rail-copy"><h3>'+a.title+'</h3><p>'+(drop?dropEpisode+(drop.verb||'Added')+' '+dropAdded+(drop.fresh?' · New':'')+' · '+dropType:'★ '+a.rating+' · '+genreText(a))+'</p></div></article>'}
       function renderHomeRows(){var html='';each(rows,function(row,i){var cards='';each(row.keys,function(key,n){var card=railCard(key);cards+=row.ranked?'<div class="rank-card"><span class="rank-number">'+(n+1)+'</span>'+card+'</div>':card});html+='<section class="anime-rail'+(row.fresh?' fresh-rail':'')+'" aria-labelledby="rail-title-'+i+'"><div class="rail-head"><div class="rail-titles"><h2 id="rail-title-'+i+'"><span class="orange-line"></span>'+row.title+'</h2>'+(row.subtitle?'<p class="rail-sub">'+row.subtitle+'</p>':'')+'</div><div class="rail-controls"><button class="rail-arrow" data-rail-prev aria-label="Scroll '+row.title+' left">‹</button><button class="rail-arrow" data-rail-next aria-label="Scroll '+row.title+' right">›</button></div></div><div class="rail-track'+(row.ranked?' ranked-track':'')+'">'+cards+'</div></section>'});byId('homeRows').innerHTML=html}
       /* Studio Ghibli collection: 22 feature films from the IMDb list, shown as
          their own rail inside Movies. Poster art comes from TMDB; if a poster
@@ -953,6 +953,34 @@ var CR_NEW_DROPS_MODE='today';
   if(rows.length&&rows[0].fresh)rows.splice(1,0,library);else rows.unshift(library);
 })();
 /*CR_DROPS_END*/
+      /* Fresh Drop Toon: the toonstream.us home page's own "Fresh Drops" rail,
+         fetched live from /api/toonstream?home=1 so the row mirrors the site
+         instead of a hand-kept list. Every card plays through the ToonStream
+         resolver (Play/Short/MultiQ), and episode links keep their S/E. */
+      (function(){
+        function paint(items){
+          if(!items||!items.length)return;
+          var keys=[],seen={},i,it,key;
+          for(i=0;i<items.length;i++){
+            it=items[i];
+            if(!it||!it.title)continue;
+            key='tsd-'+(it.slug||('t'+i)).replace(/[^a-z0-9]+/g,'-');
+            if(seen[key]||shows[key])continue;
+            seen[key]=1;
+            shows[key]={title:it.title,year:'',rating:'-',genres:['anime'],audio:'Sub & Dub',img:it.img||'',type:'TV',drop:true};
+            window.CR_NX_DROPS[key]={id:null,kind:'tv',seasons:{},added:'',fresh:true,src:'toonstream',verb:'Fresh',season:it.season||null,episode:(typeof it.ep==='number'?it.ep:null),guide:null};
+            keys.push(key);
+          }
+          if(!keys.length)return;
+          rows.unshift({title:'Fresh Drop Toon',subtitle:'New on toonstream.us right now',fresh:true,ranked:false,keys:keys});
+          renderHomeRows();
+        }
+        try{
+          fetch('/api/toonstream?home=1').then(function(r){return r.json()}).then(function(b){
+            if(b&&b.ok&&b.items)paint(b.items);
+          }).catch(function(){});
+        }catch(e){}
+      })();
       renderHomeRows();renderCatalog();renderMovies('all');renderGhibliRow();
       var saved={};var favorites={solo:true,jjk:true,demon:true};var activeKey='solo';
       var dialog=byId('detailDialog'),toast=document.querySelector('.toast'),toastTimer,playerShell=byId('playerShell'),videoStage=byId('videoStage');
