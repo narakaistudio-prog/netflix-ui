@@ -86943,8 +86943,9 @@
      {
       "season": 1,
       "episode": 28,
-      "name": "Episode 28",
-      "overview": "",
+      "name": "They're One and the Same",
+      "overview": "Yumeka snaps at Taiki for overstepping while a teammate's harsh words stir up old memories for Chinatsu. Later, a chance encounter catches her off guard.",
+      "runtime": 24,
       "still": "https://image.tmdb.org/t/p/w500/y7awaFrsTC419Yp5bSOQVaOTK8z.jpg",
       "air_date": "2026-10-18"
      },
@@ -98844,7 +98845,7 @@
     "season_number": 5,
     "name": "Season 5",
     "overview": "",
-    "episode_count": 4,
+    "episode_count": 5,
     "episodes": [
      {
       "season": 5,
@@ -98876,9 +98877,18 @@
      {
       "season": 5,
       "episode": 4,
-      "name": "TBD",
-      "overview": "",
+      "name": "Royally Funny - Saif Ali Khan and Kareena Kapoor Khan",
+      "overview": "Opposites attract! Saif and Kareena bring 14 years of couple quirks, cheeky jabs and rare revelations to Kapil's stage in a must-watch celebration!",
+      "runtime": 63,
+      "still": "https://image.tmdb.org/t/p/w500/rK0Z9hMxpi0YYXMOnnkxtlk56L7.jpg",
       "air_date": "2026-10-17"
+     },
+     {
+      "season": 5,
+      "episode": 5,
+      "name": "Episode 5",
+      "overview": "",
+      "air_date": "2026-10-24"
      }
     ]
    }
@@ -100649,8 +100659,9 @@
      {
       "season": 1,
       "episode": 27,
-      "name": "Episode 27",
-      "overview": "",
+      "name": "Happosai Days Are Here Again",
+      "overview": "The Tendo family hits the beach. As Happosai runs wild, Ranma tries to set him up with Cologne — but it seems they share a past tied to an heirloom.",
+      "runtime": 23,
       "still": "https://image.tmdb.org/t/p/w500/dfEiAZgzCUcowomk2ZPfmR9pOG3.jpg",
       "air_date": "2026-10-18"
      },
@@ -106209,8 +106220,8 @@
       "season": 1,
       "episode": 1,
       "name": "Episode 1",
-      "overview": "Pickpocket Lee Ga-gyeong has just one goal — to flee colonial Joseon. But she soon ends up unexpectedly entangled with the Korean independence movement.",
-      "runtime": 73,
+      "overview": "Pickpocket Lee Ga-kyung has just one goal — to flee colonial Joseon. But she soon ends up unexpectedly entangled with the Korean independence movement.",
+      "runtime": 74,
       "still": "https://image.tmdb.org/t/p/w500/2HIrsHCOktTwKqg1DvtPTWxVSjn.jpg",
       "air_date": "2026-10-10"
      },
@@ -106218,7 +106229,7 @@
       "season": 1,
       "episode": 2,
       "name": "Episode 2",
-      "overview": "Ga-gyeong's language skills shock Yoo Philip and Yoo So-ran. Meanwhile, Kim Tae-ung's insistence that Ga-gyeong return his wallet raises her suspicions.",
+      "overview": "Ga-kyung's language skills shock Yoo Philip and Yoo So-ran. Meanwhile, Kim Tae-ung's insistence that Ga-kyung return his wallet raises her suspicions.",
       "runtime": 69,
       "still": "https://image.tmdb.org/t/p/w500/njBM0KY8iHG4CPs5DX5BE5LU7vY.jpg",
       "air_date": "2026-10-11"
@@ -106227,14 +106238,18 @@
       "season": 1,
       "episode": 3,
       "name": "Episode 3",
-      "overview": "",
+      "overview": "Despite Ga-kyung's initial reservations about So-ran, the two join hands. On her first day at work undercover, Ga-kyung meets a familiar face.",
+      "runtime": 64,
+      "still": "https://image.tmdb.org/t/p/w500/uaZcrkEshgXlxmi8fJM6StOUFaV.jpg",
       "air_date": "2026-10-17"
      },
      {
       "season": 1,
       "episode": 4,
       "name": "Episode 4",
-      "overview": "",
+      "overview": "Tae-ung remains suspicious of Ga-kyung, but also strangely captivated — or even charmed? Meanwhile, the Gugukdan start making big plans.",
+      "runtime": 67,
+      "still": "https://image.tmdb.org/t/p/w500/ejGJzQ0sa5OVVMcQWwGqLa4cYid.jpg",
       "air_date": "2026-10-18"
      },
      {
@@ -106520,7 +106535,9 @@
       "season": 1,
       "episode": 4,
       "name": "Episode 4",
-      "overview": "",
+      "overview": "After a new surgeon arrives at the hospital, Jang Hui-suk and Su-jeong keep a close eye on him. Meanwhile, a pharmaceutical rep suffers an emergency.",
+      "runtime": 61,
+      "still": "https://image.tmdb.org/t/p/w500/vCNYcpaJHHrEKTCtRtpRjlkBNRq.jpg",
       "air_date": "2026-10-17"
      },
      {
