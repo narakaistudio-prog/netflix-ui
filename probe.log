@@ -3,18 +3,68 @@
     one-piece-hindi-dub: HTTP 500
     one-piece-dub: HTTP 500
     one-piece-english-dub: HTTP 500
-  search "One Piece"/s?q=: 9 series links
+  search "One Piece"/s?q=: 10 series links
     - /series/lego-one-piece ""
     - /series/one-piece-wano-arc ""
     - /series/one-piece-live-action ""
     - /series/one-piece-dub-sub ""
-    - /series/super-robot-monkey-team-hyperforce-go ""
-    - /series/kaiju-no-8 ""
+    - /series/phineas-and-ferb ""
+    - /series/haikyu-multi-audio ""
     lego-one-piece: "LEGO ONE PIECE" buttons=1 inline=1-2 (2)
     lego-one-piece: rejected "LEGO ONE PIECE" for "One Piece"
     one-piece-wano-arc: "One Piece Wano Arc" buttons=3 inline=1-61 (61)
-   1 One Piece                                one-piece-wano-arc                 S1:61 S21:85@892 S22:67@1089
+    one-piece-live-action: "One Piece Live Action" buttons=2 inline=1-8 (8)
+    one-piece-dub-sub: "One Piece" buttons=22 inline=6-61 (56)
+   1 One Piece                                one-piece-dub-sub                  S1:56@6 S2:16@62 S3:14@78 S4:39@92 S5:13@131 S6:52@144 S7:33@196 S8:35@229 S9:73@264 S10:45@337 S11:26@382 S12:14@408 S13:101@422 S14:58@523 S15:62@581 S16:50@643 S17:56@693 S18:55@749 S19:74@804 S20:14@878 S21:197@892 S22:64@1089
+    golden-kamuy: HTTP 500
+    golden-kamuy-hindi-dub: HTTP 500
+    golden-kamuy-dub: HTTP 500
+    golden-kamuy-english-dub: HTTP 500
+  search "Golden Kamuy"/s?q=: 6 series links
+    - /series/phineas-and-ferb ""
+    - /series/haikyu-multi-audio ""
+    - /series/scooby-doo-mystery-incorporated ""
+    - /series/i-made-friends-with-the-second-prettiest-girl-in-my-class-fan-dub ""
+    - /series/tokyo-ghoul-crunchyroll-dub ""
+    - /series/baki-hanma ""
+   2 Golden Kamuy                                     MISS
+    fate-strange-fake: HTTP 500
+    fate-strange-fake-hindi-dub: HTTP 500
+    fate-strange-fake-dub: HTTP 500
+    fate-strange-fake-english-dub: HTTP 500
+  search "Fate/strange Fake"/s?q=: 6 series links
+    - /series/phineas-and-ferb ""
+    - /series/haikyu-multi-audio ""
+    - /series/scooby-doo-mystery-incorporated ""
+    - /series/i-made-friends-with-the-second-prettiest-girl-in-my-class-fan-dub ""
+    - /series/tokyo-ghoul-crunchyroll-dub ""
+    - /series/baki-hanma ""
+   3 Fate/strange Fake                                MISS
+    to-your-eternity: HTTP 500
+    to-your-eternity-hindi-dub: HTTP 500
+    to-your-eternity-dub: HTTP 500
+    to-your-eternity-english-dub: HTTP 500
+  search "To Your Eternity"/s?q=: 6 series links
+    - /series/phineas-and-ferb ""
+    - /series/haikyu-multi-audio ""
+    - /series/scooby-doo-mystery-incorporated ""
+    - /series/i-made-friends-with-the-second-prettiest-girl-in-my-class-fan-dub ""
+    - /series/tokyo-ghoul-crunchyroll-dub ""
+    - /series/baki-hanma ""
+   4 To Your Eternity                                 MISS
+    blue-miburo: HTTP 500
+    blue-miburo-hindi-dub: HTTP 500
+    blue-miburo-dub: HTTP 500
+    blue-miburo-english-dub: HTTP 500
+  search "Blue Miburo"/s?q=: 6 series links
+    - /series/phineas-and-ferb ""
+    - /series/haikyu-multi-audio ""
+    - /series/scooby-doo-mystery-incorporated ""
+    - /series/i-made-friends-with-the-second-prettiest-girl-in-my-class-fan-dub ""
+    - /series/tokyo-ghoul-crunchyroll-dub ""
+    - /series/baki-hanma ""
+   5 Blue Miburo                                      MISS
 /*TS_SEASONS_START*/
 /* Written by scripts/harvest-toonstream-seasons.mjs — do not edit by hand. */
-var TS_SEASONS={"onepiece":{"slug":"one-piece-wano-arc","seasons":{"1":61,"21":85,"22":67},"epStart":{"21":892,"22":1089},"nxMap":{"1":{"season":1,"base":0}}}};
+var TS_SEASONS={"onepiece":{"slug":"one-piece-dub-sub","seasons":{"1":56,"2":16,"3":14,"4":39,"5":13,"6":52,"7":33,"8":35,"9":73,"10":45,"11":26,"12":14,"13":101,"14":58,"15":62,"16":50,"17":56,"18":55,"19":74,"20":14,"21":197,"22":64},"epStart":{"1":6,"2":62,"3":78,"4":92,"5":131,"6":144,"7":196,"8":229,"9":264,"10":337,"11":382,"12":408,"13":422,"14":523,"15":581,"16":643,"17":693,"18":749,"19":804,"20":878,"21":892,"22":1089},"nxMap":{"1":{"season":1,"base":0}}}};
 /*TS_SEASONS_END*/
