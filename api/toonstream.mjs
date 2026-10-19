@@ -125,6 +125,39 @@ function extractIframes(html) {
 }
 
 /**
+ * The site's own player slots: `id="options-N"` divs each wrap one player
+ * iframe (slot 0 is the sidebar's SERVER 1 "PLAY"). Lazy slots carry the URL
+ * in data-src. Returns [{slot, url}] in slot order, trailer frames skipped.
+ */
+function extractPlayerSlots(html) {
+  const out = [];
+  const divs = [...html.matchAll(/id="options-(\d+)"/g)];
+  for (let i = 0; i < divs.length; i++) {
+    const slot = parseInt(divs[i][1], 10);
+    const end = i + 1 < divs.length ? divs[i + 1].index : Math.min(html.length, divs[i].index + 1600);
+    const seg = html.slice(divs[i].index, end);
+    const f = seg.match(/(?:data-src|src)="(https?:\/\/[^"]+)"/i);
+    if (!f) continue;
+    const url = f[1].trim();
+    if (/youtube|youtu\.be|dailymotion/i.test(url)) continue;
+    if (!out.some((o) => o.slot === slot)) out.push({ slot, url });
+  }
+  return out;
+}
+
+/**
+ * Sidebar row names: <span class="hex-number">01</span> ... <span class="server-name">Play</span>.
+ * Returns {'1': 'Play', '2': 'Short', ...}.
+ */
+function extractServerNames(html) {
+  const names = {};
+  for (const m of html.matchAll(/hex-number">\s*(\d+)\s*<\/span>[\s\S]{0,500}?server-name">\s*([^<]+?)\s*</gi)) {
+    names[String(parseInt(m[1], 10))] = m[2];
+  }
+  return names;
+}
+
+/**
  * Third-party player/download links with the quality label closest to them
  * (the rows render as "… <host> … Multi Audio … 1080p … [link]").
  */
@@ -260,10 +293,19 @@ async function handler(req, res) {
       return res.status(200).json({ ok: true, frameBlocked: !!found.frameBlocked, b64 });
     }
     const embeds = extractIframes(found.html);
-    const servers = extractServers(found.html);
-    const chosen = pickEmbed(embeds);
+    // Only the site's first three servers (SERVER 1/2/3 in the sidebar),
+    // named from the page's own server list - everything else is dropped.
+    const rowNames = extractServerNames(found.html);
+    let siteServers = extractPlayerSlots(found.html)
+      .slice(0, 3)
+      .map((sl) => ({ name: rowNames[String(sl.slot + 1)] || `S${sl.slot + 1}`, url: sl.url }));
+    if (!siteServers.length) {
+      siteServers = embeds.slice(0, 3).map((url, i) => ({ name: `S${i + 1}`, url }));
+    }
+    const chosen = siteServers[0] ? siteServers[0].url : pickEmbed(embeds);
+    const embeds3 = siteServers.map((x) => x.url);
     if (steps) {
-      steps.push({ step: 'parsed', iframes: embeds.length, servers: servers.length });
+      steps.push({ step: 'parsed', iframes: embeds.length, servers: siteServers.length });
     }
 
     res.status(200).json({
@@ -273,9 +315,9 @@ async function handler(req, res) {
       episode: Number(episode),
       episodeUrl: found.episodeUrl,
       via: found.via,
-      embeds,
+      embeds: embeds3,
       chosen,
-      servers: servers.slice(0, 12),
+      servers: siteServers,
       ...(debug ? { steps } : {}),
     });
   } catch (err) {
@@ -292,4 +334,4 @@ export default handler;
 export const config = { maxDuration: 30 };
 
 // Exposed for tests.
-export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractServers, matchScore, pickEmbed };
+export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractServers, matchScore, pickEmbed };
