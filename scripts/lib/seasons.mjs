@@ -41,6 +41,10 @@ export const nxEpisodes = (body) => {
  * begins at episode 6, Naruto's second at 33). That absolute number — not the
  * count of earlier seasons — decides the Nxsha position, otherwise the guide
  * and the embed would point at the wrong episode.
+ *
+ * Example: One Piece S1 has 56 episodes numbered 6..61 and Nxsha's S1 has
+ * 61 episodes numbered 1..61, so its first card maps to Nxsha episode 6
+ * (`base: 5`), while S2 (site numbering 62..77) lands on Nxsha S2 episode 62.
  */
 export function buildSeasonMap(tsSeasons, nxSeasons) {
     const flat = [];
