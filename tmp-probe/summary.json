@@ -1,0 +1,213 @@
+{
+  "Ranma1/2": {
+    "seriesStatus": 200,
+    "dataUrls": [
+      "/series/ranma1-2/season/1",
+      "/series/ranma1-2/season/2",
+      "/series/ranma1-2/season/3"
+    ],
+    "seasons": {
+      "1": {
+        "status": 200,
+        "links": {
+          "1": {
+            "count": 12,
+            "max": 12,
+            "missing": []
+          }
+        }
+      },
+      "2": {
+        "status": 200,
+        "links": {
+          "2": {
+            "count": 12,
+            "max": 12,
+            "missing": []
+          }
+        }
+      },
+      "3": {
+        "status": 200,
+        "links": {
+          "3": {
+            "count": 3,
+            "max": 3,
+            "missing": []
+          }
+        }
+      },
+      "initial": {
+        "1": {
+          "count": 12,
+          "max": 12,
+          "missing": []
+        }
+      }
+    },
+    "nx": {
+      "1": {
+        "count": 36,
+        "declared": 36,
+        "first": [
+          1,
+          "2024-10-06",
+          "Here's Ranma"
+        ],
+        "last": [
+          36,
+          "2026-12-20",
+          "Episode 36"
+        ]
+      },
+      "2": "{\"success\":false,\"message\":\"Season not found\"}",
+      "3": "{\"success\":false,\"message\":\"Season not found\"}",
+      "4": "{\"success\":false,\"message\":\"Season not found\"}",
+      "5": "{\"success\":false,\"message\":\"Season not found\"}"
+    }
+  },
+  "Blue Box": {
+    "seriesStatus": 200,
+    "dataUrls": [
+      "/series/blue-box/season/1",
+      "/series/blue-box/season/2"
+    ],
+    "seasons": {
+      "1": {
+        "status": 200,
+        "links": {
+          "1": {
+            "count": 25,
+            "max": 25,
+            "missing": []
+          }
+        }
+      },
+      "2": {
+        "status": 200,
+        "links": {
+          "2": {
+            "count": 3,
+            "max": 3,
+            "missing": []
+          }
+        }
+      },
+      "initial": {
+        "1": {
+          "count": 25,
+          "max": 25,
+          "missing": []
+        }
+      }
+    },
+    "nx": {
+      "1": {
+        "count": 37,
+        "declared": 37,
+        "first": [
+          1,
+          "2024-10-03",
+          "Chinatsu Senpai"
+        ],
+        "last": [
+          37,
+          "2026-12-20",
+          "Episode 37"
+        ]
+      },
+      "2": "{\"success\":false,\"message\":\"Season not found\"}",
+      "3": "{\"success\":false,\"message\":\"Season not found\"}",
+      "4": "{\"success\":false,\"message\":\"Season not found\"}",
+      "5": "{\"success\":false,\"message\":\"Season not found\"}"
+    }
+  },
+  "The Elusive Samurai": {
+    "seriesStatus": 200,
+    "dataUrls": [
+      "/series/the-elusive-samurai/season/1",
+      "/series/the-elusive-samurai/season/2"
+    ],
+    "seasons": {
+      "1": {
+        "status": 200,
+        "links": {
+          "1": {
+            "count": 12,
+            "max": 12,
+            "missing": []
+          }
+        }
+      },
+      "2": {
+        "status": 200,
+        "links": {
+          "2": {
+            "count": 11,
+            "max": 11,
+            "missing": []
+          }
+        }
+      },
+      "initial": {
+        "1": {
+          "count": 12,
+          "max": 12,
+          "missing": []
+        }
+      }
+    },
+    "nx": {
+      "1": {
+        "count": 12,
+        "declared": 12,
+        "first": [
+          1,
+          "2024-07-06",
+          "May 22nd"
+        ],
+        "last": [
+          12,
+          "2024-09-28",
+          "Hang in There, Tokiyuki, Until the Day You Retake Kamakura"
+        ]
+      },
+      "2": {
+        "count": 12,
+        "declared": 12,
+        "first": [
+          1,
+          "2026-07-17",
+          "Longing for Sea Bream!"
+        ],
+        "last": [
+          12,
+          "2026-10-02",
+          "The Age"
+        ]
+      },
+      "3": "{\"success\":false,\"message\":\"Season not found\"}",
+      "4": "{\"success\":false,\"message\":\"Season not found\"}",
+      "5": "{\"success\":false,\"message\":\"Season not found\"}"
+    }
+  },
+  "sampleSeasonPage": {
+    "status": 200,
+    "bytes": 9657,
+    "cards": [
+      [
+        "/episode/ranma1-2-2x1/",
+        ""
+      ],
+      [
+        "/episode/ranma1-2-2x2/",
+        ""
+      ],
+      [
+        "/episode/ranma1-2-2x3/",
+        ""
+      ]
+    ],
+    "hasSeasonBtns": false
+  }
+}
