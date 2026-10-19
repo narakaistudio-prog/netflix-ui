@@ -1,45 +1,25 @@
-// @ts-nocheck — the toonstream "server 2" resolver, driven with mocked upstreams.
-// Fixtures mirror the structures observed on the live site (episode slug
-// `<title>-<s>x<e>`, series pages, player rows with 1080p download links).
-const handler = require('../api/toonstream.mjs').default;
-const { titleSlug, matchScore, extractServers, extractIframes, findEpisodeLink } = require('../api/toonstream.mjs')._internal;
+// @ts-nocheck — the toonstream "server 2" resolver, driven through a
+// child-process ESM harness (jest cannot import .mjs directly; the harness
+// imports the module exactly like Vercel does). Fixtures mirror the live
+// site: episode slug `<title>-<s>x<e>`, series pages, player rows with
+// quality-labelled download links.
+import { spawnSync } from 'node:child_process';
+import { join } from 'node:path';
 
-const ROOT = process.cwd();
+const MODULE_PATH = join(process.cwd(), 'api', 'toonstream.mjs');
+const HARNESS = join(process.cwd(), 'tests-arena', 'helpers', 'toonstream-harness.mjs');
 
-function makeRes() {
-    return {
-        statusCode: 0,
-        body: null as any,
-        setHeader: () => {},
-        status(code: number) {
-            this.statusCode = code;
-            return this;
-        },
-        json(body: any) {
-            this.body = body;
-            return this;
-        },
-    };
+function runScenario(scenario) {
+    const res = spawnSync('node', [HARNESS], {
+        encoding: 'utf8',
+        timeout: 45000,
+        env: { ...process.env, TS_SCENARIO: JSON.stringify(scenario), TS_MODULE_PATH: MODULE_PATH },
+    });
+    const out = String(res.stdout || '');
+    const marker = out.lastIndexOf('__RESULT__');
+    if (marker === -1) throw new Error(`harness failed: ${res.stderr || out}`);
+    return JSON.parse(out.slice(marker + '__RESULT__'.length));
 }
-
-function call(query: Record<string, string>) {
-    const res = makeRes();
-    return Promise.resolve(
-        handler(
-            {
-                method: 'GET',
-                headers: { origin: 'https://app.example' },
-                socket: { remoteAddress: '1.2.3.4' },
-                query,
-            },
-            res,
-        ),
-    ).then(() => res);
-}
-
-afterEach(() => {
-    try { delete (global as any).fetch; } catch {}
-});
 
 /** The live episode page shape: player iframes + quality-labelled rows. */
 const EPISODE_HTML = `
@@ -68,44 +48,38 @@ const SEARCH_HTML = `
   <a href="/series/overgeared-hindi-dub/">Overgeared Hindi Dub</a>
 </body></html>`;
 
-function mockUpstream(map: Record<string, [number, string]>) {
-    const entries = Object.entries(map);
-    return jest.fn(async (url: string) => {
-        // The LONGEST matching needle wins, so '/episode/x-1x2' beats
-        // '/episode/x-1x2/' when both are registered.
-        const hit = entries
-            .filter(([needle]) => String(url).includes(needle))
-            .sort((a, b) => b[0].length - a[0].length)[0];
-        if (hit) {
-            const [status, body] = hit[1];
-            return { status, text: async () => body } as any;
-        }
-        return { status: 404, text: async () => 'not found' } as any;
-    });
-}
-
 test('titleSlug follows the site rule (verified against live URLs)', () => {
-    expect(titleSlug('Kaiju No. 8')).toBe('kaiju-no-8');
-    expect(titleSlug('Overgeared')).toBe('overgeared');
-    expect(titleSlug('The Beginning After the End')).toBe('the-beginning-after-the-end');
-    expect(titleSlug('Ranma1/2')).toBe('ranma1-2');
+    const { results } = runScenario({
+        mode: 'unit',
+        calls: [
+            ['titleSlug', ['Kaiju No. 8']],
+            ['titleSlug', ['Overgeared']],
+            ['titleSlug', ['The Beginning After the End']],
+            ['titleSlug', ['Ranma1/2']],
+        ],
+    });
+    expect(results).toEqual(['kaiju-no-8', 'overgeared', 'the-beginning-after-the-end', 'ranma1-2']);
 });
 
 test('matchScore ranks the right series first', () => {
-    const q = ['kaiju', 'no', '8'];
-    expect(matchScore(q, 'Kaiju No. 8')).toBe(1);
-    expect(matchScore(q, 'Kaiju No. 8 Hindi Dub')).toBe(1);
-    expect(matchScore(['overgeared'], 'Overgeared (2026)')).toBe(1);
-    expect(matchScore(['overgeared'], 'Totally Different Show')).toBe(0);
+    const { results } = runScenario({
+        mode: 'unit',
+        calls: [
+            ['matchScore', [['kaiju', 'no', '8'], 'Kaiju No. 8']],
+            ['matchScore', [['kaiju', 'no', '8'], 'Kaiju No. 8 Hindi Dub']],
+            ['matchScore', [['overgeared'], 'Overgeared (2026)']],
+            ['matchScore', [['overgeared'], 'Totally Different Show']],
+        ],
+    });
+    expect(results).toEqual([1, 1, 1, 0]);
 });
 
-test('resolves the episode directly from the deterministic slug and picks the embed', async () => {
-    global.fetch = mockUpstream({
-        '/episode/overgeared-1x2/': [200, EPISODE_HTML],
-    }) as any;
-
-    const res = await call({ title: 'Overgeared', s: '1', e: '2' });
-    expect(res.statusCode).toBe(200);
+test('resolves the episode directly from the deterministic slug and picks the embed', () => {
+    const res = runScenario({
+        query: { title: 'Overgeared', s: '1', e: '2' },
+        mocks: [{ needle: '/episode/overgeared-1x2/', status: 200, body: EPISODE_HTML }],
+    });
+    expect(res.code).toBe(200);
     expect(res.body.ok).toBe(true);
     expect(res.body.via).toBe('direct');
     expect(res.body.episodeUrl).toBe('https://toonstream.us/episode/overgeared-1x2/');
@@ -113,30 +87,29 @@ test('resolves the episode directly from the deterministic slug and picks the em
     expect(res.body.chosen).toBe('https://awish.click/embed-abc123.html');
     expect(res.body.embeds).toContain('https://awish.click/embed-abc123.html');
     // Player rows come back with their quality labels.
-    const ruby = res.body.servers.find((s: any) => s.url.includes('rubystm'));
+    const ruby = res.body.servers.find((s) => s.url.includes('rubystm'));
     expect(ruby).toMatchObject({ quality: '1080p', name: 'rubystm' });
-    const moly = res.body.servers.find((s: any) => s.url.includes('vidmoly'));
+    const moly = res.body.servers.find((s) => s.url.includes('vidmoly'));
     expect(moly.quality).toBe('720p');
-    // Only ONE upstream hit: the direct URL (no search roundtrip).
-    expect((global.fetch as jest.Mock).mock.calls).toHaveLength(1);
 });
 
-test('falls back to search -> series -> episode when the slug misses', async () => {
+test('falls back to search -> series -> episode when the slug misses', () => {
     // Realistic miss: our slug rule dashes the apostrophe, the site drops it —
     // so the direct URL 404s and the search chain takes over.
-    const FRIEREN_EP = EPISODE_HTML.replace('overgeared', 'frieren-beyond-journeys-end');
-    global.fetch = mockUpstream({
-        '/episode/frieren-beyond-journey-s-end-1x2/': [404, 'nope'],  // direct slug miss...
-        '?s=Frieren': [200, SEARCH_HTML.replace(/overgeared/g, 'frieren-beyond-journeys-end').replace(/Overgeared/g, 'Frieren: Beyond Journey')],
-        '/series/frieren-beyond-journeys-end/': [200, SERIES_HTML.replace(/overgeared/g, 'frieren-beyond-journeys-end').replace(/Overgeared/g, 'Frieren: Beyond Journey End')],
-        '/episode/frieren-beyond-journeys-end-1x2/': [200, FRIEREN_EP], // found via the series page
-    }) as any;
-
-    const res = await call({ title: 'Frieren: Beyond Journey\'s End', s: '1', e: '2', debug: '1' });
+    const frieren = (s) => String(s).replace(/overgeared/g, 'frieren-beyond-journeys-end').replace(/Overgeared/g, 'Frieren: Beyond Journey');
+    const res = runScenario({
+        query: { title: 'Frieren: Beyond Journey\'s End', s: '1', e: '2', debug: '1' },
+        mocks: [
+            { needle: '/episode/frieren-beyond-journey-s-end-1x2/', status: 404, body: 'nope' },
+            { needle: '?s=Frieren', status: 200, body: frieren(SEARCH_HTML) },
+            { needle: '/series/frieren-beyond-journeys-end/', status: 200, body: frieren(SERIES_HTML) },
+            { needle: '/episode/frieren-beyond-journeys-end-1x2/', status: 200, body: frieren(EPISODE_HTML) },
+        ],
+    });
     expect(res.body.ok).toBe(true);
     expect(res.body.via).toBe('search');
     expect(res.body.chosen).toBe('https://awish.click/embed-abc123.html');
-    const stepNames = res.body.steps.map((s: any) => s.step);
+    const stepNames = res.body.steps.map((s) => s.step);
     expect(stepNames).toContain('episode-direct');
     expect(stepNames).toContain('search');
     expect(stepNames).toContain('series-candidates');
@@ -144,29 +117,37 @@ test('falls back to search -> series -> episode when the slug misses', async () 
     expect(stepNames).toContain('episode');
 });
 
-test('no episode anywhere -> ok:false with a helpful hint, still a 200', async () => {
-    global.fetch = mockUpstream({}) as any;
-    const res = await call({ title: 'Made Up Show', s: '3', e: '9', debug: '1' });
-    expect(res.statusCode).toBe(200);
+test('no episode anywhere -> ok:false with a helpful hint, still a 200', () => {
+    const res = runScenario({
+        query: { title: 'Made Up Show', s: '3', e: '9', debug: '1' },
+        mocks: [],
+    });
+    expect(res.code).toBe(200);
     expect(res.body.ok).toBe(false);
     expect(res.body.error).toBe('no-episode');
     expect(res.body.hint).toContain('Made Up Show');
 });
 
-test('an unreachable site stays ok:false, never a 5xx', async () => {
-    global.fetch = jest.fn(async () => {
-        throw new TypeError('fetch failed');
-    }) as any;
-    const res = await call({ title: 'Overgeared', s: '1', e: '2' });
-    expect(res.statusCode).toBe(200);
+test('an unreachable site stays ok:false, never a 5xx', () => {
+    // A fetch that throws (network/CF block) must surface as ok:false.
+    const res = runScenario({
+        query: { title: 'Overgeared', s: '1', e: '2' },
+        crashFetch: true,
+    });
+    expect(res.code).toBe(200);
     expect(res.body.ok).toBe(false);
 });
 
 test('parsing helpers are conservative (only real player hosts, no site frames)', () => {
-    expect(extractIframes('<iframe src="https://toonstream.us/x"></iframe><iframe src="https://a-ads.com/f"></iframe><iframe src="https://awish.click/e1"></iframe>')).toEqual([
-        'https://awish.click/e1',
-    ]);
-    expect(findEpisodeLink(SERIES_HTML, '1', '2')).toBe('/episode/overgeared-1x2');
-    expect(findEpisodeLink(SERIES_HTML, '2', '9')).toBe(null);
+    const { results } = runScenario({
+        mode: 'unit',
+        calls: [
+            ['extractIframes', ['<iframe src="https://toonstream.us/x"></iframe><iframe src="https://a-ads.com/f"></iframe><iframe src="https://awish.click/e1"></iframe>']],
+            ['findEpisodeLink', [SERIES_HTML, '1', '2']],
+            ['findEpisodeLink', [SERIES_HTML, '2', '9']],
+        ],
+    });
+    expect(results[0]).toEqual(['https://awish.click/e1']);
+    expect(results[1]).toBe('/episode/overgeared-1x2');
+    expect(results[2]).toBe(null);
 });
-

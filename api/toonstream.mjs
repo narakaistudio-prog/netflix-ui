@@ -262,9 +262,9 @@ async function handler(req, res) {
   }
 }
 
-module.exports = handler;
-module.exports.default = handler;
-module.exports.config = { maxDuration: 30 };
+// ESM exports: on Vercel this file is imported as a real ES module.
+export default handler;
+export const config = { maxDuration: 30 };
 
 // Exposed for tests.
-module.exports._internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractServers, matchScore };
+export const _internal = { titleSlug, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractServers, matchScore };
