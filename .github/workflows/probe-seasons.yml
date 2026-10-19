@@ -4,6 +4,9 @@ on:
     paths:
       - '.github/workflows/probe-seasons.yml'
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
