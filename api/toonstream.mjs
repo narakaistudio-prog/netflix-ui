@@ -9,7 +9,7 @@
  *   1. Episode permalinks are the title slug plus `-<s>x<e>`:
  *      "Kaiju No. 8" S2E11 -> /episode/kaiju-no-8-2x11/  — so the direct URL
  *      is tried first, one request.
- *   2. On a miss (different spelling), the ?s=<title> search page is parsed
+ *   2. On a miss, the SSR search page /s?q=<title> is parsed for series links
  *      for /series/<slug>/ links, the best title match wins, and the series
  *      page is scanned for the wanted `-<s>x<e>` episode link.
  *   3. The episode page lists player servers (Ruby/vidc/Moly/…, labelled
@@ -233,8 +233,18 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   if (page.status === 200) {
     return { episodeUrl: direct, html: page.text, via: 'direct', frameBlocked: !!page.frameBlocked };
   }
+  // Sequel seasons often live on "-season-N" (or "-3rd-season") series
+  // pages, so probe the season-qualified slugs before searching.
+  const ord = season === '1' ? 'st' : season === '2' ? 'nd' : season === '3' ? 'rd' : 'th';
+  for (const suffix of [`-season-${season}`, `-${season}${ord}-season`]) {
+    const vu = `${BASE}/episode/${titleSlug(title)}${suffix}x${episode}/`;
+    const vp = await getText(vu, steps, 'episode-variant');
+    if (vp.status === 200) {
+      return { episodeUrl: vu, html: vp.text, via: 'direct', frameBlocked: !!vp.frameBlocked };
+    }
+  }
 
-  const search = await getText(`${BASE}/?s=${encodeURIComponent(title)}`, steps, 'search');
+  const search = await getText(`${BASE}/s?q=${encodeURIComponent(title)}`, steps, 'search');
   if (search.status !== 200) return null; // no search page -> nothing we can match
   const seriesLinks = extractSeriesLinks(search.text);
   if (steps) {

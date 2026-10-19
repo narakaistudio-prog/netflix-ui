@@ -200,7 +200,7 @@ test('falls back to search -> series -> episode when the slug misses', () => {
     const res = runScenario({
         query: { title: 'Overgeared Hindi', s: '1', e: '2', debug: '1' },
         mocks: [
-            { needle: '?s=Overgeared', status: 200, body: SEARCH_HTML },
+            { needle: '/s?q=Overgeared', status: 200, body: SEARCH_HTML },
             { needle: '/series/overgeared-hindi-dub/', status: 200, body: seriesPage },
             { needle: '/episode/og-hindi-1x2/', status: 200, body: ogEpisode },
         ],
