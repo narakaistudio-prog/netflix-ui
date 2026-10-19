@@ -306,20 +306,25 @@ test('a stale bake (anime already dropped on the page) renders no duplicate', as
     dom.window.close();
 });
 
-test('a season-number mismatch still shows the real Nxsha episode guide', async () => {
-    // ToonStream calls the current run "S3"; Nxsha merged everything into one
-    // 36-episode season. The card must still open a guide full of real names,
-    // stills and runtimes instead of 12 placeholders.
-    const guide: Record<string, any> = {};
-    for (let i = 1; i <= 36; i += 1) {
-        guide[String(i)] = {
-            title: i === 15 ? 'Chestnuts Roasting on an Open Fire' : `Episode ${i}`,
-            overview: `Story ${i}`,
-            image: `https://image.tmdb.org/t/p/w300/e${i}.jpg`,
-            airDate: '2025-10-19',
-            runtime: 23,
-        };
-    }
+test('ToonStream seasons drive the card; Nxsha fills the guide and the mapped embed', async () => {
+    // Ranma: ToonStream has S1 12, S2 12, S3 3. Nxsha merged all of it into one
+    // 36-episode season, so the drop (S3E3) is really Nxsha S1E27. The card must
+    // show ToonStream's three seasons, real metadata, and play Nxsha at the
+    // mapped coordinates.
+    const seasonGuide = (from: number, count: number) => {
+        const out: Record<string, any> = {};
+        for (let i = 0; i < count; i += 1) {
+            const nxEp = from + i;
+            out[String(i + 1)] = {
+                title: nxEp === 27 ? 'The Weirdest Couple' : `Episode ${nxEp}`,
+                overview: `Story ${nxEp}`,
+                image: `https://image.tmdb.org/t/p/w300/e${nxEp}.jpg`,
+                airDate: '2025-10-19',
+                runtime: 23,
+            };
+        }
+        return out;
+    };
     const { dom } = bootWithBake([
         {
             title: 'Ranma1/2',
@@ -328,10 +333,11 @@ test('a season-number mismatch still shows the real Nxsha episode guide', async 
             season: 3,
             episode: 3,
             nxId: '259140',
-            mappedSeason: 1,
-            seasons: { 1: 36 },
+            tsSlug: 'ranma1-2',
+            seasons: { 1: 12, 2: 12, 3: 3 },
+            nxMap: { 1: { season: 1, base: 0 }, 2: { season: 1, base: 12 }, 3: { season: 1, base: 24 } },
             firstSeen: '2026-10-19',
-            guide: { 1: guide },
+            guide: { 1: seasonGuide(1, 12), 2: seasonGuide(13, 12), 3: seasonGuide(25, 3) },
         },
     ]);
     await wait(400);
@@ -344,12 +350,39 @@ test('a season-number mismatch still shows the real Nxsha episode guide', async 
     await wait(250);
 
     const seasonSelect = doc.getElementById('seasonSelect') as HTMLSelectElement;
-    expect(seasonSelect.value).toBe('1');
+    // The dropped season opens first, with ToonStream's own episode count.
+    expect(seasonSelect.value).toBe('3');
+    expect(Array.from(seasonSelect.options).map((o) => o.value)).toEqual(['1', '2', '3']);
+    expect(Array.from(seasonSelect.options).map((o) => (o.textContent || '').trim())).toEqual([
+        'Season 1 (12)',
+        'Season 2 (12)',
+        'Season 3 (3)',
+    ]);
     const episodeList = doc.getElementById('episodeList')!;
-    expect(episodeList.querySelectorAll('.episode-card')).toHaveLength(36);
-    expect(episodeList.textContent).toContain('Chestnuts Roasting on an Open Fire');
-    expect(episodeList.innerHTML).toContain('e15.jpg');
-    // The list itself carries no placeholder-only cards.
+    expect(episodeList.querySelectorAll('.episode-card')).toHaveLength(3);
+    expect(episodeList.textContent).toContain('The Weirdest Couple');
+    expect(episodeList.innerHTML).toContain('e27.jpg');
+
+    // Season 2 carries its own slice (Nxsha episodes 13–24), not S1's data.
+    seasonSelect.value = '2';
+    seasonSelect.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
+    await wait(120);
+    expect(episodeList.querySelectorAll('.episode-card')).toHaveLength(12);
+    expect(episodeList.textContent).toContain('Episode 13');
     expect(episodeList.innerHTML).not.toContain('Episode still unavailable');
+
+    // Opening S2E1 must build the Nxsha embed from the baked map: S1E13.
+    const firstEpisode = episodeList.querySelector('.episode-card')!;
+    click(dom.window, firstEpisode);
+    await wait(200);
+    // The drop auto-starts on ToonStream; switch to the Nxsha source.
+    click(dom.window, doc.getElementById('nxServerBtn'));
+    await wait(150);
+    const poster = doc.getElementById('stagePoster');
+    if (poster && !poster.hidden) click(dom.window, poster);
+    const frame = doc.getElementById('serverFrame') as HTMLIFrameElement;
+    const ready = await waitFor(() => (frame.getAttribute('src') || '').indexOf('nxsha.space/embed') !== -1, 4000);
+    expect(ready).toBe(true);
+    expect(frame.getAttribute('src')).toContain('/embed/tv/259140/1/13');
     dom.window.close();
 });

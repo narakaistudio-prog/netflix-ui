@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 /**
  * Bake the "Fresh Drop Toon" rail: toonstream.us's own Fresh Drop list, with
- * the episode guide (titles, stills, synopsis, dates, runtimes) pulled from
- * Nxsha, and one card per anime only.
+ * ToonStream's own season layout (series page -> season pages -> episode
+ * numbers) and Nxsha's episode metadata (titles, stills, synopsis, dates,
+ * runtimes) mapped onto it, and one card per anime only.
+ *
+ * Nxsha merges split cours (Ranma's 12 + 12 + 3 ToonStream batches are one
+ * 36-episode Nxsha season), so a ToonStream season maps either onto the Nxsha
+ * season with the same number (when the counts agree) or onto a slice of the
+ * flat Nxsha list at the cumulative ToonStream offset. The page then builds the
+ * Nxsha embed from `nxMap`, while ToonStream playback uses the series slug.
  *
  * The row used to be fetched in the browser from /api/toonstream?home=1, which
  * meant no episode guide and no memory of what the page already carried. This
@@ -11,8 +18,8 @@
  *   1. GET toonstream.us/home -> the Fresh Drop rail (api/toonstream.mjs's parser)
  *   2. Resolve each title to an Nxsha id: the catalog registry, the existing
  *      drop states, then Nxsha's own /search/tv results.
- *   3. Episode guide for the dropped season from Nxsha's
- *      /api/tv/<id>/season/<n> JSON (the same source the catalog guide uses).
+ *   3. Season layout from ToonStream's /series/<slug>/ season pages, and the
+ *      Nxsha guide for those seasons from /api/tv/<id>/season/<n> JSON.
  *   4. Titles the page already shows (catalog or an older drop) are marked
  *      `onSite`: the page must not render a second card for them.
  *   5. Write data/toonstream-drops.json and bake it into crunchyroll.html
@@ -31,7 +38,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
-import { buildSeasonGuide, decodeEntities, titleKey } from './harvest-deadtoons-schedule.mjs';
+import { decodeEntities, titleKey } from './harvest-deadtoons-schedule.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const STATE_FILE = resolve(process.env.TS_DROPS_STATE_FILE || resolve(ROOT, 'data', 'toonstream-drops.json'));
@@ -223,69 +230,166 @@ async function fetchNxshaSeasons(id, report) {
     return seasons;
 }
 
-const latestAirDate = (body) => {
-    let latest = '';
-    for (const ep of body.episodes || []) {
-        const day = String(ep?.air_date || '');
-        if (day > latest) latest = day;
-    }
-    return latest;
-};
+/** Series slug from an episode URL: /episode/<slug>-<s>x<e>/ -> <slug>. */
+export function seriesSlugFromEpisode(url) {
+    const m = String(url || '').match(/\/episode\/(.+?)-(\d+)x(\d+)\/?$/i);
+    return m ? m[1] : '';
+}
 
-/**
- * Which Nxsha season should the guide open on? The exact ToonStream number when
- * Nxsha has it; a dub drop prefers season 1 (a dub of the original run); every
- * other mismatch falls back to the season that aired most recently, because a
- * Fresh Drop is by definition the newest episode.
- */
-export function pickGuideSeason(seasons, dropSeason, title = '') {
-    if (!Array.isArray(seasons) || !seasons.length) return null;
-    const number = (body) => Number(body?.season?.season_number) || 0;
-    const exact = seasons.find((body) => number(body) === Number(dropSeason));
-    if (exact) return exact;
-    if (/\bdub(bed)?\b/i.test(String(title))) {
-        return seasons.slice().sort((a, b) => number(a) - number(b))[0];
+/** The season buttons on a ToonStream series page, in order. */
+export function parseToonSeasons(html) {
+    const out = new Map();
+    for (const tag of String(html || '').matchAll(/<a\b[^>]*>/g)) {
+        const hit = /data-url="([^"]*\/season\/(\d+))"/.exec(tag[0]);
+        if (!hit) continue;
+        out.set(Number(hit[2]), hit[1]);
     }
-    return seasons
-        .slice()
-        .sort((a, b) => latestAirDate(b).localeCompare(latestAirDate(a)) || number(b) - number(a))[0];
+    return [...out.entries()].sort((a, b) => a[0] - b[0]).map(([n, url]) => ({ n, url }));
+}
+
+/** Episode numbers a season page links to: count + any gaps. */
+export function parseSeasonEpisodes(html) {
+    const nums = new Set();
+    for (const m of String(html || '').matchAll(/\/episode\/[^"'#]*?-(\d+)x(\d+)\/?(?=["'#])/g)) {
+        nums.add(Number(m[2]));
+    }
+    const sorted = [...nums].filter((n) => n > 0).sort((a, b) => a - b);
+    return {
+        count: sorted.length ? sorted[sorted.length - 1] : 0,
+        missing: sorted.filter((n, i) => n !== i + 1).slice(0, 5),
+    };
 }
 
 /**
- * Guide for the whole show in CR_NX_DROPS.guide shape: every Nxsha season, the
- * chosen one first, capped so a 300-episode backlog cannot bloat the page.
- * `seasons` carries the baked episode count per season, never a fake count.
+ * ToonStream's own season structure. The series page lists its seasons and
+ * every season page lists that season's episodes, so the numbers here are the
+ * ones the player uses. Nxsha never decides the season layout: it only supplies
+ * the stills, titles and synopses that get mapped onto these seasons.
  */
-export function buildShowGuide(seasons, preferred, { maxEpisodes = 150, overviewLimit = 200 } = {}) {
-    if (!Array.isArray(seasons) || !seasons.length) return { guide: null, seasons: null, mappedSeason: null };
-    const number = (body) => Number(body?.season?.season_number) || 0;
-    const preferredNumber = Number(preferred?.season?.season_number) || number(seasons[0]);
-    const ordered = [
-        ...seasons.filter((body) => number(body) === preferredNumber),
-        ...seasons
-            .filter((body) => number(body) !== preferredNumber)
-            .sort((a, b) => latestAirDate(b).localeCompare(latestAirDate(a)) || number(b) - number(a)),
-    ];
-    const guide = {};
-    const counts = {};
-    let budget = maxEpisodes;
-    for (const body of ordered) {
-        if (budget <= 0) break;
-        const seasonNumber = number(body);
-        const episodes = [...(body.episodes || [])]
-            .filter((ep) => Number.isInteger(Number(ep?.episode_number)) && Number(ep.episode_number) > 0)
-            .sort((a, b) => Number(a.episode_number) - Number(b.episode_number))
-            .slice(0, budget);
-        if (!episodes.length) continue;
-        const built = buildSeasonGuide({ ...body, episodes }, seasonNumber, { overviewLimit });
-        const seasonGuide = built?.[String(seasonNumber)];
-        if (!seasonGuide || !Object.keys(seasonGuide).length) continue;
-        guide[seasonNumber] = seasonGuide;
-        counts[seasonNumber] = Object.keys(seasonGuide).length;
-        budget -= counts[seasonNumber];
+async function fetchToonSeasons(seriesSlug, report) {
+    if (!seriesSlug) return null;
+    const series = await getText(`${BASE}/series/${seriesSlug}/`);
+    if (series.status !== 200) {
+        report.push({ step: 'toon-series', slug: seriesSlug, status: series.status });
+        return null;
     }
-    if (!Object.keys(guide).length) return { guide: null, seasons: null, mappedSeason: null };
-    return { guide, seasons: counts, mappedSeason: preferredNumber };
+    const links = parseToonSeasons(series.text);
+    const seasons = [];
+    if (links.length) {
+        for (const link of links) {
+            const url = link.url.startsWith('http') ? link.url : `${BASE}${link.url}`;
+            const page = await getText(url.endsWith('/') ? url : `${url}/`);
+            const info = parseSeasonEpisodes(page.text || '');
+            if (page.status === 200 && info.count) seasons.push({ n: link.n, ...info });
+            await sleep(120);
+        }
+    } else {
+        const bySeason = new Map();
+        for (const m of (series.text || '').matchAll(/\/episode\/[^"'#]*?-(\d+)x(\d+)\/?(?=["'#])/g)) {
+            const n = Number(m[1]);
+            if (!bySeason.has(n)) bySeason.set(n, new Set());
+            bySeason.get(n).add(Number(m[2]));
+        }
+        for (const n of [...bySeason.keys()].sort((a, b) => a - b)) {
+            const eps = [...bySeason.get(n)].sort((a, b) => a - b);
+            const count = eps[eps.length - 1] || 0;
+            if (count) seasons.push({ n, count, missing: eps.filter((e, i) => e !== i + 1).slice(0, 5) });
+        }
+    }
+    if (!seasons.length) {
+        report.push({ step: 'toon-series', slug: seriesSlug, status: series.status, seasons: 'none' });
+        return null;
+    }
+    return { slug: seriesSlug, seasons };
+}
+
+const nxSeasonNumber = (body) => Number(body?.season?.season_number) || 0;
+
+/** Nxsha episodes of one season, in order, numbered from 1. */
+const nxEpisodes = (body) =>
+    [...((body && body.episodes) || [])]
+        .filter((ep) => Number.isInteger(Number(ep?.episode_number)) && Number(ep.episode_number) > 0)
+        .sort((a, b) => Number(a.episode_number) - Number(b.episode_number));
+
+/** One Nxsha episode as a guide entry (the shape CR_NX_DROPS.guide already uses). */
+function guideEpisode(episode, overviewLimit) {
+    const still = String(episode?.still_path || '').trim();
+    const image = !still
+        ? ''
+        : /^https?:\/\//i.test(still)
+            ? still
+            : `https://image.tmdb.org/t/p/w300${still.startsWith('/') ? '' : '/'}${still}`;
+    const overview = decodeEntities(String(episode?.overview || ''))
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, overviewLimit);
+    const runtime = Number.parseInt(episode?.runtime, 10);
+    return {
+        ...(episode?.name ? { title: decodeEntities(String(episode.name)).trim() } : {}),
+        ...(overview ? { overview } : {}),
+        ...(image ? { image } : {}),
+        ...(episode?.air_date ? { airDate: String(episode.air_date) } : {}),
+        ...(Number.isInteger(runtime) && runtime > 0 ? { runtime } : {}),
+    };
+}
+
+/**
+ * Bake a guide keyed by ToonStream's seasons. ToonStream splits a show into
+ * release batches (Ranma: S1 12 + S2 12 + S3 3) while Nxsha merges them (one
+ * 36-episode "Season 1"), so each ToonStream season maps either onto the Nxsha
+ * season with the same number (when the counts roughly agree) or onto a slice
+ * of the flat Nxsha episode list at the cumulative ToonStream offset.
+ *
+ * `seasons` = ToonStream's own episode counts (never Nxsha's, never a guess) and
+ * `nxMap[s] = {season, base}` lets the page build the Nxsha embed URL for any
+ * ToonStream episode: nxEpisode = base + episode.
+ */
+export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overviewLimit = 200 } = {}) {
+    if (!Array.isArray(tsSeasons) || !tsSeasons.length || !Array.isArray(nxSeasons) || !nxSeasons.length) {
+        return { guide: null, seasons: null, nxMap: null };
+    }
+    const flat = [];
+    for (const body of nxSeasons.slice().sort((a, b) => nxSeasonNumber(a) - nxSeasonNumber(b))) {
+        for (const episode of nxEpisodes(body)) {
+            flat.push({ season: nxSeasonNumber(body), ep: Number(episode.episode_number), data: episode });
+        }
+    }
+    if (!flat.length) return { guide: null, seasons: null, nxMap: null };
+
+    const guide = {};
+    const seasons = {};
+    const nxMap = {};
+    let offset = 0;
+    let budget = maxEpisodes;
+    for (const ts of tsSeasons) {
+        const count = Number(ts?.count) || 0;
+        if (!count) continue;
+        const same = nxSeasons.find((body) => nxSeasonNumber(body) === Number(ts.n));
+        const sameEps = same ? nxEpisodes(same) : [];
+        // Direct when Nxsha really carries this season number with a similar
+        // count; a merged 36-episode season must never swallow a 12-ep batch.
+        const direct = sameEps.length > 0 && Math.abs(sameEps.length - count) <= 2;
+        const base = direct ? { season: Number(ts.n), base: 0 } : { season: flat[offset]?.season, base: Math.max(0, (flat[offset]?.ep || 1) - 1) };
+        const seasonGuide = {};
+        for (let ep = 1; ep <= count && budget > 0; ep += 1) {
+            const hit = direct ? sameEps[ep - 1] : flat[offset + ep - 1];
+            if (!hit) continue;
+            if (!direct && hit.season !== base.season) continue; // never leak across an Nxsha season boundary
+            const meta = guideEpisode(direct ? hit : hit.data, overviewLimit);
+            if (!Object.keys(meta).length) continue;
+            seasonGuide[ep] = meta;
+            budget -= 1;
+        }
+        if (Object.keys(seasonGuide).length) {
+            guide[Number(ts.n)] = seasonGuide;
+            seasons[Number(ts.n)] = count;
+            nxMap[Number(ts.n)] = base;
+        }
+        offset += count;
+    }
+    if (!Object.keys(guide).length) return { guide: null, seasons: null, nxMap: null };
+    return { guide, seasons, nxMap };
 }
 
 async function resolveNxsha(title, indexHit, report) {
@@ -313,9 +417,10 @@ function toBlockItem(record) {
         episode: record.episode ?? null,
         ...(record.episodeUrl ? { episodeUrl: record.episodeUrl } : {}),
         ...(record.nxId ? { nxId: record.nxId } : {}),
+        ...(record.tsSlug ? { tsSlug: record.tsSlug } : {}),
         ...(record.seasons && Object.keys(record.seasons).length ? { seasons: record.seasons } : {}),
+        ...(record.nxMap && Object.keys(record.nxMap).length ? { nxMap: record.nxMap } : {}),
         ...(record.guide && Object.keys(record.guide).length ? { guide: record.guide } : {}),
-        ...(record.mappedSeason ? { mappedSeason: record.mappedSeason } : {}),
         ...(record.firstSeen ? { firstSeen: record.firstSeen } : {}),
         ...(record.onSite ? { onSite: true } : {}),
     };
@@ -350,18 +455,17 @@ function mergeState(previous, incoming, updated) {
     const items = {};
     for (const [slug, record] of Object.entries(incoming)) {
         const old = previous.items?.[slug];
-        const guide = {
-            ...(old?.guide || {}),
-            ...(record.guide || {}),
-        };
+        // A fresh guide covers every ToonStream season, so it replaces the old
+        // one outright. A failed fetch keeps yesterday's so cards never go blank.
+        for (const field of ['guide', 'seasons', 'nxMap', 'tsSlug']) {
+            if (!record[field] && old?.[field]) record[field] = old[field];
+        }
         const merged = {
             ...old,
             ...record,
             firstSeen: old?.firstSeen || record.firstSeen,
-            ...(Object.keys(guide).length ? { guide } : {}),
         };
-        // A remap only describes today's drop; never carry a stale one forward.
-        if (!record.mappedSeason) delete merged.mappedSeason;
+        delete merged.mappedSeason; // from the old Nxsha-season layout
         items[slug] = merged;
     }
     return { updated, source: BASE + '/home', items };
@@ -430,28 +534,30 @@ async function harvest() {
         }
         record.nxId = nxId;
 
-        // Fetch the show's whole Nxsha guide, not just the dropped season: the
-        // season numbers rarely line up (Nxsha merges split cours), and a guide
-        // with real stills/names matters more than a matching season label.
-        const seasons = await fetchNxshaSeasons(nxId, report);
-        const preferred = pickGuideSeason(seasons, season, title);
-        const built = buildShowGuide(seasons, preferred);
+        // Season layout is ToonStream's: its series page lists the seasons and
+        // each season page lists the real episode numbers. Nxsha only supplies
+        // the stills/titles/synopses mapped onto those seasons.
+        const seriesSlug = seriesSlugFromEpisode(record.episodeUrl) || drop.slug;
+        const toon = await fetchToonSeasons(seriesSlug, report);
+        if (toon) record.tsSlug = toon.slug;
+        const tsSeasons = toon?.seasons?.length
+            ? toon.seasons
+            : season
+                ? [{ n: season, count: episode || 1 }] // series page failed: keep the drop season playable
+                : [];
+        const nxSeasons = await fetchNxshaSeasons(nxId, report);
+        const built = buildShowGuide(tsSeasons, nxSeasons);
         if (built.guide) {
             record.guide = built.guide;
             record.seasons = built.seasons;
-            if (built.mappedSeason && Number(built.mappedSeason) !== Number(season)) {
-                // ToonStream's season does not exist on Nxsha; the guide is the
-                // closest real season (newest, or S1 for a dub). Playback keeps
-                // ToonStream's own S/E — only the guide is remapped.
-                record.mappedSeason = built.mappedSeason;
-            }
+            record.nxMap = built.nxMap;
         }
         if (report.length > 40) report.length = 40;
+        const layout = tsSeasons.map((s) => `S${s.n}:${s.count}`).join(' ');
         const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);
         console.log(
-            `  ${title.slice(0, 44).padEnd(46)} nx=${nxId} (${resolved?.from || hit?.from || '-'}) ` +
-                `s${season ?? '?'}e${episode ?? '?'} -> guide ${guideCount} eps` +
-                (record.mappedSeason ? ` (season ${record.mappedSeason})` : ''),
+            `  ${title.slice(0, 40).padEnd(42)} nx=${nxId} ts=[${layout}] ` +
+                `guide=${guideCount}${toon ? '' : ' (series fetch failed)'}`,
         );
         incoming[drop.slug] = record;
     }
