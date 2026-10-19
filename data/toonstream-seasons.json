@@ -29,6 +29,12 @@
           "season": 4,
           "base": 0
         }
+      },
+      "images": {
+        "5": {
+          "1": "https://image.tmdb.org/t/p/w780/xbY78pkMhTyEAYMNyAn428WGqs8.jpg",
+          "2": "https://image.tmdb.org/t/p/w780/jiXRRO9nO9vN5BfzL4HwWi3Oaob.jpg"
+        }
       }
     },
     "tokyo": {
@@ -175,6 +181,11 @@
         "4": {
           "season": 5,
           "base": 0
+        }
+      },
+      "images": {
+        "5": {
+          "1": "https://image.tmdb.org/t/p/w780/1RgPyOhN4DRs225BGTlHJqCudII.jpg"
         }
       }
     },
