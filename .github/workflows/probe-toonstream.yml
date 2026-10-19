@@ -1,0 +1,39 @@
+name: probe-toonstream
+on: workflow_dispatch
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch series + episode pages
+        run: |
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36'
+          curl -sSL -A "$UA" 'https://toonstream.us/series/ranma1-2/' -o series.html
+          echo "series bytes: $(wc -c < series.html)"
+          echo '--- episode hrefs ---'
+          grep -oE 'href="[^"]*/episode/[^"]*"' series.html | sort -u | head -60
+          echo '--- episode markup samples ---'
+          grep -oE '.{0,160}/episode/[^" ]{0,60}.{0,160}' series.html | head -6
+          echo '--- season words ---'
+          grep -oiE '.{0,50}season.{0,50}' series.html | head -20
+          echo '--- selects/options ---'
+          grep -oE '<select[^>]*>|<option[^>]*>[^<]{0,40}' series.html | head -40
+          echo '--- script src ---'
+          grep -oE '<script[^>]+src="[^"]+"' series.html | head -20
+          echo '--- data attrs ---'
+          grep -oE 'data-[a-z-]+="[^"]{0,80}"' series.html | sort -u | head -30
+          echo '--- api/ajax urls ---'
+          grep -oiE '(https?://[^"'"'"' ]*|/)[a-z0-9_./?=&-]*(ajax|api|episode|season)[a-z0-9_./?=&-]*' series.html | sort -u | head -30
+
+          curl -sSL -A "$UA" 'https://toonstream.us/episode/ranma1-2-3x3/' -o ep.html
+          echo "episode bytes: $(wc -c < ep.html)"
+          echo '--- episode title/h tags ---'
+          grep -oE '<title>[^<]*|<h1[^>]*>[^<]*|<h2[^>]*>[^<]*' ep.html | head -10
+          echo '--- server / iframe bits ---'
+          grep -oiE '.{0,120}(iframe|server|embed|player).{0,120}' ep.html | head -20
+          echo '--- episode links / nav ---'
+          grep -oE 'href="[^"]*/episode/[^"]*"' ep.html | sort -u | head -40
+          echo '--- selects/options ---'
+          grep -oE '<select[^>]*>|<option[^>]*>[^<]{0,40}' ep.html | head -30
+          echo '--- scripts ---'
+          grep -oE '<script[^>]+src="[^"]+"' ep.html | head -20
