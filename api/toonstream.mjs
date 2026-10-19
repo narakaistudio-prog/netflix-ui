@@ -81,7 +81,13 @@ function matchScore(queryTokens, candidate) {
   if (!have.size) return 0;
   let hit = 0;
   for (const t of queryTokens) if (have.has(t)) hit += 1;
-  return hit / queryTokens.length;
+  let score = hit / queryTokens.length;
+  // Punctuation-split titles still have to match: "Re:ZERO" -> re|zero is
+  // the site's single token "rezero-starting-life-in-another-world".
+  const qCompact = queryTokens.join('');
+  const cCompact = [...have].join('');
+  if (qCompact.length >= 4 && cCompact.includes(qCompact)) score = Math.max(score, 0.9);
+  return score;
 }
 
 /** The wanted `-<s>x<e>` episode link from a series page, or null. */
@@ -267,11 +273,28 @@ async function resolveEpisode({ title, slug, season, episode }, steps) {
   const ranked = seriesLinks
     .map((link) => ({ ...link, score: matchScore(q, link.text || link.slug) }))
     .sort((a, b) => b.score - a.score);
-  for (const candidate of ranked.filter((c) => c.score > 0).slice(0, 3)) {
+  for (const candidate of ranked.filter((c) => c.score > 0).slice(0, 4)) {
+    // The site's own search slug is the ground truth for this show — it beats
+    // any guess from the display title ("Re:ZERO" lives on
+    // /series/rezero-starting-life-in-another-world, not re-zero-...).
+    const base = String(candidate.slug)
+      .replace(/^\/series\//, '')
+      .replace(/\/+$/, '');
+    const seasonScoped = /-(season-\d+|\d+(?:st|nd|rd|th)-season|part-\d+)$/.test(base);
+    const tried = new Set();
+    for (const sKey of seasonScoped ? [season, '1'] : [season]) {
+      const direct = `${BASE}/episode/${base}-${sKey}x${episode}/`;
+      if (tried.has(direct)) continue;
+      tried.add(direct);
+      const dp = await getText(direct, steps, 'episode-from-series');
+      if (dp.status === 200) {
+        return { episodeUrl: direct, html: dp.text, via: 'series-slug', frameBlocked: !!dp.frameBlocked };
+      }
+    }
     const seriesPage = await getText(`${BASE}${candidate.slug}/`, steps, 'series');
     if (seriesPage.status !== 200) continue;
     let epLink = findEpisodeLink(seriesPage.text, season, episode);
-    if (!epLink && /-(season-\d+|\d+(?:st|nd|rd|th)-season)$/.test(candidate.slug)) {
+    if (!epLink && seasonScoped) {
       // Season-scoped series pages number episodes relative to that season.
       epLink = findEpisodeLink(seriesPage.text, '1', episode);
     }
