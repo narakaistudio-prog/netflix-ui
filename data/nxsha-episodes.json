@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-19T07:47:25.525Z",
+    "generatedAt": "2026-10-19T09:48:24.083Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": [
       "onepiece"
@@ -19516,6 +19516,7 @@
           "season": 2,
           "episode": 49,
           "title": "THE BLADE",
+          "image": "https://image.tmdb.org/t/p/w780/7tYwNIyqWxiMmGTtEZwCRVun68y.jpg",
           "airDate": "2026-10-20"
         },
         {
