@@ -51,10 +51,12 @@ export const nxEpisodes = (body) => {
 export function buildSeasonMap(tsSeasons, nxSeasons) {
     const flat = [];
     const byNumber = new Map();
+    const firstIndex = new Map();
     for (const body of (nxSeasons || []).slice().sort((a, b) => nxSeasonNumber(a) - nxSeasonNumber(b))) {
         const number = nxSeasonNumber(body);
         const episodes = nxEpisodes(body);
         byNumber.set(number, episodes);
+        firstIndex.set(number, flat.length);
         // `ep` is the position inside the season, which is what Nxsha's embed
         // address uses and what the baked guide is keyed by (the API numbers
         // long shows absolutely: Naruto S2 is 33..53, but the embed is 1..21).
@@ -64,19 +66,35 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
     }
 
     const map = {};
+    const consumed = new Set();
     let absolute = 0;
     for (const ts of (tsSeasons || []).slice().sort((a, b) => Number(a?.n) - Number(b?.n))) {
         const count = Number(ts?.count) || 0;
         if (!count) continue;
-        // ToonStream restarts numbering inside most seasons (1..N), so `start`
-        // is only an absolute position when it leaps past the running count —
-        // One Piece S1 begins at 6, Naruto S2 at 33.
-        const first = Number(ts?.start) || 0;
-        const startAbs = first > absolute + 1 ? first : absolute + 1;
-        const startIndex = startAbs - 1;
+        const number = Number(ts.n);
+        const same = byNumber.get(number);
+        // Most sites split a show the same way Nxsha does. When the counts are
+        // within an episode or two, trust the season number instead of the
+        // running total: Trigun's ToonStream S1 carries one extra card, and a
+        // cumulative mapping would shift all 12 episodes of S2 by one.
+        const anchor = same && !consumed.has(number) && Math.abs(same.length - count) <= 2;
+        let startIndex;
+        let budget;
+        if (anchor) {
+            startIndex = firstIndex.get(number);
+            budget = Math.min(count, same.length);
+        } else {
+            // ToonStream restarts numbering inside most seasons (1..N), so
+            // `start` is only an absolute position when it leaps past the
+            // running count — One Piece S1 begins at 6, Naruto S2 at 33.
+            const first = Number(ts?.start) || 0;
+            const startAbs = first > absolute + 1 ? first : absolute + 1;
+            startIndex = startAbs - 1;
+            budget = Math.min(count, Math.max(0, flat.length - startIndex));
+        }
         const segments = [];
         let at = startIndex;
-        let left = Math.min(count, Math.max(0, flat.length - startIndex));
+        let left = budget;
         while (left > 0 && at < flat.length) {
             const season = flat[at].season;
             const from = flat[at].ep;
@@ -87,9 +105,10 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
                 at += 1;
             }
             segments.push({ season, from, count: run });
+            consumed.add(season);
         }
         if (segments.length) {
-            map[Number(ts.n)] = {
+            map[number] = {
                 season: segments[0].season,
                 base: Math.max(0, segments[0].from - 1),
                 start: startIndex,
@@ -97,7 +116,7 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
                 segments,
             };
         }
-        absolute = startAbs + count - 1;
+        absolute = startIndex + count;
     }
     return { flat, map, byNumber };
 }

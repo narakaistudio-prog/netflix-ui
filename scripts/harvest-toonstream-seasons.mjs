@@ -284,8 +284,11 @@ function planCoords(plan, episode) {
             if (left < segment.count) return { season: segment.season, ep: segment.from + left };
             left -= segment.count;
         }
+        // Past the last mapped episode: keep counting inside that season so the
+        // card still resolves to a plausible coordinate (and gets its ToonStream
+        // still instead of silently borrowing the season's first episode).
         const last = plan.segments[plan.segments.length - 1];
-        return { season: last.season, ep: last.from + left };
+        return { season: last.season, ep: last.from + last.count + left };
     }
     return { season: plan.season, ep: (Number(plan.base) || 0) + left + 1 };
 }

@@ -56,6 +56,13 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           [{ n: 1, count: 56, start: 6 }, { n: 2, count: 16, start: 62 }],
           [{ season: { season_number: 1 }, count: 61 }, { season: { season_number: 2 }, count: 16 }],
         );
+        // When a site season carries one extra card (Trigun: 12 vs Nxsha 11),
+        // the next season still anchors to its own Nxsha season instead of
+        // shifting every later episode by one.
+        const anchored = buildSeasonMap(
+          [{ n: 1, count: 12 }, { n: 2, count: 12 }],
+          [{ season: { season_number: 1 }, count: 11 }, { season: { season_number: 2 }, count: 12 }],
+        );
         // A Hindi-dub season numbers episodes absolutely: S2 starts at 33.
         const absolute = parseSeasonEpisodes(
           Array.from({ length: 21 }, (_, i) => '<a href="/episode/naruto-shippuden-hindi-dub-2x' + (33 + i) + '/">x</a>').join(''),
@@ -65,6 +72,7 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           split: { map: split.map },
           cross: { map: cross.map, compact: compactPlan(cross.map['2']) },
           offset: offset.map,
+          anchored: anchored.map,
           absolute,
         }));
     `;
@@ -82,6 +90,8 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
     expect(parsed.cross.compact).toEqual({ seg: [[2, 1, 7], [3, 1, 11]] });
     expect(parsed.offset['1']).toMatchObject({ season: 1, base: 5, start: 5, count: 56 });
     expect(parsed.offset['2']).toMatchObject({ season: 2, base: 0, start: 61, count: 16 });
+    expect(parsed.anchored['1'].segments).toEqual([{ season: 1, from: 1, count: 11 }]);
+    expect(parsed.anchored['2']).toMatchObject({ season: 2, base: 0, start: 11, count: 12 });
     // Absolute numbering: 21 episodes starting at 33, not 53.
     expect(parsed.absolute).toEqual({ count: 21, first: 33, last: 53, missing: [] });
 });
