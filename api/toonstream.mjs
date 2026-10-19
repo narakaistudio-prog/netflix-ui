@@ -330,6 +330,10 @@ async function handler(req, res) {
       const b64 = Buffer.from([...new Set(wins)].join('\n~~~\n')).toString('base64');
       return res.status(200).json({ ok: true, frameBlocked: !!found.frameBlocked, sB64, b64 });
     }
+    if (String(req.query.servers || '') === '1') {
+      const cfg = await getText(`${BASE}/public/servers`, steps, 'servers-config');
+      return res.status(200).json({ ok: true, status: cfg.status, body: cfg.text.slice(0, 8000) });
+    }
     if (String(req.query.raw || '') === '1x') {
       // Structured debug: every player slot, every named row, every script
       // that could build the client-side sidebar, plus our own picks.
@@ -351,7 +355,9 @@ async function handler(req, res) {
           scripts.push({ inline: body.slice(0, 9000) });
         }
       }
-      const b64 = Buffer.from(JSON.stringify({ opts, rows, scripts: scripts.slice(0, 8), mine: extractSiteServers(found.html) })).toString('base64');
+      const tsi = found.html.search(/aa-tbs-video/);
+      const tbs = tsi === -1 ? 'NO-TBS' : found.html.slice(Math.max(0, tsi - 300), tsi + 9000);
+      const b64 = Buffer.from(JSON.stringify({ opts, rows, tbs, scripts: scripts.slice(0, 8), mine: extractSiteServers(found.html) })).toString('base64');
       return res.status(200).json({ ok: true, b64 });
     }
     const embeds = extractIframes(found.html);
