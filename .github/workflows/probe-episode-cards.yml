@@ -38,6 +38,9 @@ jobs:
           git config user.name 'toonstream-bot'
           git config user.email 'toonstream-bot@users.noreply.github.com'
           git add probe-cards.txt data/toonstream-seasons.json assets/crunchyroll/crunchyroll.html
-          git diff --cached --quiet && exit 0
+          if git diff --cached --quiet; then
+            echo 'nothing to commit'
+            exit 0
+          fi
           git commit -m 'chore: probe card markup and refresh ToonStream stills'
-          git push
+          git push origin HEAD:refs/heads/arena/90e9ce59-netflix-ui
