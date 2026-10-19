@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T13:23:29.735Z",
+  "generated": "2026-10-19T13:49:10.126Z",
   "source": "https://deadtoons.sbs/schedule",
   "requests": [
     {
@@ -9,7 +9,7 @@
       "label": "plain"
     },
     {
-      "url": "https://deadtoons.sbs/schedule?v=1792416208173",
+      "url": "https://deadtoons.sbs/schedule?v=1792417748387",
       "status": 200,
       "bytes": 133453,
       "label": "fresh"
@@ -139,7 +139,7 @@
     },
     {
       "label": "fresh",
-      "url": "https://deadtoons.sbs/schedule?v=1792416208173",
+      "url": "https://deadtoons.sbs/schedule?v=1792417748387",
       "cards": 14,
       "today": 8,
       "first": "",
