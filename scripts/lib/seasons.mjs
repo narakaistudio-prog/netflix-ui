@@ -68,8 +68,11 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
     for (const ts of (tsSeasons || []).slice().sort((a, b) => Number(a?.n) - Number(b?.n))) {
         const count = Number(ts?.count) || 0;
         if (!count) continue;
+        // ToonStream restarts numbering inside most seasons (1..N), so `start`
+        // is only an absolute position when it leaps past the running count —
+        // One Piece S1 begins at 6, Naruto S2 at 33.
         const first = Number(ts?.start) || 0;
-        const startAbs = first > 0 ? first : absolute + 1;
+        const startAbs = first > absolute + 1 ? first : absolute + 1;
         const startIndex = startAbs - 1;
         const segments = [];
         let at = startIndex;

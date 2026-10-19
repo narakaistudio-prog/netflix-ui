@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/probe-toonstream-images.yml'
+      - 'scripts/harvest-toonstream-seasons.mjs'
+      - 'scripts/lib/seasons.mjs'
   workflow_dispatch:
 
 permissions:
