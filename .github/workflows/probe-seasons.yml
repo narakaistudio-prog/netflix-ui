@@ -17,7 +17,16 @@ jobs:
           TS_SEASONS_DEBUG: '1'
           TS_SEASONS_ONLY: 'onepiece,golden-kamuy,fate-strange-fake,to-your-eternity,blue-miburo,aot,demon,naruto'
         run: node scripts/harvest-toonstream-seasons.mjs --dry-run 2>&1 | tail -120 | tee probe.log
-      - uses: actions/upload-artifact@v4
-        with:
-          name: seasons-probe
-          path: probe.log
+      - name: Commit the probe log
+        run: |
+          ls -l probe.log
+          git config user.name 'netflix-catalog-bot'
+          git config user.email 'netflix-catalog-bot@users.noreply.github.com'
+          git add -f probe.log
+          git commit -m 'chore: seasons probe log' || true
+          for i in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin HEAD:"${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+          echo "could not push the probe log"
+          exit 1
