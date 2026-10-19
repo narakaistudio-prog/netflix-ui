@@ -7,8 +7,11 @@ name: Crunchyroll daily Fresh Drops
 #   2. DeadToons schedule    -> today's + upcoming anime episodes, each with the
 #      Nxsha id the harvester verified, so every card in the row plays
 #      (data/deadtoons-schedule.json; scripts/harvest-deadtoons-schedule.mjs)
-#   3. both states          -> the rail block between CR_DROPS markers in
-#      assets/crunchyroll/crunchyroll.html (scripts/build-crunchyroll-new-drops.mjs)
+#   3. ToonStream home rail  -> the "Fresh Drop Toon" row, with each drop's
+#      episode guide (stills, synopsis, runtime) from Nxsha and one card per
+#      anime only (scripts/harvest-toonstream-drops.mjs)
+#   4. all of the above     -> the rail blocks in assets/crunchyroll/crunchyroll.html
+#      (scripts/build-crunchyroll-new-drops.mjs, scripts/harvest-toonstream-drops.mjs)
 #
 # Every step degrades safely: a schedule harvest that finds nothing (site down or
 # changed shape) leaves the previous state in place, and the bake is verified
@@ -38,6 +41,8 @@ on:
       - '.github/workflows/crunchyroll-daily-drops.yml'
       - 'scripts/build-crunchyroll-new-drops.mjs'
       - 'scripts/harvest-deadtoons-schedule.mjs'
+      - 'scripts/harvest-toonstream-drops.mjs'
+      - 'api/toonstream.mjs'
   workflow_dispatch:
     inputs:
       probe:
@@ -84,6 +89,12 @@ jobs:
           DEADTOONS_BASE: ${{ vars.DEADTOONS_BASE }}
         run: node scripts/harvest-deadtoons-schedule.mjs
 
+      - name: Harvest the ToonStream Fresh Drop rail (Nxsha episode guides)
+        id: toonstream
+        if: inputs.probe != true
+        continue-on-error: true
+        run: node scripts/harvest-toonstream-drops.mjs
+
       # Probe runs — and harvests that found nothing — commit the diagnostics
       # file so the site's shape is reviewable from the repository, not just the
       # (short-lived) run log.
@@ -101,11 +112,16 @@ jobs:
             git push origin HEAD:"${{ github.ref_name }}"
           fi
 
-      - name: Bake both states into the Fresh Drops row
+      - name: Bake all states into the rails
         if: inputs.probe != true
         run: |
           node scripts/build-crunchyroll-new-drops.mjs --from-state
           node scripts/build-crunchyroll-new-drops.mjs --check
+          # A failed ToonStream harvest keeps yesterday's block untouched.
+          if [ -f data/toonstream-drops.json ]; then
+            node scripts/harvest-toonstream-drops.mjs --from-state
+            node scripts/harvest-toonstream-drops.mjs --check
+          fi
 
       - name: Summarize the row
         if: inputs.probe != true
@@ -128,6 +144,9 @@ jobs:
           git config user.name "netflix-catalog-bot"
           git config user.email "netflix-catalog-bot@users.noreply.github.com"
           git add data/crunchyroll-new-drops.json assets/crunchyroll/crunchyroll.html
+          if [ -f data/toonstream-drops.json ]; then
+            git add data/toonstream-drops.json
+          fi
           # The schedule state only exists once a harvest has succeeded.
           if [ -f data/deadtoons-schedule.json ]; then
             git add data/deadtoons-schedule.json
