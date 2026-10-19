@@ -321,7 +321,7 @@ export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overvi
         if (Object.keys(seasonGuide).length) {
             guide[Number(ts.n)] = seasonGuide;
             seasons[Number(ts.n)] = plan.count;
-            nxMap[Number(ts.n)] = { season: plan.season, base: plan.base };
+            nxMap[Number(ts.n)] = compactPlan(plan);
         }
     }
     if (!Object.keys(guide).length) return { guide: null, seasons: null, nxMap: null };

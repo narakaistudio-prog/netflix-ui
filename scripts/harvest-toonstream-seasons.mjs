@@ -31,7 +31,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
 import { decodeEntities, titleKey, titleVariants } from './lib/text.mjs';
-import { buildSeasonMap, parseSeasonEpisodes, parseToonSeasons } from './lib/seasons.mjs';
+import { buildSeasonMap, compactPlan, parseSeasonCards, parseSeasonEpisodes, parseToonSeasons } from './lib/seasons.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REGISTRY_FILE = resolve(ROOT, 'data', 'nxsha-titles.json');
@@ -39,6 +39,8 @@ const EPISODES_FILE = resolve(ROOT, 'data', 'nxsha-episodes.json');
 const STATE_FILE = resolve(process.env.TS_SEASONS_STATE_FILE || resolve(ROOT, 'data', 'toonstream-seasons.json'));
 const HTML_FILE = resolve(process.env.TS_SEASONS_HTML_FILE || resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'));
 const BASE = 'https://toonstream.us';
+const IMG_START = '/*TS_EP_IMAGES_START*/';
+const IMG_END = '/*TS_EP_IMAGES_END*/';
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
 const START = '/*TS_SEASONS_START*/';
 const END = '/*TS_SEASONS_END*/';
@@ -163,7 +165,23 @@ async function seasonsOf(slug) {
             const body = await getText(url.endsWith('/') ? url : `${url}/`);
             const info = parseSeasonEpisodes(body.text || '');
             if (info.count && link.n > 0) {
-                seasons.push({ n: link.n, count: info.count, start: info.first, last: info.last, missing: info.missing });
+                const cards = parseSeasonCards(body.text || '');
+                // Keep the images keyed like the UI: 1..count inside the season,
+                // even when the site numbers the episode absolutely (One Piece S1
+                // starts at 6).
+                const images = {};
+                for (const [episode, url] of cards) {
+                    const local = episode - info.first + 1;
+                    if (local >= 1 && local <= info.count) images[String(local)] = url;
+                }
+                seasons.push({
+                    n: link.n,
+                    count: info.count,
+                    start: info.first,
+                    last: info.last,
+                    missing: info.missing,
+                    ...(Object.keys(images).length ? { images } : {}),
+                });
             }
             await sleep(120);
         }
@@ -240,6 +258,38 @@ async function findSeries(key, title) {
     return null;
 }
 
+/** `season:localEpisode` pairs that already have an Nxsha still. */
+function nxImageIndex(show) {
+    const out = new Set();
+    const bySeason = {};
+    for (const episode of show?.episodes || []) {
+        const season = Number(episode.season);
+        const number = Number(episode.episode);
+        if (!Number.isInteger(season) || !Number.isInteger(number)) continue;
+        (bySeason[season] ||= []).push({ number, image: Boolean(episode.image) });
+    }
+    for (const [season, list] of Object.entries(bySeason)) {
+        list.sort((a, b) => a.number - b.number).forEach((episode, index) => {
+            if (episode.image) out.add(`${season}:${index + 1}`);
+        });
+    }
+    return out;
+}
+
+/** Nxsha coordinates of a local ToonStream episode, segment aware. */
+function planCoords(plan, episode) {
+    let left = Math.max(0, (Number(episode) || 1) - 1);
+    if (Array.isArray(plan?.segments) && plan.segments.length) {
+        for (const segment of plan.segments) {
+            if (left < segment.count) return { season: segment.season, ep: segment.from + left };
+            left -= segment.count;
+        }
+        const last = plan.segments[plan.segments.length - 1];
+        return { season: last.season, ep: last.from + left };
+    }
+    return { season: plan.season, ep: (Number(plan.base) || 0) + left + 1 };
+}
+
 function stateBlock(shows) {
     const payload = {};
     for (const [key, entry] of Object.entries(shows)) {
@@ -263,7 +313,26 @@ function replaceBlock(html) {
     const start = html.indexOf(START);
     const end = html.indexOf(END);
     if (start === -1 || end === -1 || end < start) throw new Error('TS_SEASONS markers are missing from the page');
-    return { start, end };
+    const imgStart = html.indexOf(IMG_START);
+    const imgEnd = html.indexOf(IMG_END);
+    if (imgStart === -1 || imgEnd === -1 || imgEnd < imgStart) throw new Error('TS_EP_IMAGES markers are missing from the page');
+    return { start, end, imgStart, imgEnd };
+}
+
+/** Only the episodes Nxsha has no still for, keyed by ToonStream season/ep. */
+function imageBlock(shows) {
+    const payload = {};
+    for (const [key, entry] of Object.entries(shows)) {
+        const seasons = entry?.images;
+        if (!seasons || !Object.keys(seasons).length) continue;
+        payload[key] = seasons;
+    }
+    return [
+        IMG_START,
+        '/* Written by scripts/harvest-toonstream-seasons.mjs — do not edit by hand. */',
+        `var TS_EP_IMAGES=${JSON.stringify(payload)};`,
+        IMG_END,
+    ].join('\n');
 }
 
 /** Rebuild nxMap for every saved show from its own season layout. */
@@ -285,7 +354,7 @@ function remapNx(shows) {
         }));
         const { map } = buildSeasonMap(tsSeasons, nxSeasons);
         const nxMap = {};
-        for (const [season, plan] of Object.entries(map)) nxMap[season] = { season: plan.season, base: plan.base };
+        for (const [season, plan] of Object.entries(map)) nxMap[season] = compactPlan(plan);
         out[key] = { ...entry, ...(Object.keys(nxMap).length ? { nxMap } : {}) };
     }
     return out;
@@ -316,16 +385,30 @@ async function harvest() {
             .filter((body) => body.count > 0);
         const { map } = buildSeasonMap(found.seasons, nxSeasons);
         const nxMap = {};
-        for (const [season, plan] of Object.entries(map)) {
-            nxMap[season] = { season: plan.season, base: plan.base };
-        }
+        for (const [season, plan] of Object.entries(map)) nxMap[season] = compactPlan(plan);
         const seasonsMap = {};
         const epStart = {};
+        const haveImage = nxImageIndex(nxEpisodesData[key]);
+        const images = {};
         for (const season of found.seasons) {
             seasonsMap[String(season.n)] = season.count;
             if (Number(season.start) > 1) epStart[String(season.n)] = Number(season.start);
+            if (!season.images) continue;
+            const plan = map[season.n];
+            for (const [episode, url] of Object.entries(season.images)) {
+                const at = plan ? planCoords(plan, episode) : null;
+                if (at && haveImage.has(`${at.season}:${at.ep}`)) continue;
+                (images[String(season.n)] ||= {})[String(episode)] = url;
+            }
         }
-        shows[key] = { title: entry.title, slug: found.slug, seasons: seasonsMap, ...(Object.keys(epStart).length ? { epStart } : {}), nxMap };
+        shows[key] = {
+            title: entry.title,
+            slug: found.slug,
+            seasons: seasonsMap,
+            ...(Object.keys(epStart).length ? { epStart } : {}),
+            nxMap,
+            ...(Object.keys(images).length ? { images } : {}),
+        };
         console.log(
             `  ${String(index).padStart(2)} ${entry.title.slice(0, 38).padEnd(40)} ${found.slug.slice(0, 32).padEnd(34)} ` +
                 found.seasons.map((s) => `S${s.n}:${s.count}${s.start > 1 ? `@${s.start}` : ''}`).join(' '),
@@ -344,12 +427,17 @@ async function main() {
         }
         const block = stateBlock(state.shows || {});
         const current = html.slice(html.indexOf(START), html.indexOf(END) + END.length);
-        if (current !== block) {
-            console.error(`TS_SEASONS block is out of sync. Run: node scripts/harvest-toonstream-seasons.mjs --from-state`);
+        const images = imageBlock(state.shows || {});
+        const currentImages = html.slice(html.indexOf(IMG_START), html.indexOf(IMG_END) + IMG_END.length);
+        if (current !== block || currentImages !== images) {
+            console.error(`TS_SEASONS/TS_EP_IMAGES block is out of sync. Run: node scripts/harvest-toonstream-seasons.mjs --from-state`);
             console.error(`(state has ${Object.keys(state.shows || {}).length} shows)`);
             process.exit(1);
         }
-        console.log(`TS_SEASONS block is in sync (${Object.keys(state.shows || {}).length} shows).`);
+        console.log(
+            `TS_SEASONS/TS_EP_IMAGES blocks are in sync (${Object.keys(state.shows || {}).length} shows, ` +
+                `${Object.values(state.shows || {}).reduce((n, s) => n + Object.values(s.images || {}).reduce((m, x) => m + Object.keys(x).length, 0), 0)} fallback stills).`,
+        );
         return;
     }
 
@@ -369,12 +457,17 @@ async function main() {
     }
 
     const block = stateBlock(state.shows || {});
+    const images = imageBlock(state.shows || {});
     if (DRY_RUN) {
         console.log(block.slice(0, 4000));
         return;
     }
-    const { start, end } = replaceBlock(html);
-    writeFileSync(HTML_FILE, html.slice(0, start) + block + html.slice(end + END.length));
+    const { start, end, imgStart, imgEnd } = replaceBlock(html);
+    const withImages =
+        html.slice(0, imgStart) + images + html.slice(imgEnd + IMG_END.length);
+    const withSeasons =
+        withImages.slice(0, start) + block + withImages.slice(end + END.length);
+    writeFileSync(HTML_FILE, withSeasons);
     console.log(
         `baked ${Object.keys(state.shows || {}).length} ToonStream season layouts` +
             (state.misses?.length ? ` (${state.misses.length} not found)` : ''),
@@ -389,4 +482,4 @@ if (isMain) {
     });
 }
 
-export { stateBlock, pageVar, tokens, slugify, titleKey, remapNx };
+export { stateBlock, imageBlock, pageVar, tokens, slugify, titleKey, remapNx };

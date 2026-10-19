@@ -33,9 +33,11 @@ export const nxEpisodes = (body) => {
  * works whether Nxsha kept the seasons split or merged them (JJK/Ranma).
  *
  * Returns the flat Nxsha list and, per ToonStream season:
- *   {season, base, start, count}
+ *   {season, base, start, count, segments}
  * `base + episode` is the Nxsha episode inside `season`; `start` is the index
- * into `flat`.
+ * into `flat`. `segments` lists every Nxsha season a ToonStream season covers:
+ * ToonStream batches do not always end where Nxsha's seasons do (Demon Slayer's
+ * S2 is Nxsha's S2 + S3), so one `season`/`base` pair is not always enough.
  *
  * ToonStream seasons may carry an absolute `start` (One Piece's first season
  * begins at episode 6, Naruto's second at 33). That absolute number — not the
@@ -53,32 +55,61 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
         const number = nxSeasonNumber(body);
         const episodes = nxEpisodes(body);
         byNumber.set(number, episodes);
-        for (const episode of episodes) {
-            flat.push({ season: number, ep: Number(episode.episode_number), data: episode });
-        }
+        // `ep` is the position inside the season, which is what Nxsha's embed
+        // address uses and what the baked guide is keyed by (the API numbers
+        // long shows absolutely: Naruto S2 is 33..53, but the embed is 1..21).
+        episodes.forEach((episode, index) => {
+            flat.push({ season: number, ep: index + 1, number: Number(episode.episode_number), data: episode });
+        });
     }
 
     const map = {};
-    let offset = 0;
     let absolute = 0;
     for (const ts of (tsSeasons || []).slice().sort((a, b) => Number(a?.n) - Number(b?.n))) {
         const count = Number(ts?.count) || 0;
         if (!count) continue;
         const first = Number(ts?.start) || 0;
         const startAbs = first > 0 ? first : absolute + 1;
-        const at = flat[startAbs - 1];
-        if (at) {
+        const startIndex = startAbs - 1;
+        const segments = [];
+        let at = startIndex;
+        let left = Math.min(count, Math.max(0, flat.length - startIndex));
+        while (left > 0 && at < flat.length) {
+            const season = flat[at].season;
+            const from = flat[at].ep;
+            let run = 0;
+            while (left > 0 && at < flat.length && flat[at].season === season) {
+                run += 1;
+                left -= 1;
+                at += 1;
+            }
+            segments.push({ season, from, count: run });
+        }
+        if (segments.length) {
             map[Number(ts.n)] = {
-                season: at.season,
-                base: Math.max(0, at.ep - 1),
-                start: startAbs - 1,
+                season: segments[0].season,
+                base: Math.max(0, segments[0].from - 1),
+                start: startIndex,
                 count,
+                segments,
             };
         }
         absolute = startAbs + count - 1;
-        offset += count;
     }
     return { flat, map, byNumber };
+}
+
+/**
+ * The page-sized form of a map entry: a single Nxsha season is `{season, base}`,
+ * a season that crosses a boundary keeps one `[season, firstLocalEp, count]`
+ * row per Nxsha season in `seg`.
+ */
+export function compactPlan(plan) {
+    if (!plan) return null;
+    if (Array.isArray(plan.segments) && plan.segments.length > 1) {
+        return { seg: plan.segments.map((s) => [s.season, s.from, s.count]) };
+    }
+    return { season: plan.season, base: plan.base };
 }
 
 /** Series slug from an episode URL: /episode/<slug>-<s>x<e>/ -> <slug>. */
@@ -96,6 +127,22 @@ export function parseToonSeasons(html) {
         out.set(Number(hit[2]), hit[1]);
     }
     return [...out.entries()].sort((a, b) => a[0] - b[0]).map(([n, url]) => ({ n, url }));
+}
+
+/** Episode stills on a season page: {episode -> image URL}. */
+export function parseSeasonCards(html) {
+    const out = new Map();
+    const blocks = String(html || '').match(/<article\b[\s\S]*?<\/article>/gi) || [];
+    for (const block of blocks) {
+        const link = /\/episode\/[^"']*?-(\d+)x(\d+)\/?/i.exec(block);
+        if (!link) continue;
+        const img = /<img\b[^>]*\bsrc="([^"]+)"/i.exec(block);
+        if (!img) continue;
+        const url = img[1].replace(/&amp;/gi, '&').trim();
+        if (!/^https?:\/\//i.test(url)) continue;
+        out.set(Number(link[2]), url);
+    }
+    return out;
 }
 
 /** Episode numbers a season page links to: count + any gaps. */
