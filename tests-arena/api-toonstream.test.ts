@@ -194,6 +194,29 @@ test('colon-kept slugs resolve directly (Mushoku S3 live shape)', () => {
     expect(directSteps).toHaveLength(2);
 });
 
+test('trailer-only episode pages are not reported as servers', () => {
+    // Live shape of ToonStream pages whose servers are not uploaded yet:
+    // the page exists but only embeds the YouTube trailer (Mushoku S3E9+).
+    const trailerOnly = `<html><body>
+      <iframe src="https://www.youtube.com/embed/k5VxfJpzy1Q"></iframe>
+    </body></html>`;
+    const res = runScenario({
+        query: { title: 'Mushoku Tensei: Jobless Reincarnation', s: '3', e: '9', debug: '1' },
+        mocks: [
+            {
+                needle: 'mushoku-tensei:-jobless-reincarnation-3x9',
+                status: 200,
+                body: trailerOnly,
+            },
+        ],
+    });
+    expect(res.body.ok).toBe(false);
+    expect(res.body.error).toBe('no-episode');
+    expect(JSON.stringify(res.body)).not.toContain('youtube');
+    const stepNames = res.body.steps.map((x: { step: string }) => x.step);
+    expect(stepNames).toContain('no-servers');
+});
+
 test('apostrophe titles now resolve directly (jojo/frieren site slugs)', () => {
     const jojoHtml = EPISODE_HTML.replace(/\/episode\/x-/g, '/episode/jojos-bizarre-adventure-');
     const res = runScenario({

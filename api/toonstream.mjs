@@ -391,13 +391,26 @@ async function handler(req, res) {
       return res.status(200).json({ ok: true, b64 });
     }
     const embeds = extractIframes(found.html);
+    // Trailers are never a playable server: a page shell with only a YouTube
+    // embed means the site has not uploaded this episode yet (Mushoku S3E9+).
+    const playable = embeds.filter((src) => !/(youtube|youtu\.be|dailymotion)/i.test(src));
     // Only the site's first three servers (SERVER 1/2/3 in the sidebar),
     // named from the page's own server list - everything else is dropped.
     let siteServers = extractSiteServers(found.html);
     if (!siteServers.length) {
-      siteServers = embeds.slice(0, 3).map((url, i) => ({ name: `S${i + 1}`, url }));
+      siteServers = playable.slice(0, 3).map((url, i) => ({ name: `S${i + 1}`, url }));
     }
-    const chosen = siteServers[0] ? siteServers[0].url : pickEmbed(embeds);
+    if (!siteServers.length) {
+      if (steps) steps.push({ step: 'no-servers', iframes: embeds.length });
+      res.status(200).json({
+        ok: false,
+        error: 'no-episode',
+        episodeUrl: found.episodeUrl,
+        ...(debug ? { steps, hint: `${title} S${season}E${episode}: page exists but has no player servers yet` } : {}),
+      });
+      return;
+    }
+    const chosen = siteServers[0].url;
     const embeds3 = siteServers.map((x) => x.url);
     if (steps) {
       steps.push({ step: 'parsed', iframes: embeds.length, servers: siteServers.length });
