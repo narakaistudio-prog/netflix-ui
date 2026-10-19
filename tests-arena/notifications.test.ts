@@ -37,16 +37,16 @@ describe('bell notifications', () => {
 import { notificationsFromCrunchyroll } from '@/lib/notifications';
 
 describe('crunchyroll fresh-drop notifications', () => {
-    test('only titles first seen after the baseline run notify', () => {
+    test('only the drops baked today notify', () => {
         const items = notificationsFromCrunchyroll({
             updated: '2026-10-14',
             items: {
-                'tv:1': { kind: 'tv', id: '1', title: 'Old One', year: '2019', firstSeen: '2026-10-13', baseline: true },
-                'tv:2': { kind: 'tv', id: '2', title: 'New One', year: '2026', firstSeen: '2026-10-14', baseline: false },
+                old: { title: 'Old One', firstSeen: '2026-10-13' },
+                new: { title: 'New One', firstSeen: '2026-10-14' },
             },
         });
-        expect(items.map(i => i.id)).toEqual(['cr-tv:2']);
-        expect(items[0].text).toBe('New One (2026) was just added to Fresh Drops.');
+        expect(items.map(i => i.id)).toEqual(['ts-new']);
+        expect(items[0].text).toBe('New One was just added to Fresh Drop Toon.');
         expect(items[0].date).toBe('2026-10-14');
     });
 

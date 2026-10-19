@@ -1,5 +1,5 @@
 import historyData from '@/data/tudum-top10-india-history.json';
-import crunchyrollDrops from '@/data/crunchyroll-new-drops.json';
+import toonstreamDrops from '@/data/toonstream-drops.json';
 
 /**
  * Bell notifications come from real catalog updates only. Each weekly Tudum Top 10
@@ -46,27 +46,28 @@ export function unseenCount(items: ContentNotification[], seenDate: string | nul
     return items.filter((item) => !seenDate || item.date > seenDate).length;
 }
 
-export interface CrunchyrollDropsState {
+/** The daily ToonStream bake (scripts/harvest-toonstream-drops.mjs). */
+export interface ToonStreamDropsState {
     updated: string | null;
-    items: Record<string, { kind: string; id: string; title: string; year: string; firstSeen: string; baseline: boolean }>;
+    items: Record<string, { title: string; firstSeen: string }>;
 }
 
 /**
- * One notification per anime title that was first seen after the baseline run
- * (written by the daily Crunchyroll job). Baseline titles are never notified.
+ * One notification per anime that landed on the ToonStream rail today
+ * (`firstSeen` === the bake's `updated` day). Older drops stay quiet.
  */
-export function notificationsFromCrunchyroll(state: CrunchyrollDropsState): ContentNotification[] {
+export function notificationsFromCrunchyroll(state: ToonStreamDropsState): ContentNotification[] {
     return Object.entries(state.items || {})
-        .filter(([, item]) => !item.baseline)
-        .map(([key, item]) => ({
-            id: `cr-${key}`,
+        .filter(([, item]) => item.firstSeen && item.firstSeen === state.updated)
+        .map(([slug, item]) => ({
+            id: `ts-${slug}`,
             date: item.firstSeen,
             title: 'New on Crunchyroll',
-            text: `${item.title}${item.year ? ` (${item.year})` : ''} was just added to Fresh Drops.`,
+            text: `${item.title} was just added to Fresh Drop Toon.`,
         }));
 }
 
 export const NOTIFICATIONS: ContentNotification[] = [
-    ...notificationsFromCrunchyroll(crunchyrollDrops as CrunchyrollDropsState),
+    ...notificationsFromCrunchyroll(toonstreamDrops as ToonStreamDropsState),
     ...notificationsFromHistory(historyData as TudumHistory),
 ].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
