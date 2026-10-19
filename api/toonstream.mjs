@@ -253,29 +253,82 @@ const stripTags = (s) =>
  */
 function parseFreshDrops(html) {
   if (!html) return [];
-  const headings = [...html.matchAll(/<h[1-6][^>]*>([\s\S]{0,300}?)<\/h[1-6]>/gi)];
+  // The rail is announced by its own section heading ("Fresh Drop").
+  const headingRe = /<h[1-6][^>]*>([\s\S]{0,300}?)<\/h[1-6]>/gi;
   let start = -1;
-  let end = html.length;
-  for (let i = 0; i < headings.length; i++) {
-    if (!/fresh\s*drops?/i.test(stripTags(headings[i][1]))) continue;
-    start = (headings[i].index || 0) + headings[i][0].length;
-    if (headings[i + 1]) end = headings[i + 1].index || html.length;
+  for (const m of html.matchAll(headingRe)) {
+    if (!/fresh\s*drops?/i.test(stripTags(m[1]))) continue;
+    start = (m.index || 0) + m[0].length;
     break;
   }
-  if (start === -1) {
-    // No heading found: scan the first occurrence and the markup after it.
-    const at = html.search(/fresh\s*drops?/i);
-    if (at === -1) return [];
-    start = at;
-  }
-  end = Math.min(end, start + 120000);
+  if (start === -1) return [];
+  // Cards of the next sections must not leak in: the rail ends where the
+  // following section title starts.
+  const nextSection = html.indexOf('section-title', start);
+  const end = nextSection > start ? nextSection : Math.min(html.length, start + 120000);
   const seg = html.slice(start, end);
-  const out = new Map();
-  // Hrefs may contain an apostrophe (jojo's-bizarre-adventure), so quoted
-  // attributes must be matched per quote style instead of a ["'] class.
+
+  const decode = (v) =>
+    stripTags(String(v || ''))
+      .replace(/&#0?39;|&apos;/g, "'")
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"');
+
+  const items = [];
+  const seen = new Set();
+  // Live markup: <article class="post ..."> with the poster, "Season N"
+  // (post-ql), "EP N" (year), the title (entry-title/alt) and a trailing
+  // <a class="lnk-blk" href="/episode/<slug>-<S>x<E>/">.
+  for (const m of seg.matchAll(/<article\b[\s\S]*?<\/article>/gi)) {
+    const block = m[0];
+    const hrefMatch = block.match(/href=["']([^"']*\/(?:episode|series)\/[^"']*)["']/i);
+    if (!hrefMatch) continue;
+    let href = decode(hrefMatch[1]).replace(/[?#].*$/, '').replace(/\/+$/, '');
+    if (!href.startsWith('/')) {
+      const abs = href.match(/^https?:\/\/toonstream\.us(\/[^?#]*)/i);
+      if (!abs) continue;
+      href = abs[1];
+    }
+    if (!/^\/(series|episode)\//.test(href)) continue;
+    if (seen.has(href)) continue;
+    seen.add(href);
+    const imgMatch = block.match(/<img\b[^>]*src=["']([^"']+)["']/i);
+    const altMatch = block.match(/<img\b[^>]*alt=["']([^"']*)["']/i);
+    const titleMatch = block.match(/class=["'][^"']*entry-title[^"']*["'][^>]*>([\s\S]*?)<\/h[1-6]>/i);
+    const title = decode(titleMatch ? titleMatch[1] : altMatch ? altMatch[1] : '');
+    const seasonMatch = block.match(/class=["'][^"']*post-ql[^"']*["'][^>]*>([\s\S]*?)<\/span>/i);
+    const epMatch = block.match(/class=["'][^"']*year[^"']*["'][^>]*>([\s\S]*?)<\/span>/i);
+    const season = seasonMatch ? parseInt(decode(seasonMatch[1]).replace(/\D+/g, ''), 10) || null : null;
+    const ep = epMatch ? parseInt(decode(epMatch[1]).replace(/\D+/g, ''), 10) || null : null;
+    let slug = '';
+    let episode = '';
+    const big = href.match(/^\/episode\/(.+?)-(\d+)x(\d+)$/);
+    if (big) {
+      slug = big[1];
+      episode = `${BASE}${href}/`;
+    } else if (href.startsWith('/series/')) {
+      slug = href.slice('/series/'.length);
+    } else {
+      slug = href.slice('/episode/'.length);
+    }
+    items.push({
+      title: title || slug.replace(/-/g, ' '),
+      slug,
+      ...(imgMatch ? { img: decode(imgMatch[1]) } : {}),
+      url: `${BASE}${href}/`,
+      ...(episode ? { episode } : {}),
+      ...(season ? { season } : {}),
+      ...(ep ? { ep } : {}),
+    });
+    if (items.length >= 40) break;
+  }
+  if (items.length) return items;
+
+  // Fallback: some layouts link series directly from anchors.
   const anchors = [...seg.matchAll(/<a\b[^>]*href=(?:"([^"]+)"|'([^']+)')[^>]*>([\s\S]*?)<\/a>/gi)];
+  const out = new Map();
   for (const m of anchors) {
-    let href = String(m[1] || m[2] || '').trim();
+    let href = decode(m[1] || m[2] || '');
     if (!href.startsWith('/')) {
       const abs = href.match(/^https?:\/\/toonstream\.us(\/[^?#]*)/i);
       if (!abs) continue;
@@ -285,16 +338,12 @@ function parseFreshDrops(html) {
     if (!/^\/(series|episode)\//.test(href)) continue;
     const inner = m[3];
     const imgMatch = inner.match(/<img\b[^>]*src=["']([^"']+)["']/i);
-    const img = imgMatch ? imgMatch[1].trim() : '';
-    const label = stripTags(inner);
+    const label = decode(inner);
     const cur = out.get(href) || { href, title: '', img: '' };
-    if (img && !cur.img) cur.img = img;
-    if (label && label.length > cur.title.length && !/^(play|watch|view|download|episode|series)$/i.test(label)) {
-      cur.title = label;
-    }
+    if (imgMatch && !cur.img) cur.img = imgMatch[1].trim();
+    if (label && label.length > cur.title.length) cur.title = label;
     out.set(href, cur);
   }
-  const items = [];
   for (const c of out.values()) {
     if (!c.title && !c.img) continue;
     let slug = '';
@@ -304,12 +353,12 @@ function parseFreshDrops(html) {
     if (c.href.startsWith('/series/')) slug = c.href.slice('/series/'.length);
     else {
       episode = `${BASE}${c.href}/`;
-      slug = c.href.slice('/episode/'.length).replace(/-\d+x\d+$/, '');
-      const m2 = c.href.match(/-(\d+)x(\d+)$/);
-      if (m2) {
-        season = Number(m2[1]);
-        ep = Number(m2[2]);
-      }
+      const big = c.href.match(/^\/episode\/(.+?)-(\d+)x(\d+)$/);
+      if (big) {
+        slug = big[1];
+        season = Number(big[2]);
+        ep = Number(big[3]);
+      } else slug = c.href.slice('/episode/'.length);
     }
     items.push({
       title: c.title || slug.replace(/-/g, ' '),

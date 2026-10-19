@@ -240,24 +240,57 @@ test("apostrophe-kept slugs resolve directly (JoJo S4 live shape)", () => {
 });
 
 test('fresh drops parse from the home page markup', () => {
+    // Trimmed live shape: <article class="post"> cards inside the
+    // "Fresh Drop" section, apostrophes entity-encoded in the href.
+    const card = (
+        img: string,
+        alt: string,
+        season: string,
+        ep: string,
+        title: string,
+        href: string,
+    ) => `
+        <div class="swiper-slide watch-history-swiper-slide">
+          <article class="post dfx fcl movies">
+            <div class="post-thumbnail">
+              <figure><img src="${img}" alt="${alt}" loading="lazy"></figure>
+              <span class="post-ql" style="background:rgba(0,0,0,.75)">${season}</span>
+              <span class="year">${ep}</span>
+              <span class="play fa-play"></span>
+            </div>
+            <header class="entry-header">
+              <h2 class="entry-title">${title}</h2>
+              <div class="entry-meta"><span class="vote"><span>TMDB</span>8.5</span></div>
+            </header>
+            <a href="${href}" class="lnk-blk"></a>
+          </article>
+        </div>`;
     const home = `<html><body>
-      <section><h2>Latest Episodes</h2>
+      <section><h2 class="section-title">Latest Episodes</h2>
         <a href="/series/other-show/"><img src="https://img/other.jpg" alt="">Other Show</a>
       </section>
-      <section>
-        <h2>Fresh Drops</h2>
-        <div class="grid">
-          <a href="/episode/jojo's-bizarre-adventure-4x1/">
-            <img src="https://img/jojo.jpg" alt="">
-            <span class="title">JoJo's Bizarre Adventure</span>
-          </a>
-          <a href="/series/dandadan/">
-            <img src="https://img/dan.jpg" alt="">
-            <span class="title">DAN DA DAN</span>
-          </a>
-        </div>
+      <section class="wdgt-home widget section watch_history_widget">
+        <header class="section-header"><h3 class="section-title">Fresh Drop</h3></header>
+        <div class="swiper watch-history-swiper-container"><div class="swiper-wrapper">
+          ${card(
+              'https://image.tmdb.org/t/p/w780/jojo.jpg',
+              'JoJo&#39;s Bizarre Adventure',
+              'Season 6',
+              'EP 5',
+              'JoJo&#39;s Bizarre Adventure',
+              '/episode/jojo&#39;s-bizarre-adventure-6x5/',
+          )}
+          ${card(
+              'https://image.tmdb.org/t/p/w780/dan.jpg',
+              'DAN DA DAN',
+              'Season 1',
+              'EP 7',
+              'DAN DA DAN',
+              '/episode/dan-da-dan-1x7/',
+          )}
+        </div></div>
       </section>
-      <section><h2>Popular</h2>
+      <section><h2 class="section-title">Popular</h2>
         <a href="/series/popular-one/">Popular One</a>
       </section>
     </body></html>`;
@@ -269,14 +302,34 @@ test('fresh drops parse from the home page markup', () => {
     expect(items).toHaveLength(2);
     expect(items[0].title).toBe("JoJo's Bizarre Adventure");
     expect(items[0].slug).toBe("jojo's-bizarre-adventure");
-    expect(items[0].season).toBe(4);
-    expect(items[0].ep).toBe(1);
+    expect(items[0].season).toBe(6);
+    expect(items[0].ep).toBe(5);
+    expect(items[0].img).toBe('https://image.tmdb.org/t/p/w780/jojo.jpg');
     expect(items[0].episode).toBe(
-        "https://toonstream.us/episode/jojo's-bizarre-adventure-4x1/",
+        "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
     );
     expect(items[1].title).toBe('DAN DA DAN');
-    expect(items[1].slug).toBe('dandadan');
-    expect(items[1].season).toBeUndefined();
+    expect(items[1].slug).toBe('dan-da-dan');
+    expect(items[1].season).toBe(1);
+    expect(items[1].ep).toBe(7);
+    // Cards outside the Fresh Drop rail must not leak in.
+    expect(items.map((i: { slug: string }) => i.slug)).not.toContain('popular-one');
+});
+
+test('fresh drops fall back to anchor markup when cards are absent', () => {
+    const home = `<section><h3 class="section-title">Fresh Drops</h3>
+      <a href="/episode/jojo's-bizarre-adventure-4x1/"><img src="https://img/jojo.jpg" alt="">JoJo</a>
+      <a href="/series/dandadan/"><img src="https://img/dan.jpg" alt="">DAN DA DAN</a>
+    </section>`;
+    const { results } = runScenario({
+        mode: 'unit',
+        calls: [['parseFreshDrops', [home]]],
+    });
+    const items = results[0];
+    expect(items).toHaveLength(2);
+    expect(items[0].slug).toBe("jojo's-bizarre-adventure");
+    expect(items[0].season).toBe(4);
+    expect(items[0].ep).toBe(1);
 });
 
 test('colon-kept slugs resolve directly (Mushoku S3 live shape)', () => {
