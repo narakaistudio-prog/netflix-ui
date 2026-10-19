@@ -1,0 +1,1065 @@
+{
+  "updated": "2026-10-19",
+  "source": "https://toonstream.us/home",
+  "shows": {
+    "aot": {
+      "title": "Attack on Titan",
+      "slug": "attack-on-titan",
+      "seasons": {
+        "0": 8,
+        "1": 25,
+        "2": 12,
+        "3": 22,
+        "4": 28,
+        "5": 2
+      },
+      "nxMap": {
+        "0": {
+          "season": 1,
+          "base": 0
+        },
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
+    },
+    "tokyo": {
+      "title": "Tokyo Revengers",
+      "slug": "tokyo-revengers",
+      "seasons": {
+        "1": 50
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "vinland": {
+      "title": "Vinland Saga",
+      "slug": "vinland-saga",
+      "seasons": {
+        "1": 24,
+        "2": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "sao": {
+      "title": "Sword Art Online",
+      "slug": "sword-art-online",
+      "seasons": {
+        "1": 25,
+        "2": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "drstone": {
+      "title": "Dr. STONE",
+      "slug": "dr-stone",
+      "seasons": {
+        "1": 24,
+        "2": 11,
+        "3": 22,
+        "4": 37
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
+    },
+    "boruto": {
+      "title": "Boruto: Naruto Next Generations",
+      "slug": "boruto-naruto-next-generations",
+      "seasons": {
+        "1": 293
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "solo": {
+      "title": "Solo Leveling",
+      "slug": "solo-leveling",
+      "seasons": {
+        "1": 12,
+        "2": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 12
+        }
+      }
+    },
+    "demon": {
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "slug": "demon-slayer-kimetsu-no-yaiba",
+      "seasons": {
+        "1": 26,
+        "2": 18,
+        "3": 11,
+        "4": 8,
+        "5": 1
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 5,
+          "base": 0
+        }
+      }
+    },
+    "jjk": {
+      "title": "JUJUTSU KAISEN",
+      "slug": "jujutsu-kaisen",
+      "seasons": {
+        "1": 24,
+        "2": 23,
+        "3": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 24
+        },
+        "3": {
+          "season": 1,
+          "base": 47
+        }
+      }
+    },
+    "onepiece": {
+      "title": "One Piece",
+      "slug": "one-piece",
+      "seasons": {
+        "1": 2
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "frieren": {
+      "title": "Frieren: Beyond Journey’s End",
+      "slug": "frieren-beyond-journeys-end",
+      "seasons": {
+        "1": 28,
+        "2": 10
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 28
+        }
+      }
+    },
+    "chainsaw": {
+      "title": "Chainsaw Man",
+      "slug": "chainsaw-man",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "spy": {
+      "title": "SPY x FAMILY",
+      "slug": "spy-x-family",
+      "seasons": {
+        "1": 25,
+        "2": 12,
+        "3": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        }
+      }
+    },
+    "kaiju": {
+      "title": "Kaiju No. 8",
+      "slug": "kaiju-no-8",
+      "seasons": {
+        "0": 4,
+        "1": 12,
+        "2": 11
+      },
+      "nxMap": {
+        "0": {
+          "season": 1,
+          "base": 0
+        },
+        "1": {
+          "season": 1,
+          "base": 4
+        },
+        "2": {
+          "season": 1,
+          "base": 16
+        }
+      }
+    },
+    "naruto": {
+      "title": "Naruto Shippuden",
+      "slug": "naruto-shippuden-hindi-dub",
+      "seasons": {
+        "1": 32,
+        "2": 53,
+        "3": 71,
+        "4": 88,
+        "5": 112,
+        "6": 143,
+        "7": 151,
+        "8": 175,
+        "9": 196,
+        "10": 221,
+        "11": 242,
+        "12": 275,
+        "13": 295,
+        "14": 320,
+        "15": 348,
+        "16": 360
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 4,
+          "base": 14
+        },
+        "4": {
+          "season": 8,
+          "base": 5
+        },
+        "5": {
+          "season": 12,
+          "base": 2
+        },
+        "6": {
+          "season": 16,
+          "base": 8
+        },
+        "7": {
+          "season": 20,
+          "base": 86
+        }
+      }
+    },
+    "deathnote": {
+      "title": "Death Note",
+      "slug": "death-note-720p",
+      "seasons": {
+        "1": 37
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mha": {
+      "title": "My Hero Academia",
+      "slug": "my-hero-academia",
+      "seasons": {
+        "0": 8,
+        "1": 13,
+        "2": 25,
+        "3": 25,
+        "4": 25,
+        "5": 25,
+        "6": 25,
+        "7": 21,
+        "8": 12
+      },
+      "nxMap": {
+        "0": {
+          "season": 1,
+          "base": 0
+        },
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        },
+        "5": {
+          "season": 5,
+          "base": 0
+        },
+        "6": {
+          "season": 6,
+          "base": 0
+        },
+        "7": {
+          "season": 7,
+          "base": 0
+        },
+        "8": {
+          "season": 8,
+          "base": 0
+        }
+      }
+    },
+    "opm": {
+      "title": "One Punch Man",
+      "slug": "one-punch-man",
+      "seasons": {
+        "1": 12,
+        "2": 12,
+        "3": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        }
+      }
+    },
+    "bleach": {
+      "title": "Bleach",
+      "slug": "bleach",
+      "seasons": {
+        "1": 366,
+        "2": 26
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "hxh": {
+      "title": "Hunter x Hunter",
+      "slug": "hunter-x-hunter-hindi-dub",
+      "seasons": {
+        "1": 62,
+        "2": 136,
+        "3": 148
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "mob": {
+      "title": "Mob Psycho 100",
+      "slug": "mob-psycho-100",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "rezero": {
+      "title": "Re:ZERO",
+      "slug": "rezero-starting-life-in-another-world",
+      "seasons": {
+        "1": 13,
+        "2": 25,
+        "3": 16,
+        "4": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 13
+        },
+        "3": {
+          "season": 1,
+          "base": 38
+        },
+        "4": {
+          "season": 1,
+          "base": 54
+        }
+      }
+    },
+    "blackclover": {
+      "title": "Black Clover",
+      "slug": "black-clover",
+      "seasons": {
+        "1": 52
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "haikyuu": {
+      "title": "HAIKYU!!",
+      "slug": "haikyu",
+      "seasons": {
+        "2": 25,
+        "3": 10,
+        "4": 25
+      },
+      "nxMap": {
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
+    },
+    "bluelock": {
+      "title": "BLUE LOCK",
+      "slug": "blue-lock-multi-audio",
+      "seasons": {
+        "1": 24,
+        "2": 14
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 24
+        }
+      }
+    },
+    "oshi": {
+      "title": "OSHI NO KO",
+      "slug": "oshi-no-ko",
+      "seasons": {
+        "1": 11,
+        "2": 13,
+        "3": 11
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 11
+        },
+        "3": {
+          "season": 1,
+          "base": 24
+        }
+      }
+    },
+    "dandadan": {
+      "title": "DAN DA DAN",
+      "slug": "dan-da-dan",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 12
+        }
+      }
+    },
+    "tower": {
+      "title": "Tower of God",
+      "slug": "tower-of-god",
+      "seasons": {
+        "1": 13,
+        "2": 26
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "goh": {
+      "title": "The God of High School",
+      "slug": "god-of-high-school",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "fireforce": {
+      "title": "Fire Force",
+      "slug": "fire-force",
+      "seasons": {
+        "1": 24,
+        "2": 24,
+        "3": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        }
+      }
+    },
+    "cheatskill": {
+      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in The Real World, Too",
+      "slug": "i-got-a-cheat-skill-in-another-world-and-became-unrivaled-in-the-real-world-too",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mfg": {
+      "title": "MF GHOST",
+      "slug": "mf-ghost",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "trigun": {
+      "title": "TRIGUN STAMPEDE",
+      "slug": "trigun-stampede",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "slime": {
+      "title": "That Time I Got Reincarnated as a Slime",
+      "slug": "that-time-i-got-reincarnated-as-a-slime",
+      "seasons": {
+        "1": 24,
+        "2": 24,
+        "3": 24,
+        "4": 21
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
+    },
+    "classroom": {
+      "title": "Classroom of the Elite",
+      "slug": "classroom-of-the-elite",
+      "seasons": {
+        "1": 12,
+        "2": 13,
+        "3": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        }
+      }
+    },
+    "apothecary": {
+      "title": "The Apothecary Diaries",
+      "slug": "apothecary-diaries",
+      "seasons": {
+        "1": 24,
+        "2": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 24
+        }
+      }
+    },
+    "dbz": {
+      "title": "Dragon Ball Z",
+      "slug": "dragon-ball-z-kai",
+      "seasons": {
+        "1": 26,
+        "2": 26,
+        "3": 25,
+        "4": 20,
+        "5": 35,
+        "6": 26,
+        "7": 9
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 26
+        },
+        "3": {
+          "season": 2,
+          "base": 13
+        },
+        "4": {
+          "season": 3,
+          "base": 3
+        },
+        "5": {
+          "season": 3,
+          "base": 23
+        },
+        "6": {
+          "season": 4,
+          "base": 25
+        },
+        "7": {
+          "season": 5,
+          "base": 19
+        }
+      }
+    },
+    "gachiakuta": {
+      "title": "Gachiakuta",
+      "slug": "gachiakuta",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "hellsparadise": {
+      "title": "Hell's Paradise",
+      "slug": "hells-paradise-english-dub",
+      "seasons": {
+        "1": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "beginningend": {
+      "title": "The Beginning After the End",
+      "slug": "beginning-after-the-end",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "mushoku": {
+      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "slug": "mushoku-tensei-jobless-reincarnation",
+      "seasons": {
+        "1": 24,
+        "2": 24,
+        "3": 8
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 1
+        }
+      }
+    },
+    "tsukimichi": {
+      "title": "TSUKIMICHI -Moonlit Fantasy-",
+      "slug": "tsukimichi-moonlit-fantasy",
+      "seasons": {
+        "1": 12,
+        "2": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "shieldhero": {
+      "title": "The Rising of the Shield Hero",
+      "slug": "rising-of-the-shield-hero",
+      "seasons": {
+        "1": 25,
+        "2": 13,
+        "3": 12,
+        "4": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
+    },
+    "fairytail": {
+      "title": "Fairy Tail",
+      "slug": "fairy-tail",
+      "seasons": {
+        "1": 48,
+        "2": 48,
+        "3": 28,
+        "5": 25,
+        "6": 25,
+        "7": 90,
+        "8": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "5": {
+          "season": 3,
+          "base": 28
+        },
+        "6": {
+          "season": 3,
+          "base": 53
+        },
+        "7": {
+          "season": 4,
+          "base": 24
+        },
+        "8": {
+          "season": 6,
+          "base": 38
+        }
+      }
+    },
+    "yourlie": {
+      "title": "Your Lie in April",
+      "slug": "your-lie-in-april",
+      "seasons": {
+        "1": 22
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "jojo": {
+      "title": "JoJo's Bizarre Adventure",
+      "slug": "jojos-bizarre-adventure",
+      "seasons": {
+        "1": 26,
+        "2": 32,
+        "6": 1
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "6": {
+          "season": 2,
+          "base": 32
+        }
+      }
+    },
+    "shangri": {
+      "title": "Shangri-La Frontier",
+      "slug": "shangri-la-frontier",
+      "seasons": {
+        "1": 25,
+        "2": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 25
+        }
+      }
+    },
+    "iruma": {
+      "title": "Welcome to Demon School! Iruma-kun",
+      "slug": "welcome-to-demon-school-iruma-kun",
+      "seasons": {
+        "1": 23,
+        "2": 21,
+        "3": 21
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        }
+      }
+    }
+  },
+  "misses": [
+    {
+      "key": "goldenkamuy",
+      "title": "Golden Kamuy"
+    },
+    {
+      "key": "fatestrange",
+      "title": "Fate/strange Fake"
+    },
+    {
+      "key": "toyour",
+      "title": "To Your Eternity"
+    },
+    {
+      "key": "bluemiburo",
+      "title": "Blue Miburo"
+    }
+  ]
+}
