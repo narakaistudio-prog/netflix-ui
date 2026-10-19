@@ -88,6 +88,10 @@ async function getText(url, { retries = 1 } = {}) {
                 headers: { 'user-agent': UA, accept: 'text/html,application/xhtml+xml' },
                 signal: AbortSignal.timeout(25_000),
             });
+            if (res.status >= 500 && attempt < retries) {
+                await sleep(700 * (attempt + 1));
+                continue;
+            }
             return { status: res.status, text: await res.text() };
         } catch (error) {
             last = error;
@@ -212,12 +216,22 @@ async function findSeries(key, title) {
                 }))
                 .filter((link) => link.slug && link.score >= 0.6 && !seen.has(link.slug))
                 .sort((a, b) => b.score - a.score);
-            for (const candidate of ranked.slice(0, 2)) {
+            const matches = [];
+            for (const candidate of ranked.slice(0, 6)) {
                 seen.add(candidate.slug);
                 const found = await seasonsOf(candidate.slug);
-                if (found && titleMatches(title, found.title || candidate.slug)) return found;
-                if (found && DEBUG) console.log(`    ${candidate.slug}: rejected "${found.title}" for "${title}"`);
+                if (!found) continue;
+                if (!titleMatches(title, found.title || candidate.slug)) {
+                    if (DEBUG) console.log(`    ${candidate.slug}: rejected "${found.title}" for "${title}"`);
+                    continue;
+                }
+                // "One Piece" must beat "One Piece Wano Arc"/"LEGO ONE PIECE".
+                matches.push({ ...found, extra: normTitle(found.title).length - normTitle(title).length });
                 await sleep(120);
+            }
+            if (matches.length) {
+                matches.sort((a, b) => a.extra - b.extra || a.slug.localeCompare(b.slug));
+                return matches[0];
             }
         }
     }
