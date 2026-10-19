@@ -5,6 +5,11 @@ name: Fill TV seasons and episodes from Nxsha
 # on a hosted runner, rebuilds data/tv-episodes.json, and commits it. It never reads
 # or writes the Crunchyroll data (data/nxsha-*, crunchyroll.html).
 on:
+  schedule:
+    # Daily 07:00 IST: rebuild every show's seasons/episodes straight from nxsha,
+    # so new episodes (e.g. a weekly drop) land on the site the same morning —
+    # no manual merge needed. Vercel redeploys main automatically on the bot commit.
+    - cron: '30 1 * * *'
   push:
     branches:
       - main
