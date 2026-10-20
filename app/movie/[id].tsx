@@ -28,7 +28,10 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { getTvSeasons } from '@/lib/tvEpisodes';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
+import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
+import { buildServerCycle, nextServerIn, hasServerSwitcher } from '@/lib/playbackServers';
 import {
     getRecentlyWatched,
     markWatched,
@@ -115,6 +118,8 @@ export default function MovieScreen() {
 
     const [playerOpen, setPlayerOpen] = useState(false);
     const [providerIndex, setProviderIndex] = useState(0);
+    /** Play daba par MovieBox ka jawab aa raha hai — tab official link par mat bhejo. */
+    const [pendingPlay, setPendingPlay] = useState<{ season: number; episode: number } | null>(null);
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
     const [season, setSeason] = useState(1);
@@ -399,21 +404,40 @@ export default function MovieScreen() {
     const primaryEmbedUrl = movie.embed_url && !rowIsMoviebox ? movie.embed_url : undefined;
     const movieboxLinkKey = movieboxKeyForTitle(movie);
 
-    // Cycle order: (M2Box, jab row me m2box link ho) → default provider →
-    // other built-in providers → custom (if embed_url set) → M2Box (Server 2).
-    const settings = loadSettings();
-    const cycle: PlaybackServerId[] = useMemo(() => {
-        const list: PlaybackServerId[] = [];
-        const def = movie.embed_provider ?? settings.defaultProvider;
-        if (rowIsMoviebox) list.push('moviebox');
-        list.push(def);
-        for (const p of PROVIDERS) if (p.id !== def) list.push(p.id);
-        if (primaryEmbedUrl) list.push('custom');
-        list.push('moviebox');
-        return Array.from(new Set(list));
-    }, [movie.embed_provider, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider]);
+    /**
+     * MovieBox par ye title hai ya nahi — link row/baked/saved se mile to turant
+     * pata, warna background me live resolve. Jawab aane tak M2Box ka option
+     * dikhta hi nahi.
+     */
+    const movieboxAvailability = useMovieboxAvailable(movie, {
+        known: Boolean(movieboxEntry),
+        linkKey: movieboxLinkKey,
+        onResolved: () => setMovieboxRevision(n => n + 1),
+    });
+    const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
 
-    const currentProvider: PlaybackServerId = cycle[providerIndex] ?? 'nxsha';
+    // Cycle: MovieBox mile to (row-m2box) → default → baaki providers → custom
+    // → M2Box (pill se switch). Na mile to **sirf Server 1** — koi switch option
+    // hi nahi (owner ka rule).
+    const settings = loadSettings();
+    const cycle: PlaybackServerId[] = useMemo(
+        () =>
+            buildServerCycle({
+                defaultProvider: movie.embed_provider ?? settings.defaultProvider,
+                movieboxAvailable,
+                rowIsMoviebox,
+                customAvailable: Boolean(primaryEmbedUrl),
+                providers: PROVIDERS.map(p => p.id),
+            }),
+        [movie.embed_provider, movieboxAvailable, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider],
+    );
+
+    // Cycle chhota ho jaye (MovieBox nahi mila) to index phir bhi valid rehna chahiye.
+    useEffect(() => {
+        if (providerIndex > cycle.length - 1) setProviderIndex(0);
+    }, [cycle.length, providerIndex]);
+
+    const currentProvider: PlaybackServerId = cycle[providerIndex] ?? cycle[0] ?? 'nxsha';
     const isMovieboxServer = currentProvider === 'moviebox';
     const movieboxIndex = cycle.indexOf('moviebox');
     const directPreviewUrl = movie.videoUrl
@@ -491,19 +515,32 @@ export default function MovieScreen() {
         } catch {}
     }, [movie, parsedTmdb, mediaType, currentProvider]);
 
+    /** Server 2 (M2Box) full-screen player kholo. */
+    const openMovieboxPlayer = useCallback(
+        (playSeason: number, playEpisode: number) => {
+            requestPlayerFullscreen();
+            setPlayerChromeHidden(true);
+            setProviderIndex(Math.max(0, movieboxIndex));
+            setSeason(playSeason);
+            setEpisode(playEpisode);
+            setPlayerOpen(true);
+            rememberPlayback(playSeason, playEpisode);
+        },
+        [movieboxIndex, rememberPlayback],
+    );
+
     const handlePlayFull = useCallback(() => {
         const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
         if (!hasPlayablePlayback) {
-            // Nxsha/NHD ke paas is title ke liye id hi nahi — lekin M2Box ka
-            // link saved ho to Server 2 seedha chala do.
-            if (movieboxEntry) {
-                requestPlayerFullscreen();
-                setPlayerChromeHidden(true);
-                setProviderIndex(Math.max(0, movieboxIndex));
-                setSeason(initialSeason);
-                setEpisode(1);
-                setPlayerOpen(true);
-                rememberPlayback(initialSeason, 1);
+            // Nxsha/NHD ke paas is title ke liye id hi nahi — M2Box ka link ho
+            // to Server 2 chalao, warna official Netflix.
+            if (movieboxAvailable) {
+                openMovieboxPlayer(initialSeason, 1);
+                return;
+            }
+            // MovieBox ka jawab aa raha hai — tab tak official link par mat bhejo.
+            if (movieboxAvailability.checking) {
+                setPendingPlay({ season: initialSeason, episode: 1 });
                 return;
             }
             openOfficialTitle();
@@ -511,6 +548,7 @@ export default function MovieScreen() {
         }
         requestPlayerFullscreen();
         setPlayerChromeHidden(true);
+        // Server 1 hi default — MovieBox ka option sirf tab jab wo available ho.
         setProviderIndex(0);
         setSeason(initialSeason);
         setEpisode(1);
@@ -519,12 +557,24 @@ export default function MovieScreen() {
     }, [
         movie,
         hasPlayablePlayback,
-        movieboxEntry,
-        movieboxIndex,
-        mediaType,
+        movieboxAvailable,
+        movieboxAvailability.checking,
+        openMovieboxPlayer,
         openOfficialTitle,
         rememberPlayback,
     ]);
+
+    /**
+     * Play daba tha par MovieBox ka jawab pending tha — jawab aate hi wahi
+     * karo jo us waqt karna chahiye tha.
+     */
+    useEffect(() => {
+        if (!pendingPlay || movieboxAvailability.checking) return;
+        const { season: playSeason, episode: playEpisode } = pendingPlay;
+        setPendingPlay(null);
+        if (movieboxAvailable) openMovieboxPlayer(playSeason, playEpisode);
+        else openOfficialTitle();
+    }, [pendingPlay, movieboxAvailability.checking, movieboxAvailable, openMovieboxPlayer, openOfficialTitle]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -533,18 +583,16 @@ export default function MovieScreen() {
     }, [mediaType]);
 
     const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
-        if (!hasPlayablePlayback && !movieboxEntry) {
-            openOfficialTitle();
-            return;
-        }
         if (!hasPlayablePlayback) {
-            requestPlayerFullscreen();
-            setPlayerChromeHidden(true);
-            setProviderIndex(Math.max(0, movieboxIndex));
-            setSeason(selectedSeason);
-            setEpisode(selectedEpisode);
-            setPlayerOpen(true);
-            rememberPlayback(selectedSeason, selectedEpisode);
+            if (movieboxAvailable) {
+                openMovieboxPlayer(selectedSeason, selectedEpisode);
+                return;
+            }
+            if (movieboxAvailability.checking) {
+                setPendingPlay({ season: selectedSeason, episode: selectedEpisode });
+                return;
+            }
+            openOfficialTitle();
             return;
         }
         if (mediaType !== 'tv') {
@@ -562,8 +610,9 @@ export default function MovieScreen() {
         mediaType,
         handlePlayFull,
         hasPlayablePlayback,
-        movieboxEntry,
-        movieboxIndex,
+        movieboxAvailable,
+        movieboxAvailability.checking,
+        openMovieboxPlayer,
         openOfficialTitle,
         rememberPlayback,
     ]);
@@ -606,7 +655,29 @@ export default function MovieScreen() {
     const playerVisible = playerOpen && (Boolean(src) || isMovieboxServer);
     /** Server switcher labels: jo chal raha hai + jo agla hai. */
     const currentServerLabel = serverLabel(currentProvider);
-    const nextServer = cycle.length > 1 ? cycle[(providerIndex + 1) % cycle.length] : null;
+    // MovieBox available na ho to cycle hi ek server ka hai — `nextServer` null
+    // rehta hai aur EmbedPlayer/US pill dikhata hi nahi.
+    const nextServer = hasServerSwitcher(cycle) ? nextServerIn(cycle, providerIndex) : null;
+
+    /**
+     * Is season me total episodes — sirf series par. "Next Episode" button
+     * isi se pata karta hai ki agla episode hai ya nahi.
+     */
+    /** Chalu episode ka naam — player ki bottom strip me dikhta hai. */
+    const activeEpisodeTitle = useMemo(() => {
+        if (mediaType !== 'tv') return undefined;
+        const fromRow = movie.seasons
+            ?.find((item) => item.season_number === season)
+            ?.episodes?.find((item) => item.episode === episode)?.name;
+        if (fromRow) return fromRow;
+        return getTvSeasons(movie.tmdb_id)
+            .find((item) => item.season_number === season)
+            ?.episodes?.find((item) => item.episode === episode)?.name;
+    }, [episode, mediaType, movie.seasons, movie.tmdb_id, season]);
+
+    const seasonEpisodeTotal =
+        movie.seasonEpisodeCounts?.[season - 1] ??
+        movie.seasons?.find((item) => item.season_number === season)?.episode_count;
 
     const renderPlayer = () => {
         if (isMovieboxServer) {
@@ -619,9 +690,13 @@ export default function MovieScreen() {
                     mediaType={mediaType}
                     season={mediaType === 'tv' ? season : undefined}
                     episode={mediaType === 'tv' ? episode : undefined}
+                    episodeCount={mediaType === 'tv' ? seasonEpisodeTotal : undefined}
+                    episodeTitle={activeEpisodeTitle}
+                    onEpisodeChange={(next) => {
+                        setEpisode(next.episode);
+                        rememberPlayback(next.season, next.episode);
+                    }}
                     onClose={handleCloseInline}
-                    onSwitchServer={nextServer ? handleSwitchProvider : undefined}
-                    switchLabel={nextServer ? serverLabel(nextServer) : undefined}
                     onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
                 />
             );
@@ -631,7 +706,7 @@ export default function MovieScreen() {
                 src={src}
                 title={movie.title}
                 onClose={handleCloseInline}
-                onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                onSwitchProvider={!directFallback && hasServerSwitcher(cycle) ? handleSwitchProvider : undefined}
                 serverName={currentServerLabel}
                 nextServerName={nextServer ? serverLabel(nextServer) : undefined}
                 fallbackUrl={officialNetflixUrl}

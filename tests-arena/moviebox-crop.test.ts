@@ -7,6 +7,8 @@ import {
     isMovieboxUrl,
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
+    MOVIEBOX_STAGE_PLAYER_HEIGHT,
+    MOVIEBOX_STAGE_PLAYER_WIDTH,
     MOVIEBOX_STAGE_VISIBLE_HEIGHT,
     MOVIEBOX_STAGE_WIDTH,
     parseMovieboxInput,
@@ -125,60 +127,106 @@ describe('buildMovieboxPageUrl', () => {
 });
 
 describe('getMovieboxCrop', () => {
-    it('keeps the measured crop constants on desktop', () => {
+    it('keeps the measured crop constants', () => {
         expect(MOVIEBOX_STAGE_WIDTH).toBe(1536);
         expect(MOVIEBOX_STAGE_CROP_TOP).toBe(117);
         expect(MOVIEBOX_STAGE_CROP_LEFT).toBe(120);
+        // poora page mode (sirf search frame)
         expect(MOVIEBOX_STAGE_VISIBLE_HEIGHT).toBe(545);
+        // sirf player mode: 968 × 545 = 16:9
+        expect(MOVIEBOX_STAGE_PLAYER_WIDTH).toBe(968);
+        expect(MOVIEBOX_STAGE_PLAYER_HEIGHT).toBe(545);
+        const ratio = MOVIEBOX_STAGE_PLAYER_WIDTH / MOVIEBOX_STAGE_PLAYER_HEIGHT;
+        expect(Math.abs(ratio - 16 / 9)).toBeLessThan(0.02);
     });
 
-    it('uses a fixed 1536px stage and scales it to the screen', () => {
+    it('shows only the player — Resources panel bahar reh jata hai', () => {
         const crop = getMovieboxCrop(1440, 900);
         expect(crop.stacked).toBe(false);
         expect(crop.stageWidth).toBe(1536);
-        expect(crop.stageVisibleWidth).toBe(1416);
-        expect(crop.scale).toBeCloseTo(1440 / 1416, 6);
+        // naapa gaya: video stage-x 128.6 → 1088.6 (960 wide), panel wahin se
+        expect(crop.stageVisibleWidth).toBe(968);
+        expect(crop.cropLeft + crop.stageVisibleWidth).toBeLessThanOrEqual(1089);
         expect(crop.cropTop).toBe(117);
         expect(crop.cropLeft).toBe(120);
-        expect(crop.frameWidth).toBe(1440);
-        // 545 × scale
-        expect(crop.height).toBe(Math.round(545 * (1440 / 1416)));
+        // title strip stage-y 663 se — window 662 par band
         expect(crop.stageVisibleHeight).toBe(545);
+        expect(crop.scale).toBeCloseTo(1440 / 968, 6);
+        expect(crop.frameWidth).toBe(1440);
+        expect(crop.height).toBe(811);
     });
 
-    it('caps the visible height to the parent (fixed-height host)', () => {
+    it('keeps the whole 16:9 player at any desktop width', () => {
+        for (const width of [960, 1100, 1280, 1440, 1920]) {
+            const crop = getMovieboxCrop(width, 1200);
+            expect(crop.frameWidth).toBe(width);
+            expect(Math.abs(crop.height / crop.frameWidth - 9 / 16)).toBeLessThan(0.02);
+        }
+    });
+
+    it('contain-fits a short host so the control bar is never cut', () => {
         const crop = getMovieboxCrop(1440, 300);
         expect(crop.height).toBe(300);
+        expect(crop.frameWidth).toBe(533);
+        expect(Math.abs(crop.height / crop.frameWidth - 9 / 16)).toBeLessThan(0.02);
     });
 
-    it('switches to the stacked mobile layout below 900px', () => {
+    it('keeps the full-page crop for the search frame', () => {
+        const crop = getMovieboxCrop(1440, 900, { resources: true });
+        expect(crop.stageVisibleWidth).toBe(1416);
+        expect(crop.stageVisibleHeight).toBe(545);
+        expect(crop.scale).toBeCloseTo(1440 / 1416, 6);
+        expect(crop.frameWidth).toBe(1440);
+        expect(crop.height).toBe(Math.round(545 * (1440 / 1416)));
+    });
+
+    it('keepa player-only crop in a small window too (PC par window chhoti ho)', () => {
+        // Chrome window 900px se chhoti hui to pehle site ka POORA mobile page
+        // dikhne lagta tha (Refresh/Download/Prev/Next, title, description,
+        // bottom nav). Ab har width par wahi stage crop chalta hai.
         const crop = getMovieboxCrop(420, 900);
+        expect(crop.stacked).toBe(false);
+        expect(crop.stageWidth).toBe(1536);
+        expect(crop.cropLeft).toBe(120);
+        expect(crop.cropTop).toBe(117);
+        expect(crop.stageVisibleWidth).toBe(968);
+        expect(crop.stageVisibleHeight).toBe(545);
+        expect(crop.frameWidth).toBe(420);
+        expect(crop.scale).toBeCloseTo(420 / 968, 6);
+        expect(crop.height).toBe(Math.round(545 * (420 / 968)));
+    });
+
+    it('keeps the site mobile layout only for the search page', () => {
+        const crop = getMovieboxCrop(420, 900, { resources: true });
         expect(crop.stacked).toBe(true);
         expect(crop.scale).toBe(1);
         expect(crop.cropLeft).toBe(0);
         expect(crop.stageWidth).toBe(420);
-        // player (396×9/16) + 16 saans + 320 episode grid
         expect(crop.stageVisibleHeight).toBe(Math.round((396 * 9) / 16 + 16 + 320));
         expect(crop.cropTop).toBe(104);
     });
 
-    it('steps the mobile top crop down with the width', () => {
-        expect(getMovieboxCrop(800, 800).cropTop).toBe(112);
-        expect(getMovieboxCrop(700, 800).cropTop).toBe(108);
-        expect(getMovieboxCrop(400, 800).cropTop).toBe(104);
+    it('steps the search-page top crop down with the width', () => {
+        expect(getMovieboxCrop(800, 800, { resources: true }).cropTop).toBe(112);
+        expect(getMovieboxCrop(700, 800, { resources: true }).cropTop).toBe(108);
+        expect(getMovieboxCrop(400, 800, { resources: true }).cropTop).toBe(104);
     });
 
-    it('falls back to the desktop stage size before layout is measured', () => {
+    it('falls back to the desktop player box before layout is measured', () => {
         const crop = getMovieboxCrop(0, 0);
         expect(crop.stacked).toBe(false);
         expect(crop.frameWidth).toBe(1416);
-        expect(crop.scale).toBe(1);
-        expect(crop.height).toBe(545);
+        expect(crop.scale).toBeCloseTo(1416 / 968, 6);
+        expect(crop.height).toBe(Math.round(545 * (1416 / 968)));
     });
 
-    it('desktop starts exactly at 900px', () => {
-        expect(getMovieboxCrop(900, 800).stacked).toBe(false);
-        expect(getMovieboxCrop(899, 800).stacked).toBe(true);
+    it('player mode never goes stacked, at any width', () => {
+        for (const width of [320, 420, 760, 899, 900, 1440, 1920]) {
+            expect(getMovieboxCrop(width, 800).stacked).toBe(false);
+        }
+        // sirf search page hi 900px par switch karta hai
+        expect(getMovieboxCrop(900, 800, { resources: true }).stacked).toBe(false);
+        expect(getMovieboxCrop(899, 800, { resources: true }).stacked).toBe(true);
     });
 });
 

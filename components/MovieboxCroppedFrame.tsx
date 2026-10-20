@@ -26,6 +26,11 @@ import {
  * neeche rakhti hai) — tab iframe asli chaudai par khulta hai aur andar
  * scroll khula rehta hai.
  *
+ * Player mode me crop ka daaya kinara MovieBox ke **Resources panel** se pehle
+ * hi band ho jata hai, isliye screen par sirf player dikhta hai (episode grid,
+ * "Source: …", sab bahar). Site ki layout badal jaye to
+ * `MOVIEBOX_STAGE_PLAYER_WIDTH` (lib/moviebox.ts) dobara naap lena.
+ *
  * Do usool jo pane par rehte hain:
  *   1. Host ki height PAKKI honi chahiye (full-screen layer). Agar host apni
  *      height bachchon se banaye (auto / min-height), crop apni hi height
@@ -47,11 +52,31 @@ interface MovieboxCroppedFrameProps {
      * page nahi, search results khule hon (warna kata hua header wapas dikhta).
      */
     allowScroll?: boolean;
+    /**
+     * `player` (default) = screen par **sirf player** (MovieBox ka Resources
+     * panel bahar) — NetMirror jaisa full-bleed 16:9.
+     * `page` = poora page crop (search results ke liye).
+     */
+    mode?: 'player' | 'page';
+    /**
+     * Frame pointer events le raha hai? Chrome (hamare overlays) chhupne par
+     * `false` — tab pointer ka pura movement hamare dabbe tak aata hai, isliye
+     * mouse hilte hi chrome wapas aa jata hai (warna cross-origin iframe
+     * andar ka mousemove deta hi nahi).
+     */
+    interactive?: boolean;
 }
 
 const IS_WEB = Platform.OS === 'web';
 
-export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }: MovieboxCroppedFrameProps) {
+export function MovieboxCroppedFrame({
+    src,
+    title,
+    onLoad,
+    allowScroll = false,
+    mode = 'player',
+    interactive = true,
+}: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
     onLoadRef.current = onLoad;
@@ -99,13 +124,20 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
         frame.setAttribute('data-m2box', 'frame');
         frame.title = title ? `${title} — M2Box` : 'M2Box player';
         frame.setAttribute('allow', MOVIEBOX_FRAME_ALLOW);
-        frame.setAttribute('allowfullscreen', 'true');
+        // `allowfullscreen` jaan-boojh kar nahi — wo allow="fullscreen" ka
+        // purana alias hai aur site ke fullscreen button ko chalu kar deta
+        // hai (crop toot kar poora page dikhne lagta hai). Fullscreen hum
+        // apne player dabbe ka dete hain.
         frame.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
         frame.setAttribute('sandbox', MOVIEBOX_FRAME_SANDBOX);
         frame.setAttribute('frameborder', '0');
         frame.style.position = 'absolute';
         frame.style.border = '0';
         frame.style.backgroundColor = '#000';
+        // Chrome chhupa ho to video pointer events na le — tab mouse ka har
+        // movement hum tak aata hai aur overlays turant wapas dikh jate hain
+        // (cross-origin iframe andar ki harkat nahi batata).
+        frame.style.pointerEvents = interactive ? 'auto' : 'none';
         frame.src = src;
         frame.onload = () => onLoadRef.current?.();
 
@@ -118,30 +150,11 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
 
         const apply = () => {
             const rect = host.getBoundingClientRect();
-            const fs = doc.fullscreenElement as Element | null;
-            // Sirf tab crop hatao jab VIDEO khud fullscreen hua ho — us waqt
-            // top-level document ka fullscreen element yahi iframe hota hai.
-            // Hamari app khud `documentElement` ko fullscreen karti hai; us
-            // halat me crop chalta rahega (bas naye size se dobara naapa
-            // jayega), warna fullscreen me poora m2box page dikhne lagta.
-            const frameIsFullscreen =
-                !!fs && fs !== doc.documentElement && (fs === frame || frame.contains(fs));
-
-            if (frameIsFullscreen) {
-                box.style.width = '100%';
-                box.style.height = '100%';
-                stage.style.width = '100%';
-                stage.style.height = '100%';
-                stage.style.transform = '';
-                frame.style.top = '0px';
-                frame.style.left = '0px';
-                frame.style.width = '100%';
-                frame.style.height = '100%';
-                frame.setAttribute('scrolling', 'no');
-                return;
-            }
-
-            const crop = getMovieboxCrop(rect.width, rect.height);
+            // Crop HAR haalat me — chhoti window, bada fullscreen, sab me.
+            // Host (hamara player dabba) fullscreen hone par uski rect hi
+            // screen ka naap hoti hai, isliye crop apne aap naye size par
+            // lag jata hai aur screen par sirf player dikhta hai.
+            const crop = getMovieboxCrop(rect.width, rect.height, { resources: mode === 'page' });
             box.style.width = `${crop.frameWidth}px`;
             box.style.height = `${crop.height}px`;
             stage.style.width = `${crop.stageVisibleWidth}px`;
@@ -151,7 +164,9 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
             frame.style.left = `${-crop.cropLeft}px`;
             frame.style.width = `${crop.stageWidth}px`;
             frame.style.height = `${crop.stageVisibleHeight + crop.cropTop}px`;
-            // Mobile par episode list neeche hoti hai — scroll khula chahiye.
+            // Scroll sirf desktop player crop par band — warna user crop ke
+            // bahar wala header/grid wapas la sakta hai. Mobile par grid
+            // neeche hoti hai, isliye wahan scroll khula rehta hai.
             if (crop.stacked || allowScroll) frame.removeAttribute('scrolling');
             else frame.setAttribute('scrolling', 'no');
         };
@@ -169,6 +184,8 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
         // phir rAF + 80ms + 250ms par dobara naapo.
         const timers: Array<ReturnType<typeof setTimeout>> = [];
         const onFullscreenChange = () => {
+            // Hamara player dabba fullscreen hua / bahar aaya — naaya size
+            // aa gaya, dobara naapo (crop wahin ka wahin rehna chahiye).
             apply();
             if (typeof requestAnimationFrame === 'function') requestAnimationFrame(apply);
             timers.push(setTimeout(apply, 80));
@@ -193,7 +210,20 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
             } catch {}
             host.innerHTML = '';
         };
-    }, [src, title]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [src, title, mode, allowScroll]);
+
+    /**
+     * Chrome chhupne/dikhne par sirf pointer-events badalta hai — iframe
+     * dobara mount NAHI hota (warna video reload ho jata). Isliye `interactive`
+     * upar wale effect ki dependency me nahi hai.
+     */
+    useEffect(() => {
+        if (!IS_WEB || typeof document === 'undefined') return;
+        const host = hostRef.current as unknown as HTMLElement | null;
+        const frame = host?.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement | null;
+        if (frame) frame.style.pointerEvents = interactive ? 'auto' : 'none';
+    }, [interactive, src]);
 
     if (!IS_WEB) {
         return (

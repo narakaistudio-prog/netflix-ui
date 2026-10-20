@@ -5,7 +5,8 @@ import { act } from 'react-dom/test-utils';
 
 jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
-    return { Ionicons: (props: any) => ReactLocal.createElement('i', props) };
+    const icon = (props: any) => ReactLocal.createElement('i', props);
+    return { Ionicons: icon, MaterialCommunityIcons: icon };
 });
 jest.mock('@/components/EmbedPlayer', () => {
     const ReactLocal = require('react');
@@ -25,6 +26,15 @@ jest.mock('expo-linear-gradient', () => {
 jest.mock('@/hooks/useCatalog', () => ({
     useCatalog: () => ({ rows: [], isLive: false }),
 }));
+// Ye test Nxsha (embed) wala rasta dekhta hai — MovieBox available na hone par
+// hi wo chalta hai (naya default MovieBox hai jahan link milta hai).
+jest.mock('@/hooks/useMovieboxAvailable', () => ({
+    useMovieboxAvailable: () => ({ available: false, checking: false }),
+}));
+jest.mock('@/lib/movieboxLinks', () => {
+    const actual = jest.requireActual('@/lib/movieboxLinks');
+    return { ...actual, resolveMovieboxLink: () => null };
+});
 
 import { ContinueWatchingRow, timeAgo } from '../components/ContinueWatchingRow';
 import {

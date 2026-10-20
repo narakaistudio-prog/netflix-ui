@@ -1,7 +1,8 @@
 # Server 2 — M2Box (MovieBox) cropped player
 
 > TL;DR: MovieBox embed nahi deta. Uska **poora watch page** iframe me kholo,
-> aur dabbe ko aise kaato ki screen par sirf **player + episode list** bache.
+> aur dabbe ko aise kaato ki screen par sirf **player** bache — site ka header,
+> sidebar aur "Resources" (episode grid) panel sab bahar.
 > Desktop par iframe ek **fixed 1536px stage** par render karta hai aur stage
 > `transform: scale()` se screen ke hisaab se chhoti/badi hoti hai — isliye
 > kaat har screen par ek hi jagah padta hai.
@@ -35,15 +36,85 @@ Naap (asli screenshots par pixel-naap, 20 Oct 2026 — Demon Slayer, 26 eps):
 | `MOVIEBOX_STAGE_WIDTH` | 1536 | Site ka layout isi chaudai par waisa rehta hai jaisa asli site par (episode guide 5-column chhota). |
 | `MOVIEBOX_STAGE_CROP_TOP` | 117 | Header + menu kaat (player page-y 120 se shuru hota hai). |
 | `MOVIEBOX_STAGE_CROP_LEFT` | 120 | Baayein ka kaat (iframe ke andar player 129 se shuru hota hai). |
-| `MOVIEBOX_STAGE_VISIBLE_HEIGHT` | 545 | Window page-y 117 → 662: player/panel ke 8px neeche, title (≈682) se 20px upar. |
+| `MOVIEBOX_STAGE_PLAYER_WIDTH` | 968 | **Sirf player**: x 120 → 1088. Video stage-x 128.6 → 1088.6 (960 wide) hai aur "Resources" panel bilkul wahin (1088.6) se shuru hota hai — isliye panel kabhi andar nahi aata. |
+| `MOVIEBOX_STAGE_PLAYER_HEIGHT` | 545 | Window y 117 → 662: video y 121 → 661 (540 tall, 16:9) + uske apne controls. Title/rating patti 663 se shuru hoti hai — bahar. 968 × 545 = 16:9. |
+| `MOVIEBOX_STAGE_VISIBLE_HEIGHT` | 545 | **Poora page** mode (sirf search frame): y 117 → 662. |
 
-Scale = `dabbe ki chaudai / 1416` (`1536 − 120`), dikhne wali unchai =
-`545 × scale`, par host ki unchai se zyada kabhi nahi.
+Desktop scale = `min(chaudai / visibleWidth, unchai / visibleHeight)` — yaani
+`contain`: jo dabba chhota pad jaye usme bhi player ka koi hissa (control bar,
+fullscreen button) nahi katta. Phir `dikhne wali chaudai × scale` hi dabbe ki
+chaudai banti hai.
 
-**Mobile (<900px):** site episode list player ke **neeche** rakhti hai, isliye
-stage nahi banta — iframe asli chaudai par (scale 1), upar ka kaat 112/108/104
-(chaudai 768+/480+/usse kam), unchai = player + 16 + 320. Wahan andar scroll
-**khula** rehta hai (warna episodes tak pahunchenge hi nahi).
+Mode ka faisla `MovieboxCroppedFrame` ke `mode` prop se hota hai:
+`player` (default — watch page, panel bahar) aur `page` (search results frame).
+
+**Chhoti window (mobile / PC par window chhoti):** player mode me **koi
+special case nahi** — har chaudai par wahi 1536px stage + wahi crop, bas poora
+stage `scale` ho kar dabbe me fit ho jata hai. (Pehle 900px se neeche site ka
+apna mobile layout chal jata tha, jisme player ke neeche Refresh/Download/Prev/
+Next, title, description aur bottom nav — poora page — dikhta tha.)
+
+Sirf **search/page mode** hi 900px se neeche site ke asli mobile layout par
+jaata hai (scale 1, upar ka kaat 112/108/104, unchai = player + 16 + 320) —
+wahan results/episode grid padhne ke liye scroll khula rehta hai.
+
+## Series: episode badalna ("Next Episode")
+
+Resources panel crop se bahar hai, isliye episode aage badhane ka apna raasta
+hai — player ke neeche-daayein **Next Episode** ka pill (agar series ho aur
+agla episode bacha ho):
+
+- Button **video ke dabbe ke andar** hota hai, bottom-right (site ke apne Next
+  Episode ki jagah) — `getMovieboxCrop` se dabbe ka rect nikaal kar overlay
+  usi par align hota hai, root ke kinare par nahi (warna black gutter me chala
+  jata tha).
+- Visibility site ke controls jaisi: yahan milne wali **har activity** par
+  overlays dikhte hain aur timer reset hota hai (pointer ka player par
+  aana/ghoomna, click, scroll, key, pointer ka frame me jaana, frame par
+  click/focus). **3.2s tak kuch na ho to gayab** — chahe pointer khamoshi se
+  video par hi khada ho.
+  (Iframe cross-origin hai isliye video ke andar lagatar mouse ghumane ka
+  event humein nahi milta; us halat me overlays 3.2s baad chhup jate hain aur
+  pointer ke bahar-nikal-kar-andar-aane ya click par turant wapas.)
+- `MovieboxPagePlayer` khud hi agla episode khol deta hai (`episode + 1`,
+  wahi `detailSe`/`detailEp` watch page — iframe dobara mount hota hai).
+- Parent ko `onEpisodeChange({ season, episode })` se batata hai, taaki
+  Continue Watching / row ka state sahi rahe.
+- `episodeCount` (us season ke episodes) se pata chalta hai ki agla episode
+  hai ya nahi — aakhri episode par button dikhta hi nahi. Movie par bhi nahi.
+- Search-results frame me bhi nahi (wahan title hi nahi mila tha).
+
+## Fullscreen
+
+Site ka fullscreen button **band** hai (iframe ke `allow` me `fullscreen` nahi,
+`allowfullscreen` attribute bhi nahi). Wajah: wo iframe ko fullscreen karta
+tha, aur us waqt browser sirf iframe dikhata hai — crop toot jata tha aur poora
+MovieBox page (header, Resources panel, title, Download/Share bar) dikhne lagta
+tha.
+
+Fullscreen ab hum dete hain:
+
+- **Fullscreen button video ke andar hai**, theek site ke apne fullscreen icon
+  ke **upar** — ek **kaale plate** (#000, ink ka 1.4x, halke rounded kone) par.
+  Plate unka icon dhak leti hai, aur plate ke beech me hamara safed
+  `MaterialCommunityIcons` `fullscreen` (chaaron kone wale brackets) unke icon
+  se **~11% bada** hai. Isse do fullscreen kabhi saath nahi dikhte. Chrome
+  (mouse rukne par) chhupte waqt **plate + icon dono** fade hote hain — warna
+  video ke corner me sirf kaala dabba chipka reh jata (owner ne yahi pakda).
+  Naap (owner ke 4.14x zoom crop se): ink 3.4% unchai, plate ka daaya kinara
+  2.14% chaudai aur neeche se 2.06% unchai par. `testID="moviebox-fullscreen"`
+  poore player dabbe (iframe + overlays) ko fullscreen karta hai. Top bar me
+  sirf X + server pill (link icon aur neeche wala badge hata diye).
+- **Chrome chhupne par iframe pointer-events `none` ho jate hain**, isliye
+  cross-origin iframe ke bawajood mouse ka har movement hamare dabbe tak aata
+  hai — mouse hilte hi fullscreen button (aur Next Episode + patti) wapas dikh
+  jate hain, aur chup-chaap 3.2s baad gayab. Pause karne ke liye pehla click
+  sirf chrome wapas laata hai (YouTube jaisa), doosra click player tak jata hai.
+- Fullscreen me bhi crop chalta rehta hai — host (player dabba) ka naap hi
+  screen ka naap ban jata hai, `getMovieboxCrop` wahi player-only dabba nikalta
+  hai, aur overlays (Next Episode, episode patti) usi dabbe par align rehte
+  hain. `fullscreenchange` par sirf dobara naapa jata hai.
+- Esc se bahar.
 
 ## Jab phir bhi link na mile — live resolve
 
@@ -162,6 +233,28 @@ kya MovieBox par title hai hi nahi, ya naam alag hai.
 ke saath `MATCH_ACCEPT` thoda badha do, ya us title ka sahi link row ke
 `embed_url` me daal do (row hamesha catalog se jeetta hai).
 
+## Server 2 sirf tab, jab link sach me ho
+
+Owner ka rule: **jis title ka MovieBox link nahi, us par Nxsha hi default
+rahega aur server badalne ka option dikhega hi nahi.**
+
+Title khulte hi (`hooks/useMovieboxAvailable.ts`):
+
+1. row / baked catalog / browser-saved link hai → turant pata, `available: true`;
+2. warna background me live resolve (`/api/moviebox-resolve`).
+
+`lib/playbackServers.ts` ka `buildServerCycle()` usi par cycle banata hai:
+
+| MovieBox | Server cycle | Pill |
+| --- | --- | --- |
+| mila | default (Nxsha) → NHD → custom → M2Box | dikhta hai |
+| nahi mila | **sirf Nxsha** | dikhta hi nahi (cycle length 1) |
+
+Settings me default provider `moviebox` ho par link na ho to bhi Nxsha par gir
+jata hai. Pehle har title par "M2Box" ka option aata tha, aur jab MovieBox par
+wo title hi nahi hota tha to us par jaate hi paste/search screen khulti thi —
+ab aisa nahi hota.
+
 ## Link kahan se aata hai
 
 MovieBox ke har title/dub ka apna canonical watch-page URL hota hai:
@@ -235,6 +328,9 @@ referrerpolicy="no-referrer-when-downgrade"
 4. **Browser tab se naapna** — tab me sidebar khuli hoti hai (player 245 se),
    iframe me band (129 se). Naap hamesha iframe ke andar ke screenshot se.
 5. **Desktop par andar scroll khula** — user kata hua menu/title dekh leta hai.
+6. **Panel ko CSS se chhupane ki koshish** — frame cross-origin hai (m2box.org),
+   uske DOM tak pahunch nahi hai; isliye panel sirf crop se hi bahar rehta hai
+   (`MOVIEBOX_STAGE_PLAYER_WIDTH`).
 
 ## Site layout badle to dobara naapna
 
@@ -242,18 +338,26 @@ referrerpolicy="no-referrer-when-downgrade"
    (browser tab me khuli m2box.org ka **nahi**).
 2. Screenshot me player/panel ka top, left, bottom aur title ki pehli line
    dhoondo.
-3. `stagePx = screenshotPx × (1416 / screenshot me frame ki chaudai)`.
-4. Naye constants: `CROP_TOP = playerTop − 3`, `CROP_LEFT = playerLeft − 9`,
-   `VISIBLE_HEIGHT = (playerBottom + 8) − CROP_TOP`, aur `CROP_TOP +
-   VISIBLE_HEIGHT` title se 15–20px upar rakho.
-5. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
-   (wahi sabse pehle tootti hai).
+3. Frame me **do** cheezein naapo: player ka daaya kinara aur "Resources"
+   panel ka baaya kinara (panel ka background `#28292E` jaisa flat grey hota
+   hai — rang badalne wali jagah hi kinara hai).
+4. `stagePx = screenshotPx × (visibleWidth / screenshot me frame ki chaudai)`
+   (`visibleWidth` = 1064 player mode / 1416 page mode).
+5. Scale seedha naapo: `scale = frameChaudaiPx / visibleWidth` (poora page mode
+   me `1416`). Phir har kinara stage units me: `stageX = CROP_LEFT + (xPx −
+   frameLeftPx) / scale`, `stageY = CROP_TOP + (yPx − frameTopPx) / scale`.
+6. Naye constants: `CROP_TOP = videoTop − 4`, `CROP_LEFT = videoLeft − 9`,
+   `PLAYER_WIDTH = panelLeft − CROP_LEFT` (panel aur video ke beech saans nahi
+   hota — thoda sa video ka daaya kinara kaatna padta hai), aur
+   `PLAYER_HEIGHT = (videoBottom + 1) − CROP_TOP`.
+7. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
+   (panel sabse pehle wahi chaudi karta hai).
 
 ## Hadein
 
-- **Bahut lambi series (40–50+ eps):** episode panel player se lamba ho jata hai
-  aur neeche ke episodes window ke bahar reh jate hain (scroll band hai). Us
-  halat me `/moviebox` page se poora page khol lo.
+- **Episode chunna:** player mode me "Resources" panel jaan-boojh kar bahar hai
+  (screen par sirf player). Episode change app ke apne episode selector se hota
+  hai (URL me `detailSe`/`detailEp`), ya `/moviebox` page se poora page khol lo.
 - **Framing kabhi bhi band ho sakti hai:** jis din M2Box `X-Frame-Options`/CSP
   laga dega, seedha frame blank hoga — tab proxy (`/api/moviebox-frame`) ya
   naya tab bacha hua rasta hai.
@@ -280,3 +384,27 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
   similarity, type+year penalties, ranking, Hindi dub pick).
 - `moviebox-catalog.test.ts` — baked JSON padhna + link priority
   (row → catalog → saved) + "baked link M2Box ko pehla server nahi banata".
+- **Server lagate hi kaala parda (3.2s)**: watch page khulte hi M2Box ka
+  *shell* dikhta hai (header, "Join Telegram", footer) — player uske baad mount
+  hota hai, isliye wo ~2s crop ke andar jhalak jata tha. `FRAME_COVER_MS`
+  (3200ms) tak `#000` parda + spinner rehta hai, phir seedha player. Search
+  page mode me parda nahi (wahan page hi dikhna hai).
+
+## Server chunna (Hindi / Multi)
+
+- Detail screen par, description ke neeche aur "Episodes" ke upar, do chip:
+  **Hindi** = MovieBox (M2Box crop player), **Multi** = Nxsha (embed).
+  Default **MovieBox** hai (`server` state `'moviebox'` se shuru hota hai).
+  MovieBox link na ho to ye option dikhta hi nahi — Nxsha hi chalta hai.
+- Play dabne par jo server us waqt chal raha hai wahi chipak jata hai, taaki
+  MovieBox ki availability baad me resolve hone par video ke beech player na
+  badle.
+- **Player ke andar server switch nahi** — `MovieboxPagePlayer` ko
+  `onSwitchServer` aur `EmbedPlayer` ko `onSwitchProvider` nahi diya jata; X se
+  band karke detail screen se server badla ja sakta hai. (Standalone
+  `/movie/[id]` page par Nxsha ka pill video chalu hone se pehle tak dikhta hai,
+  `rolling` hone par gayab.)
+- Frame ka loading parda ab sirf **"Loading…"** likhta hai.
+
+- **Fullscreen me koi top bar nahi** — X ka nishan bhi nahi (owner). Bahar
+  aane ke liye corner ka fullscreen-exit button ya Esc.

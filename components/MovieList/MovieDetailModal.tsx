@@ -17,6 +17,7 @@ import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
 import { MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
+import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -81,7 +82,11 @@ export function MovieDetailModal({
      * Which playback server is on: the regular embed providers, or M2Box
      * (MovieBox ka poora watch page, sirf-player crop me).
      */
-    const [server, setServer] = useState<'primary' | 'moviebox'>('primary');
+    /**
+     * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
+     * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
+     */
+    const [server, setServer] = useState<'primary' | 'moviebox'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
 
@@ -97,6 +102,43 @@ export function MovieDetailModal({
     const primaryEmbedUrl = movie?.embed_url && !rowIsMoviebox ? movie.embed_url : undefined;
     const movieboxLinkKey = movieboxKeyForTitle(movie ?? { id: '' });
 
+    /**
+     * MovieBox par ye title hai ya nahi — Server 2 ka option sirf tab, jab link
+     * sach me mile (row/baked/saved ya live resolve). Warna Nxsha hi rehta hai
+     * aur switch ka option dikhta hi nahi.
+     */
+    const movieboxAvailability = useMovieboxAvailable(movie, {
+        known: Boolean(movieboxEntry),
+        linkKey: movieboxLinkKey,
+        onResolved: () => setMovieboxRevision((n) => n + 1),
+    });
+    const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
+
+    /** Play daba par MovieBox ka jawab pending tha — jawab aate hi wahi karo. */
+    const pendingPlayRef = useRef<{ season: number; episode: number } | null>(null);
+
+    /** Pending play ka jawab aa gaya — ab sahi rasta chuno. */
+    useEffect(() => {
+        if (!movie) return;
+        const pending = pendingPlayRef.current;
+        if (!pending || movieboxAvailability.checking) return;
+        pendingPlayRef.current = null;
+        if (movieboxAvailable) {
+            setActiveEntry(null);
+            setServer('moviebox');
+            setPlaying(true);
+            return;
+        }
+        // MovieBox par bhi nahi hai — official Netflix.
+        const url = officialUrlFor(movie);
+        if (IS_WEB) {
+            window.open(url, '_blank', 'noopener');
+        } else {
+            Linking.openURL(url).catch(() => {});
+        }
+    }, [movieboxAvailability.checking, movieboxAvailable, movie]);
+
+
     /** Show a short message over the player, the way the Crunchyroll page does. */
     const announce = useCallback((message: string | null) => {
         if (noticeTimer.current) clearTimeout(noticeTimer.current);
@@ -107,7 +149,7 @@ export function MovieDetailModal({
 
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
-        setServer(rowIsMoviebox ? 'moviebox' : 'primary');
+        setServer('moviebox');
         setPlaying(autoPlay);
         setEpisodeRef(initialEpisode ?? null);
         setSeason(initialEpisode?.season ?? 1);
@@ -181,6 +223,9 @@ export function MovieDetailModal({
     const cast = (movie.cast || []).filter((name) => name && name !== 'Cast not available');
     const genres = movie.genres || [];
 
+    /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
+    const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
+
     const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
             const isSeries = movie.mediaType === 'tv';
@@ -213,13 +258,21 @@ export function MovieDetailModal({
                 });
             } catch {}
             setActiveEntry({ id: entryId, season: ep.season, episode: ep.episode });
+            // Jo server abhi chal raha hai wahi chipka do — warna MovieBox ki
+            // availability baad me resolve hone par video ke beech player badal
+            // jata (play dabne ke baad server apne aap nahi badalna chahiye).
+            setServer(activeServer);
             setPlaying(true);
             return;
         }
-        // Koi primary embed nahi bana — lekin M2Box ka link saved hai to
-        // Server 2 seedha chalao (yahi un titles ka rasta hai jinpe Nxsha
-        // ke paas id hi nahi hoti).
-        if (movieboxEntry) {
+        // Koi primary embed nahi bana — lekin M2Box ka link hai to Server 2
+        // seedha chalao (yahi un titles ka rasta hai jinpe Nxsha ke paas id
+        // hi nahi hoti). Jawab pending ho to official par mat bhejo.
+        if (movieboxAvailability.checking) {
+            pendingPlayRef.current = episode ?? episodeRef ?? { season: 1, episode: 1 };
+            return;
+        }
+        if (movieboxAvailable) {
             if (episode) setEpisodeRef(episode);
             setActiveEntry(null);
             setServer('moviebox');
@@ -309,6 +362,58 @@ export function MovieDetailModal({
                                 ) : null}
                             </View>
                         </View>
+
+                        {/* Server chunna — owner ke naap par description ke
+                            neeche, "Episodes" ke upar. **Hindi = MovieBox**,
+                            **Multi = Nxsha**. MovieBox link na ho to ye option
+                            dikhta hi nahi (Nxsha hi chalta hai). */}
+                        {movieboxAvailable ? (
+                            <View style={[styles.serverRow, wide && styles.serverRowWide]}>
+                                <Text style={styles.serverRowLabel}>Server</Text>
+                                <Pressable
+                                    onPress={() => setServer('moviebox')}
+                                    style={[
+                                        styles.serverChip,
+                                        activeServer === 'moviebox' && styles.serverChipActive,
+                                    ]}
+                                    accessibilityLabel="Hindi server (M2Box)"
+                                    accessibilityRole="button"
+                                    accessibilityState={{ selected: activeServer === 'moviebox' }}
+                                    {...({ dataSet: { selected: activeServer === 'moviebox' ? '1' : '0' } } as any)}
+                                    testID="server-hindi"
+                                >
+                                    <Text
+                                        style={[
+                                            styles.serverChipText,
+                                            activeServer === 'moviebox' && styles.serverChipTextActive,
+                                        ]}
+                                    >
+                                        Hindi
+                                    </Text>
+                                </Pressable>
+                                <Pressable
+                                    onPress={() => setServer('primary')}
+                                    style={[
+                                        styles.serverChip,
+                                        activeServer === 'primary' && styles.serverChipActive,
+                                    ]}
+                                    accessibilityLabel="Multi server (Nxsha)"
+                                    accessibilityRole="button"
+                                    accessibilityState={{ selected: activeServer === 'primary' }}
+                                    {...({ dataSet: { selected: activeServer === 'primary' ? '1' : '0' } } as any)}
+                                    testID="server-multi"
+                                >
+                                    <Text
+                                        style={[
+                                            styles.serverChipText,
+                                            activeServer === 'primary' && styles.serverChipTextActive,
+                                        ]}
+                                    >
+                                        Multi
+                                    </Text>
+                                </Pressable>
+                            </View>
+                        ) : null}
 
                         {currentSeason ? (
                             <View style={[styles.episodes, wide && styles.episodesWide]}>
@@ -409,9 +514,9 @@ export function MovieDetailModal({
                     </ScrollView>
                 </View>
 
-                {playing && (src || server === 'moviebox') ? (
+                {playing && (src || activeServer === 'moviebox') ? (
                     <View style={styles.playerLayer}>
-                        {server === 'moviebox' ? (
+                        {activeServer === 'moviebox' ? (
                             <MovieboxPagePlayer
                                 linkKey={movieboxLinkKey}
                                 initialLink={movieboxEntry?.link ?? null}
@@ -420,9 +525,25 @@ export function MovieDetailModal({
                                 mediaType={movie.mediaType === 'tv' ? 'tv' : 'movie'}
                                 season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
                                 episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
+                                episodeCount={
+                                    movie.mediaType === 'tv' ? currentSeason?.episode_count : undefined
+                                }
+                                episodeTitle={
+                                    movie.mediaType === 'tv'
+                                        ? currentSeason?.episodes?.find(
+                                              (item) =>
+                                                  item.episode ===
+                                                  (episodeRef?.episode ?? 1),
+                                          )?.name
+                                        : undefined
+                                }
+                                onEpisodeChange={(next) => {
+                                    // Agla episode chal raha hai — modal ka apna
+                                    // state bhi wahi rahe (player band karke
+                                    // dobara kholne par sahi episode khule).
+                                    setEpisodeRef(next);
+                                }}
                                 onClose={() => setPlaying(false)}
-                                onSwitchServer={() => setServer('primary')}
-                                switchLabel="Server 1"
                                 onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
                             />
                         ) : (
@@ -433,8 +554,6 @@ export function MovieDetailModal({
                                 fallbackUrl={officialUrlFor(movie)}
                                 resumeAt={resumeSec}
                                 serverName="Nxsha"
-                                nextServerName={MOVIEBOX_SERVER_LABEL}
-                                onSwitchProvider={() => setServer('moviebox')}
                                 onProgress={(info) => {
                                     if (!activeEntry) return;
                                     updateWatchPosition(activeEntry.id, info.seconds, info.duration);
@@ -600,6 +719,46 @@ const styles = StyleSheet.create({
     },
     sideLabel: {
         color: MUTED,
+    },
+    /** Hindi / Multi — server chunne wali patti (moviebox / nxsha). */
+    serverRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: 10,
+        paddingHorizontal: 16,
+        paddingBottom: 10,
+    },
+    serverRowWide: {
+        paddingHorizontal: 40,
+    },
+    serverRowLabel: {
+        color: '#9a9a9a',
+        fontSize: 13,
+        fontWeight: '700',
+        letterSpacing: 0.8,
+        textTransform: 'uppercase',
+        marginRight: 6,
+    },
+    serverChip: {
+        paddingHorizontal: 18,
+        paddingVertical: 8,
+        borderRadius: 18,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.4)',
+        backgroundColor: 'rgba(255,255,255,0.06)',
+    },
+    serverChipActive: {
+        backgroundColor: '#fff',
+        borderColor: '#fff',
+    },
+    serverChipText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '700',
+    },
+    serverChipTextActive: {
+        color: '#000',
     },
     episodes: {
         paddingHorizontal: 16,

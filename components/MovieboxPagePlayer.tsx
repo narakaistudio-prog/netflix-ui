@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { MovieboxCroppedFrame } from './MovieboxCroppedFrame';
 import { MovieboxLinkPanel } from './MovieboxLinkPanel';
 import {
     buildMovieboxFrameProxyUrl,
     buildMovieboxPageUrl,
     buildMovieboxSearchUrl,
+    getMovieboxCrop,
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
@@ -47,6 +48,18 @@ interface MovieboxPagePlayerProps {
     /** Series ke liye — page seedha usi episode se khulta hai. */
     season?: number;
     episode?: number;
+    /**
+     * Series ke liye — is season me total episodes. Isse pata chalta hai ki
+     * "Next Episode" dikhana hai ya nahi (aakhri episode par nahi).
+     */
+    episodeCount?: number;
+    /** Chalu episode ka naam ("Everyone Has a Demon in Their Heart"). */
+    episodeTitle?: string;
+    /**
+     * Next Episode dabane par parent ko batao (Continue Watching / row state
+     * apne aap sahi rahe). Na de to player khud hi agla episode khol deta hai.
+     */
+    onEpisodeChange?: (next: { season: number; episode: number }) => void;
     onClose: () => void;
     /** Server 1 par wapas jaane ke liye (cycle me switch). */
     onSwitchServer?: () => void;
@@ -56,6 +69,27 @@ interface MovieboxPagePlayerProps {
 }
 
 const FRAME_TIMEOUT_MS = 15000;
+/**
+ * Site ki page khulte hi jo **shell** dikhta hai (M2Box ka header, "Join
+ * Telegram" ka dabba, footer) — watch page ka player uske baad mount hota hai,
+ * isliye ~2s wahi shell crop ke andar dikhta reh jata hai ("sidhe player par
+ * jana chahiye" — owner). Itni der ke liye kaala parda.
+ */
+const FRAME_COVER_MS = 3200;
+/**
+ * Site ka apna chrome (controls) ~3s me gayab hota hai. Hamara Next Episode
+ * bhi usi waqt gayab hota hai, aur mouse hilte hi wapas.
+ */
+const CHROME_IDLE_MS = 3200;
+/** Player se pointer bahar nikalne ke baad overlays kitni der me gayab. */
+const CHROME_HIDE_AFTER_LEAVE_MS = 900;
+/**
+ * Episode patti video ke dabbe me **neeche** baithti hai — site ke apne
+ * controls wali line par (seek bar + "00:13 / 01:08:31" + "English DualSub
+ * 720P"), bilkul NetMirror jaisa. 0.90 = dabbe ki 90% unchai — yaani un
+ * icons ke thoda neeche, khaali kaali patti me.
+ */
+const EPISODE_STRIP_BOTTOM = 0.9;
 
 export function MovieboxPagePlayer({
     linkKey,
@@ -66,6 +100,9 @@ export function MovieboxPagePlayer({
     autoResolve = true,
     season,
     episode,
+    episodeCount,
+    episodeTitle,
+    onEpisodeChange,
     onClose,
     onSwitchServer,
     switchLabel,
@@ -74,6 +111,8 @@ export function MovieboxPagePlayer({
     const [link, setLink] = useState<string | null>(null);
     const [proxy, setProxy] = useState(false);
     const [loading, setLoading] = useState(false);
+    /** Page khulte waqt ka kaala parda (site ka shell na dikhe). */
+    const [covered, setCovered] = useState(false);
     const [timedOut, setTimedOut] = useState(false);
     /** Live resolve chal raha hai (baked/saved link nahi mila). */
     const [resolving, setResolving] = useState(false);
@@ -85,7 +124,26 @@ export function MovieboxPagePlayer({
     const [searchFallback, setSearchFallback] = useState(false);
     /** User ne search ke bajaye khud link paste karna chuna. */
     const [manualEntry, setManualEntry] = useState(false);
+    /**
+     * "Next Episode" se aage badha hua episode. Parent ka `episode` prop na
+     * badle to bhi frame naye episode par chala jaye — isliye apna override.
+     * Parent episode/link badle to override saaf.
+     */
+    const [episodeOverride, setEpisodeOverride] = useState<number | null>(null);
+    /** Player ka apna naap — overlays ko video ke dabbe par align karne ke liye. */
+    const [rootSize, setRootSize] = useState({ width: 0, height: 0 });
+    /** Site ke controls jaisa: idle par gayab. */
+    const [chromeVisible, setChromeVisible] = useState(true);
+    /** Poora player dabba (overlays ke saath) fullscreen hai. */
+    const [ownFullscreen, setOwnFullscreen] = useState(false);
+    const rootRef = useRef<View | null>(null);
+    /** Idle-effect se nikala hua "abhi dikhao" — fullscreen change par bhi use hota hai. */
+    const revealRef = useRef<(() => void) | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        setEpisodeOverride(null);
+    }, [linkKey, episode]);
 
     /* ---------------------------- Link ---------------------------- */
 
@@ -140,10 +198,35 @@ export function MovieboxPagePlayer({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [autoResolve, link, initialLink, linkKey, title, year, mediaType]);
 
+    /** Jo episode abhi frame me khula hai (override jeetta hai). */
+    const activeEpisode = episodeOverride ?? episode;
+
     const pageUrl = useMemo(
-        () => (link ? buildMovieboxPageUrl(link, { se: season, ep: episode }) : null),
-        [link, season, episode],
+        () => (link ? buildMovieboxPageUrl(link, { se: season, ep: activeEpisode }) : null),
+        [link, season, activeEpisode],
     );
+
+    /**
+     * "Next Episode" — sirf series par, aur sirf tab jab agla episode ho.
+     * Resources panel ab crop se bahar hai, isliye episode badalne ka yehi
+     * sabse seedha raasta hai.
+     */
+    const isSeries = mediaType === 'tv' || typeof episode === 'number';
+    const nextEpisode = useMemo(() => {
+        if (!isSeries || typeof activeEpisode !== 'number') return null;
+        if (typeof episodeCount === 'number' && episodeCount > 0 && activeEpisode >= episodeCount) {
+            return null;
+        }
+        return { season: typeof season === 'number' ? season : 1, episode: activeEpisode + 1 };
+    }, [activeEpisode, episodeCount, isSeries, season]);
+
+    const goNextEpisode = useCallback(() => {
+        if (!nextEpisode) return;
+        setEpisodeOverride(nextEpisode.episode);
+        setLoading(true);
+        setTimedOut(false);
+        onEpisodeChange?.(nextEpisode);
+    }, [nextEpisode, onEpisodeChange]);
 
     /** Search fallback ka page (sirf jab watch page hi na mile). */
     const searchUrl = useMemo(
@@ -160,7 +243,64 @@ export function MovieboxPagePlayer({
     /** Frame me search results khule hain (watch page nahi). */
     const isSearchFrame = Boolean(searchUrl);
 
+    /**
+     * Video ka asli dabba screen par kahan hai.
+     *
+     * `MovieboxCroppedFrame` poore player me dabbe ko **center** karta hai
+     * (`alignItems/justifyContent: center`), aur uski chaudai/unchai wahi crop
+     * math deti hai. Isliye overlay (Next Episode) ko root ke kinare par nahi,
+     * dabbe ke andar - uske bottom-right - rakha ja sakta hai.
+     */
+    const overlayBox = useMemo(() => {
+        if (!rootSize.width || !rootSize.height) return null;
+        const crop = getMovieboxCrop(rootSize.width, rootSize.height, { resources: isSearchFrame });
+        const pad = Math.max(12, Math.round(crop.frameWidth * 0.025));
+        return {
+            left: Math.round((rootSize.width - crop.frameWidth) / 2),
+            top: Math.round((rootSize.height - crop.height) / 2),
+            width: crop.frameWidth,
+            height: crop.height,
+            padRight: pad,
+            padLeft: pad,
+            /**
+             * Site ke apne fullscreen icon ki jagah — video ke bottom-right.
+             *
+             * Wo icon **cross-origin iframe ke andar** hai, use DOM se hata
+             * nahi sakte. Isliye uske upar hamara icon ek **kaale plate** par
+             * baithta hai: plate unka icon dhak leti hai, aur hamare safed
+             * brackets usi plate me unke icon se thoda bade hain.
+             *
+             * Naap — owner ke screenshot se (crop 4.14x zoom, site ka icon
+             * 28px, uska centre dabbe ke daayein kinare se 56.5px aur neeche
+             * se 40.5px par): ink 3.4% unchai (unse ~11% bada), plate ink ka
+             * 1.4x, plate ka daaya kinara 2.14% chaudai aur neeche se 2.06%
+             * unchai par.
+             */
+            fsInk: Math.max(26, Math.round(crop.height * 0.034)),
+            fsPlate: Math.max(34, Math.round(crop.height * 0.034 * 1.4)),
+            fsRight: Math.round(crop.frameWidth * 0.0214),
+            fsBottom: Math.round(crop.height * 0.0206),
+            // site ka seek bar + controls neeche ~10-12% jagah lete hain
+            padBottom: Math.max(20, Math.round(crop.height * 0.13)),
+        };
+    }, [rootSize, isSearchFrame]);
+
     /* --------------------------- Frame ---------------------------- */
+
+    /**
+     * Player mount hone tak site ka shell (header / Join Telegram / footer)
+     * crop ke andar dikhta hai. Utni der kaala parda — warna server lagate hi
+     * 2 second ke liye M2Box ka apna page jhalak jata hai.
+     */
+    useEffect(() => {
+        if (!frameSrc || isSearchFrame) {
+            setCovered(false);
+            return;
+        }
+        setCovered(true);
+        const coverTimer = setTimeout(() => setCovered(false), FRAME_COVER_MS);
+        return () => clearTimeout(coverTimer);
+    }, [frameSrc, isSearchFrame]);
 
     useEffect(() => {
         setTimedOut(false);
@@ -179,6 +319,117 @@ export function MovieboxPagePlayer({
             if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, [frameSrc]);
+
+    /** Hamara player dabba fullscreen karo (web par). */
+    const enterOwnFullscreen = useCallback(() => {
+        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const el = rootRef.current as unknown as HTMLElement | null;
+        if (!el || document.fullscreenElement === el) return;
+        const request =
+            (el as any).requestFullscreen ||
+            (el as any).webkitRequestFullscreen;
+        try {
+            request?.call(el)?.catch?.(() => {});
+        } catch {}
+    }, []);
+
+    /** Apna fullscreen chal raha hai? (Button ka icon badalne ke liye.) */
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const onFs = () => {
+            const el = rootRef.current as unknown as HTMLElement | null;
+            setOwnFullscreen(!!el && document.fullscreenElement === el);
+            // Fullscreen me bhi chrome turant dikhe, phir idle par gayab —
+            // pehle fullscreen ke baad button wapas aata hi nahi tha.
+            revealRef.current?.();
+        };
+        document.addEventListener('fullscreenchange', onFs);
+        document.addEventListener('webkitfullscreenchange', onFs as EventListener);
+        return () => {
+            document.removeEventListener('fullscreenchange', onFs);
+            document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
+        };
+    }, []);
+
+    /**
+     * Player chrome (Next Episode + episode patti) — site ke apne controls
+     * jaisa: hilla nahi to gayab.
+     *
+     * Iframe cross-origin hai: video ke andar ka mousemove humein **nahi**
+     * milta (browser share nahi karta), aur site ke controls andar chalti
+     * hain. Isliye sync ka tareeka ye hai:
+     *
+     *   - Yahan milne wali **har activity** par overlays dikhte hain aur
+     *     timer dobara chalu ho jata hai: pointer player par aana/ghoomna,
+     *     click, scroll, key, aur pointer ka frame ke andar jaana
+     *     (`mouseout` relatedTarget = null) ya frame ko focus (click).
+     *   - **`CHROME_IDLE_MS` (3.2s) tak kuch na ho** to gayab — bilkul site
+     *     ke controls ki tarah, chahe pointer khamoshi se video par hi khada
+     *     ho. (Pehle pointer "andar" hone par hum kabhi nahi chhupate the,
+     *     isliye controls gayab hone ke baad bhi hamara button dikhta rehta
+     *     tha — user ki latest shikayat.)
+     *
+     * Video ke andar lagatar mouse ghumane par site ke controls dikhte hain
+     * par humein events nahi milte — us halat me ye overlays 3.2s baad chhup
+     * jate hain. Pointer ek baar bahar-nikle-andar-aaye (ya click ho) to
+     * turant wapas dikh jate hain.
+     */
+    useEffect(() => {
+        if (!frameSrc || isSearchFrame) {
+            setChromeVisible(true);
+            return;
+        }
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+
+        const doc = window.document;
+        const el = rootRef.current as unknown as HTMLElement | null;
+        let timer: ReturnType<typeof setTimeout> | null = null;
+
+        const hideLater = (ms: number) => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => setChromeVisible(false), ms);
+        };
+
+        const reveal = () => {
+            setChromeVisible(true);
+            hideLater(CHROME_IDLE_MS);
+        };
+        revealRef.current = reveal;
+
+        reveal();
+
+        const onLeave = () => hideLater(CHROME_HIDE_AFTER_LEAVE_MS);
+        /** Pointer iframe ke andar gaya — parent ko sirf ye milta hai. */
+        const onOut = (event: MouseEvent) => {
+            if (!event.relatedTarget) reveal();
+        };
+        /** Frame par click (focus) — activity maano. */
+        const onFrameFocus = () => reveal();
+
+        el?.addEventListener('mouseenter', reveal);
+        el?.addEventListener('mouseleave', onLeave);
+        el?.addEventListener('mousemove', reveal, { passive: true });
+        el?.addEventListener('mousedown', reveal, { passive: true });
+        el?.addEventListener('touchstart', reveal, { passive: true });
+        window.addEventListener('keydown', reveal);
+        window.addEventListener('wheel', reveal, { passive: true });
+        doc.addEventListener('mouseout', onOut);
+        doc.addEventListener('focusin', onFrameFocus);
+
+        return () => {
+            revealRef.current = null;
+            if (timer) clearTimeout(timer);
+            el?.removeEventListener('mouseenter', reveal);
+            el?.removeEventListener('mouseleave', onLeave);
+            el?.removeEventListener('mousemove', reveal);
+            el?.removeEventListener('mousedown', reveal);
+            el?.removeEventListener('touchstart', reveal);
+            window.removeEventListener('keydown', reveal);
+            window.removeEventListener('wheel', reveal);
+            doc.removeEventListener('mouseout', onOut);
+            doc.removeEventListener('focusin', onFrameFocus);
+        };
+    }, [frameSrc, isSearchFrame]);
 
     /* ---------------------------- Keys ---------------------------- */
 
@@ -231,13 +482,27 @@ export function MovieboxPagePlayer({
     /* --------------------------- Render --------------------------- */
 
     return (
-        <View style={styles.root} {...({ dataSet: { tvScope: 'player' } } as any)}>
+        <View
+            ref={rootRef}
+            style={[styles.root, ownFullscreen && styles.rootFullscreen]}
+            onLayout={(event) => {
+                const { width, height } = event.nativeEvent.layout;
+                setRootSize((prev) =>
+                    Math.abs(prev.width - width) < 1 && Math.abs(prev.height - height) < 1
+                        ? prev
+                        : { width, height },
+                );
+            }}
+            {...({ dataSet: { tvScope: 'player' } } as any)}
+        >
             {frameSrc ? (
                 <MovieboxCroppedFrame
                     key={frameSrc}
                     src={frameSrc}
                     title={title}
                     allowScroll={isSearchFrame}
+                    mode={isSearchFrame ? 'page' : 'player'}
+                    interactive={chromeVisible}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -266,24 +531,158 @@ export function MovieboxPagePlayer({
                 />
             )}
 
-            {frameSrc && loading ? (
-                <View style={styles.loadingOverlay} pointerEvents="none">
+            {/* Kaala parda: page load hone tak + site ka shell (header/footer)
+                player ban jaye tab tak. Isse server lagate hi seedha player
+                dikhta hai, M2Box ka apna page nahi. */}
+            {frameSrc && (loading || covered) ? (
+                <View style={styles.frameCover} pointerEvents="none" testID="moviebox-cover">
                     <ActivityIndicator size="large" color="#E50914" />
-                    <Text style={styles.loadingText}>{MOVIEBOX_SERVER_LABEL} page khul raha hai…</Text>
+                    <Text style={styles.loadingText}>Loading…</Text>
                 </View>
             ) : null}
 
-            {/* Top bar: bas X + server switch + link badalna. */}
-            <View style={styles.topBar} pointerEvents="box-none">
-                <Pressable
-                    style={styles.iconButton}
-                    onPress={onClose}
-                    accessibilityLabel="Close player"
-                    accessibilityRole="button"
-                    testID="moviebox-close"
+            {/* Series: episode ki patti — "S1 • E2  My Demon – <episode name>"
+                video ke andar bottom-left, bilkul NetMirror jaisa. Chrome ke
+                saath gayab. */}
+            {frameSrc && isSeries && !isSearchFrame && typeof activeEpisode === 'number' ? (
+                <View
+                    style={[
+                        styles.stripWrap,
+                        overlayBox
+                            ? {
+                                  left: overlayBox.left,
+                                  top:
+                                      overlayBox.top +
+                                      Math.round(overlayBox.height * EPISODE_STRIP_BOTTOM),
+                                  width: overlayBox.width,
+                                  paddingHorizontal: overlayBox.padRight + 150,
+                              }
+                            : styles.stripFallback,
+                        { opacity: chromeVisible ? 1 : 0 },
+                    ]}
+                    pointerEvents="none"
+                    testID="moviebox-episode-strip"
                 >
-                    <Ionicons name="close" size={22} color="#fff" />
+                    <View style={styles.epBadge}>
+                        <Text style={styles.epBadgeText}>
+                            {`S${typeof season === 'number' ? season : 1} • E${activeEpisode}`}
+                        </Text>
+                    </View>
+                    {title ? (
+                        <Text style={styles.stripTitle} numberOfLines={1}>
+                            {title}
+                            {episodeTitle ? (
+                                <>
+                                    <Text style={styles.stripDash}>{' – '}</Text>
+                                    <Text style={styles.stripEpName}>{episodeTitle}</Text>
+                                </>
+                            ) : null}
+                        </Text>
+                    ) : null}
+                </View>
+            ) : null}
+
+            {/* Fullscreen — theek site ke fullscreen icon ke UPAR, video ke
+                bottom-right me. Site ka icon hata nahi sakte (cross-origin),
+                isliye hamara icon unse thoda bada hai aur unke brackets ko
+                dhak leta hai; koi plate/background nahi (warna video ke
+                neeche kaala dabba dikhta hai). (overlayBox milne se pehle
+                fallback: root ke corner par.) */}
+            {frameSrc && !isSearchFrame ? (
+                <Pressable
+                    style={[
+                        styles.fsButton,
+                        overlayBox
+                            ? {
+                                  left:
+                                      overlayBox.left +
+                                      overlayBox.width -
+                                      overlayBox.fsRight -
+                                      overlayBox.fsPlate,
+                                  top:
+                                      overlayBox.top +
+                                      overlayBox.height -
+                                      overlayBox.fsBottom -
+                                      overlayBox.fsPlate,
+                                  width: overlayBox.fsPlate,
+                                  height: overlayBox.fsPlate,
+                              }
+                            : styles.fsFallback,
+                        /**
+                         * Chrome ke saath poora button (kaala plate + icon)
+                         * gayab — warna mouse rukne ke baad video ke corner me
+                         * sirf kaala dabba chipka reh jata hai.
+                         */
+                        { opacity: chromeVisible ? 1 : 0 },
+                    ]}
+                    onPress={() => {
+                        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+                        if (document.fullscreenElement) {
+                            document.exitFullscreen?.().catch(() => {});
+                        } else {
+                            enterOwnFullscreen();
+                        }
+                    }}
+                    accessibilityRole="button"
+                    accessibilityLabel={ownFullscreen ? 'Exit fullscreen' : 'Fullscreen player'}
+                    testID="moviebox-fullscreen"
+                >
+                    <MaterialCommunityIcons
+                        name={ownFullscreen ? 'fullscreen-exit' : 'fullscreen'}
+                        size={overlayBox ? Math.round(overlayBox.fsInk / 0.6) : 46}
+                        color="#fff"
+                    />
                 </Pressable>
+            ) : null}
+
+            {/* Series: agla episode — video ke andar, bottom-right (site ke
+                apne Next Episode ki jagah), aur chrome ke saath gayab. */}
+            {frameSrc && nextEpisode && !isSearchFrame ? (
+                <View
+                    style={[
+                        styles.nextWrap,
+                        overlayBox
+                            ? {
+                                  left: overlayBox.left,
+                                  top: overlayBox.top,
+                                  width: overlayBox.width,
+                                  height: overlayBox.height,
+                                  paddingRight: overlayBox.padRight,
+                                  paddingBottom: overlayBox.padBottom,
+                              }
+                            : styles.nextFallback,
+                        { opacity: chromeVisible ? 1 : 0 },
+                    ]}
+                    pointerEvents={chromeVisible ? 'box-none' : 'none'}
+                >
+                    <Pressable
+                        style={styles.nextButton}
+                        onPress={goNextEpisode}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Next episode ${nextEpisode.episode}`}
+                        testID="moviebox-next-episode"
+                    >
+                        <Ionicons name="play" size={15} color="#000" />
+                        <Text style={styles.nextButtonText}>Next Episode</Text>
+                    </Pressable>
+                </View>
+            ) : null}
+
+            {/* Top bar. Fullscreen me kuch bhi nahi — owner: "fullscreen hone
+                ke baad upar X ka nishan nahi aana chahiye". Fullscreen se
+                nikalne ke liye corner ka fullscreen-exit button ya Esc. */}
+            <View style={styles.topBar} pointerEvents="box-none">
+                {ownFullscreen ? null : (
+                    <Pressable
+                        style={styles.iconButton}
+                        onPress={onClose}
+                        accessibilityLabel="Close player"
+                        accessibilityRole="button"
+                        testID="moviebox-close"
+                    >
+                        <Ionicons name="close" size={22} color="#fff" />
+                    </Pressable>
+                )}
 
                 {onSwitchServer ? (
                     <Pressable
@@ -297,16 +696,6 @@ export function MovieboxPagePlayer({
                     </Pressable>
                 ) : null}
 
-                {frameSrc ? (
-                    <Pressable
-                        style={[styles.iconButton, styles.editButton]}
-                        onPress={editLink}
-                        accessibilityLabel="Change M2Box link"
-                        testID="moviebox-edit-link"
-                    >
-                        <Ionicons name="link-outline" size={18} color="#fff" />
-                    </Pressable>
-                ) : null}
             </View>
 
             {/* MovieBox par title hi nahi — search results khule hain. */}
@@ -365,19 +754,89 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-            {frameSrc && link ? (
-                <View style={styles.titleBadge} pointerEvents="none">
-                    <Text style={styles.titleBadgeText} numberOfLines={1}>
-                        {MOVIEBOX_SERVER_LABEL} · {describeMovieboxLink(link)}
-                    </Text>
-                </View>
-            ) : null}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#000', position: 'relative' },
+    /** Fullscreen me UA ke bharose na raho — poora screen pakka. */
+    rootFullscreen: { width: '100%', height: '100%', flex: 0 },
+    /**
+     * Video ke dabbe ke andar, bottom-right. `overlayBox` milne tak (pehla
+     * layout) fallback: root ke daayein kinare par.
+     */
+    /** Site ke fullscreen icon ki jagah — thoda gehra gola, icon saaf dikhe. */
+    /**
+     * Site ke apne fullscreen icon ki tarah — koi gola/background nahi, bas
+     * safed icon (chaaron kone wale brackets).
+     */
+    /**
+     * Site ke icon ke bilkul upar — **kaala plate** (unka icon iske neeche
+     * chhup jata hai), uske beech me hamare safed brackets. Plate ki wajah
+     * se do fullscreen kabhi saath nahi dikhte.
+     */
+    fsButton: {
+        position: 'absolute',
+        zIndex: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000',
+        borderRadius: 3,
+    },
+    /** `overlayBox` se pehle (pehla layout) — root ke bottom-right. */
+    fsFallback: {
+        right: 16,
+        bottom: 14,
+        width: 44,
+        height: 44,
+        backgroundColor: '#000',
+        borderRadius: 3,
+    },
+    nextWrap: {
+        position: 'absolute',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+    },
+    /** `overlayBox` se pehle (pehla layout) — root ke daayein kinare par. */
+    nextFallback: { right: 24, bottom: '13%' },
+    /** Episode ki patti: video ke andar neeche, controls ki line par, center. */
+    stripWrap: {
+        position: 'absolute',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+    },
+    stripFallback: { left: 0, right: 0, bottom: '8%' },
+    epBadge: {
+        backgroundColor: 'rgba(255,255,255,0.95)',
+        borderRadius: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+    },
+    epBadgeText: { color: '#000', fontSize: 13, fontWeight: '700' },
+    stripTitle: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: '700',
+        flexShrink: 1,
+        textShadowColor: 'rgba(0,0,0,0.75)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+    },
+    stripDash: { color: '#cfcfcf', fontWeight: '600' },
+    stripEpName: { color: '#7CD44A', fontWeight: '600' },
+    nextButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        backgroundColor: 'rgba(255,255,255,0.92)',
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 6,
+    },
+    nextButtonText: { color: '#000', fontSize: 14, fontWeight: '700' },
     resolving: {
         flex: 1,
         alignItems: 'center',
@@ -387,12 +846,14 @@ const styles = StyleSheet.create({
     },
     resolvingTitle: { color: '#fff', fontSize: 17, fontWeight: '700' },
     resolvingText: { color: '#9a9a9a', fontSize: 13, textAlign: 'center', maxWidth: 420, lineHeight: 20 },
-    loadingOverlay: {
+    /** Pura kaala — site ka shell iske peeche chalta rehta hai, dikhta nahi. */
+    frameCover: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.75)',
+        backgroundColor: '#000',
         gap: 14,
+        zIndex: 2,
     },
     loadingText: { color: '#ccc', fontSize: 13 },
     topBar: {
@@ -415,7 +876,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    editButton: { marginLeft: 'auto', opacity: 0.6 },
     serverPill: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -492,18 +952,6 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     proxyBadgeText: { color: '#d0d0d0', fontSize: 9, letterSpacing: 0.8, fontWeight: '700' },
-    titleBadge: {
-        position: 'absolute',
-        left: 12,
-        bottom: 14,
-        maxWidth: '60%',
-        paddingHorizontal: 9,
-        paddingVertical: 4,
-        borderRadius: 6,
-        backgroundColor: 'rgba(0,0,0,0.45)',
-        zIndex: 2,
-    },
-    titleBadgeText: { color: 'rgba(255,255,255,0.55)', fontSize: 10 },
 });
 
 export default MovieboxPagePlayer;
