@@ -77,6 +77,14 @@ jobs:
           echo "args: $ARGS"
           node scripts/harvest-moviebox-links.mjs $ARGS
 
+      - name: TEMP probe (misses ka reason)
+        if: always()
+        run: |
+          for Q in "Vishwanath" "Vishwanath and Sons" "Ohh My Dog" "Demon Slayer Infinity Castle"; do
+            echo "=== $Q"
+            node scripts/harvest-moviebox-links.mjs --probe "$Q" 2>&1 | head -40
+          done
+
       - name: Validate the baked links
         if: steps.harvest.outcome == 'success'
         run: node scripts/harvest-moviebox-links.mjs --check
