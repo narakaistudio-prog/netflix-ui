@@ -1,0 +1,579 @@
+=== Vishwanath
+probe: Vishwanath
+token: eyJhbGciOiJIUzI1NiIsInR5…
+search status=200 total=107 items=11
+[
+  {
+    "title": "Vishwatma",
+    "subjectId": "8925904644191176928",
+    "detailPath": "vishwatma-OTziiKKJmDa",
+    "subjectType": 1,
+    "year": 1992,
+    "hasResource": true
+  },
+  {
+    "title": "Kotha Kothaga",
+    "subjectId": "7201094757924650960",
+    "detailPath": "kotha-kothaga-eDQ0ksB5Xz8",
+    "subjectType": 1,
+    "year": 2022,
+    "hasResource": true
+  },
+  {
+    "title": "Jogira Sara Ra Ra",
+    "subjectId": "5367263844177953616",
+    "detailPath": "jogira-sara-ra-ra-sugk9QL7uo6",
+    "subjectType": 1,
+    "year": 2023,
+    "hasResource": true
+  },
+  {
+    "title": "Mahima Kashi Vishwanath Ki",
+    "subjectId": "4437099272189919464",
+    "detailPath": "mahima-kashi-vishwanath-ki-OlIYLVCXLh5",
+    "subjectType": 1,
+    "year": 2003,
+    "hasResource": true
+  },
+  {
+    "title": "Rakshasudu",
+    "subjectId": "1907379975980729424",
+    "detailPath": "rakshasudu-QeEnh6SOTg2",
+    "subjectType": 1,
+    "year": 2019,
+    "hasResource": true
+  },
+  {
+    "title": "Sorgavaasal",
+    "subjectId": "4732479962509363368",
+    "detailPath": "sorgavaasal-GVY40D7OAD5",
+    "subjectType": 1,
+    "year": 2024,
+    "hasResource": true
+  },
+  {
+    "title": "Aranmanai 3",
+    "subjectId": "989221847629712536",
+    "detailPath": "aranmanai-3-63GUDm5E4b1",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Gangers",
+    "subjectId": "839262268310406136",
+    "detailPath": "gangers-GdwZlSsPZZ",
+    "subjectType": 1,
+    "year": 2025,
+    "hasResource": true
+  },
+  {
+    "title": "Happy Patel: Khatarnak Jasoos",
+    "subjectId": "8290180434730927952",
+    "detailPath": "happy-patel-khatarnak-jasoos-Q4hogx57pS9",
+    "subjectType": 1,
+    "year": 2026,
+    "hasResource": true
+  },
+  {
+    "title": "Changure Bangaru Raja",
+    "subjectId": "8235004105496880152",
+    "detailPath": "changure-bangaru-raja-GdqcKjbpkO9",
+    "subjectType": 1,
+    "year": 2023,
+    "hasResource": true
+  }
+]
+detail: {
+  "subjectId": "8925904644191176928",
+  "detailPath": "vishwatma-OTziiKKJmDa",
+  "title": "Vishwatma",
+  "subjectType": 1,
+  "year": 1992,
+  "hasResource": true,
+  "dubs": [
+    {
+      "subjectId": "8925904644191176928",
+      "detailPath": "vishwatma-OTziiKKJmDa",
+      "lanName": "Original Audio",
+      "lanCode": "hi",
+      "type": 0,
+      "original": true
+    },
+    {
+      "subjectId": "6602600592538305424",
+      "detailPath": "vishwatma-wCR783OYJR7",
+      "lanName": "Hindi dub",
+      "lanCode": "hi",
+      "type": 0,
+      "original": false
+    }
+  ]
+}
+=== Vishwanath & Sons
+probe: Vishwanath & Sons
+token: eyJhbGciOiJIUzI1NiIsInR5…
+search status=200 total=268 items=16
+[
+  {
+    "title": "Aranmanai 3",
+    "subjectId": "989221847629712536",
+    "detailPath": "aranmanai-3-63GUDm5E4b1",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Rakshasudu",
+    "subjectId": "1907379975980729424",
+    "detailPath": "rakshasudu-QeEnh6SOTg2",
+    "subjectType": 1,
+    "year": 2019,
+    "hasResource": true
+  },
+  {
+    "title": "Kotha Kothaga",
+    "subjectId": "7201094757924650960",
+    "detailPath": "kotha-kothaga-eDQ0ksB5Xz8",
+    "subjectType": 1,
+    "year": 2022,
+    "hasResource": true
+  },
+  {
+    "title": "Sons of the Caliphate S1-S2",
+    "subjectId": "1460362528592118864",
+    "detailPath": "sons-of-the-caliphate-qNWeagvtSJ1",
+    "subjectType": 2,
+    "year": 2016,
+    "hasResource": true
+  },
+  {
+    "title": "The Torn Poster Let Out a Hero",
+    "subjectId": "4600197803397237432",
+    "detailPath": "the-torn-poster-let-out-a-hero-uVJ5g2cXOt5",
+    "subjectType": 1,
+    "year": 2013,
+    "hasResource": true
+  },
+  {
+    "title": "Custody",
+    "subjectId": "7445419200069648416",
+    "detailPath": "custody-M80mXg860S8",
+    "subjectType": 1,
+    "year": 2023,
+    "hasResource": true
+  },
+  {
+    "title": "The Y",
+    "subjectId": "7566280502660187216",
+    "detailPath": "the-y-ydQHvhZDV09",
+    "subjectType": 1,
+    "year": 2023,
+    "hasResource": true
+  },
+  {
+    "title": "Bob Biswas",
+    "subjectId": "7315053915463369808",
+    "detailPath": "bob-biswas-ClFmykw1nI8",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Custody",
+    "subjectId": "3438690032100463176",
+    "detailPath": "custody-2PRbXmGe164",
+    "subjectType": 1,
+    "year": 2023,
+    "hasResource": true
+  },
+  {
+    "title": "Mittran Da Challeya Truck Ni",
+    "subjectId": "2845414552626414232",
+    "detailPath": "mittran-da-challeya-truck-ni-UWJg4RM1co3",
+    "subjectType": 1,
+    "year": 2024,
+    "hasResource": true
+  }
+]
+detail: {
+  "subjectId": "989221847629712536",
+  "detailPath": "aranmanai-3-63GUDm5E4b1",
+  "title": "Aranmanai 3",
+  "subjectType": 1,
+  "year": 2021,
+  "hasResource": true,
+  "dubs": [
+    {
+      "subjectId": "989221847629712536",
+      "detailPath": "aranmanai-3-63GUDm5E4b1",
+      "lanName": "Original Audio",
+      "lanCode": "ta",
+      "type": 0,
+      "original": true
+    },
+    {
+      "subjectId": "4117312373839614000",
+      "detailPath": "aranmanai-3-ASWOQfJk9U4",
+      "lanName": "Arabic sub",
+      "lanCode": "ar",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "7099865416373525848",
+      "detailPath": "aranmanai-3-CVLr88ssts8",
+      "lanName": "Hindi dub",
+      "lanCode": "hi",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "248540109849723048",
+      "detailPath": "aranmanai-3-qfB7F0Cjmi",
+      "lanName": "Tamil dub",
+      "lanCode": "ta",
+      "type": 0,
+      "original": false
+    }
+  ]
+}
+=== Ohh My Dog
+probe: Ohh My Dog
+token: eyJhbGciOiJIUzI1NiIsInR5…
+search status=200 total=133 items=15
+[
+  {
+    "title": "Oh My Dog",
+    "subjectId": "3823046659714469296",
+    "detailPath": "oh-my-dog-wCLu3lQApy4",
+    "subjectType": 1,
+    "year": 2022,
+    "hasResource": true
+  },
+  {
+    "title": "Johnny Mad Dog",
+    "subjectId": "825355032672486480",
+    "detailPath": "johnny-mad-dog-6vO63cm8YY",
+    "subjectType": 1,
+    "year": 2008,
+    "hasResource": true
+  },
+  {
+    "title": "Dog",
+    "subjectId": "305585982512975448",
+    "detailPath": "dog-86hZwAoAzm",
+    "subjectType": 1,
+    "year": 2022,
+    "hasResource": true
+  },
+  {
+    "title": "Dog Bite Dog",
+    "subjectId": "2648600346683131896",
+    "detailPath": "dog-bite-dog-6v6ZcoiCE93",
+    "subjectType": 1,
+    "year": 2006,
+    "hasResource": true
+  },
+  {
+    "title": "Clifford the Big Red Dog",
+    "subjectId": "4632465503997546072",
+    "detailPath": "clifford-the-big-red-dog-iZ8w20XJcw5",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Courage the Cowardly Dog S1-S4",
+    "subjectId": "1058045887492017960",
+    "detailPath": "courage-the-cowardly-dog-qBSEibpR9g1",
+    "subjectType": 2,
+    "year": 1999,
+    "hasResource": true
+  },
+  {
+    "title": "Dog World",
+    "subjectId": "7257315687629555352",
+    "detailPath": "dog-world-K1dj1s8A6E8",
+    "subjectType": 1,
+    "year": 2008,
+    "hasResource": true
+  },
+  {
+    "title": "Dog",
+    "subjectId": "8537651527756963848",
+    "detailPath": "dog-wW9NcU8xGaa",
+    "subjectType": 1,
+    "year": 2022,
+    "hasResource": true
+  },
+  {
+    "title": "SPECIAL HOT DOG 2",
+    "subjectId": "136792863152790288",
+    "detailPath": "special-hot-dog-2-uT8E84Nv6a",
+    "subjectType": 1,
+    "year": 2026,
+    "hasResource": true
+  },
+  {
+    "title": "Rock Dog",
+    "subjectId": "613988505794004008",
+    "detailPath": "rock-dog-IYH5pXz4mJ",
+    "subjectType": 1,
+    "year": 2017,
+    "hasResource": true
+  }
+]
+detail: {
+  "subjectId": "3823046659714469296",
+  "detailPath": "oh-my-dog-wCLu3lQApy4",
+  "title": "Oh My Dog",
+  "subjectType": 1,
+  "year": 2022,
+  "hasResource": true,
+  "dubs": [
+    {
+      "subjectId": "3823046659714469296",
+      "detailPath": "oh-my-dog-wCLu3lQApy4",
+      "lanName": "Original Audio",
+      "lanCode": "ta",
+      "type": 0,
+      "original": true
+    },
+    {
+      "subjectId": "6451490006543860112",
+      "detailPath": "oh-my-dog-0ISGwrlTzG7",
+      "lanName": "Hindi dub",
+      "lanCode": "hi",
+      "type": 0,
+      "original": false
+    }
+  ]
+}
+=== Demon Slayer
+probe: Demon Slayer
+token: eyJhbGciOiJIUzI1NiIsInR5…
+search status=200 total=128 items=19
+[
+  {
+    "title": "Demon Slayer: Kimetsu no Yaiba [English] S1-S5",
+    "subjectId": "7231184498325966096",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-english-cK8E2dUTaC8",
+    "subjectType": 2,
+    "year": 2025,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer: Kimetsu No Yaiba - To the Hashira Training",
+    "subjectId": "6189703385403770824",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-to-the-hashira-training-GDvoLafUen7",
+    "subjectType": 1,
+    "year": 2024,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer: Kimetsu no Yaiba S1-S5",
+    "subjectId": "3619725132714887968",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-OpOlWPwnoj4",
+    "subjectType": 2,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer: Kimetsu no Yaiba - Asakusa Arc [English]",
+    "subjectId": "4879401361420468336",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-asakusa-arc-english-A4dkmf1IrO5",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer: Kimetsu No Yaiba - To the Swordsmith Village",
+    "subjectId": "5829592540739160760",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-to-the-swordsmith-village-O5ckcOVADW6",
+    "subjectType": 1,
+    "year": 2023,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer the Movie: Mugen Train [English]",
+    "subjectId": "1798435330735982848",
+    "detailPath": "demon-slayer-the-movie-mugen-train-english-kGw0IwSQQ82",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer: Kimetsu no Yaiba - Mt. Natagumo Arc [English]",
+    "subjectId": "3561087974131515536",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-mt-natagumo-arc-english-eBdzfMSO3f4",
+    "subjectType": 1,
+    "year": 2020,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer the Movie: Mugen Train",
+    "subjectId": "4260168667809336920",
+    "detailPath": "demon-slayer-the-movie-mugen-train-Y6S4bqiCH45",
+    "subjectType": 1,
+    "year": 2021,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer S2: Yoriichi Theme | EPIC VERSION (Extended Theme)",
+    "subjectId": "1624343461904139648",
+    "detailPath": "demon-slayer-s2-yoriichi-theme-epic-version-extended-theme-QoJd3yDvZV1",
+    "subjectType": 6,
+    "year": 2022,
+    "hasResource": true
+  },
+  {
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "subjectId": "5635985817983242720",
+    "detailPath": "demon-slayer-kimetsu-no-yaiba-kkdCPSeSkI6",
+    "subjectType": 2,
+    "year": 2019,
+    "hasResource": true
+  }
+]
+detail: {
+  "subjectId": "7231184498325966096",
+  "detailPath": "demon-slayer-kimetsu-no-yaiba-english-cK8E2dUTaC8",
+  "title": "Demon Slayer: Kimetsu no Yaiba [English] S1-S5",
+  "subjectType": 2,
+  "year": 2025,
+  "hasResource": true,
+  "dubs": [
+    {
+      "subjectId": "3619725132714887968",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-OpOlWPwnoj4",
+      "lanName": "Original Audio",
+      "lanCode": "ja",
+      "type": 0,
+      "original": true
+    },
+    {
+      "subjectId": "6746630405254169528",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-uDkLHFBDn28",
+      "lanName": "Arabic sub",
+      "lanCode": "ar",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "2791050960590857480",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-QkJnAkF2bk3",
+      "lanName": "English sub",
+      "lanCode": "en",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "7231184498325966096",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-cK8E2dUTaC8",
+      "lanName": "English dub",
+      "lanCode": "en",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "3940158204063154120",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-e3ylCKUX3H4",
+      "lanName": "French dub",
+      "lanCode": "fr",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "3350050042852901216",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-kwZDpEpgtZ3",
+      "lanName": "Hindi dub",
+      "lanCode": "hi",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "217065231758019360",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-wwMU88Z92g",
+      "lanName": "Indonesian sub",
+      "lanCode": "id",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "8579378194283905896",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-GZK6LgSDLda",
+      "lanName": "Indonesian dub",
+      "lanCode": "id",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "3412420421369612576",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-W7x4N89V444",
+      "lanName": "Kurdish sub",
+      "lanCode": "ku",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "2966907434452795504",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-E6XhDaZsax3",
+      "lanName": "Portuguese sub",
+      "lanCode": "pt",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "2822541740262018944",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-okqjoaOgvm3",
+      "lanName": "Russian sub",
+      "lanCode": "ru",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "8215011815491880712",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-UUabbQ9QQM9",
+      "lanName": "Russian dub",
+      "lanCode": "ru",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "4991383644297220392",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-cSEzo8AAIW5",
+      "lanName": "Spanish dub",
+      "lanCode": "es",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "1046230370720662456",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-cugvMngKhf1",
+      "lanName": "Spanish sub",
+      "lanCode": "es",
+      "type": 1,
+      "original": false
+    },
+    {
+      "subjectId": "1674744651330339184",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-mJd6HKAlIZ1",
+      "lanName": "Tamil dub",
+      "lanCode": "ta",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "1422543072197592552",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-cUhfowgg5H1",
+      "lanName": "Telugu dub",
+      "lanCode": "te",
+      "type": 0,
+      "original": false
+    },
+    {
+      "subjectId": "4324850899446386984",
+      "detailPath": "demon-slayer-kimetsu-no-yaiba-english-EYsBJnvRt95",
+      "lanName": "esla dub",
+      "lanCode": "esla"
