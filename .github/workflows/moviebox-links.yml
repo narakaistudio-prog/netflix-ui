@@ -80,10 +80,12 @@ jobs:
       - name: TEMP probe (misses ka reason)
         if: always()
         run: |
-          for Q in "Vishwanath" "Vishwanath and Sons" "Ohh My Dog" "Demon Slayer Infinity Castle"; do
-            echo "=== $Q"
-            node scripts/harvest-moviebox-links.mjs --probe "$Q" 2>&1 | head -40
+          : > data/moviebox-probe.txt
+          for Q in "Vishwanath" "Vishwanath & Sons" "Ohh My Dog" "Demon Slayer"; do
+            echo "=== $Q" >> data/moviebox-probe.txt
+            node scripts/harvest-moviebox-links.mjs --probe "$Q" >> data/moviebox-probe.txt 2>&1 || true
           done
+          head -c 400 data/moviebox-probe.txt
 
       - name: Validate the baked links
         if: steps.harvest.outcome == 'success'
@@ -94,7 +96,7 @@ jobs:
         run: |
           git config user.name "moviebox-bot"
           git config user.email "moviebox-bot@users.noreply.github.com"
-          git add data/moviebox-links.json data/moviebox-harvest-report.json
+          git add -A data/
           if git diff --cached --quiet; then
             echo "no change — links already up to date"
             exit 0
