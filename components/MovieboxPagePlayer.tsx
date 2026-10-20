@@ -74,6 +74,13 @@ const FRAME_TIMEOUT_MS = 15000;
  * bhi usi waqt gayab hota hai, aur mouse hilte hi wapas.
  */
 const CHROME_IDLE_MS = 3200;
+/**
+ * Episode patti video ke dabbe me **neeche** baithti hai — site ke apne
+ * controls wali line par (seek bar + "00:13 / 01:08:31" + "English DualSub
+ * 720P"), bilkul NetMirror jaisa. 0.90 = dabbe ki 90% unchai — yaani un
+ * icons ke thoda neeche, khaali kaali patti me.
+ */
+const EPISODE_STRIP_BOTTOM = 0.9;
 
 export function MovieboxPagePlayer({
     linkKey,
@@ -423,14 +430,11 @@ export function MovieboxPagePlayer({
                         overlayBox
                             ? {
                                   left: overlayBox.left,
-                                  top: overlayBox.top,
+                                  top:
+                                      overlayBox.top +
+                                      Math.round(overlayBox.height * EPISODE_STRIP_BOTTOM),
                                   width: overlayBox.width,
-                                  height: overlayBox.height,
-                                  paddingLeft: overlayBox.padLeft,
-                                  // daayein Next Episode ka pill hai — text us
-                                  // ke neeche na chala jaye
-                                  paddingRight: overlayBox.padRight + 180,
-                                  paddingBottom: overlayBox.padBottom,
+                                  paddingHorizontal: overlayBox.padRight + 150,
                               }
                             : styles.stripFallback,
                         { opacity: chromeVisible ? 1 : 0 },
@@ -609,14 +613,15 @@ const styles = StyleSheet.create({
     },
     /** `overlayBox` se pehle (pehla layout) — root ke daayein kinare par. */
     nextFallback: { right: 24, bottom: '13%' },
-    /** Episode ki patti: video ke andar bottom-left, seek bar ke upar. */
+    /** Episode ki patti: video ke andar neeche, controls ki line par, center. */
     stripWrap: {
         position: 'absolute',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: 10,
     },
-    stripFallback: { left: 24, bottom: '13%' },
+    stripFallback: { left: 0, right: 0, bottom: '8%' },
     epBadge: {
         backgroundColor: 'rgba(255,255,255,0.95)',
         borderRadius: 4,
