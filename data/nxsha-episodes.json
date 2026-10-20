@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-19T17:51:54.621Z",
+    "generatedAt": "2026-10-20T04:48:14.907Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -30305,8 +30305,10 @@
           "season": 2,
           "episode": 49,
           "title": "THE BLADE",
-          "image": "https://image.tmdb.org/t/p/w780/7tYwNIyqWxiMmGTtEZwCRVun68y.jpg",
-          "airDate": "2026-10-20"
+          "overview": "Yhwach simultaneously appears in the Seireitei, the World of the Living, and Hueco Mundo.",
+          "image": "https://image.tmdb.org/t/p/w780/ytgu1uer3VcIjhThYDpnyrMny4x.jpg",
+          "airDate": "2026-10-20",
+          "runtime": 27
         },
         {
           "season": 2,
