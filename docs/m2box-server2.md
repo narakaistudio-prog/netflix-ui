@@ -95,13 +95,12 @@ tha.
 Fullscreen ab hum dete hain:
 
 - **Fullscreen button video ke andar hai**, theek site ke apne fullscreen icon
-  ke **upar** (naap — 1917×1077 window, dabba 1639×923: unka icon 28px, centre
-  daayein kinare se 64px yaani 3.9% aur neeche se 30px yaani 3.25%). Hamara
-  icon **~11% bada** hai (ink 3.4% unchai) — `MaterialCommunityIcons` ka
-  `fullscreen` (chaaron kone wale brackets). Bada hone se unke safed brackets
-  hamare neeche chhup jate hain, isliye ek hi icon dikhta hai. **Koi plate /
-  gola / background nahi** — pehle gehra plate tha, wo video ke corner me kaala
-  dabba jaisa dikhta tha (owner ne hatwaya). `testID="moviebox-fullscreen"`
+  ke **upar** — ek **kaale plate** (#000, ink ka 1.4x, halke rounded kone) par.
+  Plate unka icon dhak leti hai, aur plate ke beech me hamara safed
+  `MaterialCommunityIcons` `fullscreen` (chaaron kone wale brackets) unke icon
+  se **~11% bada** hai. Isse do fullscreen kabhi saath nahi dikhte.
+  Naap (owner ke 4.14x zoom crop se): ink 3.4% unchai, plate ka daaya kinara
+  2.14% chaudai aur neeche se 2.06% unchai par. `testID="moviebox-fullscreen"`
   poore player dabbe (iframe + overlays) ko fullscreen karta hai. Top bar me
   sirf X + server pill (link icon aur neeche wala badge hata diye).
 - **Chrome chhupne par iframe pointer-events `none` ho jate hain**, isliye

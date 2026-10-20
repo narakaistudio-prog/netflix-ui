@@ -443,9 +443,8 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             expect(fs.innerHTML).toContain('fullscreen');
             // dikhte waqt icon poora saaf
             expect((fs.firstElementChild as HTMLElement).style.opacity).toBe('');
-            // koi plate / gola nahi — sirf safed brackets (warna video ke
-            // corner me kaala dabba dikhta hai)
-            expect(fs.className).not.toContain('backgroundColor');
+            // kaala plate — isse site ka apna icon dhak jata hai
+            expect(fs.className).toContain('backgroundColor');
             expect(frame()!.style.pointerEvents).toBe('auto');
 
             // Chrome idle par chhupa → iframe pointer events nahi le, isliye

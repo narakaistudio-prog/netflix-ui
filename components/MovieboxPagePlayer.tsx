@@ -257,20 +257,20 @@ export function MovieboxPagePlayer({
              * Site ke apne fullscreen icon ki jagah — video ke bottom-right.
              *
              * Wo icon **cross-origin iframe ke andar** hai, use DOM se hata
-             * nahi sakte. Isliye hamara icon **theek uske upar aur usse
-             * thoda bada** baithta hai — hamare safed brackets unke brackets
-             * ko dhak lete hain, do icon nahi dikhte. (Pehle ek gehra plate
-             * bhi tha; owner ne kaha wo video ke neeche kaala dabba dikhata
-             * hai — hata diya.)
+             * nahi sakte. Isliye uske upar hamara icon ek **kaale plate** par
+             * baithta hai: plate unka icon dhak leti hai, aur hamare safed
+             * brackets usi plate me unke icon se thoda bade hain.
              *
-             * Naap — 1917×1077 window ka live screenshot, dabba 1639×923,
-             * site ka icon 28px, uska centre dabbe ke daayein kinare se 64px
-             * (3.9%) aur neeche se 30px (3.25%) par. Hamara icon ~11% bada
-             * (3.4% unchai) taaki unka poora dhak jaye.
+             * Naap — owner ke screenshot se (crop 4.14x zoom, site ka icon
+             * 28px, uska centre dabbe ke daayein kinare se 56.5px aur neeche
+             * se 40.5px par): ink 3.4% unchai (unse ~11% bada), plate ink ka
+             * 1.4x, plate ka daaya kinara 2.14% chaudai aur neeche se 2.06%
+             * unchai par.
              */
             fsInk: Math.max(26, Math.round(crop.height * 0.034)),
-            fsRight: Math.round(crop.frameWidth * 0.0295),
-            fsBottom: Math.round(crop.height * 0.0155),
+            fsPlate: Math.max(34, Math.round(crop.height * 0.034 * 1.4)),
+            fsRight: Math.round(crop.frameWidth * 0.0214),
+            fsBottom: Math.round(crop.height * 0.0206),
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
@@ -571,14 +571,14 @@ export function MovieboxPagePlayer({
                                       overlayBox.left +
                                       overlayBox.width -
                                       overlayBox.fsRight -
-                                      overlayBox.fsInk,
+                                      overlayBox.fsPlate,
                                   top:
                                       overlayBox.top +
                                       overlayBox.height -
                                       overlayBox.fsBottom -
-                                      overlayBox.fsInk,
-                                  width: overlayBox.fsInk,
-                                  height: overlayBox.fsInk,
+                                      overlayBox.fsPlate,
+                                  width: overlayBox.fsPlate,
+                                  height: overlayBox.fsPlate,
                               }
                             : styles.fsFallback,
                     ]}
@@ -596,7 +596,7 @@ export function MovieboxPagePlayer({
                 >
                     <MaterialCommunityIcons
                         name={ownFullscreen ? 'fullscreen-exit' : 'fullscreen'}
-                        size={overlayBox ? Math.round(overlayBox.fsInk / 0.6) : 44}
+                        size={overlayBox ? Math.round(overlayBox.fsInk / 0.6) : 46}
                         color="#fff"
                         style={chromeVisible ? undefined : styles.fsIconHidden}
                     />
@@ -736,23 +736,28 @@ const styles = StyleSheet.create({
      * safed icon (chaaron kone wale brackets).
      */
     /**
-     * Site ke icon ke bilkul upar — koi gola/plate/background nahi, warna
-     * video ke corner me kaala dabba dikhta hai. Sirf safed brackets.
+     * Site ke icon ke bilkul upar — **kaala plate** (unka icon iske neeche
+     * chhup jata hai), uske beech me hamare safed brackets. Plate ki wajah
+     * se do fullscreen kabhi saath nahi dikhte.
      */
     fsButton: {
         position: 'absolute',
         zIndex: 4,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#000',
+        borderRadius: 3,
     },
     /** Chrome chhupa ho to icon gayab. */
     fsIconHidden: { opacity: 0 },
     /** `overlayBox` se pehle (pehla layout) — root ke bottom-right. */
     fsFallback: {
-        right: 20,
+        right: 16,
         bottom: 14,
-        width: 31,
-        height: 31,
+        width: 44,
+        height: 44,
+        backgroundColor: '#000',
+        borderRadius: 3,
     },
     nextWrap: {
         position: 'absolute',
