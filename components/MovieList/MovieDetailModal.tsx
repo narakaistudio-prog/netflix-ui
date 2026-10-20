@@ -110,6 +110,31 @@ export function MovieDetailModal({
     });
     const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
 
+    /** Play daba par MovieBox ka jawab pending tha — jawab aate hi wahi karo. */
+    const pendingPlayRef = useRef<{ season: number; episode: number } | null>(null);
+
+    /** Pending play ka jawab aa gaya — ab sahi rasta chuno. */
+    useEffect(() => {
+        if (!movie) return;
+        const pending = pendingPlayRef.current;
+        if (!pending || movieboxAvailability.checking) return;
+        pendingPlayRef.current = null;
+        if (movieboxAvailable) {
+            setActiveEntry(null);
+            setServer('moviebox');
+            setPlaying(true);
+            return;
+        }
+        // MovieBox par bhi nahi hai — official Netflix.
+        const url = officialUrlFor(movie);
+        if (IS_WEB) {
+            window.open(url, '_blank', 'noopener');
+        } else {
+            Linking.openURL(url).catch(() => {});
+        }
+    }, [movieboxAvailability.checking, movieboxAvailable, movie]);
+
+
     /** Show a short message over the player, the way the Crunchyroll page does. */
     const announce = useCallback((message: string | null) => {
         if (noticeTimer.current) clearTimeout(noticeTimer.current);
@@ -197,9 +222,6 @@ export function MovieDetailModal({
     /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
     const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
 
-    /** Play daba par MovieBox ka jawab pending tha — jawab aate hi wahi karo. */
-    const pendingPlayRef = useRef<{ season: number; episode: number } | null>(null);
-
     const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
             const isSeries = movie.mediaType === 'tv';
@@ -257,26 +279,6 @@ export function MovieDetailModal({
             Linking.openURL(url).catch(() => {});
         }
     };
-
-    /** Pending play ka jawab aa gaya — ab sahi rasta chuno. */
-    useEffect(() => {
-        const pending = pendingPlayRef.current;
-        if (!pending || movieboxAvailability.checking) return;
-        pendingPlayRef.current = null;
-        if (movieboxAvailable) {
-            setActiveEntry(null);
-            setServer('moviebox');
-            setPlaying(true);
-            return;
-        }
-        // MovieBox par bhi nahi hai — official Netflix.
-        const url = officialUrlFor(movie);
-        if (IS_WEB) {
-            window.open(url, '_blank', 'noopener');
-        } else {
-            Linking.openURL(url).catch(() => {});
-        }
-    }, [movieboxAvailability.checking, movieboxAvailable, movie]);
 
     return (
         <Modal visible transparent animationType="fade" onRequestClose={onClose}>
