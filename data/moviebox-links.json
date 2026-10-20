@@ -1,22 +1,25 @@
 {
  "$comment": "MovieBox (m2box.org) watch-pages for the Netflix catalog — Server 2. Baked by scripts/harvest-moviebox-links.mjs (GitHub Actions). Har entry ka `url` seedha MovieboxPagePlayer me jata hai; slug/subjectId dobara naapo mat, script hi update kare.",
- "generatedAt": "2026-10-20T10:16:39.482Z",
+ "generatedAt": "2026-10-20T11:37:31.803Z",
  "stats": {
   "catalog": 791,
-  "linked": 685,
+  "linked": 686,
   "hindi": 33,
   "hindiAudio": 384,
-  "review": 34,
-  "miss": 91,
+  "review": 28,
+  "miss": 77,
   "errors": 0,
-  "matchedThisRun": 665,
+  "matchedThisRun": 1,
   "pinned": 1,
   "queriesUsed": {
-   "primary": 790,
-   "hindi": 150,
-   "year": 125,
-   "clean": 1,
-   "ampersand": 2
+   "primary": 106,
+   "hindi": 106,
+   "year": 106,
+   "ampersand": 6,
+   "anchor": 71,
+   "head": 30,
+   "short": 60,
+   "clean": 1
   }
  },
  "links": {
@@ -32,7 +35,7 @@
    "score": 1,
    "query": "pin",
    "pinned": true,
-   "harvestedAt": "2026-10-20T10:02:34.080Z"
+   "harvestedAt": "2026-10-20T11:32:48.535Z"
   },
   "tmdb:1389172": {
    "url": "https://m2box.org/movies/reporting-live-08MIGBdRGC1?id=1363066357566304784&type=/movie/detail&detailSe=&detailEp=&lang=en",
@@ -8925,6 +8928,19 @@
    "score": 0.9,
    "query": "Her Private Life",
    "harvestedAt": "2026-10-20T10:16:35.088Z"
+  },
+  "tmdb:271690": {
+   "url": "https://m2box.org/movies/crime-0Ey46zErSn7?id=6198336305102212248&type=/movie/detail&detailSe=&detailEp=&lang=en",
+   "subjectId": "6198336305102212248",
+   "detailPath": "crime-0Ey46zErSn7",
+   "title": "Crime",
+   "year": 2021,
+   "type": "tv",
+   "dub": "original",
+   "hindiAudio": false,
+   "score": 0.815,
+   "query": "Crime Patrol",
+   "harvestedAt": "2026-10-20T11:35:37.032Z"
   }
  }
 }
