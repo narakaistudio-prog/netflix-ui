@@ -416,6 +416,8 @@ export function MovieDetailModal({
                                 linkKey={movieboxLinkKey}
                                 initialLink={movieboxEntry?.link ?? null}
                                 title={movie.title}
+                                year={movie.year}
+                                mediaType={movie.mediaType === 'tv' ? 'tv' : 'movie'}
                                 season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
                                 episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
                                 onClose={() => setPlaying(false)}

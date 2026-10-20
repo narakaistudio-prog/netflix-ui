@@ -35,6 +35,7 @@ export default function MovieboxScreen() {
                     linkKey={MOVIEBOX_PAGE_KEY}
                     initialLink={link}
                     title="M2Box"
+                    autoResolve={false}
                     onClose={() => setLink(null)}
                 />
             </View>

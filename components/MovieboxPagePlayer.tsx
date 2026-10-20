@@ -9,6 +9,7 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
+import { resolveMovieboxLive } from '@/lib/movieboxResolve';
 
 /**
  * "Server 2 · M2Box" — poora MovieBox watch page, sirf-player crop me.
@@ -18,9 +19,13 @@ import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/m
  * button. Frame ke andar M2Box ki poori site chalti hai (episode grid,
  * quality, subtitles sab wahi) — hum sirf dikhne wala hissa kaatte hain.
  *
- * Link ek baar chahiye: title row me `embed_url`/`videoUrl` me m2box link ho
- * to seedha chalta hai, warna panel link maangta hai aur use is browser me
- * title ke saath yaad rakhta hai (`lib/movieboxLinks.ts`).
+ * Link kahan se aata hai (is order me):
+ *   1. title row ka `embed_url`/`videoUrl`,
+ *   2. catalog ke liye baked link (`data/moviebox-links.json`),
+ *   3. browser me pehle save hua link,
+ *   4. **live resolve** — `/api/moviebox-resolve` MovieBox par khud dhoondhta hai
+ *      (`lib/movieboxResolve.ts`), taaki user ko link paste na karna pade.
+ * Sab fail ho jaye tabhi paste panel aata hai.
  *
  * `allow-top-navigation` nahi diya jata — M2Box ki ads hamari tab hijack
  * nahi kar sakti. Baaki scripts/forms/popups allowed hain taaki site ke
@@ -33,6 +38,11 @@ interface MovieboxPagePlayerProps {
     /** Title row se mila hua m2box link (agar hai). */
     initialLink?: string | null;
     title?: string;
+    /** Live resolve ke liye — MovieBox par sahi subject chunne me madad. */
+    year?: number | string;
+    mediaType?: 'movie' | 'tv';
+    /** Band karo to live resolve nahi hoga (standalone /moviebox page). */
+    autoResolve?: boolean;
     /** Series ke liye — page seedha usi episode se khulta hai. */
     season?: number;
     episode?: number;
@@ -50,6 +60,9 @@ export function MovieboxPagePlayer({
     linkKey,
     initialLink,
     title,
+    year,
+    mediaType,
+    autoResolve = true,
     season,
     episode,
     onClose,
@@ -61,6 +74,10 @@ export function MovieboxPagePlayer({
     const [proxy, setProxy] = useState(false);
     const [loading, setLoading] = useState(false);
     const [timedOut, setTimedOut] = useState(false);
+    /** Live resolve chal raha hai (baked/saved link nahi mila). */
+    const [resolving, setResolving] = useState(false);
+    /** Live resolve chala par MovieBox par kuch nahi mila. */
+    const [resolveFailed, setResolveFailed] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     /* ---------------------------- Link ---------------------------- */
@@ -72,7 +89,44 @@ export function MovieboxPagePlayer({
         setProxy(saved?.proxy ?? false);
         setLoading(Boolean(next));
         setTimedOut(false);
+        setResolveFailed(false);
     }, [linkKey, initialLink]);
+
+    /**
+     * Koi link nahi mila (na row, na baked catalog, na saved) — to poochhne ke
+     * bajaye khud dhoondho. Resolve hote hi frame khul jata hai.
+     */
+    useEffect(() => {
+        if (!autoResolve || link || initialLink || !title) return;
+        let cancelled = false;
+        setResolving(true);
+        setResolveFailed(false);
+        resolveMovieboxLive(
+            { title, year, mediaType },
+            { key: linkKey, storeKey: linkKey },
+        )
+            .then((result) => {
+                if (cancelled) return;
+                if (result?.entry?.url) {
+                    setLink(result.entry.url);
+                    setProxy(false);
+                    setLoading(true);
+                    onLinkSaved?.(result.entry.url);
+                } else {
+                    setResolveFailed(true);
+                }
+            })
+            .catch(() => {
+                if (!cancelled) setResolveFailed(true);
+            })
+            .finally(() => {
+                if (!cancelled) setResolving(false);
+            });
+        return () => {
+            cancelled = true;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [autoResolve, link, initialLink, linkKey, title, year, mediaType]);
 
     const pageUrl = useMemo(
         () => (link ? buildMovieboxPageUrl(link, { se: season, ep: episode }) : null),
@@ -157,9 +211,22 @@ export function MovieboxPagePlayer({
                         setTimedOut(false);
                     }}
                 />
+            ) : resolving ? (
+                <View style={styles.resolving} {...({ dataSet: { movieboxResolving: '1' } } as any)}>
+                    <ActivityIndicator size="large" color="#E50914" />
+                    <Text style={styles.resolvingTitle}>Server 2 taiyaar ho raha hai</Text>
+                    <Text style={styles.resolvingText}>
+                        MovieBox par “{title}” dhoondha ja raha hai — link khud lag jayega.
+                    </Text>
+                </View>
             ) : (
                 <MovieboxLinkPanel
                     title={title}
+                    notice={
+                        resolveFailed
+                            ? 'MovieBox par is title ka page nahi mila — link paste karo, ya thodi der baad “Play (Server 2)” dobara dabao.'
+                            : undefined
+                    }
                     initialLink={link}
                     initialProxy={proxy}
                     onPlay={handlePlay}
@@ -250,6 +317,15 @@ export function MovieboxPagePlayer({
 
 const styles = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#000', position: 'relative' },
+    resolving: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 24,
+        gap: 12,
+    },
+    resolvingTitle: { color: '#fff', fontSize: 17, fontWeight: '700' },
+    resolvingText: { color: '#9a9a9a', fontSize: 13, textAlign: 'center', maxWidth: 420, lineHeight: 20 },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',

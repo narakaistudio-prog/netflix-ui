@@ -45,6 +45,39 @@ stage nahi banta — iframe asli chaudai par (scale 1), upar ka kaat 112/108/104
 (chaudai 768+/480+/usse kam), unchai = player + 16 + 320. Wahan andar scroll
 **khula** rehta hai (warna episodes tak pahunchenge hi nahi).
 
+## Jab phir bhi link na mile — live resolve
+
+Baked map ~87% catalog cover karta hai. Baaki titles (naya release, ya MovieBox
+par search me na aane wala naam) ke liye ab **paste karne ki zaroorat nahi**:
+
+```
+GET /api/moviebox-resolve?title=Vishwanath%20%26%20Sons&year=2026&type=movie
+→ { found: true, url, subjectId, detailPath, title, dub, score, tier }
+```
+
+Server wahi search ladder + matching chalata hai jo harvester chalata hai
+(`scripts/lib/moviebox-api.mjs` + `scripts/lib/moviebox-match.mjs` — dono ek hi
+code hain, isliye app aur roz ka bake kabhi alag behave nahi karte).
+
+Client (`lib/movieboxResolve.ts`, `MovieboxPagePlayer`):
+
+1. row link → 2. baked catalog → 3. browser me saved → 4. **live resolve**
+   (sirf tab jab teeno na hon) → 5. tabhi paste panel.
+
+- Milne par link `netflix-moviebox-live-v1` me 7 din ke liye yaad rehta hai
+  (`saveMovieboxLink` se sync resolver ko bhi de diya jata hai, isliye reload ke
+  baad network call nahi).
+- Na mile to 6 ghante tak dobara nahi poochha jata; panel tab ek note ke saath
+  khulta hai.
+- Ek IP se 30 resolve/minute; jawab `s-maxage=86400` ke saath cache hota hai.
+
+### Search ladder
+
+MovieBox ka search poore title par kamzor padta hai — "Vishwanath & Sons" par
+"SONS OF ROYALTY" lauta deta hai, lekin "Vishwanath" par sahi subject mil jata
+hai. Isliye ladder: poora naam → naam + saal → naam Hindi → brackets hata kar →
+`&` ↔ and → subtitle se pehle ka hissa → **sabse distinctive shabd**.
+
 ## Har title par pehle se link (auto-harvest)
 
 Owner ki demand: Netflix ke **saare content** par M2Box apne aap second server
@@ -104,6 +137,10 @@ page sahi hai, to `data/moviebox-pins.json` me daal do:
 Pin hamesha jeetta hai — harvester na use search se replace karta hai, na
 refresh se, aur us title ke liye network call bhi nahi karta. Offline merge:
 `node scripts/harvest-moviebox-links.mjs --pins`.
+
+**Miss ka reason dekhna**: `data/moviebox-harvest-report.json` me har miss ke
+saath `candidates` (top 3, kis query se aaye) hote hain — usse pata chalta hai
+kya MovieBox par title hai hi nahi, ya naam alag hai.
 
 **Tuning**: `MATCH_ACCEPT` (default 0.72) se neeche kuch bake nahi hota;
 0.60–0.72 `review` list me jata hai. Koi title galat match lage to `--refresh`

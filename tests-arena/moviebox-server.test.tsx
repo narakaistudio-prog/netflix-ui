@@ -160,7 +160,12 @@ describe('MovieboxPagePlayer (Server 2)', () => {
     it('asks for the link when the title has none, then plays the cropped page', () => {
         act(() => {
             root.render(
-                <MovieboxPagePlayer linkKey="tmdb:1:movie" title="My Demon" onClose={() => {}} />,
+                <MovieboxPagePlayer
+                    linkKey="tmdb:1:movie"
+                    title="My Demon"
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
             );
         });
 
@@ -226,6 +231,69 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         });
         expect(frame()).toBeTruthy();
         expect(frame()!.getAttribute('src')).toContain('m2box.org/movies/my-demon-hindi-SfaaEeePcfa');
+    });
+
+    it('finds the link itself (live resolve) instead of asking for a paste', async () => {
+        const resolved =
+            'https://m2box.org/movies/vishwanath-and-sons-hindi-AbC123?id=4151920426815471968&type=/movie/detail&detailSe=&detailEp=&lang=en';
+        const fetchMock = jest.fn(async () => ({
+            ok: true,
+            status: 200,
+            json: async () => ({
+                found: true,
+                url: resolved,
+                subjectId: '4151920426815471968',
+                detailPath: 'vishwanath-and-sons-hindi-AbC123',
+                title: 'Vishwanath & Sons [Hindi]',
+                dub: 'hindi',
+                score: 0.93,
+            }),
+        }));
+        (globalThis as any).fetch = fetchMock;
+
+        await act(async () => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:1408162:movie"
+                    title="Vishwanath & Sons"
+                    year={2026}
+                    mediaType="movie"
+                    onClose={() => {}}
+                />,
+            );
+        });
+
+        // Resolver ne API se poochha...
+        expect(fetchMock).toHaveBeenCalled();
+        expect(String(fetchMock.mock.calls[0][0])).toContain('/api/moviebox-resolve?');
+        // ...aur frame khud khul gaya — paste panel aaya hi nahi
+        expect(document.querySelector('input[data-testid="moviebox-link-input"]')).toBeNull();
+        expect(frame()!.getAttribute('src')).toContain('vishwanath-and-sons-hindi-AbC123');
+        expect(frame()!.getAttribute('src')).toContain('id=4151920426815471968');
+    });
+
+    it('shows the paste panel (with a note) only when live resolve finds nothing', async () => {
+        (globalThis as any).fetch = jest.fn(async () => ({
+            ok: true,
+            status: 200,
+            json: async () => ({ found: false, reason: 'no-match' }),
+        }));
+
+        await act(async () => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:999:movie"
+                    title="Koi Anjaan Film"
+                    year={2026}
+                    mediaType="movie"
+                    onClose={() => {}}
+                />,
+            );
+        });
+
+        expect(document.querySelector('input[data-testid="moviebox-link-input"]')).toBeTruthy();
+        expect(document.querySelector('[data-testid="moviebox-link-notice"]')).toBeTruthy();
+        expect(frame()).toBeNull();
     });
 
     it('has a close button and a way back to Server 1', () => {

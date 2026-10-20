@@ -30,7 +30,6 @@
  *   data/moviebox-links.json          — app isi ko bundle karta hai
  *   data/moviebox-harvest-report.json — matched/review/miss + notes
  */
-import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -44,6 +43,12 @@ import {
     splitDubHint,
     typeOfSubject,
 } from './lib/moviebox-match.mjs';
+import {
+    buildSearchQueries,
+    createMovieboxClient,
+    movieboxWatchUrl,
+    parseMovieboxWatchUrl,
+} from './lib/moviebox-api.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CATALOG_PATH = resolve(ROOT, 'data', 'movies.json');
@@ -51,13 +56,7 @@ const LINKS_PATH = resolve(ROOT, 'data', 'moviebox-links.json');
 const REPORT_PATH = resolve(ROOT, 'data', 'moviebox-harvest-report.json');
 const PINS_PATH = resolve(ROOT, 'data', 'moviebox-pins.json');
 
-const H5_API = 'https://h5-api.aoneroom.com/wefeed-h5api-bff';
 const SITE = 'https://m2box.org';
-const FRONT_HOST = process.env.MOVIEBOX_HOST || 'moviebox.ph';
-const UA =
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
-const TIMEOUT_MS = 20_000;
-const RETRIES = 2;
 /** Politeness: har upstream call ke beech itna ruk kar. */
 const DEFAULT_DELAY_MS = 260;
 /** Kitne din purana link dobara check ho (MovieBox domains badalte rehte hain). */
@@ -130,178 +129,27 @@ export function catalogTargets(catalog) {
 /*  Upstream (MovieBox H5 API)                                                */
 /* -------------------------------------------------------------------------- */
 
-function headers(extra = {}) {
-    return {
-        'User-Agent': UA,
-        Accept: 'application/json',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'X-Client-Info': '{"timezone":"Asia/Kolkata"}',
-        'X-Request-Lang': 'en',
-        Referer: `https://${FRONT_HOST}/`,
-        Origin: `https://${FRONT_HOST}`,
-        ...extra,
-    };
-}
+/**
+ * Poora API client `scripts/lib/moviebox-api.mjs` me hai (live resolver bhi
+ * wahi use karta hai) — yahan bas harvester ke chhote wrappers hain.
+ */
+const api = createMovieboxClient();
 
-async function fetchJson(url, init = {}) {
-    let lastError = '';
-    for (let attempt = 0; attempt <= RETRIES; attempt += 1) {
-        try {
-            const res = await fetch(url, {
-                method: init.method || 'GET',
-                headers: init.headers,
-                body: init.body,
-                redirect: 'follow',
-                signal: AbortSignal.timeout(TIMEOUT_MS),
-            });
-            const text = await res.text().catch(() => '');
-            let data = null;
-            try {
-                data = text ? JSON.parse(text) : null;
-            } catch {
-                data = null;
-            }
-            if (res.status === 429 && attempt < RETRIES) {
-                await sleep(1500 * (attempt + 1));
-                lastError = 'rate-limited';
-                continue;
-            }
-            return { status: res.status, data, headers: res.headers, text };
-        } catch (error) {
-            lastError = error?.message || String(error);
-            if (attempt < RETRIES) await sleep(700 * (attempt + 1));
-        }
-    }
-    return { status: 0, data: null, headers: null, text: '', error: lastError };
-}
+const getToken = (force = false) => api.getToken(force);
 
-/** `X-Client-Token`: `<unix-sec>,<md5(reverse(sec))>` — MovieBox ka apna formula. */
-function clientToken(nowMs = Date.now()) {
-    const sec = String(Math.floor(nowMs / 1000));
-    const md5 = createHash('md5').update(sec.split('').reverse().join('')).digest('hex');
-    return `${sec},${md5}`;
-}
-
-function tokenFrom(xUserHeader, cookies) {
-    if (xUserHeader) {
-        try {
-            const token = JSON.parse(xUserHeader)?.token;
-            if (token) return String(token);
-        } catch {
-            // header JSON nahi tha
-        }
-    }
-    const match = String(cookies || '').match(/token=([^;]+)/);
-    return match ? match[1] : '';
-}
-
-const tokenState = { value: '', at: 0 };
-
-async function getToken(force = false) {
-    if (!force && tokenState.value && Date.now() - tokenState.at < 45 * 60 * 1000) return tokenState.value;
-    const home = await fetchJson(`${H5_API}/home?host=${encodeURIComponent(FRONT_HOST)}`, { headers: headers() });
-    let token = tokenFrom(home.headers?.get('x-user'), home.headers?.get('set-cookie'));
-    if (!token) {
-        const mint = await fetchJson(`${H5_API}/subject/search-suggest`, {
-            method: 'POST',
-            headers: headers({
-                'Content-Type': 'application/json',
-                'X-Client-Token': clientToken(),
-            }),
-            body: JSON.stringify({ keyword: 'a', perPage: 10 }),
-        });
-        token = tokenFrom(mint.headers?.get('x-user'), mint.headers?.get('set-cookie'));
-    }
-    if (token) {
-        tokenState.value = token;
-        tokenState.at = Date.now();
-    }
-    return token;
-}
-
-/** `{status, data}` — MovieBox search ka normalized jawab. */
-async function searchSubjects(keyword) {
-    let token = await getToken();
-    const call = (bearer) =>
-        fetchJson(`${H5_API}/subject/search`, {
-            method: 'POST',
-            headers: headers({
-                'Content-Type': 'application/json',
-                ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
-            }),
-            // Site khud perPage:0 bhejti hai — isi se order/count site jaisa rehta hai.
-            body: JSON.stringify({ keyword, page: 1, perPage: 0, subjectType: 0 }),
-        });
-
-    let result = await call(token);
-    if (result.status === 401 || result.status === 403 || !result.data) {
-        token = await getToken(true);
-        result = await call(token);
-    }
-
-    const items = result?.data?.data?.items;
-    const list = Array.isArray(items) ? items : [];
-    return {
-        status: result.status,
-        items: list.map((item) => ({
-            title: String(item?.title ?? ''),
-            subjectId: String(item?.subjectId ?? item?.id ?? ''),
-            detailPath: String(item?.detailPath ?? ''),
-            subjectType: Number(item?.subjectType) || 0,
-            year: Number(String(item?.releaseDate ?? '').slice(0, 4)) || undefined,
-            hasResource: item?.hasResource !== false,
-        })),
-        total: Number(result?.data?.data?.pager?.totalCount) || list.length,
-    };
-}
+/** `{status, items, total}` — MovieBox search ka normalized jawab. */
+const searchSubjects = (keyword) => api.search(keyword);
 
 /** `/detail` — confirm + dubs (Hindi dub ka apna subjectId hota hai). */
-async function fetchDetail(ref) {
-    const queries = [];
-    if (ref.detailPath) queries.push(`detailPath=${encodeURIComponent(ref.detailPath)}`);
-    if (ref.subjectId) queries.push(`subjectId=${encodeURIComponent(ref.subjectId)}`);
-    const token = await getToken();
-    for (const query of queries) {
-        const result = await fetchJson(`${H5_API}/detail?${query}`, {
-            headers: headers(token ? { Authorization: `Bearer ${token}` } : {}),
-        });
-        const subject = result?.data?.data?.subject;
-        if (result.status === 200 && subject) {
-            const releaseDate = String(subject.releaseDate ?? '');
-            return {
-                subjectId: String(subject.subjectId ?? ''),
-                detailPath: String(subject.detailPath ?? ''),
-                title: String(subject.title ?? ''),
-                subjectType: Number(subject.subjectType) || 0,
-                year: Number(releaseDate.slice(0, 4)) || undefined,
-                hasResource: subject.hasResource !== false,
-                dubs: Array.isArray(subject.dubs)
-                    ? subject.dubs.map((dub) => ({
-                          subjectId: String(dub?.subjectId ?? ''),
-                          detailPath: String(dub?.detailPath ?? ''),
-                          lanName: String(dub?.lanName ?? ''),
-                          lanCode: String(dub?.lanCode ?? ''),
-                          type: Number(dub?.type ?? 0),
-                          original: dub?.original === true,
-                      }))
-                    : [],
-            };
-        }
-    }
-    return null;
-}
+const fetchDetail = (ref) => api.detail(ref);
 
 /* -------------------------------------------------------------------------- */
 /*  Link building                                                             */
 /* -------------------------------------------------------------------------- */
 
 /** Canonical m2box.org watch page (season/episode player khud lagata hai). */
-export function movieboxUrl({ detailPath, subjectId }) {
-    if (!detailPath || !subjectId) return '';
-    return (
-        `${SITE}/movies/${encodeURIComponent(detailPath)}` +
-        `?id=${encodeURIComponent(subjectId)}&type=/movie/detail&detailSe=&detailEp=&lang=en`
-    );
+export function movieboxUrl(ref) {
+    return movieboxWatchUrl(ref || {});
 }
 
 /**
@@ -342,15 +190,7 @@ export function applyPins(pins, previousLinks = {}) {
 }
 
 export function parseMovieboxUrl(value) {
-    try {
-        const url = new URL(String(value ?? ''));
-        const match = url.pathname.match(/\/movies\/([^/]+)\/?$/);
-        const subjectId = url.searchParams.get('id') || '';
-        if (!match || !subjectId) return null;
-        return { detailPath: decodeURIComponent(match[1]), subjectId };
-    } catch {
-        return null;
-    }
+    return parseMovieboxWatchUrl(value);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -530,37 +370,48 @@ async function harvest() {
     const review = [];
     const misses = [];
     const errors = [];
-    const queriesUsed = { primary: 0, hindi: 0, year: 0, clean: 0, ampersand: 0 };
+    const queriesUsed = {};
     let matchedNow = 0;
 
     for (let index = 0; index < work.length; index += 1) {
         const target = work[index];
         const label = `[${index + 1}/${work.length}] ${target.title} (${target.year ?? '?'}, ${target.mediaType})`;
 
-        const queries = [{ text: target.title, tag: 'primary' }];
-        if (!/\bhindi\b/i.test(target.title)) queries.push({ text: `${target.title} Hindi`, tag: 'hindi' });
-        if (target.year) queries.push({ text: `${target.title} ${target.year}`, tag: 'year' });
-        // Clean variant: brackets/parenthetical hata kar ("Mandaadi (2026)" → "Mandaadi").
-        const clean = target.title.replace(/[([][^)\]]*[)\]]/g, ' ').replace(/\s+/g, ' ').trim();
-        if (clean && clean !== target.title && clean.length >= 3) {
-            queries.push({ text: clean, tag: 'clean' });
-        }
-        const ampersand = target.title.replace(/&/g, ' and ').replace(/\s+/g, ' ').trim();
-        if (ampersand !== target.title) queries.push({ text: ampersand, tag: 'ampersand' });
+        // Poora title, Hindi variant, saal, brackets hata kar, `&`↔and, subtitle
+        // se pehle ka hissa, aur sabse distinctive shabd (MovieBox ka search
+        // poore title par kamzor padta hai, chhote query par sahi subject deta hai).
+        const queries = buildSearchQueries(target.title, target.year);
 
         let chosen = null;
         let chosenQuery = '';
         let bestSeen = null;
         let bestSeenQuery = '';
+        /** Report ke liye: har query ke top candidates (miss ka reason samajhne ko). */
+        const seenCandidates = new Map();
 
         for (const query of queries) {
             const result = await searchSubjects(query.text);
-            queriesUsed[query.tag] += 1;
+            queriesUsed[query.tag] = (queriesUsed[query.tag] || 0) + 1;
             if (result.status === 401 || result.status === 403) {
                 errors.push({ key: target.key, title: target.title, error: `search HTTP ${result.status}` });
                 break;
             }
-            const { best } = rankCandidates(target, result.items);
+            const { best, runnersUp } = rankCandidates(target, result.items);
+            for (const candidate of [best, ...(runnersUp || [])]) {
+                if (!candidate) continue;
+                const id = candidate.item.detailPath || candidate.item.title;
+                const previous = seenCandidates.get(id);
+                if (!previous || candidate.score > previous.score) {
+                    seenCandidates.set(id, {
+                        title: candidate.item.title,
+                        subjectType: candidate.item.subjectType,
+                        year: candidate.item.year,
+                        detailPath: candidate.item.detailPath,
+                        score: Number(candidate.score.toFixed(3)),
+                        query: query.text,
+                    });
+                }
+            }
             if (best && (!bestSeen || best.score > bestSeen.score)) {
                 bestSeen = { ...best, query: query.text };
                 bestSeenQuery = query.text;
@@ -589,6 +440,9 @@ async function harvest() {
                           query: top.query,
                       }
                     : null,
+                candidates: [...seenCandidates.values()]
+                    .sort((a, b) => b.score - a.score)
+                    .slice(0, 3),
             };
             if (top && top.score >= MATCH_REVIEW) review.push(entry);
             else misses.push(entry);

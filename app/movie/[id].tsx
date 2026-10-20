@@ -615,6 +615,8 @@ export default function MovieScreen() {
                     linkKey={movieboxLinkKey}
                     initialLink={movieboxEntry?.link ?? null}
                     title={movie.title}
+                    year={movie.year}
+                    mediaType={mediaType}
                     season={mediaType === 'tv' ? season : undefined}
                     episode={mediaType === 'tv' ? episode : undefined}
                     onClose={handleCloseInline}

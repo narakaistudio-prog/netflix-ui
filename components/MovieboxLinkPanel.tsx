@@ -25,6 +25,8 @@ interface MovieboxLinkPanelProps {
     initialProxy?: boolean;
     /** Chhoti list dikhani hai (standalone /moviebox page). */
     showSaved?: boolean;
+    /** Upar dikhne wala note (auto-resolve fail hone par). */
+    notice?: string;
     onPlay: (link: string, opts: { proxy: boolean }) => void;
     /** Server 1 par wapas jane ka rasta (player ke andar dikhta hai). */
     onBack?: () => void;
@@ -38,6 +40,7 @@ export function MovieboxLinkPanel({
     initialLink,
     initialProxy = false,
     showSaved = false,
+    notice,
     onPlay,
     onBack,
     backLabel,
@@ -99,10 +102,16 @@ export function MovieboxLinkPanel({
                 <Text style={styles.heading}>
                     {title ? `${title} ke liye M2Box link chahiye` : 'M2Box link paste karo'}
                 </Text>
+                {notice ? (
+                    <Text style={styles.notice} testID="moviebox-link-notice">
+                        {notice}
+                    </Text>
+                ) : null}
                 <Text style={styles.body}>
-                    MovieBox embed nahi deta. Isliye uska poora watch page khol kar sirf player wala hissa
-                    dikhaya jata hai — logo, menu, sidebar, title sab kata hua. Bas ek baar watch-page ka
-                    link chahiye; wahi is browser me yaad rah jayega.
+                    MovieBox embed nahi deta — isliye uska poora watch page khol kar sirf player wala
+                    hissa dikhaya jata hai. Aam taur par link apne aap lag jata hai (catalog ke liye
+                    pehle se baked, warna live search). Yahan sirf tab paste karo jab MovieBox par is
+                    title ka page na mile; link is browser me yaad rah jayega.
                 </Text>
 
                 <Pressable style={styles.linkRow} onPress={openSite} accessibilityLabel="Open m2box.org">
@@ -252,6 +261,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         maxWidth: 560,
         marginBottom: 16,
+    },
+    notice: {
+        color: '#f5c542',
+        fontSize: 12.5,
+        lineHeight: 19,
+        textAlign: 'center',
+        maxWidth: 460,
+        marginBottom: 4,
     },
     linkRow: {
         flexDirection: 'row',
