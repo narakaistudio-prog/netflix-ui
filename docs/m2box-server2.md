@@ -389,3 +389,19 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
   hota hai, isliye wo ~2s crop ke andar jhalak jata tha. `FRAME_COVER_MS`
   (3200ms) tak `#000` parda + spinner rehta hai, phir seedha player. Search
   page mode me parda nahi (wahan page hi dikhna hai).
+
+## Server chunna (Hindi / Multi)
+
+- Detail screen par, description ke neeche aur "Episodes" ke upar, do chip:
+  **Hindi** = MovieBox (M2Box crop player), **Multi** = Nxsha (embed).
+  Default **MovieBox** hai (`server` state `'moviebox'` se shuru hota hai).
+  MovieBox link na ho to ye option dikhta hi nahi — Nxsha hi chalta hai.
+- Play dabne par jo server us waqt chal raha hai wahi chipak jata hai, taaki
+  MovieBox ki availability baad me resolve hone par video ke beech player na
+  badle.
+- **Player ke andar server switch nahi** — `MovieboxPagePlayer` ko
+  `onSwitchServer` aur `EmbedPlayer` ko `onSwitchProvider` nahi diya jata; X se
+  band karke detail screen se server badla ja sakta hai. (Standalone
+  `/movie/[id]` page par Nxsha ka pill video chalu hone se pehle tak dikhta hai,
+  `rolling` hone par gayab.)
+- Frame ka loading parda ab sirf **"Loading…"** likhta hai.

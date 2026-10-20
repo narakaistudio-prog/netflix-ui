@@ -180,6 +180,13 @@ export function EmbedPlayer({
         flushProgress(true);
     }, [rebase, flushProgress]);
 
+    /**
+     * Video chalu ho gayi — owner ka rule: **play dabne ke baad player me
+     * server badalne ka option nahi** dikhna chahiye. Server ab detail
+     * screen (Hindi/Multi) se chuna jata hai.
+     */
+    const [rolling, setRolling] = useState(false);
+
     /** The viewer pressed play inside the frame: the media starts rolling. */
     const markStarted = useCallback(() => {
         const p = playRef.current;
@@ -187,6 +194,7 @@ export function EmbedPlayer({
         p.started = true;
         p.paused = false;
         p.baseStamp = Date.now();
+        setRolling(true);
     }, []);
 
     /**
@@ -679,7 +687,7 @@ export function EmbedPlayer({
                  * bhi cycle me hai. Bina is button ke dusre server tak pahunchne
                  * ka koi rasta nahi tha (switch sirf timeout overlay me tha).
                  */}
-                {onSwitchProvider && nextServerName ? (
+                {onSwitchProvider && nextServerName && !rolling ? (
                     <Pressable
                         style={styles.serverPill}
                         onPress={onSwitchProvider}

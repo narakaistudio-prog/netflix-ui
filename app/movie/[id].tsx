@@ -697,8 +697,6 @@ export default function MovieScreen() {
                         rememberPlayback(next.season, next.episode);
                     }}
                     onClose={handleCloseInline}
-                    onSwitchServer={nextServer ? handleSwitchProvider : undefined}
-                    switchLabel={nextServer ? serverLabel(nextServer) : undefined}
                     onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
                 />
             );

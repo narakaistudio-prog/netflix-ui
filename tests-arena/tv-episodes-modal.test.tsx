@@ -5,7 +5,8 @@ import { act } from 'react-dom/test-utils';
 
 jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
-    return { Ionicons: (props: any) => ReactLocal.createElement('i', props) };
+    const icon = (props: any) => ReactLocal.createElement('i', props);
+    return { Ionicons: icon, MaterialCommunityIcons: icon };
 });
 jest.mock('@/components/EmbedPlayer', () => {
     const ReactLocal = require('react');
@@ -37,6 +38,16 @@ jest.mock('@/lib/tvEpisodes', () => {
         },
     ];
     return { ...actual, getTvSeasons: (id: string) => (id === '777' ? seasons : []) };
+});
+
+// Ye tests Nxsha (embed) wala rasta dekhte hain — MovieBox available na hone
+// par hi wo chalta hai (owner ka naya rule: MovieBox ho to wahi default hai).
+jest.mock('@/hooks/useMovieboxAvailable', () => ({
+    useMovieboxAvailable: () => ({ available: false, checking: false }),
+}));
+jest.mock('@/lib/movieboxLinks', () => {
+    const actual = jest.requireActual('@/lib/movieboxLinks');
+    return { ...actual, resolveMovieboxLink: () => null };
 });
 
 import { MovieDetailModal } from '../components/MovieList/MovieDetailModal';

@@ -82,7 +82,11 @@ export function MovieDetailModal({
      * Which playback server is on: the regular embed providers, or M2Box
      * (MovieBox ka poora watch page, sirf-player crop me).
      */
-    const [server, setServer] = useState<'primary' | 'moviebox'>('primary');
+    /**
+     * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
+     * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
+     */
+    const [server, setServer] = useState<'primary' | 'moviebox'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
 
@@ -145,7 +149,7 @@ export function MovieDetailModal({
 
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
-        setServer(rowIsMoviebox ? 'moviebox' : 'primary');
+        setServer('moviebox');
         setPlaying(autoPlay);
         setEpisodeRef(initialEpisode ?? null);
         setSeason(initialEpisode?.season ?? 1);
@@ -254,6 +258,10 @@ export function MovieDetailModal({
                 });
             } catch {}
             setActiveEntry({ id: entryId, season: ep.season, episode: ep.episode });
+            // Jo server abhi chal raha hai wahi chipka do — warna MovieBox ki
+            // availability baad me resolve hone par video ke beech player badal
+            // jata (play dabne ke baad server apne aap nahi badalna chahiye).
+            setServer(activeServer);
             setPlaying(true);
             return;
         }
@@ -354,6 +362,58 @@ export function MovieDetailModal({
                                 ) : null}
                             </View>
                         </View>
+
+                        {/* Server chunna — owner ke naap par description ke
+                            neeche, "Episodes" ke upar. **Hindi = MovieBox**,
+                            **Multi = Nxsha**. MovieBox link na ho to ye option
+                            dikhta hi nahi (Nxsha hi chalta hai). */}
+                        {movieboxAvailable ? (
+                            <View style={[styles.serverRow, wide && styles.serverRowWide]}>
+                                <Text style={styles.serverRowLabel}>Server</Text>
+                                <Pressable
+                                    onPress={() => setServer('moviebox')}
+                                    style={[
+                                        styles.serverChip,
+                                        activeServer === 'moviebox' && styles.serverChipActive,
+                                    ]}
+                                    accessibilityLabel="Hindi server (M2Box)"
+                                    accessibilityRole="button"
+                                    accessibilityState={{ selected: activeServer === 'moviebox' }}
+                                    {...({ dataSet: { selected: activeServer === 'moviebox' ? '1' : '0' } } as any)}
+                                    testID="server-hindi"
+                                >
+                                    <Text
+                                        style={[
+                                            styles.serverChipText,
+                                            activeServer === 'moviebox' && styles.serverChipTextActive,
+                                        ]}
+                                    >
+                                        Hindi
+                                    </Text>
+                                </Pressable>
+                                <Pressable
+                                    onPress={() => setServer('primary')}
+                                    style={[
+                                        styles.serverChip,
+                                        activeServer === 'primary' && styles.serverChipActive,
+                                    ]}
+                                    accessibilityLabel="Multi server (Nxsha)"
+                                    accessibilityRole="button"
+                                    accessibilityState={{ selected: activeServer === 'primary' }}
+                                    {...({ dataSet: { selected: activeServer === 'primary' ? '1' : '0' } } as any)}
+                                    testID="server-multi"
+                                >
+                                    <Text
+                                        style={[
+                                            styles.serverChipText,
+                                            activeServer === 'primary' && styles.serverChipTextActive,
+                                        ]}
+                                    >
+                                        Multi
+                                    </Text>
+                                </Pressable>
+                            </View>
+                        ) : null}
 
                         {currentSeason ? (
                             <View style={[styles.episodes, wide && styles.episodesWide]}>
@@ -484,8 +544,6 @@ export function MovieDetailModal({
                                     setEpisodeRef(next);
                                 }}
                                 onClose={() => setPlaying(false)}
-                                onSwitchServer={() => setServer('primary')}
-                                switchLabel="Server 1"
                                 onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
                             />
                         ) : (
@@ -496,8 +554,6 @@ export function MovieDetailModal({
                                 fallbackUrl={officialUrlFor(movie)}
                                 resumeAt={resumeSec}
                                 serverName="Nxsha"
-                                nextServerName={movieboxAvailable ? MOVIEBOX_SERVER_LABEL : undefined}
-                                onSwitchProvider={movieboxAvailable ? () => setServer('moviebox') : undefined}
                                 onProgress={(info) => {
                                     if (!activeEntry) return;
                                     updateWatchPosition(activeEntry.id, info.seconds, info.duration);
@@ -663,6 +719,46 @@ const styles = StyleSheet.create({
     },
     sideLabel: {
         color: MUTED,
+    },
+    /** Hindi / Multi — server chunne wali patti (moviebox / nxsha). */
+    serverRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: 10,
+        paddingHorizontal: 16,
+        paddingBottom: 10,
+    },
+    serverRowWide: {
+        paddingHorizontal: 40,
+    },
+    serverRowLabel: {
+        color: '#9a9a9a',
+        fontSize: 13,
+        fontWeight: '700',
+        letterSpacing: 0.8,
+        textTransform: 'uppercase',
+        marginRight: 6,
+    },
+    serverChip: {
+        paddingHorizontal: 18,
+        paddingVertical: 8,
+        borderRadius: 18,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.4)',
+        backgroundColor: 'rgba(255,255,255,0.06)',
+    },
+    serverChipActive: {
+        backgroundColor: '#fff',
+        borderColor: '#fff',
+    },
+    serverChipText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '700',
+    },
+    serverChipTextActive: {
+        color: '#000',
     },
     episodes: {
         paddingHorizontal: 16,

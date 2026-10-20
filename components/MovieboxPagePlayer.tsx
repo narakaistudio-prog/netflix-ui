@@ -537,7 +537,7 @@ export function MovieboxPagePlayer({
             {frameSrc && (loading || covered) ? (
                 <View style={styles.frameCover} pointerEvents="none" testID="moviebox-cover">
                     <ActivityIndicator size="large" color="#E50914" />
-                    <Text style={styles.loadingText}>{MOVIEBOX_SERVER_LABEL} player khul raha hai…</Text>
+                    <Text style={styles.loadingText}>Loading…</Text>
                 </View>
             ) : null}
 
