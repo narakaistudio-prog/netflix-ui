@@ -658,6 +658,14 @@ export default function MovieScreen() {
     // rehta hai aur EmbedPlayer/US pill dikhata hi nahi.
     const nextServer = hasServerSwitcher(cycle) ? nextServerIn(cycle, providerIndex) : null;
 
+    /**
+     * Is season me total episodes — sirf series par. "Next Episode" button
+     * isi se pata karta hai ki agla episode hai ya nahi.
+     */
+    const seasonEpisodeTotal =
+        movie.seasonEpisodeCounts?.[season - 1] ??
+        movie.seasons?.find((item) => item.season_number === season)?.episode_count;
+
     const renderPlayer = () => {
         if (isMovieboxServer) {
             return (
@@ -669,6 +677,11 @@ export default function MovieScreen() {
                     mediaType={mediaType}
                     season={mediaType === 'tv' ? season : undefined}
                     episode={mediaType === 'tv' ? episode : undefined}
+                    episodeCount={mediaType === 'tv' ? seasonEpisodeTotal : undefined}
+                    onEpisodeChange={(next) => {
+                        setEpisode(next.episode);
+                        rememberPlayback(next.season, next.episode);
+                    }}
                     onClose={handleCloseInline}
                     onSwitchServer={nextServer ? handleSwitchProvider : undefined}
                     switchLabel={nextServer ? serverLabel(nextServer) : undefined}

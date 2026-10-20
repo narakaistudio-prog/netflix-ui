@@ -47,6 +47,16 @@ interface MovieboxPagePlayerProps {
     /** Series ke liye — page seedha usi episode se khulta hai. */
     season?: number;
     episode?: number;
+    /**
+     * Series ke liye — is season me total episodes. Isse pata chalta hai ki
+     * "Next Episode" dikhana hai ya nahi (aakhri episode par nahi).
+     */
+    episodeCount?: number;
+    /**
+     * Next Episode dabane par parent ko batao (Continue Watching / row state
+     * apne aap sahi rahe). Na de to player khud hi agla episode khol deta hai.
+     */
+    onEpisodeChange?: (next: { season: number; episode: number }) => void;
     onClose: () => void;
     /** Server 1 par wapas jaane ke liye (cycle me switch). */
     onSwitchServer?: () => void;
@@ -66,6 +76,8 @@ export function MovieboxPagePlayer({
     autoResolve = true,
     season,
     episode,
+    episodeCount,
+    onEpisodeChange,
     onClose,
     onSwitchServer,
     switchLabel,
@@ -85,7 +97,17 @@ export function MovieboxPagePlayer({
     const [searchFallback, setSearchFallback] = useState(false);
     /** User ne search ke bajaye khud link paste karna chuna. */
     const [manualEntry, setManualEntry] = useState(false);
+    /**
+     * "Next Episode" se aage badha hua episode. Parent ka `episode` prop na
+     * badle to bhi frame naye episode par chala jaye — isliye apna override.
+     * Parent episode/link badle to override saaf.
+     */
+    const [episodeOverride, setEpisodeOverride] = useState<number | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        setEpisodeOverride(null);
+    }, [linkKey, episode]);
 
     /* ---------------------------- Link ---------------------------- */
 
@@ -140,10 +162,35 @@ export function MovieboxPagePlayer({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [autoResolve, link, initialLink, linkKey, title, year, mediaType]);
 
+    /** Jo episode abhi frame me khula hai (override jeetta hai). */
+    const activeEpisode = episodeOverride ?? episode;
+
     const pageUrl = useMemo(
-        () => (link ? buildMovieboxPageUrl(link, { se: season, ep: episode }) : null),
-        [link, season, episode],
+        () => (link ? buildMovieboxPageUrl(link, { se: season, ep: activeEpisode }) : null),
+        [link, season, activeEpisode],
     );
+
+    /**
+     * "Next Episode" — sirf series par, aur sirf tab jab agla episode ho.
+     * Resources panel ab crop se bahar hai, isliye episode badalne ka yehi
+     * sabse seedha raasta hai.
+     */
+    const isSeries = mediaType === 'tv' || typeof episode === 'number';
+    const nextEpisode = useMemo(() => {
+        if (!isSeries || typeof activeEpisode !== 'number') return null;
+        if (typeof episodeCount === 'number' && episodeCount > 0 && activeEpisode >= episodeCount) {
+            return null;
+        }
+        return { season: typeof season === 'number' ? season : 1, episode: activeEpisode + 1 };
+    }, [activeEpisode, episodeCount, isSeries, season]);
+
+    const goNextEpisode = useCallback(() => {
+        if (!nextEpisode) return;
+        setEpisodeOverride(nextEpisode.episode);
+        setLoading(true);
+        setTimedOut(false);
+        onEpisodeChange?.(nextEpisode);
+    }, [nextEpisode, onEpisodeChange]);
 
     /** Search fallback ka page (sirf jab watch page hi na mile). */
     const searchUrl = useMemo(
@@ -274,6 +321,22 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
+            {/* Series: agla episode (Resources panel crop me nahi rehta). */}
+            {frameSrc && nextEpisode && !isSearchFrame ? (
+                <View style={styles.nextWrap} pointerEvents="box-none">
+                    <Pressable
+                        style={styles.nextButton}
+                        onPress={goNextEpisode}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Next episode ${nextEpisode.episode}`}
+                        testID="moviebox-next-episode"
+                    >
+                        <Ionicons name="play" size={15} color="#000" />
+                        <Text style={styles.nextButtonText}>Next Episode</Text>
+                    </Pressable>
+                </View>
+            ) : null}
+
             {/* Top bar: bas X + server switch + link badalna. */}
             <View style={styles.topBar} pointerEvents="box-none">
                 <Pressable
@@ -370,6 +433,9 @@ export function MovieboxPagePlayer({
                 <View style={styles.titleBadge} pointerEvents="none">
                     <Text style={styles.titleBadgeText} numberOfLines={1}>
                         {MOVIEBOX_SERVER_LABEL} · {describeMovieboxLink(link)}
+                        {typeof activeEpisode === 'number'
+                            ? ` · S${typeof season === 'number' ? season : 1} E${activeEpisode}`
+                            : ''}
                     </Text>
                 </View>
             ) : null}
@@ -379,6 +445,18 @@ export function MovieboxPagePlayer({
 
 const styles = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#000', position: 'relative' },
+    // video ke apne controls ke thoda upar, daayein kinare par — NetMirror jaisa
+    nextWrap: { position: 'absolute', right: 16, bottom: '14%' },
+    nextButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        backgroundColor: 'rgba(255,255,255,0.92)',
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 6,
+    },
+    nextButtonText: { color: '#000', fontSize: 14, fontWeight: '700' },
     resolving: {
         flex: 1,
         alignItems: 'center',

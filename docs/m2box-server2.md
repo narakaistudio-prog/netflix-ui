@@ -58,6 +58,20 @@ Sirf **search/page mode** hi 900px se neeche site ke asli mobile layout par
 jaata hai (scale 1, upar ka kaat 112/108/104, unchai = player + 16 + 320) —
 wahan results/episode grid padhne ke liye scroll khula rehta hai.
 
+## Series: episode badalna ("Next Episode")
+
+Resources panel crop se bahar hai, isliye episode aage badhane ka apna raasta
+hai — player ke neeche-daayein **Next Episode** ka pill (agar series ho aur
+agla episode bacha ho):
+
+- `MovieboxPagePlayer` khud hi agla episode khol deta hai (`episode + 1`,
+  wahi `detailSe`/`detailEp` watch page — iframe dobara mount hota hai).
+- Parent ko `onEpisodeChange({ season, episode })` se batata hai, taaki
+  Continue Watching / row ka state sahi rahe.
+- `episodeCount` (us season ke episodes) se pata chalta hai ki agla episode
+  hai ya nahi — aakhri episode par button dikhta hi nahi. Movie par bhi nahi.
+- Search-results frame me bhi nahi (wahan title hi nahi mila tha).
+
 ## Jab phir bhi link na mile — live resolve
 
 Baked map ~87% catalog cover karta hai. Baaki titles (naya release, ya MovieBox

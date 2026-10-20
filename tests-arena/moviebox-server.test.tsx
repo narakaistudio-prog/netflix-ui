@@ -226,6 +226,96 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(stored['tmdb:1:movie'].url).toBe(PAGE);
     });
 
+    it('puts a Next Episode button on series and opens the next episode', () => {
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:2:tv"
+                    initialLink={PAGE}
+                    title="My Demon"
+                    mediaType="tv"
+                    season={1}
+                    episode={2}
+                    episodeCount={16}
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
+            );
+        });
+
+        expect(frame()!.getAttribute('src')).toContain('detailEp=2');
+        const next = document.querySelector('[data-testid="moviebox-next-episode"]') as HTMLElement;
+        expect(next).toBeTruthy();
+        expect(next.textContent).toContain('Next Episode');
+
+        act(() => {
+            next.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        });
+
+        // Agla episode usi watch page par khul jata hai
+        expect(frame()!.getAttribute('src')).toContain('detailEp=3');
+        expect(frame()!.getAttribute('src')).toContain('detailSe=1');
+        expect(container.textContent).toContain('S1 E3');
+    });
+
+    it('tells the parent when the episode changed', () => {
+        const onEpisodeChange = jest.fn();
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:2:tv"
+                    initialLink={PAGE}
+                    title="My Demon"
+                    mediaType="tv"
+                    season={2}
+                    episode={4}
+                    episodeCount={10}
+                    autoResolve={false}
+                    onEpisodeChange={onEpisodeChange}
+                    onClose={() => {}}
+                />,
+            );
+        });
+        const next = document.querySelector('[data-testid="moviebox-next-episode"]') as HTMLElement;
+        act(() => {
+            next.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        });
+        expect(onEpisodeChange).toHaveBeenCalledWith({ season: 2, episode: 5 });
+    });
+
+    it('hides Next Episode on the last episode of the season, and for movies', () => {
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:2:tv"
+                    initialLink={PAGE}
+                    title="My Demon"
+                    mediaType="tv"
+                    season={1}
+                    episode={16}
+                    episodeCount={16}
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
+            );
+        });
+        expect(document.querySelector('[data-testid="moviebox-next-episode"]')).toBeNull();
+
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:3:movie"
+                    initialLink={PAGE}
+                    title="Mandaadi"
+                    mediaType="movie"
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
+            );
+        });
+        expect(document.querySelector('[data-testid="moviebox-next-episode"]')).toBeNull();
+    });
+
     it('opens the exact episode from a row season/episode', () => {
         act(() => {
             root.render(

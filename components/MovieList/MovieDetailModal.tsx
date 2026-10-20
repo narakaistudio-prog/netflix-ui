@@ -465,6 +465,15 @@ export function MovieDetailModal({
                                 mediaType={movie.mediaType === 'tv' ? 'tv' : 'movie'}
                                 season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
                                 episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
+                                episodeCount={
+                                    movie.mediaType === 'tv' ? currentSeason?.episode_count : undefined
+                                }
+                                onEpisodeChange={(next) => {
+                                    // Agla episode chal raha hai — modal ka apna
+                                    // state bhi wahi rahe (player band karke
+                                    // dobara kholne par sahi episode khule).
+                                    setEpisodeRef(next);
+                                }}
                                 onClose={() => setPlaying(false)}
                                 onSwitchServer={() => setServer('primary')}
                                 switchLabel="Server 1"
