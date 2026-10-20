@@ -258,6 +258,45 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(container.textContent).toContain('S1 E3');
     });
 
+    it('hides Next Episode with the player chrome when the mouse goes idle', () => {
+        jest.useFakeTimers();
+        try {
+            act(() => {
+                root.render(
+                    <MovieboxPagePlayer
+                        linkKey="tmdb:4:tv"
+                        initialLink={PAGE}
+                        title="My Demon"
+                        mediaType="tv"
+                        season={1}
+                        episode={2}
+                        episodeCount={16}
+                        autoResolve={false}
+                        onClose={() => {}}
+                    />,
+                );
+            });
+            const wrap = () =>
+                document.querySelector('[data-testid="moviebox-next-episode"]')!
+                    .parentElement as HTMLElement;
+            expect(wrap().style.opacity).toBe('1');
+
+            // Site ka chrome chup-chaap gayab hota hai — humara button bhi.
+            act(() => {
+                jest.advanceTimersByTime(4000);
+            });
+            expect(wrap().style.opacity).toBe('0');
+
+            // Mouse hilte hi wapas (site ke controls ki tarah).
+            act(() => {
+                window.dispatchEvent(new MouseEvent('mousemove'));
+            });
+            expect(wrap().style.opacity).toBe('1');
+        } finally {
+            jest.useRealTimers();
+        }
+    });
+
     it('tells the parent when the episode changed', () => {
         const onEpisodeChange = jest.fn();
         act(() => {

@@ -64,6 +64,15 @@ Resources panel crop se bahar hai, isliye episode aage badhane ka apna raasta
 hai — player ke neeche-daayein **Next Episode** ka pill (agar series ho aur
 agla episode bacha ho):
 
+- Button **video ke dabbe ke andar** hota hai, bottom-right (site ke apne Next
+  Episode ki jagah) — `getMovieboxCrop` se dabbe ka rect nikaal kar overlay
+  usi par align hota hai, root ke kinare par nahi (warna black gutter me chala
+  jata tha).
+- Site ka chrome ~3s me gayab hota hai, to button bhi `CHROME_IDLE_MS` (3.2s)
+  idle par fade ho jata hai aur mouse hilte/touch par wapas aata hai. Iframe
+  cross-origin hai isliye andar ka mousemove nahi milta — pointer frame me
+  ghusne par milne wala `mouseout` (relatedTarget = null) bhi activity maana
+  jata hai.
 - `MovieboxPagePlayer` khud hi agla episode khol deta hai (`episode + 1`,
   wahi `detailSe`/`detailEp` watch page — iframe dobara mount hota hai).
 - Parent ko `onEpisodeChange({ season, episode })` se batata hai, taaki

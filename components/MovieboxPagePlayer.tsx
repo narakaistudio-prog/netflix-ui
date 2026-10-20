@@ -7,6 +7,7 @@ import {
     buildMovieboxFrameProxyUrl,
     buildMovieboxPageUrl,
     buildMovieboxSearchUrl,
+    getMovieboxCrop,
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
@@ -66,6 +67,11 @@ interface MovieboxPagePlayerProps {
 }
 
 const FRAME_TIMEOUT_MS = 15000;
+/**
+ * Site ka apna chrome (controls) ~3s me gayab hota hai. Hamara Next Episode
+ * bhi usi waqt gayab hota hai, aur mouse hilte hi wapas.
+ */
+const CHROME_IDLE_MS = 3200;
 
 export function MovieboxPagePlayer({
     linkKey,
@@ -103,6 +109,10 @@ export function MovieboxPagePlayer({
      * Parent episode/link badle to override saaf.
      */
     const [episodeOverride, setEpisodeOverride] = useState<number | null>(null);
+    /** Player ka apna naap — overlays ko video ke dabbe par align karne ke liye. */
+    const [rootSize, setRootSize] = useState({ width: 0, height: 0 });
+    /** Site ke controls jaisa: idle par gayab. */
+    const [chromeVisible, setChromeVisible] = useState(true);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -207,6 +217,29 @@ export function MovieboxPagePlayer({
     /** Frame me search results khule hain (watch page nahi). */
     const isSearchFrame = Boolean(searchUrl);
 
+    /**
+     * Video ka asli dabba screen par kahan hai.
+     *
+     * `MovieboxCroppedFrame` poore player me dabbe ko **center** karta hai
+     * (`alignItems/justifyContent: center`), aur uski chaudai/unchai wahi crop
+     * math deti hai. Isliye overlay (Next Episode) ko root ke kinare par nahi,
+     * dabbe ke andar - uske bottom-right - rakha ja sakta hai.
+     */
+    const overlayBox = useMemo(() => {
+        if (!rootSize.width || !rootSize.height) return null;
+        const crop = getMovieboxCrop(rootSize.width, rootSize.height, { resources: isSearchFrame });
+        const pad = Math.max(12, Math.round(crop.frameWidth * 0.025));
+        return {
+            left: Math.round((rootSize.width - crop.frameWidth) / 2),
+            top: Math.round((rootSize.height - crop.height) / 2),
+            width: crop.frameWidth,
+            height: crop.height,
+            padRight: pad,
+            // site ka seek bar + controls neeche ~10-12% jagah lete hain
+            padBottom: Math.max(20, Math.round(crop.height * 0.13)),
+        };
+    }, [rootSize, isSearchFrame]);
+
     /* --------------------------- Frame ---------------------------- */
 
     useEffect(() => {
@@ -226,6 +259,50 @@ export function MovieboxPagePlayer({
             if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, [frameSrc]);
+
+    /**
+     * Player chrome (aur Next Episode) idle par gayab.
+     *
+     * Iframe cross-origin hai — andar ka mousemove humein nahi milta. Isliye:
+     *   - window par koi bhi hilna/dabna (mousemove, wheel, key, touch) → dikhao
+     *   - pointer iframe ke andar gaya → parent ko sirf ek `mouseout`
+     *     (relatedTarget = null) milta hai → usko bhi activity maano
+     * Chup-chaap 3.2s → gayab, bilkul site ke controls jaisa.
+     */
+    useEffect(() => {
+        if (!frameSrc || isSearchFrame) {
+            setChromeVisible(true);
+            return;
+        }
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+        const doc = window.document;
+        let timer: ReturnType<typeof setTimeout> | null = null;
+        const arm = () => {
+            setChromeVisible(true);
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => setChromeVisible(false), CHROME_IDLE_MS);
+        };
+        arm();
+        const onWindow = () => arm();
+        const onOut = (event: MouseEvent) => {
+            if (!event.relatedTarget) arm();
+        };
+        window.addEventListener('mousemove', onWindow, { passive: true });
+        window.addEventListener('mousedown', onWindow, { passive: true });
+        window.addEventListener('touchstart', onWindow, { passive: true });
+        window.addEventListener('keydown', onWindow);
+        window.addEventListener('wheel', onWindow, { passive: true });
+        doc.addEventListener('mouseout', onOut);
+        return () => {
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('mousemove', onWindow);
+            window.removeEventListener('mousedown', onWindow);
+            window.removeEventListener('touchstart', onWindow);
+            window.removeEventListener('keydown', onWindow);
+            window.removeEventListener('wheel', onWindow);
+            doc.removeEventListener('mouseout', onOut);
+        };
+    }, [frameSrc, isSearchFrame]);
 
     /* ---------------------------- Keys ---------------------------- */
 
@@ -278,7 +355,18 @@ export function MovieboxPagePlayer({
     /* --------------------------- Render --------------------------- */
 
     return (
-        <View style={styles.root} {...({ dataSet: { tvScope: 'player' } } as any)}>
+        <View
+            style={styles.root}
+            onLayout={(event) => {
+                const { width, height } = event.nativeEvent.layout;
+                setRootSize((prev) =>
+                    Math.abs(prev.width - width) < 1 && Math.abs(prev.height - height) < 1
+                        ? prev
+                        : { width, height },
+                );
+            }}
+            {...({ dataSet: { tvScope: 'player' } } as any)}
+        >
             {frameSrc ? (
                 <MovieboxCroppedFrame
                     key={frameSrc}
@@ -321,9 +409,26 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-            {/* Series: agla episode (Resources panel crop me nahi rehta). */}
+            {/* Series: agla episode — video ke andar, bottom-right (site ke
+                apne Next Episode ki jagah), aur chrome ke saath gayab. */}
             {frameSrc && nextEpisode && !isSearchFrame ? (
-                <View style={styles.nextWrap} pointerEvents="box-none">
+                <View
+                    style={[
+                        styles.nextWrap,
+                        overlayBox
+                            ? {
+                                  left: overlayBox.left,
+                                  top: overlayBox.top,
+                                  width: overlayBox.width,
+                                  height: overlayBox.height,
+                                  paddingRight: overlayBox.padRight,
+                                  paddingBottom: overlayBox.padBottom,
+                              }
+                            : styles.nextFallback,
+                        { opacity: chromeVisible ? 1 : 0 },
+                    ]}
+                    pointerEvents={chromeVisible ? 'box-none' : 'none'}
+                >
                     <Pressable
                         style={styles.nextButton}
                         onPress={goNextEpisode}
@@ -445,8 +550,17 @@ export function MovieboxPagePlayer({
 
 const styles = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#000', position: 'relative' },
-    // video ke apne controls ke thoda upar, daayein kinare par — NetMirror jaisa
-    nextWrap: { position: 'absolute', right: 16, bottom: '14%' },
+    /**
+     * Video ke dabbe ke andar, bottom-right. `overlayBox` milne tak (pehla
+     * layout) fallback: root ke daayein kinare par.
+     */
+    nextWrap: {
+        position: 'absolute',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+    },
+    /** `overlayBox` se pehle (pehla layout) — root ke daayein kinare par. */
+    nextFallback: { right: 24, bottom: '13%' },
     nextButton: {
         flexDirection: 'row',
         alignItems: 'center',
