@@ -31,6 +31,12 @@ switch (scenario.op) {
     case 'score':
         result = mod.scoreCandidate(scenario.target, scenario.item);
         break;
+    case 'playRef':
+        result = mod.pickPlayRef(scenario.detail, scenario.fallback);
+        break;
+    case 'language':
+        result = mod.languageOfRef(scenario.ref);
+        break;
     case 'pickDub':
         result = mod.pickDub(scenario.dubs, scenario.prefer);
         break;

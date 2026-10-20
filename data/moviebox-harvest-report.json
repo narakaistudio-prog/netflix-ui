@@ -1,0 +1,1622 @@
+{
+ "$comment": "MovieBox harvest report: matched / review / miss + per-title notes. Sirf debugging ke liye — app ise nahi padhta.",
+ "generatedAt": "2026-10-20T09:09:38.743Z",
+ "stats": {
+  "catalog": 791,
+  "linked": 668,
+  "hindi": 375,
+  "review": 59,
+  "miss": 64,
+  "errors": 0,
+  "matchedThisRun": 667,
+  "queriesUsed": {
+   "primary": 790,
+   "hindi": 153,
+   "year": 124
+  }
+ },
+ "review": [
+  {
+   "key": "tmdb:1685882",
+   "title": "Modha Rathri",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Modha Rathiri",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.6,
+    "query": "Modha Rathri"
+   }
+  },
+  {
+   "key": "tmdb:1311031",
+   "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+   "year": 2025,
+   "mediaType": "movie",
+   "best": {
+    "title": "Demon Slayer: Kimetsu No Yaiba - To the Hashira Training",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.658,
+    "query": "Demon Slayer: Kimetsu no Yaiba Infinity Castle"
+   }
+  },
+  {
+   "key": "tmdb:46260",
+   "title": "Naruto",
+   "year": 2002,
+   "mediaType": "tv",
+   "best": {
+    "title": "Naruto",
+    "subjectType": 2,
+    "year": 2005,
+    "score": 0.6,
+    "query": "Naruto"
+   }
+  },
+  {
+   "key": "tmdb:35610",
+   "title": "InuYasha",
+   "year": 2000,
+   "mediaType": "tv",
+   "best": {
+    "title": "Inuyasha",
+    "subjectType": 2,
+    "year": 2002,
+    "score": 0.6,
+    "query": "InuYasha"
+   }
+  },
+  {
+   "key": "tmdb:947040",
+   "title": "Death Note",
+   "year": 2021,
+   "mediaType": "movie",
+   "best": {
+    "title": "Death Note",
+    "subjectType": 1,
+    "year": 2017,
+    "score": 0.6,
+    "query": "Death Note"
+   }
+  },
+  {
+   "key": "tmdb:240411",
+   "title": "Dan Da Dan",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "Dosa dan Cinta",
+    "subjectType": 2,
+    "year": 2023,
+    "score": 0.637,
+    "query": "Dan Da Dan 2024"
+   }
+  },
+  {
+   "key": "tmdb:1268198",
+   "title": "Blue Period",
+   "year": 2024,
+   "mediaType": "movie",
+   "best": {
+    "title": "Blue Cave",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.6,
+    "query": "Blue Period 2024"
+   }
+  },
+  {
+   "key": "tmdb:280110",
+   "title": "My Hero Academia: Vigilantes",
+   "year": 2025,
+   "mediaType": "tv",
+   "best": {
+    "title": "My Hero Academia: Memories [English]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.695,
+    "query": "My Hero Academia: Vigilantes"
+   }
+  },
+  {
+   "key": "tmdb:1752217",
+   "title": "Leviathan",
+   "year": 2027,
+   "mediaType": "movie",
+   "best": {
+    "title": "Leviathan",
+    "subjectType": 1,
+    "year": 2015,
+    "score": 0.6,
+    "query": "Leviathan"
+   }
+  },
+  {
+   "key": "tmdb:1338572",
+   "title": "Exception",
+   "year": 2024,
+   "mediaType": "movie",
+   "best": {
+    "title": "The Exception",
+    "subjectType": 1,
+    "year": 2017,
+    "score": 0.6,
+    "query": "Exception"
+   }
+  },
+  {
+   "key": "tmdb:75624",
+   "title": "Naruto Shippuden the Movie: Blood Prison",
+   "year": 2011,
+   "mediaType": "movie",
+   "best": {
+    "title": "Naruto Shippuden: The Movie - Bonds",
+    "subjectType": 1,
+    "year": 2011,
+    "score": 0.691,
+    "query": "Naruto Shippuden the Movie: Blood Prison"
+   }
+  },
+  {
+   "key": "tmdb:1764171",
+   "title": "Children Of The Whales",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Killer Whale",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.6,
+    "query": "Children Of The Whales Hindi"
+   }
+  },
+  {
+   "key": "tmdb:890",
+   "title": "Neon Genesis Evangelion",
+   "year": 1995,
+   "mediaType": "tv",
+   "best": {
+    "title": "Neon Genesis Evangelion",
+    "subjectType": 2,
+    "year": 1997,
+    "score": 0.6,
+    "query": "Neon Genesis Evangelion"
+   }
+  },
+  {
+   "key": "tmdb:1545621",
+   "title": "Detective Conan: Fallen Angel of the Highway",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Detective Conan: Highway No Datenshi[CAM]",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.67,
+    "query": "Detective Conan: Fallen Angel of the Highway"
+   }
+  },
+  {
+   "key": "tmdb:20982",
+   "title": "Naruto Shippuden the Movie",
+   "year": 2007,
+   "mediaType": "movie",
+   "best": {
+    "title": "Naruto the Movie: Ninja Clash in the Land of Snow",
+    "subjectType": 1,
+    "year": 2007,
+    "score": 0.663,
+    "query": "Naruto Shippuden the Movie Hindi"
+   }
+  },
+  {
+   "key": "tmdb:50723",
+   "title": "Naruto Shippuden the Movie: The Lost Tower",
+   "year": 2010,
+   "mediaType": "movie",
+   "best": {
+    "title": "Naruto Shippûden: The Movie [English]",
+    "subjectType": 1,
+    "year": 2009,
+    "score": 0.646,
+    "query": "Naruto Shippuden the Movie: The Lost Tower"
+   }
+  },
+  {
+   "key": "tmdb:16907",
+   "title": "Naruto the Movie: Ninja Clash in the Land of Snow",
+   "year": 2004,
+   "mediaType": "movie",
+   "best": {
+    "title": "Naruto the Movie: Ninja Clash in the Land of Snow [Hindi]",
+    "subjectType": 1,
+    "year": 2007,
+    "score": 0.65,
+    "query": "Naruto the Movie: Ninja Clash in the Land of Snow Hindi"
+   }
+  },
+  {
+   "key": "tmdb:128255",
+   "title": "Transformers: War for Cybertron: Kingdom",
+   "year": 2021,
+   "mediaType": "tv",
+   "best": {
+    "title": "Transformers: War for Cybertron S1-S3",
+    "subjectType": 2,
+    "year": 2020,
+    "score": 0.711,
+    "query": "Transformers: War for Cybertron: Kingdom"
+   }
+  },
+  {
+   "key": "tmdb:1373310",
+   "title": "Babanba Banban Vampire",
+   "year": 2025,
+   "mediaType": "movie",
+   "best": {
+    "title": "Baban Baban Ban Vampire",
+    "subjectType": 1,
+    "year": 2025,
+    "score": 0.693,
+    "query": "Babanba Banban Vampire"
+   }
+  },
+  {
+   "key": "tmdb:587454",
+   "title": "Anpanman: Apple Boy and Everyone's Hope",
+   "year": 2014,
+   "mediaType": "movie",
+   "best": {
+    "title": "Anpanman: Apple Boy and Everyone's Hope [English]",
+    "subjectType": 1,
+    "year": 2021,
+    "score": 0.6,
+    "query": "Anpanman: Apple Boy and Everyone's Hope"
+   }
+  },
+  {
+   "key": "tmdb:195053",
+   "title": "Case Closed: Zero's Tea Time",
+   "year": 2022,
+   "mediaType": "tv",
+   "best": {
+    "title": "Detective Conan: Zero's Tea Time",
+    "subjectType": 2,
+    "year": 2022,
+    "score": 0.67,
+    "query": "Case Closed: Zero's Tea Time"
+   }
+  },
+  {
+   "key": "tmdb:839144",
+   "title": "Trese After Dark",
+   "year": 2021,
+   "mediaType": "movie",
+   "best": {
+    "title": "Girls After Dark",
+    "subjectType": 1,
+    "year": 2022,
+    "score": 0.637,
+    "query": "Trese After Dark"
+   }
+  },
+  {
+   "key": "tmdb:76826",
+   "title": "Grave of the Fireflies",
+   "year": 2005,
+   "mediaType": "movie",
+   "best": {
+    "title": "Grave of the Fireflies [Hindi]",
+    "subjectType": 1,
+    "year": 1989,
+    "score": 0.65,
+    "query": "Grave of the Fireflies Hindi"
+   }
+  },
+  {
+   "key": "tmdb:591077",
+   "title": "Anpanman: Shine! Kulun and the Stars of Life",
+   "year": 2018,
+   "mediaType": "movie",
+   "best": {
+    "title": "Anpanman: Shine! Kurun & The Star of Life [English]",
+    "subjectType": 1,
+    "year": 2018,
+    "score": 0.67,
+    "query": "Anpanman: Shine! Kulun and the Stars of Life"
+   }
+  },
+  {
+   "key": "tmdb:845387",
+   "title": "maboroshi",
+   "year": 2023,
+   "mediaType": "movie",
+   "best": {
+    "title": "Maborosi",
+    "subjectType": 1,
+    "year": 1995,
+    "score": 0.6,
+    "query": "maboroshi"
+   }
+  },
+  {
+   "key": "tmdb:624989",
+   "title": "Sturgill Simpson Presents Sound & Fury",
+   "year": 2019,
+   "mediaType": "movie",
+   "best": {
+    "title": "Sound & Fury",
+    "subjectType": 1,
+    "year": 2019,
+    "score": 0.614,
+    "query": "Sturgill Simpson Presents Sound & Fury"
+   }
+  },
+  {
+   "key": "tmdb:1625726",
+   "title": "Epic",
+   "year": 2015,
+   "mediaType": "movie",
+   "best": {
+    "title": "Epic [Hindi]",
+    "subjectType": 1,
+    "year": 2013,
+    "score": 0.65,
+    "query": "Epic Hindi"
+   }
+  },
+  {
+   "key": "tmdb:284753",
+   "title": "Operation Safed Sagar: The Untold Story of the Kargil War",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Operation Safed Sagar",
+    "subjectType": 2,
+    "year": 2026,
+    "score": 0.63,
+    "query": "Operation Safed Sagar: The Untold Story of the Kargil War"
+   }
+  },
+  {
+   "key": "tmdb:1355228",
+   "title": "Gandhari",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Gandharwa",
+    "subjectType": 1,
+    "year": 2022,
+    "score": 0.6,
+    "query": "Gandhari"
+   }
+  },
+  {
+   "key": "tmdb:1582770",
+   "title": "Dhurandhar: The Revenge",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "MAIN AUR TU (Video) | Dhurandhar The Revenge | Ranveer Singh | Shashwat S,Jasmine S,Reble | Aditya D",
+    "subjectType": 6,
+    "year": 2026,
+    "score": 0.68,
+    "query": "Dhurandhar: The Revenge Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1057265",
+   "title": "Peddi",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Full Video: Peddi Reddy | Mana ShankaraVaraPrasad Garu | Chiranjeevi | Anil Ravipudi | Bheems C",
+    "subjectType": 6,
+    "year": 2026,
+    "score": 0.672,
+    "query": "Peddi"
+   }
+  },
+  {
+   "key": "tmdb:1239134",
+   "title": "Bhooth Bangla",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Ram Ji Aake Bhala Karenge | Bhooth Bangla | Akshay Kumar | Pritam,Armaan Malik,Aarvan,Kumaar,MellowD",
+    "subjectType": 6,
+    "year": 2026,
+    "score": 0.679,
+    "query": "Bhooth Bangla"
+   }
+  },
+  {
+   "key": "tmdb:337806",
+   "title": "Least Eligible Bachelor",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Least Eligible Bachelor [Hindi]",
+    "subjectType": 2,
+    "year": 2023,
+    "score": 0.65,
+    "query": "Least Eligible Bachelor Hindi"
+   }
+  },
+  {
+   "key": "tmdb:868668",
+   "title": "Ustaad Bhagat Singh",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Aura Of Ustaad - Lyric Video | Ustaad Bhagat Singh | Pawan Kalyan | Harish Shankar | Devi Sri Prasad",
+    "subjectType": 6,
+    "year": 2026,
+    "score": 0.69,
+    "query": "Ustaad Bhagat Singh"
+   }
+  },
+  {
+   "key": "tmdb:271690",
+   "title": "Crime Patrol City Crimes",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "Crime Patrol: 26 Jurm, 26 Cases",
+    "subjectType": 2,
+    "year": 2025,
+    "score": 0.66,
+    "query": "Crime Patrol City Crimes"
+   }
+  },
+  {
+   "key": "tmdb:1228858",
+   "title": "Kuch Kuch Hota Hai",
+   "year": 2020,
+   "mediaType": "movie",
+   "best": {
+    "title": "Kuch Kuch Hota Hai",
+    "subjectType": 1,
+    "year": 1998,
+    "score": 0.6,
+    "query": "Kuch Kuch Hota Hai"
+   }
+  },
+  {
+   "key": "tmdb:441909",
+   "title": "Tiger Zinda Hai",
+   "year": 2017,
+   "mediaType": "movie",
+   "best": {
+    "title": "Zinda Hai Song | Tiger Zinda Hai | Salman Khan | Katrina Kaif | Sukhwinder Singh | Raftaar",
+    "subjectType": 6,
+    "year": 2017,
+    "score": 0.692,
+    "query": "Tiger Zinda Hai"
+   }
+  },
+  {
+   "key": "tmdb:331970",
+   "title": "Mass Jathara",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mass Jathara - Ole Ole Lyric Video | Ravi Teja, Sreeleela | Bheems Ceciroleo | Bhanu Bogavarapu",
+    "subjectType": 6,
+    "year": 2025,
+    "score": 0.602,
+    "query": "Mass Jathara"
+   }
+  },
+  {
+   "key": "tmdb:1060046",
+   "title": "HIT: The Third Case",
+   "year": 2025,
+   "mediaType": "movie",
+   "best": {
+    "title": "HIT: The 3rd Case",
+    "subjectType": 1,
+    "year": 2025,
+    "score": 0.717,
+    "query": "HIT: The Third Case"
+   }
+  },
+  {
+   "key": "tmdb:1202888",
+   "title": "PK",
+   "year": 2023,
+   "mediaType": "movie",
+   "best": {
+    "title": "PK [Hindi]",
+    "subjectType": 1,
+    "year": 2014,
+    "score": 0.65,
+    "query": "PK Hindi"
+   }
+  },
+  {
+   "key": "tmdb:496327",
+   "title": "Sui Dhaaga - Made in India",
+   "year": 2018,
+   "mediaType": "movie",
+   "best": {
+    "title": "Needle and Thread: Made in India",
+    "subjectType": 1,
+    "year": 2018,
+    "score": 0.67,
+    "query": "Sui Dhaaga - Made in India"
+   }
+  },
+  {
+   "key": "tmdb:33081",
+   "title": "Paheli",
+   "year": 2005,
+   "mediaType": "movie",
+   "best": {
+    "title": "Paheli",
+    "subjectType": 1,
+    "year": 2021,
+    "score": 0.6,
+    "query": "Paheli"
+   }
+  },
+  {
+   "key": "tmdb:1639512",
+   "title": "Milestone",
+   "year": 2024,
+   "mediaType": "movie",
+   "best": {
+    "title": "Milestone [Hindi]",
+    "subjectType": 1,
+    "year": 2021,
+    "score": 0.65,
+    "query": "Milestone Hindi"
+   }
+  },
+  {
+   "key": "tmdb:249068",
+   "title": "Chhota Bheem aur Gadadhari Bheem",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mighty Bheem's Playtime [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.617,
+    "query": "Chhota Bheem aur Gadadhari Bheem"
+   }
+  },
+  {
+   "key": "tmdb:1531117",
+   "title": "Wild Dog",
+   "year": 2025,
+   "mediaType": "movie",
+   "best": {
+    "title": "Wild",
+    "subjectType": 1,
+    "year": 2025,
+    "score": 0.67,
+    "query": "Wild Dog"
+   }
+  },
+  {
+   "key": "tmdb:413882",
+   "title": "Ok Jaanu",
+   "year": 2017,
+   "mediaType": "movie",
+   "best": {
+    "title": "@A. R. Rahman - Enna Sona Video|OK Jaanu|Arijit Singh|Shraddha Kapoor|Aditya Roy",
+    "subjectType": 6,
+    "year": 2017,
+    "score": 0.682,
+    "query": "Ok Jaanu"
+   }
+  },
+  {
+   "key": "tmdb:14071",
+   "title": "Dostana",
+   "year": 2008,
+   "mediaType": "movie",
+   "best": {
+    "title": "Dostana [Hindi]",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.65,
+    "query": "Dostana Hindi"
+   }
+  },
+  {
+   "key": "tmdb:129478",
+   "title": "The King's Affection",
+   "year": 2021,
+   "mediaType": "tv",
+   "best": {
+    "title": "Affection",
+    "subjectType": 2,
+    "year": 2021,
+    "score": 0.67,
+    "query": "The King's Affection"
+   }
+  },
+  {
+   "key": "tmdb:78385",
+   "title": "Something in the Rain",
+   "year": 2018,
+   "mediaType": "tv",
+   "best": {
+    "title": "Something in the Rain [Hindi]",
+    "subjectType": 2,
+    "year": 2020,
+    "score": 0.65,
+    "query": "Something in the Rain Hindi"
+   }
+  },
+  {
+   "key": "tmdb:154887",
+   "title": "My Liberation Notes",
+   "year": 2022,
+   "mediaType": "tv",
+   "best": {
+    "title": "My Liberation Diary",
+    "subjectType": 2,
+    "year": 2022,
+    "score": 0.717,
+    "query": "My Liberation Notes"
+   }
+  },
+  {
+   "key": "tmdb:76662",
+   "title": "My Mister",
+   "year": 2018,
+   "mediaType": "tv",
+   "best": {
+    "title": "My Mister",
+    "subjectType": 2,
+    "year": 2020,
+    "score": 0.6,
+    "query": "My Mister"
+   }
+  },
+  {
+   "key": "tmdb:274403",
+   "title": "Secret Garden",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Secret Garden",
+    "subjectType": 2,
+    "year": 2010,
+    "score": 0.6,
+    "query": "Secret Garden"
+   }
+  },
+  {
+   "key": "tmdb:108284",
+   "title": "Tale of the Nine Tailed",
+   "year": 2020,
+   "mediaType": "tv",
+   "best": {
+    "title": "Tale of the Nine Tailed [Hindi]",
+    "subjectType": 2,
+    "year": 2023,
+    "score": 0.65,
+    "query": "Tale of the Nine Tailed Hindi"
+   }
+  },
+  {
+   "key": "tmdb:152471",
+   "title": "Ghost Doctor",
+   "year": 2022,
+   "mediaType": "tv",
+   "best": {
+    "title": "Ghost Doctor [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.65,
+    "query": "Ghost Doctor Hindi"
+   }
+  },
+  {
+   "key": "tmdb:75123",
+   "title": "A Korean Odyssey",
+   "year": 2017,
+   "mediaType": "tv",
+   "best": {
+    "title": "A Korean Odyssey [Hindi]",
+    "subjectType": 2,
+    "year": 2019,
+    "score": 0.65,
+    "query": "A Korean Odyssey Hindi"
+   }
+  },
+  {
+   "key": "tmdb:90447",
+   "title": "Hotel Del Luna",
+   "year": 2019,
+   "mediaType": "tv",
+   "best": {
+    "title": "Hotel Del Luna [Hindi]",
+    "subjectType": 2,
+    "year": 2021,
+    "score": 0.65,
+    "query": "Hotel Del Luna Hindi"
+   }
+  },
+  {
+   "key": "tmdb:135652",
+   "title": "Military Prosecutor Doberman",
+   "year": 2022,
+   "mediaType": "tv",
+   "best": {
+    "title": "Military Prosecutor Doberman",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.6,
+    "query": "Military Prosecutor Doberman"
+   }
+  },
+  {
+   "key": "tmdb:31417",
+   "title": "You're Beautiful",
+   "year": 2009,
+   "mediaType": "tv",
+   "best": {
+    "title": "YOU'RE BEAUTIFUL - James Blunt (Subtitulado en ESPAÑOL)",
+    "subjectType": 6,
+    "year": 2009,
+    "score": 0.7,
+    "query": "You're Beautiful"
+   }
+  },
+  {
+   "key": "tmdb:87553",
+   "title": "Her Private Life",
+   "year": 2019,
+   "mediaType": "tv",
+   "best": {
+    "title": "Her Private Life",
+    "subjectType": 2,
+    "year": 2021,
+    "score": 0.6,
+    "query": "Her Private Life"
+   }
+  }
+ ],
+ "misses": [
+  {
+   "key": "tmdb:1408162",
+   "title": "Vishwanath & Sons",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "SONS OF JEZEBEL",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.2,
+    "query": "Vishwanath & Sons 2026"
+   }
+  },
+  {
+   "key": "tmdb:1727563",
+   "title": "Ohh My Dog",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Oh My Dog",
+    "subjectType": 1,
+    "year": 2022,
+    "score": 0.317,
+    "query": "Ohh My Dog"
+   }
+  },
+  {
+   "key": "tmdb:331780",
+   "title": "The Seven Deadly Sins",
+   "year": 2021,
+   "mediaType": "tv",
+   "best": {
+    "title": "The Seven Deadly Sins [English] S1-S5",
+    "subjectType": 2,
+    "year": 2014,
+    "score": 0.494,
+    "query": "The Seven Deadly Sins"
+   }
+  },
+  {
+   "key": "tmdb:1623376",
+   "title": "Blue Lock",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Blue Lock: Episode Nagi",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.48,
+    "query": "Blue Lock"
+   }
+  },
+  {
+   "key": "tmdb:874117",
+   "title": "Fighting Spirit",
+   "year": 2013,
+   "mediaType": "movie",
+   "best": {
+    "title": "Fighting Spirit: Champion Road [English]",
+    "subjectType": 1,
+    "year": 2003,
+    "score": 0.48,
+    "query": "Fighting Spirit"
+   }
+  },
+  {
+   "key": "tmdb:111993",
+   "title": "Overlord",
+   "year": 2020,
+   "mediaType": "tv",
+   "best": {
+    "title": "Overlord: Pure Pure Pleiades",
+    "subjectType": 2,
+    "year": 2015,
+    "score": 0.445,
+    "query": "Overlord"
+   }
+  },
+  {
+   "key": "tmdb:253811",
+   "title": "Tougen Anki",
+   "year": 2025,
+   "mediaType": "tv",
+   "best": {
+    "title": "12-Sai. Chiccha na Mune no Tokimeki [English] S1-S2",
+    "subjectType": 2,
+    "year": 2016,
+    "score": 0,
+    "query": "Tougen Anki"
+   }
+  },
+  {
+   "key": "tmdb:152752",
+   "title": "Ouran High School Host Club",
+   "year": 2012,
+   "mediaType": "movie",
+   "best": {
+    "title": "High School",
+    "subjectType": 1,
+    "year": 2010,
+    "score": 0.214,
+    "query": "Ouran High School Host Club 2012"
+   }
+  },
+  {
+   "key": "tmdb:1503040",
+   "title": "Romantic Killer",
+   "year": 2025,
+   "mediaType": "movie",
+   "best": {
+    "title": "TWO ROMANTIC LOVERS",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.497,
+    "query": "Romantic Killer"
+   }
+  },
+  {
+   "key": "tmdb:260463",
+   "title": "Daemons of the Shadow Realm",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "The Gate of Mystical Realm",
+    "subjectType": 2,
+    "year": 2025,
+    "score": 0.403,
+    "query": "Daemons of the Shadow Realm"
+   }
+  },
+  {
+   "key": "tmdb:201740",
+   "title": "Shimajiro: A Wonderful Adventure",
+   "year": 2012,
+   "mediaType": "tv",
+   "best": {
+    "title": "Wonderful World",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.107,
+    "query": "Shimajiro: A Wonderful Adventure"
+   }
+  },
+  {
+   "key": "tmdb:117465",
+   "title": "Hell's Paradise",
+   "year": 2023,
+   "mediaType": "tv",
+   "best": {
+    "title": "Paradise",
+    "subjectType": 2,
+    "year": 2022,
+    "score": 0.59,
+    "query": "Hell's Paradise 2023"
+   }
+  },
+  {
+   "key": "tmdb:724332",
+   "title": "Toriko X One Piece Collaboration Special",
+   "year": 2012,
+   "mediaType": "movie",
+   "best": {
+    "title": "One Piece Film Z",
+    "subjectType": 1,
+    "year": 2012,
+    "score": 0.507,
+    "query": "Toriko X One Piece Collaboration Special Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1361184",
+   "title": "Dragon Ball DAIMA",
+   "year": 2024,
+   "mediaType": "movie",
+   "best": {
+    "title": "Dragon Ball Daima [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.4,
+    "query": "Dragon Ball DAIMA Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1159311",
+   "title": "My Hero Academia: You're Next",
+   "year": 2024,
+   "mediaType": "movie",
+   "best": {
+    "title": "You're My Boss",
+    "subjectType": 1,
+    "year": 2025,
+    "score": 0.487,
+    "query": "My Hero Academia: You're Next Hindi"
+   }
+  },
+  {
+   "key": "tmdb:643058",
+   "title": "Aggretsuko: We Wish You a Metal Christmas",
+   "year": 2018,
+   "mediaType": "movie",
+   "best": {
+    "title": "A Christmas Wish",
+    "subjectType": 1,
+    "year": 2019,
+    "score": 0.497,
+    "query": "Aggretsuko: We Wish You a Metal Christmas"
+   }
+  },
+  {
+   "key": "tmdb:717022",
+   "title": "Anpanman: Nanda and Runda from Star of Toys",
+   "year": 2016,
+   "mediaType": "movie",
+   "best": {
+    "title": "Soreike! Anpanman: Omocha no hoshi no Nanda to Runda [English]",
+    "subjectType": 1,
+    "year": 2016,
+    "score": 0.577,
+    "query": "Anpanman: Nanda and Runda from Star of Toys"
+   }
+  },
+  {
+   "key": "tmdb:360599",
+   "title": "Anpanman: The Secret of Fairy Rin-Rin",
+   "year": 2008,
+   "mediaType": "movie",
+   "best": {
+    "title": "Rin Tin Tin: The True Story",
+    "subjectType": 1,
+    "year": 2007,
+    "score": 0.45,
+    "query": "Anpanman: The Secret of Fairy Rin-Rin"
+   }
+  },
+  {
+   "key": "tmdb:437872",
+   "title": "Anpanman: Adventure of Happie",
+   "year": 2005,
+   "mediaType": "movie",
+   "best": {
+    "title": "Digimon Adventure 02: Revenge of Diaboromon [English]",
+    "subjectType": 1,
+    "year": 2005,
+    "score": 0.465,
+    "query": "Anpanman: Adventure of Happie"
+   }
+  },
+  {
+   "key": "tmdb:361606",
+   "title": "Anpanman: The Blacknose with Magical Song",
+   "year": 2010,
+   "mediaType": "movie",
+   "best": {
+    "title": "magical encounter",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.032,
+    "query": "Anpanman: The Blacknose with Magical Song"
+   }
+  },
+  {
+   "key": "tmdb:373879",
+   "title": "One Piece: Adventure of Nebulandia",
+   "year": 2015,
+   "mediaType": "movie",
+   "best": {
+    "title": "One Piece: Heart of Gold",
+    "subjectType": 1,
+    "year": 2016,
+    "score": 0.52,
+    "query": "One Piece: Adventure of Nebulandia"
+   }
+  },
+  {
+   "key": "tmdb:195923",
+   "title": "Case Closed: The Culprit Hanzawa",
+   "year": 2022,
+   "mediaType": "tv",
+   "best": {
+    "title": "Detective Conan: The Culprit Hanzawa",
+    "subjectType": 2,
+    "year": 2023,
+    "score": 0.52,
+    "query": "Case Closed: The Culprit Hanzawa"
+   }
+  },
+  {
+   "key": "tmdb:437630",
+   "title": "Anpanman: Purun, the Soap Bubble",
+   "year": 2007,
+   "mediaType": "movie",
+   "best": {
+    "title": "The Bubble",
+    "subjectType": 1,
+    "year": 2007,
+    "score": 0.53,
+    "query": "Anpanman: Purun, the Soap Bubble"
+   }
+  },
+  {
+   "key": "tmdb:688900",
+   "title": "Sol Levante",
+   "year": 2020,
+   "mediaType": "movie",
+   "best": {
+    "title": "Sol Invictus",
+    "subjectType": 1,
+    "year": 2021,
+    "score": 0.52,
+    "query": "Sol Levante"
+   }
+  },
+  {
+   "key": "tmdb:857862",
+   "title": "EVANGELION: DEATH (TRUE)²",
+   "year": 1998,
+   "mediaType": "movie",
+   "best": {
+    "title": "Neon Genesis Evangelion: Death & Rebirth",
+    "subjectType": 1,
+    "year": 1997,
+    "score": 0.599,
+    "query": "EVANGELION: DEATH (TRUE)² Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1598785",
+   "title": "Milky☆Subway: The Galactic Limited Express - the Movie",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "movie",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.483,
+    "query": "Milky☆Subway: The Galactic Limited Express - the Movie"
+   }
+  },
+  {
+   "key": "tmdb:1303331",
+   "title": "Dhamaal 4",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Dhamaal",
+    "subjectType": 1,
+    "year": 2007,
+    "score": 0.27,
+    "query": "Dhamaal 4"
+   }
+  },
+  {
+   "key": "tmdb:1423253",
+   "title": "Korean Kanakaraju",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Korean 101: Essential Expressions",
+    "subjectType": 5,
+    "year": 2025,
+    "score": 0.335,
+    "query": "Korean Kanakaraju 2026"
+   }
+  },
+  {
+   "key": "tmdb:1484913",
+   "title": "Ikka",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Ikke Pe Ikka",
+    "subjectType": 1,
+    "year": 1994,
+    "score": 0.457,
+    "query": "Ikka"
+   }
+  },
+  {
+   "key": "tmdb:1431068",
+   "title": "Main Vaapas Aaunga",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Tu Yaa Main",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.483,
+    "query": "Main Vaapas Aaunga"
+   }
+  },
+  {
+   "key": "tmdb:335845",
+   "title": "Dhee Double Impact",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Seeing Double",
+    "subjectType": 2,
+    "year": 2026,
+    "score": 0.507,
+    "query": "Dhee Double Impact Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1339876",
+   "title": "Mardaani 3",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Aranmanai 3",
+    "subjectType": 1,
+    "year": 2021,
+    "score": 0.2,
+    "query": "Mardaani 3"
+   }
+  },
+  {
+   "key": "tmdb:1740614",
+   "title": "Newton's 3rd Law",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Newton",
+    "subjectType": 1,
+    "year": 2017,
+    "score": 0.177,
+    "query": "Newton's 3rd Law"
+   }
+  },
+  {
+   "key": "tmdb:1043448",
+   "title": "Sacred Games",
+   "year": 2022,
+   "mediaType": "movie",
+   "best": {
+    "title": "THE SACRED EPITOME OF BEAUTY",
+    "subjectType": 1,
+    "year": 2022,
+    "score": 0.577,
+    "query": "Sacred Games"
+   }
+  },
+  {
+   "key": "tmdb:1596008",
+   "title": "Con City",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "City of the City",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.2,
+    "query": "Con City"
+   }
+  },
+  {
+   "key": "tmdb:1451078",
+   "title": "Raakaasa",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Bien & Rayvanny - Rakata (Official Audio)",
+    "subjectType": 6,
+    "year": 2024,
+    "score": 0,
+    "query": "Raakaasa"
+   }
+  },
+  {
+   "key": "tmdb:1464795",
+   "title": "Daadi Ki Shaadi",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Dadi Ki Shadi",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.483,
+    "query": "Daadi Ki Shaadi"
+   }
+  },
+  {
+   "key": "tmdb:1320660",
+   "title": "Pati Patni Aur Woh Do",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Pati Patni Aur Woh",
+    "subjectType": 1,
+    "year": 2019,
+    "score": 0.438,
+    "query": "Pati Patni Aur Woh Do"
+   }
+  },
+  {
+   "key": "tmdb:1628448",
+   "title": "Maa Behen",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Maa",
+    "subjectType": 1,
+    "year": 2025,
+    "score": 0.59,
+    "query": "Maa Behen"
+   }
+  },
+  {
+   "key": "tmdb:1576369",
+   "title": "Bharathanatyam 2 Mohiniyattam",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Mohiniyattam",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.577,
+    "query": "Bharathanatyam 2 Mohiniyattam"
+   }
+  },
+  {
+   "key": "tmdb:331170",
+   "title": "Hustle 5 - Apna Homeground",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Hustle",
+    "subjectType": 2,
+    "year": 2006,
+    "score": 0.13,
+    "query": "Hustle 5 - Apna Homeground"
+   }
+  },
+  {
+   "key": "tmdb:992328",
+   "title": "Ranveer vs Wild with Bear Grylls",
+   "year": 2022,
+   "mediaType": "movie",
+   "best": {
+    "title": "Wild Nights with Emily",
+    "subjectType": 1,
+    "year": 2022,
+    "score": 0.507,
+    "query": "Ranveer vs Wild with Bear Grylls Hindi"
+   }
+  },
+  {
+   "key": "tmdb:262838",
+   "title": "India's Got Latent",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "Britain's Got Talent S1-S18",
+    "subjectType": 2,
+    "year": 2007,
+    "score": 0.065,
+    "query": "India's Got Latent"
+   }
+  },
+  {
+   "key": "tmdb:258650",
+   "title": "Best of The Great Indian Kapil Show",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "The Great American Baking Show S1-S4",
+    "subjectType": 2,
+    "year": 2023,
+    "score": 0.441,
+    "query": "Best of The Great Indian Kapil Show Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1060467",
+   "title": "My Next Guest with David Letterman and Shah Rukh Khan",
+   "year": 2019,
+   "mediaType": "movie",
+   "best": {
+    "title": "Aankhein Khuli Song | Mohabbatein | Shah Rukh Khan, Aishwarya Rai | Lata Mangeshkar, Udit Narayan",
+    "subjectType": 6,
+    "year": 2014,
+    "score": 0,
+    "query": "My Next Guest with David Letterman and Shah Rukh Khan"
+   }
+  },
+  {
+   "key": "tmdb:98855",
+   "title": "What the Love! with Karan Johar",
+   "year": 2020,
+   "mediaType": "tv",
+   "best": {
+    "title": "What Comes After Love",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.144,
+    "query": "What the Love! with Karan Johar Hindi"
+   }
+  },
+  {
+   "key": "tmdb:1247165",
+   "title": "Raja Shivaji",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Raja Hindustani",
+    "subjectType": 1,
+    "year": 1996,
+    "score": 0.2,
+    "query": "Raja Shivaji"
+   }
+  },
+  {
+   "key": "tmdb:770906",
+   "title": "Salaar: Part 1 - Ceasefire",
+   "year": 2023,
+   "mediaType": "movie",
+   "best": {
+    "title": "Salaar",
+    "subjectType": 1,
+    "year": 2023,
+    "score": 0.577,
+    "query": "Salaar: Part 1 - Ceasefire"
+   }
+  },
+  {
+   "key": "tmdb:14163",
+   "title": "Chak De! India",
+   "year": 2007,
+   "mediaType": "movie",
+   "best": {
+    "title": "Chak De India Title Song | Shah Rukh Khan | Sukhwinder Singh | Salim-Sulaiman | Jaideep Sahni",
+    "subjectType": 6,
+    "year": 2011,
+    "score": 0.29,
+    "query": "Chak De! India Hindi"
+   }
+  },
+  {
+   "key": "tmdb:852957",
+   "title": "Chhota Bheem: Dinosaur World",
+   "year": 2025,
+   "mediaType": "movie",
+   "best": {
+    "title": "Chhota Bheem and the Curse of Damyaan",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.52,
+    "query": "Chhota Bheem: Dinosaur World"
+   }
+  },
+  {
+   "key": "tmdb:232840",
+   "title": "Chhota Bheem Kirmada",
+   "year": 2023,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mighty Bheem's Playtime [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.453,
+    "query": "Chhota Bheem Kirmada Hindi"
+   }
+  },
+  {
+   "key": "tmdb:90982",
+   "title": "Mighty Raju",
+   "year": 2015,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mighty Magiswords S1-S2",
+    "subjectType": 2,
+    "year": 2015,
+    "score": 0.565,
+    "query": "Mighty Raju"
+   }
+  },
+  {
+   "key": "tmdb:335894",
+   "title": "ChuChuTV Surprise Eggs",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Diana and Roma play Surprise Eggs",
+    "subjectType": 2,
+    "year": 2023,
+    "score": 0.279,
+    "query": "ChuChuTV Surprise Eggs"
+   }
+  },
+  {
+   "key": "tmdb:979421",
+   "title": "Mighty Little Bheem: I Love Taj Mahal",
+   "year": 2022,
+   "mediaType": "movie",
+   "best": {
+    "title": "Sasaki and Miyano: A Little Story Before I Realized I Was in Love [English]",
+    "subjectType": 1,
+    "year": 2022,
+    "score": 0.528,
+    "query": "Mighty Little Bheem: I Love Taj Mahal"
+   }
+  },
+  {
+   "key": "tmdb:249065",
+   "title": "Chhota Bheem: Magic Block Buster",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mighty Bheem's Playtime [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.459,
+    "query": "Chhota Bheem: Magic Block Buster Hindi"
+   }
+  },
+  {
+   "key": "tmdb:232838",
+   "title": "Chhota Bheem Rangda",
+   "year": 2023,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mighty Bheem's Playtime [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.453,
+    "query": "Chhota Bheem Rangda Hindi"
+   }
+  },
+  {
+   "key": "tmdb:232839",
+   "title": "Chhota Bheem Damyan",
+   "year": 2023,
+   "mediaType": "tv",
+   "best": {
+    "title": "Mighty Bheem's Playtime [Hindi]",
+    "subjectType": 2,
+    "year": 2024,
+    "score": 0.453,
+    "query": "Chhota Bheem Damyan Hindi"
+   }
+  },
+  {
+   "key": "tmdb:95388",
+   "title": "/DRIVE",
+   "year": 2014,
+   "mediaType": "tv",
+   "best": {
+    "title": "Akudama Drive",
+    "subjectType": 2,
+    "year": 2020,
+    "score": 0.48,
+    "query": "/DRIVE"
+   }
+  },
+  {
+   "key": "tmdb:659086",
+   "title": "Sillu Karuppatti",
+   "year": 2019,
+   "mediaType": "movie",
+   "best": {
+    "title": "Daring Policewala (Kaaki Sattai) 2019 New Released Hindi Dubbed Movie | Sivakarthikeyan, Sri Divya",
+    "subjectType": 6,
+    "year": 2019,
+    "score": 0,
+    "query": "Sillu Karuppatti"
+   }
+  },
+  {
+   "key": "tmdb:61678",
+   "title": "Misaeng: Incomplete Life",
+   "year": 2014,
+   "mediaType": "tv",
+   "best": {
+    "title": "Misaeng",
+    "subjectType": 2,
+    "year": 2014,
+    "score": 0.577,
+    "query": "Misaeng: Incomplete Life"
+   }
+  },
+  {
+   "key": "tmdb:296206",
+   "title": "Agent Kim Reactivated",
+   "year": 2026,
+   "mediaType": "tv",
+   "best": {
+    "title": "Agent from Above",
+    "subjectType": 2,
+    "year": 2026,
+    "score": 0.483,
+    "query": "Agent Kim Reactivated"
+   }
+  },
+  {
+   "key": "tmdb:86640",
+   "title": "Possessed",
+   "year": 2019,
+   "mediaType": "tv",
+   "best": {
+    "title": "Possessed Love - English",
+    "subjectType": 2,
+    "year": 2021,
+    "score": 0.457,
+    "query": "Possessed"
+   }
+  },
+  {
+   "key": "tmdb:44821",
+   "title": "The Great Doctor",
+   "year": 2012,
+   "mediaType": "tv",
+   "best": {
+    "title": "The Doctor Blake Mysteries",
+    "subjectType": 2,
+    "year": 2013,
+    "score": 0.497,
+    "query": "The Great Doctor Hindi"
+   }
+  },
+  {
+   "key": "tmdb:137520",
+   "title": "Bulgasal: Immortal Souls",
+   "year": 2021,
+   "mediaType": "tv",
+   "best": {
+    "title": "Bulgasal",
+    "subjectType": 2,
+    "year": 2021,
+    "score": 0.577,
+    "query": "Bulgasal: Immortal Souls"
+   }
+  }
+ ],
+ "errors": []
+}

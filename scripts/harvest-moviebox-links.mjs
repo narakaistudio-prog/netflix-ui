@@ -37,7 +37,8 @@ import { fileURLToPath } from 'node:url';
 import {
     MATCH_ACCEPT,
     MATCH_REVIEW,
-    pickDub,
+    languageOfRef,
+    pickPlayRef,
     rankCandidates,
     splitDubHint,
     typeOfSubject,
@@ -82,6 +83,7 @@ const OPTIONS = {
         .map((s) => s.trim())
         .filter(Boolean),
     probe: valueOf('--probe', ''),
+    relabel: flag('--relabel'),
     delay: Number(valueOf('--delay', String(DEFAULT_DELAY_MS))) || DEFAULT_DELAY_MS,
     maxAgeDays: Number(valueOf('--max-age-days', String(DEFAULT_MAX_AGE_DAYS))) || DEFAULT_MAX_AGE_DAYS,
 };
@@ -334,6 +336,8 @@ function runCheck() {
         if (!entry?.detailPath) problems.push('detailPath');
         if (!entry?.subjectId) problems.push('subjectId');
         if (!/^https:\/\/m2box\.org\/movies\//.test(String(entry?.url ?? ''))) problems.push('url');
+        if (!entry?.dub) problems.push('dub');
+        else if (entry.dub !== languageOfRef(entry)) problems.push(`dub=${entry.dub} (slug ${languageOfRef(entry)})`);
         if (problems.length) {
             bad += 1;
             console.error(`✗ ${key}: ${problems.join(', ')}`);
@@ -343,6 +347,38 @@ function runCheck() {
     log(`links: ${entries.length} | catalog targets: ${targets.length} | kharab: ${bad}`);
     if (bad) process.exitCode = 1;
     else log('✓ moviebox-links.json theek hai');
+}
+
+/* -------------------------------------------------------------------------- */
+/*  --relabel (offline: purane entries ka dub label slug se theek karo)        */
+/* -------------------------------------------------------------------------- */
+
+function runRelabel() {
+    const store = readJson(LINKS_PATH, null);
+    if (!store || typeof store !== 'object' || !store.links) {
+        throw new Error('data/moviebox-links.json missing ya kharab hai (links object chahiye).');
+    }
+    let changed = 0;
+    for (const entry of Object.values(store.links)) {
+        const next = languageOfRef(entry);
+        if (entry.dub !== next) {
+            entry.dub = next;
+            changed += 1;
+        }
+        // PuranE runs ne har Hindi-audio title ko `hindi` likh diya tha.
+        if (entry.hindiAudio === undefined) entry.hindiAudio = next === 'hindi';
+    }
+    const entries = Object.values(store.links);
+    if (store.stats && typeof store.stats === 'object') {
+        store.stats.linked = entries.length;
+        store.stats.hindi = entries.filter((entry) => entry.dub === 'hindi').length;
+    }
+    if (!OPTIONS.dry) {
+        store.generatedAt = new Date().toISOString();
+        writeFileSync(LINKS_PATH, `${JSON.stringify(store, null, 1)}\n`);
+    }
+    log(`✓ relabelled ${changed}/${entries.length} entries (hindi: ${store.stats?.hindi ?? '?'})`);
+    return changed;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -391,7 +427,7 @@ async function harvest() {
     const review = [];
     const misses = [];
     const errors = [];
-    const queriesUsed = { primary: 0, hindi: 0, year: 0 };
+    const queriesUsed = { primary: 0, hindi: 0, year: 0, clean: 0, ampersand: 0 };
     let matchedNow = 0;
 
     for (let index = 0; index < work.length; index += 1) {
@@ -401,6 +437,13 @@ async function harvest() {
         const queries = [{ text: target.title, tag: 'primary' }];
         if (!/\bhindi\b/i.test(target.title)) queries.push({ text: `${target.title} Hindi`, tag: 'hindi' });
         if (target.year) queries.push({ text: `${target.title} ${target.year}`, tag: 'year' });
+        // Clean variant: brackets/parenthetical hata kar ("Mandaadi (2026)" → "Mandaadi").
+        const clean = target.title.replace(/[([][^)\]]*[)\]]/g, ' ').replace(/\s+/g, ' ').trim();
+        if (clean && clean !== target.title && clean.length >= 3) {
+            queries.push({ text: clean, tag: 'clean' });
+        }
+        const ampersand = target.title.replace(/&/g, ' and ').replace(/\s+/g, ' ').trim();
+        if (ampersand !== target.title) queries.push({ text: ampersand, tag: 'ampersand' });
 
         let chosen = null;
         let chosenQuery = '';
@@ -458,12 +501,8 @@ async function harvest() {
         });
         await sleep(OPTIONS.delay);
 
-        const hindiDub = detail ? pickDub(detail.dubs, 'hindi') : null;
-        const playRef = hindiDub?.detailPath
-            ? { detailPath: hindiDub.detailPath, subjectId: hindiDub.subjectId }
-            : detail?.detailPath
-            ? { detailPath: detail.detailPath, subjectId: detail.subjectId }
-            : { detailPath: chosen.item.detailPath, subjectId: chosen.item.subjectId };
+        const play = pickPlayRef(detail, chosen.item);
+        const playRef = play.ref;
 
         const url = movieboxUrl(playRef);
         if (!url) {
@@ -475,24 +514,27 @@ async function harvest() {
             url,
             subjectId: playRef.subjectId,
             detailPath: playRef.detailPath,
-            title: detail?.title || chosen.item.title,
+            title: play.title || chosen.item.title,
             year: detail?.year || chosen.item.year,
             type: typeOfSubject(detail?.subjectType || chosen.item.subjectType) || target.mediaType,
-            dub: hindiDub ? 'hindi' : 'original',
+            dub: play.dub,
+            hindiAudio: play.hindiAudio,
             score: Number(chosen.score.toFixed(3)),
             query: chosenQuery,
             harvestedAt: new Date().toISOString(),
         };
         matchedNow += 1;
-        log(`   ✓ ${Math.round(chosen.score * 100)}% ${links[target.key].title}${hindiDub ? ' [Hindi]' : ''}`);
+        log(`   ✓ ${Math.round(chosen.score * 100)}% ${links[target.key].title} (${play.dub})`);
     }
 
     const entries = Object.values(links);
     const hindi = entries.filter((entry) => entry.dub === 'hindi').length;
+    const hindiAudio = entries.filter((entry) => entry.hindiAudio).length;
     const stats = {
         catalog: allTargets.length,
         linked: entries.length,
         hindi,
+        hindiAudio,
         review: review.length,
         miss: misses.length,
         errors: errors.length,
@@ -543,6 +585,10 @@ async function main() {
     }
     if (OPTIONS.probe) {
         await runProbe(OPTIONS.probe);
+        return;
+    }
+    if (OPTIONS.relabel) {
+        runRelabel();
         return;
     }
     await harvest();

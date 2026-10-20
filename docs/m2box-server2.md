@@ -45,6 +45,57 @@ stage nahi banta — iframe asli chaudai par (scale 1), upar ka kaat 112/108/104
 (chaudai 768+/480+/usse kam), unchai = player + 16 + 320. Wahan andar scroll
 **khula** rehta hai (warna episodes tak pahunchenge hi nahi).
 
+## Har title par pehle se link (auto-harvest)
+
+Owner ki demand: Netflix ke **saare content** par M2Box apne aap second server
+bane — koi link paste na karna pade. Isliye link khojna ab repo ka kaam hai:
+
+```bash
+node scripts/harvest-moviebox-links.mjs            # sirf naye/miss hue titles
+node scripts/harvest-moviebox-links.mjs --refresh   # poora catalog dobara
+node scripts/harvest-moviebox-links.mjs --limit 25  # test run
+node scripts/harvest-moviebox-links.mjs --check     # offline validation
+node scripts/harvest-moviebox-links.mjs --relabel   # offline: purane dub labels slug se theek
+node scripts/harvest-moviebox-links.mjs --probe "Mandaadi"   # raw API debug
+```
+
+Kya karta hai (MovieBox ki apni site ka flow):
+
+1. guest JWT — `GET /home?host=moviebox.ph` ke `x-user` header se (fallback:
+   `POST /subject/search-suggest` + `X-Client-Token: <sec>,<md5(reverse(sec))>`).
+2. `POST /subject/search {keyword, page, perPage:0, subjectType:0}` — pehle
+   seedha naam, phir `<naam> Hindi`, phir `<naam> <saal>`.
+3. Matching (`scripts/lib/moviebox-match.mjs`, pure + tested): title
+   (accents/case/`&`/brackets/season markers normalise), type (movie vs TV —
+   mismatch par bada penalty), year (film par strict, TV par season-pack window),
+   Hindi-dub hint bonus, `hasResource:false` par penalty, aur **junk clip
+   penalty** (`[SUB] … EP24`, teaser/trailer/“meet” wale YouTube-style results
+   kabhi bake nahi hote). Ek-shabd titles ("Jawan", "Sultan") par extra shabd
+   wala result reject hota hai — warna "Jawani Janeman" jaisi galti bake ho jati.
+4. `GET /detail` se confirm. `dubs[]` me Hindi audio ho to:
+   - us dub ka **apna** `subjectId`/`detailPath` ho → wahi page bake hota hai
+     (`dub: "hindi"`),
+   - warna wahi subject rehta hai (jahan page ke andar dub badalta hai) aur
+     `hindiAudio: true` note ho jata hai — label jhooth nahi bolta, `dub` slug
+     se aata hai (`hindi`, `english`, `tamil`, … ya `original`).
+
+Output:
+
+| File | Kaam |
+| --- | --- |
+| `data/moviebox-links.json` | `{ "tmdb:<id>": { url, subjectId, detailPath, title, year, type, dub, hindiAudio, score, harvestedAt } }` — app isi ko bundle karta hai (`lib/movieboxCatalog.ts`). |
+| `data/moviebox-harvest-report.json` | `stats` + `review` (60–72% wale shakki matches) + `misses` + `errors`. App ise nahi padhta. |
+
+CI: `.github/workflows/moviebox-links.yml` — daily + manual. Harvester chalata
+hai, `--check` se validate karta hai, phir changed files commit karta hai
+(`moviebox-bot`). Sab kuch fail ho jaye to purana baked JSON hi chalta rehta
+hai (app kabhi khali links par nahi jata).
+
+**Tuning**: `MATCH_ACCEPT` (default 0.72) se neeche kuch bake nahi hota;
+0.60–0.72 `review` list me jata hai. Koi title galat match lage to `--refresh`
+ke saath `MATCH_ACCEPT` thoda badha do, ya us title ka sahi link row ke
+`embed_url` me daal do (row hamesha catalog se jeetta hai).
+
 ## Link kahan se aata hai
 
 MovieBox ke har title/dub ka apna canonical watch-page URL hota hai:
@@ -59,11 +110,18 @@ hai (series ke episode badalne par page wahi episode kholta hai).
 
 Teen tarah se link aa sakta hai:
 
-1. **Title row me** — `embed_url` ya `videoUrl` me poora m2box link. Is halat
-   me M2Box hi pehla server hota hai (Nxsha ko chhoda nahi jata, cycle me hai).
-2. **Ek baar paste** — player me server pill se M2Box chuno; panel link maangega
-   aur usi browser me title ke saath yaad rakhega (`netflix-moviebox-links-v1`).
-3. **`/moviebox` page** — kisi bhi link ko turant kholne ke liye (`?url=` bhi).
+1. **Baked catalog** — harvester ne us title ka link `data/moviebox-links.json`
+   me bake kar diya hai (poora Netflix catalog). Kuch paste nahi karna padta;
+   Server 1 hi default rehta hai, pill se Server 2 chala lo.
+2. **Title row me** — `embed_url` ya `videoUrl` me poora m2box link. Is halat
+   me M2Box hi **pehla** server hota hai (Nxsha cycle me rehta hai).
+3. **Ek baar paste** — jo title catalog me nahi mila (naya/obscure), uske liye
+   panel link maangta hai aur usi browser me yaad rakhta hai
+   (`netflix-moviebox-links-v1`).
+4. **`/moviebox` page** — kisi bhi link ko turant kholne ke liye (`?url=` bhi).
+
+Priority: **row → baked catalog → browser me saved**. Isliye owner kabhi bhi
+kisi title ka link manually override kar sakta hai.
 
 ## UI
 
@@ -152,3 +210,7 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
   Esc/X, proxy mode.
 - `api-moviebox-frame.test.ts` — proxy: frame guards utre, `<base>` inject,
   rotated domain allowed, open proxy band.
+- `moviebox-match.test.ts` — matcher fixtures (normalise/dub hint, title
+  similarity, type+year penalties, ranking, Hindi dub pick).
+- `moviebox-catalog.test.ts` — baked JSON padhna + link priority
+  (row → catalog → saved) + "baked link M2Box ko pehla server nahi banata".

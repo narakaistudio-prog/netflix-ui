@@ -90,6 +90,52 @@ describe('moviebox matcher — candidate scoring', () => {
         expect(far.reasons).toContain('year-far');
     });
 
+    it('penalises YouTube-style clips hard', () => {
+        const clip = run({
+            op: 'score',
+            target: { title: 'Suspicious Partner', year: 2017, mediaType: 'tv' },
+            item: {
+                title: '[SUB] 남지현 기습키스 《Suspicious Partner》 EP24',
+                subjectType: 2,
+                year: 2017,
+                detailPath: 'sub-suspicious-partner-ep24-AbC',
+            },
+        });
+        expect(clip.score).toBeLessThan(0.6);
+        expect(clip.reasons).toContain('junk-clip');
+    });
+
+    it('rejects a longer title when the catalog title is one word', () => {
+        const exact = run({ op: 'score', target: { title: 'Sultan' }, item: { title: 'Sultan', subjectType: 1 } });
+        const delhi = run({
+            op: 'score',
+            target: { title: 'Sultan' },
+            item: { title: 'Sultan of Delhi', subjectType: 1, year: 2022 },
+        });
+        expect(exact.score).toBeGreaterThan(0.72);
+        expect(delhi.score).toBeLessThan(0.6);
+    });
+
+    it('keeps a TV season pack even when the year is a few years off', () => {
+        const result = run({
+            op: 'score',
+            target: { title: 'Squid Game', year: 2021, mediaType: 'tv' },
+            item: { title: 'Squid Game [English] S1-S3', subjectType: 2, year: 2025 },
+        });
+        expect(result.score).toBeGreaterThan(0.72);
+        expect(result.reasons).toContain('year-tv-window');
+    });
+
+    it('still rejects a far-off year for a movie', () => {
+        const result = run({
+            op: 'score',
+            target: { title: 'Mandaadi', year: 2026, mediaType: 'movie' },
+            item: { title: 'Mandaadi', subjectType: 1, year: 1998 },
+        });
+        expect(result.score).toBeLessThan(0.72);
+        expect(result.reasons).toContain('year-far');
+    });
+
     it('ranks the right candidate first', () => {
         const ranked = run({
             op: 'rank',
@@ -103,6 +149,54 @@ describe('moviebox matcher — candidate scoring', () => {
         expect(ranked.best.item.detailPath).toBe('mandaadi-hindi-x');
         expect(ranked.best.score).toBeGreaterThanOrEqual(run({ op: 'constants' }).accept);
         expect(ranked.runnersUp.length).toBe(2);
+    });
+});
+
+describe('moviebox matcher — play target + dub label', () => {
+    it('uses a Hindi dub only when it has its own subject', () => {
+        const withOwnSubject = run({
+            op: 'playRef',
+            detail: {
+                detailPath: 'my-demon-AbC',
+                subjectId: '111',
+                title: 'My Demon',
+                dubs: [{ subjectId: '222', detailPath: 'my-demon-hindi-XyZ', lanCode: 'hi', lanName: 'Hindi', type: 0 }],
+            },
+        });
+        expect(withOwnSubject.ref.detailPath).toBe('my-demon-hindi-XyZ');
+        expect(withOwnSubject.dub).toBe('hindi');
+        expect(withOwnSubject.hindiDub).toBeTruthy();
+    });
+
+    it('labels the page by its slug when the Hindi track shares the subject', () => {
+        const sharedSubject = run({
+            op: 'playRef',
+            detail: {
+                detailPath: 'reporting-live-08MIG',
+                subjectId: '333',
+                title: 'Reporting Live',
+                dubs: [{ subjectId: '333', detailPath: 'reporting-live-08MIG', lanCode: 'hi', lanName: 'Hindi', type: 0 }],
+            },
+        });
+        expect(sharedSubject.ref.detailPath).toBe('reporting-live-08MIG');
+        expect(sharedSubject.dub).toBe('original');
+        expect(sharedSubject.hindiAudio).toBe(true);
+        expect(sharedSubject.hindiDub).toBeNull();
+    });
+
+    it('falls back to the picked search item when /detail is empty', () => {
+        const fallback = run({
+            op: 'playRef',
+            detail: null,
+            fallback: { detailPath: 'mandaadi-hindi-qxUx', subjectId: '444', title: 'Mandaadi [Hindi]' },
+        });
+        expect(fallback.ref.detailPath).toBe('mandaadi-hindi-qxUx');
+        expect(fallback.dub).toBe('hindi');
+    });
+
+    it('does not leak a language word from "Hindi Medium"-style names into the slug', () => {
+        expect(run({ op: 'language', ref: { detailPath: 'hindi-medium-AbC', title: 'Hindi Medium' } })).toBe('hindi');
+        expect(run({ op: 'language', ref: { detailPath: 'the-office-AbC', title: 'The Office' } })).toBe('original');
     });
 });
 

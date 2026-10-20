@@ -61,8 +61,12 @@ jobs:
       - name: Harvest MovieBox links for the catalog
         id: harvest
         continue-on-error: true
+        env:
+          # Ek baar poora catalog dobara check karana ho to '1' karo (phir wapas '').
+          FORCE_REFRESH: '1'
         run: |
           ARGS=""
+          if [ "$FORCE_REFRESH" = "1" ]; then ARGS="$ARGS --refresh"; fi
           if [ -n "${{ github.event.inputs.limit }}" ] && [ "${{ github.event.inputs.limit }}" != "0" ]; then
             ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"
           fi
