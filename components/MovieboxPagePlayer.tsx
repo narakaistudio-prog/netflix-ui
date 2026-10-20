@@ -70,6 +70,13 @@ interface MovieboxPagePlayerProps {
 
 const FRAME_TIMEOUT_MS = 15000;
 /**
+ * Site ki page khulte hi jo **shell** dikhta hai (M2Box ka header, "Join
+ * Telegram" ka dabba, footer) — watch page ka player uske baad mount hota hai,
+ * isliye ~2s wahi shell crop ke andar dikhta reh jata hai ("sidhe player par
+ * jana chahiye" — owner). Itni der ke liye kaala parda.
+ */
+const FRAME_COVER_MS = 3200;
+/**
  * Site ka apna chrome (controls) ~3s me gayab hota hai. Hamara Next Episode
  * bhi usi waqt gayab hota hai, aur mouse hilte hi wapas.
  */
@@ -104,6 +111,8 @@ export function MovieboxPagePlayer({
     const [link, setLink] = useState<string | null>(null);
     const [proxy, setProxy] = useState(false);
     const [loading, setLoading] = useState(false);
+    /** Page khulte waqt ka kaala parda (site ka shell na dikhe). */
+    const [covered, setCovered] = useState(false);
     const [timedOut, setTimedOut] = useState(false);
     /** Live resolve chal raha hai (baked/saved link nahi mila). */
     const [resolving, setResolving] = useState(false);
@@ -277,6 +286,21 @@ export function MovieboxPagePlayer({
     }, [rootSize, isSearchFrame]);
 
     /* --------------------------- Frame ---------------------------- */
+
+    /**
+     * Player mount hone tak site ka shell (header / Join Telegram / footer)
+     * crop ke andar dikhta hai. Utni der kaala parda — warna server lagate hi
+     * 2 second ke liye M2Box ka apna page jhalak jata hai.
+     */
+    useEffect(() => {
+        if (!frameSrc || isSearchFrame) {
+            setCovered(false);
+            return;
+        }
+        setCovered(true);
+        const coverTimer = setTimeout(() => setCovered(false), FRAME_COVER_MS);
+        return () => clearTimeout(coverTimer);
+    }, [frameSrc, isSearchFrame]);
 
     useEffect(() => {
         setTimedOut(false);
@@ -507,10 +531,13 @@ export function MovieboxPagePlayer({
                 />
             )}
 
-            {frameSrc && loading ? (
-                <View style={styles.loadingOverlay} pointerEvents="none">
+            {/* Kaala parda: page load hone tak + site ka shell (header/footer)
+                player ban jaye tab tak. Isse server lagate hi seedha player
+                dikhta hai, M2Box ka apna page nahi. */}
+            {frameSrc && (loading || covered) ? (
+                <View style={styles.frameCover} pointerEvents="none" testID="moviebox-cover">
                     <ActivityIndicator size="large" color="#E50914" />
-                    <Text style={styles.loadingText}>{MOVIEBOX_SERVER_LABEL} page khul raha hai…</Text>
+                    <Text style={styles.loadingText}>{MOVIEBOX_SERVER_LABEL} player khul raha hai…</Text>
                 </View>
             ) : null}
 
@@ -815,12 +842,14 @@ const styles = StyleSheet.create({
     },
     resolvingTitle: { color: '#fff', fontSize: 17, fontWeight: '700' },
     resolvingText: { color: '#9a9a9a', fontSize: 13, textAlign: 'center', maxWidth: 420, lineHeight: 20 },
-    loadingOverlay: {
+    /** Pura kaala — site ka shell iske peeche chalta rehta hai, dikhta nahi. */
+    frameCover: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.75)',
+        backgroundColor: '#000',
         gap: 14,
+        zIndex: 2,
     },
     loadingText: { color: '#ccc', fontSize: 13 },
     topBar: {

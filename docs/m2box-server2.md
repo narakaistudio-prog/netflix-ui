@@ -384,3 +384,8 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
   similarity, type+year penalties, ranking, Hindi dub pick).
 - `moviebox-catalog.test.ts` — baked JSON padhna + link priority
   (row → catalog → saved) + "baked link M2Box ko pehla server nahi banata".
+- **Server lagate hi kaala parda (3.2s)**: watch page khulte hi M2Box ka
+  *shell* dikhta hai (header, "Join Telegram", footer) — player uske baad mount
+  hota hai, isliye wo ~2s crop ke andar jhalak jata tha. `FRAME_COVER_MS`
+  (3200ms) tak `#000` parda + spinner rehta hai, phir seedha player. Search
+  page mode me parda nahi (wahan page hi dikhna hai).

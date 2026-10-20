@@ -467,6 +467,38 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         }
     });
 
+    it('covers the frame until the site shell turns into the player', () => {
+        jest.useFakeTimers();
+        try {
+            act(() => {
+                root.render(
+                    <MovieboxPagePlayer
+                        linkKey="tmdb:9:tv"
+                        initialLink={PAGE}
+                        title="My Demon"
+                        mediaType="tv"
+                        season={1}
+                        episode={5}
+                        episodeCount={16}
+                        autoResolve={false}
+                        onClose={() => {}}
+                    />,
+                );
+            });
+            // Server lagate hi M2Box ka shell (header / Join Telegram / footer)
+            // crop ke andar dikhta tha — uske upar kaala parda.
+            expect(document.querySelector('[data-testid="moviebox-cover"]')).toBeTruthy();
+            // 3.2s baad parda hat jata hai (jsdom me iframe ka load event nahi
+            // aata, isliye 15s ka timeout bhi nikalo).
+            act(() => {
+                jest.advanceTimersByTime(16000);
+            });
+            expect(document.querySelector('[data-testid="moviebox-cover"]')).toBeNull();
+        } finally {
+            jest.useRealTimers();
+        }
+    });
+
     it('tells the parent when the episode changed', () => {
         const onEpisodeChange = jest.fn();
         act(() => {
