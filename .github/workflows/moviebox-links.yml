@@ -81,14 +81,13 @@ jobs:
         if: always()
         run: |
           : > data/moviebox-probe.txt
-          curl -s -A "Mozilla/5.0" https://m2box.org/ -o /tmp/home.html
-          echo "=== routes home" >> data/moviebox-probe.txt
-          grep -oE 'path:"/[a-zA-Z0-9_/?=&:-]*"' /tmp/home.html | sort -u | head -40 >> data/moviebox-probe.txt
-          echo "=== keyword refs" >> data/moviebox-probe.txt
-          grep -oE '(keyword=|/search[a-zA-Z0-9_/?=&:-]*|web/search[a-zA-Z0-9_/?=&:-]*)' /tmp/home.html | sort -u | head -20 >> data/moviebox-probe.txt
-          echo "=== scripts" >> data/moviebox-probe.txt
-          grep -oE '<script[^>]+src="[^"]+"' /tmp/home.html | grep -oE 'src="[^"]+"' | head -8 >> data/moviebox-probe.txt
-          head -80 data/moviebox-probe.txt
+          curl -s -A "Mozilla/5.0" https://h5-static.aoneroom.com/ssrStatic/m2boxorg/public/_nuxt/DEG2b77B.js -o /tmp/app.js
+          echo "bytes=$(wc -c </tmp/app.js)" >> data/moviebox-probe.txt
+          echo "=== path: literals" >> data/moviebox-probe.txt
+          grep -oE 'path:"/[a-zA-Z0-9_:/-]*"' /tmp/app.js | sort -u | head -40 >> data/moviebox-probe.txt
+          echo "=== search refs" >> data/moviebox-probe.txt
+          grep -oE '.{0,60}(keyword|search).{0,60}' /tmp/app.js | head -20 >> data/moviebox-probe.txt
+          head -70 data/moviebox-probe.txt
 
       - name: Validate the baked links
         if: steps.harvest.outcome == 'success'
