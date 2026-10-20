@@ -1,6 +1,6 @@
 {
  "$comment": "MovieBox (m2box.org) watch-pages for the Netflix catalog — Server 2. Baked by scripts/harvest-moviebox-links.mjs (GitHub Actions). Har entry ka `url` seedha MovieboxPagePlayer me jata hai; slug/subjectId dobara naapo mat, script hi update kare.",
- "generatedAt": "2026-10-20T09:16:06.599Z",
+ "generatedAt": "2026-10-20T09:18:01.438Z",
  "stats": {
   "catalog": 791,
   "linked": 668,

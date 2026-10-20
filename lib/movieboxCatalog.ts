@@ -25,8 +25,13 @@ export interface MovieboxCatalogEntry {
     title?: string;
     year?: number;
     type?: 'movie' | 'tv' | string;
-    /** `hindi` jab Hindi dub ka alag subject chuna gaya ho. */
+    /**
+     * Page ki apni audio language — slug/bracket tag se (`hindi`, `english`,
+     * `tamil`, …) ya `original`.
+     */
     dub?: string;
+    /** Page ke andar Hindi audio available hai (dedicated Hindi page ho ya na ho). */
+    hindiAudio?: boolean;
     /** Matching confidence (0..1) — harvester ka score. */
     score?: number;
     harvestedAt?: string;
@@ -34,11 +39,11 @@ export interface MovieboxCatalogEntry {
 
 interface CatalogFile {
     generatedAt?: string;
-    stats?: Record<string, number>;
+    stats?: Record<string, unknown>;
     links?: Record<string, MovieboxCatalogEntry>;
 }
 
-const FILE = (raw ?? {}) as CatalogFile;
+const FILE = (raw ?? {}) as unknown as CatalogFile;
 const LINKS: Record<string, MovieboxCatalogEntry> = FILE.links ?? {};
 
 /** Kitne titles ka link baked hai (UI/debug ke liye). */
