@@ -236,6 +236,17 @@ export function isMovieboxUrl(input: string | null | undefined): boolean {
 }
 
 /**
+ * MovieBox par search results ka page — aakhri fallback jab title ka watch page
+ * hi na mile (MovieBox par wo title abhi nahi hai). Route site ke apne router
+ * se liya gaya: `/en/web/searchResult` (slug ke `?keyword=`).
+ */
+export function buildMovieboxSearchUrl(keyword: string | null | undefined): string | null {
+    const text = String(keyword ?? '').trim();
+    if (!text) return null;
+    return `${MOVIEBOX_SITE}/en/web/searchResult?keyword=${encodeURIComponent(text)}`;
+}
+
+/**
  * Canonical M2Box watch page URL:
  *
  *   https://m2box.org/movies/<slug>?id=<subjectId>&type=/movie/detail&detailSe=<s>&detailEp=<e>&lang=en

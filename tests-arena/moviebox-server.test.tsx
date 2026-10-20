@@ -272,7 +272,7 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(frame()!.getAttribute('src')).toContain('id=4151920426815471968');
     });
 
-    it('shows the paste panel (with a note) only when live resolve finds nothing', async () => {
+    it('falls back to MovieBox search when the title has no page there', async () => {
         (globalThis as any).fetch = jest.fn(async () => ({
             ok: true,
             status: 200,
@@ -283,7 +283,7 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             root.render(
                 <MovieboxPagePlayer
                     linkKey="tmdb:999:movie"
-                    title="Koi Anjaan Film"
+                    title="Vishwanath & Sons"
                     year={2026}
                     mediaType="movie"
                     onClose={() => {}}
@@ -291,9 +291,37 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             );
         });
 
+        // Paste nahi maanga — MovieBox ke apne search results khul gaye
+        expect(document.querySelector('input[data-testid="moviebox-link-input"]')).toBeNull();
+        expect(frame()!.getAttribute('src')).toBe(
+            'https://m2box.org/en/web/searchResult?keyword=Vishwanath%20%26%20Sons',
+        );
+        // search page par andar scroll khula rehta hai
+        expect(frame()!.hasAttribute('scrolling')).toBe(false);
+        expect(document.querySelector('[data-testid="moviebox-manual-link"]')).toBeTruthy();
+    });
+
+    it('lets the viewer paste a link from the search fallback', async () => {
+        (globalThis as any).fetch = jest.fn(async () => ({
+            ok: true,
+            status: 200,
+            json: async () => ({ found: false, reason: 'no-match' }),
+        }));
+
+        await act(async () => {
+            root.render(
+                <MovieboxPagePlayer linkKey="tmdb:998:movie" title="Koi Anjaan Film" onClose={() => {}} />,
+            );
+        });
+
+        const paste = document.querySelector('[data-testid="moviebox-manual-link"]') as HTMLElement;
+        act(() => {
+            paste.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        });
+
+        expect(frame()).toBeNull();
         expect(document.querySelector('input[data-testid="moviebox-link-input"]')).toBeTruthy();
         expect(document.querySelector('[data-testid="moviebox-link-notice"]')).toBeTruthy();
-        expect(frame()).toBeNull();
     });
 
     it('has a close button and a way back to Server 1', () => {

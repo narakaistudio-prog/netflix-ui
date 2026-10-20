@@ -6,6 +6,7 @@ import { MovieboxLinkPanel } from './MovieboxLinkPanel';
 import {
     buildMovieboxFrameProxyUrl,
     buildMovieboxPageUrl,
+    buildMovieboxSearchUrl,
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
@@ -76,8 +77,14 @@ export function MovieboxPagePlayer({
     const [timedOut, setTimedOut] = useState(false);
     /** Live resolve chal raha hai (baked/saved link nahi mila). */
     const [resolving, setResolving] = useState(false);
-    /** Live resolve chala par MovieBox par kuch nahi mila. */
-    const [resolveFailed, setResolveFailed] = useState(false);
+    /**
+     * Live resolve chala par title ka watch page MovieBox par hai hi nahi.
+     * Tab paste maangne ke bajaye MovieBox ke apne search results frame me
+     * khulte hain — wahan se user seedha play kar sakta hai.
+     */
+    const [searchFallback, setSearchFallback] = useState(false);
+    /** User ne search ke bajaye khud link paste karna chuna. */
+    const [manualEntry, setManualEntry] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     /* ---------------------------- Link ---------------------------- */
@@ -89,7 +96,8 @@ export function MovieboxPagePlayer({
         setProxy(saved?.proxy ?? false);
         setLoading(Boolean(next));
         setTimedOut(false);
-        setResolveFailed(false);
+        setSearchFallback(false);
+        setManualEntry(false);
     }, [linkKey, initialLink]);
 
     /**
@@ -100,7 +108,7 @@ export function MovieboxPagePlayer({
         if (!autoResolve || link || initialLink || !title) return;
         let cancelled = false;
         setResolving(true);
-        setResolveFailed(false);
+        setSearchFallback(false);
         resolveMovieboxLive(
             { title, year, mediaType },
             { key: linkKey, storeKey: linkKey },
@@ -113,11 +121,15 @@ export function MovieboxPagePlayer({
                     setLoading(true);
                     onLinkSaved?.(result.entry.url);
                 } else {
-                    setResolveFailed(true);
+                    setSearchFallback(true);
+                    setLoading(true);
                 }
             })
             .catch(() => {
-                if (!cancelled) setResolveFailed(true);
+                if (!cancelled) {
+                    setSearchFallback(true);
+                    setLoading(true);
+                }
             })
             .finally(() => {
                 if (!cancelled) setResolving(false);
@@ -133,10 +145,20 @@ export function MovieboxPagePlayer({
         [link, season, episode],
     );
 
+    /** Search fallback ka page (sirf jab watch page hi na mile). */
+    const searchUrl = useMemo(
+        () => (searchFallback && !link ? buildMovieboxSearchUrl(title) : null),
+        [searchFallback, link, title],
+    );
+
     const frameSrc = useMemo(() => {
+        if (searchUrl) return searchUrl;
         if (!pageUrl) return null;
         return proxy ? buildMovieboxFrameProxyUrl(pageUrl) : pageUrl;
-    }, [pageUrl, proxy]);
+    }, [pageUrl, proxy, searchUrl]);
+
+    /** Frame me search results khule hain (watch page nahi). */
+    const isSearchFrame = Boolean(searchUrl);
 
     /* --------------------------- Frame ---------------------------- */
 
@@ -192,6 +214,16 @@ export function MovieboxPagePlayer({
      */
     const editLink = useCallback(() => {
         setLink(null);
+        setSearchFallback(false);
+        setManualEntry(true);
+        setLoading(false);
+        setTimedOut(false);
+    }, []);
+
+    /** Search frame se wapas watch page par (live resolve dobara chalega). */
+    const retryResolve = useCallback(() => {
+        setSearchFallback(false);
+        setManualEntry(false);
         setLoading(false);
         setTimedOut(false);
     }, []);
@@ -205,6 +237,7 @@ export function MovieboxPagePlayer({
                     key={frameSrc}
                     src={frameSrc}
                     title={title}
+                    allowScroll={isSearchFrame}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -219,13 +252,11 @@ export function MovieboxPagePlayer({
                         MovieBox par “{title}” dhoondha ja raha hai — link khud lag jayega.
                     </Text>
                 </View>
-            ) : (
+            ) : searchFallback && !manualEntry ? null : (
                 <MovieboxLinkPanel
                     title={title}
                     notice={
-                        resolveFailed
-                            ? 'MovieBox par is title ka page nahi mila — link paste karo, ya thodi der baad “Play (Server 2)” dobara dabao.'
-                            : undefined
+                        'MovieBox par is title ka watch page nahi mila. Wahan se link copy karke yahan paste kar do, ya thodi der baad dobara try karo.'
                     }
                     initialLink={link}
                     initialProxy={proxy}
@@ -277,6 +308,36 @@ export function MovieboxPagePlayer({
                     </Pressable>
                 ) : null}
             </View>
+
+            {/* MovieBox par title hi nahi — search results khule hain. */}
+            {isSearchFrame ? (
+                <View style={styles.searchBar} pointerEvents="box-none">
+                    <Text style={styles.searchBarText} numberOfLines={2}>
+                        MovieBox par “{title}” ka watch page nahi mila — uske search results khule hain.
+                        Neeche se title kholo, ya link paste kar do.
+                    </Text>
+                    <View style={styles.searchBarActions}>
+                        <Pressable
+                            style={styles.searchBarButton}
+                            onPress={retryResolve}
+                            accessibilityLabel="MovieBox par dobara dhoondho"
+                            testID="moviebox-retry-resolve"
+                        >
+                            <Ionicons name="refresh" size={13} color="#000" />
+                            <Text style={styles.searchBarButtonText}>Dobara dhoondho</Text>
+                        </Pressable>
+                        <Pressable
+                            style={styles.searchBarButton}
+                            onPress={editLink}
+                            accessibilityLabel="Link paste karo"
+                            testID="moviebox-manual-link"
+                        >
+                            <Ionicons name="link-outline" size={13} color="#000" />
+                            <Text style={styles.searchBarButtonText}>Link paste karo</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            ) : null}
 
             {/* Seedha frame khali aaya (frame-blocking) — proxy ka rasta do. */}
             {frameSrc && timedOut && !proxy ? (
@@ -368,6 +429,31 @@ const styles = StyleSheet.create({
         opacity: 0.75,
     },
     serverPillText: { color: '#fff', fontSize: 12, fontWeight: '600' },
+    searchBar: {
+        position: 'absolute',
+        left: 12,
+        right: 12,
+        bottom: 12,
+        backgroundColor: 'rgba(12,12,12,0.92)',
+        borderRadius: 12,
+        paddingHorizontal: 14,
+        paddingVertical: 10,
+        gap: 8,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.12)',
+    },
+    searchBarText: { color: '#d8d8d8', fontSize: 12.5, lineHeight: 18 },
+    searchBarActions: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
+    searchBarButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        backgroundColor: '#e6e6e6',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+    },
+    searchBarButtonText: { color: '#000', fontSize: 12, fontWeight: '600' },
     hintBar: {
         position: 'absolute',
         left: 12,

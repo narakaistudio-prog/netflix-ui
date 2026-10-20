@@ -42,11 +42,16 @@ interface MovieboxCroppedFrameProps {
     src: string;
     title?: string;
     onLoad?: () => void;
+    /**
+     * Desktop par bhi andar scroll khula rakho. Sirf tab — jab frame me watch
+     * page nahi, search results khule hon (warna kata hua header wapas dikhta).
+     */
+    allowScroll?: boolean;
 }
 
 const IS_WEB = Platform.OS === 'web';
 
-export function MovieboxCroppedFrame({ src, title, onLoad }: MovieboxCroppedFrameProps) {
+export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
     onLoadRef.current = onLoad;
@@ -147,7 +152,7 @@ export function MovieboxCroppedFrame({ src, title, onLoad }: MovieboxCroppedFram
             frame.style.width = `${crop.stageWidth}px`;
             frame.style.height = `${crop.stageVisibleHeight + crop.cropTop}px`;
             // Mobile par episode list neeche hoti hai — scroll khula chahiye.
-            if (crop.stacked) frame.removeAttribute('scrolling');
+            if (crop.stacked || allowScroll) frame.removeAttribute('scrolling');
             else frame.setAttribute('scrolling', 'no');
         };
 

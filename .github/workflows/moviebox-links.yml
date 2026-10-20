@@ -77,18 +77,6 @@ jobs:
           echo "args: $ARGS"
           node scripts/harvest-moviebox-links.mjs $ARGS
 
-      - name: TEMP probe (router ke route paths)
-        if: always()
-        run: |
-          : > data/moviebox-probe.txt
-          curl -s -A "Mozilla/5.0" https://h5-static.aoneroom.com/ssrStatic/m2boxorg/public/_nuxt/DEG2b77B.js -o /tmp/app.js
-          echo "bytes=$(wc -c </tmp/app.js)" >> data/moviebox-probe.txt
-          echo "=== path: literals" >> data/moviebox-probe.txt
-          grep -oE 'path:"/[a-zA-Z0-9_:/-]*"' /tmp/app.js | sort -u | head -40 >> data/moviebox-probe.txt
-          echo "=== search refs" >> data/moviebox-probe.txt
-          grep -oE '.{0,60}(keyword|search).{0,60}' /tmp/app.js | head -20 >> data/moviebox-probe.txt
-          head -70 data/moviebox-probe.txt
-
       - name: Validate the baked links
         if: steps.harvest.outcome == 'success'
         run: node scripts/harvest-moviebox-links.mjs --check
@@ -98,7 +86,7 @@ jobs:
         run: |
           git config user.name "moviebox-bot"
           git config user.email "moviebox-bot@users.noreply.github.com"
-          git add -A data/
+          git add data/moviebox-links.json data/moviebox-harvest-report.json data/moviebox-pins.json
           if git diff --cached --quiet; then
             echo "no change — links already up to date"
             exit 0

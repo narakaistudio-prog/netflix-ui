@@ -71,6 +71,21 @@ Client (`lib/movieboxResolve.ts`, `MovieboxPagePlayer`):
   khulta hai.
 - Ek IP se 30 resolve/minute; jawab `s-maxage=86400` ke saath cache hota hai.
 
+### Jab MovieBox par title hi na ho
+
+Live resolve bhi kuch na de (MovieBox par wo title abhi nahi hai — e.g. naya
+release), to paste maangne ke bajaye frame me **MovieBox ke apne search
+results** khul jate hain:
+
+```
+https://m2box.org/en/web/searchResult?keyword=<title>
+```
+
+Route MovieBox ke apne Nuxt router se liya gaya hai (`/en/web/searchResult`).
+Us frame me andar scroll khula rehta hai (crop ke baad bhi results dekh sakein),
+aur neeche do buttons hote hain — **Dobara dhoondho** (live resolve retry) aur
+**Link paste karo** (manual panel, sirf jab user khud chaahe).
+
 ### Search ladder
 
 MovieBox ka search poore title par kamzor padta hai — "Vishwanath & Sons" par
