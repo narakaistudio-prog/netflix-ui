@@ -668,17 +668,21 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-            {/* Top bar: bas X + server switch + link badalna. */}
+            {/* Top bar. Fullscreen me kuch bhi nahi — owner: "fullscreen hone
+                ke baad upar X ka nishan nahi aana chahiye". Fullscreen se
+                nikalne ke liye corner ka fullscreen-exit button ya Esc. */}
             <View style={styles.topBar} pointerEvents="box-none">
-                <Pressable
-                    style={styles.iconButton}
-                    onPress={onClose}
-                    accessibilityLabel="Close player"
-                    accessibilityRole="button"
-                    testID="moviebox-close"
-                >
-                    <Ionicons name="close" size={22} color="#fff" />
-                </Pressable>
+                {ownFullscreen ? null : (
+                    <Pressable
+                        style={styles.iconButton}
+                        onPress={onClose}
+                        accessibilityLabel="Close player"
+                        accessibilityRole="button"
+                        testID="moviebox-close"
+                    >
+                        <Ionicons name="close" size={22} color="#fff" />
+                    </Pressable>
+                )}
 
                 {onSwitchServer ? (
                     <Pressable

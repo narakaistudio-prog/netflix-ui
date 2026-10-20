@@ -405,3 +405,6 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
   `/movie/[id]` page par Nxsha ka pill video chalu hone se pehle tak dikhta hai,
   `rolling` hone par gayab.)
 - Frame ka loading parda ab sirf **"Loading…"** likhta hai.
+
+- **Fullscreen me koi top bar nahi** — X ka nishan bhi nahi (owner). Bahar
+  aane ke liye corner ka fullscreen-exit button ya Esc.

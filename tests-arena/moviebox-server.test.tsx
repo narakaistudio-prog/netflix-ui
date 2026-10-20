@@ -706,6 +706,38 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(onSwitch).toHaveBeenCalled();
     });
 
+    it('fullscreen me upar ka X nahi dikhta (corner button / Esc se bahar)', () => {
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer linkKey="tf:1" initialLink={PAGE} onClose={() => {}} />,
+            );
+        });
+        expect(document.querySelector('[data-testid="moviebox-close"]')).toBeTruthy();
+
+        // jsdom me requestFullscreen nahi hota — component sirf
+        // document.fullscreenElement + fullscreenchange dekhta hai, isliye
+        // wahi set kar dete hain.
+        const rootEl = document.querySelector('[data-tv-scope="player"], [data-tvScope="player"]');
+        Object.defineProperty(document, 'fullscreenElement', {
+            configurable: true,
+            get: () => rootEl,
+        });
+        act(() => {
+            document.dispatchEvent(new Event('fullscreenchange'));
+        });
+        expect(document.querySelector('[data-testid="moviebox-close"]')).toBeNull();
+
+        Object.defineProperty(document, 'fullscreenElement', {
+            configurable: true,
+            get: () => null,
+        });
+        act(() => {
+            document.dispatchEvent(new Event('fullscreenchange'));
+        });
+        expect(document.querySelector('[data-testid="moviebox-close"]')).toBeTruthy();
+        delete (document as any).fullscreenElement;
+    });
+
     it('Esc closes the player', () => {
         const onClose = jest.fn();
         act(() => {
