@@ -55,6 +55,10 @@ export interface EmbedPlayerProps {
     resumeAt?: number;
     /** The player reported that the media finished. */
     onEnded?: () => void;
+    /** Server jo abhi chal raha hai (Nxsha / NHD / Custom) — switcher pill. */
+    serverName?: string;
+    /** Agla server (switcher pill ka label), jab switch available ho. */
+    nextServerName?: string;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -75,6 +79,8 @@ export function EmbedPlayer({
     onProgress,
     resumeAt,
     onEnded,
+    serverName,
+    nextServerName,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
@@ -668,6 +674,26 @@ export function EmbedPlayer({
                     <Ionicons name="close" size={22} color="#fff" />
                 </Pressable>
 
+                {/**
+                 * Server switcher: Nxsha/NHD/custom ke saath M2Box (Server 2)
+                 * bhi cycle me hai. Bina is button ke dusre server tak pahunchne
+                 * ka koi rasta nahi tha (switch sirf timeout overlay me tha).
+                 */}
+                {onSwitchProvider && nextServerName ? (
+                    <Pressable
+                        style={styles.serverPill}
+                        onPress={onSwitchProvider}
+                        accessibilityLabel={`Switch server to ${nextServerName}`}
+                        accessibilityRole="button"
+                        testID="embed-server-switch"
+                    >
+                        <Ionicons name="swap-horizontal" size={14} color="#fff" />
+                        <Text style={styles.serverPillText}>
+                            {serverName ? `${serverName} → ${nextServerName}` : nextServerName}
+                        </Text>
+                    </Pressable>
+                ) : null}
+
                 {canAutoFullscreen ? (
                     <Pressable
                         style={styles.iconButton}
@@ -697,6 +723,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.55)',
         alignItems: 'center', justifyContent: 'center', marginLeft: 8,
     },
+    serverPill: {
+        height: 32,
+        marginLeft: 8,
+        paddingHorizontal: 12,
+        borderRadius: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        backgroundColor: 'rgba(0,0,0,0.55)',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'rgba(255,255,255,0.25)',
+        opacity: 0.8,
+    },
+    serverPillText: { color: '#fff', fontSize: 11, fontWeight: '600' },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',

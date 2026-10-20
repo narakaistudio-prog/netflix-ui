@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
+import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import {
     getRecentlyWatched,
@@ -14,6 +15,8 @@ import {
 } from '@/lib/recentlyWatched';
 import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
+import { MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -74,6 +77,25 @@ export function MovieDetailModal({
     const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     /** Position the media continues from — 0 means "from the beginning". */
     const [resumeSec, setResumeSec] = useState(resumeAt);
+    /**
+     * Which playback server is on: the regular embed providers, or M2Box
+     * (MovieBox ka poora watch page, sirf-player crop me).
+     */
+    const [server, setServer] = useState<'primary' | 'moviebox'>('primary');
+    /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
+    const [movieboxRevision, setMovieboxRevision] = useState(0);
+
+    /** movie ke liye M2Box link (row ka apna, ya browser me saved). */
+    const movieboxEntry = useMemo(
+        () => resolveMovieboxLink(movie),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [movie?.id, movie?.tmdb_id, movie?.mediaType, movie?.embed_url, movie?.videoUrl, movieboxRevision],
+    );
+    /** Row ne khud m2box link diya hai — tab M2Box hi pehla server hai. */
+    const rowIsMoviebox = Boolean(movieboxEntry?.fromTitle);
+    /** Manual embed override jo m2box page nahi hai. */
+    const primaryEmbedUrl = movie?.embed_url && !rowIsMoviebox ? movie.embed_url : undefined;
+    const movieboxLinkKey = movieboxKeyForTitle(movie ?? { id: '' });
 
     /** Show a short message over the player, the way the Crunchyroll page does. */
     const announce = useCallback((message: string | null) => {
@@ -85,6 +107,7 @@ export function MovieDetailModal({
 
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
+        setServer(rowIsMoviebox ? 'moviebox' : 'primary');
         setPlaying(autoPlay);
         setEpisodeRef(initialEpisode ?? null);
         setSeason(initialEpisode?.season ?? 1);
@@ -117,6 +140,8 @@ export function MovieDetailModal({
 
     const src = useMemo(() => {
         if (!movie) return '';
+        // Row ka link hi m2box page hai → wo M2Box server chalata hai, koi embed nahi.
+        if (rowIsMoviebox) return '';
         try {
             const provider = movie.embed_provider || 'nxsha';
             // Netflix titles play in the Netflix-accent nxsha player.
@@ -126,20 +151,20 @@ export function MovieDetailModal({
                 return buildEmbedUrl(
                     provider,
                     'tv',
-                    { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url, season: ep.season, episode: ep.episode },
+                    { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: primaryEmbedUrl, season: ep.season, episode: ep.episode },
                     provider === 'nxsha' ? { tvTemplate: NETFLIX_NXSHA_TV } : {},
                 );
             }
             return buildEmbedUrl(
                 provider,
                 'movie',
-                { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: movie.embed_url },
+                { tmdbId: movie.tmdb_id, imdbId: movie.imdb_id, embed_url: primaryEmbedUrl },
                 provider === 'nxsha' ? { movieTemplate: NETFLIX_NXSHA_MOVIE } : {},
             );
         } catch {
             return '';
         }
-    }, [movie, episodeRef]);
+    }, [movie, episodeRef, primaryEmbedUrl, rowIsMoviebox]);
 
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
@@ -188,6 +213,16 @@ export function MovieDetailModal({
                 });
             } catch {}
             setActiveEntry({ id: entryId, season: ep.season, episode: ep.episode });
+            setPlaying(true);
+            return;
+        }
+        // Koi primary embed nahi bana — lekin M2Box ka link saved hai to
+        // Server 2 seedha chalao (yahi un titles ka rasta hai jinpe Nxsha
+        // ke paas id hi nahi hoti).
+        if (movieboxEntry) {
+            if (episode) setEpisodeRef(episode);
+            setActiveEntry(null);
+            setServer('moviebox');
             setPlaying(true);
             return;
         }
@@ -374,26 +409,43 @@ export function MovieDetailModal({
                     </ScrollView>
                 </View>
 
-                {playing && src ? (
+                {playing && (src || server === 'moviebox') ? (
                     <View style={styles.playerLayer}>
-                        <EmbedPlayer
-                            src={src}
-                            title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
-                            onClose={() => setPlaying(false)}
-                            fallbackUrl={officialUrlFor(movie)}
-                            resumeAt={resumeSec}
-                            onProgress={(info) => {
-                                if (!activeEntry) return;
-                                updateWatchPosition(activeEntry.id, info.seconds, info.duration);
-                            }}
-                            onEnded={() => {
-                                if (!activeEntry) return;
-                                // The media finished: it leaves the row, the
-                                // same way the Crunchyroll page does it.
-                                removeWatched(activeEntry.id);
-                                announce('Marked as watched');
-                            }}
-                        />
+                        {server === 'moviebox' ? (
+                            <MovieboxPagePlayer
+                                linkKey={movieboxLinkKey}
+                                initialLink={movieboxEntry?.link ?? null}
+                                title={movie.title}
+                                season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
+                                episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
+                                onClose={() => setPlaying(false)}
+                                onSwitchServer={() => setServer('primary')}
+                                switchLabel="Server 1"
+                                onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
+                            />
+                        ) : (
+                            <EmbedPlayer
+                                src={src}
+                                title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
+                                onClose={() => setPlaying(false)}
+                                fallbackUrl={officialUrlFor(movie)}
+                                resumeAt={resumeSec}
+                                serverName="Nxsha"
+                                nextServerName={MOVIEBOX_SERVER_LABEL}
+                                onSwitchProvider={() => setServer('moviebox')}
+                                onProgress={(info) => {
+                                    if (!activeEntry) return;
+                                    updateWatchPosition(activeEntry.id, info.seconds, info.duration);
+                                }}
+                                onEnded={() => {
+                                    if (!activeEntry) return;
+                                    // The media finished: it leaves the row, the
+                                    // same way the Crunchyroll page does it.
+                                    removeWatched(activeEntry.id);
+                                    announce('Marked as watched');
+                                }}
+                            />
+                        )}
                         {playerNotice ? (
                             <View style={styles.playerNotice} pointerEvents="none">
                                 <Ionicons name="play-circle" size={16} color="#fff" />

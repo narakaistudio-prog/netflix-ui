@@ -303,6 +303,26 @@ export default function AdminScreen() {
                     />
                 </Section>
 
+                {/* -------- Server 2: M2Box -------- */}
+                <Section title="Server 2 — M2Box (MovieBox)">
+                    <Hint>
+                        MovieBox ka koi official embed nahi hota. Isliye uska poora watch page ek
+                        frame me khol kar sirf player + episode list bacha kar dikhaya jata hai
+                        (logo, menu, sidebar, title sab kata hua). Player me server switch pill se
+                        M2Box chun lo — link ek baar paste karna padta hai, wahi is browser me yaad
+                        reh jata hai. Kisi title ke liye permanent link dena ho to uski row ke
+                        Embed URL me poora m2box watch-page link daal do.
+                    </Hint>
+                    <View style={styles.row}>
+                        <Pressable
+                            style={[styles.smallBtn, { backgroundColor: '#E50914' }]}
+                            onPress={() => router.push('/moviebox' as any)}
+                        >
+                            <Text style={[styles.smallBtnText, { color: '#fff' }]}>Open M2Box page</Text>
+                        </Pressable>
+                    </View>
+                </Section>
+
                 {/* -------- Test embed -------- */}
                 <Section title="Test embed">
                     <View style={styles.row}>

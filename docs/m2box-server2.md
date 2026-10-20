@@ -1,0 +1,154 @@
+# Server 2 — M2Box (MovieBox) cropped player
+
+> TL;DR: MovieBox embed nahi deta. Uska **poora watch page** iframe me kholo,
+> aur dabbe ko aise kaato ki screen par sirf **player + episode list** bache.
+> Desktop par iframe ek **fixed 1536px stage** par render karta hai aur stage
+> `transform: scale()` se screen ke hisaab se chhoti/badi hoti hai — isliye
+> kaat har screen par ek hi jagah padta hai.
+
+## Kahan kya hai
+
+| File | Kaam |
+| --- | --- |
+| `lib/moviebox.ts` | Pure helpers: link parse, canonical watch-page URL, crop ka naap-tol (`getMovieboxCrop`), sandbox/allow tokens, proxy URL. |
+| `lib/movieboxLinks.ts` | Per-title link yaad rakhna (localStorage) — MovieBox ka per-ID embed nahi hota, isliye ek link chahiye. |
+| `components/MovieboxCroppedFrame.tsx` | Teen dabbe + iframe + crop (web par imperative DOM). Native par browser fallback. |
+| `components/MovieboxPagePlayer.tsx` | "Server 2" player: X, server switch, link badalna, loading, proxy hint. |
+| `components/MovieboxLinkPanel.tsx` | Link paste karne wala panel (validation + proxy toggle + saved links). |
+| `app/moviebox.tsx` | `/moviebox` page — kisi bhi m2box link ko seedha cropped frame me kholta hai (`?url=<link>`). Admin me iska button hai. |
+| `api/moviebox-frame.mjs` | Fallback proxy: page ka HTML hamare origin se, frame-block headers utre hue (jis din M2Box framing rok de). |
+| `scripts/preview-server.mjs` | Local preview: `dist/` + `api/*.mjs` ek hi port par. |
+
+## Crop kaise kaam karta hai
+
+```
+host (naapne wali jagah — PAKKI height)
+ └── box   (dikhne wala dabba, overflow:hidden)
+       └── stage (fixed 1536px chaudi, scale hoti hai)
+             └── iframe (upar −117, baayein −120 dhakela hua)
+```
+
+Naap (asli screenshots par pixel-naap, 20 Oct 2026 — Demon Slayer, 26 eps):
+
+| Constant | Value | Matlab |
+| --- | --- | --- |
+| `MOVIEBOX_STAGE_WIDTH` | 1536 | Site ka layout isi chaudai par waisa rehta hai jaisa asli site par (episode guide 5-column chhota). |
+| `MOVIEBOX_STAGE_CROP_TOP` | 117 | Header + menu kaat (player page-y 120 se shuru hota hai). |
+| `MOVIEBOX_STAGE_CROP_LEFT` | 120 | Baayein ka kaat (iframe ke andar player 129 se shuru hota hai). |
+| `MOVIEBOX_STAGE_VISIBLE_HEIGHT` | 545 | Window page-y 117 → 662: player/panel ke 8px neeche, title (≈682) se 20px upar. |
+
+Scale = `dabbe ki chaudai / 1416` (`1536 − 120`), dikhne wali unchai =
+`545 × scale`, par host ki unchai se zyada kabhi nahi.
+
+**Mobile (<900px):** site episode list player ke **neeche** rakhti hai, isliye
+stage nahi banta — iframe asli chaudai par (scale 1), upar ka kaat 112/108/104
+(chaudai 768+/480+/usse kam), unchai = player + 16 + 320. Wahan andar scroll
+**khula** rehta hai (warna episodes tak pahunchenge hi nahi).
+
+## Link kahan se aata hai
+
+MovieBox ke har title/dub ka apna canonical watch-page URL hota hai:
+
+```
+https://m2box.org/movies/<slug>?id=<subjectId>&type=/movie/detail&detailSe=<s>&detailEp=<e>&lang=en
+```
+
+`lib/moviebox.ts` kisi bhi mirror/SPA link se slug + subjectId nikaal kar
+canonical m2box.org page bana deta hai. Season/episode player ki state jeetti
+hai (series ke episode badalne par page wahi episode kholta hai).
+
+Teen tarah se link aa sakta hai:
+
+1. **Title row me** — `embed_url` ya `videoUrl` me poora m2box link. Is halat
+   me M2Box hi pehla server hota hai (Nxsha ko chhoda nahi jata, cycle me hai).
+2. **Ek baar paste** — player me server pill se M2Box chuno; panel link maangega
+   aur usi browser me title ke saath yaad rakhega (`netflix-moviebox-links-v1`).
+3. **`/moviebox` page** — kisi bhi link ko turant kholne ke liye (`?url=` bhi).
+
+## UI
+
+- Player ke upar hamara koi bada UI nahi: top-left **X** (Esc bhi), uske bagal
+  **server switch pill**, aur (frame chalne ke baad) link badalne ka chhota
+  button.
+- Frame 15s tak kuch na dikhaye to neeche ek hint aata hai: **"Proxy se kholo"**
+  — wahi page `/api/moviebox-frame` se load hota hai.
+
+## Safety
+
+```html
+sandbox="allow-downloads allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; web-share"
+referrerpolicy="no-referrer-when-downgrade"
+```
+
+- **`allow-top-navigation` kabhi nahi** — warna site/ads hamari poori tab
+  hijack kar sakti hain.
+- `allow-scripts` + `allow-same-origin` zaroori hain, warna player/episode list
+  chalegi hi nahi.
+- Server-side proxy sirf MovieBox hosts (aur player-jaisi shakal wale rotated
+  domains) ke liye khulta hai — open proxy nahi.
+
+## Fullscreen ke usool
+
+1. Crop tabhi hatao jab **iframe khud** fullscreen ho (top-level
+   `document.fullscreenElement` wahi iframe ho). App khud `documentElement` ko
+   fullscreen karti hai — us waqt crop chalta rahega, bas naye size se dobara
+   naapa jayega. Warna fullscreen me poora m2box page (title, menu) dikhne lagta.
+2. `scrolling="no"` desktop par hamesha (fullscreen me bhi) — warna user scroll
+   karke kata hua hissa wapas dekh leta hai.
+3. Fullscreen se lautne par dobara naapo: turant + `requestAnimationFrame` +
+   80ms + 250ms. Purana size chipka to dabba lamba ho jata hai aur title
+   jhaankne lagta hai.
+
+## Galtiyan jo mat dohrana
+
+1. **Host ki height auto/min-height** — crop apni hi unchai naap kar "cap" lagane
+   lagta hai; controls kat jate hain. Host ko pakki height do (full-screen layer).
+2. **Chaudai ke hisaab se seedha crop (proportional)** — har screen par kaat
+   alag padta hai. Fixed stage + scale hi pakka rasta hai.
+3. **Stage 1280** — kam episodes par theek, 26+ par panel player se lamba ho
+   kar controls bahar dhakel deta hai. 1536 rakho.
+4. **Browser tab se naapna** — tab me sidebar khuli hoti hai (player 245 se),
+   iframe me band (129 se). Naap hamesha iframe ke andar ke screenshot se.
+5. **Desktop par andar scroll khula** — user kata hua menu/title dekh leta hai.
+
+## Site layout badle to dobara naapna
+
+1. Purane numbers se frame chalao, apni site par khule player ka screenshot lo
+   (browser tab me khuli m2box.org ka **nahi**).
+2. Screenshot me player/panel ka top, left, bottom aur title ki pehli line
+   dhoondo.
+3. `stagePx = screenshotPx × (1416 / screenshot me frame ki chaudai)`.
+4. Naye constants: `CROP_TOP = playerTop − 3`, `CROP_LEFT = playerLeft − 9`,
+   `VISIBLE_HEIGHT = (playerBottom + 8) − CROP_TOP`, aur `CROP_TOP +
+   VISIBLE_HEIGHT` title se 15–20px upar rakho.
+5. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
+   (wahi sabse pehle tootti hai).
+
+## Hadein
+
+- **Bahut lambi series (40–50+ eps):** episode panel player se lamba ho jata hai
+  aur neeche ke episodes window ke bahar reh jate hain (scroll band hai). Us
+  halat me `/moviebox` page se poora page khol lo.
+- **Framing kabhi bhi band ho sakti hai:** jis din M2Box `X-Frame-Options`/CSP
+  laga dega, seedha frame blank hoga — tab proxy (`/api/moviebox-frame`) ya
+  naya tab bacha hua rasta hai.
+- **Quality/subtitles/episode** sab site ke haath me hai — crop sirf dikhne wala
+  hissa kaatta hai, andar poori site waisi hi chalti hai.
+- **Continue Watching** M2Box par position track nahi karta (cross-origin frame
+  kuch nahi batata) — position sirf Nxsha/NHD wale server par save hoti hai.
+
+## Test
+
+```bash
+npx jest --config jest.arena.config.js tests-arena/moviebox
+npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
+```
+
+- `moviebox-crop.test.ts` — link parse, canonical URL, crop math (desktop,
+  mobile, cap, 900px boundary).
+- `moviebox-server.test.tsx` — jsdom me asli iframe: 1536px stage, offsets,
+  scale, sandbox tokens, `scrolling="no"`, link paste → saved → next visit,
+  Esc/X, proxy mode.
+- `api-moviebox-frame.test.ts` — proxy: frame guards utre, `<base>` inject,
+  rotated domain allowed, open proxy band.

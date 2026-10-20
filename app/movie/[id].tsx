@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
 import { ExpandedPlayer } from '@/components/BottomSheet/ExpandedPlayer';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
+import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
 import { useRootScale } from '@/contexts/RootScaleContext';
 import Animated, {
     useSharedValue,
@@ -26,6 +27,8 @@ import {
     buildEmbedUrl,
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
+import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import {
     getRecentlyWatched,
     markWatched,
@@ -36,6 +39,21 @@ import { useTvBackHandler } from '@/hooks/useTvNavigation';
 
 const IS_WEB = Platform.OS === 'web';
 const SCALE_FACTOR = 0.83;
+
+/**
+ * Playback "servers": the regular embed providers (Nxsha / NHD / custom) plus
+ * M2Box — MovieBox ka koi embed nahi hota, isliye uska poora watch page frame
+ * me khol kar sirf player wala hissa dikhaya jata hai (MovieboxPagePlayer).
+ */
+type PlaybackServerId = ProviderId | 'moviebox';
+
+function serverLabel(id: PlaybackServerId): string {
+    if (id === 'moviebox') return MOVIEBOX_SERVER_LABEL;
+    if (id === 'nxsha') return 'Nxsha';
+    if (id === 'nhd') return 'NHD';
+    return 'Custom';
+}
+
 const DRAG_THRESHOLD = Math.min(Dimensions.get('window').height * 0.20, 150);
 const HORIZONTAL_DRAG_THRESHOLD = Math.min(Dimensions.get('window').width * 0.51, 80);
 const DIRECTION_LOCK_ANGLE = 45;
@@ -97,6 +115,8 @@ export default function MovieScreen() {
 
     const [playerOpen, setPlayerOpen] = useState(false);
     const [providerIndex, setProviderIndex] = useState(0);
+    /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
+    const [movieboxRevision, setMovieboxRevision] = useState(0);
     const [season, setSeason] = useState(1);
     const [episode, setEpisode] = useState(1);
     /** Continue Watching: the entry being played and the position to resume. */
@@ -360,26 +380,52 @@ export default function MovieScreen() {
             ? 'tv'
             : 'movie');
 
-    // Cycle order: default provider → other built-in providers → custom (if embed_url set)
+    /**
+     * MovieBox ki taraf ishara karne wala link: ya to row me hi `embed_url` /
+     * `videoUrl` me m2box link hai, ya viewer ne ek baar paste karke is browser
+     * me yaad rakha hai (`lib/movieboxLinks.ts`).
+     */
+    const movieboxEntry = useMemo(
+        () => resolveMovieboxLink(movie),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [movie.id, movie.tmdb_id, movie.mediaType, movie.embed_url, movie.videoUrl, movieboxRevision],
+    );
+    /** Row ne khud m2box link diya hai — tab M2Box hi pehla server hai. */
+    const rowIsMoviebox = Boolean(movieboxEntry?.fromTitle);
+    /** Manual embed override jo m2box page nahi hai (warna wo M2Box ka kaam hai). */
+    const primaryEmbedUrl = movie.embed_url && !rowIsMoviebox ? movie.embed_url : undefined;
+    const movieboxLinkKey = movieboxKeyForTitle(movie);
+
+    // Cycle order: (M2Box, jab row me m2box link ho) → default provider →
+    // other built-in providers → custom (if embed_url set) → M2Box (Server 2).
     const settings = loadSettings();
-    const cycle: ProviderId[] = useMemo(() => {
-        const list: ProviderId[] = [];
+    const cycle: PlaybackServerId[] = useMemo(() => {
+        const list: PlaybackServerId[] = [];
         const def = movie.embed_provider ?? settings.defaultProvider;
+        if (rowIsMoviebox) list.push('moviebox');
         list.push(def);
         for (const p of PROVIDERS) if (p.id !== def) list.push(p.id);
-        if (movie.embed_url) list.push('custom');
+        if (primaryEmbedUrl) list.push('custom');
+        list.push('moviebox');
         return Array.from(new Set(list));
-    }, [movie.embed_provider, movie.embed_url, settings.defaultProvider]);
+    }, [movie.embed_provider, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider]);
 
-    const currentProvider: ProviderId = cycle[providerIndex] ?? 'nxsha';
-    const directPreviewUrl = movie.videoUrl && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
+    const currentProvider: PlaybackServerId = cycle[providerIndex] ?? 'nxsha';
+    const isMovieboxServer = currentProvider === 'moviebox';
+    const movieboxIndex = cycle.indexOf('moviebox');
+    const directPreviewUrl = movie.videoUrl
+        && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
+        // m2box link ek page hai, `<video>` ka source nahi.
+        && !(movieboxEntry?.fromTitle && isMovieboxUrl(movie.videoUrl))
         ? movie.videoUrl.replace(/^http:/i, 'https:')
         : undefined;
-    const hasProviderPlayback = Boolean(movie.embed_url || parsedTmdb || movie.imdb_id);
+    const hasProviderPlayback = Boolean(primaryEmbedUrl || parsedTmdb || movie.imdb_id);
     const directFallback = !hasProviderPlayback && Boolean(directPreviewUrl);
     const hasPlayablePlayback = hasProviderPlayback || directFallback;
 
     const buildSrc = useCallback(() => {
+        // M2Box ka apna player hai (MovieboxPagePlayer) — yahan URL nahi banta.
+        if (currentProvider === 'moviebox') return '';
         if (directFallback) return directPreviewUrl || '';
         try {
             return buildEmbedUrl(
@@ -391,14 +437,14 @@ export default function MovieScreen() {
                     season: mediaType === 'tv' ? season : undefined,
                     episode: mediaType === 'tv' ? episode : undefined,
                     strictHindi: settings.strictHindi && currentProvider === 'nxsha',
-                    embed_url: currentProvider === 'custom' ? movie.embed_url : undefined,
+                    embed_url: currentProvider === 'custom' ? primaryEmbedUrl : undefined,
                 },
                 templateOverridesFor(settings, currentProvider),
             );
         } catch {
             return '';
         }
-    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, movie.embed_url, season, episode, settings]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings]);
 
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
@@ -443,11 +489,23 @@ export default function MovieScreen() {
     }, [movie, parsedTmdb, mediaType, currentProvider]);
 
     const handlePlayFull = useCallback(() => {
+        const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
         if (!hasPlayablePlayback) {
+            // Nxsha/NHD ke paas is title ke liye id hi nahi — lekin M2Box ka
+            // link saved ho to Server 2 seedha chala do.
+            if (movieboxEntry) {
+                requestPlayerFullscreen();
+                setPlayerChromeHidden(true);
+                setProviderIndex(Math.max(0, movieboxIndex));
+                setSeason(initialSeason);
+                setEpisode(1);
+                setPlayerOpen(true);
+                rememberPlayback(initialSeason, 1);
+                return;
+            }
             openOfficialTitle();
             return;
         }
-        const initialSeason = mediaType === 'tv' ? movie.seasons?.[0]?.season_number ?? 1 : 1;
         requestPlayerFullscreen();
         setPlayerChromeHidden(true);
         setProviderIndex(0);
@@ -455,7 +513,15 @@ export default function MovieScreen() {
         setEpisode(1);
         setPlayerOpen(true);
         rememberPlayback(initialSeason, 1);
-    }, [movie, hasPlayablePlayback, openOfficialTitle, rememberPlayback]);
+    }, [
+        movie,
+        hasPlayablePlayback,
+        movieboxEntry,
+        movieboxIndex,
+        mediaType,
+        openOfficialTitle,
+        rememberPlayback,
+    ]);
 
     const handleSelectSeason = useCallback((selectedSeason: number) => {
         if (mediaType !== 'tv') return;
@@ -464,8 +530,18 @@ export default function MovieScreen() {
     }, [mediaType]);
 
     const handlePlayEpisode = useCallback((selectedSeason: number, selectedEpisode: number) => {
-        if (!hasPlayablePlayback) {
+        if (!hasPlayablePlayback && !movieboxEntry) {
             openOfficialTitle();
+            return;
+        }
+        if (!hasPlayablePlayback) {
+            requestPlayerFullscreen();
+            setPlayerChromeHidden(true);
+            setProviderIndex(Math.max(0, movieboxIndex));
+            setSeason(selectedSeason);
+            setEpisode(selectedEpisode);
+            setPlayerOpen(true);
+            rememberPlayback(selectedSeason, selectedEpisode);
             return;
         }
         if (mediaType !== 'tv') {
@@ -479,7 +555,15 @@ export default function MovieScreen() {
         setEpisode(selectedEpisode);
         setPlayerOpen(true);
         rememberPlayback(selectedSeason, selectedEpisode);
-    }, [mediaType, handlePlayFull, hasPlayablePlayback, openOfficialTitle, rememberPlayback]);
+    }, [
+        mediaType,
+        handlePlayFull,
+        hasPlayablePlayback,
+        movieboxEntry,
+        movieboxIndex,
+        openOfficialTitle,
+        rememberPlayback,
+    ]);
 
     const handleSwitchProvider = useCallback(() => {
         if (cycle.length <= 1) return;
@@ -513,7 +597,47 @@ export default function MovieScreen() {
         mediaType,
     };
 
-    const src = playerOpen && hasPlayablePlayback ? buildSrc() : '';
+    // M2Box ka apna player hai — us waqt `src` khali rehta hai, par player
+    // phir bhi khulna chahiye (link paste karne ke liye bhi).
+    const src = playerOpen && hasPlayablePlayback && !isMovieboxServer ? buildSrc() : '';
+    const playerVisible = playerOpen && (Boolean(src) || isMovieboxServer);
+    /** Server switcher labels: jo chal raha hai + jo agla hai. */
+    const currentServerLabel = serverLabel(currentProvider);
+    const nextServer = cycle.length > 1 ? cycle[(providerIndex + 1) % cycle.length] : null;
+
+    const renderPlayer = () => {
+        if (isMovieboxServer) {
+            return (
+                <MovieboxPagePlayer
+                    linkKey={movieboxLinkKey}
+                    initialLink={movieboxEntry?.link ?? null}
+                    title={movie.title}
+                    season={mediaType === 'tv' ? season : undefined}
+                    episode={mediaType === 'tv' ? episode : undefined}
+                    onClose={handleCloseInline}
+                    onSwitchServer={nextServer ? handleSwitchProvider : undefined}
+                    switchLabel={nextServer ? serverLabel(nextServer) : undefined}
+                    onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
+                />
+            );
+        }
+        return (
+            <EmbedPlayer
+                src={src}
+                title={movie.title}
+                onClose={handleCloseInline}
+                onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
+                serverName={currentServerLabel}
+                nextServerName={nextServer ? serverLabel(nextServer) : undefined}
+                fallbackUrl={officialNetflixUrl}
+                resumeAt={resumeAt}
+                onProgress={(info) => {
+                    if (!activeEntryId) return;
+                    updateWatchPosition(activeEntryId, info.seconds, info.duration);
+                }}
+            />
+        );
+    };
 
     if (IS_WEB) {
         return (
@@ -536,21 +660,10 @@ export default function MovieScreen() {
                             onSelectSeason={handleSelectSeason}
                             onSelectRelated={handleSelectRelated}
                         />
-                        {playerOpen && src ? (
+                        {playerVisible ? (
                             <View style={webStyles.playerLayer} pointerEvents="box-none">
                                 <View style={StyleSheet.absoluteFill} pointerEvents="auto">
-                                    <EmbedPlayer
-                                        src={src}
-                                        title={movie.title}
-                                        onClose={handleCloseInline}
-                                        onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                        fallbackUrl={officialNetflixUrl}
-                                        resumeAt={resumeAt}
-                                        onProgress={(info) => {
-                                            if (!activeEntryId) return;
-                                            updateWatchPosition(activeEntryId, info.seconds, info.duration);
-                                        }}
-                                    />
+                                    {renderPlayer()}
                                 </View>
                             </View>
                         ) : null}
@@ -575,21 +688,10 @@ export default function MovieScreen() {
                     onSelectSeason={handleSelectSeason}
                     onSelectRelated={handleSelectRelated}
                 />
-                {playerOpen && src ? (
+                {playerVisible ? (
                     <View style={styles.nativePlayerLayer} pointerEvents="box-none">
                         <View style={StyleSheet.absoluteFill} pointerEvents="auto">
-                            <EmbedPlayer
-                                src={src}
-                                title={movie.title}
-                                onClose={handleCloseInline}
-                                onSwitchProvider={!directFallback && cycle.length > 1 ? handleSwitchProvider : undefined}
-                                fallbackUrl={officialNetflixUrl}
-                                resumeAt={resumeAt}
-                                onProgress={(info) => {
-                                    if (!activeEntryId) return;
-                                    updateWatchPosition(activeEntryId, info.seconds, info.duration);
-                                }}
-                            />
+                            {renderPlayer()}
                         </View>
                     </View>
                 ) : null}
