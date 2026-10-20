@@ -28,6 +28,7 @@ A high-fidelity Netflix mobile UI clone built with React Native and Expo, featur
 - 🍥 Crunchyroll OTT section (beside My List) — opens a full-screen, self-contained anime experience (`assets/crunchyroll/crunchyroll.html`)
 - 🆕 **Fresh Drop Toon** rail at the top of the Crunchyroll home rails: toonstream.us's own Fresh Drop list, baked daily by `.github/workflows/crunchyroll-daily-drops.yml`. `scripts/harvest-toonstream-drops.mjs` resolves each title to Nxsha (catalog registry first, then search with title variants), bakes the episode metadata and plays the exact drop; `scripts/harvest-toonstream-seasons.mjs` walks every anime's **ToonStream** series page (`/series/<slug>/` → `/season/<n>`) so the season tabs and episode counts are the site's own (`JJK` 24 + 23 + 12, `Ranma` 12 + 12 + 3), with Nxsha's merged seasons mapped onto them for stills/synopses (`nxMap`). Hindi-dub pages that number episodes absolutely (Naruto S2 starts at 33) keep their real numbers through `epStart`; a ToonStream season that crosses an Nxsha season boundary (Demon Slayer's S2 is Nxsha's S2 + S3) keeps one `seg` row per Nxsha season, so every card gets its still, title and embed. Episodes Nxsha has no still for fall back to the ToonStream card image (`TS_EP_IMAGES`). One card per anime only. DeadToons is no longer part of the daily rail. Re-bake with `npm run bake:crunchyroll-drops`; `node scripts/harvest-toonstream-seasons.mjs --check` guards the page block.
 - ▶️ Player (FINAL v2): [Server 1: AnimaHD] + [Server 2: Drive] tabs from one file_id table — Solo Leveling S1+S2 (25 eps); re-harvest with `npm run harvest:animahd`
+- 🧲 **Server 2 — M2Box (MovieBox)**: MovieBox koi official embed nahi deta, isliye uska poora watch page ek frame me khulta hai aur hum bas **player + episode list** bacha kar baaki sab kaat dete hain (logo, menu, sidebar, title, rating). Desktop par iframe hamesha ek fixed **1536px stage** par render hota hai aur poori stage `transform: scale()` se screen ke hisaab se chhoti/badi hoti hai — isliye kaat har screen par ekdum ek jagah padta hai. Player ke top bar ka server pill (`Nxsha → M2Box`) switch karta hai; poore Netflix catalog ke links **pehle se baked** hote hain (`data/moviebox-links.json`, roz GitHub Actions harvester se) — isliye Server 2 har title par bina kuch paste kiye chalta hai; jo title baked map me na ho uske liye app **live resolve** karta hai (`/api/moviebox-resolve` — server MovieBox par khud dhoondhta hai, jawab browser me cache hota hai), isliye paste panel sirf aakhri fallback hai. Screens: `components/MovieboxCroppedFrame.tsx`, `components/MovieboxPagePlayer.tsx`; naap-tol: `lib/moviebox.ts`; alag page `/moviebox` (ya `/admin` → "Open M2Box page"). Detail: [`docs/m2box-server2.md`](docs/m2box-server2.md).
 - 🔗 AniDisk confirmed-links pipeline + extractor API stay warm (`data/`, `server/`) for future use
 - 🎬 Separate Netflix-style Movies and TV Shows shelves
 - 🎮 Mobile games showcase
@@ -122,8 +123,17 @@ locally, run `npm run build:web` and check that these exported files exist:
 After deployment, check `/`, `/browse/movies`, a movie URL such as
 `/movie/jw-catalog-movie-vishwanath-and-sons`, and a local poster URL such as
 `/assets/posters/catalog/billboard-jawan.jpg`. No API key is required for the
-bundled catalog. Video playback runs in third-party iframe providers (Nxsha or
-NHD), so availability of a particular stream cannot be guaranteed by Vercel.
+bundled catalog. Video playback runs in third-party iframe providers (Nxsha,
+NHD, or M2Box via `MovieboxPagePlayer`), so availability of a particular stream
+cannot be guaranteed by Vercel.
+
+To try the exported build locally (static `dist/` **plus** the `api/*.mjs`
+functions, so `/api/moviebox-frame` works without `vercel dev`):
+
+```bash
+npx expo export --platform web
+node scripts/preview-server.mjs      # http://localhost:3000  (and /moviebox)
+```
 
 ## Smart TV remote mode (Samsung Tizen / LG webOS / Android TV)
 

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
+import { movieboxCatalogSize } from '@/lib/movieboxCatalog';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -301,6 +302,28 @@ export default function AdminScreen() {
                         autoCorrect={false}
                         secureTextEntry
                     />
+                </Section>
+
+                {/* -------- Server 2: M2Box -------- */}
+                <Section title="Server 2 — M2Box (MovieBox)">
+                    <Hint>
+                        MovieBox ka koi official embed nahi hota. Isliye uska poora watch page ek
+                        frame me khol kar sirf player + episode list bacha kar dikhaya jata hai
+                        (logo, menu, sidebar, title sab kata hua). Catalog ke {movieboxCatalogSize()}{' '}
+                        titles ke MovieBox links pehle se baked hain (roz ka harvester), isliye
+                        player me server pill se M2Box seedha chal jata hai — kuch paste nahi karna.
+                        Jo title bake nahi hua uske liye panel link maangta hai. Kisi link ko
+                        permanent override karna ho to{' '}
+                        {'data/moviebox-pins.json'} me daal do.
+                    </Hint>
+                    <View style={styles.row}>
+                        <Pressable
+                            style={[styles.smallBtn, { backgroundColor: '#E50914' }]}
+                            onPress={() => router.push('/moviebox' as any)}
+                        >
+                            <Text style={[styles.smallBtnText, { color: '#fff' }]}>Open M2Box page</Text>
+                        </Pressable>
+                    </View>
                 </Section>
 
                 {/* -------- Test embed -------- */}

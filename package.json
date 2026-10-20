@@ -15,7 +15,8 @@
     "lint": "expo lint",
     "harvest:anidisk": "node scripts/harvest-deadtoons.mjs && node scripts/bake-anidisk-links.mjs",
     "harvest:animahd": "node scripts/harvest-animahd.mjs solo-leveling --key solo --seasons 12,13 && node scripts/bake-animahd-links.mjs",
-    "harvest:nxsha-guide": "node scripts/harvest-nxsha-guide.mjs && node scripts/bake-animahd-links.mjs"
+    "harvest:nxsha-guide": "node scripts/harvest-nxsha-guide.mjs && node scripts/bake-animahd-links.mjs",
+    "preview": "node scripts/preview-server.mjs"
   },
   "jest": {
     "preset": "jest-expo"

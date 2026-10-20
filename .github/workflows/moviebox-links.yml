@@ -1,0 +1,118 @@
+name: Harvest MovieBox links (Server 2)
+
+# Har Netflix catalog title ka MovieBox (m2box.org) watch page khoj kar
+# `data/moviebox-links.json` me bake karta hai — isi se app me "Server 2 · M2Box"
+# bina kuch paste kiye chalta hai.
+#
+# Kya hota hai:
+#   1. guest JWT (/home ka x-user header, fallback search-suggest + X-Client-Token)
+#   2. har title ke liye /subject/search (naam → "naam Hindi" → "naam <saal>")
+#   3. matching scripts/lib/moviebox-match.mjs (title + type + year + Hindi dub)
+#   4. /detail se confirm + Hindi dub ka apna subject chunna
+#   5. links + report commit (GITHUB_TOKEN se, isliye aage koi workflow trigger nahi hota)
+#
+# Default branch se schedule chalta hai; is branch par pehli baar chalane ke liye
+# workflow_dispatch use karo (`gh workflow run moviebox-links.yml --ref <branch>`).
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Sirf itne titles (test ke liye; 0 = poora catalog)'
+        required: false
+        default: '0'
+      refresh:
+        description: 'Sab links dobara check karo (true/false)'
+        required: false
+        default: 'false'
+  schedule:
+    # 02:41 UTC = 08:11 IST — daily, top-of-hour rush se bach kar.
+    - cron: '41 2 * * *'
+  push:
+    branches:
+      - arena/7ab24a31-netflix-ui
+      - main
+    paths:
+      - '.github/workflows/moviebox-links.yml'
+      - 'data/moviebox-pins.json'
+      - 'scripts/harvest-moviebox-links.mjs'
+      - 'scripts/lib/moviebox-match.mjs'
+
+concurrency:
+  group: moviebox-links-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Harvest MovieBox links for the catalog
+        id: harvest
+        continue-on-error: true
+        env:
+          # Ek baar poora catalog dobara check karana ho to '1' karo (phir wapas '').
+          FORCE_REFRESH: ''
+        run: |
+          ARGS=""
+          if [ "$FORCE_REFRESH" = "1" ]; then ARGS="$ARGS --refresh"; fi
+          if [ -n "${{ github.event.inputs.limit }}" ] && [ "${{ github.event.inputs.limit }}" != "0" ]; then
+            ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"
+          fi
+          if [ "${{ github.event.inputs.refresh }}" = "true" ]; then
+            ARGS="$ARGS --refresh"
+          fi
+          echo "args: $ARGS"
+          node scripts/harvest-moviebox-links.mjs $ARGS
+
+      - name: Validate the baked links
+        if: steps.harvest.outcome == 'success'
+        run: node scripts/harvest-moviebox-links.mjs --check
+
+      - name: Commit the baked links
+        if: steps.harvest.outcome == 'success'
+        run: |
+          git config user.name "moviebox-bot"
+          git config user.email "moviebox-bot@users.noreply.github.com"
+          git add data/moviebox-links.json data/moviebox-harvest-report.json data/moviebox-pins.json
+          if git diff --cached --quiet; then
+            echo "no change — links already up to date"
+            exit 0
+          fi
+          COUNT=$(git diff --cached --numstat data/moviebox-links.json | awk '{print $1}')
+          git commit -m "chore(moviebox): bake Server 2 links for the Netflix catalog"
+          # Run ke dauraan koi doosra commit aa jaye to bhi data na khoye:
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "committed (moviebox-links.json: $COUNT changed lines)"
+              exit 0
+            fi
+            echo "push attempt $attempt failed — rebasing on latest ${{ github.ref_name }}"
+            git pull --rebase --autostash origin "${{ github.ref_name }}"
+            sleep 5
+          done
+          echo "push nahi hua; artifact me data safe hai"
+          exit 1
+
+      - name: Upload the MovieBox snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: moviebox-links
+          path: |
+            data/moviebox-links.json
+            data/moviebox-harvest-report.json
+          if-no-files-found: warn
+          retention-days: 7
