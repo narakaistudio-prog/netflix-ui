@@ -381,9 +381,12 @@ export default function MovieScreen() {
             : 'movie');
 
     /**
-     * MovieBox ki taraf ishara karne wala link: ya to row me hi `embed_url` /
-     * `videoUrl` me m2box link hai, ya viewer ne ek baar paste karke is browser
-     * me yaad rakha hai (`lib/movieboxLinks.ts`).
+     * MovieBox ka link, priority order me:
+     *   1. row me hi `embed_url` / `videoUrl` (tab M2Box pehla server banta hai),
+     *   2. catalog ke liye baked link (`data/moviebox-links.json`, roz ka
+     *      harvester — isliye har title par Server 2 bina paste kiye chalta hai),
+     *   3. viewer ne ek baar paste kiya hua link (is browser me yaad,
+     *      `lib/movieboxLinks.ts`).
      */
     const movieboxEntry = useMemo(
         () => resolveMovieboxLink(movie),
