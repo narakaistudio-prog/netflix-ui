@@ -17,6 +17,7 @@ import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
 import { MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
+import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -96,6 +97,18 @@ export function MovieDetailModal({
     /** Manual embed override jo m2box page nahi hai. */
     const primaryEmbedUrl = movie?.embed_url && !rowIsMoviebox ? movie.embed_url : undefined;
     const movieboxLinkKey = movieboxKeyForTitle(movie ?? { id: '' });
+
+    /**
+     * MovieBox par ye title hai ya nahi — Server 2 ka option sirf tab, jab link
+     * sach me mile (row/baked/saved ya live resolve). Warna Nxsha hi rehta hai
+     * aur switch ka option dikhta hi nahi.
+     */
+    const movieboxAvailability = useMovieboxAvailable(movie, {
+        known: Boolean(movieboxEntry),
+        linkKey: movieboxLinkKey,
+        onResolved: () => setMovieboxRevision((n) => n + 1),
+    });
+    const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
 
     /** Show a short message over the player, the way the Crunchyroll page does. */
     const announce = useCallback((message: string | null) => {
@@ -181,6 +194,9 @@ export function MovieDetailModal({
     const cast = (movie.cast || []).filter((name) => name && name !== 'Cast not available');
     const genres = movie.genres || [];
 
+    /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
+    const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
+
     const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
             const isSeries = movie.mediaType === 'tv';
@@ -216,10 +232,11 @@ export function MovieDetailModal({
             setPlaying(true);
             return;
         }
-        // Koi primary embed nahi bana — lekin M2Box ka link saved hai to
-        // Server 2 seedha chalao (yahi un titles ka rasta hai jinpe Nxsha
-        // ke paas id hi nahi hoti).
-        if (movieboxEntry) {
+        // Koi primary embed nahi bana — lekin M2Box ka link hai to Server 2
+        // seedha chalao (yahi un titles ka rasta hai jinpe Nxsha ke paas id
+        // hi nahi hoti). Jawab pending ho to official par mat bhejo.
+        if (movieboxAvailability.checking) return;
+        if (movieboxAvailable) {
             if (episode) setEpisodeRef(episode);
             setActiveEntry(null);
             setServer('moviebox');
@@ -409,9 +426,9 @@ export function MovieDetailModal({
                     </ScrollView>
                 </View>
 
-                {playing && (src || server === 'moviebox') ? (
+                {playing && (src || activeServer === 'moviebox') ? (
                     <View style={styles.playerLayer}>
-                        {server === 'moviebox' ? (
+                        {activeServer === 'moviebox' ? (
                             <MovieboxPagePlayer
                                 linkKey={movieboxLinkKey}
                                 initialLink={movieboxEntry?.link ?? null}
@@ -433,8 +450,8 @@ export function MovieDetailModal({
                                 fallbackUrl={officialUrlFor(movie)}
                                 resumeAt={resumeSec}
                                 serverName="Nxsha"
-                                nextServerName={MOVIEBOX_SERVER_LABEL}
-                                onSwitchProvider={() => setServer('moviebox')}
+                                nextServerName={movieboxAvailable ? MOVIEBOX_SERVER_LABEL : undefined}
+                                onSwitchProvider={movieboxAvailable ? () => setServer('moviebox') : undefined}
                                 onProgress={(info) => {
                                     if (!activeEntry) return;
                                     updateWatchPosition(activeEntry.id, info.seconds, info.duration);
