@@ -14,8 +14,8 @@
  * Ye sirf local/preview ke liye hai — production me Vercel khud `api/` aur
  * `dist/` dono sambhalta hai.
  */
-import { createReadStream, existsSync, statSync } from 'node:fs';
-import { extname, join, normalize, resolve } from 'node:path';
+import { createReadStream, existsSync, readdirSync, statSync } from 'node:fs';
+import { dirname, extname, join, normalize, resolve } from 'node:path';
 import { createServer } from 'node:http';
 import { pathToFileURL } from 'node:url';
 
@@ -110,6 +110,17 @@ function resolveFile(pathname) {
         } catch {
             // agla candidate dekho
         }
+    }
+
+    // Dynamic routes: expo-router `dist/movie/[id].html` export karta hai.
+    // `/movie/jw-…` ke liye usi folder ka pehla `[param].html` de do — bilkul
+    // jaise vercel.json ka rewrite karta hai.
+    try {
+        const dir = dirname(base);
+        const dynamic = readdirSync(dir).find((name) => /^\[[^\]]+\]\.html$/.test(name));
+        if (dynamic && dir.startsWith(ROOT)) return join(dir, dynamic);
+    } catch {
+        // koi dynamic route nahi
     }
     return null;
 }
