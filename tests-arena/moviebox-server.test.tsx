@@ -279,7 +279,10 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         // Agla episode usi watch page par khul jata hai
         expect(frame()!.getAttribute('src')).toContain('detailEp=3');
         expect(frame()!.getAttribute('src')).toContain('detailSe=1');
-        expect(container.textContent).toContain('S1 E3');
+        // episode patti bhi agle episode par
+        expect(
+            document.querySelector('[data-testid="moviebox-episode-strip"]')!.textContent,
+        ).toContain('S1 • E3');
     });
 
     it('hides Next Episode after the idle timeout, even with the pointer on the player', () => {
@@ -380,6 +383,38 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             );
         });
         expect(document.querySelector('[data-testid="moviebox-episode-strip"]')).toBeNull();
+    });
+
+    it('puts our fullscreen in the player corner, not in the top bar', () => {
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:7:tv"
+                    initialLink={PAGE}
+                    title="My Demon"
+                    mediaType="tv"
+                    season={1}
+                    episode={5}
+                    episodeCount={16}
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
+            );
+        });
+        const fs = document.querySelector('[data-testid="moviebox-fullscreen"]') as HTMLElement;
+        expect(fs).toBeTruthy();
+        // video ke dabbe ke andar, bottom-right (site ke fullscreen icon ki jagah)
+        // jsdom me onLayout nahi chalta, isliye fallback geometry lagti hai.
+        // react-native-web layout ko classes me daalta hai (inline style nahi)
+        expect(fs.className).toContain('r-position');
+        expect(fs.className).toContain('r-bottom');
+        // koi bhi corner geometry lagi ho — root ke andar hi
+
+        // top bar me koi fullscreen / link icon nahi
+        const topBar = fs.closest('[data-tv-scope="player"], [data-tvScope="player"]')!;
+        expect(topBar).toBeTruthy();
+        expect(document.querySelectorAll('[aria-label="Change M2Box link"]').length).toBe(0);
+        expect(document.querySelector('[aria-label="Fullscreen player"]')).toBe(fs);
     });
 
     it('tells the parent when the episode changed', () => {

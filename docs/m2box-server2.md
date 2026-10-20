@@ -94,8 +94,12 @@ tha.
 
 Fullscreen ab hum dete hain:
 
-- Player ke top bar me **fullscreen / exit** button (`testID="moviebox-fullscreen"`)
-  poore player dabbe (iframe + overlays) ko fullscreen karta hai.
+- **Fullscreen button video ke andar hai**, bottom-right — jahan site ka apna
+  fullscreen icon hota tha (naap: box ke daayein kinare se ~8.5% andar, neeche
+  se ~1%). `testID="moviebox-fullscreen"` poore player dabbe (iframe +
+  overlays) ko fullscreen karta hai. Top bar me sirf X + server pill hai
+  (link icon aur niche wala "M2Box · slug · S1 E5" badge hata diye — owner ne
+  nahi chahe).
 - Fullscreen me bhi crop chalta rehta hai — host (player dabba) ka naap hi
   screen ka naap ban jata hai, `getMovieboxCrop` wahi player-only dabba nikalta
   hai, aur overlays (Next Episode, episode patti) usi dabbe par align rehte

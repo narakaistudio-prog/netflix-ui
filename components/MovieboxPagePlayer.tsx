@@ -251,6 +251,15 @@ export function MovieboxPagePlayer({
             height: crop.height,
             padRight: pad,
             padLeft: pad,
+            /**
+             * Site ke apne fullscreen icon ki jagah — video ke bottom-right.
+             * Naap (live screenshot): box ke daayein kinare se ~8.5% andar,
+             * neeche se ~1% par, icon ~6% unchai. Hamara fullscreen button
+             * wahin baithta hai, isliye "player ka fullscreen" wahi hai.
+             */
+            fsRight: Math.round(crop.frameWidth * 0.085),
+            fsBottom: Math.round(crop.height * 0.012),
+            fsSize: Math.max(34, Math.round(crop.height * 0.062)),
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
@@ -529,6 +538,48 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
+            {/* Fullscreen — site ke apne fullscreen icon ki jagah, video ke
+                bottom-right me. Chrome ke saath gayab. (overlayBox milne se
+                pehle fallback: root ke corner par.) */}
+            {frameSrc && !isSearchFrame ? (
+                <Pressable
+                    style={[
+                        styles.fsButton,
+                        overlayBox
+                            ? {
+                                  left:
+                                      overlayBox.left +
+                                      overlayBox.width -
+                                      overlayBox.fsRight -
+                                      overlayBox.fsSize,
+                                  top:
+                                      overlayBox.top +
+                                      overlayBox.height -
+                                      overlayBox.fsBottom -
+                                      overlayBox.fsSize,
+                                  width: overlayBox.fsSize,
+                                  height: overlayBox.fsSize,
+                              }
+                            : styles.fsFallback,
+                        { opacity: chromeVisible ? 1 : 0 },
+                    ]}
+                    pointerEvents={chromeVisible ? 'auto' : 'none'}
+                    onPress={() => {
+                        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+                        if (document.fullscreenElement) {
+                            document.exitFullscreen?.().catch(() => {});
+                        } else {
+                            enterOwnFullscreen();
+                        }
+                    }}
+                    accessibilityRole="button"
+                    accessibilityLabel={ownFullscreen ? 'Exit fullscreen' : 'Fullscreen player'}
+                    testID="moviebox-fullscreen"
+                >
+                    <Ionicons name={ownFullscreen ? 'contract' : 'expand'} size={18} color="#fff" />
+                </Pressable>
+            ) : null}
+
             {/* Series: agla episode — video ke andar, bottom-right (site ke
                 apne Next Episode ki jagah), aur chrome ke saath gayab. */}
             {frameSrc && nextEpisode && !isSearchFrame ? (
@@ -586,36 +637,6 @@ export function MovieboxPagePlayer({
                     </Pressable>
                 ) : null}
 
-                {frameSrc && !isSearchFrame ? (
-                    <Pressable
-                        style={[styles.iconButton, styles.fullscreenButton]}
-                        onPress={() => {
-                            if (Platform.OS !== 'web' || typeof document === 'undefined') return;
-                            const el = rootRef.current as unknown as HTMLElement | null;
-                            if (document.fullscreenElement) {
-                                document.exitFullscreen?.().catch(() => {});
-                            } else if (el) {
-                                enterOwnFullscreen();
-                            }
-                        }}
-                        accessibilityRole="button"
-                        accessibilityLabel={ownFullscreen ? 'Exit fullscreen' : 'Fullscreen player'}
-                        testID="moviebox-fullscreen"
-                    >
-                        <Ionicons name={ownFullscreen ? 'contract' : 'expand'} size={18} color="#fff" />
-                    </Pressable>
-                ) : null}
-
-                {frameSrc ? (
-                    <Pressable
-                        style={[styles.iconButton, styles.editButton]}
-                        onPress={editLink}
-                        accessibilityLabel="Change M2Box link"
-                        testID="moviebox-edit-link"
-                    >
-                        <Ionicons name="link-outline" size={18} color="#fff" />
-                    </Pressable>
-                ) : null}
             </View>
 
             {/* MovieBox par title hi nahi — search results khule hain. */}
@@ -674,16 +695,6 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-            {frameSrc && link ? (
-                <View style={styles.titleBadge} pointerEvents="none">
-                    <Text style={styles.titleBadgeText} numberOfLines={1}>
-                        {MOVIEBOX_SERVER_LABEL} · {describeMovieboxLink(link)}
-                        {typeof activeEpisode === 'number'
-                            ? ` · S${typeof season === 'number' ? season : 1} E${activeEpisode}`
-                            : ''}
-                    </Text>
-                </View>
-            ) : null}
         </View>
     );
 }
@@ -696,7 +707,17 @@ const styles = StyleSheet.create({
      * Video ke dabbe ke andar, bottom-right. `overlayBox` milne tak (pehla
      * layout) fallback: root ke daayein kinare par.
      */
-    fullscreenButton: { marginLeft: 'auto', opacity: 0.85 },
+    /** Site ke fullscreen icon ki jagah — thoda gehra gola, icon saaf dikhe. */
+    fsButton: {
+        position: 'absolute',
+        zIndex: 3,
+        borderRadius: 6,
+        backgroundColor: 'rgba(0,0,0,0.55)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    /** `overlayBox` se pehle (pehla layout) — root ke bottom-right. */
+    fsFallback: { right: 24, bottom: 16, width: 34, height: 34 },
     nextWrap: {
         position: 'absolute',
         alignItems: 'flex-end',
@@ -778,7 +799,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    editButton: { marginLeft: 8, opacity: 0.6 },
     serverPill: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -855,18 +875,6 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     proxyBadgeText: { color: '#d0d0d0', fontSize: 9, letterSpacing: 0.8, fontWeight: '700' },
-    titleBadge: {
-        position: 'absolute',
-        left: 12,
-        bottom: 14,
-        maxWidth: '60%',
-        paddingHorizontal: 9,
-        paddingVertical: 4,
-        borderRadius: 6,
-        backgroundColor: 'rgba(0,0,0,0.45)',
-        zIndex: 2,
-    },
-    titleBadgeText: { color: 'rgba(255,255,255,0.55)', fontSize: 10 },
 });
 
 export default MovieboxPagePlayer;
