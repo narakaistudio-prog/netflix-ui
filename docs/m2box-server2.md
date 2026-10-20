@@ -95,12 +95,18 @@ tha.
 Fullscreen ab hum dete hain:
 
 - **Fullscreen button video ke andar hai**, theek site ke apne fullscreen icon
-  ki jagah par (naap: box ke daayein kinare se ~2.5% andar, neeche se ~3.5%
-  upar) — aur **wahi shakal**: `MaterialCommunityIcons` ka `fullscreen`
-  (chaaron kone wale brackets), bina kisi ghere ke, safed. Isliye lagta hai ki
-  wo player ka hi button hai. `testID="moviebox-fullscreen"` poore player
-  dabbe (iframe + overlays) ko fullscreen karta hai. Top bar me sirf X +
-  server pill (link icon aur neeche wala badge hata diye — owner ne nahi chahe).
+  ki jagah par (naap: unke icon ka ink ~2.5% unchai ka, daayein kinare se ~2.8%
+  andar, neeche se ~6% upar) — aur **wahi shakal**:
+  `MaterialCommunityIcons` ka `fullscreen` (chaaron kone wale brackets).
+  `testID="moviebox-fullscreen"` poore player dabbe (iframe + overlays) ko
+  fullscreen karta hai. Top bar me sirf X + server pill (link icon aur neeche
+  wala badge hata diye — owner ne nahi chahe).
+- **Site ka icon dhaka hua hai**: wo cross-origin iframe ke andar hai, DOM se
+  hata nahi sakte, isliye uske upar ek chhota gehra plate (`rgba(8,8,10,.92)`,
+  ink ka ~1.7x, halke rounded kone) hamesha rehta hai. Usi plate me hamara safed
+  icon baithta hai. Plate hamesha rehta hai (chrome chhupne par sirf hamara
+  icon fade hota hai) — warna site ka icon jhalak kar "do fullscreen" dikhte
+  hain. Control bar ka background wese bhi kaala hai, isliye plate dikhta nahi.
 - **Chrome chhupne par iframe pointer-events `none` ho jate hain**, isliye
   cross-origin iframe ke bawajood mouse ka har movement hamare dabbe tak aata
   hai — mouse hilte hi fullscreen button (aur Next Episode + patti) wapas dikh

@@ -441,6 +441,8 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             expect(fs).toBeTruthy();
             // site ke icon jaisa — chaaron kone wale brackets
             expect(fs.innerHTML).toContain('fullscreen');
+            // dikhte waqt icon poora saaf
+            expect((fs.firstElementChild as HTMLElement).style.opacity).toBe('');
             expect(frame()!.style.pointerEvents).toBe('auto');
 
             // Chrome idle par chhupa → iframe pointer events nahi le, isliye
@@ -450,6 +452,15 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             });
             expect(frame()!.style.pointerEvents).toBe('none');
 
+            // Chrome chhupne par bhi plate (site ka icon dhakne wala dabba)
+            // wahin rehta hai — warna site ka apna icon jhalak jata. Sirf
+            // hamara safed icon fade hota hai.
+            const idleFs = document.querySelector('[data-testid="moviebox-fullscreen"]') as HTMLElement;
+            expect(idleFs).toBeTruthy();
+            const icon = idleFs.firstElementChild as HTMLElement;
+            expect(icon.style.opacity).toBe('0');
+            // plate ka apna koi opacity nahi hota
+            expect(idleFs.className).not.toContain('opacity');
         } finally {
             jest.useRealTimers();
         }
