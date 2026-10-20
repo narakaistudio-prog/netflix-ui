@@ -282,7 +282,7 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(container.textContent).toContain('S1 E3');
     });
 
-    it('keeps Next Episode up while the pointer is on the player, hides it when it leaves', () => {
+    it('hides Next Episode after the idle timeout, even with the pointer on the player', () => {
         jest.useFakeTimers();
         try {
             act(() => {
@@ -309,26 +309,26 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             expect(player).toBeTruthy();
             expect(wrap().style.opacity).toBe('1');
 
-            // Pointer player par hai (video/iframe par bhi) — site ke controls
-            // dikh rahe hain, to humara button bhi dikhega, chahe kitni der ho.
+            // Pointer khamoshi se video par hi hai — site ke controls 3s me
+            // gayab ho jate hain, to humara button bhi gayab.
             act(() => {
                 player!.dispatchEvent(new MouseEvent('mouseenter'));
-                jest.advanceTimersByTime(20000);
-            });
-            expect(wrap().style.opacity).toBe('1');
-
-            // Pointer player se bahar — ab dono gayab.
-            act(() => {
-                player!.dispatchEvent(new MouseEvent('mouseleave'));
-                jest.advanceTimersByTime(1500);
+                jest.advanceTimersByTime(4000);
             });
             expect(wrap().style.opacity).toBe('0');
 
-            // Wapas andar aate hi phir se dikhe.
+            // Pointer hilte hi wapas.
             act(() => {
-                player!.dispatchEvent(new MouseEvent('mouseenter'));
+                player!.dispatchEvent(new MouseEvent('mousemove'));
             });
             expect(wrap().style.opacity).toBe('1');
+
+            // Player se bahar nikal gaye — turant gayab.
+            act(() => {
+                player!.dispatchEvent(new MouseEvent('mouseleave'));
+                jest.advanceTimersByTime(1200);
+            });
+            expect(wrap().style.opacity).toBe('0');
         } finally {
             jest.useRealTimers();
         }

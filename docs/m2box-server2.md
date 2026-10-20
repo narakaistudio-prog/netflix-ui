@@ -68,17 +68,14 @@ agla episode bacha ho):
   Episode ki jagah) — `getMovieboxCrop` se dabbe ka rect nikaal kar overlay
   usi par align hota hai, root ke kinare par nahi (warna black gutter me chala
   jata tha).
-- Visibility site ke controls ke saath: **pointer player ke dabbe ke andar**
-  (video/iframe par bhi) hai to Next Episode aur episode patti dikhte rehte
-  hain — usi waqt site bhi apne controls dikhati hai. Pointer player se bahar
-  jaate hi `CHROME_HIDE_AFTER_LEAVE_MS` (900ms) me gayab.
-  (Pehle sirf 3.2s ka timer tha; iframe cross-origin hai isliye video ke andar
-  ka mousemove humein nahi milta — timer chalta rehta aur overlays gayab ho
-  jate the jabki site ke controls dikh rahe hote.)
-- Video ke dabbe me **neeche, center** me **episode ki patti** hai (site ke apne
-  controls wali line par, `EPISODE_STRIP_BOTTOM = 0.90`): `S1 • E2` ka safed
-  badge + `My Demon – <episode name>` (episode ka naam catalog ke episode
-  guide se — `seasons[].episodes[].name`). Ye bhi chrome ke saath gayab.
+- Visibility site ke controls jaisi: yahan milne wali **har activity** par
+  overlays dikhte hain aur timer reset hota hai (pointer ka player par
+  aana/ghoomna, click, scroll, key, pointer ka frame me jaana, frame par
+  click/focus). **3.2s tak kuch na ho to gayab** — chahe pointer khamoshi se
+  video par hi khada ho.
+  (Iframe cross-origin hai isliye video ke andar lagatar mouse ghumane ka
+  event humein nahi milta; us halat me overlays 3.2s baad chhup jate hain aur
+  pointer ke bahar-nikal-kar-andar-aane ya click par turant wapas.)
 - `MovieboxPagePlayer` khud hi agla episode khol deta hai (`episode + 1`,
   wahi `detailSe`/`detailEp` watch page — iframe dobara mount hota hai).
 - Parent ko `onEpisodeChange({ season, episode })` se batata hai, taaki

@@ -305,23 +305,27 @@ export function MovieboxPagePlayer({
     }, []);
 
     /**
-     * Player chrome (Next Episode + episode patti) — site ke controls ke saath.
+     * Player chrome (Next Episode + episode patti) — site ke apne controls
+     * jaisa: hilla nahi to gayab.
      *
      * Iframe cross-origin hai: video ke andar ka mousemove humein **nahi**
-     * milta. Isliye sirf timer par bharosa karna galat tha — user video par
-     * mouse ghumata rehta (site ke controls dikhte rehte) par hamara timer
-     * chalta rehta aur Next Episode / patti gayab ho jate the.
+     * milta (browser share nahi karta), aur site ke controls andar chalti
+     * hain. Isliye sync ka tareeka ye hai:
      *
-     * Ab do haalat:
-     *   - **Pointer player ke andar** (video/iframe par bhi): overlays dikhte
-     *     rehte hain. Isi waqt site bhi apne controls dikhati hai, kyunki wo
-     *     mousemove par dikhte hain.
-     *   - **Pointer player se bahar**: chup-chaap 3.2s → gayab (site ke
-     *     controls bhi tab hi dikhte hain jab pointer andar ho).
+     *   - Yahan milne wali **har activity** par overlays dikhte hain aur
+     *     timer dobara chalu ho jata hai: pointer player par aana/ghoomna,
+     *     click, scroll, key, aur pointer ka frame ke andar jaana
+     *     (`mouseout` relatedTarget = null) ya frame ko focus (click).
+     *   - **`CHROME_IDLE_MS` (3.2s) tak kuch na ho** to gayab — bilkul site
+     *     ke controls ki tarah, chahe pointer khamoshi se video par hi khada
+     *     ho. (Pehle pointer "andar" hone par hum kabhi nahi chhupate the,
+     *     isliye controls gayab hone ke baad bhi hamara button dikhta rehta
+     *     tha — user ki latest shikayat.)
      *
-     * Pointer andar hai ya nahi — `mouseenter`/`mouseleave` root par lagte
-     * hain; iframe bhi root ke andar hai, isliye us par jaate waqt leave nahi
-     * hota (aur tab hi mousemove milna band ho jata hai).
+     * Video ke andar lagatar mouse ghumane par site ke controls dikhte hain
+     * par humein events nahi milte — us halat me ye overlays 3.2s baad chhup
+     * jate hain. Pointer ek baar bahar-nikle-andar-aaye (ya click ho) to
+     * turant wapas dikh jate hain.
      */
     useEffect(() => {
         if (!frameSrc || isSearchFrame) {
@@ -329,43 +333,32 @@ export function MovieboxPagePlayer({
             return;
         }
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+
         const doc = window.document;
         const el = rootRef.current as unknown as HTMLElement | null;
         let timer: ReturnType<typeof setTimeout> | null = null;
-        /** Pointer player ke dabbe ke andar hai (iframe par bhi). */
-        let inside = false;
+
+        const hideLater = (ms: number) => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(() => setChromeVisible(false), ms);
+        };
 
         const reveal = () => {
             setChromeVisible(true);
-            if (timer) clearTimeout(timer);
-            timer = setTimeout(() => {
-                // Pointer player par hai → site ke controls bhi dikh rahe hain,
-                // isliye chhupao mat. Bahar hai → chhupa do.
-                if (!inside) setChromeVisible(false);
-            }, CHROME_IDLE_MS);
+            hideLater(CHROME_IDLE_MS);
         };
 
         reveal();
 
-        const onEnter = () => {
-            inside = true;
-            reveal();
-        };
-        const onLeave = () => {
-            inside = false;
-            if (timer) clearTimeout(timer);
-            // Bahar nikal gaye — thoda ruk kar chhupao (warna flicker).
-            timer = setTimeout(() => setChromeVisible(false), CHROME_HIDE_AFTER_LEAVE_MS);
-        };
+        const onLeave = () => hideLater(CHROME_HIDE_AFTER_LEAVE_MS);
         /** Pointer iframe ke andar gaya — parent ko sirf ye milta hai. */
         const onOut = (event: MouseEvent) => {
-            if (!event.relatedTarget) {
-                inside = true;
-                reveal();
-            }
+            if (!event.relatedTarget) reveal();
         };
+        /** Frame par click (focus) — activity maano. */
+        const onFrameFocus = () => reveal();
 
-        el?.addEventListener('mouseenter', onEnter);
+        el?.addEventListener('mouseenter', reveal);
         el?.addEventListener('mouseleave', onLeave);
         el?.addEventListener('mousemove', reveal, { passive: true });
         el?.addEventListener('mousedown', reveal, { passive: true });
@@ -373,9 +366,11 @@ export function MovieboxPagePlayer({
         window.addEventListener('keydown', reveal);
         window.addEventListener('wheel', reveal, { passive: true });
         doc.addEventListener('mouseout', onOut);
+        doc.addEventListener('focusin', onFrameFocus);
+
         return () => {
             if (timer) clearTimeout(timer);
-            el?.removeEventListener('mouseenter', onEnter);
+            el?.removeEventListener('mouseenter', reveal);
             el?.removeEventListener('mouseleave', onLeave);
             el?.removeEventListener('mousemove', reveal);
             el?.removeEventListener('mousedown', reveal);
@@ -383,6 +378,7 @@ export function MovieboxPagePlayer({
             window.removeEventListener('keydown', reveal);
             window.removeEventListener('wheel', reveal);
             doc.removeEventListener('mouseout', onOut);
+            doc.removeEventListener('focusin', onFrameFocus);
         };
     }, [frameSrc, isSearchFrame]);
 
