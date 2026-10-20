@@ -26,6 +26,11 @@ import {
  * neeche rakhti hai) — tab iframe asli chaudai par khulta hai aur andar
  * scroll khula rehta hai.
  *
+ * Player mode me crop ka daaya kinara MovieBox ke **Resources panel** se pehle
+ * hi band ho jata hai, isliye screen par sirf player dikhta hai (episode grid,
+ * "Source: …", sab bahar). Site ki layout badal jaye to
+ * `MOVIEBOX_STAGE_PLAYER_WIDTH` (lib/moviebox.ts) dobara naap lena.
+ *
  * Do usool jo pane par rehte hain:
  *   1. Host ki height PAKKI honi chahiye (full-screen layer). Agar host apni
  *      height bachchon se banaye (auto / min-height), crop apni hi height
@@ -47,11 +52,23 @@ interface MovieboxCroppedFrameProps {
      * page nahi, search results khule hon (warna kata hua header wapas dikhta).
      */
     allowScroll?: boolean;
+    /**
+     * `player` (default) = screen par **sirf player** (MovieBox ka Resources
+     * panel bahar) — NetMirror jaisa full-bleed 16:9.
+     * `page` = poora page crop (search results ke liye).
+     */
+    mode?: 'player' | 'page';
 }
 
 const IS_WEB = Platform.OS === 'web';
 
-export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }: MovieboxCroppedFrameProps) {
+export function MovieboxCroppedFrame({
+    src,
+    title,
+    onLoad,
+    allowScroll = false,
+    mode = 'player',
+}: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
     onLoadRef.current = onLoad;
@@ -141,7 +158,7 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
                 return;
             }
 
-            const crop = getMovieboxCrop(rect.width, rect.height);
+            const crop = getMovieboxCrop(rect.width, rect.height, { resources: mode === 'page' });
             box.style.width = `${crop.frameWidth}px`;
             box.style.height = `${crop.height}px`;
             stage.style.width = `${crop.stageVisibleWidth}px`;
@@ -151,7 +168,9 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
             frame.style.left = `${-crop.cropLeft}px`;
             frame.style.width = `${crop.stageWidth}px`;
             frame.style.height = `${crop.stageVisibleHeight + crop.cropTop}px`;
-            // Mobile par episode list neeche hoti hai — scroll khula chahiye.
+            // Scroll sirf desktop player crop par band — warna user crop ke
+            // bahar wala header/grid wapas la sakta hai. Mobile par grid
+            // neeche hoti hai, isliye wahan scroll khula rehta hai.
             if (crop.stacked || allowScroll) frame.removeAttribute('scrolling');
             else frame.setAttribute('scrolling', 'no');
         };
@@ -193,7 +212,7 @@ export function MovieboxCroppedFrame({ src, title, onLoad, allowScroll = false }
             } catch {}
             host.innerHTML = '';
         };
-    }, [src, title]);
+    }, [src, title, mode, allowScroll]);
 
     if (!IS_WEB) {
         return (

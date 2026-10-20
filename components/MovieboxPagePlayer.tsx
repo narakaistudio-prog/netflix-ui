@@ -238,6 +238,7 @@ export function MovieboxPagePlayer({
                     src={frameSrc}
                     title={title}
                     allowScroll={isSearchFrame}
+                    mode={isSearchFrame ? 'page' : 'player'}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);

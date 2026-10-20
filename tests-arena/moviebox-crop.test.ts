@@ -7,6 +7,8 @@ import {
     isMovieboxUrl,
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
+    MOVIEBOX_STAGE_PLAYER_HEIGHT,
+    MOVIEBOX_STAGE_PLAYER_WIDTH,
     MOVIEBOX_STAGE_VISIBLE_HEIGHT,
     MOVIEBOX_STAGE_WIDTH,
     parseMovieboxInput,
@@ -125,30 +127,56 @@ describe('buildMovieboxPageUrl', () => {
 });
 
 describe('getMovieboxCrop', () => {
-    it('keeps the measured crop constants on desktop', () => {
+    it('keeps the measured crop constants', () => {
         expect(MOVIEBOX_STAGE_WIDTH).toBe(1536);
         expect(MOVIEBOX_STAGE_CROP_TOP).toBe(117);
         expect(MOVIEBOX_STAGE_CROP_LEFT).toBe(120);
+        // poora page mode (sirf search frame)
         expect(MOVIEBOX_STAGE_VISIBLE_HEIGHT).toBe(545);
+        // sirf player mode: 1064 × 600 ≈ 16:9
+        expect(MOVIEBOX_STAGE_PLAYER_WIDTH).toBe(1064);
+        expect(MOVIEBOX_STAGE_PLAYER_HEIGHT).toBe(600);
+        const ratio = MOVIEBOX_STAGE_PLAYER_WIDTH / MOVIEBOX_STAGE_PLAYER_HEIGHT;
+        expect(Math.abs(ratio - 16 / 9)).toBeLessThan(0.03);
     });
 
-    it('uses a fixed 1536px stage and scales it to the screen', () => {
+    it('shows only the player — Resources panel bahar reh jata hai', () => {
         const crop = getMovieboxCrop(1440, 900);
         expect(crop.stacked).toBe(false);
         expect(crop.stageWidth).toBe(1536);
-        expect(crop.stageVisibleWidth).toBe(1416);
-        expect(crop.scale).toBeCloseTo(1440 / 1416, 6);
+        // naapa gaya: page 1416 = video 1060 + 4 + panel 352 (panel ~1190 se)
+        expect(crop.stageVisibleWidth).toBe(1064);
+        expect(crop.cropLeft + crop.stageVisibleWidth).toBeLessThanOrEqual(1189);
         expect(crop.cropTop).toBe(117);
         expect(crop.cropLeft).toBe(120);
+        expect(crop.stageVisibleHeight).toBe(600);
+        expect(crop.scale).toBeCloseTo(1440 / 1064, 6);
         expect(crop.frameWidth).toBe(1440);
-        // 545 × scale
-        expect(crop.height).toBe(Math.round(545 * (1440 / 1416)));
-        expect(crop.stageVisibleHeight).toBe(545);
+        expect(crop.height).toBe(812);
     });
 
-    it('caps the visible height to the parent (fixed-height host)', () => {
+    it('keeps the whole 16:9 player at any desktop width', () => {
+        for (const width of [960, 1100, 1280, 1440, 1920]) {
+            const crop = getMovieboxCrop(width, 1200);
+            expect(crop.frameWidth).toBe(width);
+            expect(Math.abs(crop.height / crop.frameWidth - 9 / 16)).toBeLessThan(0.02);
+        }
+    });
+
+    it('contain-fits a short host so the control bar is never cut', () => {
         const crop = getMovieboxCrop(1440, 300);
         expect(crop.height).toBe(300);
+        expect(crop.frameWidth).toBe(532);
+        expect(Math.abs(crop.height / crop.frameWidth - 9 / 16)).toBeLessThan(0.02);
+    });
+
+    it('keeps the full-page crop for the search frame', () => {
+        const crop = getMovieboxCrop(1440, 900, { resources: true });
+        expect(crop.stageVisibleWidth).toBe(1416);
+        expect(crop.stageVisibleHeight).toBe(545);
+        expect(crop.scale).toBeCloseTo(1440 / 1416, 6);
+        expect(crop.frameWidth).toBe(1440);
+        expect(crop.height).toBe(Math.round(545 * (1440 / 1416)));
     });
 
     it('switches to the stacked mobile layout below 900px', () => {
@@ -157,7 +185,7 @@ describe('getMovieboxCrop', () => {
         expect(crop.scale).toBe(1);
         expect(crop.cropLeft).toBe(0);
         expect(crop.stageWidth).toBe(420);
-        // player (396×9/16) + 16 saans + 320 episode grid
+        // Mobile par side panel nahi hota: player (396×9/16) + 16 saans + grid
         expect(crop.stageVisibleHeight).toBe(Math.round((396 * 9) / 16 + 16 + 320));
         expect(crop.cropTop).toBe(104);
     });
@@ -168,12 +196,12 @@ describe('getMovieboxCrop', () => {
         expect(getMovieboxCrop(400, 800).cropTop).toBe(104);
     });
 
-    it('falls back to the desktop stage size before layout is measured', () => {
+    it('falls back to the desktop player box before layout is measured', () => {
         const crop = getMovieboxCrop(0, 0);
         expect(crop.stacked).toBe(false);
         expect(crop.frameWidth).toBe(1416);
-        expect(crop.scale).toBe(1);
-        expect(crop.height).toBe(545);
+        expect(crop.scale).toBeCloseTo(1416 / 1064, 6);
+        expect(crop.height).toBe(Math.round(600 * (1416 / 1064)));
     });
 
     it('desktop starts exactly at 900px', () => {

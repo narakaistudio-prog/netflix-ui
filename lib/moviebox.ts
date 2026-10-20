@@ -13,7 +13,13 @@
  *   header/menu ka neeche kinara   ≈ 120  →  crop top 117
  *   player ka baayein kinara       ≈ 129  →  crop left 120
  *   player/panel ka neeche kinara  ≈ 654  →  visible height 545 (117 → 662)
+ *   player ka daayein kinara       ≈ 1090 →  visible width 968 (120 → 1088)
  *   title/rating ki patti          ≈ 682  (isliye 662 par window band)
+ *
+ * Visible width 968 isliye ki **Resources panel bahar reh jaye** — player
+ * 968×545 = 16:9 hai (962–972 ke beech naapa gaya), aur uska baad hi panel
+ * shuru hota hai. Isse player poora dabba bhar deta hai (NetMirror jaisa),
+ * aur episode grid dikhta hi nahi (episode chunne ka apna UI app me hai).
  *
  * ⚠️ Ye number IFRAME KE ANDAR liye gaye screenshot se naape gaye hain.
  * Browser tab me khuli m2box.org se mat naapna — wahan site ki left sidebar
@@ -57,8 +63,29 @@ export const MOVIEBOX_STAGE_WIDTH = 1536;
 export const MOVIEBOX_STAGE_CROP_TOP = 117;
 /** Stage par baayein se kata hissa (site ki band sidebar + saans). */
 export const MOVIEBOX_STAGE_CROP_LEFT = 120;
-/** Stage par dikhne wala hissa: cropTop (117) se page-y 662 tak. */
+/** Poora page mode ka visible hissa: cropTop (117) se page-y 662 tak. */
 export const MOVIEBOX_STAGE_VISIBLE_HEIGHT = 545;
+
+/** Poora page mode ki visible width — cropLeft se stage ke kinare tak. */
+export const MOVIEBOX_STAGE_PAGE_WIDTH = MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_CROP_LEFT;
+
+/**
+ * "Sirf player" mode ka dabba — 1064 × 600 (≈16:9).
+ *
+ * Stage par naap (20 Oct 2026, live build ka 1917px screenshot + guide):
+ *
+ *   page 1416 units = video 1060 + saans ~4 + **Resources panel 352**
+ *   video 1060 × 596 (16:9), stage-x 129 → 1189, stage-y 120 → 716
+ *
+ * Isliye player ka crop x 120 → 1184, y 117 → 717: video poora andar,
+ * panel (≈1190 se shuru) bilkul bahar, aur player ke apne controls (jo video
+ * ke bottom par overlay hote hain) bhi andar. Screen par sirf player.
+ *
+ * Poora page mode (Resources panel ke saath) sirf **search frame** ke liye
+ * hai: wahan panel ki jagah search results / episode grid dekhne hote hain.
+ */
+export const MOVIEBOX_STAGE_PLAYER_WIDTH = 1064;
+export const MOVIEBOX_STAGE_PLAYER_HEIGHT = 600;
 
 /** Iframe sandbox — `allow-top-navigation` KABHI nahi (tab hijack). */
 export const MOVIEBOX_FRAME_SANDBOX =
@@ -289,31 +316,64 @@ export function buildMovieboxPageUrl(
  * ka kaat thoda kam, aur unchai = player + saans + episode grid ki jagah.
  * Wahan andar scroll khula rehta hai (warna episodes tak pahunchenge kaise).
  */
-export function getMovieboxCrop(outerWidth: number, outerHeight: number): MovieboxCrop {
+export interface MovieboxCropOptions {
+    /**
+     * `false` (default) = **sirf player** — Resources panel bahar, dabba 16:9.
+     * `true` = purana poora page crop (Resources panel ke saath); search page
+     * ke liye, jahan episode grid ke bajaye results dekhne hote hain.
+     */
+    resources?: boolean;
+}
+
+/**
+ * Crop ka naap-tol.
+ *
+ * Desktop: iframe hamesha 1536px "stage" par render hota hai (site ka asli
+ * desktop layout), aur dikhne wala dabba stage ke ek hisse par set hota hai:
+ *
+ *   - player mode : x 120 → 1184 (1064 wide), y 117 → 717 (600 tall)
+ *   - page mode   : x 120 → 1536 (1416 wide), y 117 → 662 (545 tall)
+ *
+ * Phir poora stage `transform: scale()` se dabbe me fit kiya jata hai
+ * (`contain` — chaudi par lambai kam ho to bhi player katta nahi).
+ */
+export function getMovieboxCrop(
+    outerWidth: number,
+    outerHeight: number,
+    options: MovieboxCropOptions = {},
+): MovieboxCrop {
     const w = outerWidth > 0 ? outerWidth : 1416;
     const stacked = w < 900;
+    const resources = options.resources === true;
 
     if (!stacked) {
-        const stageVisibleWidth = MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_CROP_LEFT;
-        const scale = w / stageVisibleWidth;
-        const wanted = MOVIEBOX_STAGE_VISIBLE_HEIGHT * scale;
-        const height = outerHeight > 0 ? Math.min(wanted, outerHeight) : wanted;
+        const stageVisibleWidth = resources ? MOVIEBOX_STAGE_PAGE_WIDTH : MOVIEBOX_STAGE_PLAYER_WIDTH;
+        const stageVisibleHeight = resources
+            ? MOVIEBOX_STAGE_VISIBLE_HEIGHT
+            : MOVIEBOX_STAGE_PLAYER_HEIGHT;
+        // Contain: width aur height dono me fit — chhote dabbe me bhi player
+        // ka koi hissa (control bar / fullscreen button) kata nahi.
+        const byWidth = w / stageVisibleWidth;
+        const scale = outerHeight > 0 ? Math.min(byWidth, outerHeight / stageVisibleHeight) : byWidth;
         return {
-            frameWidth: Math.round(w),
+            frameWidth: Math.round(stageVisibleWidth * scale),
             cropTop: MOVIEBOX_STAGE_CROP_TOP,
             cropLeft: MOVIEBOX_STAGE_CROP_LEFT,
-            height: Math.round(height),
+            height: Math.round(stageVisibleHeight * scale),
             stacked,
             stageWidth: MOVIEBOX_STAGE_WIDTH,
             scale,
             stageVisibleWidth,
-            stageVisibleHeight: MOVIEBOX_STAGE_VISIBLE_HEIGHT,
+            stageVisibleHeight,
         };
     }
 
     const cropTop = w >= 768 ? 112 : w >= 480 ? 108 : 104;
     const playerW = Math.max(0, w - 24);
     const playerH = (playerW * 9) / 16;
+    // Mobile par side panel hota hi nahi — Resources grid player ke **neeche**
+    // stacked hota hai, aur episode chunne ke liye wahi ek raasta hai. Isliye
+    // narrow screen par poora page (player + grid) hi rehta hai.
     const wanted = playerH + 16 + 320;
     const height = outerHeight > 0 ? Math.min(wanted, outerHeight) : wanted;
     return {
@@ -325,7 +385,7 @@ export function getMovieboxCrop(outerWidth: number, outerHeight: number): Movieb
         stageWidth: Math.round(w),
         scale: 1,
         stageVisibleWidth: Math.round(w),
-        stageVisibleHeight: Math.round(wanted),
+        stageVisibleHeight: Math.round(height),
     };
 }
 

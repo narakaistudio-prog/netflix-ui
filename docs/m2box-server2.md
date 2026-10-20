@@ -1,7 +1,8 @@
 # Server 2 — M2Box (MovieBox) cropped player
 
 > TL;DR: MovieBox embed nahi deta. Uska **poora watch page** iframe me kholo,
-> aur dabbe ko aise kaato ki screen par sirf **player + episode list** bache.
+> aur dabbe ko aise kaato ki screen par sirf **player** bache — site ka header,
+> sidebar aur "Resources" (episode grid) panel sab bahar.
 > Desktop par iframe ek **fixed 1536px stage** par render karta hai aur stage
 > `transform: scale()` se screen ke hisaab se chhoti/badi hoti hai — isliye
 > kaat har screen par ek hi jagah padta hai.
@@ -35,10 +36,17 @@ Naap (asli screenshots par pixel-naap, 20 Oct 2026 — Demon Slayer, 26 eps):
 | `MOVIEBOX_STAGE_WIDTH` | 1536 | Site ka layout isi chaudai par waisa rehta hai jaisa asli site par (episode guide 5-column chhota). |
 | `MOVIEBOX_STAGE_CROP_TOP` | 117 | Header + menu kaat (player page-y 120 se shuru hota hai). |
 | `MOVIEBOX_STAGE_CROP_LEFT` | 120 | Baayein ka kaat (iframe ke andar player 129 se shuru hota hai). |
-| `MOVIEBOX_STAGE_VISIBLE_HEIGHT` | 545 | Window page-y 117 → 662: player/panel ke 8px neeche, title (≈682) se 20px upar. |
+| `MOVIEBOX_STAGE_PLAYER_WIDTH` | 1064 | **Sirf player**: x 120 → 1184. Page par player 129 → 1189 (16:9), panel 1190 se — yaani panel bilkul bahar. |
+| `MOVIEBOX_STAGE_PLAYER_HEIGHT` | 600 | Window y 117 → 717: player (120 → 716) poora, uske apne controls bhi. 1064 × 600 ≈ 16:9. |
+| `MOVIEBOX_STAGE_VISIBLE_HEIGHT` | 545 | **Poora page** mode (sirf search frame): y 117 → 662. |
 
-Scale = `dabbe ki chaudai / 1416` (`1536 − 120`), dikhne wali unchai =
-`545 × scale`, par host ki unchai se zyada kabhi nahi.
+Desktop scale = `min(chaudai / visibleWidth, unchai / visibleHeight)` — yaani
+`contain`: jo dabba chhota pad jaye usme bhi player ka koi hissa (control bar,
+fullscreen button) nahi katta. Phir `dikhne wali chaudai × scale` hi dabbe ki
+chaudai banti hai.
+
+Mode ka faisla `MovieboxCroppedFrame` ke `mode` prop se hota hai:
+`player` (default — watch page, panel bahar) aur `page` (search results frame).
 
 **Mobile (<900px):** site episode list player ke **neeche** rakhti hai, isliye
 stage nahi banta — iframe asli chaudai par (scale 1), upar ka kaat 112/108/104
@@ -257,6 +265,9 @@ referrerpolicy="no-referrer-when-downgrade"
 4. **Browser tab se naapna** — tab me sidebar khuli hoti hai (player 245 se),
    iframe me band (129 se). Naap hamesha iframe ke andar ke screenshot se.
 5. **Desktop par andar scroll khula** — user kata hua menu/title dekh leta hai.
+6. **Panel ko CSS se chhupane ki koshish** — frame cross-origin hai (m2box.org),
+   uske DOM tak pahunch nahi hai; isliye panel sirf crop se hi bahar rehta hai
+   (`MOVIEBOX_STAGE_PLAYER_WIDTH`).
 
 ## Site layout badle to dobara naapna
 
@@ -264,18 +275,23 @@ referrerpolicy="no-referrer-when-downgrade"
    (browser tab me khuli m2box.org ka **nahi**).
 2. Screenshot me player/panel ka top, left, bottom aur title ki pehli line
    dhoondo.
-3. `stagePx = screenshotPx × (1416 / screenshot me frame ki chaudai)`.
-4. Naye constants: `CROP_TOP = playerTop − 3`, `CROP_LEFT = playerLeft − 9`,
-   `VISIBLE_HEIGHT = (playerBottom + 8) − CROP_TOP`, aur `CROP_TOP +
-   VISIBLE_HEIGHT` title se 15–20px upar rakho.
-5. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
-   (wahi sabse pehle tootti hai).
+3. Frame me **do** cheezein naapo: player ka daaya kinara aur "Resources"
+   panel ka baaya kinara (panel ka background `#28292E` jaisa flat grey hota
+   hai — rang badalne wali jagah hi kinara hai).
+4. `stagePx = screenshotPx × (visibleWidth / screenshot me frame ki chaudai)`
+   (`visibleWidth` = 1064 player mode / 1416 page mode).
+5. Naye constants: `CROP_TOP = playerTop − 3`, `CROP_LEFT = playerLeft − 9`,
+   `PLAYER_WIDTH = panelLeft − CROP_LEFT − 4` (4px saans), aur
+   `PLAYER_HEIGHT = CROP_TOP se playerBottom + 2 tak` — player ke apne controls
+   video ke bottom par overlay hote hain, isliye bottom tak poora chahiye.
+6. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
+   (panel sabse pehle wahi chaudi karta hai).
 
 ## Hadein
 
-- **Bahut lambi series (40–50+ eps):** episode panel player se lamba ho jata hai
-  aur neeche ke episodes window ke bahar reh jate hain (scroll band hai). Us
-  halat me `/moviebox` page se poora page khol lo.
+- **Episode chunna:** player mode me "Resources" panel jaan-boojh kar bahar hai
+  (screen par sirf player). Episode change app ke apne episode selector se hota
+  hai (URL me `detailSe`/`detailEp`), ya `/moviebox` page se poora page khol lo.
 - **Framing kabhi bhi band ho sakti hai:** jis din M2Box `X-Frame-Options`/CSP
   laga dega, seedha frame blank hoga — tab proxy (`/api/moviebox-frame`) ya
   naya tab bacha hua rasta hai.

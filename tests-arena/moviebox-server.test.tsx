@@ -22,6 +22,8 @@ import { MovieboxPagePlayer } from '../components/MovieboxPagePlayer';
 import {
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
+    MOVIEBOX_STAGE_PLAYER_HEIGHT,
+    MOVIEBOX_STAGE_PLAYER_WIDTH,
     MOVIEBOX_STAGE_VISIBLE_HEIGHT,
     MOVIEBOX_STAGE_WIDTH,
 } from '../lib/moviebox';
@@ -89,18 +91,19 @@ describe('MovieboxCroppedFrame', () => {
         expect(iframe!.style.left).toBe(`-${MOVIEBOX_STAGE_CROP_LEFT}px`);
         expect(iframe!.style.width).toBe(`${MOVIEBOX_STAGE_WIDTH}px`);
         expect(iframe!.style.height).toBe(
-            `${MOVIEBOX_STAGE_VISIBLE_HEIGHT + MOVIEBOX_STAGE_CROP_TOP}px`,
+            `${MOVIEBOX_STAGE_PLAYER_HEIGHT + MOVIEBOX_STAGE_CROP_TOP}px`,
         );
 
-        // Stage scales to the screen, so the crop lands in the same place everywhere
-        const scale = 1440 / (MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_CROP_LEFT);
-        expect(stage()!.style.width).toBe(`${MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_CROP_LEFT}px`);
-        expect(stage()!.style.height).toBe(`${MOVIEBOX_STAGE_VISIBLE_HEIGHT}px`);
+        // Stage scales to the screen, so the crop lands in the same place everywhere.
+        // Sirf player: 1056 wide (Resources panel kabhi andar nahi aata).
+        const scale = 1440 / MOVIEBOX_STAGE_PLAYER_WIDTH;
+        expect(stage()!.style.width).toBe(`${MOVIEBOX_STAGE_PLAYER_WIDTH}px`);
+        expect(stage()!.style.height).toBe(`${MOVIEBOX_STAGE_PLAYER_HEIGHT}px`);
         expect(stage()!.style.transform).toBe(`scale(${scale})`);
 
-        // Visible dabba: full width, height = 545 × scale (never taller)
+        // Visible dabba: full width, 16:9 (545 × scale)
         expect(box()!.style.width).toBe('1440px');
-        expect(box()!.style.height).toBe(`${Math.round(MOVIEBOX_STAGE_VISIBLE_HEIGHT * scale)}px`);
+        expect(box()!.style.height).toBe(`${Math.round(MOVIEBOX_STAGE_PLAYER_HEIGHT * scale)}px`);
         expect(box()!.style.overflow).toBe('hidden');
     });
 
@@ -199,7 +202,7 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             'https://m2box.org/movies/my-demon-hindi-SfaaEeePcfa?id=8598850449111924848',
         );
         expect(box()!.style.height).toBe(
-            `${Math.round(MOVIEBOX_STAGE_VISIBLE_HEIGHT * (1440 / (MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_CROP_LEFT)))}px`,
+            `${Math.round(MOVIEBOX_STAGE_PLAYER_HEIGHT * (1440 / MOVIEBOX_STAGE_PLAYER_WIDTH))}px`,
         );
         const stored = JSON.parse(localStorage.getItem('netflix-moviebox-links-v1') || '{}');
         expect(stored['tmdb:1:movie'].url).toBe(PAGE);
