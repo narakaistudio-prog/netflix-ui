@@ -64982,6 +64982,162 @@
    }
   ]
  },
+ "112888": {
+  "seasons": [
+   {
+    "season_number": 1,
+    "name": "Season 1",
+    "overview": "",
+    "episode_count": 16,
+    "episodes": [
+     {
+      "season": 1,
+      "episode": 1,
+      "name": "The Errand Girl",
+      "overview": "Kids hate her just because she’s ugly. And for the same reason, her crush cruelly rejects her confession. Thinking of ending her life, Ju Kyung stands at the edge of a rooftop. That’s when Su Ho jumps in to save her. Days later, Ju Kyung comes across some mak…",
+      "runtime": 87,
+      "still": "https://image.tmdb.org/t/p/w500/3a9GqnAjzfBlBjiERXxSL5KrprJ.jpg",
+      "air_date": "2020-12-09"
+     },
+     {
+      "season": 1,
+      "episode": 2,
+      "name": "With or Without Make-Up",
+      "overview": "As soon as Su Ho sees Ju Kyung at the comic book store, he recognizes that it’s the same girl he saw on the rooftop. He’s kind of disappointed that she doesn’t seem to remember him. Ju Kyung is anxious to see how Su Ho will react at school the next day, but s…",
+      "runtime": 85,
+      "still": "https://image.tmdb.org/t/p/w500/scJfGyeBGmdWhIVJtYeaTSWaoUU.jpg",
+      "air_date": "2020-12-10"
+     },
+     {
+      "season": 1,
+      "episode": 3,
+      "name": "Revenge Is a Dish Best Served Cold",
+      "overview": "It seems Su Ho knows that the no makeup Ju Kyung at the comic store is the same person as the made up Ju Kyung at school. Ju Kyung feels anxious that he might tell everyone about how ugly she actually is. She promises him that she’ll do anything he asks, but…",
+      "runtime": 83,
+      "still": "https://image.tmdb.org/t/p/w500/bPvwPJ4qZTRGzR4PUYlwfa8scMQ.jpg",
+      "air_date": "2020-12-16"
+     },
+     {
+      "season": 1,
+      "episode": 4,
+      "name": "Ju Kyung Goes on a Blind Date",
+      "overview": "Ju Kyung prepares to go on a blind date. She asks her mother for help at her hair salon, but then Seo Jun steps into the salon when Ju Kyung’s not wearing makeup on her face. She tries to avoid meeting him. Meanwhile, Su Ho participates in a maths competition…",
+      "runtime": 83,
+      "still": "https://image.tmdb.org/t/p/w500/kI4xtpjolAAOeFO0x364E440Uh6.jpg",
+      "air_date": "2020-12-17"
+     },
+     {
+      "season": 1,
+      "episode": 5,
+      "name": "If He Has Feelings for Me",
+      "overview": "Su Ho goes all the way to meet Ju Kyung late at night with a lame excuse. Ju Kyung starts to wonder if Su Ho has feelings for her. She asks him out. Meanwhile, a first-year student is bullied by her classmates for her ugly looks. This reminds Ju Kyung of her…",
+      "runtime": 82,
+      "still": "https://image.tmdb.org/t/p/w500/83XxlOW2TzbweRbrHlhqzga6ruD.jpg",
+      "air_date": "2020-12-23"
+     },
+     {
+      "season": 1,
+      "episode": 6,
+      "name": "Ju Kyung Runs into Bullies",
+      "overview": "Su Ho’s father visits Saebom High School to meet Su Ho’s teacher. Everyone at school gets surprised by the fact that Su Ho’s father is actor Lee Joo Hun. Meanwhile, Ju Kyung runs into the bullies who used to harass her before transferring to Saebom High Schoo…",
+      "runtime": 82,
+      "still": "https://image.tmdb.org/t/p/w500/cZSvso71vRIsP8AphPy2k7YOiyd.jpg",
+      "air_date": "2020-12-24"
+     },
+     {
+      "season": 1,
+      "episode": 7,
+      "name": "Mutual Feelings of Love",
+      "overview": "Ju Kyung’s heart doesn’t seem to calm down whenever she sees Su Ho. Unfortunately, she finds out that there is already someone whom Su Ho likes. Devastated and disappointed, Ju Kyung begins to naturally avoid him. Meanwhile, Hyung Jin, the ace baseball player…",
+      "runtime": 82,
+      "still": "https://image.tmdb.org/t/p/w500/caHAHEIU2LUgz2z2q6C0xoSOBl7.jpg",
+      "air_date": "2021-01-06"
+     },
+     {
+      "season": 1,
+      "episode": 8,
+      "name": "Misunderstanding",
+      "overview": "The students of Saebom High School go on a school trip. Su Ho makes up his mind to tell Ju Kyung that he has feelings for her and even buys jewellery for her. However, Ju Kyung gets heartbroken, thinking that Su Ho likes Soo Jin. Meanwhile, Hee Kyung gets tra…",
+      "runtime": 80,
+      "still": "https://image.tmdb.org/t/p/w500/qdivcSIQTRkGX8vTHwXI64fmXLY.jpg",
+      "air_date": "2021-01-07"
+     },
+     {
+      "season": 1,
+      "episode": 9,
+      "name": "Secret Boyfriend",
+      "overview": "Not long after reassuring each other’s feelings, Ju Kyung and Su Ho initiate a movie-like plan to keep their relationship secret at school. However, doing so makes it difficult for them to enjoy a typical ordinary date. Su Ho even puts up with embarrassing mo…",
+      "runtime": 86,
+      "still": "https://image.tmdb.org/t/p/w500/au2E330f1kiWqySxNjqkWAsodH5.jpg",
+      "air_date": "2021-01-13"
+     },
+     {
+      "season": 1,
+      "episode": 10,
+      "name": "Between Love and Friendship",
+      "overview": "Ju Kyung still doesn’t want to let her friends know that her boyfriend is Su Ho. Soo Jin tells Ju Kyung that she plans to tell Su Ho that she has feelings for him. Ju Kyung gets torn between love and friendship. Meanwhile, Su Ho and Seo Jun happen to meet at…",
+      "runtime": 76,
+      "still": "https://image.tmdb.org/t/p/w500/b7D9EvIqm6GaK7r55HvvYKvJ6OB.jpg",
+      "air_date": "2021-01-14"
+     },
+     {
+      "season": 1,
+      "episode": 11,
+      "name": "The Truth About Se Yeon",
+      "overview": "After stumbling upon the truth behind Se Yeon’s death, Su Ho gets into an accident as he runs out of his dad’s office, and Seo Jun also gets involved while trying to save Su Ho. Hospitalized in the same room, Soo Ho and Seo Jun get to know each other a little…",
+      "runtime": 75,
+      "still": "https://image.tmdb.org/t/p/w500/l326CzKfL34rhWp8iSS0J19c5Oo.jpg",
+      "air_date": "2021-01-20"
+     },
+     {
+      "season": 1,
+      "episode": 12,
+      "name": "Transfer Student",
+      "overview": "At school, Su Ho comes back to his class, and Ju Kyung runs into Hye Min who just transferred. Hye Min asks Ju Kyung if they know each other, but Ju Kyung denies and keeps avoiding her at school. Meanwhile, Soo Jin and Se Mi make a deal, and Se Mi shares with…",
+      "runtime": 74,
+      "still": "https://image.tmdb.org/t/p/w500/lQgJRwG3K0NKon5uLGkNHIH5IYn.jpg",
+      "air_date": "2021-01-21"
+     },
+     {
+      "season": 1,
+      "episode": 13,
+      "name": "Only Fools Judge Others",
+      "overview": "A video of Ju Kyung sends the whole school in turmoil. When Ju Kyung finds out that her past from the old school has been exposed, she runs away. However, it doesn’t bother Su Ho a bit what others are saying. The only thing that worries him is whether Ju Kyun…",
+      "runtime": 80,
+      "still": "https://image.tmdb.org/t/p/w500/qw7x4KqMbbm2FLwIKy6oKnpAe8E.jpg",
+      "air_date": "2021-01-27"
+     },
+     {
+      "season": 1,
+      "episode": 14,
+      "name": "Trip to the Sea",
+      "overview": "Ju Kyung comes back to school and makes up with Soo Ah. Everyone at school finally finds out that Soo Jin was the one who uploaded the photos and videos of Ju Kyung being bullied. Meanwhile, Soo Ho and Ju Kyung go on a trip to the sea, but Su Ho forgets to br…",
+      "runtime": 81,
+      "still": "https://image.tmdb.org/t/p/w500/swxXz5sFywkY5Neuoxv351Vms6B.jpg",
+      "air_date": "2021-01-28"
+     },
+     {
+      "season": 1,
+      "episode": 15,
+      "name": "Unexpected Encounter",
+      "overview": "Ju Kyung and Su Ho have no other option but to accept the breakup. After, Ju Kyung stumbles upon the fact that Su Ho is the very boy she met at the Prince Comics when she was young and struggles even more. Meanwhile, Seo Jun finds it difficult to hide feeling…",
+      "runtime": 80,
+      "still": "https://image.tmdb.org/t/p/w500/qblD956EZj0nYINLBSmbxzSPZb4.jpg",
+      "air_date": "2021-02-03"
+     },
+     {
+      "season": 1,
+      "episode": 16,
+      "name": "Happy Ending",
+      "overview": "Ju Kyung and Su Ho finally confirm that their feelings for one another haven't changed after all these years. After shedding tears from their reunion, they start their happy relationship, which is more grown-up from their high school days. Meanwhile, Seo Jun,…",
+      "runtime": 81,
+      "still": "https://image.tmdb.org/t/p/w500/36nhKe9zIKeSCZitc3ot0f5fwHR.jpg",
+      "air_date": "2021-02-04"
+     }
+    ]
+   }
+  ]
+ },
  "113240": {
   "seasons": [
    {
@@ -96158,135 +96314,6 @@
       "runtime": 29,
       "still": "https://image.tmdb.org/t/p/w500/unGZyAAKFUZiDYtE87G3aBT3UVI.jpg",
       "air_date": "2024-08-29"
-     }
-    ]
-   }
-  ]
- },
- "239779": {
-  "seasons": [
-   {
-    "season_number": 1,
-    "name": "Season 1",
-    "overview": "",
-    "episode_count": 13,
-    "episodes": [
-     {
-      "season": 1,
-      "episode": 1,
-      "name": "A Goddess descends?!",
-      "overview": "Jugyeong, who is bullied for being ugly, sees a new opportunity when she changes schools. With the help of makeup, she creates a new identity, but a new student seems to know her secret …",
-      "runtime": 20,
-      "still": "https://image.tmdb.org/t/p/w500/fekSKRH6uxndjwqUoemA0ZSTdzP.jpg",
-      "air_date": "2024-08-07"
-     },
-     {
-      "season": 1,
-      "episode": 2,
-      "name": "I'm totally screwed!",
-      "overview": "Things are not going well for Jugyeong. In order to keep her secret, Suho makes her his personal assistand and errand girl. And if that wasn't enough, she also runs into her old bullies ...",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/eYwLrZGyXfPefYQCTA2aGzk9ASp.jpg",
-      "air_date": "2024-08-14"
-     },
-     {
-      "season": 1,
-      "episode": 3,
-      "name": "The Jerk and the Troublemaker",
-      "overview": "A school assignment forces Jugyeong to reach out to Seojun Han, a renowned troublemaker, who turns out to be everything but cooperative. Besides that, Jugyeong faces another challenge: transforming the school choir‘s lead singer with the power of makeup!",
-      "runtime": 20,
-      "still": "https://image.tmdb.org/t/p/w500/p5yRxX6ssILLVH5pMgqwaz9Eou1.jpg",
-      "air_date": "2024-08-21"
-     },
-     {
-      "season": 1,
-      "episode": 4,
-      "name": "Danger never sleeps",
-      "overview": "The Sebom goddess competition starts off with a dance mission that only ignites Jugyeongs wish to quit altogether. Her fellow candidate Sujin suddenly arranges a blind date for her with a boy from another school. The date goes smoothly. Almost too smoothly.",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/72WFnZcM6KVQXzedrvd82iqPStr.jpg",
-      "air_date": "2024-08-28"
-     },
-     {
-      "season": 1,
-      "episode": 5,
-      "name": "I thought becoming pretty would make a difference",
-      "overview": "Seojun and Suho catch Hyunwoo red-handed, but Jugyeong‘s blind date points the finger at someone else. Shocked about said accusations, Jugyeong decides to confronts the friend who seemingly tries to sabotage her.",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/w8DCfL1qQIq0gIRViWmfqMWc0nR.jpg",
-      "air_date": "2024-09-04"
-     },
-     {
-      "season": 1,
-      "episode": 6,
-      "name": "This Too Shall Pass Away",
-      "overview": "With Suho slowly recovering from his accident, Jugyeong finds out what happened between him and Seojun. But she also has to keep up with her dance mission, which turns out to be harder than anticipated. Luckily, someone steps in to help her out.",
-      "runtime": 18,
-      "still": "https://image.tmdb.org/t/p/w500/lNMt1efMPxLnOFyy0ut04szVGJW.jpg",
-      "air_date": "2024-09-11"
-     },
-     {
-      "season": 1,
-      "episode": 7,
-      "name": "So what If I like her?",
-      "overview": "After a successful first mission, Jugyeong decides to relax and help out Seojun with his part-time job at a festival. Everything is going well, until Suho shows up and a small plushie ignites a fierce battle between the two boys.",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/hjvcTJpa2QFqOXkDulgOMjHkQBt.jpg",
-      "air_date": "2024-09-18"
-     },
-     {
-      "season": 1,
-      "episode": 8,
-      "name": "Stop lying to yourself",
-      "overview": "After seeing Suho together with Sujin, Jugyeong finds herself avoiding him at all costs, The second mission also calls for her attention and Jugyeong gets help from no other than Seojun.",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/6XzmF4ly98hEDVf2VL6s8Na3oC2.jpg",
-      "air_date": "2024-09-25"
-     },
-     {
-      "season": 1,
-      "episode": 9,
-      "name": "Truth or dare",
-      "overview": "Kang confronts Sujin at school, accusing her of stealing Jugyeong's mission outfit. The girls try to strategize against Sujin at a sleepover. Jugyeong, fearing that her friends will see her face without makeup, struggles with her own insecurities. Will she sh…",
-      "runtime": 18,
-      "still": "https://image.tmdb.org/t/p/w500/cmph9p4k1f8csjr5XiIXhlGVNPn.jpg",
-      "air_date": "2024-10-02"
-     },
-     {
-      "season": 1,
-      "episode": 10,
-      "name": "I will confess",
-      "overview": "While leaving the pyjama party, Suho and Seojun talk about their feelings for Jugyeong. While Jugyeong is planning a confession herself, Suho surprises her by asking her out for a movie date. But the date doesn‘t go as smoothly as planned.",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/4hYHjggWH1OmFO7TA4m3YFYIZ10.jpg",
-      "air_date": "2024-10-09"
-     },
-     {
-      "season": 1,
-      "episode": 11,
-      "name": "Goddess Livestream",
-      "overview": "The day has come: it‘s time for the final mission! The goddess candidates have to gather votes during a livestream. Disheartened from the rumors and the recent dating news, Jugyeong decides to quit, but her friends try everything to change her mind.",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/zhdUheTopeI5ZTxQ3zZHFSH3ZJZ.jpg",
-      "air_date": "2024-10-16"
-     },
-     {
-      "season": 1,
-      "episode": 12,
-      "name": "Goddess Livestream 2",
-      "overview": "The final mission of the goddess election turned into a warzone. In her weakest moment, Jugyeong is getting backstabbed by her one of her dearest friend who teamed up with her former bully Semi to expose her bare face. But is this really the plan?",
-      "runtime": 19,
-      "still": "https://image.tmdb.org/t/p/w500/m305jwiOPGyk1fhlJnFasqHSr0B.jpg",
-      "air_date": "2024-10-23"
-     },
-     {
-      "season": 1,
-      "episode": 13,
-      "name": "Our first love",
-      "overview": "The Goddess election is over and Jugyeong finally has time to enjoy her remaining time in high school. But there is one thing, she still has to do: tell Suho how she feels.",
-      "runtime": 18,
-      "still": "https://image.tmdb.org/t/p/w500/rgXYldSo9YPZnPe8gY2C2rJiVaw.jpg",
-      "air_date": "2024-10-30"
      }
     ]
    }
