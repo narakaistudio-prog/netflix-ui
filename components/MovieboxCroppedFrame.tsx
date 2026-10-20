@@ -58,6 +58,19 @@ interface MovieboxCroppedFrameProps {
      * `page` = poora page crop (search results ke liye).
      */
     mode?: 'player' | 'page';
+    /**
+     * Poora player dabba khud fullscreen hai (video ne fullscreen maanga to
+     * humne iframe ke bajaye apna dabba fullscreen kar diya). Us waqt crop
+     * band — video poore dabbe me.
+     */
+    fullscreen?: boolean;
+    /**
+     * Andar ka video fullscreen hua (M2Box ka fullscreen button). Parent ise
+     * apne poore player dabbe ko fullscreen karne ke liye use karta hai —
+     * warna browser sirf iframe dikhata hai aur hamare overlays (Next
+     * Episode / episode patti) gayab ho jate hain.
+     */
+    onFrameFullscreen?: () => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -68,10 +81,14 @@ export function MovieboxCroppedFrame({
     onLoad,
     allowScroll = false,
     mode = 'player',
+    fullscreen = false,
+    onFrameFullscreen,
 }: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
     onLoadRef.current = onLoad;
+    const onFrameFullscreenRef = useRef(onFrameFullscreen);
+    onFrameFullscreenRef.current = onFrameFullscreen;
 
     useEffect(() => {
         if (!IS_WEB) return;
@@ -144,7 +161,10 @@ export function MovieboxCroppedFrame({
             const frameIsFullscreen =
                 !!fs && fs !== doc.documentElement && (fs === frame || frame.contains(fs));
 
-            if (frameIsFullscreen) {
+            // Poora player dabba fullscreen hai (ya video ne fullscreen
+            // maanga) → crop band, video dabba bhar de. Overlays (Next
+            // Episode / episode patti) tab bhi upar dikhte rehte hain.
+            if (fullscreen || frameIsFullscreen) {
                 box.style.width = '100%';
                 box.style.height = '100%';
                 stage.style.width = '100%';
@@ -188,6 +208,15 @@ export function MovieboxCroppedFrame({
         // phir rAF + 80ms + 250ms par dobara naapo.
         const timers: Array<ReturnType<typeof setTimeout>> = [];
         const onFullscreenChange = () => {
+            // Video ne (iframe ke andar se) fullscreen maanga — us waqt
+            // browser sirf iframe dikhata hai. Isliye parent ko bolo ki apna
+            // poora player dabba fullscreen kare, taaki hamare overlays bhi
+            // dikhein. (Document already fullscreen hai, isliye request
+            // fullscreen ko naya user gesture nahi chahiye.)
+            const current = doc.fullscreenElement as Element | null;
+            if (current && current !== doc.documentElement && (current === frame || frame.contains(current))) {
+                onFrameFullscreenRef.current?.();
+            }
             apply();
             if (typeof requestAnimationFrame === 'function') requestAnimationFrame(apply);
             timers.push(setTimeout(apply, 80));
@@ -212,7 +241,7 @@ export function MovieboxCroppedFrame({
             } catch {}
             host.innerHTML = '';
         };
-    }, [src, title, mode, allowScroll]);
+    }, [src, title, mode, allowScroll, fullscreen]);
 
     if (!IS_WEB) {
         return (

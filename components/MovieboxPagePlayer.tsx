@@ -123,6 +123,9 @@ export function MovieboxPagePlayer({
     const [rootSize, setRootSize] = useState({ width: 0, height: 0 });
     /** Site ke controls jaisa: idle par gayab. */
     const [chromeVisible, setChromeVisible] = useState(true);
+    /** Poora player dabba (overlays ke saath) fullscreen hai. */
+    const [ownFullscreen, setOwnFullscreen] = useState(false);
+    const rootRef = useRef<View | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -237,6 +240,19 @@ export function MovieboxPagePlayer({
      */
     const overlayBox = useMemo(() => {
         if (!rootSize.width || !rootSize.height) return null;
+        if (ownFullscreen) {
+            // Fullscreen me crop band hai — video poore dabbe me. Isliye
+            // overlays bhi poore dabbe par, neeche wali line par.
+            return {
+                left: 0,
+                top: 0,
+                width: rootSize.width,
+                height: rootSize.height,
+                padRight: 32,
+                padLeft: 32,
+                padBottom: Math.max(28, Math.round(rootSize.height * 0.1)),
+            };
+        }
         const crop = getMovieboxCrop(rootSize.width, rootSize.height, { resources: isSearchFrame });
         const pad = Math.max(12, Math.round(crop.frameWidth * 0.025));
         return {
@@ -249,7 +265,7 @@ export function MovieboxPagePlayer({
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
-    }, [rootSize, isSearchFrame]);
+    }, [ownFullscreen, rootSize, isSearchFrame]);
 
     /* --------------------------- Frame ---------------------------- */
 
@@ -270,6 +286,45 @@ export function MovieboxPagePlayer({
             if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, [frameSrc]);
+
+    /** Hamara player dabba fullscreen karo (web par). */
+    const enterOwnFullscreen = useCallback(() => {
+        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const el = rootRef.current as unknown as HTMLElement | null;
+        if (!el || document.fullscreenElement === el) return;
+        const request =
+            (el as any).requestFullscreen ||
+            (el as any).webkitRequestFullscreen;
+        try {
+            request?.call(el)?.catch?.(() => {});
+        } catch {}
+    }, []);
+
+    /**
+     * Video ke fullscreen button se bhi poora dabba fullscreen ho — warna
+     * browser sirf iframe dikhata hai aur Next Episode / episode patti gayab
+     * ho jate hain. Document pehle se fullscreen hai, isliye fullscreen
+     * element badalne ke liye naya user gesture nahi chahiye.
+     */
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const onFs = () => {
+            const el = rootRef.current as unknown as HTMLElement | null;
+            const fs = document.fullscreenElement as Element | null;
+            const mine = !!el && fs === el;
+            setOwnFullscreen(mine);
+            if (!mine && fs && el && fs !== document.documentElement) {
+                // koi aur element (iframe) fullscreen hai → apna dabba le lo
+                enterOwnFullscreen();
+            }
+        };
+        document.addEventListener('fullscreenchange', onFs);
+        document.addEventListener('webkitfullscreenchange', onFs as EventListener);
+        return () => {
+            document.removeEventListener('fullscreenchange', onFs);
+            document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
+        };
+    }, [enterOwnFullscreen]);
 
     /**
      * Player chrome (aur Next Episode) idle par gayab.
@@ -367,6 +422,7 @@ export function MovieboxPagePlayer({
 
     return (
         <View
+            ref={rootRef}
             style={styles.root}
             onLayout={(event) => {
                 const { width, height } = event.nativeEvent.layout;
@@ -385,6 +441,8 @@ export function MovieboxPagePlayer({
                     title={title}
                     allowScroll={isSearchFrame}
                     mode={isSearchFrame ? 'page' : 'player'}
+                    fullscreen={ownFullscreen}
+                    onFrameFullscreen={enterOwnFullscreen}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -518,6 +576,26 @@ export function MovieboxPagePlayer({
                     </Pressable>
                 ) : null}
 
+                {frameSrc && !isSearchFrame ? (
+                    <Pressable
+                        style={[styles.iconButton, styles.fullscreenButton]}
+                        onPress={() => {
+                            if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+                            const el = rootRef.current as unknown as HTMLElement | null;
+                            if (document.fullscreenElement) {
+                                document.exitFullscreen?.().catch(() => {});
+                            } else if (el) {
+                                enterOwnFullscreen();
+                            }
+                        }}
+                        accessibilityRole="button"
+                        accessibilityLabel={ownFullscreen ? 'Exit fullscreen' : 'Fullscreen player'}
+                        testID="moviebox-fullscreen"
+                    >
+                        <Ionicons name={ownFullscreen ? 'contract' : 'expand'} size={18} color="#fff" />
+                    </Pressable>
+                ) : null}
+
                 {frameSrc ? (
                     <Pressable
                         style={[styles.iconButton, styles.editButton]}
@@ -606,6 +684,7 @@ const styles = StyleSheet.create({
      * Video ke dabbe ke andar, bottom-right. `overlayBox` milne tak (pehla
      * layout) fallback: root ke daayein kinare par.
      */
+    fullscreenButton: { marginLeft: 'auto', opacity: 0.85 },
     nextWrap: {
         position: 'absolute',
         alignItems: 'flex-end',
@@ -687,7 +766,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    editButton: { marginLeft: 'auto', opacity: 0.6 },
+    editButton: { marginLeft: 8, opacity: 0.6 },
     serverPill: {
         flexDirection: 'row',
         alignItems: 'center',
