@@ -1,6 +1,6 @@
 {
  "$comment": "MovieBox harvest report: matched / review / miss + per-title notes. Sirf debugging ke liye — app ise nahi padhta.",
- "generatedAt": "2026-10-20T12:23:39.012Z",
+ "generatedAt": "2026-10-20T12:33:56.571Z",
  "stats": {
   "catalog": 791,
   "linked": 686,
@@ -131,12 +131,12 @@
      "query": "Dan Da Dan 2024"
     },
     {
-     "title": "World Defying Dan God",
-     "subjectType": 2,
-     "year": 2025,
-     "detailPath": "world-defying-dan-god-yXxoTG15G99",
-     "score": 0.56,
-     "query": "Dan Da Dan 2024"
+     "title": "Dan...",
+     "subjectType": 6,
+     "year": 2014,
+     "detailPath": "dan-SVDHNoOyOc7",
+     "score": 0.35,
+     "query": "Dan Da Dan Hindi"
     }
    ]
   },
@@ -443,12 +443,12 @@
      "query": "Anpanman: Shine! Kulun & the Stars of Life"
     },
     {
-     "title": "Stars and Strife",
+     "title": "Struggle: The Life and Lost Art of Szukalski",
      "subjectType": 1,
-     "year": 2020,
-     "detailPath": "stars-and-strife-s4hdktP2dR7",
-     "score": 0.203,
-     "query": "Anpanman: Shine! Kulun and the Stars of Life Hindi"
+     "year": 2018,
+     "detailPath": "struggle-the-life-and-lost-art-of-szukalski-mPImwRh0N63",
+     "score": 0.264,
+     "query": "Anpanman: Shine! Kulun and the Stars of Life"
     }
    ]
   },
@@ -887,21 +887,13 @@
    "year": 2025,
    "mediaType": "movie",
    "best": {
-    "title": "Wild",
+    "title": "Dog",
     "subjectType": 1,
-    "year": 2025,
-    "score": 0.705,
+    "year": 2024,
+    "score": 0.625,
     "query": "Wild Dog"
    },
    "candidates": [
-    {
-     "title": "Wild",
-     "subjectType": 1,
-     "year": 2025,
-     "detailPath": "wild-WL9b3Ij6NY4",
-     "score": 0.705,
-     "query": "Wild Dog"
-    },
     {
      "title": "Dog",
      "subjectType": 1,
@@ -917,6 +909,14 @@
      "detailPath": "wild-dog-hindi-OzPcnL6LmF3",
      "score": 0.55,
      "query": "Wild Dog Hindi"
+    },
+    {
+     "title": "Dog Man",
+     "subjectType": 1,
+     "year": 2025,
+     "detailPath": "dog-man-6JxcxUj3fF6",
+     "score": 0.516,
+     "query": "Wild Dog 2025"
     }
    ]
   },
@@ -1106,11 +1106,11 @@
      "query": "Bulgasal: Immortal Souls 2021"
     },
     {
-     "title": "Keyboard  Immortal",
+     "title": "Immortal Samsara",
      "subjectType": 2,
-     "year": 2024,
-     "detailPath": "keyboard-immortal-IW6bcVTcZj1",
-     "score": 0.418,
+     "year": 2022,
+     "detailPath": "immortal-samsara-mL4MnhITgv2",
+     "score": 0.438,
      "query": "Bulgasal: Immortal Souls 2021"
     }
    ]
@@ -1318,13 +1318,29 @@
    "year": 2021,
    "mediaType": "movie",
    "best": {
-    "title": "Death Note",
+    "title": "Death Trip",
     "subjectType": 1,
-    "year": 2017,
-    "score": 0.5,
-    "query": "Death Note"
+    "year": 2021,
+    "score": 0.516,
+    "query": "Death"
    },
    "candidates": [
+    {
+     "title": "Death Trip",
+     "subjectType": 1,
+     "year": 2021,
+     "detailPath": "death-trip-wOjgWwi6M76",
+     "score": 0.516,
+     "query": "Death"
+    },
+    {
+     "title": "Death Valley",
+     "subjectType": 1,
+     "year": 2021,
+     "detailPath": "death-valley-EkaC53LHOQ9",
+     "score": 0.516,
+     "query": "Death"
+    },
     {
      "title": "Death Note",
      "subjectType": 1,
@@ -1332,22 +1348,6 @@
      "detailPath": "death-note-oE6WML0Qup1",
      "score": 0.5,
      "query": "Death Note"
-    },
-    {
-     "title": "Death Note: The Musical",
-     "subjectType": 1,
-     "year": 2017,
-     "detailPath": "death-note-the-musical-4IN5sTn9Kg6",
-     "score": 0.296,
-     "query": "Death Note"
-    },
-    {
-     "title": "High Note",
-     "subjectType": 1,
-     "year": 2019,
-     "detailPath": "high-note-Kh1lMypZCj1",
-     "score": 0.266,
-     "query": "Death Note 2021"
     }
    ]
   },
@@ -1503,7 +1503,7 @@
      "year": 2024,
      "detailPath": "my-romantic-wife-ufcptOVyP76",
      "score": 0.317,
-     "query": "Romantic Killer 2025"
+     "query": "Romantic Killer Hindi"
     }
    ]
   },
@@ -1537,10 +1537,10 @@
      "query": "Blue Period 2024"
     },
     {
-     "title": "The Period of Her",
+     "title": "Blue Moon",
      "subjectType": 1,
-     "year": 2026,
-     "detailPath": "the-period-of-her-SzUx1rL7cv3",
+     "year": 2022,
+     "detailPath": "blue-moon-G7p0HXNz18",
      "score": 0.266,
      "query": "Blue Period 2024"
     }
@@ -1724,20 +1724,20 @@
      "query": "Children Of The Whales Hindi"
     },
     {
-     "title": "The Children of October 7",
-     "subjectType": 1,
-     "year": 2025,
-     "detailPath": "the-children-of-october-7-cw1tr52O7u6",
-     "score": 0.317,
-     "query": "Children Of The Whales 2026"
-    },
-    {
      "title": "The Whale",
      "subjectType": 1,
      "year": 2022,
      "detailPath": "the-whale-2t6WDUsaeO4",
      "score": 0.205,
      "query": "Children Of The Whales Hindi"
+    },
+    {
+     "title": "Children",
+     "subjectType": 1,
+     "year": 1976,
+     "detailPath": "children-4O0y9BtCd14",
+     "score": 0.205,
+     "query": "Children"
     }
    ]
   },
@@ -1946,7 +1946,7 @@
     "subjectType": 1,
     "year": 2019,
     "score": 0.543,
-    "query": "Aggretsuko: We Wish You a Metal Christmas"
+    "query": "Aggretsuko: We Wish You a Metal Christmas Hindi"
    },
    "candidates": [
     {
@@ -2098,13 +2098,21 @@
    "year": 2005,
    "mediaType": "movie",
    "best": {
-    "title": "Digimon Adventure 02: Revenge of Diaboromon [English]",
+    "title": "The Poseidon Adventure",
     "subjectType": 1,
     "year": 2005,
-    "score": 0.329,
-    "query": "Anpanman: Adventure of Happie"
+    "score": 0.518,
+    "query": "Anpanman Adventure"
    },
    "candidates": [
+    {
+     "title": "The Poseidon Adventure",
+     "subjectType": 1,
+     "year": 2005,
+     "detailPath": "the-poseidon-adventure-GlsLBrU8op5",
+     "score": 0.518,
+     "query": "Anpanman Adventure"
+    },
     {
      "title": "Digimon Adventure 02: Revenge of Diaboromon [English]",
      "subjectType": 1,
@@ -2120,14 +2128,6 @@
      "detailPath": "anpanman-star-spirited-dollie-english-E0GsUi3JrO3",
      "score": 0.302,
      "query": "Anpanman: Adventure of Happie"
-    },
-    {
-     "title": "Pikachu's Island Adventure [English]",
-     "subjectType": 1,
-     "year": 2007,
-     "detailPath": "pikachus-island-adventure-english-2pIQ3026tw9",
-     "score": 0.191,
-     "query": "Anpanman Adventure"
     }
    ]
   },
@@ -2629,10 +2629,10 @@
      "query": "Korean Kanakaraju"
     },
     {
-     "title": "Hometown Legends",
-     "subjectType": 2,
-     "year": 2008,
-     "detailPath": "hometown-legends-A6c1rxyrOS",
+     "title": "EXO 엑소 '늑대와 미녀 (Wolf)' MV (Korean Ver.)",
+     "subjectType": 6,
+     "year": 2013,
+     "detailPath": "exo-egso-neugdaewa-minyeo-wolf-mv-korean-ver-GFiIdTbFKB6",
      "score": 0,
      "query": "Korean Kanakaraju"
     }
@@ -2696,7 +2696,7 @@
      "year": 2026,
      "detailPath": "tu-yaa-main-qBC7KOnvow3",
      "score": 0.441,
-     "query": "Main Vaapas Aaunga 2026"
+     "query": "Main Vaapas"
     },
     {
      "title": "Bebe Main Badmash Banuga",
@@ -2743,7 +2743,7 @@
      "year": 2024,
      "detailPath": "the-double-Ug8BBqpb4f6",
      "score": 0.523,
-     "query": "Double"
+     "query": "Dhee Double"
     },
     {
      "title": "Seeing Double",
@@ -2800,21 +2800,13 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Aranmanai 3",
+    "title": "Mardaani 2",
     "subjectType": 1,
-    "year": 2021,
+    "year": 2019,
     "score": 0.016,
     "query": "Mardaani 3"
    },
    "candidates": [
-    {
-     "title": "Aranmanai 3",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "aranmanai-3-63GUDm5E4b1",
-     "score": 0.016,
-     "query": "Mardaani 3"
-    },
     {
      "title": "Mardaani 2",
      "subjectType": 1,
@@ -2828,6 +2820,14 @@
      "subjectType": 1,
      "year": 2019,
      "detailPath": "adriana-trigianis-very-valentine-omBdAFxIqQ1",
+     "score": 0,
+     "query": "Mardaani 3"
+    },
+    {
+     "title": "Mardaani Anthem - Rani Mukerji | Sunidhi Chauhan | Vijay Prakash",
+     "subjectType": 6,
+     "year": 2014,
+     "detailPath": "mardaani-anthem-rani-mukerji-sunidhi-chauhan-vijay-prakash-exvuzelRQn7",
      "score": 0,
      "query": "Mardaani 3"
     }
@@ -3047,7 +3047,7 @@
      "year": 2026,
      "detailPath": "dadi-ki-shadi-4EfjtFjmzk",
      "score": 0.441,
-     "query": "Daadi Ki Shaadi 2026"
+     "query": "Daadi Ki"
     },
     {
      "title": "Jai Kanhaiyalall Ki",
@@ -3136,12 +3136,12 @@
      "query": "Hustle 5"
     },
     {
-     "title": "Hustle Hard",
-     "subjectType": 6,
-     "year": 2023,
-     "detailPath": "hustle-hard-yDxVznhlNo4",
-     "score": 0.227,
-     "query": "Hustle 5 - Apna Homeground"
+     "title": "Hustle",
+     "subjectType": 2,
+     "year": 2006,
+     "detailPath": "hustle-ujgXdNsk8o",
+     "score": 0.082,
+     "query": "Hustle 5"
     }
    ]
   },
@@ -3167,18 +3167,18 @@
      "query": "Ranveer vs Wild with Bear Grylls 2022"
     },
     {
+     "title": "Pig vs. Shark",
+     "subjectType": 1,
+     "year": 2022,
+     "detailPath": "pig-vs-shark-wubRLgAxvu6",
+     "score": 0.36,
+     "query": "Ranveer vs"
+    },
+    {
      "title": "Bear Man",
      "subjectType": 1,
      "year": 2023,
      "detailPath": "bear-man-a3FtMl9M003",
-     "score": 0.357,
-     "query": "Ranveer vs Wild with Bear Grylls Hindi"
-    },
-    {
-     "title": "Cocaine Bear",
-     "subjectType": 1,
-     "year": 2023,
-     "detailPath": "cocaine-bear-yrxbBKEi9F3",
      "score": 0.357,
      "query": "Ranveer vs Wild with Bear Grylls Hindi"
     }
@@ -3245,20 +3245,20 @@
      "query": "Best of The Great Indian Kapil Show"
     },
     {
+     "title": "Best of Fizzy Show",
+     "subjectType": 2,
+     "year": 2021,
+     "detailPath": "best-of-fizzy-show-QYrht5WpEIa",
+     "score": 0.486,
+     "query": "Best of"
+    },
+    {
      "title": "The Great American Baking Show S1-S4",
      "subjectType": 2,
      "year": 2023,
      "detailPath": "the-great-american-baking-show-g6vuGBzTu93",
      "score": 0.429,
      "query": "Best of The Great Indian Kapil Show"
-    },
-    {
-     "title": "Shankar Mahadevan क्यों है नकली Garam Ji के इतने बड़े Fan | The Kapil Sharma Show 2 | Best Moments",
-     "subjectType": 6,
-     "year": 2023,
-     "detailPath": "shankar-mahadevan-kyon-hai-nklii-garam-ji-ke-itne-bdddhe-fan-the-kapil-sharma-show-2-best-moments-4A7NhJvus33",
-     "score": 0.231,
-     "query": "Best of The Great Indian Kapil Show Hindi"
     }
    ]
   },
@@ -3662,7 +3662,7 @@
     "subjectType": 2,
     "year": 2015,
     "score": 0.516,
-    "query": "Mighty Raju 2015"
+    "query": "Mighty Raju"
    },
    "candidates": [
     {
@@ -3671,7 +3671,7 @@
      "year": 2015,
      "detailPath": "mighty-magiswords-IURUn3nhcOa",
      "score": 0.516,
-     "query": "Mighty Raju 2015"
+     "query": "Mighty Raju"
     },
     {
      "title": "Mighty Express S1-S7",
@@ -3757,7 +3757,7 @@
      "year": 2024,
      "detailPath": "mighty-little-bheem-i-love-taj-mahal-netflix-jr-OHZubAjA2I2",
      "score": 0.461,
-     "query": "Mighty Little Bheem: I Love Taj Mahal 2022"
+     "query": "Mighty Little"
     },
     {
      "title": "THE MIGHTY QUEEN",
