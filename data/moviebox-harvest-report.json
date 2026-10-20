@@ -1,19 +1,20 @@
 {
  "$comment": "MovieBox harvest report: matched / review / miss + per-title notes. Sirf debugging ke liye — app ise nahi padhta.",
- "generatedAt": "2026-10-20T09:32:42.273Z",
+ "generatedAt": "2026-10-20T10:16:39.486Z",
  "stats": {
   "catalog": 791,
   "linked": 685,
-  "hindi": 31,
+  "hindi": 33,
   "hindiAudio": 384,
-  "review": 37,
-  "miss": 89,
+  "review": 34,
+  "miss": 91,
   "errors": 0,
   "matchedThisRun": 665,
+  "pinned": 1,
   "queriesUsed": {
-   "primary": 791,
-   "hindi": 152,
-   "year": 126,
+   "primary": 790,
+   "hindi": 150,
+   "year": 125,
    "clean": 1,
    "ampersand": 2
   }
@@ -33,29 +34,16 @@
    }
   },
   {
-   "key": "tmdb:1623376",
-   "title": "Blue Lock",
-   "year": 2026,
-   "mediaType": "movie",
-   "best": {
-    "title": "Blue",
-    "subjectType": 1,
-    "year": 2026,
-    "score": 0.705,
-    "query": "Blue Lock 2026"
-   }
-  },
-  {
    "key": "tmdb:240411",
    "title": "Dan Da Dan",
    "year": 2024,
    "mediaType": "tv",
    "best": {
-    "title": "Dan Ran",
-    "subjectType": 5,
-    "year": 2024,
+    "title": "Dosa dan Cinta",
+    "subjectType": 2,
+    "year": 2023,
     "score": 0.637,
-    "query": "Dan Da Dan"
+    "query": "Dan Da Dan 2024"
    }
   },
   {
@@ -129,7 +117,7 @@
    "year": 2009,
    "mediaType": "movie",
    "best": {
-    "title": "Naruto Shippûden: The Movie",
+    "title": "Naruto Shippûden: The Movie [English]",
     "subjectType": 1,
     "year": 2009,
     "score": 0.705,
@@ -142,7 +130,7 @@
    "year": 2010,
    "mediaType": "movie",
    "best": {
-    "title": "Naruto Shippûden: The Movie",
+    "title": "Naruto Shippûden: The Movie [English]",
     "subjectType": 1,
     "year": 2009,
     "score": 0.625,
@@ -332,19 +320,6 @@
    }
   },
   {
-   "key": "tmdb:441909",
-   "title": "Tiger Zinda Hai",
-   "year": 2017,
-   "mediaType": "movie",
-   "best": {
-    "title": "Tiger",
-    "subjectType": 1,
-    "year": 2017,
-    "score": 0.623,
-    "query": "Tiger Zinda Hai Hindi"
-   }
-  },
-  {
    "key": "tmdb:770906",
    "title": "Salaar: Part 1 - Ceasefire",
    "year": 2023,
@@ -384,19 +359,6 @@
    }
   },
   {
-   "key": "tmdb:1773907",
-   "title": "MAD",
-   "year": 2026,
-   "mediaType": "movie",
-   "best": {
-    "title": "mad",
-    "subjectType": 6,
-    "year": 2024,
-    "score": 0.6,
-    "query": "MAD"
-   }
-  },
-  {
    "key": "tmdb:249068",
    "title": "Chhota Bheem aur Gadadhari Bheem",
    "year": 2024,
@@ -415,10 +377,10 @@
    "year": 2025,
    "mediaType": "movie",
    "best": {
-    "title": "Dog",
+    "title": "Wild",
     "subjectType": 1,
-    "year": 2024,
-    "score": 0.625,
+    "year": 2025,
+    "score": 0.705,
     "query": "Wild Dog 2025"
    }
   },
@@ -508,10 +470,10 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "SONS OF JEZEBEL",
+    "title": "SONS OF ROYALTY",
     "subjectType": 1,
-    "year": 2024,
-    "score": 0.266,
+    "year": 2026,
+    "score": 0.516,
     "query": "Vishwanath and Sons"
    }
   },
@@ -521,10 +483,10 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Oh My Dog",
+    "title": "Dog",
     "subjectType": 1,
-    "year": 2022,
-    "score": 0.217,
+    "year": 2024,
+    "score": 0.373,
     "query": "Ohh My Dog"
    }
   },
@@ -568,16 +530,29 @@
    }
   },
   {
+   "key": "tmdb:1623376",
+   "title": "Blue Lock",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "Blue Lock: Episode Nagi",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.427,
+    "query": "Blue Lock"
+   }
+  },
+  {
    "key": "tmdb:874117",
    "title": "Fighting Spirit",
    "year": 2013,
    "mediaType": "movie",
    "best": {
-    "title": "Teen Spirit",
+    "title": "SPIRIT",
     "subjectType": 1,
-    "year": 2011,
-    "score": 0.266,
-    "query": "Fighting Spirit Hindi"
+    "year": 2026,
+    "score": 0.205,
+    "query": "Fighting Spirit 2013"
    }
   },
   {
@@ -599,11 +574,11 @@
    "year": 2020,
    "mediaType": "tv",
    "best": {
-    "title": "Overlord and the Underwoods",
+    "title": "Overlord: Pure Pure Pleiades",
     "subjectType": 2,
-    "year": 2021,
-    "score": 0.485,
-    "query": "Overlord Hindi"
+    "year": 2015,
+    "score": 0.465,
+    "query": "Overlord"
    }
   },
   {
@@ -638,11 +613,11 @@
    "year": 2025,
    "mediaType": "movie",
    "best": {
-    "title": "Cult Killer",
+    "title": "TWO ROMANTIC LOVERS",
     "subjectType": 1,
     "year": 2024,
-    "score": 0.436,
-    "query": "Romantic Killer 2025"
+    "score": 0.317,
+    "query": "Romantic Killer"
    }
   },
   {
@@ -668,7 +643,7 @@
     "subjectType": 2,
     "year": 2023,
     "score": 0.418,
-    "query": "Daemons of the Shadow Realm"
+    "query": "Daemons of the Shadow Realm 2026"
    }
   },
   {
@@ -679,7 +654,7 @@
    "best": {
     "title": "Leviathan",
     "subjectType": 1,
-    "year": 1989,
+    "year": 2015,
     "score": 0.5,
     "query": "Leviathan"
    }
@@ -703,11 +678,11 @@
    "year": 2012,
    "mediaType": "tv",
    "best": {
-    "title": "Wonderful Days",
+    "title": "Shimaizuma: Shimaizuma 3 The Animation",
     "subjectType": 2,
-    "year": 2014,
-    "score": 0.418,
-    "query": "Shimajiro: A Wonderful Adventure 2012"
+    "year": 2007,
+    "score": 0.282,
+    "query": "Shimajiro: A Wonderful Adventure"
    }
   },
   {
@@ -772,7 +747,7 @@
     "subjectType": 1,
     "year": 2018,
     "score": 0.485,
-    "query": "Gintama"
+    "query": "Gintama Hindi"
    }
   },
   {
@@ -785,7 +760,7 @@
     "subjectType": 1,
     "year": 2025,
     "score": 0.506,
-    "query": "My Hero Academia: You're Next Hindi"
+    "query": "My Hero Academia: You're Next 2024"
    }
   },
   {
@@ -885,9 +860,9 @@
    "year": 2010,
    "mediaType": "movie",
    "best": {
-    "title": "Anpanman: Shine! Kurun & The Star of Life [English]",
-    "subjectType": 1,
-    "year": 2018,
+    "title": "Ano Ba Talaga Tayo feat. Janine Berdin - Performance Video | The Juans",
+    "subjectType": 6,
+    "year": 2025,
     "score": 0,
     "query": "Anpanman: The Blacknose with Magical Song"
    }
@@ -1041,9 +1016,9 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "2NE1 - 'Crush' (Korean Ver.) M/V",
+    "title": "4 Korean Kpop Idols and 1 Imposter: Guess Who's Not Korean (ft. Loossemble)",
     "subjectType": 6,
-    "year": 2014,
+    "year": 2024,
     "score": 0,
     "query": "Korean Kanakaraju"
    }
@@ -1084,7 +1059,7 @@
     "subjectType": 2,
     "year": 2026,
     "score": 0.518,
-    "query": "Dhee Double Impact"
+    "query": "Dhee Double Impact Hindi"
    }
   },
   {
@@ -1158,10 +1133,10 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Con Mum",
+    "title": "City of the City",
     "subjectType": 1,
-    "year": 2025,
-    "score": 0.436,
+    "year": 2024,
+    "score": 0.266,
     "query": "Con City"
    }
   },
@@ -1171,8 +1146,8 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Thukra Ke Mera Pyaar S1-S2",
-    "subjectType": 2,
+    "title": "Bien & Rayvanny - Rakata (Official Audio)",
+    "subjectType": 6,
     "year": 2024,
     "score": 0,
     "query": "Raakaasa"
@@ -1197,11 +1172,11 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Chameli Ki Shaadi",
+    "title": "Dadi Ki Shadi",
     "subjectType": 1,
-    "year": 1986,
-    "score": 0.217,
-    "query": "Daadi Ki Shaadi Hindi"
+    "year": 2026,
+    "score": 0.441,
+    "query": "Daadi Ki Shaadi"
    }
   },
   {
@@ -1253,7 +1228,7 @@
     "subjectType": 6,
     "year": 2023,
     "score": 0.227,
-    "query": "Hustle 5 - Apna Homeground"
+    "query": "Hustle 5 - Apna Homeground Hindi"
    }
   },
   {
@@ -1266,7 +1241,7 @@
     "subjectType": 1,
     "year": 2022,
     "score": 0.476,
-    "query": "Ranveer vs Wild with Bear Grylls"
+    "query": "Ranveer vs Wild with Bear Grylls Hindi"
    }
   },
   {
@@ -1275,11 +1250,11 @@
    "year": 2024,
    "mediaType": "tv",
    "best": {
-    "title": "Got to Get Out",
+    "title": "Britain's Got Talent S1-S18",
     "subjectType": 2,
-    "year": 2025,
-    "score": 0.302,
-    "query": "India's Got Latent Hindi"
+    "year": 2007,
+    "score": 0,
+    "query": "India's Got Latent"
    }
   },
   {
@@ -1301,9 +1276,9 @@
    "year": 2019,
    "mediaType": "movie",
    "best": {
-    "title": "Aankhein Khuli Song | Mohabbatein | Shah Rukh Khan, Aishwarya Rai | Lata Mangeshkar, Udit Narayan",
+    "title": "JAWAN: Chaleya (Hindi) | Shah Rukh Khan | Nayanthara | Atlee | Anirudh | Arijit S, Shilpa R | Kumaar",
     "subjectType": 6,
-    "year": 2014,
+    "year": 2023,
     "score": 0,
     "query": "My Next Guest with David Letterman and Shah Rukh Khan"
    }
@@ -1314,10 +1289,10 @@
    "year": 2020,
    "mediaType": "tv",
    "best": {
-    "title": "With Love S1-S2",
+    "title": "What Comes After Love",
     "subjectType": 2,
-    "year": 2021,
-    "score": 0.576,
+    "year": 2024,
+    "score": 0.409,
     "query": "What the Love! with Karan Johar Hindi"
    }
   },
@@ -1332,6 +1307,19 @@
     "year": 1996,
     "score": 0.016,
     "query": "Raja Shivaji"
+   }
+  },
+  {
+   "key": "tmdb:441909",
+   "title": "Tiger Zinda Hai",
+   "year": 2017,
+   "mediaType": "movie",
+   "best": {
+    "title": "Zinda Hai Song | Tiger Zinda Hai | Salman Khan | Katrina Kaif | Sukhwinder Singh | Raftaar",
+    "subjectType": 6,
+    "year": 2017,
+    "score": 0.498,
+    "query": "Tiger Zinda Hai"
    }
   },
   {
@@ -1357,7 +1345,7 @@
     "subjectType": 2,
     "year": 2021,
     "score": 0.416,
-    "query": "Mass Jathara"
+    "query": "Mass Jathara Hindi"
    }
   },
   {
@@ -1413,6 +1401,19 @@
    }
   },
   {
+   "key": "tmdb:1773907",
+   "title": "MAD",
+   "year": 2026,
+   "mediaType": "movie",
+   "best": {
+    "title": "MAD MUMS",
+    "subjectType": 1,
+    "year": 2026,
+    "score": 0.565,
+    "query": "MAD"
+   }
+  },
+  {
    "key": "tmdb:852957",
    "title": "Chhota Bheem: Dinosaur World",
    "year": 2025,
@@ -1444,11 +1445,11 @@
    "year": 2015,
    "mediaType": "tv",
    "best": {
-    "title": "Mighty Med S1-S2",
+    "title": "Mighty Magiswords S1-S2",
     "subjectType": 2,
-    "year": 2013,
-    "score": 0.416,
-    "query": "Mighty Raju"
+    "year": 2015,
+    "score": 0.516,
+    "query": "Mighty Raju 2015"
    }
   },
   {
@@ -1530,19 +1531,6 @@
    }
   },
   {
-   "key": "tmdb:1474984",
-   "title": "Happy New Year",
-   "year": 2025,
-   "mediaType": "movie",
-   "best": {
-    "title": "Happy New Year [Hindi]",
-    "subjectType": 1,
-    "year": 2014,
-    "score": 0.55,
-    "query": "Happy New Year Hindi"
-   }
-  },
-  {
    "key": "tmdb:413882",
    "title": "Ok Jaanu",
    "year": 2017,
@@ -1613,11 +1601,11 @@
    "year": 2017,
    "mediaType": "tv",
    "best": {
-    "title": "Chinese Partner",
+    "title": "The Suspicious Housekeeper",
     "subjectType": 2,
-    "year": 2018,
-    "score": 0.436,
-    "query": "Suspicious Partner 2017"
+    "year": 2013,
+    "score": 0.416,
+    "query": "Suspicious Partner"
    }
   },
   {
@@ -1639,10 +1627,10 @@
    "year": 2012,
    "mediaType": "tv",
    "best": {
-    "title": "The Mob Doctor",
+    "title": "The Good Doctor S1-S7",
     "subjectType": 2,
-    "year": 2012,
-    "score": 0.516,
+    "year": 2017,
+    "score": 0.416,
     "query": "The Great Doctor"
    }
   },
