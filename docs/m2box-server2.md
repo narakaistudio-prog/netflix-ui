@@ -68,11 +68,13 @@ agla episode bacha ho):
   Episode ki jagah) — `getMovieboxCrop` se dabbe ka rect nikaal kar overlay
   usi par align hota hai, root ke kinare par nahi (warna black gutter me chala
   jata tha).
-- Site ka chrome ~3s me gayab hota hai, to button bhi `CHROME_IDLE_MS` (3.2s)
-  idle par fade ho jata hai aur mouse hilte/touch par wapas aata hai. Iframe
-  cross-origin hai isliye andar ka mousemove nahi milta — pointer frame me
-  ghusne par milne wala `mouseout` (relatedTarget = null) bhi activity maana
-  jata hai.
+- Visibility site ke controls ke saath: **pointer player ke dabbe ke andar**
+  (video/iframe par bhi) hai to Next Episode aur episode patti dikhte rehte
+  hain — usi waqt site bhi apne controls dikhati hai. Pointer player se bahar
+  jaate hi `CHROME_HIDE_AFTER_LEAVE_MS` (900ms) me gayab.
+  (Pehle sirf 3.2s ka timer tha; iframe cross-origin hai isliye video ke andar
+  ka mousemove humein nahi milta — timer chalta rehta aur overlays gayab ho
+  jate the jabki site ke controls dikh rahe hote.)
 - Video ke dabbe me **neeche, center** me **episode ki patti** hai (site ke apne
   controls wali line par, `EPISODE_STRIP_BOTTOM = 0.90`): `S1 • E2` ka safed
   badge + `My Demon – <episode name>` (episode ka naam catalog ke episode

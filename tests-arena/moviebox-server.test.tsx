@@ -282,7 +282,7 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(container.textContent).toContain('S1 E3');
     });
 
-    it('hides Next Episode with the player chrome when the mouse goes idle', () => {
+    it('keeps Next Episode up while the pointer is on the player, hides it when it leaves', () => {
         jest.useFakeTimers();
         try {
             act(() => {
@@ -303,17 +303,30 @@ describe('MovieboxPagePlayer (Server 2)', () => {
             const wrap = () =>
                 document.querySelector('[data-testid="moviebox-next-episode"]')!
                     .parentElement as HTMLElement;
+            const player = document.querySelector(
+                '[data-tv-scope="player"], [data-tvScope="player"]',
+            ) as HTMLElement | null;
+            expect(player).toBeTruthy();
             expect(wrap().style.opacity).toBe('1');
 
-            // Site ka chrome chup-chaap gayab hota hai — humara button bhi.
+            // Pointer player par hai (video/iframe par bhi) — site ke controls
+            // dikh rahe hain, to humara button bhi dikhega, chahe kitni der ho.
             act(() => {
-                jest.advanceTimersByTime(4000);
+                player!.dispatchEvent(new MouseEvent('mouseenter'));
+                jest.advanceTimersByTime(20000);
+            });
+            expect(wrap().style.opacity).toBe('1');
+
+            // Pointer player se bahar — ab dono gayab.
+            act(() => {
+                player!.dispatchEvent(new MouseEvent('mouseleave'));
+                jest.advanceTimersByTime(1500);
             });
             expect(wrap().style.opacity).toBe('0');
 
-            // Mouse hilte hi wapas (site ke controls ki tarah).
+            // Wapas andar aate hi phir se dikhe.
             act(() => {
-                window.dispatchEvent(new MouseEvent('mousemove'));
+                player!.dispatchEvent(new MouseEvent('mouseenter'));
             });
             expect(wrap().style.opacity).toBe('1');
         } finally {

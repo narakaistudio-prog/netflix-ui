@@ -74,6 +74,8 @@ const FRAME_TIMEOUT_MS = 15000;
  * bhi usi waqt gayab hota hai, aur mouse hilte hi wapas.
  */
 const CHROME_IDLE_MS = 3200;
+/** Player se pointer bahar nikalne ke baad overlays kitni der me gayab. */
+const CHROME_HIDE_AFTER_LEAVE_MS = 900;
 /**
  * Episode patti video ke dabbe me **neeche** baithti hai — site ke apne
  * controls wali line par (seek bar + "00:13 / 01:08:31" + "English DualSub
@@ -303,13 +305,23 @@ export function MovieboxPagePlayer({
     }, []);
 
     /**
-     * Player chrome (aur Next Episode) idle par gayab.
+     * Player chrome (Next Episode + episode patti) — site ke controls ke saath.
      *
-     * Iframe cross-origin hai — andar ka mousemove humein nahi milta. Isliye:
-     *   - window par koi bhi hilna/dabna (mousemove, wheel, key, touch) → dikhao
-     *   - pointer iframe ke andar gaya → parent ko sirf ek `mouseout`
-     *     (relatedTarget = null) milta hai → usko bhi activity maano
-     * Chup-chaap 3.2s → gayab, bilkul site ke controls jaisa.
+     * Iframe cross-origin hai: video ke andar ka mousemove humein **nahi**
+     * milta. Isliye sirf timer par bharosa karna galat tha — user video par
+     * mouse ghumata rehta (site ke controls dikhte rehte) par hamara timer
+     * chalta rehta aur Next Episode / patti gayab ho jate the.
+     *
+     * Ab do haalat:
+     *   - **Pointer player ke andar** (video/iframe par bhi): overlays dikhte
+     *     rehte hain. Isi waqt site bhi apne controls dikhati hai, kyunki wo
+     *     mousemove par dikhte hain.
+     *   - **Pointer player se bahar**: chup-chaap 3.2s → gayab (site ke
+     *     controls bhi tab hi dikhte hain jab pointer andar ho).
+     *
+     * Pointer andar hai ya nahi — `mouseenter`/`mouseleave` root par lagte
+     * hain; iframe bhi root ke andar hai, isliye us par jaate waqt leave nahi
+     * hota (aur tab hi mousemove milna band ho jata hai).
      */
     useEffect(() => {
         if (!frameSrc || isSearchFrame) {
@@ -318,30 +330,58 @@ export function MovieboxPagePlayer({
         }
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
         const doc = window.document;
+        const el = rootRef.current as unknown as HTMLElement | null;
         let timer: ReturnType<typeof setTimeout> | null = null;
-        const arm = () => {
+        /** Pointer player ke dabbe ke andar hai (iframe par bhi). */
+        let inside = false;
+
+        const reveal = () => {
             setChromeVisible(true);
             if (timer) clearTimeout(timer);
-            timer = setTimeout(() => setChromeVisible(false), CHROME_IDLE_MS);
+            timer = setTimeout(() => {
+                // Pointer player par hai → site ke controls bhi dikh rahe hain,
+                // isliye chhupao mat. Bahar hai → chhupa do.
+                if (!inside) setChromeVisible(false);
+            }, CHROME_IDLE_MS);
         };
-        arm();
-        const onWindow = () => arm();
+
+        reveal();
+
+        const onEnter = () => {
+            inside = true;
+            reveal();
+        };
+        const onLeave = () => {
+            inside = false;
+            if (timer) clearTimeout(timer);
+            // Bahar nikal gaye — thoda ruk kar chhupao (warna flicker).
+            timer = setTimeout(() => setChromeVisible(false), CHROME_HIDE_AFTER_LEAVE_MS);
+        };
+        /** Pointer iframe ke andar gaya — parent ko sirf ye milta hai. */
         const onOut = (event: MouseEvent) => {
-            if (!event.relatedTarget) arm();
+            if (!event.relatedTarget) {
+                inside = true;
+                reveal();
+            }
         };
-        window.addEventListener('mousemove', onWindow, { passive: true });
-        window.addEventListener('mousedown', onWindow, { passive: true });
-        window.addEventListener('touchstart', onWindow, { passive: true });
-        window.addEventListener('keydown', onWindow);
-        window.addEventListener('wheel', onWindow, { passive: true });
+
+        el?.addEventListener('mouseenter', onEnter);
+        el?.addEventListener('mouseleave', onLeave);
+        el?.addEventListener('mousemove', reveal, { passive: true });
+        el?.addEventListener('mousedown', reveal, { passive: true });
+        el?.addEventListener('touchstart', reveal, { passive: true });
+        window.addEventListener('keydown', reveal);
+        window.addEventListener('wheel', reveal, { passive: true });
         doc.addEventListener('mouseout', onOut);
         return () => {
             if (timer) clearTimeout(timer);
-            window.removeEventListener('mousemove', onWindow);
-            window.removeEventListener('mousedown', onWindow);
-            window.removeEventListener('touchstart', onWindow);
-            window.removeEventListener('keydown', onWindow);
-            window.removeEventListener('wheel', onWindow);
+            el?.removeEventListener('mouseenter', onEnter);
+            el?.removeEventListener('mouseleave', onLeave);
+            el?.removeEventListener('mousemove', reveal);
+            el?.removeEventListener('mousedown', reveal);
+            el?.removeEventListener('touchstart', reveal);
+            window.removeEventListener('keydown', reveal);
+            window.removeEventListener('wheel', reveal);
             doc.removeEventListener('mouseout', onOut);
         };
     }, [frameSrc, isSearchFrame]);
