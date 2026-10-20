@@ -77,17 +77,18 @@ jobs:
           echo "args: $ARGS"
           node scripts/harvest-moviebox-links.mjs $ARGS
 
-      - name: TEMP probe (search URL scheme)
+      - name: TEMP probe (router ke route paths)
         if: always()
         run: |
           : > data/moviebox-probe.txt
-          for U in "https://m2box.org/search?keyword=Vishwanath" "https://m2box.org/web/search?keyword=Vishwanath" "https://m2box.org/search/Vishwanath" "https://m2box.org/" ; do
-            echo "=== $U" >> data/moviebox-probe.txt
-            code=$(curl -s -o /tmp/page.html -w "%{http_code}" -A "Mozilla/5.0" "$U")
-            echo "status=$code bytes=$(wc -c </tmp/page.html)" >> data/moviebox-probe.txt
-            grep -oiE '(search[^\"'"'"' ]{0,40}|/web/[a-z/-]{2,30})' /tmp/page.html | sort -u | head -12 >> data/moviebox-probe.txt
-          done
-          cat data/moviebox-probe.txt | head -60
+          curl -s -A "Mozilla/5.0" https://m2box.org/ -o /tmp/home.html
+          echo "=== routes home" >> data/moviebox-probe.txt
+          grep -oE 'path:"/[a-zA-Z0-9_/?=&:-]*"' /tmp/home.html | sort -u | head -40 >> data/moviebox-probe.txt
+          echo "=== keyword refs" >> data/moviebox-probe.txt
+          grep -oE '(keyword=|/search[a-zA-Z0-9_/?=&:-]*|web/search[a-zA-Z0-9_/?=&:-]*)' /tmp/home.html | sort -u | head -20 >> data/moviebox-probe.txt
+          echo "=== scripts" >> data/moviebox-probe.txt
+          grep -oE '<script[^>]+src="[^"]+"' /tmp/home.html | grep -oE 'src="[^"]+"' | head -8 >> data/moviebox-probe.txt
+          head -80 data/moviebox-probe.txt
 
       - name: Validate the baked links
         if: steps.harvest.outcome == 'success'
