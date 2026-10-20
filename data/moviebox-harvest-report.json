@@ -1,6 +1,6 @@
 {
  "$comment": "MovieBox harvest report: matched / review / miss + per-title notes. Sirf debugging ke liye — app ise nahi padhta.",
- "generatedAt": "2026-10-20T12:53:43.215Z",
+ "generatedAt": "2026-10-20T13:12:05.610Z",
  "stats": {
   "catalog": 791,
   "linked": 686,
@@ -53,12 +53,12 @@
      "query": "The Seven Deadly Sins"
     },
     {
-     "title": "Seven Mortal Sins [English]",
+     "title": "Seven Mortal Sins",
      "subjectType": 2,
      "year": 2017,
-     "detailPath": "seven-mortal-sins-english-67ILkgiNb69",
+     "detailPath": "seven-mortal-sins-al0OmtmF8ca",
      "score": 0.617,
-     "query": "The Seven Deadly Sins"
+     "query": "The Seven Deadly Sins 2021"
     }
    ]
   },
@@ -84,20 +84,20 @@
      "query": "Blue"
     },
     {
-     "title": "heart and lock",
+     "title": "Blue Lock: Episode Nagi",
      "subjectType": 1,
-     "year": 2026,
-     "detailPath": "heart-and-lock-YWKLEtJcHQ1",
-     "score": 0.516,
-     "query": "Blue Lock Hindi"
+     "year": 2024,
+     "detailPath": "blue-lock-episode-nagi-gMSOC1xcRF7",
+     "score": 0.427,
+     "query": "Blue Lock"
     },
     {
-     "title": "The Spirit Lock",
+     "title": "Blue Lock: Episode Nagi [English]",
      "subjectType": 1,
-     "year": 2026,
-     "detailPath": "the-spirit-lock-04UZDCYVFK3",
-     "score": 0.516,
-     "query": "Blue Lock Hindi"
+     "year": 2024,
+     "detailPath": "blue-lock-episode-nagi-english-8yB7eW2cTN9",
+     "score": 0.427,
+     "query": "Blue Lock"
     }
    ]
   },
@@ -107,36 +107,36 @@
    "year": 2024,
    "mediaType": "tv",
    "best": {
-    "title": "Dan Ran",
-    "subjectType": 5,
-    "year": 2024,
+    "title": "Dosa dan Cinta",
+    "subjectType": 2,
+    "year": 2023,
     "score": 0.637,
-    "query": "Dan Da Dan"
+    "query": "Dan Da Dan 2024"
    },
    "candidates": [
-    {
-     "title": "Dan Ran",
-     "subjectType": 5,
-     "year": 2024,
-     "detailPath": "dan-ran-SxxVFmwUnB8",
-     "score": 0.637,
-     "query": "Dan Da Dan"
-    },
     {
      "title": "Dosa dan Cinta",
      "subjectType": 2,
      "year": 2023,
      "detailPath": "dosa-dan-cinta-Y0x6m1jZy2",
      "score": 0.637,
-     "query": "Dan Da Dan Hindi"
+     "query": "Dan Da Dan 2024"
     },
     {
-     "title": "Rahasia dan Cinta",
+     "title": "Jack dan Danil",
      "subjectType": 2,
-     "year": 2023,
-     "detailPath": "rahasia-dan-cinta-wSBbN7QVN96",
-     "score": 0.637,
+     "year": 2022,
+     "detailPath": "jack-dan-danil-MIcRrMbrf29",
+     "score": 0.617,
      "query": "Dan Da Dan 2024"
+    },
+    {
+     "title": "Dan...",
+     "subjectType": 6,
+     "year": 2014,
+     "detailPath": "dan-SVDHNoOyOc7",
+     "score": 0.35,
+     "query": "Dan Da Dan Hindi"
     }
    ]
   },
@@ -175,7 +175,7 @@
      "year": 2023,
      "detailPath": "my-home-hero-oiXCWStQqZ6",
      "score": 0.535,
-     "query": "My Hero Academia: Vigilantes Hindi"
+     "query": "My Hero"
     }
    ]
   },
@@ -245,7 +245,7 @@
      "year": 2025,
      "detailPath": "paradise-CDwD5QsArZ4",
      "score": 0.605,
-     "query": "Hell's Paradise"
+     "query": "Hell's Paradise 2023"
     },
     {
      "title": "Hell's Kitchen S10-S20",
@@ -253,7 +253,7 @@
      "year": 2018,
      "detailPath": "hells-kitchen-6roC3t02DR8",
      "score": 0.416,
-     "query": "Hell's Paradise Hindi"
+     "query": "Hell's Paradise 2023"
     }
    ]
   },
@@ -263,7 +263,7 @@
    "year": 2010,
    "mediaType": "movie",
    "best": {
-    "title": "Naruto Shippûden: The Movie",
+    "title": "Naruto Shippûden: The Movie [English]",
     "subjectType": 1,
     "year": 2009,
     "score": 0.625,
@@ -271,20 +271,20 @@
    },
    "candidates": [
     {
-     "title": "Naruto Shippûden: The Movie",
-     "subjectType": 1,
-     "year": 2009,
-     "detailPath": "naruto-shippuden-the-movie-SD6GQNN0qe5",
-     "score": 0.625,
-     "query": "Naruto Shippuden the Movie: The Lost Tower"
-    },
-    {
      "title": "Naruto Shippûden: The Movie [English]",
      "subjectType": 1,
      "year": 2009,
      "detailPath": "naruto-shippuden-the-movie-english-YCUoQLmWdm5",
      "score": 0.625,
      "query": "Naruto Shippuden the Movie: The Lost Tower"
+    },
+    {
+     "title": "Naruto Shippûden: The Movie",
+     "subjectType": 1,
+     "year": 2009,
+     "detailPath": "naruto-shippuden-the-movie-SD6GQNN0qe5",
+     "score": 0.625,
+     "query": "Naruto Shippuden the Movie: The Lost Tower Hindi"
     },
     {
      "title": "Naruto Shippuden: The Movie - Bonds",
@@ -435,20 +435,20 @@
      "query": "Anpanman: Shine! Kulun and the Stars of Life"
     },
     {
-     "title": "Planetarian: Storyteller of the Stars",
+     "title": "Shine",
      "subjectType": 1,
-     "year": 2016,
-     "detailPath": "planetarian-storyteller-of-the-stars-aTvRtvK3AZ",
-     "score": 0.126,
+     "year": 2018,
+     "detailPath": "shine-oo4sas9VfB9",
+     "score": 0.558,
      "query": "Anpanman: Shine! Kulun & the Stars of Life"
     },
     {
-     "title": "Shine Your Eyes",
+     "title": "Stars and Strife",
      "subjectType": 1,
      "year": 2020,
-     "detailPath": "shine-your-eyes-IUF0vme8Wz1",
-     "score": 0.126,
-     "query": "Anpanman Shine"
+     "detailPath": "stars-and-strife-s4hdktP2dR7",
+     "score": 0.203,
+     "query": "Anpanman: Shine! Kulun and the Stars of Life Hindi"
     }
    ]
   },
@@ -557,7 +557,7 @@
      "year": 2026,
      "detailPath": "main-aur-tu-video-dhurandhar-the-revenge-ranveer-singh-shashwat-s-jasmine-s-reble-aditya-d-QiopyIkNKV1",
      "score": 0.41,
-     "query": "Dhurandhar"
+     "query": "Dhurandhar: The Revenge Hindi"
     },
     {
      "title": "Jaan Se Guzarte Hain (Audio): Dhurandhar The Revenge | Shashwat S | Nusrat Fateh Ali,Khan S,Irshad K",
@@ -696,7 +696,7 @@
     "subjectType": 1,
     "year": 2017,
     "score": 0.623,
-    "query": "Tiger Zinda Hai 2017"
+    "query": "Tiger"
    },
    "candidates": [
     {
@@ -705,7 +705,7 @@
      "year": 2017,
      "detailPath": "tiger-oqdJD27aKxa",
      "score": 0.623,
-     "query": "Tiger Zinda"
+     "query": "Tiger"
     },
     {
      "title": "The Tiger",
@@ -752,7 +752,7 @@
      "year": 2023,
      "detailPath": "viduthalai-part-1-OhKPU7bBcp7",
      "score": 0.518,
-     "query": "Salaar Part"
+     "query": "Salaar: Part 1 - Ceasefire 2023"
     },
     {
      "title": "Sooraj Hi Chhaon Banke(Hindi)Salaar |Prabhas |Prithviraj |Prashanth Neel |Ravi Basrur |Hombale Films",
@@ -786,20 +786,20 @@
      "query": "HIT: The Third Case"
     },
     {
-     "title": "the third party",
+     "title": "THIRD EYE",
      "subjectType": 1,
-     "year": 2024,
-     "detailPath": "the-third-party-SxXbjDQ7Aaa",
-     "score": 0.438,
-     "query": "HIT: The Third Case 2025"
+     "year": 2025,
+     "detailPath": "third-eye-EGHKqrkhbv1",
+     "score": 0.518,
+     "query": "Third"
     },
     {
-     "title": "The Third Party",
+     "title": "THIRD EYE",
      "subjectType": 1,
-     "year": 2026,
-     "detailPath": "the-third-party-iBa6akXq3X3",
-     "score": 0.438,
-     "query": "HIT: The Third Case 2025"
+     "year": 2025,
+     "detailPath": "third-eye-sq0Leqx07a",
+     "score": 0.518,
+     "query": "Third"
     }
    ]
   },
@@ -891,7 +891,7 @@
     "subjectType": 1,
     "year": 2024,
     "score": 0.625,
-    "query": "Wild Dog 2025"
+    "query": "Wild Dog"
    },
    "candidates": [
     {
@@ -900,7 +900,7 @@
      "year": 2024,
      "detailPath": "dog-KxZvFfbXUG4",
      "score": 0.625,
-     "query": "Wild Dog 2025"
+     "query": "Wild Dog"
     },
     {
      "title": "Wild Dog [Hindi]",
@@ -950,10 +950,10 @@
      "query": "Affection"
     },
     {
-     "title": "The King's Avatar [English]",
+     "title": "The King's Woman",
      "subjectType": 2,
      "year": 2017,
-     "detailPath": "the-kings-avatar-english-E0UaggH0dZ7",
+     "detailPath": "the-kings-woman-KXQnWVJOkL3",
      "score": 0.416,
      "query": "The King's Affection"
     }
@@ -981,18 +981,18 @@
      "query": "My Liberation Notes"
     },
     {
-     "title": "The Liberator",
-     "subjectType": 2,
-     "year": 2020,
-     "detailPath": "the-liberator-WFQRLfbsmSa",
-     "score": 0.523,
-     "query": "Liberation"
-    },
-    {
      "title": "The Liberation",
      "subjectType": 2,
      "year": 2025,
      "detailPath": "the-liberation-SDEVWeY6bZ5",
+     "score": 0.523,
+     "query": "My Liberation Notes 2022"
+    },
+    {
+     "title": "The Liberator",
+     "subjectType": 2,
+     "year": 2020,
+     "detailPath": "the-liberator-WFQRLfbsmSa",
      "score": 0.523,
      "query": "Liberation"
     }
@@ -1059,20 +1059,20 @@
      "query": "Doctor"
     },
     {
-     "title": "The Mob Doctor",
-     "subjectType": 2,
-     "year": 2012,
-     "detailPath": "the-mob-doctor-kCsLdqKt083",
-     "score": 0.516,
-     "query": "The Great Doctor"
-    },
-    {
      "title": "Doctor X S1-S7",
      "subjectType": 2,
      "year": 2012,
      "detailPath": "doctor-x-4oXbNdeh2c7",
      "score": 0.516,
      "query": "Doctor"
+    },
+    {
+     "title": "The Great Seer",
+     "subjectType": 2,
+     "year": 2012,
+     "detailPath": "the-great-seer-yTNPBrzghZ9",
+     "score": 0.516,
+     "query": "The Great"
     }
    ]
   },
@@ -1098,18 +1098,18 @@
      "query": "Bulgasal Immortal"
     },
     {
-     "title": "Souls",
-     "subjectType": 2,
-     "year": 2022,
-     "detailPath": "souls-4mYtXOmP4F9",
-     "score": 0.543,
-     "query": "Bulgasal: Immortal Souls 2021"
-    },
-    {
      "title": "Alchemy of Souls S1-S2",
      "subjectType": 2,
      "year": 2022,
      "detailPath": "alchemy-of-souls-wsMhupZ18n1",
+     "score": 0.438,
+     "query": "Bulgasal: Immortal Souls 2021"
+    },
+    {
+     "title": "Immortal Samsara",
+     "subjectType": 2,
+     "year": 2022,
+     "detailPath": "immortal-samsara-mL4MnhITgv2",
      "score": 0.438,
      "query": "Bulgasal: Immortal Souls 2021"
     }
@@ -1123,36 +1123,36 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "SONS OF JEZEBEL",
+    "title": "SONS OF ROYALTY",
     "subjectType": 1,
-    "year": 2024,
-    "score": 0.266,
+    "year": 2026,
+    "score": 0.516,
     "query": "Vishwanath and Sons"
    },
    "candidates": [
+    {
+     "title": "SONS OF ROYALTY",
+     "subjectType": 1,
+     "year": 2026,
+     "detailPath": "sons-of-royalty-yRqAx9V9Eta",
+     "score": 0.516,
+     "query": "Vishwanath and Sons"
+    },
+    {
+     "title": "MAHAKWE AND SONS",
+     "subjectType": 1,
+     "year": 2025,
+     "detailPath": "mahakwe-and-sons-YSqkpRwHLl7",
+     "score": 0.436,
+     "query": "Vishwanath and Sons"
+    },
     {
      "title": "SONS OF JEZEBEL",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "sons-of-jezebel-KhXPbr6Q4D9",
      "score": 0.266,
-     "query": "Vishwanath and Sons"
-    },
-    {
-     "title": "SONS OF JEZEBEL",
-     "subjectType": 1,
-     "year": 2024,
-     "detailPath": "sons-of-jezebel-GpiPMs1KtS4",
-     "score": 0.266,
-     "query": "Vishwanath and Sons"
-    },
-    {
-     "title": "Vishwatma",
-     "subjectType": 1,
-     "year": 1992,
-     "detailPath": "vishwatma-OTziiKKJmDa",
-     "score": 0.205,
-     "query": "Vishwanath"
+     "query": "Vishwanath & Sons 2026"
     }
    ]
   },
@@ -1162,13 +1162,21 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Oh My Dog",
+    "title": "Dog",
     "subjectType": 1,
-    "year": 2022,
-    "score": 0.217,
+    "year": 2024,
+    "score": 0.373,
     "query": "Ohh My Dog"
    },
    "candidates": [
+    {
+     "title": "Dog",
+     "subjectType": 1,
+     "year": 2024,
+     "detailPath": "dog-KxZvFfbXUG4",
+     "score": 0.373,
+     "query": "Ohh My Dog 2026"
+    },
     {
      "title": "Oh My Dog",
      "subjectType": 1,
@@ -1178,20 +1186,12 @@
      "query": "Ohh My Dog"
     },
     {
-     "title": "My Dog the Space Traveler",
-     "subjectType": 1,
-     "year": 2014,
-     "detailPath": "my-dog-the-space-traveler-YsHmHryLiG5",
-     "score": 0.14,
-     "query": "Ohh My Dog Hindi"
-    },
-    {
      "title": "Dog",
      "subjectType": 1,
      "year": 2022,
      "detailPath": "dog-86hZwAoAzm",
      "score": 0.123,
-     "query": "Ohh My Dog Hindi"
+     "query": "Ohh My Dog"
     }
    ]
   },
@@ -1225,10 +1225,10 @@
      "query": "Rathri"
     },
     {
-     "title": "Ab hai judai ka mausam do pal ka mahman DJ rimex hindi song 2021 अब हैजुदाई का मौसम2021New  dhanepur",
+     "title": "Humko Mohabbat | Kitne Door Kitne Paas (2002) | Fardeen Khan | Amrita Arora | Roop Kumar Rathod",
      "subjectType": 6,
-     "year": 2021,
-     "detailPath": "ab-hai-judai-ka-mausam-do-pal-ka-mahman-dj-rimex-hindi-song-2021-ab-haijudaaii-kaa-mausm2021new-dhanepur-CddlNHz3kta",
+     "year": 2020,
+     "detailPath": "humko-mohabbat-kitne-door-kitne-paas-2002-fardeen-khan-amrita-arora-roop-kumar-rathod-SJfkMS52gp6",
      "score": 0,
      "query": "Modha Rathri"
     }
@@ -1295,20 +1295,20 @@
      "query": "Fighting"
     },
     {
-     "title": "Teen Spirit",
+     "title": "SPIRIT",
      "subjectType": 1,
-     "year": 2011,
-     "detailPath": "teen-spirit-4Yf1yBAx2g4",
-     "score": 0.266,
+     "year": 2026,
+     "detailPath": "spirit-cqix3LErVQ2",
+     "score": 0.205,
      "query": "Fighting Spirit 2013"
     },
     {
-     "title": "The Spirit",
+     "title": "Fighting",
      "subjectType": 1,
-     "year": 2008,
-     "detailPath": "the-spirit-kUz1ssDSeF2",
+     "year": 2009,
+     "detailPath": "fighting-MuXruae7lOa",
      "score": 0.205,
-     "query": "Fighting Spirit Hindi"
+     "query": "Fighting"
     }
    ]
   },
@@ -1318,29 +1318,13 @@
    "year": 2021,
    "mediaType": "movie",
    "best": {
-    "title": "Death Knot",
+    "title": "Death Note",
     "subjectType": 1,
-    "year": 2021,
-    "score": 0.516,
-    "query": "Death"
+    "year": 2017,
+    "score": 0.5,
+    "query": "Death Note"
    },
    "candidates": [
-    {
-     "title": "Death Knot",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "death-knot-AOaTye7Xgx9",
-     "score": 0.516,
-     "query": "Death"
-    },
-    {
-     "title": "Death Link",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "death-link-oMM6tl0XvH7",
-     "score": 0.516,
-     "query": "Death"
-    },
     {
      "title": "Death Note",
      "subjectType": 1,
@@ -1348,6 +1332,22 @@
      "detailPath": "death-note-oE6WML0Qup1",
      "score": 0.5,
      "query": "Death Note"
+    },
+    {
+     "title": "Death Note: The Musical",
+     "subjectType": 1,
+     "year": 2017,
+     "detailPath": "death-note-the-musical-4IN5sTn9Kg6",
+     "score": 0.296,
+     "query": "Death Note"
+    },
+    {
+     "title": "High Note",
+     "subjectType": 1,
+     "year": 2019,
+     "detailPath": "high-note-Kh1lMypZCj1",
+     "score": 0.266,
+     "query": "Death Note 2021"
     }
    ]
   },
@@ -1357,21 +1357,13 @@
    "year": 2020,
    "mediaType": "tv",
    "best": {
-    "title": "Overlord and the Underwoods",
+    "title": "Overlord: Pure Pure Pleiades",
     "subjectType": 2,
-    "year": 2021,
-    "score": 0.485,
-    "query": "Overlord Hindi"
+    "year": 2015,
+    "score": 0.465,
+    "query": "Overlord"
    },
    "candidates": [
-    {
-     "title": "Overlord and the Underwoods",
-     "subjectType": 2,
-     "year": 2021,
-     "detailPath": "overlord-and-the-underwoods-EgSSOgevMsa",
-     "score": 0.485,
-     "query": "Overlord Hindi"
-    },
     {
      "title": "Overlord: Pure Pure Pleiades",
      "subjectType": 2,
@@ -1387,6 +1379,14 @@
      "detailPath": "overlord-pure-pure-pleiades-english-SHy8Hbd4YQ1",
      "score": 0.465,
      "query": "Overlord"
+    },
+    {
+     "title": "Overlord [Hindi]",
+     "subjectType": 1,
+     "year": 2018,
+     "detailPath": "overlord-hindi-qNEEy2kIwA2",
+     "score": 0.3,
+     "query": "Overlord Hindi"
     }
    ]
   },
@@ -1456,7 +1456,7 @@
      "year": 2010,
      "detailPath": "high-school-suuvNXlZpX9",
      "score": 0.406,
-     "query": "Ouran High School Host Club"
+     "query": "Ouran High School Host Club 2012"
     },
     {
      "title": "Our School",
@@ -1474,36 +1474,36 @@
    "year": 2025,
    "mediaType": "movie",
    "best": {
-    "title": "romantic song",
-    "subjectType": 6,
-    "year": 2025,
-    "score": 0.366,
-    "query": "Romantic Killer Hindi"
+    "title": "BEST ROMANTIC MOVIES",
+    "subjectType": 1,
+    "year": 2024,
+    "score": 0.317,
+    "query": "Romantic Killer"
    },
    "candidates": [
-    {
-     "title": "romantic song",
-     "subjectType": 6,
-     "year": 2025,
-     "detailPath": "romantic-song-K1H1hdTOGn7",
-     "score": 0.366,
-     "query": "Romantic Killer Hindi"
-    },
     {
      "title": "BEST ROMANTIC MOVIES",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "best-romantic-movies-2tgQIBkmq58",
      "score": 0.317,
-     "query": "Romantic Killer Hindi"
+     "query": "Romantic Killer"
     },
     {
-     "title": "ROMANTIC CRIME",
+     "title": "TWO ROMANTIC LOVERS",
      "subjectType": 1,
-     "year": 2023,
-     "detailPath": "romantic-crime-kq2Y3ZhP6E4",
-     "score": 0.266,
+     "year": 2024,
+     "detailPath": "two-romantic-lovers-KT4oh6THAb1",
+     "score": 0.317,
      "query": "Romantic Killer"
+    },
+    {
+     "title": "MY ROMANTIC WIFE",
+     "subjectType": 1,
+     "year": 2024,
+     "detailPath": "my-romantic-wife-ufcptOVyP76",
+     "score": 0.317,
+     "query": "Romantic Killer 2025"
     }
    ]
   },
@@ -1542,7 +1542,7 @@
      "year": 2023,
      "detailPath": "trial-period-0o8QCnOa7B3",
      "score": 0.436,
-     "query": "Blue Period"
+     "query": "Blue Period 2024"
     }
    ]
   },
@@ -1573,15 +1573,15 @@
      "year": 2023,
      "detailPath": "my-daemon-qjlxodbzWz6",
      "score": 0.418,
-     "query": "Daemons"
+     "query": "Daemons of"
     },
     {
-     "title": "My Daemon [English]",
+     "title": "The Gate of Mystical Realm",
      "subjectType": 2,
-     "year": 2023,
-     "detailPath": "my-daemon-english-GHf4Q07n1l6",
-     "score": 0.418,
-     "query": "Daemons"
+     "year": 2025,
+     "detailPath": "the-gate-of-mystical-realm-2paNDN6ca73",
+     "score": 0.361,
+     "query": "Daemons of the Shadow Realm 2026"
     }
    ]
   },
@@ -1593,7 +1593,7 @@
    "best": {
     "title": "Leviathan",
     "subjectType": 1,
-    "year": 1989,
+    "year": 2015,
     "score": 0.5,
     "query": "Leviathan"
    },
@@ -1601,16 +1601,16 @@
     {
      "title": "Leviathan",
      "subjectType": 1,
-     "year": 1989,
-     "detailPath": "leviathan-uPUiHuPBue9",
+     "year": 2015,
+     "detailPath": "leviathan-KxxwoD6lqia",
      "score": 0.5,
      "query": "Leviathan"
     },
     {
      "title": "Leviathan",
      "subjectType": 1,
-     "year": 2015,
-     "detailPath": "leviathan-KxxwoD6lqia",
+     "year": 1989,
+     "detailPath": "leviathan-uPUiHuPBue9",
      "score": 0.5,
      "query": "Leviathan"
     },
@@ -1669,21 +1669,13 @@
    "year": 2012,
    "mediaType": "tv",
    "best": {
-    "title": "Wonderful Days",
+    "title": "Shimaizuma: Shimaizuma 3 The Animation",
     "subjectType": 2,
-    "year": 2014,
-    "score": 0.418,
-    "query": "Shimajiro: A Wonderful Adventure 2012"
+    "year": 2007,
+    "score": 0.282,
+    "query": "Shimajiro: A Wonderful Adventure"
    },
    "candidates": [
-    {
-     "title": "Wonderful Days",
-     "subjectType": 2,
-     "year": 2014,
-     "detailPath": "wonderful-days-uv6t8iFvh37",
-     "score": 0.418,
-     "query": "Shimajiro: A Wonderful Adventure 2012"
-    },
     {
      "title": "Shimaizuma: Shimaizuma 3 The Animation",
      "subjectType": 2,
@@ -1699,6 +1691,14 @@
      "detailPath": "wonderful-world-6dDe6LRH5I4",
      "score": 0.018,
      "query": "Shimajiro: A Wonderful Adventure 2012"
+    },
+    {
+     "title": "A Doggone Adventure",
+     "subjectType": 1,
+     "year": 2018,
+     "detailPath": "a-doggone-adventure-wyD254dOrY1",
+     "score": 0,
+     "query": "Shimajiro: A Wonderful Adventure"
     }
    ]
   },
@@ -1729,7 +1729,7 @@
      "year": 2025,
      "detailPath": "the-children-of-october-7-cw1tr52O7u6",
      "score": 0.317,
-     "query": "Children Of The Whales Hindi"
+     "query": "Children Of The Whales 2026"
     },
     {
      "title": "The Whale",
@@ -1810,11 +1810,11 @@
      "query": "Toriko X One Piece Collaboration Special 2012"
     },
     {
-     "title": "One Piece Film Z [English]",
+     "title": "One Piece: Strong World",
      "subjectType": 1,
-     "year": 2012,
-     "detailPath": "one-piece-film-z-english-qv7aFPMgl54",
-     "score": 0.476,
+     "year": 2013,
+     "detailPath": "one-piece-strong-world-W9U1HVsIF08",
+     "score": 0.396,
      "query": "Toriko X One Piece Collaboration Special 2012"
     }
    ]
@@ -1997,20 +1997,20 @@
      "query": "Anpanman: Apple Boy and Everyone's Hope"
     },
     {
+     "title": "Apple Mortgage Cake",
+     "subjectType": 1,
+     "year": 2014,
+     "detailPath": "apple-mortgage-cake-Snki2cs62C9",
+     "score": 0.376,
+     "query": "Anpanman: Apple Boy and Everyone's Hope 2014"
+    },
+    {
      "title": "Anpanman: Revive Banana Island! [English]",
      "subjectType": 1,
      "year": 2013,
      "detailPath": "anpanman-revive-banana-island-english-6xJTa6KouD7",
      "score": 0.236,
-     "query": "Anpanman"
-    },
-    {
-     "title": "Hope",
-     "subjectType": 1,
-     "year": 2022,
-     "detailPath": "hope-0Wnylhbli4a",
-     "score": 0.058,
-     "query": "Anpanman: Apple Boy and Everyone's Hope"
+     "query": "Anpanman Apple"
     }
    ]
   },
@@ -2044,12 +2044,12 @@
      "query": "Anpanman: Nanda and Runda from Star of Toys"
     },
     {
-     "title": "Lord of the Toys",
+     "title": "Anpanman: Shine! Kurun & The Star of Life [English]",
      "subjectType": 1,
      "year": 2018,
-     "detailPath": "lord-of-the-toys-Q4t6MtcHS96",
-     "score": 0.187,
-     "query": "Anpanman: Nanda and Runda from Star of Toys"
+     "detailPath": "anpanman-shine-kurun-and-the-star-of-life-english-qDTKt7ux5Ea",
+     "score": 0.163,
+     "query": "Anpanman Nanda"
     }
    ]
   },
@@ -2137,34 +2137,34 @@
    "year": 2010,
    "mediaType": "movie",
    "best": {
-    "title": "Magical Girl Isuka",
-    "subjectType": 2,
-    "year": 2010,
+    "title": "Ano Ba Talaga Tayo feat. Janine Berdin - Performance Video | The Juans",
+    "subjectType": 6,
+    "year": 2025,
     "score": 0,
     "query": "Anpanman: The Blacknose with Magical Song"
    },
    "candidates": [
     {
-     "title": "Magical Girl Isuka",
-     "subjectType": 2,
-     "year": 2010,
-     "detailPath": "magical-girl-isuka-sMNJjX7HYx7",
+     "title": "Ano Ba Talaga Tayo feat. Janine Berdin - Performance Video | The Juans",
+     "subjectType": 6,
+     "year": 2025,
+     "detailPath": "ano-ba-talaga-tayo-feat-janine-berdin-performance-video-the-juans-ylWvFKSMUA4",
      "score": 0,
      "query": "Anpanman: The Blacknose with Magical Song"
     },
     {
-     "title": "Anpanman: Shine! Kurun & The Star of Life [English]",
+     "title": "Anpanman: Apple Boy and Everyone's Hope [English]",
      "subjectType": 1,
-     "year": 2018,
-     "detailPath": "anpanman-shine-kurun-and-the-star-of-life-english-qDTKt7ux5Ea",
+     "year": 2021,
+     "detailPath": "anpanman-apple-boy-and-everyones-hope-english-YMRPiErdRX3",
      "score": 0,
      "query": "Anpanman: The Blacknose with Magical Song"
     },
     {
-     "title": "Anpanman: Star-Spirited Dollie [English]",
+     "title": "Anpanman: Revive Banana Island! [English]",
      "subjectType": 1,
-     "year": 2006,
-     "detailPath": "anpanman-star-spirited-dollie-english-E0GsUi3JrO3",
+     "year": 2013,
+     "detailPath": "anpanman-revive-banana-island-english-6xJTa6KouD7",
      "score": 0,
      "query": "Anpanman: The Blacknose with Magical Song"
     }
@@ -2197,15 +2197,15 @@
      "year": 2013,
      "detailPath": "one-piece-strong-world-W9U1HVsIF08",
      "score": 0.308,
-     "query": "One Piece: Adventure of Nebulandia"
+     "query": "One Piece"
     },
     {
-     "title": "One Piece Film: Gold [English]",
+     "title": "One Piece: Episode of Luffy - Adventure on Hand Island [English]",
      "subjectType": 1,
-     "year": 2017,
-     "detailPath": "one-piece-film-gold-english-2xE4ce66e05",
-     "score": 0.308,
-     "query": "One Piece: Adventure of Nebulandia Hindi"
+     "year": 2013,
+     "detailPath": "one-piece-episode-of-luffy-adventure-on-hand-island-english-08K2G5mrz82",
+     "score": 0.306,
+     "query": "One Piece: Adventure of Nebulandia 2015"
     }
    ]
   },
@@ -2353,15 +2353,15 @@
      "year": 2018,
      "detailPath": "sol-searching-EoisV7VzbZ9",
      "score": 0.266,
-     "query": "Sol Levante"
+     "query": "Sol Levante Hindi"
     },
     {
-     "title": "Sauti Sol - Nenda Lote (Official Audio) SMS [Skiza 9935647] to 811",
-     "subjectType": 6,
-     "year": 2020,
-     "detailPath": "sauti-sol-nenda-lote-official-audio-sms-skiza-9935647-to-811-gg2Kds6CZa",
-     "score": 0.158,
-     "query": "Sol Levante 2020"
+     "title": "Sol Goode",
+     "subjectType": 1,
+     "year": 2003,
+     "detailPath": "sol-goode-IKCdQ0UHCZ9",
+     "score": 0.016,
+     "query": "Sol Levante Hindi"
     }
    ]
   },
@@ -2384,7 +2384,7 @@
      "year": 1998,
      "detailPath": "revival-of-evangelion-S5Xzux8VIu7",
      "score": 0.518,
-     "query": "EVANGELION: DEATH (TRUE)² Hindi"
+     "query": "EVANGELION"
     },
     {
      "title": "Neon Genesis Evangelion: Death & Rebirth",
@@ -2392,7 +2392,7 @@
      "year": 1997,
      "detailPath": "neon-genesis-evangelion-death-and-rebirth-0GRMa0R7kj3",
      "score": 0.497,
-     "query": "EVANGELION: DEATH (TRUE)²"
+     "query": "EVANGELION: DEATH (TRUE)² Hindi"
     },
     {
      "title": "Neon Genesis Evangelion: Death & Rebirth [English]",
@@ -2400,7 +2400,7 @@
      "year": 1997,
      "detailPath": "neon-genesis-evangelion-death-and-rebirth-english-oU6lAayEfh5",
      "score": 0.497,
-     "query": "EVANGELION: DEATH (TRUE)²"
+     "query": "EVANGELION: DEATH (TRUE)² Hindi"
     }
    ]
   },
@@ -2605,21 +2605,13 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "2NE1 - 'Crush' (Korean Ver.) M/V",
+    "title": "4 Korean Kpop Idols and 1 Imposter: Guess Who's Not Korean (ft. Loossemble)",
     "subjectType": 6,
-    "year": 2014,
+    "year": 2024,
     "score": 0,
     "query": "Korean Kanakaraju"
    },
    "candidates": [
-    {
-     "title": "2NE1 - 'Crush' (Korean Ver.) M/V",
-     "subjectType": 6,
-     "year": 2014,
-     "detailPath": "2ne1-crush-korean-ver-m-v-yBsR2eGRjP9",
-     "score": 0,
-     "query": "Korean Kanakaraju"
-    },
     {
      "title": "4 Korean Kpop Idols and 1 Imposter: Guess Who's Not Korean (ft. Loossemble)",
      "subjectType": 6,
@@ -2635,6 +2627,14 @@
      "detailPath": "a-korean-odyssey-sWkSE55S2c",
      "score": 0,
      "query": "Korean Kanakaraju"
+    },
+    {
+     "title": "Hometown Legends",
+     "subjectType": 2,
+     "year": 2008,
+     "detailPath": "hometown-legends-A6c1rxyrOS",
+     "score": 0,
+     "query": "Korean Kanakaraju"
     }
    ]
   },
@@ -2644,19 +2644,19 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "1LDK + JK Ikinari Doukyo? Micchaku!? Hatsu Ecchi!!?",
-    "subjectType": 2,
-    "year": 2023,
-    "score": 0,
+    "title": "Ikke Pe Ikka",
+    "subjectType": 1,
+    "year": 1994,
+    "score": 0.065,
     "query": "Ikka"
    },
    "candidates": [
     {
-     "title": "1LDK + JK Ikinari Doukyo? Micchaku!? Hatsu Ecchi!!?",
-     "subjectType": 2,
-     "year": 2023,
-     "detailPath": "1ldk-jk-ikinari-doukyo-micchaku-hatsu-ecchi-mF7fXYjjbM7",
-     "score": 0,
+     "title": "Ikke Pe Ikka",
+     "subjectType": 1,
+     "year": 1994,
+     "detailPath": "ikke-pe-ikka-8S71bcsrLy9",
+     "score": 0.065,
      "query": "Ikka"
     },
     {
@@ -2668,10 +2668,10 @@
      "query": "Ikka"
     },
     {
-     "title": "DILBAR Full Song | Satyameva Jayate | John Abraham Nora Fatehi | Tanishk B Neha Kakkar Ikka Dhvani",
+     "title": "Ikka All I Need Video Song | Latest Hindi Song 2016 | T-Series",
      "subjectType": 6,
-     "year": 2018,
-     "detailPath": "dilbar-full-song-satyameva-jayate-john-abraham-nora-fatehi-tanishk-b-neha-kakkar-ikka-dhvani-CDolp06Kk82",
+     "year": 2016,
+     "detailPath": "ikka-all-i-need-video-song-latest-hindi-song-2016-t-series-86Ps8ZmoZj",
      "score": 0,
      "query": "Ikka"
     }
@@ -2696,7 +2696,7 @@
      "year": 2026,
      "detailPath": "tu-yaa-main-qBC7KOnvow3",
      "score": 0.441,
-     "query": "Main Vaapas Aaunga"
+     "query": "Main Vaapas Aaunga 2026"
     },
     {
      "title": "Bebe Main Badmash Banuga",
@@ -2712,7 +2712,7 @@
      "year": 2026,
      "detailPath": "wwe-sunday-nights-main-event-YWwzkULSpv1",
      "score": 0.329,
-     "query": "Main Vaapas"
+     "query": "Main Vaapas Aaunga Hindi"
     }
    ]
   },
@@ -2743,7 +2743,7 @@
      "year": 2024,
      "detailPath": "the-double-Ug8BBqpb4f6",
      "score": 0.523,
-     "query": "Dhee Double"
+     "query": "Double"
     },
     {
      "title": "Seeing Double",
@@ -2855,20 +2855,20 @@
      "query": "Newton's 3rd Law 2026"
     },
     {
-     "title": "Beethoven's 3rd",
+     "title": "Yakuza Law",
      "subjectType": 1,
-     "year": 2000,
-     "detailPath": "beethovens-3rd-ml3AFsN7ZQ2",
-     "score": 0.018,
-     "query": "Newton's 3rd Law"
-    },
-    {
-     "title": "Criminal Law",
-     "subjectType": 1,
-     "year": 1989,
-     "detailPath": "criminal-law-s871fi07gf2",
+     "year": 1969,
+     "detailPath": "yakuza-law-GBm3jEr6t15",
      "score": 0.018,
      "query": "Newton's 3rd Law 2026"
+    },
+    {
+     "title": "Newton's Cradle",
+     "subjectType": 2,
+     "year": 2021,
+     "detailPath": "newtons-cradle-mZLhorUDYz4",
+     "score": 0,
+     "query": "Newton's 3rd Law"
     }
    ]
   },
@@ -2902,10 +2902,10 @@
      "query": "Sacred Games"
     },
     {
-     "title": "THE SACRED ACT OF SACRIFICE",
+     "title": "SACRED REALM OF IMMORTALS",
      "subjectType": 1,
      "year": 2023,
-     "detailPath": "the-sacred-act-of-sacrifice-eZFNsqspwja",
+     "detailPath": "sacred-realm-of-immortals-oI62MW646B2",
      "score": 0.317,
      "query": "Sacred Games"
     }
@@ -2917,35 +2917,35 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "A City Lost",
+    "title": "City of the City",
     "subjectType": 1,
-    "year": 2025,
-    "score": 0.436,
+    "year": 2024,
+    "score": 0.266,
     "query": "Con City"
    },
    "candidates": [
-    {
-     "title": "A City Lost",
-     "subjectType": 1,
-     "year": 2025,
-     "detailPath": "a-city-lost-ifb8B5kS5Na",
-     "score": 0.436,
-     "query": "Con City"
-    },
-    {
-     "title": "Con Mum",
-     "subjectType": 1,
-     "year": 2025,
-     "detailPath": "con-mum-2nDsS6HX7E3",
-     "score": 0.436,
-     "query": "Con City 2026"
-    },
     {
      "title": "City of the City",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "city-of-the-city-2vlrIqcY0fa",
      "score": 0.266,
+     "query": "Con City"
+    },
+    {
+     "title": "Ex-con",
+     "subjectType": 1,
+     "year": 2024,
+     "detailPath": "ex-con-Wtom1zJQYO6",
+     "score": 0.266,
+     "query": "Con City"
+    },
+    {
+     "title": "Con Man",
+     "subjectType": 1,
+     "year": 2018,
+     "detailPath": "con-man-QSSfJ2RrQt8",
+     "score": 0.016,
      "query": "Con City"
     }
    ]
@@ -3011,19 +3011,19 @@
      "query": "Kuch Kuch Hota Hai"
     },
     {
-     "title": "Kuch Is Tarah",
+     "title": "Kuch unki jafaon /// NAHID AKHTAR",
      "subjectType": 6,
-     "year": 2018,
-     "detailPath": "kuch-is-tarah-y5GD9tCoYK",
-     "score": 0.235,
-     "query": "Kuch Kuch Hota Hai"
+     "year": 2020,
+     "detailPath": "kuch-unki-jafaon-nahid-akhtar-sWSNRoiRn24",
+     "score": 0.345,
+     "query": "Kuch"
     },
     {
-     "title": "KUCH TO HAI",
+     "title": "Uzair Jaswal Sings Kuch Kuch Hota Hai, Umbrella And Paani Paani | Song Association | Mashion",
      "subjectType": 6,
-     "year": 2016,
-     "detailPath": "kuch-to-hai-uLaMhmTyVZ6",
-     "score": 0.177,
+     "year": 2022,
+     "detailPath": "uzair-jaswal-sings-kuch-kuch-hota-hai-umbrella-and-paani-paani-song-association-mashion-sAVhdPtzRG2",
+     "score": 0.265,
      "query": "Kuch Kuch Hota Hai 2020"
     }
    ]
@@ -3058,12 +3058,12 @@
      "query": "Daadi Ki"
     },
     {
-     "title": "Aankhon ki Gustaakhiyan",
+     "title": "Chameli Ki Shaadi",
      "subjectType": 1,
-     "year": 2025,
-     "detailPath": "aankhon-ki-gustaakhiyan-8Oto5z4R3T1",
-     "score": 0.361,
-     "query": "Daadi Ki"
+     "year": 1986,
+     "detailPath": "chameli-ki-shaadi-uf681PakXy4",
+     "score": 0.217,
+     "query": "Daadi Ki Shaadi Hindi"
     }
    ]
   },
@@ -3086,7 +3086,7 @@
      "year": 2024,
      "detailPath": "pati-patni-aur-vo-o0gUI0DWvc2",
      "score": 0.451,
-     "query": "Pati Patni"
+     "query": "Patni"
     },
     {
      "title": "Pati Patni Aur Woh",
@@ -3130,18 +3130,18 @@
     {
      "title": "Hustle",
      "subjectType": 6,
-     "year": 2021,
-     "detailPath": "hustle-ISECXKLwca2",
+     "year": 2022,
+     "detailPath": "hustle-IemZkLbvDf7",
      "score": 0.332,
      "query": "Hustle 5"
     },
     {
-     "title": "Hustle Hard",
-     "subjectType": 6,
-     "year": 2023,
-     "detailPath": "hustle-hard-yDxVznhlNo4",
-     "score": 0.227,
-     "query": "Hustle 5 - Apna Homeground 2026"
+     "title": "Hustle",
+     "subjectType": 2,
+     "year": 2006,
+     "detailPath": "hustle-ujgXdNsk8o",
+     "score": 0.082,
+     "query": "Hustle 5"
     }
    ]
   },
@@ -3155,7 +3155,7 @@
     "subjectType": 1,
     "year": 2022,
     "score": 0.476,
-    "query": "Ranveer vs Wild with Bear Grylls"
+    "query": "Ranveer vs Wild with Bear Grylls Hindi"
    },
    "candidates": [
     {
@@ -3190,34 +3190,34 @@
    "year": 2024,
    "mediaType": "tv",
    "best": {
-    "title": "Got to Get Out",
+    "title": "Britain's Got Talent S1-S18",
     "subjectType": 2,
-    "year": 2025,
-    "score": 0.302,
-    "query": "India's Got Latent Hindi"
+    "year": 2007,
+    "score": 0,
+    "query": "India's Got Latent"
    },
    "candidates": [
-    {
-     "title": "Got to Get Out",
-     "subjectType": 2,
-     "year": 2025,
-     "detailPath": "got-to-get-out-GZ0ELyGS5g",
-     "score": 0.302,
-     "query": "India's Got Latent Hindi"
-    },
-    {
-     "title": "24: India S1-S2",
-     "subjectType": 2,
-     "year": 2013,
-     "detailPath": "24-india-AcfdLWXeU1",
-     "score": 0.018,
-     "query": "India's Got Latent 2024"
-    },
     {
      "title": "Britain's Got Talent S1-S18",
      "subjectType": 2,
      "year": 2007,
      "detailPath": "britains-got-talent-u1zwPloTYY4",
+     "score": 0,
+     "query": "India's Got Latent"
+    },
+    {
+     "title": "India Pakistan",
+     "subjectType": 1,
+     "year": 2015,
+     "detailPath": "india-pakistan-4MhtFUF24H1",
+     "score": 0,
+     "query": "India's Got Latent"
+    },
+    {
+     "title": "India's Most Wanted",
+     "subjectType": 1,
+     "year": 2019,
+     "detailPath": "indias-most-wanted-y9ibp2XMB12",
      "score": 0,
      "query": "India's Got Latent"
     }
@@ -3245,20 +3245,20 @@
      "query": "Best of The Great Indian Kapil Show"
     },
     {
+     "title": "Best of Fizzy Show",
+     "subjectType": 2,
+     "year": 2021,
+     "detailPath": "best-of-fizzy-show-QYrht5WpEIa",
+     "score": 0.486,
+     "query": "Best of"
+    },
+    {
      "title": "The Great American Baking Show S1-S4",
      "subjectType": 2,
      "year": 2023,
      "detailPath": "the-great-american-baking-show-g6vuGBzTu93",
      "score": 0.429,
      "query": "Best of The Great Indian Kapil Show"
-    },
-    {
-     "title": "Best of REMA",
-     "subjectType": 6,
-     "year": 2024,
-     "detailPath": "best-of-rema-MiLyzDCW2E2",
-     "score": 0.303,
-     "query": "Best of"
     }
    ]
   },
@@ -3268,21 +3268,13 @@
    "year": 2019,
    "mediaType": "movie",
    "best": {
-    "title": "Next Gen",
+    "title": "Girl Next",
     "subjectType": 1,
-    "year": 2018,
-    "score": 0.329,
+    "year": 2021,
+    "score": 0.159,
     "query": "My Next"
    },
    "candidates": [
-    {
-     "title": "Next Gen",
-     "subjectType": 1,
-     "year": 2018,
-     "detailPath": "next-gen-SltFRxSYhR4",
-     "score": 0.329,
-     "query": "My Next"
-    },
     {
      "title": "Girl Next",
      "subjectType": 1,
@@ -3298,6 +3290,14 @@
      "detailPath": "next-KzkydMU27ta",
      "score": 0.014,
      "query": "My Next"
+    },
+    {
+     "title": "JAWAN: Chaleya (Hindi) | Shah Rukh Khan | Nayanthara | Atlee | Anirudh | Arijit S, Shilpa R | Kumaar",
+     "subjectType": 6,
+     "year": 2023,
+     "detailPath": "jawan-chaleya-hindi-shah-rukh-khan-nayanthara-atlee-anirudh-arijit-s-shilpa-r-kumaar-Es8hRtgkLS6",
+     "score": 0,
+     "query": "My Next Guest with David Letterman and Shah Rukh Khan"
     }
    ]
   },
@@ -3307,21 +3307,13 @@
    "year": 2020,
    "mediaType": "tv",
    "best": {
-    "title": "With Love S1-S2",
+    "title": "What Comes After Love",
     "subjectType": 2,
-    "year": 2021,
-    "score": 0.576,
+    "year": 2024,
+    "score": 0.409,
     "query": "What the Love! with Karan Johar Hindi"
    },
    "candidates": [
-    {
-     "title": "With Love S1-S2",
-     "subjectType": 2,
-     "year": 2021,
-     "detailPath": "with-love-8CxCxux4QHa",
-     "score": 0.576,
-     "query": "What the Love! with Karan Johar Hindi"
-    },
     {
      "title": "What Comes After Love",
      "subjectType": 2,
@@ -3337,6 +3329,14 @@
      "detailPath": "with-love-KZ13izmXmua",
      "score": 0.406,
      "query": "What the Love! with Karan Johar Hindi"
+    },
+    {
+     "title": "What the Duck",
+     "subjectType": 2,
+     "year": 2018,
+     "detailPath": "what-the-duck-OlsjltZb9L6",
+     "score": 0.353,
+     "query": "What the"
     }
    ]
   },
@@ -3440,20 +3440,20 @@
      "query": "Chak De"
     },
     {
-     "title": "Indian",
-     "subjectType": 1,
-     "year": 1996,
-     "detailPath": "indian-0OrTUkusDJa",
-     "score": 0.123,
-     "query": "India"
-    },
-    {
      "title": "Chak Lein De",
      "subjectType": 6,
      "year": 2011,
      "detailPath": "chak-lein-de-KfufQktTO96",
      "score": 0.067,
      "query": "Chak De! India"
+    },
+    {
+     "title": "India Pakistan",
+     "subjectType": 1,
+     "year": 2015,
+     "detailPath": "india-pakistan-4MhtFUF24H1",
+     "score": 0.018,
+     "query": "Chak De! India Hindi"
     }
    ]
   },
@@ -3487,11 +3487,11 @@
      "query": "PK"
     },
     {
-     "title": "Episode 02 | Order of Operations for Numbers/PEMDAS PK/PM UTBK - Super Basic Mathematics",
-     "subjectType": 5,
-     "year": 2025,
-     "detailPath": "episode-02-order-of-operations-for-numbers-pemdas-pk-pm-utbk-super-basic-mathematics-ifbSQxtpj74",
-     "score": 0.165,
+     "title": "PK Lele a Salesman",
+     "subjectType": 1,
+     "year": 2018,
+     "detailPath": "pk-lele-a-salesman-gyxwLt5PxO8",
+     "score": 0.065,
      "query": "PK"
     }
    ]
@@ -3570,7 +3570,7 @@
      "year": 2021,
      "detailPath": "kipchoge-the-last-milestone-WVwiEiNhTd5",
      "score": 0.065,
-     "query": "Milestone"
+     "query": "Milestone Hindi"
     }
    ]
   },
@@ -3658,20 +3658,20 @@
    "year": 2015,
    "mediaType": "tv",
    "best": {
-    "title": "Mighty Med S2",
+    "title": "Mighty Magiswords S1-S2",
     "subjectType": 2,
-    "year": 2014,
-    "score": 0.436,
-    "query": "Mighty"
+    "year": 2015,
+    "score": 0.516,
+    "query": "Mighty Raju 2015"
    },
    "candidates": [
     {
-     "title": "Mighty Med S2",
+     "title": "Mighty Magiswords S1-S2",
      "subjectType": 2,
-     "year": 2014,
-     "detailPath": "mighty-med-GVAvO9DCpA8",
-     "score": 0.436,
-     "query": "Mighty"
+     "year": 2015,
+     "detailPath": "mighty-magiswords-IURUn3nhcOa",
+     "score": 0.516,
+     "query": "Mighty Raju 2015"
     },
     {
      "title": "Mighty Express S1-S7",
@@ -3682,12 +3682,12 @@
      "query": "Mighty Raju"
     },
     {
-     "title": "Mighty Little Bheem S1-S3",
+     "title": "Mighty Med S1-S2",
      "subjectType": 2,
-     "year": 2019,
-     "detailPath": "mighty-little-bheem-ksD1I1xi6k3",
-     "score": 0.297,
-     "query": "Mighty Raju"
+     "year": 2013,
+     "detailPath": "mighty-med-GVAvO9DCpA8",
+     "score": 0.416,
+     "query": "Mighty Raju Hindi"
     }
    ]
   },
@@ -3721,12 +3721,12 @@
      "query": "ChuChuTV Surprise Eggs"
     },
     {
-     "title": "L.O.L. Surprise! House of Surprises",
-     "subjectType": 2,
+     "title": "SURPRISE H2WO",
+     "subjectType": 6,
      "year": 2021,
-     "detailPath": "l-o-l-surprise-house-of-surprises-s8LxzLpqkE",
-     "score": 0.208,
-     "query": "ChuChuTV Surprise Eggs Hindi"
+     "detailPath": "surprise-h2wo-itO6TeGddVa",
+     "score": 0.268,
+     "query": "ChuChuTV Surprise"
     }
    ]
   },
@@ -3804,7 +3804,7 @@
      "year": 2025,
      "detailPath": "old-episodes-of-chhota-bheem-Ozz35NXO759",
      "score": 0.279,
-     "query": "Chhota Bheem: Magic Block Buster 2024"
+     "query": "Chhota Bheem: Magic Block Buster"
     }
    ]
   },
@@ -3830,18 +3830,18 @@
      "query": "Chhota Bheem Rangda 2023"
     },
     {
+     "title": "Chhota Bheem Videos in Tamil",
+     "subjectType": 5,
+     "year": 2024,
+     "detailPath": "chhota-bheem-videos-in-tamil-cmWzxWDx6c5",
+     "score": 0.41,
+     "query": "Chhota Bheem Rangda Hindi"
+    },
+    {
      "title": "Chhota Bheem & Krishna's Adventures",
      "subjectType": 5,
      "year": 2026,
      "detailPath": "chhota-bheem-and-krishnas-adventures-6PUIHQPuAO9",
-     "score": 0.39,
-     "query": "Chhota Bheem Rangda Hindi"
-    },
-    {
-     "title": "Latest Movie Premieres of Chhota Bheem",
-     "subjectType": 5,
-     "year": 2025,
-     "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
      "score": 0.39,
      "query": "Chhota Bheem Rangda Hindi"
     }
@@ -4025,20 +4025,20 @@
      "query": "Agent Kim Reactivated"
     },
     {
-     "title": "Agent Carter S1-S2",
+     "title": "Agent Aika [English]",
      "subjectType": 2,
-     "year": 2015,
-     "detailPath": "agent-carter-E0wh7w9LtR4",
-     "score": 0.018,
-     "query": "Agent Kim Reactivated 2026"
-    },
-    {
-     "title": "Agent Ali S1-S3",
-     "subjectType": 2,
-     "year": 2016,
-     "detailPath": "agent-ali-ud1ZlRtQ5K",
+     "year": 1997,
+     "detailPath": "agent-aika-english-I8TgsnyE9Ia",
      "score": 0.018,
      "query": "Agent Kim"
+    },
+    {
+     "title": "A Bona Fide Killer",
+     "subjectType": 2,
+     "year": 2026,
+     "detailPath": "a-bona-fide-killer-yzvVpvmbTK4",
+     "score": 0,
+     "query": "Agent Kim Reactivated"
     }
    ]
   },
@@ -4064,19 +4064,19 @@
      "query": "Possessed"
     },
     {
-     "title": "Possessed",
-     "subjectType": 1,
-     "year": 2018,
-     "detailPath": "possessed-edJv4lrlHU1",
-     "score": 0.27,
+     "title": "Possessed Love S1",
+     "subjectType": 2,
+     "year": 2024,
+     "detailPath": "possessed-love-s1-409e4mTJKE7",
+     "score": 0.465,
      "query": "Possessed"
     },
     {
      "title": "Possessed",
      "subjectType": 1,
-     "year": 2022,
-     "detailPath": "possessed-KphMRAwzsn5",
-     "score": 0.25,
+     "year": 2018,
+     "detailPath": "possessed-edJv4lrlHU1",
+     "score": 0.27,
      "query": "Possessed"
     }
    ]
