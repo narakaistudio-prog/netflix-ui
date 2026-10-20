@@ -297,6 +297,54 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         }
     });
 
+    it('shows the S1 • E2 + episode-name strip and keeps it in sync with Next', () => {
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:5:tv"
+                    initialLink={PAGE}
+                    title="My Demon"
+                    mediaType="tv"
+                    season={1}
+                    episode={2}
+                    episodeCount={16}
+                    episodeTitle="Everyone Has a Demon in Their Heart"
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
+            );
+        });
+        const strip = () =>
+            document.querySelector('[data-testid="moviebox-episode-strip"]') as HTMLElement;
+        expect(strip()).toBeTruthy();
+        expect(strip().textContent).toContain('S1 • E2');
+        expect(strip().textContent).toContain('My Demon');
+        expect(strip().textContent).toContain('Everyone Has a Demon in Their Heart');
+
+        // Next dabane par patti bhi agle episode par
+        const next = document.querySelector('[data-testid="moviebox-next-episode"]') as HTMLElement;
+        act(() => {
+            next.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        });
+        expect(strip().textContent).toContain('S1 • E3');
+    });
+
+    it('shows no episode strip for a movie', () => {
+        act(() => {
+            root.render(
+                <MovieboxPagePlayer
+                    linkKey="tmdb:6:movie"
+                    initialLink={PAGE}
+                    title="Mandaadi"
+                    mediaType="movie"
+                    autoResolve={false}
+                    onClose={() => {}}
+                />,
+            );
+        });
+        expect(document.querySelector('[data-testid="moviebox-episode-strip"]')).toBeNull();
+    });
+
     it('tells the parent when the episode changed', () => {
         const onEpisodeChange = jest.fn();
         act(() => {

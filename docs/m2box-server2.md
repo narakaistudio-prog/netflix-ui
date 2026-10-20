@@ -73,6 +73,9 @@ agla episode bacha ho):
   cross-origin hai isliye andar ka mousemove nahi milta — pointer frame me
   ghusne par milne wala `mouseout` (relatedTarget = null) bhi activity maana
   jata hai.
+- Video ke andar bottom-left **episode ki patti** hai: `S1 • E2` ka safed
+  badge + `My Demon – <episode name>` (episode ka naam catalog ke episode
+  guide se — `seasons[].episodes[].name`). Ye bhi chrome ke saath gayab.
 - `MovieboxPagePlayer` khud hi agla episode khol deta hai (`episode + 1`,
   wahi `detailSe`/`detailEp` watch page — iframe dobara mount hota hai).
 - Parent ko `onEpisodeChange({ season, episode })` se batata hai, taaki

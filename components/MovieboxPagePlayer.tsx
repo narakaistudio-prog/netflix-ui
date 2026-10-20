@@ -53,6 +53,8 @@ interface MovieboxPagePlayerProps {
      * "Next Episode" dikhana hai ya nahi (aakhri episode par nahi).
      */
     episodeCount?: number;
+    /** Chalu episode ka naam ("Everyone Has a Demon in Their Heart"). */
+    episodeTitle?: string;
     /**
      * Next Episode dabane par parent ko batao (Continue Watching / row state
      * apne aap sahi rahe). Na de to player khud hi agla episode khol deta hai.
@@ -83,6 +85,7 @@ export function MovieboxPagePlayer({
     season,
     episode,
     episodeCount,
+    episodeTitle,
     onEpisodeChange,
     onClose,
     onSwitchServer,
@@ -235,6 +238,7 @@ export function MovieboxPagePlayer({
             width: crop.frameWidth,
             height: crop.height,
             padRight: pad,
+            padLeft: pad,
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
@@ -409,6 +413,50 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
+            {/* Series: episode ki patti — "S1 • E2  My Demon – <episode name>"
+                video ke andar bottom-left, bilkul NetMirror jaisa. Chrome ke
+                saath gayab. */}
+            {frameSrc && isSeries && !isSearchFrame && typeof activeEpisode === 'number' ? (
+                <View
+                    style={[
+                        styles.stripWrap,
+                        overlayBox
+                            ? {
+                                  left: overlayBox.left,
+                                  top: overlayBox.top,
+                                  width: overlayBox.width,
+                                  height: overlayBox.height,
+                                  paddingLeft: overlayBox.padLeft,
+                                  // daayein Next Episode ka pill hai — text us
+                                  // ke neeche na chala jaye
+                                  paddingRight: overlayBox.padRight + 180,
+                                  paddingBottom: overlayBox.padBottom,
+                              }
+                            : styles.stripFallback,
+                        { opacity: chromeVisible ? 1 : 0 },
+                    ]}
+                    pointerEvents="none"
+                    testID="moviebox-episode-strip"
+                >
+                    <View style={styles.epBadge}>
+                        <Text style={styles.epBadgeText}>
+                            {`S${typeof season === 'number' ? season : 1} • E${activeEpisode}`}
+                        </Text>
+                    </View>
+                    {title ? (
+                        <Text style={styles.stripTitle} numberOfLines={1}>
+                            {title}
+                            {episodeTitle ? (
+                                <>
+                                    <Text style={styles.stripDash}>{' – '}</Text>
+                                    <Text style={styles.stripEpName}>{episodeTitle}</Text>
+                                </>
+                            ) : null}
+                        </Text>
+                    ) : null}
+                </View>
+            ) : null}
+
             {/* Series: agla episode — video ke andar, bottom-right (site ke
                 apne Next Episode ki jagah), aur chrome ke saath gayab. */}
             {frameSrc && nextEpisode && !isSearchFrame ? (
@@ -561,6 +609,32 @@ const styles = StyleSheet.create({
     },
     /** `overlayBox` se pehle (pehla layout) — root ke daayein kinare par. */
     nextFallback: { right: 24, bottom: '13%' },
+    /** Episode ki patti: video ke andar bottom-left, seek bar ke upar. */
+    stripWrap: {
+        position: 'absolute',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    stripFallback: { left: 24, bottom: '13%' },
+    epBadge: {
+        backgroundColor: 'rgba(255,255,255,0.95)',
+        borderRadius: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+    },
+    epBadgeText: { color: '#000', fontSize: 13, fontWeight: '700' },
+    stripTitle: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: '700',
+        flexShrink: 1,
+        textShadowColor: 'rgba(0,0,0,0.75)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+    },
+    stripDash: { color: '#cfcfcf', fontWeight: '600' },
+    stripEpName: { color: '#7CD44A', fontWeight: '600' },
     nextButton: {
         flexDirection: 'row',
         alignItems: 'center',

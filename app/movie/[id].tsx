@@ -28,6 +28,7 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { getTvSeasons } from '@/lib/tvEpisodes';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { buildServerCycle, nextServerIn, hasServerSwitcher } from '@/lib/playbackServers';
@@ -662,6 +663,18 @@ export default function MovieScreen() {
      * Is season me total episodes — sirf series par. "Next Episode" button
      * isi se pata karta hai ki agla episode hai ya nahi.
      */
+    /** Chalu episode ka naam — player ki bottom strip me dikhta hai. */
+    const activeEpisodeTitle = useMemo(() => {
+        if (mediaType !== 'tv') return undefined;
+        const fromRow = movie.seasons
+            ?.find((item) => item.season_number === season)
+            ?.episodes?.find((item) => item.episode === episode)?.name;
+        if (fromRow) return fromRow;
+        return getTvSeasons(movie.tmdb_id)
+            .find((item) => item.season_number === season)
+            ?.episodes?.find((item) => item.episode === episode)?.name;
+    }, [episode, mediaType, movie.seasons, movie.tmdb_id, season]);
+
     const seasonEpisodeTotal =
         movie.seasonEpisodeCounts?.[season - 1] ??
         movie.seasons?.find((item) => item.season_number === season)?.episode_count;
@@ -678,6 +691,7 @@ export default function MovieScreen() {
                     season={mediaType === 'tv' ? season : undefined}
                     episode={mediaType === 'tv' ? episode : undefined}
                     episodeCount={mediaType === 'tv' ? seasonEpisodeTotal : undefined}
+                    episodeTitle={activeEpisodeTitle}
                     onEpisodeChange={(next) => {
                         setEpisode(next.episode);
                         rememberPlayback(next.season, next.episode);

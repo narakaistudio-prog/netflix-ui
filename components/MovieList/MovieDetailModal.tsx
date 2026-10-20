@@ -468,6 +468,15 @@ export function MovieDetailModal({
                                 episodeCount={
                                     movie.mediaType === 'tv' ? currentSeason?.episode_count : undefined
                                 }
+                                episodeTitle={
+                                    movie.mediaType === 'tv'
+                                        ? currentSeason?.episodes?.find(
+                                              (item) =>
+                                                  item.episode ===
+                                                  (episodeRef?.episode ?? 1),
+                                          )?.name
+                                        : undefined
+                                }
                                 onEpisodeChange={(next) => {
                                     // Agla episode chal raha hai — modal ka apna
                                     // state bhi wahi rahe (player band karke
