@@ -48,10 +48,15 @@ chaudai banti hai.
 Mode ka faisla `MovieboxCroppedFrame` ke `mode` prop se hota hai:
 `player` (default — watch page, panel bahar) aur `page` (search results frame).
 
-**Mobile (<900px):** site episode list player ke **neeche** rakhti hai, isliye
-stage nahi banta — iframe asli chaudai par (scale 1), upar ka kaat 112/108/104
-(chaudai 768+/480+/usse kam), unchai = player + 16 + 320. Wahan andar scroll
-**khula** rehta hai (warna episodes tak pahunchenge hi nahi).
+**Chhoti window (mobile / PC par window chhoti):** player mode me **koi
+special case nahi** — har chaudai par wahi 1536px stage + wahi crop, bas poora
+stage `scale` ho kar dabbe me fit ho jata hai. (Pehle 900px se neeche site ka
+apna mobile layout chal jata tha, jisme player ke neeche Refresh/Download/Prev/
+Next, title, description aur bottom nav — poora page — dikhta tha.)
+
+Sirf **search/page mode** hi 900px se neeche site ke asli mobile layout par
+jaata hai (scale 1, upar ka kaat 112/108/104, unchai = player + 16 + 320) —
+wahan results/episode grid padhne ke liye scroll khula rehta hai.
 
 ## Jab phir bhi link na mile — live resolve
 

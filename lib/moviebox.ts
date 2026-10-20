@@ -121,7 +121,10 @@ export interface MovieboxCrop {
     cropLeft: number;
     /** Screen par dikhne wale dabbe ki unchai (px). */
     height: number;
-    /** Chhoti chaudai par site episode list player ke NEECHE rakhti hai. */
+    /**
+     * Site ka asli mobile layout (sirf page mode me, 900px se neeche) — player
+     * mode me hamesha `false`, kyunki wahan har width par stage crop chalta hai.
+     */
     stacked: boolean;
     /** Iframe jis fixed chaudai par render hota hai. */
     stageWidth: number;
@@ -327,14 +330,17 @@ export interface MovieboxCropOptions {
 /**
  * Crop ka naap-tol.
  *
- * Desktop: iframe hamesha 1536px "stage" par render hota hai (site ka asli
- * desktop layout), aur dikhne wala dabba stage ke ek hisse par set hota hai:
+ * Player mode: **har width** par iframe 1536px "stage" par render hota hai
+ * (site ka asli desktop layout), aur dikhne wala dabba stage ke ek hisse par
+ * set hota hai — chhoti window par bhi isliye sirf player hi dikhta hai:
  *
  *   - player mode : x 120 → 1088 (968 wide), y 117 → 662 (545 tall)
  *   - page mode   : x 120 → 1536 (1416 wide), y 117 → 662 (545 tall)
  *
  * Phir poora stage `transform: scale()` se dabbe me fit kiya jata hai
  * (`contain` — chaudi par lambai kam ho to bhi player katta nahi).
+ * Page mode (search frame) hi 900px se neeche site ke apne mobile layout par
+ * jaata hai.
  */
 export function getMovieboxCrop(
     outerWidth: number,
@@ -342,8 +348,14 @@ export function getMovieboxCrop(
     options: MovieboxCropOptions = {},
 ): MovieboxCrop {
     const w = outerWidth > 0 ? outerWidth : 1416;
-    const stacked = w < 900;
     const resources = options.resources === true;
+    /**
+     * Stacked (asli mobile layout) sirf **page** mode me. Player mode har width
+     * par fixed stage hi use karta hai — warna chhoti window (ya PC par window
+     * chhoti karte hi) site ka poora mobile page dikhne lagta tha: player ke
+     * neeche Refresh/Download/Prev/Next, title, description, bottom nav.
+     */
+    const stacked = resources && w < 900;
 
     if (!stacked) {
         const stageVisibleWidth = resources ? MOVIEBOX_STAGE_PAGE_WIDTH : MOVIEBOX_STAGE_PLAYER_WIDTH;
@@ -367,12 +379,10 @@ export function getMovieboxCrop(
         };
     }
 
+    // Sirf search/page frame ke liye: site ka asli mobile layout, scroll khula.
     const cropTop = w >= 768 ? 112 : w >= 480 ? 108 : 104;
     const playerW = Math.max(0, w - 24);
     const playerH = (playerW * 9) / 16;
-    // Mobile par side panel hota hi nahi — Resources grid player ke **neeche**
-    // stacked hota hai, aur episode chunne ke liye wahi ek raasta hai. Isliye
-    // narrow screen par poora page (player + grid) hi rehta hai.
     const wanted = playerH + 16 + 320;
     const height = outerHeight > 0 ? Math.min(wanted, outerHeight) : wanted;
     return {

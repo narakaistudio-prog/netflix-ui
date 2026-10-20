@@ -131,18 +131,36 @@ describe('MovieboxCroppedFrame', () => {
         expect(frame()!.getAttribute('scrolling')).toBe('no');
     });
 
-    it('on a narrow screen uses the real width and leaves scroll open for episodes', () => {
+    it('on a narrow screen keeps the same player-only crop (PC window chhoti ho)', () => {
         rectSpy.mockRestore();
         measureAs(420, 900);
         act(() => {
-            root.render(<MovieboxCroppedFrame src={PAGE} />);
+            root.render(<MovieboxCroppedFrame src={PAGE} title="My Demon" />);
+        });
+        const iframe = frame()!;
+        // Wahi stage crop — sirf poora stage chhota scale hota hai. Isliye
+        // player ke neeche title/description/bottom-nav kabhi nahi aate.
+        expect(iframe.style.left).toBe(`-${MOVIEBOX_STAGE_CROP_LEFT}px`);
+        expect(iframe.style.top).toBe(`-${MOVIEBOX_STAGE_CROP_TOP}px`);
+        expect(iframe.style.width).toBe(`${MOVIEBOX_STAGE_WIDTH}px`);
+        expect(iframe.getAttribute('scrolling')).toBe('no');
+        expect(box()!.style.width).toBe('420px');
+        expect(box()!.style.height).toBe(
+            `${Math.round(MOVIEBOX_STAGE_PLAYER_HEIGHT * (420 / MOVIEBOX_STAGE_PLAYER_WIDTH))}px`,
+        );
+    });
+
+    it('leaves scroll open for the search page on a narrow screen', () => {
+        rectSpy.mockRestore();
+        measureAs(420, 900);
+        act(() => {
+            root.render(<MovieboxCroppedFrame src={PAGE} mode="page" allowScroll />);
         });
         const iframe = frame()!;
         expect(iframe.style.left).toBe('0px');
         expect(iframe.style.top).toBe('-104px');
         expect(iframe.style.width).toBe('420px');
         expect(iframe.hasAttribute('scrolling')).toBe(false);
-        expect(box()!.style.width).toBe('420px');
     });
 
     it('kills the frame on unmount (no background audio)', () => {
