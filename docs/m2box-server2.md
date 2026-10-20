@@ -36,8 +36,8 @@ Naap (asli screenshots par pixel-naap, 20 Oct 2026 — Demon Slayer, 26 eps):
 | `MOVIEBOX_STAGE_WIDTH` | 1536 | Site ka layout isi chaudai par waisa rehta hai jaisa asli site par (episode guide 5-column chhota). |
 | `MOVIEBOX_STAGE_CROP_TOP` | 117 | Header + menu kaat (player page-y 120 se shuru hota hai). |
 | `MOVIEBOX_STAGE_CROP_LEFT` | 120 | Baayein ka kaat (iframe ke andar player 129 se shuru hota hai). |
-| `MOVIEBOX_STAGE_PLAYER_WIDTH` | 1064 | **Sirf player**: x 120 → 1184. Page par player 129 → 1189 (16:9), panel 1190 se — yaani panel bilkul bahar. |
-| `MOVIEBOX_STAGE_PLAYER_HEIGHT` | 600 | Window y 117 → 717: player (120 → 716) poora, uske apne controls bhi. 1064 × 600 ≈ 16:9. |
+| `MOVIEBOX_STAGE_PLAYER_WIDTH` | 968 | **Sirf player**: x 120 → 1088. Video stage-x 128.6 → 1088.6 (960 wide) hai aur "Resources" panel bilkul wahin (1088.6) se shuru hota hai — isliye panel kabhi andar nahi aata. |
+| `MOVIEBOX_STAGE_PLAYER_HEIGHT` | 545 | Window y 117 → 662: video y 121 → 661 (540 tall, 16:9) + uske apne controls. Title/rating patti 663 se shuru hoti hai — bahar. 968 × 545 = 16:9. |
 | `MOVIEBOX_STAGE_VISIBLE_HEIGHT` | 545 | **Poora page** mode (sirf search frame): y 117 → 662. |
 
 Desktop scale = `min(chaudai / visibleWidth, unchai / visibleHeight)` — yaani
@@ -280,11 +280,14 @@ referrerpolicy="no-referrer-when-downgrade"
    hai — rang badalne wali jagah hi kinara hai).
 4. `stagePx = screenshotPx × (visibleWidth / screenshot me frame ki chaudai)`
    (`visibleWidth` = 1064 player mode / 1416 page mode).
-5. Naye constants: `CROP_TOP = playerTop − 3`, `CROP_LEFT = playerLeft − 9`,
-   `PLAYER_WIDTH = panelLeft − CROP_LEFT − 4` (4px saans), aur
-   `PLAYER_HEIGHT = CROP_TOP se playerBottom + 2 tak` — player ke apne controls
-   video ke bottom par overlay hote hain, isliye bottom tak poora chahiye.
-6. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
+5. Scale seedha naapo: `scale = frameChaudaiPx / visibleWidth` (poora page mode
+   me `1416`). Phir har kinara stage units me: `stageX = CROP_LEFT + (xPx −
+   frameLeftPx) / scale`, `stageY = CROP_TOP + (yPx − frameTopPx) / scale`.
+6. Naye constants: `CROP_TOP = videoTop − 4`, `CROP_LEFT = videoLeft − 9`,
+   `PLAYER_WIDTH = panelLeft − CROP_LEFT` (panel aur video ke beech saans nahi
+   hota — thoda sa video ka daaya kinara kaatna padta hai), aur
+   `PLAYER_HEIGHT = (videoBottom + 1) − CROP_TOP`.
+7. Teen titles par test karo — movie, chhoti series, aur 26+ episode wali series
    (panel sabse pehle wahi chaudi karta hai).
 
 ## Hadein

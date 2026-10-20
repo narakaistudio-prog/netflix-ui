@@ -133,26 +133,27 @@ describe('getMovieboxCrop', () => {
         expect(MOVIEBOX_STAGE_CROP_LEFT).toBe(120);
         // poora page mode (sirf search frame)
         expect(MOVIEBOX_STAGE_VISIBLE_HEIGHT).toBe(545);
-        // sirf player mode: 1064 × 600 ≈ 16:9
-        expect(MOVIEBOX_STAGE_PLAYER_WIDTH).toBe(1064);
-        expect(MOVIEBOX_STAGE_PLAYER_HEIGHT).toBe(600);
+        // sirf player mode: 968 × 545 = 16:9
+        expect(MOVIEBOX_STAGE_PLAYER_WIDTH).toBe(968);
+        expect(MOVIEBOX_STAGE_PLAYER_HEIGHT).toBe(545);
         const ratio = MOVIEBOX_STAGE_PLAYER_WIDTH / MOVIEBOX_STAGE_PLAYER_HEIGHT;
-        expect(Math.abs(ratio - 16 / 9)).toBeLessThan(0.03);
+        expect(Math.abs(ratio - 16 / 9)).toBeLessThan(0.02);
     });
 
     it('shows only the player — Resources panel bahar reh jata hai', () => {
         const crop = getMovieboxCrop(1440, 900);
         expect(crop.stacked).toBe(false);
         expect(crop.stageWidth).toBe(1536);
-        // naapa gaya: page 1416 = video 1060 + 4 + panel 352 (panel ~1190 se)
-        expect(crop.stageVisibleWidth).toBe(1064);
-        expect(crop.cropLeft + crop.stageVisibleWidth).toBeLessThanOrEqual(1189);
+        // naapa gaya: video stage-x 128.6 → 1088.6 (960 wide), panel wahin se
+        expect(crop.stageVisibleWidth).toBe(968);
+        expect(crop.cropLeft + crop.stageVisibleWidth).toBeLessThanOrEqual(1089);
         expect(crop.cropTop).toBe(117);
         expect(crop.cropLeft).toBe(120);
-        expect(crop.stageVisibleHeight).toBe(600);
-        expect(crop.scale).toBeCloseTo(1440 / 1064, 6);
+        // title strip stage-y 663 se — window 662 par band
+        expect(crop.stageVisibleHeight).toBe(545);
+        expect(crop.scale).toBeCloseTo(1440 / 968, 6);
         expect(crop.frameWidth).toBe(1440);
-        expect(crop.height).toBe(812);
+        expect(crop.height).toBe(811);
     });
 
     it('keeps the whole 16:9 player at any desktop width', () => {
@@ -166,7 +167,7 @@ describe('getMovieboxCrop', () => {
     it('contain-fits a short host so the control bar is never cut', () => {
         const crop = getMovieboxCrop(1440, 300);
         expect(crop.height).toBe(300);
-        expect(crop.frameWidth).toBe(532);
+        expect(crop.frameWidth).toBe(533);
         expect(Math.abs(crop.height / crop.frameWidth - 9 / 16)).toBeLessThan(0.02);
     });
 
@@ -200,8 +201,8 @@ describe('getMovieboxCrop', () => {
         const crop = getMovieboxCrop(0, 0);
         expect(crop.stacked).toBe(false);
         expect(crop.frameWidth).toBe(1416);
-        expect(crop.scale).toBeCloseTo(1416 / 1064, 6);
-        expect(crop.height).toBe(Math.round(600 * (1416 / 1064)));
+        expect(crop.scale).toBeCloseTo(1416 / 968, 6);
+        expect(crop.height).toBe(Math.round(545 * (1416 / 968)));
     });
 
     it('desktop starts exactly at 900px', () => {

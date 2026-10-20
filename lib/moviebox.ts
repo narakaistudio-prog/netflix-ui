@@ -70,22 +70,21 @@ export const MOVIEBOX_STAGE_VISIBLE_HEIGHT = 545;
 export const MOVIEBOX_STAGE_PAGE_WIDTH = MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_CROP_LEFT;
 
 /**
- * "Sirf player" mode ka dabba — 1064 × 600 (≈16:9).
+ * "Sirf player" mode ka dabba — 968 × 545 (16:9).
  *
- * Stage par naap (20 Oct 2026, live build ka 1917px screenshot + guide):
+ * Naap (20 Oct 2026, live build ka 1917×1077 screenshot; crop box 1064 × 600
+ * units = 1617 × 912 px tha, isliye scale = 1.5197 px/unit — seedha naap):
  *
- *   page 1416 units = video 1060 + saans ~4 + **Resources panel 352**
- *   video 1060 × 596 (16:9), stage-x 129 → 1189, stage-y 120 → 716
+ *   video      : stage-x 128.6 → 1088.6 (960), stage-y 121 → 661 (540) — 16:9
+ *   panel left : stage-x 1088.6  (video se bilkul chipka hua, koi saans nahi)
+ *   title strip: stage-y 663 se shuru
  *
- * Isliye player ka crop x 120 → 1184, y 117 → 717: video poora andar,
- * panel (≈1190 se shuru) bilkul bahar, aur player ke apne controls (jo video
- * ke bottom par overlay hote hain) bhi andar. Screen par sirf player.
- *
- * Poora page mode (Resources panel ke saath) sirf **search frame** ke liye
- * hai: wahan panel ki jagah search results / episode grid dekhne hote hain.
+ * Isliye window: x 120 → 1088 (968), y 117 → 662 (545). Video poora, uske
+ * apne controls (video ke bottom par overlay) bhi poore, aur "Resources"
+ * panel + neeche ki title/rating patti dono bahar.
  */
-export const MOVIEBOX_STAGE_PLAYER_WIDTH = 1064;
-export const MOVIEBOX_STAGE_PLAYER_HEIGHT = 600;
+export const MOVIEBOX_STAGE_PLAYER_WIDTH = 968;
+export const MOVIEBOX_STAGE_PLAYER_HEIGHT = 545;
 
 /** Iframe sandbox — `allow-top-navigation` KABHI nahi (tab hijack). */
 export const MOVIEBOX_FRAME_SANDBOX =
@@ -331,7 +330,7 @@ export interface MovieboxCropOptions {
  * Desktop: iframe hamesha 1536px "stage" par render hota hai (site ka asli
  * desktop layout), aur dikhne wala dabba stage ke ek hisse par set hota hai:
  *
- *   - player mode : x 120 → 1184 (1064 wide), y 117 → 717 (600 tall)
+ *   - player mode : x 120 → 1088 (968 wide), y 117 → 662 (545 tall)
  *   - page mode   : x 120 → 1536 (1416 wide), y 117 → 662 (545 tall)
  *
  * Phir poora stage `transform: scale()` se dabbe me fit kiya jata hai

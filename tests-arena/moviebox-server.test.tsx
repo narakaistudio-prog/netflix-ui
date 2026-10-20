@@ -95,7 +95,7 @@ describe('MovieboxCroppedFrame', () => {
         );
 
         // Stage scales to the screen, so the crop lands in the same place everywhere.
-        // Sirf player: 1056 wide (Resources panel kabhi andar nahi aata).
+        // Sirf player: 968 wide (Resources panel kabhi andar nahi aata).
         const scale = 1440 / MOVIEBOX_STAGE_PLAYER_WIDTH;
         expect(stage()!.style.width).toBe(`${MOVIEBOX_STAGE_PLAYER_WIDTH}px`);
         expect(stage()!.style.height).toBe(`${MOVIEBOX_STAGE_PLAYER_HEIGHT}px`);
