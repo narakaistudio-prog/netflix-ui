@@ -1,6 +1,6 @@
 {
  "$comment": "MovieBox harvest report: matched / review / miss + per-title notes. Sirf debugging ke liye — app ise nahi padhta.",
- "generatedAt": "2026-10-20T11:37:31.807Z",
+ "generatedAt": "2026-10-20T12:04:08.090Z",
  "stats": {
   "catalog": 791,
   "linked": 686,
@@ -9,16 +9,16 @@
   "review": 28,
   "miss": 77,
   "errors": 0,
-  "matchedThisRun": 1,
+  "matchedThisRun": 0,
   "pinned": 1,
   "queriesUsed": {
-   "primary": 106,
-   "hindi": 106,
-   "year": 106,
+   "primary": 105,
+   "hindi": 105,
+   "year": 105,
    "ampersand": 6,
-   "anchor": 71,
+   "anchor": 70,
    "head": 30,
-   "short": 60,
+   "short": 59,
    "clean": 1
   }
  },
@@ -175,7 +175,7 @@
      "year": 2023,
      "detailPath": "my-home-hero-oiXCWStQqZ6",
      "score": 0.535,
-     "query": "My Hero Academia: Vigilantes Hindi"
+     "query": "My Hero"
     }
    ]
   },
@@ -887,13 +887,21 @@
    "year": 2025,
    "mediaType": "movie",
    "best": {
-    "title": "Dog",
+    "title": "Wild",
     "subjectType": 1,
-    "year": 2024,
-    "score": 0.625,
-    "query": "Wild Dog"
+    "year": 2025,
+    "score": 0.705,
+    "query": "Wild Dog 2025"
    },
    "candidates": [
+    {
+     "title": "Wild",
+     "subjectType": 1,
+     "year": 2025,
+     "detailPath": "wild-WL9b3Ij6NY4",
+     "score": 0.705,
+     "query": "Wild Dog 2025"
+    },
     {
      "title": "Dog",
      "subjectType": 1,
@@ -909,14 +917,6 @@
      "detailPath": "wild-dog-hindi-OzPcnL6LmF3",
      "score": 0.55,
      "query": "Wild Dog Hindi"
-    },
-    {
-     "title": "Wild Dog",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "wild-dog-oSzbXU1a88",
-     "score": 0.5,
-     "query": "Wild Dog"
     }
    ]
   },
@@ -1225,10 +1225,10 @@
      "query": "Rathri"
     },
     {
-     "title": "Ab hai judai ka mausam do pal ka mahman DJ rimex hindi song 2021 अब हैजुदाई का मौसम2021New  dhanepur",
+     "title": "Humko Mohabbat | Kitne Door Kitne Paas (2002) | Fardeen Khan | Amrita Arora | Roop Kumar Rathod",
      "subjectType": 6,
-     "year": 2021,
-     "detailPath": "ab-hai-judai-ka-mausam-do-pal-ka-mahman-dj-rimex-hindi-song-2021-ab-haijudaaii-kaa-mausm2021new-dhanepur-CddlNHz3kta",
+     "year": 2020,
+     "detailPath": "humko-mohabbat-kitne-door-kitne-paas-2002-fardeen-khan-amrita-arora-roop-kumar-rathod-SJfkMS52gp6",
      "score": 0,
      "query": "Modha Rathri"
     }
@@ -1396,34 +1396,34 @@
    "year": 2025,
    "mediaType": "tv",
    "best": {
-    "title": "Black Clover S1-S2",
+    "title": "12-Sai. Chiccha na Mune no Tokimeki [English] S1-S2",
     "subjectType": 2,
-    "year": 2017,
+    "year": 2016,
     "score": 0,
     "query": "Tougen Anki"
    },
    "candidates": [
     {
-     "title": "Black Clover S1-S2",
+     "title": "12-Sai. Chiccha na Mune no Tokimeki [English] S1-S2",
      "subjectType": 2,
-     "year": 2017,
-     "detailPath": "black-clover-cE1aW4X3H14",
+     "year": 2016,
+     "detailPath": "12-sai-chiccha-na-mune-no-tokimeki-english-ix23htwKli7",
      "score": 0,
      "query": "Tougen Anki"
     },
     {
-     "title": "Bleach: Thousand-Year Blood War [English] S1-S4",
+     "title": "A Time to Screw, Toki Neiro",
      "subjectType": 2,
-     "year": 2022,
-     "detailPath": "bleach-thousand-year-blood-war-english-IKoyJ28zSi8",
+     "year": 2004,
+     "detailPath": "a-time-to-screw-toki-neiro-mdJd22HyWs",
      "score": 0,
      "query": "Tougen Anki"
     },
     {
-     "title": "Jujutsu Kaisen [English] S1-S3",
+     "title": "Aniki no Yome-san nara, Ore ni Hamerarete Hiihii Itteru Tokoro Da yo",
      "subjectType": 2,
-     "year": 2020,
-     "detailPath": "jujutsu-kaisen-english-KD0jSM9ot5",
+     "year": 2015,
+     "detailPath": "aniki-no-yome-san-nara-ore-ni-hamerarete-hiihii-itteru-tokoro-da-yo-KH0mfK6HU77",
      "score": 0,
      "query": "Tougen Anki"
     }
@@ -1669,35 +1669,35 @@
    "year": 2012,
    "mediaType": "tv",
    "best": {
-    "title": "Shimaizuma: Shimaizuma 3 The Animation",
+    "title": "Adventure Time S1-S10",
     "subjectType": 2,
-    "year": 2007,
-    "score": 0.282,
-    "query": "Shimajiro: A Wonderful Adventure"
+    "year": 2010,
+    "score": 0.418,
+    "query": "Shimajiro: A Wonderful Adventure Hindi"
    },
    "candidates": [
+    {
+     "title": "Adventure Time S1-S10",
+     "subjectType": 2,
+     "year": 2010,
+     "detailPath": "adventure-time-SngqEO4qYY2",
+     "score": 0.418,
+     "query": "Shimajiro: A Wonderful Adventure Hindi"
+    },
+    {
+     "title": "Adventure Time S1-S10",
+     "subjectType": 2,
+     "year": 2010,
+     "detailPath": "adventure-time-6zK6CeO4Nla",
+     "score": 0.418,
+     "query": "Shimajiro: A Wonderful Adventure 2012"
+    },
     {
      "title": "Shimaizuma: Shimaizuma 3 The Animation",
      "subjectType": 2,
      "year": 2007,
      "detailPath": "shimaizuma-shimaizuma-3-the-animation-yV2mB3qKpE2",
      "score": 0.282,
-     "query": "Shimajiro: A Wonderful Adventure"
-    },
-    {
-     "title": "Wonderful World",
-     "subjectType": 2,
-     "year": 2024,
-     "detailPath": "wonderful-world-6dDe6LRH5I4",
-     "score": 0.018,
-     "query": "Shimajiro: A Wonderful Adventure 2012"
-    },
-    {
-     "title": "A Very Special Feature! Momonosuke's Road to Becoming a Great Shogun",
-     "subjectType": 1,
-     "year": 2023,
-     "detailPath": "a-very-special-feature-momonosukes-road-to-becoming-a-great-shogun-gy1tnLegPM9",
-     "score": 0,
      "query": "Shimajiro: A Wonderful Adventure"
     }
    ]
@@ -1724,20 +1724,20 @@
      "query": "Children Of The Whales Hindi"
     },
     {
-     "title": "Audrey's Children",
-     "subjectType": 1,
-     "year": 2025,
-     "detailPath": "audreys-children-cExaCGX81s4",
-     "score": 0.436,
-     "query": "Children Of The Whales Hindi"
-    },
-    {
      "title": "Amelia's Children",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "amelias-children-uNNJV86TBm4",
      "score": 0.266,
-     "query": "Children Of The Whales 2026"
+     "query": "Children Of The Whales Hindi"
+    },
+    {
+     "title": "Children",
+     "subjectType": 1,
+     "year": 1976,
+     "detailPath": "children-4O0y9BtCd14",
+     "score": 0.205,
+     "query": "Children Of The Whales"
     }
    ]
   },
@@ -1868,7 +1868,7 @@
     "subjectType": 1,
     "year": 2025,
     "score": 0.506,
-    "query": "My Hero Academia: You're Next Hindi"
+    "query": "My Hero Academia: You're Next 2024"
    },
    "candidates": [
     {
@@ -1877,7 +1877,7 @@
      "year": 2025,
      "detailPath": "youre-my-boss-GtINpr3Zl27",
      "score": 0.506,
-     "query": "My Hero Academia: You're Next Hindi"
+     "query": "My Hero Academia: You're Next 2024"
     },
     {
      "title": "You're My Boss",
@@ -2002,7 +2002,7 @@
      "year": 2014,
      "detailPath": "apple-mortgage-cake-Snki2cs62C9",
      "score": 0.376,
-     "query": "Anpanman: Apple Boy and Everyone's Hope Hindi"
+     "query": "Anpanman: Apple Boy and Everyone's Hope 2014"
     },
     {
      "title": "Anpanman: Revive Banana Island! [English]",
@@ -2111,7 +2111,7 @@
      "year": 2005,
      "detailPath": "the-poseidon-adventure-GlsLBrU8op5",
      "score": 0.518,
-     "query": "Anpanman: Adventure of Happie 2005"
+     "query": "Anpanman Adventure"
     },
     {
      "title": "Anpanman: Star-Spirited Dollie [English]",
@@ -2122,11 +2122,11 @@
      "query": "Anpanman: Adventure of Happie"
     },
     {
-     "title": "Pikachu's Island Adventure [English]",
+     "title": "THE ADVENTURE",
      "subjectType": 1,
-     "year": 2007,
-     "detailPath": "pikachus-island-adventure-english-2pIQ3026tw9",
-     "score": 0.191,
+     "year": 2024,
+     "detailPath": "the-adventure-MEoHMvbKcv2",
+     "score": 0.123,
      "query": "Anpanman Adventure"
     }
    ]
@@ -2192,20 +2192,20 @@
      "query": "One Piece: Adventure of Nebulandia"
     },
     {
+     "title": "One Piece: Strong World",
+     "subjectType": 1,
+     "year": 2013,
+     "detailPath": "one-piece-strong-world-W9U1HVsIF08",
+     "score": 0.308,
+     "query": "One Piece"
+    },
+    {
      "title": "One Piece: Episode of Luffy - Adventure on Hand Island [English]",
      "subjectType": 1,
      "year": 2013,
      "detailPath": "one-piece-episode-of-luffy-adventure-on-hand-island-english-08K2G5mrz82",
      "score": 0.306,
      "query": "One Piece: Adventure of Nebulandia 2015"
-    },
-    {
-     "title": "One Piece - Episode of East Blue: Luffy and His Four Friends' Great Adventure",
-     "subjectType": 1,
-     "year": 2017,
-     "detailPath": "one-piece-episode-of-east-blue-luffy-and-his-four-friends-great-adventure-gmDcbgjEIi3",
-     "score": 0.285,
-     "query": "One Piece: Adventure of Nebulandia"
     }
    ]
   },
@@ -2687,7 +2687,7 @@
     "subjectType": 1,
     "year": 2026,
     "score": 0.441,
-    "query": "Main Vaapas Aaunga"
+    "query": "Main Vaapas Aaunga 2026"
    },
    "candidates": [
     {
@@ -2743,7 +2743,7 @@
      "year": 2024,
      "detailPath": "the-double-Ug8BBqpb4f6",
      "score": 0.523,
-     "query": "Double"
+     "query": "Dhee Double"
     },
     {
      "title": "Seeing Double",
@@ -3047,7 +3047,7 @@
      "year": 2026,
      "detailPath": "dadi-ki-shadi-4EfjtFjmzk",
      "score": 0.441,
-     "query": "Daadi Ki"
+     "query": "Daadi Ki Shaadi 2026"
     },
     {
      "title": "Jai Kanhaiyalall Ki",
@@ -3058,12 +3058,12 @@
      "query": "Daadi Ki"
     },
     {
-     "title": "Aankhon ki Gustaakhiyan",
+     "title": "Chameli Ki Shaadi",
      "subjectType": 1,
-     "year": 2025,
-     "detailPath": "aankhon-ki-gustaakhiyan-8Oto5z4R3T1",
-     "score": 0.361,
-     "query": "Daadi Ki"
+     "year": 1986,
+     "detailPath": "chameli-ki-shaadi-uf681PakXy4",
+     "score": 0.217,
+     "query": "Daadi Ki Shaadi Hindi"
     }
    ]
   },
@@ -3245,20 +3245,20 @@
      "query": "Best of The Great Indian Kapil Show"
     },
     {
-     "title": "Best of Fizzy Show",
-     "subjectType": 2,
-     "year": 2021,
-     "detailPath": "best-of-fizzy-show-QYrht5WpEIa",
-     "score": 0.486,
-     "query": "Best of"
-    },
-    {
      "title": "The Great American Baking Show S1-S4",
      "subjectType": 2,
      "year": 2023,
      "detailPath": "the-great-american-baking-show-g6vuGBzTu93",
      "score": 0.429,
      "query": "Best of The Great Indian Kapil Show"
+    },
+    {
+     "title": "Best Hindi Collection Songs ||Hindi||",
+     "subjectType": 6,
+     "year": 2024,
+     "detailPath": "best-hindi-collection-songs-hindi-OnBY3UsUqo2",
+     "score": 0.276,
+     "query": "Best of The Great Indian Kapil Show Hindi"
     }
    ]
   },
@@ -3757,7 +3757,7 @@
      "year": 2024,
      "detailPath": "mighty-little-bheem-i-love-taj-mahal-netflix-jr-OHZubAjA2I2",
      "score": 0.461,
-     "query": "Mighty Little Bheem"
+     "query": "Mighty Little Bheem: I Love Taj Mahal 2022"
     },
     {
      "title": "THE MIGHTY QUEEN",
