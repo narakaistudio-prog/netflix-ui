@@ -1,0 +1,27 @@
+{
+ "$comment": "MovieBox (m2box.org) watch-pages for the Netflix catalog — Server 2. Baked by scripts/harvest-moviebox-links.mjs (GitHub Actions). Har entry ka `url` seedha MovieboxPagePlayer me jata hai; slug/subjectId dobara naapo mat, script hi update kare.",
+ "generatedAt": "2026-10-20T00:00:00.000Z",
+ "stats": {
+  "catalog": 0,
+  "linked": 1,
+  "hindi": 1,
+  "review": 0,
+  "miss": 0,
+  "errors": 0,
+  "matchedThisRun": 1
+ },
+ "links": {
+  "tmdb:1465943": {
+   "url": "https://m2box.org/movies/mandaadi-hindi-qxUx1r3QHW4?id=4151920426815471968&type=/movie/detail&detailSe=&detailEp=&lang=en",
+   "subjectId": "4151920426815471968",
+   "detailPath": "mandaadi-hindi-qxUx1r3QHW4",
+   "title": "Mandaadi [Hindi]",
+   "year": 2026,
+   "type": "movie",
+   "dub": "hindi",
+   "score": 1,
+   "query": "Mandaadi",
+   "harvestedAt": "2026-10-20T00:00:00.000Z"
+  }
+ }
+}

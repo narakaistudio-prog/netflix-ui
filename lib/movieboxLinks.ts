@@ -16,10 +16,19 @@
  */
 
 import { cleanMovieboxInput, isMovieboxUrl, MOVIEBOX_SITE, parseMovieboxInput } from './moviebox';
+import { movieboxCatalogEntry } from './movieboxCatalog';
 
 const STORAGE_KEY = 'netflix-moviebox-links-v1';
 /** Standalone /moviebox page apna link is key par rakhta hai. */
 export const MOVIEBOX_PAGE_KEY = '@page';
+
+/**
+ * Link kahan se aaya:
+ *   row     — title ki row me hi m2box link tha (tab M2Box pehla server banta hai)
+ *   catalog — harvester ne bake kiya hai (`data/moviebox-links.json`), sab titles par
+ *   saved   — viewer ne ek baar paste kiya tha
+ */
+export type MovieboxLinkSource = 'row' | 'catalog' | 'saved';
 
 export interface MovieboxSavedLink {
     /** Jaisa paste hua tha (trimmed). */
@@ -139,21 +148,35 @@ export function movieboxLinkFromTitle(title: {
 }
 
 /**
- * Ek title ke liye M2Box ka link — row ka apna link pehle, warna browser me
- * saved link. Dono na hon to `null` (player link paste karne ko kahega).
+ * Ek title ke liye M2Box ka link, is tarteeb me:
+ *   1. row ka apna link (`embed_url` / `videoUrl`),
+ *   2. baked catalog link (harvester ne poore Netflix catalog ke liye khoja),
+ *   3. is browser me saved link.
+ *
+ * Teenon na hon to `null` — player link paste karne ko kahega.
+ * `fromTitle` tab `true` hai jab link title ke data se hi aaya ho (row ya
+ * catalog). "M2Box pehla server hai" ka faisla `source === 'row'` par hota hai.
  */
 export function resolveMovieboxLink(
     title:
         | { id?: string | number; tmdb_id?: string | number; mediaType?: string; embed_url?: string; videoUrl?: string }
         | null
         | undefined,
-): { link: string; key: string; proxy: boolean; fromTitle: boolean } | null {
+): { link: string; key: string; proxy: boolean; fromTitle: boolean; source: MovieboxLinkSource } | null {
     if (!title) return null;
     const key = movieboxKeyForTitle(title);
+
     const fromTitle = movieboxLinkFromTitle(title);
-    if (fromTitle) return { link: fromTitle, key, proxy: false, fromTitle: true };
+    if (fromTitle) return { link: fromTitle, key, proxy: false, fromTitle: true, source: 'row' };
+
+    const baked = movieboxCatalogEntry(title);
+    if (baked?.url && isMovieboxUrl(baked.url)) {
+        return { link: baked.url, key, proxy: false, fromTitle: true, source: 'catalog' };
+    }
+
     const saved = getMovieboxLink(key);
-    if (saved) return { link: saved.url, key, proxy: saved.proxy, fromTitle: false };
+    if (saved) return { link: saved.url, key, proxy: saved.proxy, fromTitle: false, source: 'saved' };
+
     return null;
 }
 

@@ -391,7 +391,7 @@ export default function MovieScreen() {
         [movie.id, movie.tmdb_id, movie.mediaType, movie.embed_url, movie.videoUrl, movieboxRevision],
     );
     /** Row ne khud m2box link diya hai — tab M2Box hi pehla server hai. */
-    const rowIsMoviebox = Boolean(movieboxEntry?.fromTitle);
+    const rowIsMoviebox = movieboxEntry?.source === 'row';
     /** Manual embed override jo m2box page nahi hai (warna wo M2Box ka kaam hai). */
     const primaryEmbedUrl = movie.embed_url && !rowIsMoviebox ? movie.embed_url : undefined;
     const movieboxLinkKey = movieboxKeyForTitle(movie);
