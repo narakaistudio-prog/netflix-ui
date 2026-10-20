@@ -21701,7 +21701,6 @@
                         "Prateik Smita Patil",
                         "Kavin Dave",
                         "Garima Yajnik",
-                        "Neelu Kohli",
                         "Nimisha Vakharia"
                     ],
                     "genres": [
@@ -24000,7 +23999,7 @@
                         "Akshara Nunna Sujana",
                         "Harshaali Malthotra",
                         "Kabir Duhan Singh",
-                        "Poorna",
+                        "Shamna Kasim",
                         "Saswata Chatterjee",
                         "Tarun Khanna"
                     ],
@@ -29508,7 +29507,7 @@
                         "Comedy",
                         "Family"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/tq3h43fZy0H80vzf47MAY7R9Mxo.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/vcM0CWnMGdOo6ty1iyt7zE1jtd6.jpg"
                 },
                 {
                     "id": "netflix-genre-70307646",
@@ -29854,22 +29853,6 @@
                         "Thriller"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/dWgJDuJof8AjGPRyH26QjSQzmH9.jpg"
-                },
-                {
-                    "id": "netflix-genre-81648103",
-                    "title": "The Ghost",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/vIlZmA4Fa079EFZTt0P49mTSpeq.jpg",
-                    "type": "FILM",
-                    "mediaType": "movie",
-                    "tmdb_id": "1410285",
-                    "embed_provider": "nxsha",
-                    "netflixId": "81648103",
-                    "netflixUrl": "https://www.netflix.com/in/title/81648103",
-                    "catalogCollection": "netflix-genre-100381",
-                    "year": "2024",
-                    "description": "A ghost tries to prove his friend wrong by scaring a girl.",
-                    "duration": "5m",
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/nWRLkGxOrBTStBY9JvcyxWhXSyY.jpg"
                 },
                 {
                     "id": "netflix-genre-80159955",
@@ -31497,6 +31480,7 @@
                         "Mahesh Pillai",
                         "Sonali Sachdev",
                         "Ritika Shrotri",
+                        "Nivedita Bhargava",
                         "Komal Chhabria"
                     ],
                     "genres": [
@@ -34606,26 +34590,29 @@
                 {
                     "id": "netflix-kdrama-81410834",
                     "title": "True Beauty",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/9gpc8kIhNEG7r0VTkyI9aVBxdO3.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/I9WCyKUbKAiu95tAitaHOx8EVO.jpg",
                     "type": "SERIES",
                     "mediaType": "tv",
-                    "tmdb_id": "239779",
+                    "tmdb_id": "112888",
                     "embed_provider": "nxsha",
                     "netflixId": "81410834",
                     "netflixUrl": "https://www.netflix.com/in/title/81410834",
                     "catalogCollection": "netflix-genre-2638104",
-                    "year": "2024",
-                    "description": "Once bullied for her looks, Jugyeong transforms herself using the art of makeup. When she joins a new school with a True Beauty goddess competition, offering winners the chance of recruitment by entertainment agencies, she instantly becomes a top candidate! But her new identity is at stake when heartthrob Suho Lee accidentally sees her bare face. Will her elite status be short-lived?",
+                    "year": "2020",
+                    "description": "After being bullied and discriminated because of her ugly looks, a high school girl transforms herself into a gorgeous \"goddess\" and quickly rises to fame after mastering the art of makeup via online tutorial videos.",
                     "cast": [
-                        "Crunchyroll",
-                        "Crunchyroll Amazon Channel",
-                        "Jung Hye-won",
-                        "Seo Ban-seok",
-                        "Jang Min-hyeok",
-                        "Jung Yoo-jung",
-                        "Kim Ji-yul"
+                        "Mun Ka-young",
+                        "Cha Eun-woo",
+                        "Hwang In-youp",
+                        "Park You-na",
+                        "Im Se-mi",
+                        "Park Ho-san",
+                        "Jang Hye-jin",
+                        "Oh Eui-sik",
+                        "Kim Min-ki",
+                        "Kang Min-ah"
                     ],
-                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/yNQT7fVLhopmytPytN6VVPgrMoX.jpg"
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/3E1GroTJCRdIYHa5n62GqjmqxQR.jpg"
                 },
                 {
                     "id": "netflix-kdrama-81509440",
