@@ -33,6 +33,7 @@ on:
       - main
     paths:
       - '.github/workflows/moviebox-links.yml'
+      - 'data/moviebox-pins.json'
       - 'scripts/harvest-moviebox-links.mjs'
       - 'scripts/lib/moviebox-match.mjs'
 

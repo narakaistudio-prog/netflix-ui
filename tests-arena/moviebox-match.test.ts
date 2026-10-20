@@ -5,12 +5,18 @@ import { join } from 'node:path';
 
 const MODULE_PATH = join(process.cwd(), 'scripts', 'lib', 'moviebox-match.mjs');
 const HARNESS = join(process.cwd(), 'tests-arena', 'helpers', 'moviebox-match-harness.mjs');
+const HARVESTER_PATH = join(process.cwd(), 'scripts', 'harvest-moviebox-links.mjs');
 
 function run(scenario) {
     const res = spawnSync('node', [HARNESS], {
         encoding: 'utf8',
         timeout: 30000,
-        env: { ...process.env, MBM_SCENARIO: JSON.stringify(scenario), MBM_MODULE_PATH: MODULE_PATH },
+        env: {
+            ...process.env,
+            MBM_SCENARIO: JSON.stringify(scenario),
+            MBM_MODULE_PATH: MODULE_PATH,
+            MBM_HARVESTER_PATH: HARVESTER_PATH,
+        },
     });
     const out = String(res.stdout || '');
     const marker = out.lastIndexOf('__RESULT__');
@@ -136,6 +142,18 @@ describe('moviebox matcher — candidate scoring', () => {
         expect(result.reasons).toContain('year-far');
     });
 
+    it('prefers the Hindi-dub page when scores tie', () => {
+        const ranked = run({
+            op: 'rank',
+            target: { title: 'Mandaadi', year: 2026, mediaType: 'movie' },
+            items: [
+                { title: 'Mandaadi', subjectType: 1, year: 2026, detailPath: 'mandaadi-qxUx1r3QHW4' },
+                { title: 'Mandaadi [Hindi]', subjectType: 1, year: 2026, detailPath: 'mandaadi-hindi-qxUx1r3QHW4' },
+            ],
+        });
+        expect(ranked.best.item.detailPath).toBe('mandaadi-hindi-qxUx1r3QHW4');
+    });
+
     it('ranks the right candidate first', () => {
         const ranked = run({
             op: 'rank',
@@ -220,5 +238,40 @@ describe('moviebox matcher — Hindi dub pick', () => {
             prefer: 'hindi',
         });
         expect(picked).toBeNull();
+    });
+});
+
+
+describe('moviebox pins — owner-verified links', () => {
+    const URL =
+        'https://m2box.org/movies/mandaadi-hindi-qxUx1r3QHW4?id=4151920426815471968&type=/movie/detail&detailSe=&detailEp=&lang=en';
+
+    it('parses a watch page URL', () => {
+        expect(run({ op: 'parseUrl', url: URL })).toEqual({
+            detailPath: 'mandaadi-hindi-qxUx1r3QHW4',
+            subjectId: '4151920426815471968',
+        });
+        expect(run({ op: 'parseUrl', url: 'https://example.com/nope' })).toBeNull();
+    });
+
+    it('turns a pin into a baked entry with an honest dub label', () => {
+        const { links, keys } = run({ op: 'pins', pins: { 'tmdb:1465943': { url: URL, title: 'Mandaadi [Hindi]' } } });
+        expect(keys).toEqual(['tmdb:1465943']);
+        expect(links['tmdb:1465943'].url).toBe(URL);
+        expect(links['tmdb:1465943'].dub).toBe('hindi');
+        expect(links['tmdb:1465943'].pinned).toBe(true);
+        expect(links['tmdb:1465943'].score).toBe(1);
+    });
+
+    it('skips broken pins instead of crashing', () => {
+        const { links, keys } = run({ op: 'pins', pins: { 'tmdb:1': { url: 'https://m2box.org/movies/x' } } });
+        expect(keys).toEqual([]);
+        expect(links).toEqual({});
+    });
+
+    it('the real pins file is valid and matches the reference link', () => {
+        const pins = require('../data/moviebox-pins.json');
+        const { links } = run({ op: 'pins', pins: pins.links });
+        expect(links['tmdb:1465943'].url).toBe(URL);
     });
 });

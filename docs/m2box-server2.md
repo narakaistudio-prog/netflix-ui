@@ -84,12 +84,26 @@ Output:
 | File | Kaam |
 | --- | --- |
 | `data/moviebox-links.json` | `{ "tmdb:<id>": { url, subjectId, detailPath, title, year, type, dub, hindiAudio, score, harvestedAt } }` — app isi ko bundle karta hai (`lib/movieboxCatalog.ts`). |
+| `data/moviebox-pins.json` | Owner-verified overrides — inhe harvester kabhi nahi chhoo sakta. |
 | `data/moviebox-harvest-report.json` | `stats` + `review` (60–72% wale shakki matches) + `misses` + `errors`. App ise nahi padhta. |
 
 CI: `.github/workflows/moviebox-links.yml` — daily + manual. Harvester chalata
 hai, `--check` se validate karta hai, phir changed files commit karta hai
 (`moviebox-bot`). Sab kuch fail ho jaye to purana baked JSON hi chalta rehta
 hai (app kabhi khali links par nahi jata).
+
+### Pin (owner-verified link)
+
+Kabhi matching kisi title par galat page chun le, ya owner ko pata ho ki kaunsa
+page sahi hai, to `data/moviebox-pins.json` me daal do:
+
+```json
+{ "links": { "tmdb:1465943": { "url": "https://m2box.org/movies/mandaadi-hindi-qxUx1r3QHW4?id=…&type=/movie/detail&detailSe=&detailEp=&lang=en" } } }
+```
+
+Pin hamesha jeetta hai — harvester na use search se replace karta hai, na
+refresh se, aur us title ke liye network call bhi nahi karta. Offline merge:
+`node scripts/harvest-moviebox-links.mjs --pins`.
 
 **Tuning**: `MATCH_ACCEPT` (default 0.72) se neeche kuch bake nahi hota;
 0.60–0.72 `review` list me jata hai. Koi title galat match lage to `--refresh`

@@ -1,10 +1,10 @@
 {
  "$comment": "MovieBox (m2box.org) watch-pages for the Netflix catalog — Server 2. Baked by scripts/harvest-moviebox-links.mjs (GitHub Actions). Har entry ka `url` seedha MovieboxPagePlayer me jata hai; slug/subjectId dobara naapo mat, script hi update kare.",
- "generatedAt": "2026-10-20T09:32:42.270Z",
+ "generatedAt": "2026-10-20T09:46:07.569Z",
  "stats": {
   "catalog": 791,
   "linked": 685,
-  "hindi": 31,
+  "hindi": 32,
   "hindiAudio": 384,
   "review": 37,
   "miss": 89,
@@ -16,21 +16,23 @@
    "year": 126,
    "clean": 1,
    "ampersand": 2
-  }
+  },
+  "pinned": 1
  },
  "links": {
   "tmdb:1465943": {
-   "url": "https://m2box.org/movies/mandaadi-qxUx1r3QHW4?id=4151920426815471968&type=/movie/detail&detailSe=&detailEp=&lang=en",
+   "url": "https://m2box.org/movies/mandaadi-hindi-qxUx1r3QHW4?id=4151920426815471968&type=/movie/detail&detailSe=&detailEp=&lang=en",
    "subjectId": "4151920426815471968",
-   "detailPath": "mandaadi-qxUx1r3QHW4",
-   "title": "Mandaadi",
+   "detailPath": "mandaadi-hindi-qxUx1r3QHW4",
+   "title": "Mandaadi [Hindi]",
    "year": 2026,
    "type": "movie",
-   "dub": "original",
+   "dub": "hindi",
    "hindiAudio": true,
    "score": 1,
-   "query": "Mandaadi",
-   "harvestedAt": "2026-10-20T09:18:49.971Z"
+   "query": "pin",
+   "pinned": true,
+   "harvestedAt": "2026-10-20T09:46:07.569Z"
   },
   "tmdb:1389172": {
    "url": "https://m2box.org/movies/reporting-live-08MIGBdRGC1?id=1363066357566304784&type=/movie/detail&detailSe=&detailEp=&lang=en",

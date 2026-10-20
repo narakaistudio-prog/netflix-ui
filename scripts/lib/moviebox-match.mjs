@@ -269,6 +269,9 @@ export function scoreCandidate(target, item) {
         score: Math.max(0, Math.min(1, score - penalty)),
         title,
         reasons,
+        /** Page Hindi dub ka lagta hai (title tag ya slug) — tie-break me pehle. */
+        hindiHint: hint === 'hindi' || /\bhindi\b/.test(slug),
+        yearExact: ys === 1,
     };
 }
 
@@ -276,7 +279,15 @@ export function scoreCandidate(target, item) {
 export function rankCandidates(target, items) {
     const scored = (Array.isArray(items) ? items : [])
         .map((item) => ({ item, ...scoreCandidate(target, item) }))
-        .sort((a, b) => b.score - a.score || String(a.item.title).localeCompare(String(b.item.title)));
+        .sort(
+            (a, b) =>
+                b.score - a.score ||
+                // Barabar score par Hindi-dub page chuno — owner ne Hindi page ko
+                // "perfect" kaha hai, aur base page se audio switch karna padta hai.
+                Number(b.hindiHint) - Number(a.hindiHint) ||
+                Number(b.yearExact) - Number(a.yearExact) ||
+                String(a.item.title).localeCompare(String(b.item.title)),
+        );
     return {
         best: scored[0] || null,
         runnersUp: scored.slice(1, 4),

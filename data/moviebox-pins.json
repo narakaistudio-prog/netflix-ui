@@ -1,0 +1,12 @@
+{
+ "$comment": "Owner-verified MovieBox links — harvester inhe kabhi overwrite nahi karta (na search, na refresh). Key wahi format jo baked links me hai: tmdb:<id> ya id:<cardId>. Kisi title ka link galat lage to yahan daal do, phir workflow chalne par baked JSON me aa jayega.",
+ "links": {
+  "tmdb:1465943": {
+   "url": "https://m2box.org/movies/mandaadi-hindi-qxUx1r3QHW4?id=4151920426815471968&type=/movie/detail&detailSe=&detailEp=&lang=en",
+   "title": "Mandaadi [Hindi]",
+   "year": 2026,
+   "type": "movie",
+   "note": "Owner-verified Hindi watch page (base page par audio switch karna padta hai)."
+  }
+ }
+}

@@ -9,6 +9,7 @@
  */
 const scenario = JSON.parse(process.env.MBM_SCENARIO || '{}');
 const mod = await import(process.env.MBM_MODULE_PATH);
+const harvester = process.env.MBM_HARVESTER_PATH ? await import(process.env.MBM_HARVESTER_PATH) : null;
 
 let result;
 switch (scenario.op) {
@@ -36,6 +37,12 @@ switch (scenario.op) {
         break;
     case 'language':
         result = mod.languageOfRef(scenario.ref);
+        break;
+    case 'pins':
+        result = harvester.applyPins(scenario.pins, scenario.previous);
+        break;
+    case 'parseUrl':
+        result = harvester.parseMovieboxUrl(scenario.url);
         break;
     case 'pickDub':
         result = mod.pickDub(scenario.dubs, scenario.prefer);

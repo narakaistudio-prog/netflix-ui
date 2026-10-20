@@ -39,6 +39,7 @@ import {
     MATCH_REVIEW,
     languageOfRef,
     pickPlayRef,
+    scoreCandidate,
     rankCandidates,
     splitDubHint,
     typeOfSubject,
@@ -48,6 +49,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CATALOG_PATH = resolve(ROOT, 'data', 'movies.json');
 const LINKS_PATH = resolve(ROOT, 'data', 'moviebox-links.json');
 const REPORT_PATH = resolve(ROOT, 'data', 'moviebox-harvest-report.json');
+const PINS_PATH = resolve(ROOT, 'data', 'moviebox-pins.json');
 
 const H5_API = 'https://h5-api.aoneroom.com/wefeed-h5api-bff';
 const SITE = 'https://m2box.org';
@@ -84,6 +86,7 @@ const OPTIONS = {
         .filter(Boolean),
     probe: valueOf('--probe', ''),
     relabel: flag('--relabel'),
+    pins: flag('--pins'),
     delay: Number(valueOf('--delay', String(DEFAULT_DELAY_MS))) || DEFAULT_DELAY_MS,
     maxAgeDays: Number(valueOf('--max-age-days', String(DEFAULT_MAX_AGE_DAYS))) || DEFAULT_MAX_AGE_DAYS,
 };
@@ -301,6 +304,55 @@ export function movieboxUrl({ detailPath, subjectId }) {
     );
 }
 
+/**
+ * `https://m2box.org/movies/<detailPath>?id=<subjectId>…` ko todo.
+ * Pins me poora URL hi rakha jata hai (owner wahi paste karta hai).
+ */
+
+/**
+ * Owner-verified pins ko baked links me daalo (pure — koi file/network nahi).
+ * Pin ka URL hamesha jeetta hai: harvester na use search se replace karta hai,
+ * na refresh se.
+ */
+export function applyPins(pins, previousLinks = {}) {
+    const links = {};
+    const keys = [];
+    for (const [key, pin] of Object.entries(pins && typeof pins === 'object' ? pins : {})) {
+        const parsed = parseMovieboxUrl(typeof pin === 'string' ? pin : pin?.url);
+        if (!parsed) continue;
+        const dub = languageOfRef(parsed);
+        const prev = previousLinks[key] || {};
+        links[key] = {
+            url: movieboxUrl(parsed),
+            subjectId: parsed.subjectId,
+            detailPath: parsed.detailPath,
+            title: (typeof pin === 'object' && pin?.title) || prev.title || '',
+            year: (typeof pin === 'object' && pin?.year) || prev.year,
+            type: (typeof pin === 'object' && pin?.type) || prev.type,
+            dub,
+            hindiAudio: dub === 'hindi',
+            score: 1,
+            query: 'pin',
+            pinned: true,
+            harvestedAt: new Date().toISOString(),
+        };
+        keys.push(key);
+    }
+    return { links, keys };
+}
+
+export function parseMovieboxUrl(value) {
+    try {
+        const url = new URL(String(value ?? ''));
+        const match = url.pathname.match(/\/movies\/([^/]+)\/?$/);
+        const subjectId = url.searchParams.get('id') || '';
+        if (!match || !subjectId) return null;
+        return { detailPath: decodeURIComponent(match[1]), subjectId };
+    } catch {
+        return null;
+    }
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Load / save                                                               */
 /* -------------------------------------------------------------------------- */
@@ -343,8 +395,20 @@ function runCheck() {
             console.error(`✗ ${key}: ${problems.join(', ')}`);
         }
     }
+    const pins = readJson(PINS_PATH, { links: {} })?.links ?? {};
+    for (const [key, pin] of Object.entries(pins)) {
+        if (!/^(tmdb|id):/.test(key)) {
+            bad += 1;
+            console.error(`✗ pin ${key}: key`);
+            continue;
+        }
+        if (!parseMovieboxUrl(typeof pin === 'string' ? pin : pin?.url)) {
+            bad += 1;
+            console.error(`✗ pin ${key}: url`);
+        }
+    }
     const targets = catalogTargets(readJson(CATALOG_PATH, { movies: [] }));
-    log(`links: ${entries.length} | catalog targets: ${targets.length} | kharab: ${bad}`);
+    log(`links: ${entries.length} | pins: ${Object.keys(pins).length} | catalog targets: ${targets.length} | kharab: ${bad}`);
     if (bad) process.exitCode = 1;
     else log('✓ moviebox-links.json theek hai');
 }
@@ -352,6 +416,37 @@ function runCheck() {
 /* -------------------------------------------------------------------------- */
 /*  --relabel (offline: purane entries ka dub label slug se theek karo)        */
 /* -------------------------------------------------------------------------- */
+
+/**
+ * `--pins` (offline): pins ko baked JSON me merge karo — network ke bina.
+ * Baki entries jaisi hain waisi rehti hain.
+ */
+function runPins() {
+    const store = readJson(LINKS_PATH, { links: {} });
+    const links = store?.links && typeof store.links === 'object' ? store.links : {};
+    const pins = readJson(PINS_PATH, { links: {} })?.links ?? {};
+    const { links: pinned, keys } = applyPins(pins, links);
+    if (!keys.length) {
+        log('· koi valid pin nahi mila');
+        return;
+    }
+    Object.assign(links, pinned);
+    const entries = Object.values(links);
+    const stats = {
+        ...(store.stats || {}),
+        linked: entries.length,
+        hindi: entries.filter((entry) => entry.dub === 'hindi').length,
+        hindiAudio: entries.filter((entry) => entry.hindiAudio).length,
+        pinned: keys.length,
+    };
+    if (!OPTIONS.dry) {
+        writeFileSync(
+            LINKS_PATH,
+            `${JSON.stringify({ $comment: LINKS_COMMENT, generatedAt: new Date().toISOString(), stats, links }, null, 1)}\n`,
+        );
+    }
+    log(`✓ pins merged: ${keys.join(', ')}`);
+}
 
 function runRelabel() {
     const store = readJson(LINKS_PATH, null);
@@ -411,7 +506,15 @@ async function harvest() {
     const existing = readJson(LINKS_PATH, { links: {} });
     const previousLinks = existing?.links && typeof existing.links === 'object' ? existing.links : {};
 
+    // Pins = owner-verified links (jaise Mandaadi ka Hindi page). Ye kabhi
+    // overwrite nahi hote, aur network bhi nahi maangte.
+    const previousOrEmpty = previousLinks;
+    const pins = readJson(PINS_PATH, { links: {} })?.links ?? {};
+    const { links: linksFromPins, keys: pinnedKeys } = applyPins(pins, previousOrEmpty);
+    if (pinnedKeys.length) log(`pins: ${pinnedKeys.length} owner-verified link(s) locked`);
+
     let work = allTargets;
+    if (pinnedKeys.length) work = work.filter((target) => !pinnedKeys.includes(target.key));
     if (OPTIONS.only.length) work = work.filter((target) => OPTIONS.only.includes(target.key));
     if (!OPTIONS.refresh) {
         work = work.filter((target) => {
@@ -421,9 +524,9 @@ async function harvest() {
     }
     if (OPTIONS.limit > 0) work = work.slice(0, OPTIONS.limit);
 
-    log(`catalog targets: ${allTargets.length} | is run me kaam: ${work.length}`);
+    log(`catalog targets: ${allTargets.length} | pinned: ${pinnedKeys.length} | is run me kaam: ${work.length}`);
 
-    const links = { ...previousLinks };
+    const links = { ...previousLinks, ...linksFromPins };
     const review = [];
     const misses = [];
     const errors = [];
@@ -502,7 +605,27 @@ async function harvest() {
         await sleep(OPTIONS.delay);
 
         const play = pickPlayRef(detail, chosen.item);
-        const playRef = play.ref;
+        let playRef = play.ref;
+        let playDub = play.dub;
+
+        // Refresh par purana **Hindi page** na chhodo: jo link pehle se baked
+        // hai aur naye matcher par bhi pass hota hai, use base/English page se
+        // replace karne ka koi fayda nahi (owner ne Hindi page hi chuna tha).
+        const prev = previousLinks[target.key];
+        if (OPTIONS.refresh && prev?.detailPath && prev?.subjectId && prev.dub === 'hindi' && playDub !== 'hindi') {
+            const prevScore = scoreCandidate(target, {
+                title: prev.title,
+                year: prev.year,
+                subjectType: prev.type === 'tv' ? 2 : 1,
+                detailPath: prev.detailPath,
+                hasResource: true,
+            }).score;
+            if (prevScore >= MATCH_ACCEPT) {
+                playRef = { detailPath: prev.detailPath, subjectId: prev.subjectId };
+                playDub = 'hindi';
+                log('   · purana Hindi page rakha');
+            }
+        }
 
         const url = movieboxUrl(playRef);
         if (!url) {
@@ -517,8 +640,8 @@ async function harvest() {
             title: play.title || chosen.item.title,
             year: detail?.year || chosen.item.year,
             type: typeOfSubject(detail?.subjectType || chosen.item.subjectType) || target.mediaType,
-            dub: play.dub,
-            hindiAudio: play.hindiAudio,
+            dub: playDub,
+            hindiAudio: play.hindiAudio || playDub === 'hindi',
             score: Number(chosen.score.toFixed(3)),
             query: chosenQuery,
             harvestedAt: new Date().toISOString(),
@@ -539,6 +662,7 @@ async function harvest() {
         miss: misses.length,
         errors: errors.length,
         matchedThisRun: matchedNow,
+        pinned: pinnedKeys.length,
         queriesUsed,
     };
 
@@ -589,6 +713,10 @@ async function main() {
     }
     if (OPTIONS.relabel) {
         runRelabel();
+        return;
+    }
+    if (OPTIONS.pins) {
+        runPins();
         return;
     }
     await harvest();
