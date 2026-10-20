@@ -58,19 +58,6 @@ interface MovieboxCroppedFrameProps {
      * `page` = poora page crop (search results ke liye).
      */
     mode?: 'player' | 'page';
-    /**
-     * Poora player dabba khud fullscreen hai (video ne fullscreen maanga to
-     * humne iframe ke bajaye apna dabba fullscreen kar diya). Us waqt crop
-     * band — video poore dabbe me.
-     */
-    fullscreen?: boolean;
-    /**
-     * Andar ka video fullscreen hua (M2Box ka fullscreen button). Parent ise
-     * apne poore player dabbe ko fullscreen karne ke liye use karta hai —
-     * warna browser sirf iframe dikhata hai aur hamare overlays (Next
-     * Episode / episode patti) gayab ho jate hain.
-     */
-    onFrameFullscreen?: () => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -81,14 +68,10 @@ export function MovieboxCroppedFrame({
     onLoad,
     allowScroll = false,
     mode = 'player',
-    fullscreen = false,
-    onFrameFullscreen,
 }: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
     onLoadRef.current = onLoad;
-    const onFrameFullscreenRef = useRef(onFrameFullscreen);
-    onFrameFullscreenRef.current = onFrameFullscreen;
 
     useEffect(() => {
         if (!IS_WEB) return;
@@ -133,7 +116,10 @@ export function MovieboxCroppedFrame({
         frame.setAttribute('data-m2box', 'frame');
         frame.title = title ? `${title} — M2Box` : 'M2Box player';
         frame.setAttribute('allow', MOVIEBOX_FRAME_ALLOW);
-        frame.setAttribute('allowfullscreen', 'true');
+        // `allowfullscreen` jaan-boojh kar nahi — wo allow="fullscreen" ka
+        // purana alias hai aur site ke fullscreen button ko chalu kar deta
+        // hai (crop toot kar poora page dikhne lagta hai). Fullscreen hum
+        // apne player dabbe ka dete hain.
         frame.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
         frame.setAttribute('sandbox', MOVIEBOX_FRAME_SANDBOX);
         frame.setAttribute('frameborder', '0');
@@ -152,32 +138,10 @@ export function MovieboxCroppedFrame({
 
         const apply = () => {
             const rect = host.getBoundingClientRect();
-            const fs = doc.fullscreenElement as Element | null;
-            // Sirf tab crop hatao jab VIDEO khud fullscreen hua ho — us waqt
-            // top-level document ka fullscreen element yahi iframe hota hai.
-            // Hamari app khud `documentElement` ko fullscreen karti hai; us
-            // halat me crop chalta rahega (bas naye size se dobara naapa
-            // jayega), warna fullscreen me poora m2box page dikhne lagta.
-            const frameIsFullscreen =
-                !!fs && fs !== doc.documentElement && (fs === frame || frame.contains(fs));
-
-            // Poora player dabba fullscreen hai (ya video ne fullscreen
-            // maanga) → crop band, video dabba bhar de. Overlays (Next
-            // Episode / episode patti) tab bhi upar dikhte rehte hain.
-            if (fullscreen || frameIsFullscreen) {
-                box.style.width = '100%';
-                box.style.height = '100%';
-                stage.style.width = '100%';
-                stage.style.height = '100%';
-                stage.style.transform = '';
-                frame.style.top = '0px';
-                frame.style.left = '0px';
-                frame.style.width = '100%';
-                frame.style.height = '100%';
-                frame.setAttribute('scrolling', 'no');
-                return;
-            }
-
+            // Crop HAR haalat me — chhoti window, bada fullscreen, sab me.
+            // Host (hamara player dabba) fullscreen hone par uski rect hi
+            // screen ka naap hoti hai, isliye crop apne aap naye size par
+            // lag jata hai aur screen par sirf player dikhta hai.
             const crop = getMovieboxCrop(rect.width, rect.height, { resources: mode === 'page' });
             box.style.width = `${crop.frameWidth}px`;
             box.style.height = `${crop.height}px`;
@@ -208,15 +172,8 @@ export function MovieboxCroppedFrame({
         // phir rAF + 80ms + 250ms par dobara naapo.
         const timers: Array<ReturnType<typeof setTimeout>> = [];
         const onFullscreenChange = () => {
-            // Video ne (iframe ke andar se) fullscreen maanga — us waqt
-            // browser sirf iframe dikhata hai. Isliye parent ko bolo ki apna
-            // poora player dabba fullscreen kare, taaki hamare overlays bhi
-            // dikhein. (Document already fullscreen hai, isliye request
-            // fullscreen ko naya user gesture nahi chahiye.)
-            const current = doc.fullscreenElement as Element | null;
-            if (current && current !== doc.documentElement && (current === frame || frame.contains(current))) {
-                onFrameFullscreenRef.current?.();
-            }
+            // Hamara player dabba fullscreen hua / bahar aaya — naaya size
+            // aa gaya, dobara naapo (crop wahin ka wahin rehna chahiye).
             apply();
             if (typeof requestAnimationFrame === 'function') requestAnimationFrame(apply);
             timers.push(setTimeout(apply, 80));
@@ -241,7 +198,7 @@ export function MovieboxCroppedFrame({
             } catch {}
             host.innerHTML = '';
         };
-    }, [src, title, mode, allowScroll, fullscreen]);
+    }, [src, title, mode, allowScroll]);
 
     if (!IS_WEB) {
         return (

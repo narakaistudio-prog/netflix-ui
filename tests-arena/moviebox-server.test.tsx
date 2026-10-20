@@ -118,7 +118,10 @@ describe('MovieboxCroppedFrame', () => {
         expect(sandbox).not.toContain('allow-top-navigation');
 
         const allow = frame()!.getAttribute('allow') || '';
-        expect(allow).toContain('fullscreen');
+        // Site ka fullscreen button band — warna browser sirf iframe fullscreen
+        // karta hai aur poora MovieBox page dikhne lagta hai.
+        expect(allow).not.toContain('fullscreen');
+        expect(frame()!.hasAttribute('allowfullscreen')).toBe(false);
         expect(allow).toContain('autoplay');
         expect(allow).toContain('encrypted-media');
         expect(frame()!.getAttribute('referrerpolicy')).toBe('no-referrer-when-downgrade');
@@ -163,36 +166,25 @@ describe('MovieboxCroppedFrame', () => {
         expect(iframe.hasAttribute('scrolling')).toBe(false);
     });
 
-    it('fills the whole box when the player itself is fullscreen', () => {
+    it('keeps the crop after a fullscreen change (poora page kabhi nahi)', () => {
         act(() => {
-            root.render(<MovieboxCroppedFrame src={PAGE} fullscreen />);
+            root.render(<MovieboxCroppedFrame src={PAGE} />);
         });
         const iframe = frame()!;
-        expect(iframe.style.top).toBe('0px');
-        expect(iframe.style.left).toBe('0px');
-        expect(iframe.style.width).toBe('100%');
-        expect(iframe.style.height).toBe('100%');
-        expect(box()!.style.width).toBe('100%');
-        expect(box()!.style.height).toBe('100%');
-    });
-
-    it('asks the parent to promote the player when the video goes fullscreen', () => {
-        const onFrameFullscreen = jest.fn();
-        act(() => {
-            root.render(<MovieboxCroppedFrame src={PAGE} onFrameFullscreen={onFrameFullscreen} />);
-        });
-        const iframe = frame()!;
-        // Browser ne video (iframe) ko fullscreen kiya — us waqt sirf iframe
-        // dikhta hai, isliye parent ko apna poora dabba fullscreen karna hai.
-        Object.defineProperty(document, 'fullscreenElement', {
-            configurable: true,
-            get: () => iframe,
-        });
+        // Fullscreen hone par host ka naap badalta hai — crop wahi rehna
+        // chahiye, 100% wide nahi hona chahiye (warna poora page dikhta hai).
+        rectSpy.mockRestore();
+        measureAs(1920, 1080);
         act(() => {
             document.dispatchEvent(new Event('fullscreenchange'));
         });
-        expect(onFrameFullscreen).toHaveBeenCalled();
-        delete (document as any).fullscreenElement;
+        expect(iframe.style.width).toBe(`${MOVIEBOX_STAGE_WIDTH}px`);
+        expect(iframe.style.left).toBe(`-${MOVIEBOX_STAGE_CROP_LEFT}px`);
+        expect(iframe.style.top).toBe(`-${MOVIEBOX_STAGE_CROP_TOP}px`);
+        // contain: 1920 × 9/16 = 1080 → height limit lagti hai, isliye 1918
+        expect(box()!.style.width).toBe('1918px');
+        // contain me height hi limit thi → 1080 (screen bhar), 16:9 barkarar
+        expect(box()!.style.height).toBe('1080px');
     });
 
     it('kills the frame on unmount (no background audio)', () => {

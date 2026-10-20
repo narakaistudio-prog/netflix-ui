@@ -240,19 +240,6 @@ export function MovieboxPagePlayer({
      */
     const overlayBox = useMemo(() => {
         if (!rootSize.width || !rootSize.height) return null;
-        if (ownFullscreen) {
-            // Fullscreen me crop band hai — video poore dabbe me. Isliye
-            // overlays bhi poore dabbe par, neeche wali line par.
-            return {
-                left: 0,
-                top: 0,
-                width: rootSize.width,
-                height: rootSize.height,
-                padRight: 32,
-                padLeft: 32,
-                padBottom: Math.max(28, Math.round(rootSize.height * 0.1)),
-            };
-        }
         const crop = getMovieboxCrop(rootSize.width, rootSize.height, { resources: isSearchFrame });
         const pad = Math.max(12, Math.round(crop.frameWidth * 0.025));
         return {
@@ -265,7 +252,7 @@ export function MovieboxPagePlayer({
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
-    }, [ownFullscreen, rootSize, isSearchFrame]);
+    }, [rootSize, isSearchFrame]);
 
     /* --------------------------- Frame ---------------------------- */
 
@@ -300,23 +287,12 @@ export function MovieboxPagePlayer({
         } catch {}
     }, []);
 
-    /**
-     * Video ke fullscreen button se bhi poora dabba fullscreen ho — warna
-     * browser sirf iframe dikhata hai aur Next Episode / episode patti gayab
-     * ho jate hain. Document pehle se fullscreen hai, isliye fullscreen
-     * element badalne ke liye naya user gesture nahi chahiye.
-     */
+    /** Apna fullscreen chal raha hai? (Button ka icon badalne ke liye.) */
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof document === 'undefined') return;
         const onFs = () => {
             const el = rootRef.current as unknown as HTMLElement | null;
-            const fs = document.fullscreenElement as Element | null;
-            const mine = !!el && fs === el;
-            setOwnFullscreen(mine);
-            if (!mine && fs && el && fs !== document.documentElement) {
-                // koi aur element (iframe) fullscreen hai → apna dabba le lo
-                enterOwnFullscreen();
-            }
+            setOwnFullscreen(!!el && document.fullscreenElement === el);
         };
         document.addEventListener('fullscreenchange', onFs);
         document.addEventListener('webkitfullscreenchange', onFs as EventListener);
@@ -324,7 +300,7 @@ export function MovieboxPagePlayer({
             document.removeEventListener('fullscreenchange', onFs);
             document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
         };
-    }, [enterOwnFullscreen]);
+    }, []);
 
     /**
      * Player chrome (aur Next Episode) idle par gayab.
@@ -423,7 +399,7 @@ export function MovieboxPagePlayer({
     return (
         <View
             ref={rootRef}
-            style={styles.root}
+            style={[styles.root, ownFullscreen && styles.rootFullscreen]}
             onLayout={(event) => {
                 const { width, height } = event.nativeEvent.layout;
                 setRootSize((prev) =>
@@ -441,8 +417,6 @@ export function MovieboxPagePlayer({
                     title={title}
                     allowScroll={isSearchFrame}
                     mode={isSearchFrame ? 'page' : 'player'}
-                    fullscreen={ownFullscreen}
-                    onFrameFullscreen={enterOwnFullscreen}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -680,6 +654,8 @@ export function MovieboxPagePlayer({
 
 const styles = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#000', position: 'relative' },
+    /** Fullscreen me UA ke bharose na raho — poora screen pakka. */
+    rootFullscreen: { width: '100%', height: '100%', flex: 0 },
     /**
      * Video ke dabbe ke andar, bottom-right. `overlayBox` milne tak (pehla
      * layout) fallback: root ke daayein kinare par.

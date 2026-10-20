@@ -90,9 +90,18 @@ export const MOVIEBOX_STAGE_PLAYER_HEIGHT = 545;
 export const MOVIEBOX_FRAME_SANDBOX =
     'allow-downloads allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts';
 
-/** Player ke buttons (fullscreen / autoplay / PiP) isi `allow` par chalte hain. */
+/**
+ * Player ke buttons (autoplay / PiP) isi `allow` par chalte hain.
+ *
+ * `fullscreen` **jaan-boojh kar nahi** hai: site ka fullscreen button iframe
+ * ko fullscreen karta hai, aur us waqt browser sirf iframe dikhata hai — crop
+ * toot jata hai aur poora MovieBox page (header, Resources panel, title,
+ * Download/Share bar) dikhne lagta hai. Fullscreen hum khud dete hain
+ * (player ke top bar ka button), jo poora dabba — video + hamare overlays —
+ * fullscreen karta hai aur crop chalta rehta hai.
+ */
 export const MOVIEBOX_FRAME_ALLOW =
-    'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; web-share';
+    'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
 
 /** Server switcher me dikhne wala naam. */
 export const MOVIEBOX_SERVER_LABEL = 'M2Box';

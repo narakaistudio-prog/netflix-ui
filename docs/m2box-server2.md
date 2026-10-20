@@ -87,20 +87,21 @@ agla episode bacha ho):
 
 ## Fullscreen
 
-Site ka fullscreen button video ko fullscreen karta hai — browser tabhi **sirf
-iframe** dikhata hai, isliye hamare overlays (Next Episode, episode patti) gayab
-ho jate the. Ab aisa hota hai:
+Site ka fullscreen button **band** hai (iframe ke `allow` me `fullscreen` nahi,
+`allowfullscreen` attribute bhi nahi). Wajah: wo iframe ko fullscreen karta
+tha, aur us waqt browser sirf iframe dikhata hai — crop toot jata tha aur poora
+MovieBox page (header, Resources panel, title, Download/Share bar) dikhne lagta
+tha.
 
-1. `MovieboxCroppedFrame` `fullscreenchange` par dekhta hai ki fullscreen
-   element iframe (ya uske andar) hai → `onFrameFullscreen()` call karta hai.
-2. `MovieboxPagePlayer` apne poore dabbe (iframe + overlays) ko
-   `requestFullscreen()` kar deta hai. Document pehle se fullscreen hai, isliye
-   fullscreen element badalne ke liye naya user gesture nahi chahiye.
-3. Ab fullscreen me bhi wahi overlay dikhte hain — `fullscreen` prop par crop
-   band ho jata hai (video poora dabba bharta hai) aur overlay geometry poore
-   dabbe par lagti hai.
-4. Player ke top bar me apna **fullscreen / exit** button bhi hai
-   (`testID="moviebox-fullscreen"`), Esc se bahar.
+Fullscreen ab hum dete hain:
+
+- Player ke top bar me **fullscreen / exit** button (`testID="moviebox-fullscreen"`)
+  poore player dabbe (iframe + overlays) ko fullscreen karta hai.
+- Fullscreen me bhi crop chalta rehta hai — host (player dabba) ka naap hi
+  screen ka naap ban jata hai, `getMovieboxCrop` wahi player-only dabba nikalta
+  hai, aur overlays (Next Episode, episode patti) usi dabbe par align rehte
+  hain. `fullscreenchange` par sirf dobara naapa jata hai.
+- Esc se bahar.
 
 ## Jab phir bhi link na mile — live resolve
 
