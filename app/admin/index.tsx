@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
+import { movieboxCatalogSize } from '@/lib/movieboxCatalog';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -308,10 +309,12 @@ export default function AdminScreen() {
                     <Hint>
                         MovieBox ka koi official embed nahi hota. Isliye uska poora watch page ek
                         frame me khol kar sirf player + episode list bacha kar dikhaya jata hai
-                        (logo, menu, sidebar, title sab kata hua). Player me server switch pill se
-                        M2Box chun lo — link ek baar paste karna padta hai, wahi is browser me yaad
-                        reh jata hai. Kisi title ke liye permanent link dena ho to uski row ke
-                        Embed URL me poora m2box watch-page link daal do.
+                        (logo, menu, sidebar, title sab kata hua). Catalog ke {movieboxCatalogSize()}{' '}
+                        titles ke MovieBox links pehle se baked hain (roz ka harvester), isliye
+                        player me server pill se M2Box seedha chal jata hai — kuch paste nahi karna.
+                        Jo title bake nahi hua uske liye panel link maangta hai. Kisi link ko
+                        permanent override karna ho to{' '}
+                        {'data/moviebox-pins.json'} me daal do.
                     </Hint>
                     <View style={styles.row}>
                         <Pressable
