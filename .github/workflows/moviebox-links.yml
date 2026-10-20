@@ -93,8 +93,18 @@ jobs:
           fi
           COUNT=$(git diff --cached --numstat data/moviebox-links.json | awk '{print $1}')
           git commit -m "chore(moviebox): bake Server 2 links for the Netflix catalog"
-          git push
-          echo "committed (moviebox-links.json: $COUNT changed lines)"
+          # Run ke dauraan koi doosra commit aa jaye to bhi data na khoye:
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "committed (moviebox-links.json: $COUNT changed lines)"
+              exit 0
+            fi
+            echo "push attempt $attempt failed — rebasing on latest ${{ github.ref_name }}"
+            git pull --rebase --autostash origin "${{ github.ref_name }}"
+            sleep 5
+          done
+          echo "push nahi hua; artifact me data safe hai"
+          exit 1
 
       - name: Upload the MovieBox snapshot
         if: always()
