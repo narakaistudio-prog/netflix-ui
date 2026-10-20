@@ -95,18 +95,15 @@ tha.
 Fullscreen ab hum dete hain:
 
 - **Fullscreen button video ke andar hai**, theek site ke apne fullscreen icon
-  ki jagah par (naap: unke icon ka ink ~2.5% unchai ka, daayein kinare se ~2.8%
-  andar, neeche se ~6% upar) — aur **wahi shakal**:
-  `MaterialCommunityIcons` ka `fullscreen` (chaaron kone wale brackets).
-  `testID="moviebox-fullscreen"` poore player dabbe (iframe + overlays) ko
-  fullscreen karta hai. Top bar me sirf X + server pill (link icon aur neeche
-  wala badge hata diye — owner ne nahi chahe).
-- **Site ka icon dhaka hua hai**: wo cross-origin iframe ke andar hai, DOM se
-  hata nahi sakte, isliye uske upar ek chhota gehra plate (`rgba(8,8,10,.92)`,
-  ink ka ~1.7x, halke rounded kone) hamesha rehta hai. Usi plate me hamara safed
-  icon baithta hai. Plate hamesha rehta hai (chrome chhupne par sirf hamara
-  icon fade hota hai) — warna site ka icon jhalak kar "do fullscreen" dikhte
-  hain. Control bar ka background wese bhi kaala hai, isliye plate dikhta nahi.
+  ke **upar** (naap — 1917×1077 window, dabba 1639×923: unka icon 28px, centre
+  daayein kinare se 64px yaani 3.9% aur neeche se 30px yaani 3.25%). Hamara
+  icon **~11% bada** hai (ink 3.4% unchai) — `MaterialCommunityIcons` ka
+  `fullscreen` (chaaron kone wale brackets). Bada hone se unke safed brackets
+  hamare neeche chhup jate hain, isliye ek hi icon dikhta hai. **Koi plate /
+  gola / background nahi** — pehle gehra plate tha, wo video ke corner me kaala
+  dabba jaisa dikhta tha (owner ne hatwaya). `testID="moviebox-fullscreen"`
+  poore player dabbe (iframe + overlays) ko fullscreen karta hai. Top bar me
+  sirf X + server pill (link icon aur neeche wala badge hata diye).
 - **Chrome chhupne par iframe pointer-events `none` ho jate hain**, isliye
   cross-origin iframe ke bawajood mouse ka har movement hamare dabbe tak aata
   hai — mouse hilte hi fullscreen button (aur Next Episode + patti) wapas dikh

@@ -257,19 +257,20 @@ export function MovieboxPagePlayer({
              * Site ke apne fullscreen icon ki jagah — video ke bottom-right.
              *
              * Wo icon **cross-origin iframe ke andar** hai, use DOM se hata
-             * nahi sakte. Isliye uske upar ek chhota gehra "plate" rakha hai
-             * jo usse dhak leta hai, aur usi plate me hamara icon baithta hai
-             * — do icon ek saath kabhi dikhte hi nahi.
+             * nahi sakte. Isliye hamara icon **theek uske upar aur usse
+             * thoda bada** baithta hai — hamare safed brackets unke brackets
+             * ko dhak lete hain, do icon nahi dikhte. (Pehle ek gehra plate
+             * bhi tha; owner ne kaha wo video ke neeche kaala dabba dikhata
+             * hai — hata diya.)
              *
-             * Naap (owner ke screenshot se, icon ke apne ink ke hisaab se):
-             * ink ~2.5% unchai ka, daayein kinare se ~2.8% andar, neeche
-             * kinare se ~6% upar. Plate ink se ~1.7x — itni jagah ki agar
-             * ±3-4px idhar-udhar ho to bhi site ka icon dhaka rahe.
+             * Naap — 1917×1077 window ka live screenshot, dabba 1639×923,
+             * site ka icon 28px, uska centre dabbe ke daayein kinare se 64px
+             * (3.9%) aur neeche se 30px (3.25%) par. Hamara icon ~11% bada
+             * (3.4% unchai) taaki unka poora dhak jaye.
              */
-            fsInk: Math.max(20, Math.round(crop.height * 0.025)),
-            fsRight: Math.round(crop.frameWidth * 0.028),
-            fsBottom: Math.round(crop.height * 0.06),
-            fsPlate: Math.max(34, Math.round(crop.height * 0.043)),
+            fsInk: Math.max(26, Math.round(crop.height * 0.034)),
+            fsRight: Math.round(crop.frameWidth * 0.0295),
+            fsBottom: Math.round(crop.height * 0.0155),
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
@@ -554,13 +555,12 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-            {/* Fullscreen — theek site ke fullscreen icon ki jagah, video ke
+            {/* Fullscreen — theek site ke fullscreen icon ke UPAR, video ke
                 bottom-right me. Site ka icon hata nahi sakte (cross-origin),
-                isliye uske upar ye gehra plate hamesha rehta hai: wo unka icon
-                dhak leta hai aur hamara icon usi plate me baithta hai. Plate
-                hamesha rehta hai, sirf hamara safed icon chrome ke saath fade
-                hota hai — warna site ka icon jhalak jata. (overlayBox milne se
-                pehle fallback: root ke corner par.) */}
+                isliye hamara icon unse thoda bada hai aur unke brackets ko
+                dhak leta hai; koi plate/background nahi (warna video ke
+                neeche kaala dabba dikhta hai). (overlayBox milne se pehle
+                fallback: root ke corner par.) */}
             {frameSrc && !isSearchFrame ? (
                 <Pressable
                     style={[
@@ -571,17 +571,14 @@ export function MovieboxPagePlayer({
                                       overlayBox.left +
                                       overlayBox.width -
                                       overlayBox.fsRight -
-                                      overlayBox.fsInk / 2 -
-                                      overlayBox.fsPlate / 2,
+                                      overlayBox.fsInk,
                                   top:
                                       overlayBox.top +
                                       overlayBox.height -
                                       overlayBox.fsBottom -
-                                      overlayBox.fsInk / 2 -
-                                      overlayBox.fsPlate / 2,
-                                  width: overlayBox.fsPlate,
-                                  height: overlayBox.fsPlate,
-                                  borderRadius: Math.round(overlayBox.fsPlate * 0.22),
+                                      overlayBox.fsInk,
+                                  width: overlayBox.fsInk,
+                                  height: overlayBox.fsInk,
                               }
                             : styles.fsFallback,
                     ]}
@@ -599,7 +596,7 @@ export function MovieboxPagePlayer({
                 >
                     <MaterialCommunityIcons
                         name={ownFullscreen ? 'fullscreen-exit' : 'fullscreen'}
-                        size={overlayBox ? Math.round(overlayBox.fsInk * 1.66) : 28}
+                        size={overlayBox ? Math.round(overlayBox.fsInk / 0.6) : 44}
                         color="#fff"
                         style={chromeVisible ? undefined : styles.fsIconHidden}
                     />
@@ -739,27 +736,23 @@ const styles = StyleSheet.create({
      * safed icon (chaaron kone wale brackets).
      */
     /**
-     * Site ke icon ko dhakne wala plate. Background jaan-boojh kar itna gehra
-     * hai ki unka safed icon neeche se dikhe hi na; control bar ke upar ye
-     * bas kaala hi dikhta hai (wahan wese bhi kaala hai).
+     * Site ke icon ke bilkul upar — koi gola/plate/background nahi, warna
+     * video ke corner me kaala dabba dikhta hai. Sirf safed brackets.
      */
     fsButton: {
         position: 'absolute',
         zIndex: 4,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(8,8,10,0.92)',
     },
-    /** Chrome chhupa ho to sirf icon gayab — plate nahi. */
+    /** Chrome chhupa ho to icon gayab. */
     fsIconHidden: { opacity: 0 },
     /** `overlayBox` se pehle (pehla layout) — root ke bottom-right. */
     fsFallback: {
-        right: 18,
-        bottom: 18,
-        width: 40,
-        height: 40,
-        borderRadius: 9,
-        backgroundColor: 'rgba(8,8,10,0.92)',
+        right: 20,
+        bottom: 14,
+        width: 31,
+        height: 31,
     },
     nextWrap: {
         position: 'absolute',
