@@ -581,6 +581,12 @@ export function MovieboxPagePlayer({
                                   height: overlayBox.fsPlate,
                               }
                             : styles.fsFallback,
+                        /**
+                         * Chrome ke saath poora button (kaala plate + icon)
+                         * gayab — warna mouse rukne ke baad video ke corner me
+                         * sirf kaala dabba chipka reh jata hai.
+                         */
+                        { opacity: chromeVisible ? 1 : 0 },
                     ]}
                     onPress={() => {
                         if (Platform.OS !== 'web' || typeof document === 'undefined') return;
@@ -598,7 +604,6 @@ export function MovieboxPagePlayer({
                         name={ownFullscreen ? 'fullscreen-exit' : 'fullscreen'}
                         size={overlayBox ? Math.round(overlayBox.fsInk / 0.6) : 46}
                         color="#fff"
-                        style={chromeVisible ? undefined : styles.fsIconHidden}
                     />
                 </Pressable>
             ) : null}
@@ -748,8 +753,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         borderRadius: 3,
     },
-    /** Chrome chhupa ho to icon gayab. */
-    fsIconHidden: { opacity: 0 },
     /** `overlayBox` se pehle (pehla layout) — root ke bottom-right. */
     fsFallback: {
         right: 16,

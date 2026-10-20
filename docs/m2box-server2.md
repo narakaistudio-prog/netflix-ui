@@ -98,7 +98,9 @@ Fullscreen ab hum dete hain:
   ke **upar** — ek **kaale plate** (#000, ink ka 1.4x, halke rounded kone) par.
   Plate unka icon dhak leti hai, aur plate ke beech me hamara safed
   `MaterialCommunityIcons` `fullscreen` (chaaron kone wale brackets) unke icon
-  se **~11% bada** hai. Isse do fullscreen kabhi saath nahi dikhte.
+  se **~11% bada** hai. Isse do fullscreen kabhi saath nahi dikhte. Chrome
+  (mouse rukne par) chhupte waqt **plate + icon dono** fade hote hain — warna
+  video ke corner me sirf kaala dabba chipka reh jata (owner ne yahi pakda).
   Naap (owner ke 4.14x zoom crop se): ink 3.4% unchai, plate ka daaya kinara
   2.14% chaudai aur neeche se 2.06% unchai par. `testID="moviebox-fullscreen"`
   poore player dabbe (iframe + overlays) ko fullscreen karta hai. Top bar me
