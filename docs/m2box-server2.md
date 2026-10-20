@@ -162,6 +162,28 @@ kya MovieBox par title hai hi nahi, ya naam alag hai.
 ke saath `MATCH_ACCEPT` thoda badha do, ya us title ka sahi link row ke
 `embed_url` me daal do (row hamesha catalog se jeetta hai).
 
+## Server 2 sirf tab, jab link sach me ho
+
+Owner ka rule: **jis title ka MovieBox link nahi, us par Nxsha hi default
+rahega aur server badalne ka option dikhega hi nahi.**
+
+Title khulte hi (`hooks/useMovieboxAvailable.ts`):
+
+1. row / baked catalog / browser-saved link hai → turant pata, `available: true`;
+2. warna background me live resolve (`/api/moviebox-resolve`).
+
+`lib/playbackServers.ts` ka `buildServerCycle()` usi par cycle banata hai:
+
+| MovieBox | Server cycle | Pill |
+| --- | --- | --- |
+| mila | default (Nxsha) → NHD → custom → M2Box | dikhta hai |
+| nahi mila | **sirf Nxsha** | dikhta hi nahi (cycle length 1) |
+
+Settings me default provider `moviebox` ho par link na ho to bhi Nxsha par gir
+jata hai. Pehle har title par "M2Box" ka option aata tha, aur jab MovieBox par
+wo title hi nahi hota tha to us par jaate hi paste/search screen khulti thi —
+ab aisa nahi hota.
+
 ## Link kahan se aata hai
 
 MovieBox ke har title/dub ka apna canonical watch-page URL hota hai:
