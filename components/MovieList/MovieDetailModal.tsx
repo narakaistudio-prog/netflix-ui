@@ -197,6 +197,9 @@ export function MovieDetailModal({
     /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
     const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
 
+    /** Play daba par MovieBox ka jawab pending tha — jawab aate hi wahi karo. */
+    const pendingPlayRef = useRef<{ season: number; episode: number } | null>(null);
+
     const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
             const isSeries = movie.mediaType === 'tv';
@@ -235,7 +238,10 @@ export function MovieDetailModal({
         // Koi primary embed nahi bana — lekin M2Box ka link hai to Server 2
         // seedha chalao (yahi un titles ka rasta hai jinpe Nxsha ke paas id
         // hi nahi hoti). Jawab pending ho to official par mat bhejo.
-        if (movieboxAvailability.checking) return;
+        if (movieboxAvailability.checking) {
+            pendingPlayRef.current = episode ?? episodeRef ?? { season: 1, episode: 1 };
+            return;
+        }
         if (movieboxAvailable) {
             if (episode) setEpisodeRef(episode);
             setActiveEntry(null);
@@ -251,6 +257,26 @@ export function MovieDetailModal({
             Linking.openURL(url).catch(() => {});
         }
     };
+
+    /** Pending play ka jawab aa gaya — ab sahi rasta chuno. */
+    useEffect(() => {
+        const pending = pendingPlayRef.current;
+        if (!pending || movieboxAvailability.checking) return;
+        pendingPlayRef.current = null;
+        if (movieboxAvailable) {
+            setActiveEntry(null);
+            setServer('moviebox');
+            setPlaying(true);
+            return;
+        }
+        // MovieBox par bhi nahi hai — official Netflix.
+        const url = officialUrlFor(movie);
+        if (IS_WEB) {
+            window.open(url, '_blank', 'noopener');
+        } else {
+            Linking.openURL(url).catch(() => {});
+        }
+    }, [movieboxAvailability.checking, movieboxAvailable, movie]);
 
     return (
         <Modal visible transparent animationType="fade" onRequestClose={onClose}>
