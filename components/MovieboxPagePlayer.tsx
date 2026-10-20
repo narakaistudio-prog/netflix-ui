@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { MovieboxCroppedFrame } from './MovieboxCroppedFrame';
 import { MovieboxLinkPanel } from './MovieboxLinkPanel';
 import {
@@ -128,6 +128,8 @@ export function MovieboxPagePlayer({
     /** Poora player dabba (overlays ke saath) fullscreen hai. */
     const [ownFullscreen, setOwnFullscreen] = useState(false);
     const rootRef = useRef<View | null>(null);
+    /** Idle-effect se nikala hua "abhi dikhao" — fullscreen change par bhi use hota hai. */
+    const revealRef = useRef<(() => void) | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -257,9 +259,14 @@ export function MovieboxPagePlayer({
              * neeche se ~1% par, icon ~6% unchai. Hamara fullscreen button
              * wahin baithta hai, isliye "player ka fullscreen" wahi hai.
              */
-            fsRight: Math.round(crop.frameWidth * 0.085),
-            fsBottom: Math.round(crop.height * 0.012),
-            fsSize: Math.max(34, Math.round(crop.height * 0.062)),
+            // Naya naap (live screenshot, 1917x1071 window): site ka apna
+            // fullscreen icon video ke daayein kinare se 41px andar aur crop
+            // dabbe ke neeche se 32px upar hai, icon 28px — yaani ~2.5%
+            // chaudai / ~3.5% unchai. Hamara button theek wahin baithta hai,
+            // bilkul same shakal (four corner brackets), bina kisi ghere ke.
+            fsRight: Math.round(crop.frameWidth * 0.025),
+            fsBottom: Math.round(crop.height * 0.035),
+            fsSize: Math.max(30, Math.round(crop.height * 0.05)),
             // site ka seek bar + controls neeche ~10-12% jagah lete hain
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
@@ -304,6 +311,9 @@ export function MovieboxPagePlayer({
         const onFs = () => {
             const el = rootRef.current as unknown as HTMLElement | null;
             setOwnFullscreen(!!el && document.fullscreenElement === el);
+            // Fullscreen me bhi chrome turant dikhe, phir idle par gayab —
+            // pehle fullscreen ke baad button wapas aata hi nahi tha.
+            revealRef.current?.();
         };
         document.addEventListener('fullscreenchange', onFs);
         document.addEventListener('webkitfullscreenchange', onFs as EventListener);
@@ -356,6 +366,7 @@ export function MovieboxPagePlayer({
             setChromeVisible(true);
             hideLater(CHROME_IDLE_MS);
         };
+        revealRef.current = reveal;
 
         reveal();
 
@@ -378,6 +389,7 @@ export function MovieboxPagePlayer({
         doc.addEventListener('focusin', onFrameFocus);
 
         return () => {
+            revealRef.current = null;
             if (timer) clearTimeout(timer);
             el?.removeEventListener('mouseenter', reveal);
             el?.removeEventListener('mouseleave', onLeave);
@@ -462,6 +474,7 @@ export function MovieboxPagePlayer({
                     title={title}
                     allowScroll={isSearchFrame}
                     mode={isSearchFrame ? 'page' : 'player'}
+                    interactive={chromeVisible}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -576,7 +589,11 @@ export function MovieboxPagePlayer({
                     accessibilityLabel={ownFullscreen ? 'Exit fullscreen' : 'Fullscreen player'}
                     testID="moviebox-fullscreen"
                 >
-                    <Ionicons name={ownFullscreen ? 'contract' : 'expand'} size={18} color="#fff" />
+                    <MaterialCommunityIcons
+                        name={ownFullscreen ? 'fullscreen-exit' : 'fullscreen'}
+                        size={overlayBox ? Math.round(overlayBox.fsSize * 0.92) : 26}
+                        color="#fff"
+                    />
                 </Pressable>
             ) : null}
 
@@ -708,16 +725,18 @@ const styles = StyleSheet.create({
      * layout) fallback: root ke daayein kinare par.
      */
     /** Site ke fullscreen icon ki jagah — thoda gehra gola, icon saaf dikhe. */
+    /**
+     * Site ke apne fullscreen icon ki tarah — koi gola/background nahi, bas
+     * safed icon (chaaron kone wale brackets).
+     */
     fsButton: {
         position: 'absolute',
-        zIndex: 3,
-        borderRadius: 6,
-        backgroundColor: 'rgba(0,0,0,0.55)',
+        zIndex: 4,
         alignItems: 'center',
         justifyContent: 'center',
     },
     /** `overlayBox` se pehle (pehla layout) — root ke bottom-right. */
-    fsFallback: { right: 24, bottom: 16, width: 34, height: 34 },
+    fsFallback: { right: 20, bottom: 16, width: 30, height: 30 },
     nextWrap: {
         position: 'absolute',
         alignItems: 'flex-end',

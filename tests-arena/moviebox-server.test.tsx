@@ -12,8 +12,10 @@ import { act } from 'react-dom/test-utils';
 
 jest.mock('@expo/vector-icons', () => {
     const ReactLocal = require('react');
+    const icon = (props: any) => ReactLocal.createElement('i', props);
     return {
-        Ionicons: (props: any) => ReactLocal.createElement('i', props),
+        Ionicons: icon,
+        MaterialCommunityIcons: icon,
     };
 });
 
@@ -415,6 +417,42 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         expect(topBar).toBeTruthy();
         expect(document.querySelectorAll('[aria-label="Change M2Box link"]').length).toBe(0);
         expect(document.querySelector('[aria-label="Fullscreen player"]')).toBe(fs);
+    });
+
+    it('uses the site-style fullscreen icon and hands pointer events to the root when hidden', () => {
+        jest.useFakeTimers();
+        try {
+            act(() => {
+                root.render(
+                    <MovieboxPagePlayer
+                        linkKey="tmdb:8:tv"
+                        initialLink={PAGE}
+                        title="My Demon"
+                        mediaType="tv"
+                        season={1}
+                        episode={5}
+                        episodeCount={16}
+                        autoResolve={false}
+                        onClose={() => {}}
+                    />,
+                );
+            });
+            const fs = document.querySelector('[data-testid="moviebox-fullscreen"]') as HTMLElement;
+            expect(fs).toBeTruthy();
+            // site ke icon jaisa — chaaron kone wale brackets
+            expect(fs.innerHTML).toContain('fullscreen');
+            expect(frame()!.style.pointerEvents).toBe('auto');
+
+            // Chrome idle par chhupa → iframe pointer events nahi le, isliye
+            // mouse ka har movement root tak aata hai aur chrome wapas aata hai.
+            act(() => {
+                jest.advanceTimersByTime(4000);
+            });
+            expect(frame()!.style.pointerEvents).toBe('none');
+
+        } finally {
+            jest.useRealTimers();
+        }
     });
 
     it('tells the parent when the episode changed', () => {

@@ -94,12 +94,18 @@ tha.
 
 Fullscreen ab hum dete hain:
 
-- **Fullscreen button video ke andar hai**, bottom-right — jahan site ka apna
-  fullscreen icon hota tha (naap: box ke daayein kinare se ~8.5% andar, neeche
-  se ~1%). `testID="moviebox-fullscreen"` poore player dabbe (iframe +
-  overlays) ko fullscreen karta hai. Top bar me sirf X + server pill hai
-  (link icon aur niche wala "M2Box · slug · S1 E5" badge hata diye — owner ne
-  nahi chahe).
+- **Fullscreen button video ke andar hai**, theek site ke apne fullscreen icon
+  ki jagah par (naap: box ke daayein kinare se ~2.5% andar, neeche se ~3.5%
+  upar) — aur **wahi shakal**: `MaterialCommunityIcons` ka `fullscreen`
+  (chaaron kone wale brackets), bina kisi ghere ke, safed. Isliye lagta hai ki
+  wo player ka hi button hai. `testID="moviebox-fullscreen"` poore player
+  dabbe (iframe + overlays) ko fullscreen karta hai. Top bar me sirf X +
+  server pill (link icon aur neeche wala badge hata diye — owner ne nahi chahe).
+- **Chrome chhupne par iframe pointer-events `none` ho jate hain**, isliye
+  cross-origin iframe ke bawajood mouse ka har movement hamare dabbe tak aata
+  hai — mouse hilte hi fullscreen button (aur Next Episode + patti) wapas dikh
+  jate hain, aur chup-chaap 3.2s baad gayab. Pause karne ke liye pehla click
+  sirf chrome wapas laata hai (YouTube jaisa), doosra click player tak jata hai.
 - Fullscreen me bhi crop chalta rehta hai — host (player dabba) ka naap hi
   screen ka naap ban jata hai, `getMovieboxCrop` wahi player-only dabba nikalta
   hai, aur overlays (Next Episode, episode patti) usi dabbe par align rehte

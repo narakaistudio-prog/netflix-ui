@@ -58,6 +58,13 @@ interface MovieboxCroppedFrameProps {
      * `page` = poora page crop (search results ke liye).
      */
     mode?: 'player' | 'page';
+    /**
+     * Frame pointer events le raha hai? Chrome (hamare overlays) chhupne par
+     * `false` — tab pointer ka pura movement hamare dabbe tak aata hai, isliye
+     * mouse hilte hi chrome wapas aa jata hai (warna cross-origin iframe
+     * andar ka mousemove deta hi nahi).
+     */
+    interactive?: boolean;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -68,6 +75,7 @@ export function MovieboxCroppedFrame({
     onLoad,
     allowScroll = false,
     mode = 'player',
+    interactive = true,
 }: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
@@ -126,6 +134,10 @@ export function MovieboxCroppedFrame({
         frame.style.position = 'absolute';
         frame.style.border = '0';
         frame.style.backgroundColor = '#000';
+        // Chrome chhupa ho to video pointer events na le — tab mouse ka har
+        // movement hum tak aata hai aur overlays turant wapas dikh jate hain
+        // (cross-origin iframe andar ki harkat nahi batata).
+        frame.style.pointerEvents = interactive ? 'auto' : 'none';
         frame.src = src;
         frame.onload = () => onLoadRef.current?.();
 
@@ -198,7 +210,20 @@ export function MovieboxCroppedFrame({
             } catch {}
             host.innerHTML = '';
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [src, title, mode, allowScroll]);
+
+    /**
+     * Chrome chhupne/dikhne par sirf pointer-events badalta hai — iframe
+     * dobara mount NAHI hota (warna video reload ho jata). Isliye `interactive`
+     * upar wale effect ki dependency me nahi hai.
+     */
+    useEffect(() => {
+        if (!IS_WEB || typeof document === 'undefined') return;
+        const host = hostRef.current as unknown as HTMLElement | null;
+        const frame = host?.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement | null;
+        if (frame) frame.style.pointerEvents = interactive ? 'auto' : 'none';
+    }, [interactive, src]);
 
     if (!IS_WEB) {
         return (
