@@ -103,7 +103,7 @@ test('phone par koi overlay nahi — na hamara fullscreen, na title/Next', () =>
     expect(document.querySelector('[data-testid="moviebox-close"]')).toBeTruthy();
 });
 
-test('phone par player FREE — koi crop nahi, tap hamesha seedha player par', () => {
+test('phone par crop pehle jaisa — sirf player, tap hamesha seedha player par', () => {
     jest.useFakeTimers();
     try {
         setUA(IPHONE_UA);
@@ -111,14 +111,12 @@ test('phone par player FREE — koi crop nahi, tap hamesha seedha player par', (
         renderPlayer({ linkKey: 'controls:1' });
 
         const frame = () => document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
-        // free mode: iframe poora dabba bharta hai (koi scale/offset nahi)
-        expect(frame().style.width).toBe('100%');
-        expect(frame().style.height).toBe('100%');
-        expect(frame().style.top).toBe('0px');
-        expect(frame().style.left).toBe('0px');
-        expect(frame().hasAttribute('scrolling')).toBe(false);
+        // crop lagta hai (pehle jaisa) — iframe ka size px naap me, 100% nahi
+        expect(frame().style.width).not.toBe('100%');
+        expect(frame().style.width).toMatch(/px$/);
+        expect(frame().style.height).toMatch(/px$/);
 
-        // tap hamesha seedha player tak — koi overlay nahi, koi pointer gate nahi
+        // tap hamesha seedha player par — koi overlay nahi, koi pointer gate nahi
         expect(frame().style.pointerEvents).toBe('auto');
         act(() => {
             jest.advanceTimersByTime(6000);
@@ -127,6 +125,41 @@ test('phone par player FREE — koi crop nahi, tap hamesha seedha player par', (
     } finally {
         jest.useRealTimers();
     }
+});
+
+test('site ka fullscreen button: iframe fullscreen ko seedha player fullscreen me badal dete hain', async () => {
+    setUA(IPHONE_UA);
+    setViewport(390, 844);
+    renderPlayer({ linkKey: 'guard:1' });
+
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+    const exitSpy = jest.fn().mockResolvedValue(undefined);
+    const requestSpy = jest.fn().mockResolvedValue(undefined);
+    (document as any).exitFullscreen = exitSpy;
+    (document.documentElement as any).requestFullscreen = requestSpy;
+    Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true,
+        get: () => frame,
+    });
+
+    act(() => {
+        document.dispatchEvent(new Event('fullscreenchange'));
+    });
+    await act(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+    });
+
+    // iframe ka fullscreen band, poora player (documentElement) fullscreen
+    expect(exitSpy).toHaveBeenCalled();
+    expect(requestSpy).toHaveBeenCalled();
+
+    Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true,
+        get: () => null,
+    });
+    delete (document as any).exitFullscreen;
+    delete (document.documentElement as any).requestFullscreen;
 });
 
 test('phone par site ka apna fullscreen button chalu hai (desktop par nahi)', () => {

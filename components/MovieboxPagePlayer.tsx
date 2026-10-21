@@ -383,6 +383,36 @@ export function MovieboxPagePlayer({
         } catch {}
     }, []);
 
+    /**
+     * Phone par site ka **apna** fullscreen button chalu hai (`allow` me
+     * fullscreen). Wo dabane par browser iframe ko fullscreen karta hai — tab
+     * crop toot kar poora MovieBox page dikhne lagta hai. Isliye us waqt turant
+     * iframe ka fullscreen band karke poora player (documentElement) fullscreen
+     * kar dete hain — crop salamat, user ko wahi landscape player.
+     */
+    useEffect(() => {
+        if (!isPhone || Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const onFs = () => {
+            const frame = document.querySelector('iframe[data-m2box="frame"]');
+            const active = document.fullscreenElement as HTMLElement | null;
+            if (!active || !frame || active !== frame) return;
+            void (async () => {
+                try {
+                    await document.exitFullscreen();
+                } catch {}
+                try {
+                    await document.documentElement.requestFullscreen();
+                } catch {}
+            })();
+        };
+        document.addEventListener('fullscreenchange', onFs);
+        document.addEventListener('webkitfullscreenchange', onFs as EventListener);
+        return () => {
+            document.removeEventListener('fullscreenchange', onFs);
+            document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
+        };
+    }, [isPhone]);
+
     /** Apna fullscreen chal raha hai? (Button ka icon badalne ke liye.) */
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof document === 'undefined') return;
@@ -561,8 +591,8 @@ export function MovieboxPagePlayer({
                     key={frameSrc}
                     src={frameSrc}
                     title={title}
-                    allowScroll={isSearchFrame || isPhone}
-                    mode={isPhone ? 'free' : isSearchFrame ? 'page' : 'player'}
+                    allowScroll={isSearchFrame}
+                    mode={isSearchFrame ? 'page' : 'player'}
                     interactive={isPhone || chromeVisible}
                     allowFullscreen={isPhone}
                     onLoad={() => {

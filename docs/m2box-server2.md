@@ -432,17 +432,14 @@ Episode aur title uske andar sahi size me."
   band karke poore player ko fullscreen kar deta hai, isliye crop nahi tootta
   aur MovieBox ka apna page kabhi nahi dikhta. Desktop par permission abhi bhi
   nahi (wahan site ka fullscreen crop tod deta hai).
-- **Phone ab: sirf pura MovieBox player** (owner: "moviebox ka player phone me
-  free rakh do… jitna title aur next button hai sab hata do… sab pura moviebox
-  ka hi player rahe phone me sirf"):
-  - `mode="free"` — koi crop/scale nahi, iframe poora dabba bharta hai, scroll
-    khula. M2Box ka apna page jaisa hai waisa.
+- **Phone: crop bilkul pehle jaisa** (owner: "pehle jaisa jo crop tha usse
+  rakhna tha yaar crop rakhna hai") — `mode="player"` hi, sirf player dikhta hai:
   - Hamare overlays phone par **render hi nahi hote**: episode strip (title +
     S1•E2), Next Episode, PROXY badge. Sirf close X (band karne ke liye) aur
     "Loading…" parda.
-  - Site ka apna fullscreen button chalu (`allow="…; fullscreen"`) aur ab koi
-    guard nahi — free mode me crop hai hi nahi, isliye site ka fullscreen seedha
-    chalta hai.
+  - Site ka apna fullscreen button chalu (`allow="…; fullscreen"`); dabane par
+    guard turant iframe ka fullscreen band karke poore player (documentElement)
+    ko fullscreen karta hai — crop salamat rehta hai.
   - Tap hamesha seedha player par (koi pointer gate nahi).
   - Desktop par sab purana: crop, strip/Next, idle-hide, hamara fullscreen
     (kaala plate), site fullscreen band.
