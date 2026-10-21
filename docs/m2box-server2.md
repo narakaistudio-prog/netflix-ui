@@ -427,6 +427,10 @@ Episode aur title uske andar sahi size me."
   - Portrait phone 390×844 → stage 844×390 → crop 693×390 (video poora, dono taraf ~75px pillarbox) — pehle 390×219 ka chhota band aata tha.
 - **Phone par hamara fullscreen button nahi** — site ka apna icon waisa hi
   dikhta hai (uske upar koi kaala plate nahi).
+- Phone par **chrome hamesha dikhta hai** (Next Episode + patti) aur iframe
+  hamesha interactive rehta hai — warna touch par pehla tap hum tak aata tha aur
+  **site ke apne controls** (play/pause, seek, volume, fullscreen) khulte hi
+  nahi the. Desktop par wahi purana idle-hide (3.2s) chalta hai.
 - Phone par **Next Episode + S1•E2 patti** thodi badi (`epBadgePhone`,
   `stripTitlePhone`, `nextButtonPhone`); strip ka side padding 64px.
 - Crop naap ab `offsetWidth/offsetHeight` se — transformed (ghume hue) dabbe

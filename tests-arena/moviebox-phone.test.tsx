@@ -103,6 +103,32 @@ test('phone par hamara fullscreen button nahi — Next Episode aur title andar h
     expect(strip!.textContent).toContain('My Demon');
 });
 
+test('phone par player ke apne controls chalu rehte hain (chrome nahi chhupta)', () => {
+    jest.useFakeTimers();
+    try {
+        setUA(IPHONE_UA);
+        setViewport(390, 844);
+        renderPlayer({ linkKey: 'controls:1' });
+
+        // Tap seedha player tak jaata hai (site ke play/pause/seek/volume
+        // controls tap par khulte hain) — pehle chrome chhupne par iframe ke
+        // pointer events band ho jate the.
+        const frame = () => document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+        expect(frame().style.pointerEvents).toBe('auto');
+
+        // 3.2s+ kuch na karne par bhi chrome (Next Episode + patti) nahi
+        // chhupta — phone par tap ka koi "hover" nahi hota.
+        act(() => {
+            jest.advanceTimersByTime(6000);
+        });
+        expect(frame().style.pointerEvents).toBe('auto');
+        const next = document.querySelector('[data-testid="moviebox-next-episode"]')!.parentElement as HTMLElement;
+        expect(next.style.opacity).toBe('1');
+    } finally {
+        jest.useRealTimers();
+    }
+});
+
 test('desktop par kuch nahi badalta — rotation bhi nahi, apna fullscreen bhi rehta hai', () => {
     setUA(DESKTOP_UA);
     setViewport(1440, 900);
