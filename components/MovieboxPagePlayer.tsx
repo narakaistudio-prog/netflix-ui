@@ -462,17 +462,11 @@ export function MovieboxPagePlayer({
             setChromeVisible(true);
             return;
         }
-        /**
-         * Phone: koi hover nahi hota, aur touch par chrome chhupana site ke
-         * apne controls ko bhi chhupa deta hai (tap pehle hum tak aata hai).
-         * Isliye phone par chrome **hamesha** dikhta hai — Next Episode + patti
-         * bhi, aur site ke controls (play/pause, seek, volume, fullscreen)
-         * tap par turant jawab dete hain.
-         */
-        if (isPhone) {
-            setChromeVisible(true);
-            return;
-        }
+        // Phone par bhi wahi idle-hide. (Pehle yahan chrome hamesha dikhta tha
+        // — owner: "title aur Next Episode button autohide bhi chahiye phone
+        // me".) Touch hone par `touchstart` chrome turant wapas laata hai;
+        // chrome chhupa ho to iframe pointer events nahi leta, isliye pehla tap
+        // hum tak aata hai.
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
 
         const doc = window.document;
@@ -597,7 +591,7 @@ export function MovieboxPagePlayer({
                     title={title}
                     allowScroll={isSearchFrame}
                     mode={isSearchFrame ? 'page' : 'player'}
-                    interactive={isPhone || chromeVisible}
+                    interactive={chromeVisible}
                     allowFullscreen={isPhone}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);

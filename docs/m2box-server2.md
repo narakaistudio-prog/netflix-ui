@@ -432,10 +432,10 @@ Episode aur title uske andar sahi size me."
   band karke poore player ko fullscreen kar deta hai, isliye crop nahi tootta
   aur MovieBox ka apna page kabhi nahi dikhta. Desktop par permission abhi bhi
   nahi (wahan site ka fullscreen crop tod deta hai).
-- Phone par **chrome hamesha dikhta hai** (Next Episode + patti) aur iframe
-  hamesha interactive rehta hai — warna touch par pehla tap hum tak aata tha aur
-  **site ke apne controls** (play/pause, seek, volume, fullscreen) khulte hi
-  nahi the. Desktop par wahi purana idle-hide (3.2s) chalta hai.
+- Phone par bhi **idle-hide** (3.2s): title + Next Episode + patti gayab hote
+  hain aur screen par touch karte hi wapas aate hain (chrome chhupa ho to iframe
+  pointer events nahi leta, isliye pehla tap hum tak aata hai; doosra tap
+  player). Desktop par bilkul wahi behaviour hai.
 - Phone par **Next Episode + S1•E2 patti** badi (`epBadgePhone` 18px,
   `stripTitlePhone` 20px, `nextButtonPhone` 19px); strip ka side padding 64px
   aur wo site ke control bar se thoda upar (`EPISODE_STRIP_BOTTOM_PHONE` 0.83).
