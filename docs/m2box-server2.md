@@ -425,14 +425,20 @@ Episode aur title uske andar sahi size me."
     bahar). Portrait hone par hi ghummta hai; phone landscape kar de to
     (`width > height`) rotation apne aap band.
   - Portrait phone 390×844 → stage 844×390 → crop 693×390 (video poora, dono taraf ~75px pillarbox) — pehle 390×219 ka chhota band aata tha.
-- **Phone par hamara fullscreen button nahi** — site ka apna icon waisa hi
-  dikhta hai (uske upar koi kaala plate nahi).
-- Phone par **chrome hamesha dikhta hai** (Next Episode + patti) aur iframe
-  hamesha interactive rehta hai — warna touch par pehla tap hum tak aata tha aur
-  **site ke apne controls** (play/pause, seek, volume, fullscreen) khulte hi
-  nahi the. Desktop par wahi purana idle-hide (3.2s) chalta hai.
-- Phone par **Next Episode + S1•E2 patti** thodi badi (`epBadgePhone`,
-  `stripTitlePhone`, `nextButtonPhone`); strip ka side padding 64px.
+- **Phone par hamara fullscreen button nahi** — site ka apna icon hi chalta
+  hai. Uske liye iframe ki `allow` me `fullscreen` jod diya jata hai
+  (`MOVIEBOX_FRAME_ALLOW_PHONE`, sirf phone par). Wo button dabane par browser
+  iframe ko fullscreen karta hai — tab `fullscreenchange` guard turant usse
+  band karke poore player ko fullscreen kar deta hai, isliye crop nahi tootta
+  aur MovieBox ka apna page kabhi nahi dikhta. Desktop par permission abhi bhi
+  nahi (wahan site ka fullscreen crop tod deta hai).
+- Phone par bhi **idle-hide** (3.2s): title + Next Episode + patti gayab hote
+  hain aur screen par touch karte hi wapas aate hain (chrome chhupa ho to iframe
+  pointer events nahi leta, isliye pehla tap hum tak aata hai; doosra tap
+  player). Desktop par bilkul wahi behaviour hai.
+- Phone par **Next Episode + S1•E2 patti** badi (`epBadgePhone` 18px,
+  `stripTitlePhone` 20px, `nextButtonPhone` 19px); strip ka side padding 64px
+  aur wo site ke control bar se thoda upar (`EPISODE_STRIP_BOTTOM_PHONE` 0.83).
 - Crop naap ab `offsetWidth/offsetHeight` se — transformed (ghume hue) dabbe
   par `getBoundingClientRect` ulta naap deta tha.
 - Phone + player khula: modal ka panel poora viewport (`panelPhonePlayer`,

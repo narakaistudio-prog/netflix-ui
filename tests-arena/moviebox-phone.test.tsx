@@ -103,30 +103,49 @@ test('phone par hamara fullscreen button nahi — Next Episode aur title andar h
     expect(strip!.textContent).toContain('My Demon');
 });
 
-test('phone par player ke apne controls chalu rehte hain (chrome nahi chhupta)', () => {
+test('phone par title + Next Episode autohide hote hain, touch par wapas aate hain', () => {
     jest.useFakeTimers();
     try {
         setUA(IPHONE_UA);
         setViewport(390, 844);
         renderPlayer({ linkKey: 'controls:1' });
 
-        // Tap seedha player tak jaata hai (site ke play/pause/seek/volume
-        // controls tap par khulte hain) — pehle chrome chhupne par iframe ke
-        // pointer events band ho jate the.
         const frame = () => document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
-        expect(frame().style.pointerEvents).toBe('auto');
+        const nextWrap = () =>
+            document.querySelector('[data-testid="moviebox-next-episode"]')!.parentElement as HTMLElement;
 
-        // 3.2s+ kuch na karne par bhi chrome (Next Episode + patti) nahi
-        // chhupta — phone par tap ka koi "hover" nahi hota.
+        // shuru me chrome dikhta hai aur tap seedha player tak jaata hai
+        expect(frame().style.pointerEvents).toBe('auto');
+        expect(nextWrap().style.opacity).toBe('1');
+
+        // 3.2s tak kuch na ho → overlays gayab, aur iframe pointer events na
+        // le (tab touch hum tak aata hai)
         act(() => {
             jest.advanceTimersByTime(6000);
         });
+        expect(nextWrap().style.opacity).toBe('0');
+        expect(frame().style.pointerEvents).toBe('none');
+
+        // screen par touch → chrome turant wapas
+        act(() => {
+            const root = document.querySelector('[data-tv-scope="player"]') as HTMLElement;
+            root.dispatchEvent(new Event('touchstart', { bubbles: true }));
+        });
+        expect(nextWrap().style.opacity).toBe('1');
         expect(frame().style.pointerEvents).toBe('auto');
-        const next = document.querySelector('[data-testid="moviebox-next-episode"]')!.parentElement as HTMLElement;
-        expect(next.style.opacity).toBe('1');
     } finally {
         jest.useRealTimers();
     }
+});
+
+test('phone par site ka apna fullscreen button chalu hai (desktop par nahi)', () => {
+    setUA(IPHONE_UA);
+    setViewport(390, 844);
+    renderPlayer({ linkKey: 'fsallow:1' });
+
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+    expect(frame.getAttribute('allow')).toContain('fullscreen');
+    expect(frame.hasAttribute('allowfullscreen')).toBe(true);
 });
 
 test('desktop par kuch nahi badalta — rotation bhi nahi, apna fullscreen bhi rehta hai', () => {
@@ -136,6 +155,10 @@ test('desktop par kuch nahi badalta — rotation bhi nahi, apna fullscreen bhi r
 
     expect(document.querySelector('[data-testid="moviebox-phone-stage"]')).toBeNull();
     expect(document.querySelector('[data-testid="moviebox-fullscreen"]')).toBeTruthy();
+    // desktop par iframe ko fullscreen ki permission nahi (crop toot jata hai)
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+    expect(frame.getAttribute('allow')).not.toContain('fullscreen');
+    expect(frame.hasAttribute('allowfullscreen')).toBe(false);
 });
 
 test('phone ko landscape ghuma dene par (width > height) rotation band ho jata hai', () => {
