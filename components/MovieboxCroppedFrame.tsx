@@ -71,6 +71,11 @@ interface MovieboxCroppedFrameProps {
      * Sirf phone par — desktop par site ka fullscreen crop tod deta hai.
      */
     allowFullscreen?: boolean;
+    /**
+     * Phone: site ka mobile layout, native scale — site ke apne controls
+     * (play/seek/quality/fullscreen) bade, touch ke laayak.
+     */
+    phoneLayout?: boolean;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -83,6 +88,7 @@ export function MovieboxCroppedFrame({
     mode = 'player',
     interactive = true,
     allowFullscreen = false,
+    phoneLayout = false,
 }: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
@@ -175,7 +181,10 @@ export function MovieboxCroppedFrame({
             // Host (hamara player dabba) fullscreen hone par uski rect hi
             // screen ka naap hoti hai, isliye crop apne aap naye size par
             // lag jata hai aur screen par sirf player dikhta hai.
-            const crop = getMovieboxCrop(measureWidth, measureHeight, { resources: mode === 'page' });
+            const crop = getMovieboxCrop(measureWidth, measureHeight, {
+                resources: mode === 'page',
+                phone: phoneLayout,
+            });
             box.style.width = `${crop.frameWidth}px`;
             box.style.height = `${crop.height}px`;
             stage.style.width = `${crop.stageVisibleWidth}px`;
@@ -184,7 +193,7 @@ export function MovieboxCroppedFrame({
             frame.style.top = `${-crop.cropTop}px`;
             frame.style.left = `${-crop.cropLeft}px`;
             frame.style.width = `${crop.stageWidth}px`;
-            frame.style.height = `${crop.stageVisibleHeight + crop.cropTop}px`;
+            frame.style.height = `${crop.viewportHeight ?? crop.stageVisibleHeight + crop.cropTop}px`;
             // Scroll sirf desktop player crop par band — warna user crop ke
             // bahar wala header/grid wapas la sakta hai. Mobile par grid
             // neeche hoti hai, isliye wahan scroll khula rehta hai.

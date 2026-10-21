@@ -5,6 +5,7 @@ import {
     buildMovieboxPageUrl,
     getMovieboxCrop,
     isMovieboxUrl,
+    MOVIEBOX_PHONE_BAR_HEIGHT,
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
     MOVIEBOX_STAGE_PLAYER_HEIGHT,
@@ -194,6 +195,33 @@ describe('getMovieboxCrop', () => {
         expect(crop.frameWidth).toBe(420);
         expect(crop.scale).toBeCloseTo(420 / 968, 6);
         expect(crop.height).toBe(Math.round(545 * (420 / 968)));
+    });
+
+    it('phone par site ka mobile layout — native scale (bade touch controls)', () => {
+        // owner: "player ke andar ke control bahut chote hai" — 1536 stage ko
+        // phone par chhota karne se site ke controls ~8px reh jate the.
+        const crop = getMovieboxCrop(390, 244, { phone: true });
+        expect(crop.stageWidth).toBe(390);
+        expect(crop.scale).toBe(1);
+        expect(crop.cropLeft).toBe(0);
+        // header 104 + 4px andar
+        expect(crop.cropTop).toBe(108);
+        const playerW = 390 - 24;
+        // video (16:9) + site ka control bar — bar aadha na kate.
+        expect(crop.height).toBe(
+            Math.round((playerW * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4),
+        );
+        expect(crop.stacked).toBe(false);
+        // Site ki fixed bottom nav viewport ke neeche — player ke upar nahi.
+        expect(crop.viewportHeight).toBeGreaterThan(crop.height + crop.cropTop + 200);
+    });
+
+    it('landscape fullscreen par wahi desktop stage crop (mobile nav nahi)', () => {
+        // Fullscreen me phone ka dabba ghuma hua hota hai (chaudai ~844) —
+        // wahan stage scale hi bade controls deta hai, mobile layout nahi.
+        const crop = getMovieboxCrop(844, 390, { phone: true });
+        expect(crop.stageWidth).toBe(1536);
+        expect(crop.viewportHeight).toBeUndefined();
     });
 
     it('keeps the site mobile layout only for the search page', () => {
