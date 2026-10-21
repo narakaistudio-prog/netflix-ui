@@ -112,6 +112,62 @@
                     "netflixId": "83195142"
                 }
             ]
+        },
+        {
+            "week": "10/12/26 - 10/18/26",
+            "firstSeen": "2026-10-21",
+            "movies": [
+                {
+                    "rank": 1,
+                    "title": "Mandaadi",
+                    "netflixId": "82787383"
+                },
+                {
+                    "rank": 2,
+                    "title": "Reporting Live",
+                    "netflixId": "81917272"
+                },
+                {
+                    "rank": 3,
+                    "title": "Enna Vilai : The Price of Dignity",
+                    "netflixId": "83001389"
+                },
+                {
+                    "rank": 4,
+                    "title": "Pradhama Drishtya Kuttakkar",
+                    "netflixId": "83197640"
+                },
+                {
+                    "rank": 5,
+                    "title": "Epic",
+                    "netflixId": "82673568"
+                },
+                {
+                    "rank": 6,
+                    "title": "Vishwanath & Sons",
+                    "netflixId": "82034837"
+                },
+                {
+                    "rank": 7,
+                    "title": "Animals",
+                    "netflixId": "81757047"
+                },
+                {
+                    "rank": 8,
+                    "title": "Irumudi",
+                    "netflixId": "83001420"
+                },
+                {
+                    "rank": 9,
+                    "title": "Evil Dead Burn",
+                    "netflixId": "82715255"
+                },
+                {
+                    "rank": 10,
+                    "title": "Modha Rathri",
+                    "netflixId": "82811466"
+                }
+            ]
         }
     ]
 }
