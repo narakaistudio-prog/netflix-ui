@@ -383,39 +383,6 @@ export function MovieboxPagePlayer({
         } catch {}
     }, []);
 
-    /**
-     * Phone par site ka **apna** fullscreen button chalu hai (`allow` me
-     * fullscreen). Wo button dabane par browser iframe ko fullscreen karta hai
-     * — tab raw MovieBox page (header, Resources panel, title) dikhne lagta
-     * hai aur hamara crop toot jata hai.
-     *
-     * Isliye us waqt turant iframe ka fullscreen band karke poora player
-     * (documentElement) fullscreen kar dete hain — user ko wahi chrome-free
-     * landscape player milta hai, par crop salamat rehta hai.
-     */
-    useEffect(() => {
-        if (!isPhone || Platform.OS !== 'web' || typeof document === 'undefined') return;
-        const onFs = () => {
-            const frame = document.querySelector('iframe[data-m2box="frame"]');
-            const active = document.fullscreenElement as HTMLElement | null;
-            if (!active || !frame || active !== frame) return;
-            void (async () => {
-                try {
-                    await document.exitFullscreen();
-                } catch {}
-                try {
-                    await document.documentElement.requestFullscreen();
-                } catch {}
-            })();
-        };
-        document.addEventListener('fullscreenchange', onFs);
-        document.addEventListener('webkitfullscreenchange', onFs as EventListener);
-        return () => {
-            document.removeEventListener('fullscreenchange', onFs);
-            document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
-        };
-    }, [isPhone]);
-
     /** Apna fullscreen chal raha hai? (Button ka icon badalne ke liye.) */
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof document === 'undefined') return;
@@ -462,11 +429,16 @@ export function MovieboxPagePlayer({
             setChromeVisible(true);
             return;
         }
-        // Phone par bhi wahi idle-hide. (Pehle yahan chrome hamesha dikhta tha
-        // — owner: "title aur Next Episode button autohide bhi chahiye phone
-        // me".) Touch hone par `touchstart` chrome turant wapas laata hai;
-        // chrome chhupa ho to iframe pointer events nahi leta, isliye pehla tap
-        // hum tak aata hai.
+        /**
+         * Phone par koi overlay nahi — sirf pura MovieBox player (owner:
+         * "jitna title aur next button hai sab hata do, sab pura moviebox ka
+         * hi player rahe phone me sirf"). Isliye idle-hide ka sawal hi nahi;
+         * chrome hamesha on (pointer events ke liye).
+         */
+        if (isPhone) {
+            setChromeVisible(true);
+            return;
+        }
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
 
         const doc = window.document;
@@ -589,9 +561,9 @@ export function MovieboxPagePlayer({
                     key={frameSrc}
                     src={frameSrc}
                     title={title}
-                    allowScroll={isSearchFrame}
-                    mode={isSearchFrame ? 'page' : 'player'}
-                    interactive={chromeVisible}
+                    allowScroll={isSearchFrame || isPhone}
+                    mode={isPhone ? 'free' : isSearchFrame ? 'page' : 'player'}
+                    interactive={isPhone || chromeVisible}
                     allowFullscreen={isPhone}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
@@ -634,7 +606,7 @@ export function MovieboxPagePlayer({
             {/* Series: episode ki patti — "S1 • E2  My Demon – <episode name>"
                 video ke andar bottom-left, bilkul NetMirror jaisa. Chrome ke
                 saath gayab. */}
-            {frameSrc && isSeries && !isSearchFrame && typeof activeEpisode === 'number' ? (
+            {frameSrc && isSeries && !isSearchFrame && !isPhone && typeof activeEpisode === 'number' ? (
                 <View
                     style={[
                         styles.stripWrap,
@@ -730,7 +702,7 @@ export function MovieboxPagePlayer({
 
             {/* Series: agla episode — video ke andar, bottom-right (site ke
                 apne Next Episode ki jagah), aur chrome ke saath gayab. */}
-            {frameSrc && nextEpisode && !isSearchFrame ? (
+            {frameSrc && nextEpisode && !isSearchFrame && !isPhone ? (
                 <View
                     style={[
                         styles.nextWrap,
@@ -843,7 +815,7 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-            {frameSrc && proxy ? (
+            {frameSrc && proxy && !isPhone ? (
                 <View style={styles.proxyBadge} pointerEvents="none">
                     <Text style={styles.proxyBadgeText}>PROXY</Text>
                 </View>

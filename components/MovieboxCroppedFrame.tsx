@@ -57,8 +57,11 @@ interface MovieboxCroppedFrameProps {
      * `player` (default) = screen par **sirf player** (MovieBox ka Resources
      * panel bahar) — NetMirror jaisa full-bleed 16:9.
      * `page` = poora page crop (search results ke liye).
+     * `free` = **koi crop nahi** — iframe poora dabba bharta hai, M2Box ka
+     * apna page jaisa hai waisa. Phone ke liye: owner "moviebox ka player
+     * phone me free rakh do, sab pura moviebox ka hi player rahe".
      */
-    mode?: 'player' | 'page';
+    mode?: 'player' | 'page' | 'free';
     /**
      * Frame pointer events le raha hai? Chrome (hamare overlays) chhupne par
      * `false` — tab pointer ka pura movement hamare dabbe tak aata hai, isliye
@@ -171,6 +174,21 @@ export function MovieboxCroppedFrame({
              */
             const measureWidth = host.offsetWidth || rect.width;
             const measureHeight = host.offsetHeight || rect.height;
+
+            /** `free` (phone): koi crop/scale nahi — page poora khula. */
+            if (mode === 'free') {
+                box.style.width = '100%';
+                box.style.height = '100%';
+                stage.style.width = '100%';
+                stage.style.height = '100%';
+                stage.style.transform = '';
+                frame.style.top = '0';
+                frame.style.left = '0';
+                frame.style.width = '100%';
+                frame.style.height = '100%';
+                frame.removeAttribute('scrolling');
+                return;
+            }
             // Crop HAR haalat me — chhoti window, bada fullscreen, sab me.
             // Host (hamara player dabba) fullscreen hone par uski rect hi
             // screen ka naap hoti hai, isliye crop apne aap naye size par
