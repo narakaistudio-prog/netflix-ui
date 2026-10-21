@@ -92,6 +92,8 @@ const CHROME_HIDE_AFTER_LEAVE_MS = 900;
  * icons ke thoda neeche, khaali kaali patti me.
  */
 const EPISODE_STRIP_BOTTOM = 0.9;
+/** Phone par patti thodi badi hai, isliye site ke control bar se thoda upar. */
+const EPISODE_STRIP_BOTTOM_PHONE = 0.83;
 
 export function MovieboxPagePlayer({
     linkKey,
@@ -381,6 +383,39 @@ export function MovieboxPagePlayer({
         } catch {}
     }, []);
 
+    /**
+     * Phone par site ka **apna** fullscreen button chalu hai (`allow` me
+     * fullscreen). Wo button dabane par browser iframe ko fullscreen karta hai
+     * — tab raw MovieBox page (header, Resources panel, title) dikhne lagta
+     * hai aur hamara crop toot jata hai.
+     *
+     * Isliye us waqt turant iframe ka fullscreen band karke poora player
+     * (documentElement) fullscreen kar dete hain — user ko wahi chrome-free
+     * landscape player milta hai, par crop salamat rehta hai.
+     */
+    useEffect(() => {
+        if (!isPhone || Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const onFs = () => {
+            const frame = document.querySelector('iframe[data-m2box="frame"]');
+            const active = document.fullscreenElement as HTMLElement | null;
+            if (!active || !frame || active !== frame) return;
+            void (async () => {
+                try {
+                    await document.exitFullscreen();
+                } catch {}
+                try {
+                    await document.documentElement.requestFullscreen();
+                } catch {}
+            })();
+        };
+        document.addEventListener('fullscreenchange', onFs);
+        document.addEventListener('webkitfullscreenchange', onFs as EventListener);
+        return () => {
+            document.removeEventListener('fullscreenchange', onFs);
+            document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
+        };
+    }, [isPhone]);
+
     /** Apna fullscreen chal raha hai? (Button ka icon badalne ke liye.) */
     useEffect(() => {
         if (Platform.OS !== 'web' || typeof document === 'undefined') return;
@@ -563,6 +598,7 @@ export function MovieboxPagePlayer({
                     allowScroll={isSearchFrame}
                     mode={isSearchFrame ? 'page' : 'player'}
                     interactive={isPhone || chromeVisible}
+                    allowFullscreen={isPhone}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -613,7 +649,10 @@ export function MovieboxPagePlayer({
                                   left: overlayBox.left,
                                   top:
                                       overlayBox.top +
-                                      Math.round(overlayBox.height * EPISODE_STRIP_BOTTOM),
+                                      Math.round(
+                                          overlayBox.height *
+                                              (isPhone ? EPISODE_STRIP_BOTTOM_PHONE : EPISODE_STRIP_BOTTOM),
+                                      ),
                                   width: overlayBox.width,
                                   paddingHorizontal: overlayBox.padRight + (isPhone ? 64 : 150),
                               }
@@ -907,8 +946,8 @@ const styles = StyleSheet.create({
     },
     epBadgeText: { color: '#000', fontSize: 13, fontWeight: '700' },
     /** Phone (ghuma hua landscape) — thoda bada, taaki door se padha ja sake. */
-    epBadgePhone: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 5 },
-    epBadgeTextPhone: { fontSize: 15 },
+    epBadgePhone: { paddingHorizontal: 12, paddingVertical: 5, borderRadius: 6 },
+    epBadgeTextPhone: { fontSize: 18 },
     stripTitle: {
         color: '#fff',
         fontSize: 15,
@@ -918,7 +957,7 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: 3,
     },
-    stripTitlePhone: { fontSize: 17 },
+    stripTitlePhone: { fontSize: 20 },
     stripDash: { color: '#cfcfcf', fontWeight: '600' },
     stripEpName: { color: '#7CD44A', fontWeight: '600' },
     nextButton: {
@@ -931,8 +970,8 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     nextButtonText: { color: '#000', fontSize: 14, fontWeight: '700' },
-    nextButtonPhone: { paddingHorizontal: 20, paddingVertical: 12, gap: 10 },
-    nextButtonTextPhone: { fontSize: 16 },
+    nextButtonPhone: { paddingHorizontal: 24, paddingVertical: 14, gap: 10 },
+    nextButtonTextPhone: { fontSize: 19 },
     resolving: {
         flex: 1,
         alignItems: 'center',

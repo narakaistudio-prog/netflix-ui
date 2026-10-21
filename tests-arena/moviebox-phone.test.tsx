@@ -129,6 +129,16 @@ test('phone par player ke apne controls chalu rehte hain (chrome nahi chhupta)',
     }
 });
 
+test('phone par site ka apna fullscreen button chalu hai (desktop par nahi)', () => {
+    setUA(IPHONE_UA);
+    setViewport(390, 844);
+    renderPlayer({ linkKey: 'fsallow:1' });
+
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+    expect(frame.getAttribute('allow')).toContain('fullscreen');
+    expect(frame.hasAttribute('allowfullscreen')).toBe(true);
+});
+
 test('desktop par kuch nahi badalta — rotation bhi nahi, apna fullscreen bhi rehta hai', () => {
     setUA(DESKTOP_UA);
     setViewport(1440, 900);
@@ -136,6 +146,10 @@ test('desktop par kuch nahi badalta — rotation bhi nahi, apna fullscreen bhi r
 
     expect(document.querySelector('[data-testid="moviebox-phone-stage"]')).toBeNull();
     expect(document.querySelector('[data-testid="moviebox-fullscreen"]')).toBeTruthy();
+    // desktop par iframe ko fullscreen ki permission nahi (crop toot jata hai)
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+    expect(frame.getAttribute('allow')).not.toContain('fullscreen');
+    expect(frame.hasAttribute('allowfullscreen')).toBe(false);
 });
 
 test('phone ko landscape ghuma dene par (width > height) rotation band ho jata hai', () => {

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {
     getMovieboxCrop,
     MOVIEBOX_FRAME_ALLOW,
+    MOVIEBOX_FRAME_ALLOW_PHONE,
     MOVIEBOX_FRAME_SANDBOX,
 } from '@/lib/moviebox';
 
@@ -65,6 +66,11 @@ interface MovieboxCroppedFrameProps {
      * andar ka mousemove deta hi nahi).
      */
     interactive?: boolean;
+    /**
+     * Site ke apne fullscreen button ko chalu rakho (`allow="…; fullscreen"`).
+     * Sirf phone par — desktop par site ka fullscreen crop tod deta hai.
+     */
+    allowFullscreen?: boolean;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -76,6 +82,7 @@ export function MovieboxCroppedFrame({
     allowScroll = false,
     mode = 'player',
     interactive = true,
+    allowFullscreen = false,
 }: MovieboxCroppedFrameProps) {
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const onLoadRef = useRef(onLoad);
@@ -123,7 +130,12 @@ export function MovieboxCroppedFrame({
         const frame = doc.createElement('iframe');
         frame.setAttribute('data-m2box', 'frame');
         frame.title = title ? `${title} — M2Box` : 'M2Box player';
-        frame.setAttribute('allow', MOVIEBOX_FRAME_ALLOW);
+        frame.setAttribute(
+            'allow',
+            allowFullscreen ? MOVIEBOX_FRAME_ALLOW_PHONE : MOVIEBOX_FRAME_ALLOW,
+        );
+        // Phone: site ka apna fullscreen button chalta rahe.
+        if (allowFullscreen) frame.setAttribute('allowfullscreen', 'true');
         // `allowfullscreen` jaan-boojh kar nahi — wo allow="fullscreen" ka
         // purana alias hai aur site ke fullscreen button ko chalu kar deta
         // hai (crop toot kar poora page dikhne lagta hai). Fullscreen hum
@@ -220,7 +232,7 @@ export function MovieboxCroppedFrame({
             host.innerHTML = '';
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [src, title, mode, allowScroll]);
+    }, [src, title, mode, allowScroll, allowFullscreen]);
 
     /**
      * Chrome chhupne/dikhne par sirf pointer-events badalta hai — iframe

@@ -103,6 +103,18 @@ export const MOVIEBOX_FRAME_SANDBOX =
 export const MOVIEBOX_FRAME_ALLOW =
     'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
 
+/**
+ * Phone ke liye extra permission: site ke **apne** fullscreen button ko chalu
+ * karta hai (owner: "phone me player ka khud ka fullscreen button khol do").
+ *
+ * Desktop par ye jaan-boojh kar nahi — wahan site ka fullscreen crop tod deta
+ * hai aur poora MovieBox page dikhne lagta hai. Phone par hamara player pehle
+ * se poore screen par fixed (ghuma hua) hai, isliye wahan ye button dabane se
+ * `fullscreenchange` par hum use sambhaal lete hain (dekho
+ * `MovieboxPagePlayer` ka fullscreen guard) — crop tootta nahi.
+ */
+export const MOVIEBOX_FRAME_ALLOW_PHONE = `${MOVIEBOX_FRAME_ALLOW}; fullscreen`;
+
 /** Server switcher me dikhne wala naam. */
 export const MOVIEBOX_SERVER_LABEL = 'M2Box';
 
