@@ -667,7 +667,7 @@ export function MovieDetailModal({
                                         testID="phone-player-back"
                                         accessibilityLabel="Back to details"
                                     >
-                                        <Ionicons name="chevron-back" size={22} color="#fff" />
+                                        <Ionicons name="chevron-back" size={26} color="#fff" />
                                     </Pressable>
                                     <View style={styles.phoneTopTitles}>
                                         <Text style={styles.phoneTopName} numberOfLines={1}>
@@ -759,7 +759,7 @@ export function MovieDetailModal({
                                             testID="phone-see-episodes"
                                             onPress={() => setPlaying(false)}
                                         >
-                                            <Ionicons name="list" size={16} color="#fff" />
+                                            <Ionicons name="list" size={18} color="#fff" />
                                             <Text style={styles.phoneSeeMoreText}>
                                                 SEE MORE EPISODES
                                             </Text>
@@ -816,15 +816,15 @@ const styles = StyleSheet.create({
     phoneTopBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 8,
+        gap: 12,
+        paddingHorizontal: 12,
+        paddingVertical: 12,
         backgroundColor: '#141414',
     },
-    phoneBack: { padding: 6 },
+    phoneBack: { padding: 8 },
     phoneTopTitles: { flex: 1 },
-    phoneTopName: { color: '#fff', fontSize: 15, fontWeight: '700' },
-    phoneTopEpisode: { color: '#9a9a9a', fontSize: 11, marginTop: 1 },
+    phoneTopName: { color: '#fff', fontSize: 19, fontWeight: '800' },
+    phoneTopEpisode: { color: '#b0b0b0', fontSize: 13, marginTop: 2 },
     /** Player 16:9 dabba — crop (968×545) isi me baithta hai. */
     phonePlayerBox: {
         width: '100%',
@@ -832,61 +832,62 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
     },
     phoneDetails: { flex: 1 },
-    phoneDetailsContent: { paddingHorizontal: 14, paddingTop: 14, paddingBottom: 28 },
-    phoneSeries: { color: '#E50914', fontSize: 13, fontWeight: '700' },
+    phoneDetailsContent: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 },
+    phoneSeries: { color: '#E50914', fontSize: 15, fontWeight: '800' },
     phoneEpisodeTitle: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: 28,
         fontWeight: '800',
-        marginTop: 4,
+        marginTop: 6,
+        lineHeight: 34,
     },
-    phoneMeta: { color: '#9a9a9a', fontSize: 13, marginTop: 8 },
-    phoneOverview: { color: '#b9b9b9', fontSize: 13, lineHeight: 19, marginTop: 10 },
+    phoneMeta: { color: '#b0b0b0', fontSize: 15, marginTop: 10 },
+    phoneOverview: { color: '#c9c9c9', fontSize: 15, lineHeight: 22, marginTop: 12 },
     phoneShowMore: {
         color: '#E50914',
-        fontSize: 13,
+        fontSize: 15,
         fontWeight: '800',
-        marginTop: 8,
+        marginTop: 10,
         letterSpacing: 0.4,
     },
-    phoneNextWrap: { marginTop: 22 },
+    phoneNextWrap: { marginTop: 28 },
     phoneNextLabel: {
-        color: '#8a8a8a',
-        fontSize: 11,
-        fontWeight: '700',
-        letterSpacing: 1,
+        color: '#9a9a9a',
+        fontSize: 12,
+        fontWeight: '800',
+        letterSpacing: 1.2,
     },
     phoneNextCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 12,
-        marginTop: 10,
-        backgroundColor: '#171717',
-        borderRadius: 8,
-        padding: 10,
+        gap: 14,
+        marginTop: 12,
+        backgroundColor: '#1a1a1a',
+        borderRadius: 10,
+        padding: 12,
     },
     phoneNextThumb: {
-        width: 118,
-        height: 66,
-        borderRadius: 6,
+        width: 150,
+        height: 84,
+        borderRadius: 8,
         backgroundColor: '#222',
     },
     phoneNextInfo: { flex: 1 },
-    phoneNextTitle: { color: '#fff', fontSize: 14, fontWeight: '700' },
+    phoneNextTitle: { color: '#fff', fontSize: 16, fontWeight: '700' },
     phoneSeeMore: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 8,
-        marginTop: 22,
-        paddingVertical: 13,
-        borderRadius: 6,
+        gap: 10,
+        marginTop: 28,
+        paddingVertical: 16,
+        borderRadius: 8,
         borderWidth: 1,
-        borderColor: '#3a3a3a',
+        borderColor: '#3f3f3f',
     },
     phoneSeeMoreText: {
         color: '#fff',
-        fontSize: 13,
+        fontSize: 15,
         fontWeight: '800',
         letterSpacing: 0.6,
     },
