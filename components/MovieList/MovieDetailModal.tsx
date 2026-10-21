@@ -18,6 +18,7 @@ import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
 import { MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
+import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import type { Movie } from '@/types/movie';
 
 const IS_WEB = Platform.OS === 'web';
@@ -62,6 +63,14 @@ export function MovieDetailModal({
     resumeAt = 0,
 }: Props) {
     const { width, height } = useWindowDimensions();
+    /**
+     * Phone par player poora screen leta hai (landscape) — panel ki 92% height
+     * aur 1000px max-width uske raste me nahi aate.
+     */
+    const isPhoneWeb =
+        Platform.OS === 'web' &&
+        typeof navigator !== 'undefined' &&
+        isPhoneUserAgent(navigator.userAgent);
     const [playing, setPlaying] = useState(false);
     /** Episode chosen from the list (TV). Null plays the first episode. */
     const [episodeRef, setEpisodeRef] = useState<{ season: number; episode: number } | null>(null);
@@ -292,7 +301,14 @@ export function MovieDetailModal({
         <Modal visible transparent animationType="fade" onRequestClose={onClose}>
             <View style={styles.overlay}>
                 <Pressable style={StyleSheet.absoluteFillObject} onPress={onClose} accessibilityLabel="Close details" />
-                <View style={[styles.panel, { width: panelWidth }]}>
+                <View
+                    style={[
+                        styles.panel,
+                        { width: panelWidth },
+                        // Phone par player poora screen (landscape) leta hai.
+                        playing && isPhoneWeb && styles.panelPhonePlayer,
+                    ]}
+                >
                     <ScrollView key={movie.id} bounces={false} showsVerticalScrollIndicator={false}>
                         <View style={[styles.hero, { height: heroHeight }]}>
                             {image ? (
@@ -593,6 +609,17 @@ const styles = StyleSheet.create({
         backgroundColor: PANEL_BG,
         borderRadius: 8,
         overflow: 'hidden',
+    },
+    /**
+     * Phone + player khula: panel hi poora viewport, bina clipping ke — ghuma
+     * hua (landscape) player modal ki 92% height me phansa na rahe.
+     */
+    panelPhonePlayer: {
+        width: '100%',
+        height: '100%',
+        maxHeight: '100%',
+        borderRadius: 0,
+        overflow: 'visible',
     },
     playerLayer: {
         ...StyleSheet.absoluteFillObject,

@@ -11,6 +11,8 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
+import { isPhoneUserAgent, landscapeBox, readViewport } from '@/lib/phonePlayer';
+import { enterPlayerFullscreen, exitPlayerFullscreen } from '@/lib/playerFullscreen';
 import { resolveMovieboxLive } from '@/lib/movieboxResolve';
 
 /**
@@ -137,6 +139,33 @@ export function MovieboxPagePlayer({
     /** Poora player dabba (overlays ke saath) fullscreen hai. */
     const [ownFullscreen, setOwnFullscreen] = useState(false);
     const rootRef = useRef<View | null>(null);
+    /** Viewport (CSS px) — phone par ghuma hua player isi par baithta hai. */
+    const [viewport, setViewport] = useState(readViewport);
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+        const sync = () => setViewport(readViewport());
+        sync();
+        window.addEventListener('resize', sync);
+        window.addEventListener('orientationchange', sync);
+        return () => {
+            window.removeEventListener('resize', sync);
+            window.removeEventListener('orientationchange', sync);
+        };
+    }, []);
+    /**
+     * Phone? (owner: "ye sare changes phone ke liye hain"). Mobile browser ka
+     * user agent — desktop par player bilkul purana hi rehta hai.
+     */
+    const isPhone =
+        Platform.OS === 'web' &&
+        typeof navigator !== 'undefined' &&
+        isPhoneUserAgent(navigator.userAgent);
+    /**
+     * Portrait phone par player 90° ghuma kar landscape dikhta hai (iOS par
+     * Fullscreen API hi nahi hoti). Landscape hone par `null` — tab player
+     * seedha waisa hi rehta hai.
+     */
+    const phoneBox = isPhone ? landscapeBox(viewport.width, viewport.height) : null;
     /** Idle-effect se nikala hua "abhi dikhao" — fullscreen change par bhi use hota hai. */
     const revealRef = useRef<(() => void) | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -285,6 +314,25 @@ export function MovieboxPagePlayer({
         };
     }, [rootSize, isSearchFrame]);
 
+    /**
+     * Phone: player khulte hi (Play dabate hi) fullscreen + landscape — Android
+     * Chrome par asli fullscreen + orientation lock; wahan window khud landscape
+     * ho jati hai. Fail ho to neeche ka CSS rotation sambhaal leta hai.
+     */
+    useEffect(() => {
+        if (!isPhone || !frameSrc) return;
+        /**
+         * `document.documentElement` par fullscreen — poore page par, taaki
+         * hamara fixed (ghuma hua) player hi poora screen le. Sirf player ke
+         * dabbe par fullscreen karne se browser us dabbe ko portrait screen me
+         * akela dikhata hai (chhota band) — wahi purani dikkat laut aati.
+         */
+        void enterPlayerFullscreen();
+        return () => {
+            void exitPlayerFullscreen();
+        };
+    }, [isPhone, frameSrc]);
+
     /* --------------------------- Frame ---------------------------- */
 
     /**
@@ -379,6 +427,17 @@ export function MovieboxPagePlayer({
             setChromeVisible(true);
             return;
         }
+        /**
+         * Phone: koi hover nahi hota, aur touch par chrome chhupana site ke
+         * apne controls ko bhi chhupa deta hai (tap pehle hum tak aata hai).
+         * Isliye phone par chrome **hamesha** dikhta hai — Next Episode + patti
+         * bhi, aur site ke controls (play/pause, seek, volume, fullscreen)
+         * tap par turant jawab dete hain.
+         */
+        if (isPhone) {
+            setChromeVisible(true);
+            return;
+        }
         if (Platform.OS !== 'web' || typeof window === 'undefined') return;
 
         const doc = window.document;
@@ -429,7 +488,7 @@ export function MovieboxPagePlayer({
             doc.removeEventListener('mouseout', onOut);
             doc.removeEventListener('focusin', onFrameFocus);
         };
-    }, [frameSrc, isSearchFrame]);
+    }, [frameSrc, isSearchFrame, isPhone]);
 
     /* ---------------------------- Keys ---------------------------- */
 
@@ -481,7 +540,8 @@ export function MovieboxPagePlayer({
 
     /* --------------------------- Render --------------------------- */
 
-    return (
+    /** Phone (portrait) par ghuma hua khol — `position: fixed` se poora viewport. */
+    const player = (
         <View
             ref={rootRef}
             style={[styles.root, ownFullscreen && styles.rootFullscreen]}
@@ -502,7 +562,7 @@ export function MovieboxPagePlayer({
                     title={title}
                     allowScroll={isSearchFrame}
                     mode={isSearchFrame ? 'page' : 'player'}
-                    interactive={chromeVisible}
+                    interactive={isPhone || chromeVisible}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);
@@ -555,7 +615,7 @@ export function MovieboxPagePlayer({
                                       overlayBox.top +
                                       Math.round(overlayBox.height * EPISODE_STRIP_BOTTOM),
                                   width: overlayBox.width,
-                                  paddingHorizontal: overlayBox.padRight + 150,
+                                  paddingHorizontal: overlayBox.padRight + (isPhone ? 64 : 150),
                               }
                             : styles.stripFallback,
                         { opacity: chromeVisible ? 1 : 0 },
@@ -563,13 +623,13 @@ export function MovieboxPagePlayer({
                     pointerEvents="none"
                     testID="moviebox-episode-strip"
                 >
-                    <View style={styles.epBadge}>
-                        <Text style={styles.epBadgeText}>
+                    <View style={[styles.epBadge, isPhone && styles.epBadgePhone]}>
+                        <Text style={[styles.epBadgeText, isPhone && styles.epBadgeTextPhone]}>
                             {`S${typeof season === 'number' ? season : 1} • E${activeEpisode}`}
                         </Text>
                     </View>
                     {title ? (
-                        <Text style={styles.stripTitle} numberOfLines={1}>
+                        <Text style={[styles.stripTitle, isPhone && styles.stripTitlePhone]} numberOfLines={1}>
                             {title}
                             {episodeTitle ? (
                                 <>
@@ -588,7 +648,7 @@ export function MovieboxPagePlayer({
                 dhak leta hai; koi plate/background nahi (warna video ke
                 neeche kaala dabba dikhta hai). (overlayBox milne se pehle
                 fallback: root ke corner par.) */}
-            {frameSrc && !isSearchFrame ? (
+            {frameSrc && !isSearchFrame && !isPhone ? (
                 <Pressable
                     style={[
                         styles.fsButton,
@@ -656,14 +716,16 @@ export function MovieboxPagePlayer({
                     pointerEvents={chromeVisible ? 'box-none' : 'none'}
                 >
                     <Pressable
-                        style={styles.nextButton}
+                        style={[styles.nextButton, isPhone && styles.nextButtonPhone]}
                         onPress={goNextEpisode}
                         accessibilityRole="button"
                         accessibilityLabel={`Next episode ${nextEpisode.episode}`}
                         testID="moviebox-next-episode"
                     >
-                        <Ionicons name="play" size={15} color="#000" />
-                        <Text style={styles.nextButtonText}>Next Episode</Text>
+                        <Ionicons name="play" size={isPhone ? 17 : 15} color="#000" />
+                        <Text style={[styles.nextButtonText, isPhone && styles.nextButtonTextPhone]}>
+                            Next Episode
+                        </Text>
                     </Pressable>
                 </View>
             ) : null}
@@ -756,6 +818,34 @@ export function MovieboxPagePlayer({
 
         </View>
     );
+
+    /**
+     * Phone: play dabate hi landscape. Android par asli fullscreen + orientation
+     * lock chalta hai (tab window khud landscape ho jati hai); baaki jagah
+     * (iOS) player ko CSS se 90° ghuma dete hain — user ko wahi poora-screen
+     * landscape player dikhta hai. Desktop par ye wrapper lagta hi nahi.
+     */
+    if (!phoneBox) return player;
+
+    return (
+        <View
+            style={[
+                styles.phoneStage,
+                {
+                    width: phoneBox.width,
+                    height: phoneBox.height,
+                    transform: [
+                        { translateX: phoneBox.translateX },
+                        { translateY: phoneBox.translateY },
+                        { rotate: phoneBox.rotate },
+                    ],
+                },
+            ]}
+            testID="moviebox-phone-stage"
+        >
+            {player}
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -816,6 +906,9 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
     },
     epBadgeText: { color: '#000', fontSize: 13, fontWeight: '700' },
+    /** Phone (ghuma hua landscape) — thoda bada, taaki door se padha ja sake. */
+    epBadgePhone: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 5 },
+    epBadgeTextPhone: { fontSize: 15 },
     stripTitle: {
         color: '#fff',
         fontSize: 15,
@@ -825,6 +918,7 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: 3,
     },
+    stripTitlePhone: { fontSize: 17 },
     stripDash: { color: '#cfcfcf', fontWeight: '600' },
     stripEpName: { color: '#7CD44A', fontWeight: '600' },
     nextButton: {
@@ -837,6 +931,8 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     nextButtonText: { color: '#000', fontSize: 14, fontWeight: '700' },
+    nextButtonPhone: { paddingHorizontal: 20, paddingVertical: 12, gap: 10 },
+    nextButtonTextPhone: { fontSize: 16 },
     resolving: {
         flex: 1,
         alignItems: 'center',
@@ -846,6 +942,18 @@ const styles = StyleSheet.create({
     },
     resolvingTitle: { color: '#fff', fontSize: 17, fontWeight: '700' },
     resolvingText: { color: '#9a9a9a', fontSize: 13, textAlign: 'center', maxWidth: 420, lineHeight: 20 },
+    /**
+     * Phone: ghuma hua player viewport par fix — modal ke andar se nikal kar
+     * poora screen le leta hai.
+     */
+    phoneStage: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 40,
+        backgroundColor: '#000',
+        overflow: 'hidden',
+    } as any,
     /** Pura kaala — site ka shell iske peeche chalta rehta hai, dikhta nahi. */
     frameCover: {
         ...StyleSheet.absoluteFillObject,

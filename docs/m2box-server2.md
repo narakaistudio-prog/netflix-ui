@@ -408,3 +408,32 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
 
 - **Fullscreen me koi top bar nahi** — X ka nishan bhi nahi (owner). Bahar
   aane ke liye corner ka fullscreen-exit button ya Esc.
+
+## Phone (mobile browser)
+
+Owner: "phone me play dabate hi landscape ho jaye, apna fullscreen hata do, Next
+Episode aur title uske andar sahi size me."
+
+- **Play dabate hi poora-screen landscape** (`lib/phonePlayer.ts`):
+  - Android Chrome: `enterPlayerFullscreen()` — `document.documentElement` par
+    fullscreen + `screen.orientation.lock('landscape')` (poore page par isliye
+    ki hamara fixed player hi screen le; sirf player ke dabbe par karne se
+    browser use portrait me akela chhota band dikhata hai).
+  - iOS Safari / jahan Fullscreen API nahi: player ko CSS se **90° ghuma**
+    dete hain — layout dabba `(viewportHeight × viewportWidth)`, centre ke
+    around rotation + `(W−H)/2` shift, `position: fixed` (modal ke 92% panel se
+    bahar). Portrait hone par hi ghummta hai; phone landscape kar de to
+    (`width > height`) rotation apne aap band.
+  - Portrait phone 390×844 → stage 844×390 → crop 693×390 (video poora, dono taraf ~75px pillarbox) — pehle 390×219 ka chhota band aata tha.
+- **Phone par hamara fullscreen button nahi** — site ka apna icon waisa hi
+  dikhta hai (uske upar koi kaala plate nahi).
+- Phone par **chrome hamesha dikhta hai** (Next Episode + patti) aur iframe
+  hamesha interactive rehta hai — warna touch par pehla tap hum tak aata tha aur
+  **site ke apne controls** (play/pause, seek, volume, fullscreen) khulte hi
+  nahi the. Desktop par wahi purana idle-hide (3.2s) chalta hai.
+- Phone par **Next Episode + S1•E2 patti** thodi badi (`epBadgePhone`,
+  `stripTitlePhone`, `nextButtonPhone`); strip ka side padding 64px.
+- Crop naap ab `offsetWidth/offsetHeight` se — transformed (ghume hue) dabbe
+  par `getBoundingClientRect` ulta naap deta tha.
+- Phone + player khula: modal ka panel poora viewport (`panelPhonePlayer`,
+  `overflow: visible`) — wrapper clip na kare.

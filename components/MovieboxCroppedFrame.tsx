@@ -150,11 +150,20 @@ export function MovieboxCroppedFrame({
 
         const apply = () => {
             const rect = host.getBoundingClientRect();
+            /**
+             * Phone par ye dabba CSS se 90° ghuma hota hai (landscape player).
+             * `getBoundingClientRect` tab **ghuma hua** naap deta hai (chaudai
+             * aur unchai ulte), isliye layout ka asli naap `offsetWidth/height`
+             * se lete hain — transform ka koi asar nahi hota. Rotation na ho
+             * to dono ek hi cheez hain.
+             */
+            const measureWidth = host.offsetWidth || rect.width;
+            const measureHeight = host.offsetHeight || rect.height;
             // Crop HAR haalat me — chhoti window, bada fullscreen, sab me.
             // Host (hamara player dabba) fullscreen hone par uski rect hi
             // screen ka naap hoti hai, isliye crop apne aap naye size par
             // lag jata hai aur screen par sirf player dikhta hai.
-            const crop = getMovieboxCrop(rect.width, rect.height, { resources: mode === 'page' });
+            const crop = getMovieboxCrop(measureWidth, measureHeight, { resources: mode === 'page' });
             box.style.width = `${crop.frameWidth}px`;
             box.style.height = `${crop.height}px`;
             stage.style.width = `${crop.stageVisibleWidth}px`;
