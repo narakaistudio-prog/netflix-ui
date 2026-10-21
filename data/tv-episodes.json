@@ -62165,71 +62165,91 @@
      {
       "season": 2,
       "episode": 1,
-      "name": "Episode 1",
-      "overview": "",
+      "name": "Last Chance for a Slow Dance",
+      "overview": "A former edgerunner slipping into cyberpsychosis and a lonely survivor with a fractured past start their stories at opposite ends of Night City.",
+      "runtime": 29,
+      "still": "https://image.tmdb.org/t/p/w500/eo8TuyXW3dQnxSY8tTMKBLeATjm.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 2,
-      "name": "Episode 2",
-      "overview": "",
+      "name": "Give Me Another Day",
+      "overview": "A desperate call drags Weak back into danger to save a rebellious teen. As D bonds with a young cinephile, painful flashbacks fuel his thirst for revenge.",
+      "runtime": 27,
+      "still": "https://image.tmdb.org/t/p/w500/cQYGjBr6mtVh2XglfXa8gVvMjDH.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 3,
-      "name": "Episode 3",
-      "overview": "",
+      "name": "0+2=1",
+      "overview": "Weak tries to rescue Talia from a dangerous surgery, but the confrontation ends in disaster. D and Roman discover a chaotic chip that sparks mayhem.",
+      "runtime": 28,
+      "still": "https://image.tmdb.org/t/p/w500/u8vsox0soaP2HXWUVSKLxiTMgMR.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 4,
-      "name": "Episode 4",
-      "overview": "",
+      "name": "Someone That I Used to Know",
+      "overview": "Armed with abilities he doesn't fully understand, D uses Capri's power to infiltrate an Arasaka research facility. Talia and Weak find common ground.",
+      "runtime": 28,
+      "still": "https://image.tmdb.org/t/p/w500/fBLNQdQjOaBlrbK3c1lM80c05Mj.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 5,
-      "name": "Episode 5",
-      "overview": "",
+      "name": "Fades (Pass the Distance)",
+      "overview": "An impulsive act sends Talia into a terrifying spiral. D's obsession with revenge reaches an unsettling new level of violence.",
+      "runtime": 26,
+      "still": "https://image.tmdb.org/t/p/w500/6U7XgNsbua4HQOigZysIO4gOmmA.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 6,
-      "name": "Episode 6",
-      "overview": "",
+      "name": "Everything Hate",
+      "overview": "D becomes an anti-corporate vigilante and asks Roman to film his every move. Weak looks into rumors of tech that can transfer digitized consciousness.",
+      "runtime": 28,
+      "still": "https://image.tmdb.org/t/p/w500/oRaMBmRQDYEGJEEC1wseNLMaiX2.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 7,
-      "name": "Episode 7",
-      "overview": "",
+      "name": "To the Depths with You",
+      "overview": "Talia's condition takes a startling turn under Capri's watch. D reconnects with an old friend. Weak and Avida chase a miracle cure.",
+      "runtime": 28,
+      "still": "https://image.tmdb.org/t/p/w500/l2ewtDsHimpBxKmHBETgDC9CpBy.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 8,
-      "name": "Episode 8",
-      "overview": "",
+      "name": "Serce",
+      "overview": "A riot ignites on the streets as D digs deeper into Project Capricorn's dark past. With time running out, Avida and Weak fight for Talia's future.",
+      "runtime": 28,
+      "still": "https://image.tmdb.org/t/p/w500/znrUJWLn0OW76DxZvpglp73fFaq.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 9,
-      "name": "Episode 9",
-      "overview": "",
+      "name": "Strictly Reserved for You",
+      "overview": "Omi and D go off the grid, and Kiril takes Talia into custody. Kyoko pushes Project Capricorn forward with frightening results.",
+      "runtime": 29,
+      "still": "https://image.tmdb.org/t/p/w500/i7Th9qKryIvTkJEBNoCfeXKzgmM.jpg",
       "air_date": "2026-10-20"
      },
      {
       "season": 2,
       "episode": 10,
-      "name": "Episode 10",
-      "overview": "",
+      "name": "Then Everyone Went Home",
+      "overview": "A chilling transformation turns the city into a war zone, erupting in an explosive confrontation.",
+      "runtime": 30,
+      "still": "https://image.tmdb.org/t/p/w500/lMYYI8BzJk90iKfem7MGvkXEO9T.jpg",
       "air_date": "2026-10-20"
      }
     ]
