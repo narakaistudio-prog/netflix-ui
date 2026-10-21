@@ -437,9 +437,10 @@ Episode aur title uske andar sahi size me."
   - Hamare overlays phone par **render hi nahi hote**: episode strip (title +
     S1•E2), Next Episode, PROXY badge. Sirf close X (band karne ke liye) aur
     "Loading…" parda.
-  - Site ka apna fullscreen button chalu (`allow="…; fullscreen"`); dabane par
-    guard turant iframe ka fullscreen band karke poore player (documentElement)
-    ko fullscreen karta hai — crop salamat rehta hai.
+  - **Site ka fullscreen button → site ka APNA fullscreen** (owner: "jab main
+    moviebox ka fullscreen button daboon to uska fullscreen hona chahiye").
+    `allow="…; fullscreen"` se site ka button chalta hai aur hamari koi
+    interference/guard nahi — jo site fullscreen karta hai, wahi dikhta hai.
   - Tap hamesha seedha player par (koi pointer gate nahi).
   - Desktop par sab purana: crop, strip/Next, idle-hide, hamara fullscreen
     (kaala plate), site fullscreen band.
