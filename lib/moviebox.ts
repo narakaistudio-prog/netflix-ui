@@ -155,6 +155,15 @@ export interface MovieboxCrop {
     stageVisibleWidth: number;
     /** Stage ke hisaab me dikhne wala hissa (iframe ki height = ye + cropTop). */
     stageVisibleHeight: number;
+    /**
+     * iframe ka andar wala viewport (px) — sirf jab dikhne wala hissa page ke
+     * upar wale tukde se chhota ho. Phone mobile layout me site ki **fixed
+     * bottom nav** iframe ke viewport ke sabse neeche chipki hoti hai; viewport
+     * chhota rakhne par wo patti player ke upar aa jati thi (owner ki
+     * screenshot me Home / Movie / TV Show / Games / Novel). Isliye viewport
+     * lamba rakhte hain aur sirf player wala hissa dikhate hain.
+     */
+    viewportHeight?: number;
 }
 
 const SUBJECT_ID_RE = /^\d{5,25}$/;
@@ -382,9 +391,9 @@ export function getMovieboxCrop(
      * ke mobile branch me header ke liye liye gaye the (104/108/112) — player
      * uska turant neeche full-width 16:9 hai.
      */
-    if (options.phone === true) {
+    if (options.phone === true && (outerWidth <= 0 || outerWidth < 480)) {
         const pw = outerWidth > 0 ? outerWidth : 390;
-        const cropTop = pw >= 768 ? 112 : pw >= 480 ? 108 : 104;
+        const cropTop = pw >= 480 ? 108 : 104;
         const playerW = Math.max(0, pw - 24);
         const playerH = (playerW * 9) / 16;
         // 4px andar se shuru — site ka header kabhi na jhaanke (video ka 4px
@@ -403,6 +412,8 @@ export function getMovieboxCrop(
             scale: 1,
             stageVisibleWidth: Math.round(pw),
             stageVisibleHeight: height,
+            // Site ki fixed bottom nav player ke neeche chali jaye.
+            viewportHeight: Math.max(760, Math.round(height + cropTop + 320)),
         };
     }
 

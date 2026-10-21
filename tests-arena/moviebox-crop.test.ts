@@ -208,6 +208,16 @@ describe('getMovieboxCrop', () => {
         const playerW = 390 - 24;
         expect(crop.height).toBe(Math.round((playerW * 9) / 16 - 4));
         expect(crop.stacked).toBe(false);
+        // Site ki fixed bottom nav viewport ke neeche — player ke upar nahi.
+        expect(crop.viewportHeight).toBeGreaterThan(crop.height + crop.cropTop + 200);
+    });
+
+    it('landscape fullscreen par wahi desktop stage crop (mobile nav nahi)', () => {
+        // Fullscreen me phone ka dabba ghuma hua hota hai (chaudai ~844) —
+        // wahan stage scale hi bade controls deta hai, mobile layout nahi.
+        const crop = getMovieboxCrop(844, 390, { phone: true });
+        expect(crop.stageWidth).toBe(1536);
+        expect(crop.viewportHeight).toBeUndefined();
     });
 
     it('keeps the site mobile layout only for the search page', () => {

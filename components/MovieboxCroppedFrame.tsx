@@ -193,7 +193,7 @@ export function MovieboxCroppedFrame({
             frame.style.top = `${-crop.cropTop}px`;
             frame.style.left = `${-crop.cropLeft}px`;
             frame.style.width = `${crop.stageWidth}px`;
-            frame.style.height = `${crop.stageVisibleHeight + crop.cropTop}px`;
+            frame.style.height = `${crop.viewportHeight ?? crop.stageVisibleHeight + crop.cropTop}px`;
             // Scroll sirf desktop player crop par band — warna user crop ke
             // bahar wala header/grid wapas la sakta hai. Mobile par grid
             // neeche hoti hai, isliye wahan scroll khula rehta hai.
