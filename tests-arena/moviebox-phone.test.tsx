@@ -90,20 +90,20 @@ test('portrait phone par player 90° ghuma kar poora screen leta hai', () => {
     expect(frame).toBeTruthy();
 });
 
-test('phone par hamara fullscreen button nahi — Next Episode aur title andar hain', () => {
+test('phone par koi overlay nahi — na hamara fullscreen, na title/Next', () => {
     setUA(IPHONE_UA);
     setViewport(390, 844);
     renderPlayer();
 
+    // owner: "jitna title aur next button hai sab hata do — phone me sirf
+    // pura moviebox ka player"
     expect(document.querySelector('[data-testid="moviebox-fullscreen"]')).toBeNull();
-    expect(document.querySelector('[data-testid="moviebox-next-episode"]')).toBeTruthy();
-    const strip = document.querySelector('[data-testid="moviebox-episode-strip"]');
-    expect(strip).toBeTruthy();
-    expect(strip!.textContent).toContain('S1 • E2');
-    expect(strip!.textContent).toContain('My Demon');
+    expect(document.querySelector('[data-testid="moviebox-next-episode"]')).toBeNull();
+    expect(document.querySelector('[data-testid="moviebox-episode-strip"]')).toBeNull();
+    expect(document.querySelector('[data-testid="moviebox-close"]')).toBeTruthy();
 });
 
-test('phone par title + Next Episode autohide hote hain, touch par wapas aate hain', () => {
+test('phone par crop pehle jaisa — sirf player, tap hamesha seedha player par', () => {
     jest.useFakeTimers();
     try {
         setUA(IPHONE_UA);
@@ -111,31 +111,52 @@ test('phone par title + Next Episode autohide hote hain, touch par wapas aate ha
         renderPlayer({ linkKey: 'controls:1' });
 
         const frame = () => document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
-        const nextWrap = () =>
-            document.querySelector('[data-testid="moviebox-next-episode"]')!.parentElement as HTMLElement;
+        // crop lagta hai (pehle jaisa) — iframe ka size px naap me, 100% nahi
+        expect(frame().style.width).not.toBe('100%');
+        expect(frame().style.width).toMatch(/px$/);
+        expect(frame().style.height).toMatch(/px$/);
 
-        // shuru me chrome dikhta hai aur tap seedha player tak jaata hai
+        // tap hamesha seedha player par — koi overlay nahi, koi pointer gate nahi
         expect(frame().style.pointerEvents).toBe('auto');
-        expect(nextWrap().style.opacity).toBe('1');
-
-        // 3.2s tak kuch na ho → overlays gayab, aur iframe pointer events na
-        // le (tab touch hum tak aata hai)
         act(() => {
             jest.advanceTimersByTime(6000);
         });
-        expect(nextWrap().style.opacity).toBe('0');
-        expect(frame().style.pointerEvents).toBe('none');
-
-        // screen par touch → chrome turant wapas
-        act(() => {
-            const root = document.querySelector('[data-tv-scope="player"]') as HTMLElement;
-            root.dispatchEvent(new Event('touchstart', { bubbles: true }));
-        });
-        expect(nextWrap().style.opacity).toBe('1');
         expect(frame().style.pointerEvents).toBe('auto');
     } finally {
         jest.useRealTimers();
     }
+});
+
+test('site ka fullscreen button → site ka APNA fullscreen (hamari koi interference nahi)', async () => {
+    setUA(IPHONE_UA);
+    setViewport(390, 844);
+    renderPlayer({ linkKey: 'guard:1' });
+
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
+    const exitSpy = jest.fn().mockResolvedValue(undefined);
+    (document as any).exitFullscreen = exitSpy;
+    Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true,
+        get: () => frame,
+    });
+
+    // site ne iframe fullscreen kiya → usme kuch nahi chhedna
+    act(() => {
+        document.dispatchEvent(new Event('fullscreenchange'));
+    });
+    await act(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+    });
+
+    // guard nahi hai: site ka fullscreen chalta rehta hai
+    expect(exitSpy).not.toHaveBeenCalled();
+
+    Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true,
+        get: () => null,
+    });
+    delete (document as any).exitFullscreen;
 });
 
 test('phone par site ka apna fullscreen button chalu hai (desktop par nahi)', () => {
@@ -148,17 +169,21 @@ test('phone par site ka apna fullscreen button chalu hai (desktop par nahi)', ()
     expect(frame.hasAttribute('allowfullscreen')).toBe(true);
 });
 
-test('desktop par kuch nahi badalta — rotation bhi nahi, apna fullscreen bhi rehta hai', () => {
+test('desktop par kuch nahi badalta — rotation nahi, apna fullscreen + title/Next rehte hain', () => {
     setUA(DESKTOP_UA);
     setViewport(1440, 900);
     renderPlayer({ linkKey: 'desktop:1' });
 
     expect(document.querySelector('[data-testid="moviebox-phone-stage"]')).toBeNull();
     expect(document.querySelector('[data-testid="moviebox-fullscreen"]')).toBeTruthy();
+    // desktop par title/Next jaisa pehle (hamara crop player)
+    expect(document.querySelector('[data-testid="moviebox-next-episode"]')).toBeTruthy();
+    expect(document.querySelector('[data-testid="moviebox-episode-strip"]')).toBeTruthy();
     // desktop par iframe ko fullscreen ki permission nahi (crop toot jata hai)
     const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
     expect(frame.getAttribute('allow')).not.toContain('fullscreen');
     expect(frame.hasAttribute('allowfullscreen')).toBe(false);
+    expect(frame.style.width).not.toBe('100%');
 });
 
 test('phone ko landscape ghuma dene par (width > height) rotation band ho jata hai', () => {
