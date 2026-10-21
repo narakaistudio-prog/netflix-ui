@@ -83,6 +83,14 @@ export const MOVIEBOX_STAGE_PAGE_WIDTH = MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_C
  * apne controls (video ke bottom par overlay) bhi poore, aur "Resources"
  * panel + neeche ki title/rating patti dono bahar.
  */
+/**
+ * Phone mobile layout me site ke player ke **neeche** uska apna control bar
+ * hota hai (pause, time, quality, CC, volume, settings, fullscreen). Utni
+ * extra jagah crop me chahiye — pehle sirf video (16:9) ka hissa dikhta tha,
+ * isliye bar aadha kata reh jata tha (owner: "control niche chala gaya hai").
+ */
+export const MOVIEBOX_PHONE_BAR_HEIGHT = 42;
+
 export const MOVIEBOX_STAGE_PLAYER_WIDTH = 968;
 export const MOVIEBOX_STAGE_PLAYER_HEIGHT = 545;
 
@@ -397,11 +405,9 @@ export function getMovieboxCrop(
         const playerW = Math.max(0, pw - 24);
         const playerH = (playerW * 9) / 16;
         // 4px andar se shuru — site ka header kabhi na jhaanke (video ka 4px
-        // upar katai dikhta bhi nahi).
-        const height =
-            outerHeight > 0
-                ? Math.min(Math.round(playerH - 4), Math.round(outerHeight))
-                : Math.round(playerH - 4);
+        // upar katai dikhta bhi nahi). Neeche control bar ki poori jagah.
+        const want = Math.round(playerH + MOVIEBOX_PHONE_BAR_HEIGHT - 4);
+        const height = outerHeight > 0 ? Math.min(want, Math.round(outerHeight)) : want;
         return {
             frameWidth: Math.round(pw),
             cropTop: cropTop + 4,

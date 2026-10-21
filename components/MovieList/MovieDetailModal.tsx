@@ -15,7 +15,7 @@ import {
 } from '@/lib/recentlyWatched';
 import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
-import { MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { MOVIEBOX_PHONE_BAR_HEIGHT, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
@@ -681,7 +681,21 @@ export function MovieDetailModal({
                                     </View>
                                 </View>
 
-                                <View style={styles.phonePlayerBox}>{playerNode}</View>
+                                <View
+                                    style={[
+                                        styles.phonePlayerBox,
+                                        // Crop ke barabar hi — video (16:9) +
+                                        // site ka control bar, dono poore.
+                                        {
+                                            height:
+                                                Math.round(((width - 24) * 9) / 16) +
+                                                MOVIEBOX_PHONE_BAR_HEIGHT -
+                                                4,
+                                        },
+                                    ]}
+                                >
+                                    {playerNode}
+                                </View>
 
                                 <ScrollView
                                     style={styles.phoneDetails}
@@ -832,7 +846,6 @@ const styles = StyleSheet.create({
      */
     phonePlayerBox: {
         width: '100%',
-        aspectRatio: 1.88,
         backgroundColor: '#000',
     },
     phoneDetails: { flex: 1 },
