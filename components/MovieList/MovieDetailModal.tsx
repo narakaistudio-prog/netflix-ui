@@ -825,10 +825,14 @@ const styles = StyleSheet.create({
     phoneTopTitles: { flex: 1 },
     phoneTopName: { color: '#fff', fontSize: 19, fontWeight: '800' },
     phoneTopEpisode: { color: '#b0b0b0', fontSize: 13, marginTop: 2 },
-    /** Player 16:9 dabba — crop (968×545) isi me baithta hai. */
+    /**
+     * Phone player dabba. Andar site ka **mobile layout** chalta hai (crop
+     * 390×~202) — ye ratio usse thoda lamba hai, taaki crop kabhi kata na
+     * jaye (bache hue kinare kaale hi dikhte hain).
+     */
     phonePlayerBox: {
         width: '100%',
-        aspectRatio: 968 / 545,
+        aspectRatio: 1.88,
         backgroundColor: '#000',
     },
     phoneDetails: { flex: 1 },

@@ -111,7 +111,7 @@ test('hideClose na ho to close X dikhta hai (route/player jahan top bar nahi)', 
     expect(document.querySelector('[data-testid="moviebox-close"]')).toBeTruthy();
 });
 
-test('phone par crop pehle jaisa — sirf player, tap hamesha seedha player par', () => {
+test('phone par site ka mobile layout — site ke apne bade controls (native scale)', () => {
     jest.useFakeTimers();
     try {
         setUA(IPHONE_UA);
@@ -119,10 +119,12 @@ test('phone par crop pehle jaisa — sirf player, tap hamesha seedha player par'
         renderPlayer({ linkKey: 'controls:1' });
 
         const frame = () => document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
-        // crop lagta hai (pehle jaisa) — iframe ka size px naap me, 100% nahi
-        expect(frame().style.width).not.toBe('100%');
-        expect(frame().style.width).toMatch(/px$/);
+        // mobile layout: iframe phone ki chaudai par (scale 1) — isliye site ke
+        // apne controls bade rehte hain (1536 stage par wo ~8px ke ho jate the)
+        expect(frame().style.width).toBe('390px');
         expect(frame().style.height).toMatch(/px$/);
+        // upar ka crop header ke neeche (~108px)
+        expect(frame().style.top).toBe('-108px');
 
         // tap hamesha seedha player par — koi overlay nahi, koi pointer gate nahi
         expect(frame().style.pointerEvents).toBe('auto');

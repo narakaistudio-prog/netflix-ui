@@ -532,6 +532,7 @@ export function MovieboxPagePlayer({
                     mode={isSearchFrame ? 'page' : 'player'}
                     interactive={isPhone || chromeVisible}
                     allowFullscreen={isPhone}
+                    phoneLayout={isPhone && !isSearchFrame}
                     onLoad={() => {
                         if (timerRef.current) clearTimeout(timerRef.current);
                         setLoading(false);

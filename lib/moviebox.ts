@@ -346,6 +346,15 @@ export interface MovieboxCropOptions {
      * ke liye, jahan episode grid ke bajaye results dekhne hote hain.
      */
     resources?: boolean;
+    /**
+     * Phone: site ka **asli mobile layout** (iframe phone ki chaudai par,
+     * scale 1) — player full-width aur uske apne **bade touch controls**.
+     *
+     * Kyun: desktop stage (1536 → player 968) ko phone par chhota karne se
+     * site ke controls ~8px ke ho jate the ("player ke andar ke control bahut
+     * chhote hai"). Mobile layout me wo native size (24-28px) ke hote hain.
+     */
+    phone?: boolean;
 }
 
 /**
@@ -368,6 +377,35 @@ export function getMovieboxCrop(
     outerHeight: number,
     options: MovieboxCropOptions = {},
 ): MovieboxCrop {
+    /**
+     * Phone player: site ka mobile layout, native scale. Naap wahi jo page mode
+     * ke mobile branch me header ke liye liye gaye the (104/108/112) — player
+     * uska turant neeche full-width 16:9 hai.
+     */
+    if (options.phone === true) {
+        const pw = outerWidth > 0 ? outerWidth : 390;
+        const cropTop = pw >= 768 ? 112 : pw >= 480 ? 108 : 104;
+        const playerW = Math.max(0, pw - 24);
+        const playerH = (playerW * 9) / 16;
+        // 4px andar se shuru — site ka header kabhi na jhaanke (video ka 4px
+        // upar katai dikhta bhi nahi).
+        const height =
+            outerHeight > 0
+                ? Math.min(Math.round(playerH - 4), Math.round(outerHeight))
+                : Math.round(playerH - 4);
+        return {
+            frameWidth: Math.round(pw),
+            cropTop: cropTop + 4,
+            cropLeft: 0,
+            height,
+            stacked: false,
+            stageWidth: Math.round(pw),
+            scale: 1,
+            stageVisibleWidth: Math.round(pw),
+            stageVisibleHeight: height,
+        };
+    }
+
     const w = outerWidth > 0 ? outerWidth : 1416;
     const resources = options.resources === true;
     /**

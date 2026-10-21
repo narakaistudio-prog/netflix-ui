@@ -418,8 +418,12 @@ nahi".)
 
 - **After-play screen (Crunchyroll jaisa)** — `MovieDetailModal` ka phone branch:
   - Top bar: back `<` + title + `S1 • E<n>`.
-  - Player upar — 16:9 dabba (`968/545` aspect), andar wahi **pehle jaisa
-    crop** (`mode="player"`).
+  - Player upar — 16:9-ish dabba, andar **site ka asli mobile layout**
+    (`getMovieboxCrop(..., { phone: true })`): iframe phone ki chaudai par
+    (scale 1), crop top ~108px (mobile header ke neeche). Isse site ke apne
+    controls (play/seek/quality/fullscreen) **native size** ke hote hain —
+    pehle 1536 stage chhota hone se wo ~8px ke reh jate the ("player ke andar
+    ke control bahut chhote hai"). Desktop par wahi 1536-stage crop.
   - Neeche (scroll): series naam (red), `E<n> – <episode name>`, meta
     (`★ rating • runtime`), `Released on <date>`, description + **SHOW MORE**,
     **NEXT EPISODE** card (thumb + naam + runtime; tap par wahi episode chalu),
