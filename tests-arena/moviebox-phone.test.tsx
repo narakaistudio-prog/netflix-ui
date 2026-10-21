@@ -76,30 +76,38 @@ function renderPlayer(props: any = {}) {
     });
 }
 
-test('portrait phone par player 90° ghuma kar poora screen leta hai', () => {
+test('portrait phone par koi rotation nahi — player seedha portrait box me (crop ke saath)', () => {
     setUA(IPHONE_UA);
     setViewport(390, 844);
     renderPlayer();
 
-    const stage = document.querySelector('[data-testid="moviebox-phone-stage"]') as HTMLElement;
-    expect(stage).toBeTruthy();
-    // layout dabba ulta (chaudai = screen ki unchai) taaki rotate ke baad
-    // poora viewport bhare
-    expect(stage.className).toContain('r-position');
-    const frame = document.querySelector('[data-m2box="frame"]') as HTMLIFrameElement;
+    // owner: "humara landscape nahi… jab user full screen karega tab hi
+    // landscape hoga" — play dabate hi koi ghuma hua stage nahi
+    expect(document.querySelector('[data-testid="moviebox-phone-stage"]')).toBeNull();
+    const frame = document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement;
     expect(frame).toBeTruthy();
+    expect(frame.style.width).toMatch(/px$/);
 });
 
 test('phone par koi overlay nahi — na hamara fullscreen, na title/Next', () => {
     setUA(IPHONE_UA);
     setViewport(390, 844);
-    renderPlayer();
+    renderPlayer({ hideClose: true });
 
     // owner: "jitna title aur next button hai sab hata do — phone me sirf
     // pura moviebox ka player"
     expect(document.querySelector('[data-testid="moviebox-fullscreen"]')).toBeNull();
     expect(document.querySelector('[data-testid="moviebox-next-episode"]')).toBeNull();
     expect(document.querySelector('[data-testid="moviebox-episode-strip"]')).toBeNull();
+    // hideClose (modal ka top bar back hota hai) — X bhi nahi
+    expect(document.querySelector('[data-testid="moviebox-close"]')).toBeNull();
+});
+
+test('hideClose na ho to close X dikhta hai (route/player jahan top bar nahi)', () => {
+    setUA(IPHONE_UA);
+    setViewport(390, 844);
+    renderPlayer({ linkKey: 'withx:1' });
+
     expect(document.querySelector('[data-testid="moviebox-close"]')).toBeTruthy();
 });
 
@@ -186,7 +194,7 @@ test('desktop par kuch nahi badalta — rotation nahi, apna fullscreen + title/N
     expect(frame.style.width).not.toBe('100%');
 });
 
-test('phone ko landscape ghuma dene par (width > height) rotation band ho jata hai', () => {
+test('phone landscape par bhi koi rotation/stage nahi', () => {
     setUA(IPHONE_UA);
     setViewport(844, 390);
     renderPlayer({ linkKey: 'land:1' });

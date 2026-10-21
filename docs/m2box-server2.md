@@ -411,43 +411,39 @@ npx jest --config jest.arena.config.js tests-arena/api-moviebox-frame.test.ts
 
 ## Phone (mobile browser)
 
-Owner: "phone me play dabate hi landscape ho jaye, apna fullscreen hata do, Next
-Episode aur title uske andar sahi size me."
+Owner: "crunchyroll me jaise play karne ke baad aisa aata hai waisa hi netflix
+par kar do phone ke liye sirf… jab user full screen karega tab hi landscape
+hoga." (Purana play-par-landscape/rotation rasta hata diya — "humara landscape
+nahi".)
 
-- **Play dabate hi poora-screen landscape** (`lib/phonePlayer.ts`):
-  - Android Chrome: `enterPlayerFullscreen()` — `document.documentElement` par
-    fullscreen + `screen.orientation.lock('landscape')` (poore page par isliye
-    ki hamara fixed player hi screen le; sirf player ke dabbe par karne se
-    browser use portrait me akela chhota band dikhata hai).
-  - iOS Safari / jahan Fullscreen API nahi: player ko CSS se **90° ghuma**
-    dete hain — layout dabba `(viewportHeight × viewportWidth)`, centre ke
-    around rotation + `(W−H)/2` shift, `position: fixed` (modal ke 92% panel se
-    bahar). Portrait hone par hi ghummta hai; phone landscape kar de to
-    (`width > height`) rotation apne aap band.
-  - Portrait phone 390×844 → stage 844×390 → crop 693×390 (video poora, dono taraf ~75px pillarbox) — pehle 390×219 ka chhota band aata tha.
-- **Phone par hamara fullscreen button nahi** — site ka apna icon hi chalta
-  hai. Uske liye iframe ki `allow` me `fullscreen` jod diya jata hai
-  (`MOVIEBOX_FRAME_ALLOW_PHONE`, sirf phone par). Wo button dabane par browser
-  iframe ko fullscreen karta hai — tab `fullscreenchange` guard turant usse
-  band karke poore player ko fullscreen kar deta hai, isliye crop nahi tootta
-  aur MovieBox ka apna page kabhi nahi dikhta. Desktop par permission abhi bhi
-  nahi (wahan site ka fullscreen crop tod deta hai).
-- **Phone: crop bilkul pehle jaisa** (owner: "pehle jaisa jo crop tha usse
-  rakhna tha yaar crop rakhna hai") — `mode="player"` hi, sirf player dikhta hai:
-  - Hamare overlays phone par **render hi nahi hote**: episode strip (title +
-    S1•E2), Next Episode, PROXY badge. Sirf close X (band karne ke liye) aur
-    "Loading…" parda.
-  - **Site ka fullscreen button → site ka APNA fullscreen** (owner: "jab main
-    moviebox ka fullscreen button daboon to uska fullscreen hona chahiye").
-    `allow="…; fullscreen"` se site ka button chalta hai aur hamari koi
-    interference/guard nahi — jo site fullscreen karta hai, wahi dikhta hai.
-  - Tap hamesha seedha player par (koi pointer gate nahi).
-  - Desktop par sab purana: crop, strip/Next, idle-hide, hamara fullscreen
-    (kaala plate), site fullscreen band.
-- Phone par **Next Episode + S1•E2 patti** badi (`epBadgePhone` 18px,
-  `stripTitlePhone` 20px, `nextButtonPhone` 19px); strip ka side padding 64px
-  aur wo site ke control bar se thoda upar (`EPISODE_STRIP_BOTTOM_PHONE` 0.83).
-- Crop naap ab `offsetWidth/offsetHeight` se — transformed (ghume hue) dabbe
-  par `getBoundingClientRect` ulta naap deta tha.
+- **After-play screen (Crunchyroll jaisa)** — `MovieDetailModal` ka phone branch:
+  - Top bar: back `<` + title + `S1 • E<n>`.
+  - Player upar — 16:9 dabba (`968/545` aspect), andar wahi **pehle jaisa
+    crop** (`mode="player"`).
+  - Neeche (scroll): series naam (red), `E<n> – <episode name>`, meta
+    (`★ rating • runtime`), `Released on <date>`, description + **SHOW MORE**,
+    **NEXT EPISODE** card (thumb + naam + runtime; tap par wahi episode chalu),
+    **SEE MORE EPISODES** (player band → detail modal ka episode list).
+  - `MovieboxPagePlayer` ko `hideClose` — video par X nahi (top bar ka back hi
+    bahar ka rasta).
+- **Landscape SIRF fullscreen par** — play dabate hi koi auto-fullscreen/rotation
+  nahi (MovieboxPagePlayer ka auto effect aur EmbedPlayer ka auto effect dono
+  hataye). `fullscreenchange` par orientation lock `landscape` (Android Chrome;
+  iOS par user khud ghoomata hai); fullscreen se bahar → unlock. EmbedPlayer ka
+  manual fullscreen button ab har phone par (sirf Android nahi).
+- **Phone par hamara fullscreen button nahi** (MovieBox player me) — site ka
+  apna icon chalta hai. `MOVIEBOX_FRAME_ALLOW_PHONE` (`allow="…; fullscreen"` +
+  `allowfullscreen`) se site ka button seedha chalta hai — koi guard/interference
+  nahi, site ka APNA fullscreen hota hai (owner: "jab main moviebox ka
+  fullscreen button daboon to uska fullscreen hona chahiye"). Desktop par
+  permission nahi (wahan site ka fullscreen crop todta hai).
+- **Crop bilkul pehle jaisa** (owner: "pehle jaisa jo crop tha usse rakhna tha").
+  Hamare overlays phone par render hi nahi hote: episode strip (title + S1•E2),
+  Next Episode, PROXY badge. "Loading…" parda rehta hai.
+- Tap hamesha seedha player par (koi pointer gate nahi).
+- Crop naap `offsetWidth/offsetHeight` se — transformed dabbe par
+  `getBoundingClientRect` ulta naap deta tha.
 - Phone + player khula: modal ka panel poora viewport (`panelPhonePlayer`,
   `overflow: visible`) — wrapper clip na kare.
+- Desktop par sab purana: crop, strip/Next, idle-hide, hamara fullscreen
+  (kaala plate), site fullscreen band.

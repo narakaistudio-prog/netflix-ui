@@ -11,8 +11,7 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
-import { isPhoneUserAgent, landscapeBox, readViewport } from '@/lib/phonePlayer';
-import { enterPlayerFullscreen, exitPlayerFullscreen } from '@/lib/playerFullscreen';
+import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import { resolveMovieboxLive } from '@/lib/movieboxResolve';
 
 /**
@@ -68,6 +67,11 @@ interface MovieboxPagePlayerProps {
     switchLabel?: string;
     /** Naya link save hone par (parent ko batane ke liye). */
     onLinkSaved?: (link: string) => void;
+    /**
+     * Close X mat dikhao — jab upar hi back wala top bar ho (phone ka
+     * Crunchyroll-style player screen).
+     */
+    hideClose?: boolean;
 }
 
 const FRAME_TIMEOUT_MS = 15000;
@@ -111,6 +115,7 @@ export function MovieboxPagePlayer({
     onSwitchServer,
     switchLabel,
     onLinkSaved,
+    hideClose = false,
 }: MovieboxPagePlayerProps) {
     const [link, setLink] = useState<string | null>(null);
     const [proxy, setProxy] = useState(false);
@@ -141,19 +146,6 @@ export function MovieboxPagePlayer({
     /** Poora player dabba (overlays ke saath) fullscreen hai. */
     const [ownFullscreen, setOwnFullscreen] = useState(false);
     const rootRef = useRef<View | null>(null);
-    /** Viewport (CSS px) — phone par ghuma hua player isi par baithta hai. */
-    const [viewport, setViewport] = useState(readViewport);
-    useEffect(() => {
-        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
-        const sync = () => setViewport(readViewport());
-        sync();
-        window.addEventListener('resize', sync);
-        window.addEventListener('orientationchange', sync);
-        return () => {
-            window.removeEventListener('resize', sync);
-            window.removeEventListener('orientationchange', sync);
-        };
-    }, []);
     /**
      * Phone? (owner: "ye sare changes phone ke liye hain"). Mobile browser ka
      * user agent — desktop par player bilkul purana hi rehta hai.
@@ -162,12 +154,7 @@ export function MovieboxPagePlayer({
         Platform.OS === 'web' &&
         typeof navigator !== 'undefined' &&
         isPhoneUserAgent(navigator.userAgent);
-    /**
-     * Portrait phone par player 90° ghuma kar landscape dikhta hai (iOS par
-     * Fullscreen API hi nahi hoti). Landscape hone par `null` — tab player
-     * seedha waisa hi rehta hai.
-     */
-    const phoneBox = isPhone ? landscapeBox(viewport.width, viewport.height) : null;
+
     /** Idle-effect se nikala hua "abhi dikhao" — fullscreen change par bhi use hota hai. */
     const revealRef = useRef<(() => void) | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -315,25 +302,6 @@ export function MovieboxPagePlayer({
             padBottom: Math.max(20, Math.round(crop.height * 0.13)),
         };
     }, [rootSize, isSearchFrame]);
-
-    /**
-     * Phone: player khulte hi (Play dabate hi) fullscreen + landscape — Android
-     * Chrome par asli fullscreen + orientation lock; wahan window khud landscape
-     * ho jati hai. Fail ho to neeche ka CSS rotation sambhaal leta hai.
-     */
-    useEffect(() => {
-        if (!isPhone || !frameSrc) return;
-        /**
-         * `document.documentElement` par fullscreen — poore page par, taaki
-         * hamara fixed (ghuma hua) player hi poora screen le. Sirf player ke
-         * dabbe par fullscreen karne se browser us dabbe ko portrait screen me
-         * akela dikhata hai (chhota band) — wahi purani dikkat laut aati.
-         */
-        void enterPlayerFullscreen();
-        return () => {
-            void exitPlayerFullscreen();
-        };
-    }, [isPhone, frameSrc]);
 
     /* --------------------------- Frame ---------------------------- */
 
@@ -541,8 +509,7 @@ export function MovieboxPagePlayer({
 
     /* --------------------------- Render --------------------------- */
 
-    /** Phone (portrait) par ghuma hua khol — `position: fixed` se poora viewport. */
-    const player = (
+    return (
         <View
             ref={rootRef}
             style={[styles.root, ownFullscreen && styles.rootFullscreen]}
@@ -739,7 +706,7 @@ export function MovieboxPagePlayer({
                 ke baad upar X ka nishan nahi aana chahiye". Fullscreen se
                 nikalne ke liye corner ka fullscreen-exit button ya Esc. */}
             <View style={styles.topBar} pointerEvents="box-none">
-                {ownFullscreen ? null : (
+                {ownFullscreen || hideClose ? null : (
                     <Pressable
                         style={styles.iconButton}
                         onPress={onClose}
@@ -821,34 +788,6 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
-        </View>
-    );
-
-    /**
-     * Phone: play dabate hi landscape. Android par asli fullscreen + orientation
-     * lock chalta hai (tab window khud landscape ho jati hai); baaki jagah
-     * (iOS) player ko CSS se 90° ghuma dete hain — user ko wahi poora-screen
-     * landscape player dikhta hai. Desktop par ye wrapper lagta hi nahi.
-     */
-    if (!phoneBox) return player;
-
-    return (
-        <View
-            style={[
-                styles.phoneStage,
-                {
-                    width: phoneBox.width,
-                    height: phoneBox.height,
-                    transform: [
-                        { translateX: phoneBox.translateX },
-                        { translateY: phoneBox.translateY },
-                        { rotate: phoneBox.rotate },
-                    ],
-                },
-            ]}
-            testID="moviebox-phone-stage"
-        >
-            {player}
         </View>
     );
 }
@@ -947,18 +886,6 @@ const styles = StyleSheet.create({
     },
     resolvingTitle: { color: '#fff', fontSize: 17, fontWeight: '700' },
     resolvingText: { color: '#9a9a9a', fontSize: 13, textAlign: 'center', maxWidth: 420, lineHeight: 20 },
-    /**
-     * Phone: ghuma hua player viewport par fix — modal ke andar se nikal kar
-     * poora screen le leta hai.
-     */
-    phoneStage: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: 40,
-        backgroundColor: '#000',
-        overflow: 'hidden',
-    } as any,
     /** Pura kaala — site ka shell iske peeche chalta rehta hai, dikhta nahi. */
     frameCover: {
         ...StyleSheet.absoluteFillObject,

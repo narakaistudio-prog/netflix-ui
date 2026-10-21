@@ -41,6 +41,15 @@ type Props = {
 };
 
 /** Official Netflix title page, used when no player source can be built. */
+/** "2024-01-07" → "Jan 7, 2024" (Crunchyroll-style released line). */
+const AIR_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function formatAirDate(iso?: string): string {
+    if (!iso) return '';
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+    if (!m) return iso;
+    return `${AIR_MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`;
+}
+
 function officialUrlFor(movie: Movie): string {
     return movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : '')
@@ -84,6 +93,8 @@ export function MovieDetailModal({
     } | null>(null);
     /** Short message shown over the player ("Resuming S1 EP3 at 6:12"). */
     const [playerNotice, setPlayerNotice] = useState<string | null>(null);
+    /** Phone player screen: description "SHOW MORE" khula hai ya nahi. */
+    const [phoneExpanded, setPhoneExpanded] = useState(false);
     const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     /** Position the media continues from — 0 means "from the beginning". */
     const [resumeSec, setResumeSec] = useState(resumeAt);
@@ -156,6 +167,34 @@ export function MovieDetailModal({
         noticeTimer.current = setTimeout(() => setPlayerNotice(null), 4000);
     }, []);
 
+    /**
+     * Phone: landscape SIRF fullscreen par (owner: "jab user full screen karega
+     * tab hi landscape hoga"). Play dabate hi koi rotation nahi — jab user
+     * player ka fullscreen button dabaye (site ka ya hamara), tabhi orientation
+     * lock landscape (Android Chrome; iOS par user khud ghoomata hai).
+     */
+    useEffect(() => {
+        if (!isPhoneWeb || Platform.OS !== 'web' || typeof document === 'undefined') return;
+        const onFs = () => {
+            try {
+                if (document.fullscreenElement) {
+                    (screen.orientation as any)?.lock?.('landscape');
+                } else {
+                    (screen.orientation as any)?.unlock?.();
+                }
+            } catch {}
+        };
+        document.addEventListener('fullscreenchange', onFs);
+        document.addEventListener('webkitfullscreenchange', onFs as EventListener);
+        return () => {
+            document.removeEventListener('fullscreenchange', onFs);
+            document.removeEventListener('webkitfullscreenchange', onFs as EventListener);
+            try {
+                (screen.orientation as any)?.unlock?.();
+            } catch {}
+        };
+    }, [isPhoneWeb]);
+
     // A different title (or closing the modal) always starts from the details view.
     useEffect(() => {
         setServer('moviebox');
@@ -163,6 +202,7 @@ export function MovieDetailModal({
         setEpisodeRef(initialEpisode ?? null);
         setSeason(initialEpisode?.season ?? 1);
         setSeasonMenuOpen(false);
+        setPhoneExpanded(false);
         setResumeSec(resumeAt);
         if (autoPlay && movie) {
             // Resuming from the Continue Watching row: the position of the
@@ -235,6 +275,31 @@ export function MovieDetailModal({
     /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
     const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
 
+    /** Phone player screen (Crunchyroll jaisa) ka episode data. */
+    const isTv = movie.mediaType === 'tv';
+    const activeSeasonNum = episodeRef?.season ?? season ?? 1;
+    const activeEpNum = episodeRef?.episode ?? 1;
+    const activeEp = isTv
+        ? currentSeason?.episodes?.find((e) => e.episode === activeEpNum) ?? null
+        : null;
+    const nextEp = isTv
+        ? currentSeason?.episodes?.find((e) => e.episode === activeEpNum + 1) ?? null
+        : null;
+    const overviewText = activeEp?.overview || movie.description || '';
+    const releasedLine = isTv
+        ? activeEp?.air_date
+            ? `Released on ${formatAirDate(activeEp.air_date)}`
+            : ''
+        : movie.year
+          ? `Released in ${movie.year}`
+          : '';
+    const metaLine = [
+        movie.rating ? `★ ${movie.rating}` : '',
+        activeEp?.runtime ? formatRuntime(activeEp.runtime) : (movie.duration || ''),
+    ]
+        .filter(Boolean)
+        .join('  •  ');
+
     const handlePlay = (episode?: { season: number; episode: number }) => {
         if (src) {
             const isSeries = movie.mediaType === 'tv';
@@ -296,6 +361,61 @@ export function MovieDetailModal({
             Linking.openURL(url).catch(() => {});
         }
     };
+
+    /** Jo bhi server chal raha hai uska player (phone screen ke box me bhi yahi). */
+    const playerNode =
+        activeServer === 'moviebox' ? (
+            <MovieboxPagePlayer
+                linkKey={movieboxLinkKey}
+                initialLink={movieboxEntry?.link ?? null}
+                title={movie.title}
+                year={movie.year}
+                mediaType={movie.mediaType === 'tv' ? 'tv' : 'movie'}
+                season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
+                episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
+                episodeCount={
+                    movie.mediaType === 'tv' ? currentSeason?.episode_count : undefined
+                }
+                episodeTitle={
+                    movie.mediaType === 'tv'
+                        ? currentSeason?.episodes?.find(
+                              (item) =>
+                                  item.episode ===
+                                  (episodeRef?.episode ?? 1),
+                          )?.name
+                        : undefined
+                }
+                onEpisodeChange={(next) => {
+                    // Agla episode chal raha hai — modal ka apna
+                    // state bhi wahi rahe (player band karke
+                    // dobara kholne par sahi episode khule).
+                    setEpisodeRef(next);
+                }}
+                onClose={() => setPlaying(false)}
+                onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
+                hideClose={isPhoneWeb}
+            />
+        ) : (
+            <EmbedPlayer
+                src={src}
+                title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
+                onClose={() => setPlaying(false)}
+                fallbackUrl={officialUrlFor(movie)}
+                resumeAt={resumeSec}
+                serverName="Nxsha"
+                onProgress={(info) => {
+                    if (!activeEntry) return;
+                    updateWatchPosition(activeEntry.id, info.seconds, info.duration);
+                }}
+                onEnded={() => {
+                    if (!activeEntry) return;
+                    // The media finished: it leaves the row, the
+                    // same way the Crunchyroll page does it.
+                    removeWatched(activeEntry.id);
+                    announce('Marked as watched');
+                }}
+            />
+        );
 
     return (
         <Modal visible transparent animationType="fade" onRequestClose={onClose}>
@@ -532,56 +652,123 @@ export function MovieDetailModal({
 
                 {playing && (src || activeServer === 'moviebox') ? (
                     <View style={styles.playerLayer}>
-                        {activeServer === 'moviebox' ? (
-                            <MovieboxPagePlayer
-                                linkKey={movieboxLinkKey}
-                                initialLink={movieboxEntry?.link ?? null}
-                                title={movie.title}
-                                year={movie.year}
-                                mediaType={movie.mediaType === 'tv' ? 'tv' : 'movie'}
-                                season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
-                                episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
-                                episodeCount={
-                                    movie.mediaType === 'tv' ? currentSeason?.episode_count : undefined
-                                }
-                                episodeTitle={
-                                    movie.mediaType === 'tv'
-                                        ? currentSeason?.episodes?.find(
-                                              (item) =>
-                                                  item.episode ===
-                                                  (episodeRef?.episode ?? 1),
-                                          )?.name
-                                        : undefined
-                                }
-                                onEpisodeChange={(next) => {
-                                    // Agla episode chal raha hai — modal ka apna
-                                    // state bhi wahi rahe (player band karke
-                                    // dobara kholne par sahi episode khule).
-                                    setEpisodeRef(next);
-                                }}
-                                onClose={() => setPlaying(false)}
-                                onLinkSaved={() => setMovieboxRevision((n) => n + 1)}
-                            />
+                        {isPhoneWeb ? (
+                            /**
+                             * Phone: Crunchyroll jaisa after-play screen — player
+                             * upar portrait, neeche episode details (owner:
+                             * "crunchyroll me jaise play karne ke baad aisa aata
+                             * hai waisa hi"). Koi auto-landscape nahi.
+                             */
+                            <View style={styles.phoneScreen}>
+                                <View style={styles.phoneTopBar}>
+                                    <Pressable
+                                        onPress={() => setPlaying(false)}
+                                        style={styles.phoneBack}
+                                        testID="phone-player-back"
+                                        accessibilityLabel="Back to details"
+                                    >
+                                        <Ionicons name="chevron-back" size={22} color="#fff" />
+                                    </Pressable>
+                                    <View style={styles.phoneTopTitles}>
+                                        <Text style={styles.phoneTopName} numberOfLines={1}>
+                                            {movie.title}
+                                        </Text>
+                                        {isTv ? (
+                                            <Text style={styles.phoneTopEpisode}>
+                                                {`S${activeSeasonNum} • E${activeEpNum}`}
+                                            </Text>
+                                        ) : null}
+                                    </View>
+                                </View>
+
+                                <View style={styles.phonePlayerBox}>{playerNode}</View>
+
+                                <ScrollView
+                                    style={styles.phoneDetails}
+                                    contentContainerStyle={styles.phoneDetailsContent}
+                                    showsVerticalScrollIndicator={false}
+                                >
+                                    <Text style={styles.phoneSeries}>{movie.title}</Text>
+                                    <Text style={styles.phoneEpisodeTitle}>
+                                        {isTv
+                                            ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
+                                            : movie.title}
+                                    </Text>
+                                    {metaLine ? (
+                                        <Text style={styles.phoneMeta}>{metaLine}</Text>
+                                    ) : null}
+                                    {releasedLine ? (
+                                        <Text style={styles.phoneMeta}>{releasedLine}</Text>
+                                    ) : null}
+                                    {overviewText ? (
+                                        <>
+                                            <Text
+                                                style={styles.phoneOverview}
+                                                numberOfLines={phoneExpanded ? undefined : 3}
+                                            >
+                                                {overviewText}
+                                            </Text>
+                                            <Pressable
+                                                onPress={() => setPhoneExpanded((v) => !v)}
+                                                testID="phone-show-more"
+                                            >
+                                                <Text style={styles.phoneShowMore}>
+                                                    {phoneExpanded ? 'SHOW LESS' : 'SHOW MORE'}
+                                                </Text>
+                                            </Pressable>
+                                        </>
+                                    ) : null}
+
+                                    {nextEp ? (
+                                        <View style={styles.phoneNextWrap}>
+                                            <Text style={styles.phoneNextLabel}>NEXT EPISODE</Text>
+                                            <Pressable
+                                                style={styles.phoneNextCard}
+                                                testID="phone-next-episode"
+                                                onPress={() => {
+                                                    setEpisodeRef({
+                                                        season: nextEp.season,
+                                                        episode: nextEp.episode,
+                                                    });
+                                                    setPhoneExpanded(false);
+                                                }}
+                                                accessibilityLabel={`Play next episode ${nextEp.episode}: ${nextEp.name}`}
+                                            >
+                                                <SafeImage
+                                                    source={{ uri: nextEp.still || image }}
+                                                    style={styles.phoneNextThumb as any}
+                                                    fallbackLabel={nextEp.name}
+                                                />
+                                                <View style={styles.phoneNextInfo}>
+                                                    <Text style={styles.phoneNextTitle} numberOfLines={1}>
+                                                        {`E${nextEp.episode} – ${nextEp.name}`}
+                                                    </Text>
+                                                    {nextEp.runtime ? (
+                                                        <Text style={styles.phoneMeta}>
+                                                            {formatRuntime(nextEp.runtime)}
+                                                        </Text>
+                                                    ) : null}
+                                                </View>
+                                            </Pressable>
+                                        </View>
+                                    ) : null}
+
+                                    {isTv ? (
+                                        <Pressable
+                                            style={styles.phoneSeeMore}
+                                            testID="phone-see-episodes"
+                                            onPress={() => setPlaying(false)}
+                                        >
+                                            <Ionicons name="list" size={16} color="#fff" />
+                                            <Text style={styles.phoneSeeMoreText}>
+                                                SEE MORE EPISODES
+                                            </Text>
+                                        </Pressable>
+                                    ) : null}
+                                </ScrollView>
+                            </View>
                         ) : (
-                            <EmbedPlayer
-                                src={src}
-                                title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
-                                onClose={() => setPlaying(false)}
-                                fallbackUrl={officialUrlFor(movie)}
-                                resumeAt={resumeSec}
-                                serverName="Nxsha"
-                                onProgress={(info) => {
-                                    if (!activeEntry) return;
-                                    updateWatchPosition(activeEntry.id, info.seconds, info.duration);
-                                }}
-                                onEnded={() => {
-                                    if (!activeEntry) return;
-                                    // The media finished: it leaves the row, the
-                                    // same way the Crunchyroll page does it.
-                                    removeWatched(activeEntry.id);
-                                    announce('Marked as watched');
-                                }}
-                            />
+                            playerNode
                         )}
                         {playerNotice ? (
                             <View style={styles.playerNotice} pointerEvents="none">
@@ -611,8 +798,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     /**
-     * Phone + player khula: panel hi poora viewport, bina clipping ke — ghuma
-     * hua (landscape) player modal ki 92% height me phansa na rahe.
+     * Phone + player khula: panel hi poora viewport, bina clipping ke — player
+     * screen (top bar + player + details) theek se fit ho.
      */
     panelPhonePlayer: {
         width: '100%',
@@ -620,6 +807,88 @@ const styles = StyleSheet.create({
         maxHeight: '100%',
         borderRadius: 0,
         overflow: 'visible',
+    },
+    /** Phone after-play screen (Crunchyroll jaisa): player upar, details neeche. */
+    phoneScreen: {
+        flex: 1,
+        backgroundColor: '#0b0b0b',
+    },
+    phoneTopBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        backgroundColor: '#141414',
+    },
+    phoneBack: { padding: 6 },
+    phoneTopTitles: { flex: 1 },
+    phoneTopName: { color: '#fff', fontSize: 15, fontWeight: '700' },
+    phoneTopEpisode: { color: '#9a9a9a', fontSize: 11, marginTop: 1 },
+    /** Player 16:9 dabba — crop (968×545) isi me baithta hai. */
+    phonePlayerBox: {
+        width: '100%',
+        aspectRatio: 968 / 545,
+        backgroundColor: '#000',
+    },
+    phoneDetails: { flex: 1 },
+    phoneDetailsContent: { paddingHorizontal: 14, paddingTop: 14, paddingBottom: 28 },
+    phoneSeries: { color: '#E50914', fontSize: 13, fontWeight: '700' },
+    phoneEpisodeTitle: {
+        color: '#fff',
+        fontSize: 22,
+        fontWeight: '800',
+        marginTop: 4,
+    },
+    phoneMeta: { color: '#9a9a9a', fontSize: 13, marginTop: 8 },
+    phoneOverview: { color: '#b9b9b9', fontSize: 13, lineHeight: 19, marginTop: 10 },
+    phoneShowMore: {
+        color: '#E50914',
+        fontSize: 13,
+        fontWeight: '800',
+        marginTop: 8,
+        letterSpacing: 0.4,
+    },
+    phoneNextWrap: { marginTop: 22 },
+    phoneNextLabel: {
+        color: '#8a8a8a',
+        fontSize: 11,
+        fontWeight: '700',
+        letterSpacing: 1,
+    },
+    phoneNextCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        marginTop: 10,
+        backgroundColor: '#171717',
+        borderRadius: 8,
+        padding: 10,
+    },
+    phoneNextThumb: {
+        width: 118,
+        height: 66,
+        borderRadius: 6,
+        backgroundColor: '#222',
+    },
+    phoneNextInfo: { flex: 1 },
+    phoneNextTitle: { color: '#fff', fontSize: 14, fontWeight: '700' },
+    phoneSeeMore: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        marginTop: 22,
+        paddingVertical: 13,
+        borderRadius: 6,
+        borderWidth: 1,
+        borderColor: '#3a3a3a',
+    },
+    phoneSeeMoreText: {
+        color: '#fff',
+        fontSize: 13,
+        fontWeight: '800',
+        letterSpacing: 0.6,
     },
     playerLayer: {
         ...StyleSheet.absoluteFillObject,

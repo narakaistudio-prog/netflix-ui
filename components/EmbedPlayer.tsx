@@ -11,11 +11,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { detectProviderFromUrl } from '@/lib/embeds';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
-import {
-    enterPlayerFullscreen,
-    exitPlayerFullscreen,
-    isAndroidWeb,
-} from '@/lib/playerFullscreen';
+import { enterPlayerFullscreen } from '@/lib/playerFullscreen';
+import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import {
     SEEK_NUDGE_DELAYS,
     buildSeekMessages,
@@ -491,19 +488,15 @@ export function EmbedPlayer({
     }, [killIframe, onClose]);
 
     /* ------------------------------------------------------------------ */
-    /* Android phones: full-screen landscape the moment the player opens   */
+    /* Phone: landscape SIRF user ke fullscreen par (owner: "humara landscape
+       nahi… jab user full screen karega tab hi landscape hoga") — play dabate
+       hi koi auto-fullscreen nahi. Top bar ka button user-initiated hai:
+       fullscreen + landscape lock, best effort. */
     /* ------------------------------------------------------------------ */
 
-    // Auto mode runs inside the play tap's user activation (the player is
-    // always mounted by a click). If the browser refuses — e.g. the player
-    // auto-opened on resume — the manual button in the top bar is the fallback.
-    const canAutoFullscreen = IS_WEB && isAndroidWeb();
-    useEffect(() => {
-        enterPlayerFullscreen(containerRef.current as any);
-        return () => {
-            exitPlayerFullscreen();
-        };
-    }, []);
+    const isPhoneWeb =
+        IS_WEB && typeof navigator !== 'undefined' && isPhoneUserAgent(navigator.userAgent);
+    const canAutoFullscreen = isPhoneWeb;
 
     useTvBackHandler(() => {
         handleClose();
