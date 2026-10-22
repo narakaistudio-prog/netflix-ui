@@ -1,24 +1,24 @@
 {
  "$comment": "MovieBox (m2box.org) watch-pages for the Netflix catalog — Server 2. Baked by scripts/harvest-moviebox-links.mjs (GitHub Actions). Har entry ka `url` seedha MovieboxPagePlayer me jata hai; slug/subjectId dobara naapo mat, script hi update kare.",
- "generatedAt": "2026-10-20T11:37:31.803Z",
+ "generatedAt": "2026-10-22T08:01:26.776Z",
  "stats": {
-  "catalog": 791,
-  "linked": 686,
+  "catalog": 792,
+  "linked": 687,
   "hindi": 33,
-  "hindiAudio": 384,
+  "hindiAudio": 385,
   "review": 28,
-  "miss": 77,
+  "miss": 78,
   "errors": 0,
   "matchedThisRun": 1,
   "pinned": 1,
   "queriesUsed": {
-   "primary": 106,
+   "primary": 107,
    "hindi": 106,
    "year": 106,
    "ampersand": 6,
    "anchor": 71,
-   "head": 30,
    "short": 60,
+   "head": 30,
    "clean": 1
   }
  },
@@ -35,7 +35,7 @@
    "score": 1,
    "query": "pin",
    "pinned": true,
-   "harvestedAt": "2026-10-20T11:32:48.535Z"
+   "harvestedAt": "2026-10-22T07:56:42.227Z"
   },
   "tmdb:1389172": {
    "url": "https://m2box.org/movies/reporting-live-08MIGBdRGC1?id=1363066357566304784&type=/movie/detail&detailSe=&detailEp=&lang=en",
@@ -8941,6 +8941,19 @@
    "score": 0.815,
    "query": "Crime Patrol",
    "harvestedAt": "2026-10-20T11:35:37.032Z"
+  },
+  "tmdb:1236045": {
+   "url": "https://m2box.org/movies/animals-ceUapSKb2O5?id=4873829237280734416&type=/movie/detail&detailSe=&detailEp=&lang=en",
+   "subjectId": "4873829237280734416",
+   "detailPath": "animals-ceUapSKb2O5",
+   "title": "Animals",
+   "year": 2026,
+   "type": "movie",
+   "dub": "original",
+   "hindiAudio": true,
+   "score": 1,
+   "query": "Animals",
+   "harvestedAt": "2026-10-22T07:56:46.916Z"
   }
  }
 }
