@@ -63,7 +63,19 @@ jobs:
         run: node scripts/import-imdb-anime.mjs --self-test
 
       - name: Import the IMDb list into the Crunchyroll catalog
-        run: node scripts/import-imdb-anime.mjs --list=${{ github.event.inputs.list || 'ls540527030' }}
+        run: |
+          set -o pipefail
+          # Logs Azure blob par jaate hain (sandbox se reachable nahi), isliye
+          # fail hone par aakhri lines check-run annotations me daal dete hain —
+          # wahan se debug karna possible rehta hai.
+          node scripts/import-imdb-anime.mjs --list=${{ github.event.inputs.list || 'ls540527030' }} 2>&1 | tee /tmp/import.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            tail -n 30 /tmp/import.log | while IFS= read -r line; do
+              echo "::error::$(echo "$line" | tr -d '\r' | cut -c1-900)"
+            done
+          fi
+          exit "$status"
 
       - name: Harvest the Nxsha episode guide for the new titles
         id: guide
