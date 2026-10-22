@@ -1841,5 +1841,6 @@
     "seasons": {
       "1": 12
     }
-  }
+  },
+  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata."
 }
