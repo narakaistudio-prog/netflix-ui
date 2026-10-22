@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T11:43:40.036Z",
+  "updated": "2026-10-22T11:53:31.142Z",
   "entries": [
     {
       "key": "rankingofkings",
@@ -711,8 +711,8 @@
     },
     {
       "key": "zom100bucketlistofthedead2",
-      "kind": "movie",
-      "id": "1070514",
+      "kind": "tv",
+      "id": "217766",
       "title": "Zom 100: Bucket List of the Dead",
       "year": "2023",
       "rating": "3.3",
@@ -1255,8 +1255,8 @@
     },
     {
       "key": "assassinationclassroom2",
-      "kind": "movie",
-      "id": "349176",
+      "kind": "tv",
+      "id": "62110",
       "title": "Assassination Classroom",
       "year": "2015",
       "rating": "3.6",
@@ -1355,8 +1355,8 @@
     },
     {
       "key": "dragonballdaima2",
-      "kind": "movie",
-      "id": "1361184",
+      "kind": "tv",
+      "id": "236994",
       "title": "Dragon Ball DAIMA",
       "year": "2024",
       "rating": "3.9",
@@ -1781,8 +1781,8 @@
     },
     {
       "key": "letsplay2",
-      "kind": "movie",
-      "id": "1441154",
+      "kind": "tv",
+      "id": "293010",
       "title": "Let's Play",
       "year": "2025",
       "rating": "",
@@ -1968,102 +1968,9 @@
       "imdbId": "tt15433166"
     },
     {
-      "key": "demonslayerkimetsunoyaiba",
-      "kind": "tv",
-      "id": "85937",
-      "title": "Demon Slayer: Kimetsu no Yaiba",
-      "year": "2019",
-      "rating": "4.3",
-      "genres": [
-        "action",
-        "adventure",
-        "drama",
-        "fantasy",
-        "science-fiction"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/xUfRZu2mi8jH6SzQEJGP6tjBuYj.jpg",
-      "runtime": "",
-      "desc": "After a demon attack leaves his family slain and his sister cursed, Tanjiro embarks upon a perilous journey to find a cure and avenge those he's lost.",
-      "imdbId": "tt9335498"
-    },
-    {
-      "key": "drstone2",
-      "kind": "tv",
-      "id": "86031",
-      "title": "Dr. STONE",
-      "year": "2019",
-      "rating": "4.3",
-      "genres": [
-        "action",
-        "adventure",
-        "fantasy",
-        "science-fiction"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/xbZQ3fDl0y5mt0ARwfeyrgQ4JTw.jpg",
-      "runtime": "",
-      "desc": "One fateful day, all of humanity was petrified by a blinding flash of light. After several millennia, high schooler Taiju awakens and finds himself lost in a world of statues. However, he’s not alone! His science-loving friend Senku’s been up and running for a few months and he's got a grand plan in mind—to kickstart civilization with the power of science!",
-      "imdbId": "tt9679542"
-    },
-    {
-      "key": "mobilesuitgundamthewitchfrommercury2",
-      "kind": "tv",
-      "id": "196400",
-      "title": "Mobile Suit Gundam: The Witch from Mercury",
-      "year": "2022",
-      "rating": "3.8",
-      "genres": [
-        "action",
-        "adventure",
-        "comedy",
-        "fantasy",
-        "science-fiction"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/gBkDlMaAVOVMRWWlRUHhkLAhNE3.jpg",
-      "runtime": "",
-      "desc": "A. S. (Ad Stella) 122 ― An era when a multitude of corporations have entered space and built a huge economic system. Suletta Mercury, a lone girl from the remote planet Mercury, transfers to the Asticassia School of Technology, run by the Beneritt Group which dominates the mobile suit industry.",
-      "imdbId": "tt15433166"
-    },
-    {
-      "key": "demonslayerkimetsunoyaiba2",
-      "kind": "tv",
-      "id": "85937",
-      "title": "Demon Slayer: Kimetsu no Yaiba",
-      "year": "2019",
-      "rating": "4.3",
-      "genres": [
-        "action",
-        "adventure",
-        "drama",
-        "fantasy",
-        "science-fiction"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/xUfRZu2mi8jH6SzQEJGP6tjBuYj.jpg",
-      "runtime": "",
-      "desc": "After a demon attack leaves his family slain and his sister cursed, Tanjiro embarks upon a perilous journey to find a cure and avenge those he's lost.",
-      "imdbId": "tt9335498"
-    },
-    {
-      "key": "drstone3",
-      "kind": "tv",
-      "id": "86031",
-      "title": "Dr. STONE",
-      "year": "2019",
-      "rating": "4.3",
-      "genres": [
-        "action",
-        "adventure",
-        "fantasy",
-        "science-fiction"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/xbZQ3fDl0y5mt0ARwfeyrgQ4JTw.jpg",
-      "runtime": "",
-      "desc": "One fateful day, all of humanity was petrified by a blinding flash of light. After several millennia, high schooler Taiju awakens and finds himself lost in a world of statues. However, he’s not alone! His science-loving friend Senku’s been up and running for a few months and he's got a grand plan in mind—to kickstart civilization with the power of science!",
-      "imdbId": "tt9679542"
-    },
-    {
       "key": "anotherworld2",
-      "kind": "movie",
-      "id": "1470329",
+      "kind": "tv",
+      "id": "4547",
       "title": "Another World",
       "year": "2025",
       "rating": "3.7",

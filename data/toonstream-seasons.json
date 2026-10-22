@@ -3488,6 +3488,35 @@
         }
       }
     },
+    "zom100bucketlistofthedead2": {
+      "title": "Zom 100: Bucket List of the Dead",
+      "slug": "zom-100-bucket-list-of-the-dead",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      },
+      "images": {
+        "1": {
+          "1": "https://image.tmdb.org/t/p/w780/3g4SUm94t32hLsgtpK2JSbnPpM3.jpg",
+          "2": "https://image.tmdb.org/t/p/w780/nmiK481iHBfOpPqITzEExn6SO6u.jpg",
+          "3": "https://image.tmdb.org/t/p/w780/cr3CuapvM8bm1TJbK1OrjALJTv7.jpg",
+          "4": "https://image.tmdb.org/t/p/w780/n1LkQyrG2NNqOzIJ8sAwBqaEI7L.jpg",
+          "5": "https://image.tmdb.org/t/p/w780/zStBpr7nRbcav4Ia3stpIyqCpfH.jpg",
+          "6": "https://image.tmdb.org/t/p/w780/qViGNP8J4xubUtyKtZ8nrMh97Vs.jpg",
+          "7": "https://image.tmdb.org/t/p/w780/h2SyhU89h1RaBafKRbeeR23Eyf4.jpg",
+          "8": "https://image.tmdb.org/t/p/w780/x6P1HAEx0bcc8gX8OwmbLk41x6Q.jpg",
+          "9": "https://image.tmdb.org/t/p/w780/kWRY85lcJtgCoNuSjYdPSMOyaPB.jpg",
+          "10": "https://image.tmdb.org/t/p/w780/zcZMvaTsU05Mc8F9sEEJ36Ed8yZ.jpg",
+          "11": "https://image.tmdb.org/t/p/w780/z7lonveHAsfOpwX9wejrZCm9dFD.jpg",
+          "12": "https://image.tmdb.org/t/p/w780/suSs5yDt4Qls6kLRdUdSEiSMs81.jpg"
+        }
+      }
+    },
     "villainesslevel99imaybethehiddenbossbutimnotthedemonlord2": {
       "title": "Villainess Level 99: I May Be the Hidden Boss But I'm Not the Demon Lord",
       "slug": "villainess-level-99-i-may-be-the-hidden-boss-but-im-not-the-demon-lord",
@@ -3903,6 +3932,73 @@
         }
       }
     },
+    "assassinationclassroom2": {
+      "title": "Assassination Classroom",
+      "slug": "assassination-classroom",
+      "seasons": {
+        "1": 22,
+        "2": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      },
+      "images": {
+        "1": {
+          "1": "https://image.tmdb.org/t/p/w780/yyfmxAialvEXve36GmyEX8L4h7F.jpg",
+          "2": "https://image.tmdb.org/t/p/w780/hsAD2kMfHWSMLjZwjlsbtl1g2YA.jpg",
+          "3": "https://image.tmdb.org/t/p/w780/2QjjvI7543ohcpFaPInws32LDub.jpg",
+          "4": "https://image.tmdb.org/t/p/w780/cjw0gwNlaChltGCPTVr9M1FtYOx.jpg",
+          "5": "https://image.tmdb.org/t/p/w780/58m7wAOe7kNaltpU1qWLfbgADPF.jpg",
+          "6": "https://image.tmdb.org/t/p/w780/4Xb0rWnHzA6M2ep7EbZp3bOE9TN.jpg",
+          "7": "https://image.tmdb.org/t/p/w780/vBNcy4o7CBYwcKphJhHJ7ACG8mt.jpg",
+          "8": "https://image.tmdb.org/t/p/w780/8pRYftU5QXxa5NUqPLxZRPh8GWE.jpg",
+          "9": "https://image.tmdb.org/t/p/w780/bIu7zmFe5UF71dqoDY1EUWM8aGx.jpg",
+          "10": "https://image.tmdb.org/t/p/w780/drBHbHXWcE2fc54JqUEtFXInVBg.jpg",
+          "11": "https://image.tmdb.org/t/p/w780/vv8xKdRahhbgeAUuTbofGDTmwNC.jpg",
+          "12": "https://image.tmdb.org/t/p/w780/xR9unZ9HuhczlcgDTSG6ex4G9xL.jpg",
+          "13": "https://image.tmdb.org/t/p/w780/d2f4685BTxxxvrpJnidX7BMiFQU.jpg",
+          "14": "https://image.tmdb.org/t/p/w780/cyIBKcwzrHPTT1PZa8V41Krh3f.jpg",
+          "15": "https://image.tmdb.org/t/p/w780/rK4MdiKSxiXt9dK0Jr4MVzRye4O.jpg",
+          "16": "https://image.tmdb.org/t/p/w780/3i4pExGkKdjok94UQNbanDsyzHd.jpg",
+          "17": "https://image.tmdb.org/t/p/w780/zYMdCixdKzQaFN2rLAqsYBLpgdQ.jpg",
+          "18": "https://image.tmdb.org/t/p/w780/5ZzTT1dJ9VpXaQIUXZVOEwtFJG2.jpg",
+          "19": "https://image.tmdb.org/t/p/w780/x2axJqE9pjc170BkkGC5Fx8TPK4.jpg",
+          "20": "https://image.tmdb.org/t/p/w780/fDCYhCEaRGpFjWm9kdO4DFxIiab.jpg",
+          "21": "https://image.tmdb.org/t/p/w780/2DuXVfQBl3Wy8Sl6IAs1WuY8lIG.jpg",
+          "22": "https://image.tmdb.org/t/p/w780/wfwoOGNlAdfiavBYCyh7ag3E2ir.jpg"
+        },
+        "2": {
+          "1": "https://image.tmdb.org/t/p/w780/vmoNbsKWqnzihOPbVdT64f6u5Qk.jpg",
+          "2": "https://image.tmdb.org/t/p/w780/dMzDeHcgyqPCJSZ3OGY7tfcTgcZ.jpg",
+          "3": "https://image.tmdb.org/t/p/w780/zH9l1Gzkt1WuyBEmjFHX2CUmM9D.jpg",
+          "4": "https://image.tmdb.org/t/p/w780/iqaQeWqXeifS0z2jMW1KVABbdZh.jpg",
+          "5": "https://image.tmdb.org/t/p/w780/oM6A4WrGaxFttinI2M3pWNVnQ21.jpg",
+          "6": "https://image.tmdb.org/t/p/w780/p6ea7peGuC03JSaR7EiOyITjfpi.jpg",
+          "7": "https://image.tmdb.org/t/p/w780/4Sv8druY1xLEy41hXZG5MwfROca.jpg",
+          "8": "https://image.tmdb.org/t/p/w780/i8Nlb0eLPPVFKQbAqoYeUY1ZjsV.jpg",
+          "9": "https://image.tmdb.org/t/p/w780/aqGUJ9Uhdcuogw2owRb2zxykAXS.jpg",
+          "10": "https://image.tmdb.org/t/p/w780/igD4qgaCPTsltKxMTx7CwTlNI0U.jpg",
+          "11": "https://image.tmdb.org/t/p/w780/muH51Q5WIEQOeyMJAcUJZIkHD1E.jpg",
+          "12": "https://image.tmdb.org/t/p/w780/p2lTYvfukuLVyMOJU4WbntnrWQz.jpg",
+          "13": "https://image.tmdb.org/t/p/w780/fr3ya4vXiy5BaGbjh2UQtFk88vs.jpg",
+          "14": "https://image.tmdb.org/t/p/w780/nsxqfUMFZ7mYP281ytnsLfVvlfk.jpg",
+          "15": "https://image.tmdb.org/t/p/w780/mlDGK08Pymf4SnJfeFmmnBV8ojB.jpg",
+          "16": "https://image.tmdb.org/t/p/w780/juTkT2MS59fAS08QuJGTanVds1q.jpg",
+          "17": "https://image.tmdb.org/t/p/w780/3k7R2ma7S2Jlq0w6PolGMNureBI.jpg",
+          "18": "https://image.tmdb.org/t/p/w780/mzbdmNtLaOofyM4cAN3wTg8rKz8.jpg",
+          "19": "https://image.tmdb.org/t/p/w780/j87xQhK6SACWvsQ9hDnNKmPSjWv.jpg",
+          "20": "https://image.tmdb.org/t/p/w780/hecv2s6DQaJn3ABKkea0QRzgGeJ.jpg",
+          "21": "https://image.tmdb.org/t/p/w780/pMPmtgtLJL95KuaSyCkOQelTzcd.jpg",
+          "22": "https://image.tmdb.org/t/p/w780/61WG2kl16UNDuS7zMxYI8OOkbEq.jpg",
+          "23": "https://image.tmdb.org/t/p/w780/k0jFjW2i9VLRNPhTeIz27rJSNCO.jpg",
+          "24": "https://image.tmdb.org/t/p/w780/bjmqJZlCLTo4UJKcTyoPpXqYvMa.jpg",
+          "25": "https://image.tmdb.org/t/p/w780/kiLifALGs9Srw7dWMTLNEo7jEFA.jpg"
+        }
+      }
+    },
     "ninathestarrybride2": {
       "title": "Nina the Starry Bride",
       "slug": "nina-the-starry-bride",
@@ -3965,6 +4061,43 @@
         "1": {
           "season": 1,
           "base": 0
+        }
+      }
+    },
+    "dragonballdaima2": {
+      "title": "Dragon Ball DAIMA",
+      "slug": "dragon-ball-daima",
+      "seasons": {
+        "1": 20
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      },
+      "images": {
+        "1": {
+          "1": "https://image.tmdb.org/t/p/w780/r3SDXWQxc5PqZ5yvcwerJq2DgEe.jpg",
+          "2": "https://image.tmdb.org/t/p/w780/h6ZzSPzRbGqFhvPJwrDrL6E3zr0.jpg",
+          "3": "https://image.tmdb.org/t/p/w780/j4E7fEAPaVlM9u4P90I2Q3BtogF.jpg",
+          "4": "https://image.tmdb.org/t/p/w780/cig3XdGMpGWUQkajoGSQU9Fry1W.jpg",
+          "5": "https://image.tmdb.org/t/p/w780/oxkBT8aiQWEEQhLHUIqYCpcU7dP.jpg",
+          "6": "https://image.tmdb.org/t/p/w780/sqrlnH3tLl3JMUJHlCAUUQ8lVt5.jpg",
+          "7": "https://image.tmdb.org/t/p/w780/pRXR1zSSIbiDKpBNulx7lZCtT3t.jpg",
+          "8": "https://image.tmdb.org/t/p/w780/3KbtT3bWqcQieS71dLBtpxeZLL2.jpg",
+          "9": "https://image.tmdb.org/t/p/w780/2d3UZpI07m03dL68tlKzjFTyiwb.jpg",
+          "10": "https://image.tmdb.org/t/p/w780/pF73h1gpZX0x887ph38IfDsQRkc.jpg",
+          "11": "https://image.tmdb.org/t/p/w780/mj7AqhBGWB1b7zfdUVA46R6wHX2.jpg",
+          "12": "https://image.tmdb.org/t/p/w780/5T5ipgDLvQbyFQZy7zsOFtuu2U6.jpg",
+          "13": "https://image.tmdb.org/t/p/w780/40GXfVsXABfU3q8kONqIh5tfyO6.jpg",
+          "14": "https://image.tmdb.org/t/p/w780/8yiYCV4sKI7DKipRAXScjn0TPiW.jpg",
+          "15": "https://image.tmdb.org/t/p/w780/vDZ4dJ59cw2Nltf2Dci1DXCfE4j.jpg",
+          "16": "https://image.tmdb.org/t/p/w780/zR2cUCEX14BoilmnByOL0GVq3Fs.jpg",
+          "17": "https://image.tmdb.org/t/p/w780/vSGMCrxd788k585aLxiTDiFaUs9.jpg",
+          "18": "https://image.tmdb.org/t/p/w780/PeyYcVcYOADRyf9HUtaGnL3gxh.jpg",
+          "19": "https://image.tmdb.org/t/p/w780/imJl2fb8m65L4u7UWsaHkYMt1HY.jpg",
+          "20": "https://image.tmdb.org/t/p/w780/yBqVWtuK9ZdD2dJPPemFfDXdws7.jpg"
         }
       }
     },
@@ -4307,6 +4440,35 @@
         }
       }
     },
+    "letsplay2": {
+      "title": "Let's Play",
+      "slug": "lets-play",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      },
+      "images": {
+        "1": {
+          "1": "https://image.tmdb.org/t/p/w780/hnxHbRQ4F7uiCUaSbQYBHo4JxJE.jpg",
+          "2": "https://image.tmdb.org/t/p/w780/g4SxsOKo6bvkQf1e1uhSGgC22yT.jpg",
+          "3": "https://image.tmdb.org/t/p/w780/4vknBBl3BTNjO8V4HrLAZ80CKXP.jpg",
+          "4": "https://image.tmdb.org/t/p/w780/zEOrX2rFZWUVKgiFbAfCZYpjUSb.jpg",
+          "5": "https://image.tmdb.org/t/p/w780/krgLzT5SIuGA3W5LlbktY0lkxJk.jpg",
+          "6": "https://image.tmdb.org/t/p/w780/alCUaZFTMKEJmHf3w5o6NSs2vXC.jpg",
+          "7": "https://image.tmdb.org/t/p/w780/ogqX18DAk1M5g7a2iTvLMkM7K9N.jpg",
+          "8": "https://image.tmdb.org/t/p/w780/6BzMRK7Jji8QGZmaJ9RwWjq3VM4.jpg",
+          "9": "https://image.tmdb.org/t/p/w780/1uQudgiJIFbYs1wKhX1pyUOVDau.jpg",
+          "10": "https://image.tmdb.org/t/p/w780/7ge4PZMYFHLxsjjgoRMdYAi641b.jpg",
+          "11": "https://image.tmdb.org/t/p/w780/6UyVc0VmoacHBIm2tgstMUVpPdm.jpg",
+          "12": "https://image.tmdb.org/t/p/w780/pIBefsHUi1936RXwGudL9jfmF6T.jpg"
+        }
+      }
+    },
     "darkmoonthebloodaltar2": {
       "title": "DARK MOON: THE BLOOD ALTAR",
       "slug": "dark-moon-the-blood-altar",
@@ -4437,163 +4599,6 @@
         }
       }
     },
-    "demonslayerkimetsunoyaiba": {
-      "title": "Demon Slayer: Kimetsu no Yaiba",
-      "slug": "demon-slayer-kimetsu-no-yaiba",
-      "seasons": {
-        "1": 26,
-        "2": 18,
-        "3": 11,
-        "4": 8,
-        "5": 1
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "seg": [
-            [
-              2,
-              1,
-              7
-            ],
-            [
-              3,
-              1,
-              11
-            ]
-          ]
-        },
-        "3": {
-          "season": 4,
-          "base": 0
-        },
-        "4": {
-          "season": 5,
-          "base": 0
-        }
-      },
-      "images": {
-        "5": {
-          "1": "https://image.tmdb.org/t/p/w780/1RgPyOhN4DRs225BGTlHJqCudII.jpg"
-        }
-      }
-    },
-    "drstone2": {
-      "title": "Dr. STONE",
-      "slug": "dr-stone",
-      "seasons": {
-        "1": 24,
-        "2": 11,
-        "3": 22,
-        "4": 37
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
-          "base": 0
-        },
-        "4": {
-          "season": 4,
-          "base": 0
-        }
-      }
-    },
-    "mobilesuitgundamthewitchfrommercury2": {
-      "title": "Mobile Suit Gundam: The Witch from Mercury",
-      "slug": "mobile-suit-gundam-the-witch-from-mercury",
-      "seasons": {
-        "1": 24
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "demonslayerkimetsunoyaiba2": {
-      "title": "Demon Slayer: Kimetsu no Yaiba",
-      "slug": "demon-slayer-kimetsu-no-yaiba",
-      "seasons": {
-        "1": 26,
-        "2": 18,
-        "3": 11,
-        "4": 8,
-        "5": 1
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "seg": [
-            [
-              2,
-              1,
-              7
-            ],
-            [
-              3,
-              1,
-              11
-            ]
-          ]
-        },
-        "3": {
-          "season": 4,
-          "base": 0
-        },
-        "4": {
-          "season": 5,
-          "base": 0
-        }
-      },
-      "images": {
-        "5": {
-          "1": "https://image.tmdb.org/t/p/w780/1RgPyOhN4DRs225BGTlHJqCudII.jpg"
-        }
-      }
-    },
-    "drstone3": {
-      "title": "Dr. STONE",
-      "slug": "dr-stone",
-      "seasons": {
-        "1": 24,
-        "2": 11,
-        "3": 22,
-        "4": 37
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
-          "base": 0
-        },
-        "4": {
-          "season": 4,
-          "base": 0
-        }
-      }
-    },
     "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside": {
       "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
       "slug": "banished-from-the-heros-party-i-decided-to-live-a-quiet-life-in-the-countryside",
@@ -4650,6 +4655,10 @@
     {
       "key": "godsgamesweplay2",
       "title": "Gods' Games We Play"
+    },
+    {
+      "key": "anotherworld2",
+      "title": "Another World"
     },
     {
       "key": "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty",

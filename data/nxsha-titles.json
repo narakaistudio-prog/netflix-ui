@@ -2074,8 +2074,8 @@
     }
   },
   "zom100bucketlistofthedead2": {
-    "id": "1070514",
-    "kind": "movie",
+    "id": "217766",
+    "kind": "tv",
     "title": "Zom 100: Bucket List of the Dead",
     "seasons": {
       "1": 1
@@ -2336,8 +2336,8 @@
     }
   },
   "assassinationclassroom2": {
-    "id": "349176",
-    "kind": "movie",
+    "id": "62110",
+    "kind": "tv",
     "title": "Assassination Classroom",
     "seasons": {
       "1": 1
@@ -2384,8 +2384,8 @@
     }
   },
   "dragonballdaima2": {
-    "id": "1361184",
-    "kind": "movie",
+    "id": "236994",
+    "kind": "tv",
     "title": "Dragon Ball DAIMA",
     "seasons": {
       "1": 1
@@ -2591,8 +2591,8 @@
     }
   },
   "letsplay2": {
-    "id": "1441154",
-    "kind": "movie",
+    "id": "293010",
+    "kind": "tv",
     "title": "Let's Play",
     "seasons": {
       "1": 1
@@ -2678,29 +2678,6 @@
       "1": 24
     }
   },
-  "demonslayerkimetsunoyaiba": {
-    "id": "85937",
-    "kind": "tv",
-    "title": "Demon Slayer: Kimetsu no Yaiba",
-    "seasons": {
-      "1": 26,
-      "2": 7,
-      "3": 11,
-      "4": 11,
-      "5": 8
-    }
-  },
-  "drstone2": {
-    "id": "86031",
-    "kind": "tv",
-    "title": "Dr. STONE",
-    "seasons": {
-      "1": 24,
-      "2": 11,
-      "3": 22,
-      "4": 37
-    }
-  },
   "anotherworld": {
     "id": "1470329",
     "kind": "movie",
@@ -2709,40 +2686,9 @@
       "1": 1
     }
   },
-  "mobilesuitgundamthewitchfrommercury2": {
-    "id": "196400",
-    "kind": "tv",
-    "title": "Mobile Suit Gundam: The Witch from Mercury",
-    "seasons": {
-      "1": 24
-    }
-  },
-  "demonslayerkimetsunoyaiba2": {
-    "id": "85937",
-    "kind": "tv",
-    "title": "Demon Slayer: Kimetsu no Yaiba",
-    "seasons": {
-      "1": 26,
-      "2": 7,
-      "3": 11,
-      "4": 11,
-      "5": 8
-    }
-  },
-  "drstone3": {
-    "id": "86031",
-    "kind": "tv",
-    "title": "Dr. STONE",
-    "seasons": {
-      "1": 24,
-      "2": 11,
-      "3": 22,
-      "4": 37
-    }
-  },
   "anotherworld2": {
-    "id": "1470329",
-    "kind": "movie",
+    "id": "4547",
+    "kind": "tv",
     "title": "Another World",
     "seasons": {
       "1": 1
