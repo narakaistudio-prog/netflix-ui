@@ -1,188 +1,44 @@
 {
-  "generatedAt": "2026-10-22T10:04:53.270Z",
+  "generatedAt": "2026-10-22T11:03:12.636Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [],
   "summary": {
-    "requested": 52,
-    "harvested": 52,
+    "requested": 105,
+    "harvested": 105,
     "failed": [],
-    "episodes": 5730,
-    "stills": 5687,
-    "overviews": 5685
+    "episodes": 2103,
+    "stills": 2080,
+    "overviews": 2066
   },
   "titles": [
     {
-      "key": "aot",
-      "title": "Attack on Titan",
-      "id": "1429",
+      "key": "mydressupdarling",
+      "title": "My Dress-Up Darling",
+      "id": "123249",
       "seasons": {
-        "1": 25,
-        "2": 12,
-        "3": 22,
-        "4": 28
+        "1": 24
       },
-      "episodes": 87,
-      "stills": 87,
-      "overviews": 87,
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
       "ok": true
     },
     {
-      "key": "tokyo",
-      "title": "Tokyo Revengers",
-      "id": "105009",
+      "key": "rankingofkingsthetreasurechestofcourage",
+      "title": "Ranking of Kings: The Treasure Chest of Courage",
+      "id": "207743",
       "seasons": {
-        "1": 55
+        "1": 10
       },
-      "episodes": 55,
-      "stills": 54,
-      "overviews": 53,
+      "episodes": 10,
+      "stills": 10,
+      "overviews": 10,
       "ok": true
     },
     {
-      "key": "vinland",
-      "title": "Vinland Saga",
-      "id": "88803",
-      "seasons": {
-        "1": 24,
-        "2": 24
-      },
-      "episodes": 48,
-      "stills": 48,
-      "overviews": 48,
-      "ok": true
-    },
-    {
-      "key": "sao",
-      "title": "Sword Art Online",
-      "id": "45782",
-      "seasons": {
-        "1": 25,
-        "2": 24,
-        "3": 24,
-        "4": 23
-      },
-      "episodes": 96,
-      "stills": 96,
-      "overviews": 96,
-      "ok": true
-    },
-    {
-      "key": "drstone",
-      "title": "Dr. STONE",
-      "id": "86031",
-      "seasons": {
-        "1": 24,
-        "2": 11,
-        "3": 22,
-        "4": 37
-      },
-      "episodes": 94,
-      "stills": 94,
-      "overviews": 94,
-      "ok": true
-    },
-    {
-      "key": "boruto",
-      "title": "Boruto: Naruto Next Generations",
-      "id": "70881",
-      "seasons": {
-        "1": 293
-      },
-      "episodes": 293,
-      "stills": 293,
-      "overviews": 293,
-      "ok": true
-    },
-    {
-      "key": "solo",
-      "title": "Solo Leveling",
-      "id": "127532",
-      "seasons": {
-        "1": 25
-      },
-      "episodes": 25,
-      "stills": 25,
-      "overviews": 25,
-      "ok": true
-    },
-    {
-      "key": "demon",
-      "title": "Demon Slayer: Kimetsu no Yaiba",
-      "id": "85937",
-      "seasons": {
-        "1": 26,
-        "2": 7,
-        "3": 11,
-        "4": 11,
-        "5": 8
-      },
-      "episodes": 63,
-      "stills": 63,
-      "overviews": 63,
-      "ok": true
-    },
-    {
-      "key": "jjk",
-      "title": "JUJUTSU KAISEN",
-      "id": "95479",
-      "seasons": {
-        "1": 59
-      },
-      "episodes": 59,
-      "stills": 59,
-      "overviews": 59,
-      "ok": true
-    },
-    {
-      "key": "onepiece",
-      "title": "One Piece",
-      "id": "37854",
-      "seasons": {
-        "1": 61,
-        "2": 16,
-        "3": 14,
-        "4": 39,
-        "5": 13,
-        "6": 52,
-        "7": 33,
-        "8": 35,
-        "9": 73,
-        "10": 45,
-        "11": 26,
-        "12": 14,
-        "13": 101,
-        "14": 58,
-        "15": 62,
-        "16": 50,
-        "17": 56,
-        "18": 55,
-        "19": 74,
-        "20": 14,
-        "21": 197,
-        "22": 67,
-        "23": 25
-      },
-      "episodes": 1180,
-      "stills": 1180,
-      "overviews": 1180,
-      "ok": true
-    },
-    {
-      "key": "frieren",
-      "title": "Frieren: Beyond Journey's End",
-      "id": "209867",
-      "seasons": {
-        "1": 38
-      },
-      "episodes": 38,
-      "stills": 38,
-      "overviews": 38,
-      "ok": true
-    },
-    {
-      "key": "chainsaw",
-      "title": "Chainsaw Man",
-      "id": "114410",
+      "key": "akebissailoruniform",
+      "title": "Akebi's Sailor Uniform",
+      "id": "121792",
       "seasons": {
         "1": 12
       },
@@ -192,97 +48,194 @@
       "ok": true
     },
     {
-      "key": "spy",
-      "title": "SPY x FAMILY",
-      "id": "120089",
+      "key": "toiletboundhanakokun",
+      "title": "Toilet-Bound Hanako-kun",
+      "id": "95269",
       "seasons": {
-        "1": 25,
-        "2": 12,
-        "3": 13
+        "1": 12,
+        "2": 24
       },
-      "episodes": 50,
-      "stills": 50,
-      "overviews": 50,
+      "episodes": 36,
+      "stills": 36,
+      "overviews": 36,
       "ok": true
     },
     {
-      "key": "kaiju",
-      "title": "Kaiju No. 8",
-      "id": "207468",
+      "key": "trappedinadatingsimtheworldofotomegamesistoughformobs",
+      "title": "Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs",
+      "id": "139512",
       "seasons": {
-        "1": 23
+        "1": 12,
+        "2": 12
       },
-      "episodes": 23,
-      "stills": 23,
-      "overviews": 23,
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
       "ok": true
     },
     {
-      "key": "naruto",
-      "title": "Naruto Shippūden",
-      "id": "31910",
+      "key": "misskuroitsufromthemonsterdevelopmentdepartment",
+      "title": "Miss Kuroitsu From the Monster Development Department",
+      "id": "128826",
       "seasons": {
-        "1": 32,
-        "2": 21,
-        "3": 18,
-        "4": 17,
-        "5": 24,
-        "6": 31,
-        "7": 8,
-        "8": 24,
-        "9": 21,
-        "10": 25,
-        "11": 21,
-        "12": 33,
-        "13": 20,
-        "14": 25,
-        "15": 28,
-        "16": 13,
-        "17": 11,
-        "18": 21,
-        "19": 20,
-        "20": 87
+        "1": 12
       },
-      "episodes": 500,
-      "stills": 500,
-      "overviews": 500,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "deathnote",
-      "title": "Death Note",
-      "id": "13916",
+      "key": "tokyo24thward",
+      "title": "Tokyo 24th Ward",
+      "id": "137045",
       "seasons": {
-        "1": 37
+        "1": 12
       },
-      "episodes": 37,
-      "stills": 37,
-      "overviews": 37,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "mha",
-      "title": "My Hero Academia",
-      "id": "65930",
+      "key": "darlinginthefranxx",
+      "title": "DARLING in the FRANXX",
+      "id": "76121",
       "seasons": {
-        "1": 13,
-        "2": 25,
-        "3": 25,
-        "4": 25,
-        "5": 25,
-        "6": 25,
-        "7": 21,
-        "8": 11
+        "1": 24
       },
-      "episodes": 170,
-      "stills": 170,
-      "overviews": 170,
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
       "ok": true
     },
     {
-      "key": "opm",
-      "title": "One-Punch Man",
-      "id": "63926",
+      "key": "relife",
+      "title": "ReLIFE",
+      "id": "66941",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "myonehitkillsister",
+      "title": "My One-Hit Kill Sister",
+      "id": "194829",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "whyraelianaendedupatthedukesmansion",
+      "title": "Why Raeliana Ended Up at the Duke's Mansion",
+      "id": "205366",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "thecasestudyofvanitas",
+      "title": "The Case Study of Vanitas",
+      "id": "121964",
+      "seasons": {
+        "1": 24
+      },
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "kamikatsuworkingforgodinagodlessworld",
+      "title": "KamiKatsu: Working for God in a Godless World",
+      "id": "199920",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "acoupleofcuckoos",
+      "title": "A Couple of Cuckoos",
+      "id": "122587",
+      "seasons": {
+        "1": 24,
+        "2": 12
+      },
+      "episodes": 36,
+      "stills": 36,
+      "overviews": 30,
+      "ok": true
+    },
+    {
+      "key": "radiant",
+      "title": "RADIANT",
+      "id": "82879",
+      "seasons": {
+        "1": 21,
+        "2": 21
+      },
+      "episodes": 42,
+      "stills": 42,
+      "overviews": 42,
+      "ok": true
+    },
+    {
+      "key": "akudamadrive",
+      "title": "Akudama Drive",
+      "id": "100436",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "masamunekunsrevenge",
+      "title": "Masamune-kun's Revenge",
+      "id": "69295",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "myuniqueskillmakesmeopevenatlevel1",
+      "title": "My Unique Skill Makes Me OP Even at Level 1",
+      "id": "201363",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "rebornasavendingmachineinowwanderthedungeon",
+      "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
+      "id": "207564",
       "seasons": {
         "1": 12,
         "2": 12,
@@ -294,116 +247,182 @@
       "ok": true
     },
     {
-      "key": "bleach",
-      "title": "Bleach",
-      "id": "30984",
+      "key": "thegreatcleric",
+      "title": "The Great Cleric",
+      "id": "220779",
       "seasons": {
-        "1": 366,
-        "2": 50
+        "1": 12
       },
-      "episodes": 416,
-      "stills": 415,
-      "overviews": 415,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "hxh",
-      "title": "Hunter x Hunter",
-      "id": "46298",
+      "key": "horimiyathemissingpieces",
+      "title": "Horimiya: The Missing Pieces",
+      "id": "228663",
       "seasons": {
-        "1": 62,
-        "2": 74,
-        "3": 12
+        "1": 13
       },
-      "episodes": 148,
-      "stills": 148,
-      "overviews": 148,
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
       "ok": true
     },
     {
-      "key": "mob",
-      "title": "Mob Psycho 100",
-      "id": "67075",
+      "key": "rentagirlfriend",
+      "title": "Rent-a-Girlfriend",
+      "id": "96316",
+      "seasons": {
+        "1": 60
+      },
+      "episodes": 60,
+      "stills": 60,
+      "overviews": 59,
+      "ok": true
+    },
+    {
+      "key": "mytinysenpai",
+      "title": "My Tiny Senpai",
+      "id": "217390",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "thedetectiveisalreadydead",
+      "title": "The Detective Is Already Dead",
+      "id": "117061",
       "seasons": {
         "1": 12,
-        "2": 13,
-        "3": 12
+        "2": 13
       },
-      "episodes": 37,
-      "stills": 37,
-      "overviews": 37,
+      "episodes": 25,
+      "stills": 15,
+      "overviews": 15,
       "ok": true
     },
     {
-      "key": "rezero",
-      "title": "Re:ZERO -Starting Life in Another World-",
-      "id": "65942",
+      "key": "themaidihiredrecentlyismysterious",
+      "title": "The Maid I Hired Recently Is Mysterious",
+      "id": "202160",
       "seasons": {
-        "1": 85
+        "1": 11
       },
-      "episodes": 85,
-      "stills": 85,
-      "overviews": 85,
+      "episodes": 11,
+      "stills": 11,
+      "overviews": 11,
       "ok": true
     },
     {
-      "key": "blackclover",
-      "title": "Black Clover",
-      "id": "73223",
+      "key": "handymansaitouinanotherworld",
+      "title": "Handyman Saitou in Another World",
+      "id": "155942",
       "seasons": {
-        "1": 170,
-        "2": 26
+        "1": 12
       },
-      "episodes": 196,
-      "stills": 173,
-      "overviews": 173,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "haikyuu",
-      "title": "Haikyu!!",
-      "id": "60863",
+      "key": "sheprofessedherselfpupilofthewiseman",
+      "title": "She Professed Herself Pupil of the Wise Man",
+      "id": "104032",
       "seasons": {
-        "1": 25,
-        "2": 25,
-        "3": 10,
-        "4": 25
+        "1": 12
       },
-      "episodes": 85,
-      "stills": 85,
-      "overviews": 85,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "bluelock",
-      "title": "BLUE LOCK",
-      "id": "131041",
+      "key": "iminlovewiththevillainess",
+      "title": "I'm in Love with the Villainess",
+      "id": "216269",
       "seasons": {
-        "1": 38
+        "1": 12
       },
-      "episodes": 38,
-      "stills": 38,
-      "overviews": 38,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "oshi",
-      "title": "【OSHI NO KO】",
-      "id": "203737",
+      "key": "theancientmagusbride",
+      "title": "The Ancient Magus' Bride",
+      "id": "73833",
       "seasons": {
-        "1": 35
+        "1": 24,
+        "2": 24
       },
-      "episodes": 35,
-      "stills": 35,
-      "overviews": 35,
+      "episodes": 48,
+      "stills": 48,
+      "overviews": 48,
       "ok": true
     },
     {
-      "key": "dandadan",
-      "title": "Dan Da Dan",
-      "id": "240411",
+      "key": "rurounikenshin",
+      "title": "Rurouni Kenshin",
+      "id": "210879",
       "seasons": {
-        "1": 24
+        "1": 47
+      },
+      "episodes": 47,
+      "stills": 47,
+      "overviews": 47,
+      "ok": true
+    },
+    {
+      "key": "ishallsurviveusingpotions",
+      "title": "I Shall Survive Using Potions!",
+      "id": "221148",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "morethanamarriedcouplebutnotlovers",
+      "title": "More than a Married Couple, but Not Lovers",
+      "id": "139287",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "buddydaddies",
+      "title": "Buddy Daddies",
+      "id": "212963",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "theangelnextdoorspoilsmerotten",
+      "title": "The Angel Next Door Spoils Me Rotten",
+      "id": "154743",
+      "seasons": {
+        "1": 12,
+        "2": 12
       },
       "episodes": 24,
       "stills": 24,
@@ -411,120 +430,41 @@
       "ok": true
     },
     {
-      "key": "tower",
-      "title": "Tower of God",
-      "id": "97860",
+      "key": "thedailylifeoftheimmortalking",
+      "title": "The Daily Life of the Immortal King",
+      "id": "98123",
       "seasons": {
-        "1": 13,
-        "2": 26
-      },
-      "episodes": 39,
-      "stills": 39,
-      "overviews": 39,
-      "ok": true
-    },
-    {
-      "key": "goh",
-      "title": "The God of High School",
-      "id": "99778",
-      "seasons": {
-        "1": 13
-      },
-      "episodes": 13,
-      "stills": 13,
-      "overviews": 13,
-      "ok": true
-    },
-    {
-      "key": "goldenkamuy",
-      "title": "Golden Kamuy",
-      "id": "76757",
-      "seasons": {
-        "1": 12,
+        "1": 15,
         "2": 12,
         "3": 12,
-        "4": 13,
-        "5": 13
+        "4": 12,
+        "5": 12
       },
-      "episodes": 62,
-      "stills": 62,
-      "overviews": 61,
+      "episodes": 63,
+      "stills": 63,
+      "overviews": 63,
       "ok": true
     },
     {
-      "key": "fireforce",
-      "title": "Fire Force",
-      "id": "88046",
+      "key": "hokkaidogalsaresuperadorable",
+      "title": "Hokkaido Gals Are Super Adorable!",
+      "id": "213181",
       "seasons": {
-        "1": 24,
-        "2": 24,
-        "3": 25
+        "1": 12
       },
-      "episodes": 73,
-      "stills": 73,
-      "overviews": 73,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "fatestrange",
-      "title": "Fate/strange Fake",
-      "id": "229858",
+      "key": "loghorizon",
+      "title": "Log Horizon",
+      "id": "60846",
       "seasons": {
-        "1": 13
-      },
-      "episodes": 13,
-      "stills": 13,
-      "overviews": 13,
-      "ok": true
-    },
-    {
-      "key": "cheatskill",
-      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in the Real World, Too",
-      "id": "208493",
-      "seasons": {
-        "1": 13
-      },
-      "emptySeasons": [
-        2
-      ],
-      "episodes": 13,
-      "stills": 13,
-      "overviews": 13,
-      "ok": true
-    },
-    {
-      "key": "mfg",
-      "title": "MF GHOST",
-      "id": "154526",
-      "seasons": {
-        "1": 37
-      },
-      "episodes": 37,
-      "stills": 37,
-      "overviews": 37,
-      "ok": true
-    },
-    {
-      "key": "trigun",
-      "title": "TRIGUN STAMPEDE",
-      "id": "204266",
-      "seasons": {
-        "1": 11,
-        "2": 12
-      },
-      "episodes": 23,
-      "stills": 23,
-      "overviews": 23,
-      "ok": true
-    },
-    {
-      "key": "toyour",
-      "title": "To Your Eternity",
-      "id": "97525",
-      "seasons": {
-        "1": 20,
-        "2": 20,
-        "3": 22
+        "1": 25,
+        "2": 25,
+        "3": 12
       },
       "episodes": 62,
       "stills": 62,
@@ -532,87 +472,108 @@
       "ok": true
     },
     {
-      "key": "slime",
-      "title": "That Time I Got Reincarnated as a Slime",
-      "id": "82684",
+      "key": "villainesslevel99imaybethehiddenbossbutimnotthedemonlord",
+      "title": "Villainess Level 99: I May Be the Hidden Boss But I'm Not the Demon Lord",
+      "id": "222930",
       "seasons": {
-        "1": 24,
-        "2": 24,
-        "3": 24,
-        "4": 24
+        "1": 12
       },
-      "episodes": 96,
-      "stills": 96,
-      "overviews": 96,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "classroom",
-      "title": "Classroom of the Elite",
-      "id": "72517",
+      "key": "theicebladesorcerershallruletheworld",
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "id": "200777",
       "seasons": {
         "1": 12,
-        "2": 13,
-        "3": 13,
-        "4": 16
+        "2": 12
       },
-      "emptySeasons": [
-        5
-      ],
-      "episodes": 54,
-      "stills": 54,
-      "overviews": 54,
+      "episodes": 24,
+      "stills": 15,
+      "overviews": 14,
       "ok": true
     },
     {
-      "key": "apothecary",
-      "title": "The Apothecary Diaries",
-      "id": "220542",
+      "key": "metallicrouge",
+      "title": "Metallic Rouge",
+      "id": "222787",
       "seasons": {
-        "1": 60
+        "1": 13
       },
-      "episodes": 60,
-      "stills": 51,
-      "overviews": 51,
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
       "ok": true
     },
     {
-      "key": "bluemiburo",
-      "title": "Blue Miburo",
-      "id": "234776",
+      "key": "codegeasslelouchoftherebellion",
+      "title": "Code Geass: Lelouch of the Rebellion",
+      "id": "31724",
       "seasons": {
-        "1": 24,
-        "2": 14
+        "1": 25,
+        "2": 25
       },
-      "episodes": 38,
-      "stills": 38,
-      "overviews": 38,
+      "episodes": 50,
+      "stills": 50,
+      "overviews": 50,
       "ok": true
     },
     {
-      "key": "dbz",
-      "title": "Dragon Ball Z",
-      "id": "12971",
+      "key": "thereincarnationofthestrongestexorcistinanotherworld",
+      "title": "The Reincarnation of the Strongest Exorcist in Another World",
+      "id": "156563",
       "seasons": {
-        "1": 39,
-        "2": 35,
-        "3": 33,
-        "4": 32,
-        "5": 26,
-        "6": 29,
-        "7": 25,
-        "8": 34,
-        "9": 38
+        "1": 13
       },
-      "episodes": 291,
-      "stills": 291,
-      "overviews": 291,
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
       "ok": true
     },
     {
-      "key": "gachiakuta",
-      "title": "Gachiakuta",
-      "id": "256721",
+      "key": "mylovestorywithyamadakunatlv999",
+      "title": "My Love Story with Yamada-kun at Lv999",
+      "id": "208067",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "theweakesttamerbeganajourneytopickuptrash",
+      "title": "The Weakest Tamer Began a Journey to Pick Up Trash",
+      "id": "214310",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "thewrongwaytousehealingmagic",
+      "title": "The Wrong Way to Use Healing Magic",
+      "id": "131365",
+      "seasons": {
+        "1": 13,
+        "2": 1
+      },
+      "episodes": 14,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "mashlemagicandmuscles",
+      "title": "MASHLE: MAGIC AND MUSCLES",
+      "id": "204832",
       "seasons": {
         "1": 24
       },
@@ -622,9 +583,45 @@
       "ok": true
     },
     {
-      "key": "hellsparadise",
-      "title": "Hell's Paradise",
-      "id": "117465",
+      "key": "bucchigiri",
+      "title": "BUCCHIGIRI?!",
+      "id": "226905",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "godsgamesweplay",
+      "title": "Gods' Games We Play",
+      "id": "156057",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "bartenderglassofgod",
+      "title": "BARTENDER Glass of God",
+      "id": "225168",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 11,
+      "ok": true
+    },
+    {
+      "key": "windbreaker",
+      "title": "WIND BREAKER",
+      "id": "223500",
       "seasons": {
         "1": 25
       },
@@ -634,9 +631,93 @@
       "ok": true
     },
     {
-      "key": "beginningend",
-      "title": "The Beginning After the End",
-      "id": "274671",
+      "key": "aconditioncalledlove",
+      "title": "A Condition Called Love",
+      "id": "239214",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "asaladbowlofeccentrics",
+      "title": "A Salad Bowl of Eccentrics",
+      "id": "236392",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "vampiredormitory",
+      "title": "Vampire Dormitory",
+      "id": "238903",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "themanysidesofvoiceactorradio",
+      "title": "The Many Sides of Voice Actor Radio",
+      "id": "216760",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "viralhit",
+      "title": "Viral Hit",
+      "id": "246029",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 11,
+      "ok": true
+    },
+    {
+      "key": "anarchdemonsdilemmahowtoloveyourelfbride",
+      "title": "An Archdemon's Dilemma: How to Love Your Elf Bride",
+      "id": "238848",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "qualityassuranceinanotherworld",
+      "title": "Quality Assurance in Another World",
+      "id": "222925",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "wistoriawandandsword",
+      "title": "Wistoria: Wand and Sword",
+      "id": "245842",
       "seasons": {
         "1": 12,
         "2": 12
@@ -647,124 +728,588 @@
       "ok": true
     },
     {
-      "key": "mushoku",
-      "title": "Mushoku Tensei: Jobless Reincarnation",
-      "id": "94664",
+      "key": "vtuberlegendhowiwentviralafterforgettingtoturnoffmystream",
+      "title": "VTuber Legend: How I Went Viral After Forgetting to Turn Off My Stream",
+      "id": "229743",
       "seasons": {
-        "1": 23,
-        "2": 24,
-        "3": 14
+        "1": 12
       },
-      "episodes": 61,
-      "stills": 61,
-      "overviews": 61,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "tsukimichi",
-      "title": "TSUKIMICHI -Moonlit Fantasy-",
-      "id": "111819",
+      "key": "theelusivesamurai",
+      "title": "The Elusive Samurai",
+      "id": "222623",
       "seasons": {
         "1": 12,
-        "2": 25,
-        "3": 1
+        "2": 12
       },
-      "episodes": 38,
-      "stills": 37,
-      "overviews": 37,
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
       "ok": true
     },
     {
-      "key": "shieldhero",
-      "title": "The Rising of the Shield Hero",
-      "id": "83095",
+      "key": "twilightoutoffocus",
+      "title": "Twilight Out of Focus",
+      "id": "249409",
       "seasons": {
-        "1": 25,
-        "2": 13,
-        "3": 12,
-        "4": 12
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "dayswithmystepsister",
+      "title": "Days with My Stepsister",
+      "id": "206629",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "byebyeearth",
+      "title": "Bye Bye, Earth",
+      "id": "214587",
+      "seasons": {
+        "1": 20
+      },
+      "episodes": 20,
+      "stills": 20,
+      "overviews": 20,
+      "ok": true
+    },
+    {
+      "key": "alyasometimeshidesherfeelingsinrussian",
+      "title": "Alya Sometimes Hides Her Feelings in Russian",
+      "id": "235758",
+      "seasons": {
+        "1": 12,
+        "2": 1
+      },
+      "episodes": 13,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "whydoesnobodyremembermeinthisworld",
+      "title": "Why Does Nobody Remember Me in This World?",
+      "id": "244672",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "makeinetoomanylosingheroines",
+      "title": "Makeine: Too Many Losing Heroines!",
+      "id": "241535",
+      "seasons": {
+        "1": 12
       },
       "emptySeasons": [
-        5
+        2
       ],
-      "episodes": 62,
-      "stills": 62,
-      "overviews": 62,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "fairytail",
-      "title": "Fairy Tail",
-      "id": "46261",
+      "key": "nolongerallowedinanotherworld",
+      "title": "No Longer Allowed in Another World",
+      "id": "205743",
       "seasons": {
-        "1": 48,
-        "2": 48,
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "truebeauty",
+      "title": "True Beauty",
+      "id": "239779",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "ninathestarrybride",
+      "title": "Nina the Starry Bride",
+      "id": "240641",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "illbecomeavillainesswhogoesdowninhistory",
+      "title": "I'll Become a Villainess Who Goes Down in History",
+      "id": "248817",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "tyingtheknotwithanamagamisister",
+      "title": "Tying the Knot with an Amagami Sister",
+      "id": "234910",
+      "seasons": {
+        "1": 24
+      },
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "youaremsservant",
+      "title": "You are Ms. Servant",
+      "id": "242143",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "goodbyedragonlife",
+      "title": "Good Bye, Dragon Life",
+      "id": "259786",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "zenshu",
+      "title": "ZENSHU",
+      "id": "249882",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "imgettingmarriedtoagirlihateinmyclass",
+      "title": "I'm Getting Married to a Girl I Hate in My Class",
+      "id": "257790",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "trilliongame",
+      "title": "TRILLION GAME",
+      "id": "240125",
+      "seasons": {
+        "1": 26
+      },
+      "episodes": 26,
+      "stills": 26,
+      "overviews": 26,
+      "ok": true
+    },
+    {
+      "key": "theredrangerbecomesanadventurerinanotherworld",
+      "title": "The Red Ranger Becomes an Adventurer in Another World",
+      "id": "261148",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "possiblythegreatestalchemistofalltime",
+      "title": "Possibly the Greatest Alchemist of All Time",
+      "id": "261298",
+      "seasons": {
+        "1": 12,
+        "2": 1
+      },
+      "episodes": 13,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "theunawareateliermeister",
+      "title": "The Unaware Atelier Meister",
+      "id": "277881",
+      "seasons": {
+        "1": 12,
+        "2": 1
+      },
+      "episodes": 13,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "catchmeattheballpark",
+      "title": "Catch Me at the Ballpark!",
+      "id": "277222",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "sk8theinfinity",
+      "title": "SK8 the Infinity",
+      "id": "110309",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "onceuponawitchsdeath",
+      "title": "Once Upon a Witch's Death",
+      "id": "258055",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "thegorillagodsgotogirl",
+      "title": "The Gorilla God's Go-To Girl",
+      "id": "278816",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "berserkofgluttony",
+      "title": "Berserk of Gluttony",
+      "id": "213331",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "theshiunjifamilychildren",
+      "title": "The Shiunji Family Children",
+      "id": "261091",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "clevatess",
+      "title": "Clevatess",
+      "id": "258348",
+      "seasons": {
+        "1": 12,
+        "2": 13
+      },
+      "episodes": 25,
+      "stills": 25,
+      "overviews": 25,
+      "ok": true
+    },
+    {
+      "key": "newsaga",
+      "title": "New Saga",
+      "id": "212766",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 11,
+      "ok": true
+    },
+    {
+      "key": "lordofmysteries",
+      "title": "Lord of Mysteries",
+      "id": "232230",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "withyouourlovewillmakeitthrough",
+      "title": "With You, Our Love Will Make It Through",
+      "id": "282662",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "mechanicalmarie",
+      "title": "Mechanical Marie",
+      "id": "287278",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "sentencedtobeahero",
+      "title": "Sentenced to Be a Hero",
+      "id": "249907",
+      "seasons": {
+        "1": 12
+      },
+      "emptySeasons": [
+        2
+      ],
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "myheroacademiavigilantes",
+      "title": "My Hero Academia: Vigilantes",
+      "id": "280110",
+      "seasons": {
+        "1": 26
+      },
+      "episodes": 26,
+      "stills": 26,
+      "overviews": 26,
+      "ok": true
+    },
+    {
+      "key": "naruto2",
+      "title": "Naruto",
+      "id": "46260",
+      "seasons": {
+        "1": 52,
+        "2": 52,
         "3": 54,
-        "4": 25,
-        "5": 51,
-        "6": 39,
-        "7": 12,
-        "8": 51
+        "4": 62
       },
-      "episodes": 328,
-      "stills": 328,
-      "overviews": 328,
+      "episodes": 220,
+      "stills": 220,
+      "overviews": 220,
       "ok": true
     },
     {
-      "key": "yourlie",
-      "title": "Your Lie in April",
-      "id": "61663",
+      "key": "youandiarepolaropposites",
+      "title": "You and I Are Polar Opposites",
+      "id": "278043",
       "seasons": {
-        "1": 22
+        "1": 25
       },
-      "episodes": 22,
-      "stills": 22,
-      "overviews": 22,
+      "episodes": 25,
+      "stills": 25,
+      "overviews": 25,
       "ok": true
     },
     {
-      "key": "jojo",
-      "title": "JoJo's Bizarre Adventure",
-      "id": "45790",
+      "key": "hanakimi",
+      "title": "Hana-Kimi",
+      "id": "254492",
       "seasons": {
-        "1": 26,
-        "2": 48,
-        "3": 39,
-        "4": 39,
-        "5": 38,
-        "6": 12
+        "1": 12,
+        "2": 13
       },
-      "episodes": 202,
-      "stills": 195,
-      "overviews": 195,
+      "episodes": 25,
+      "stills": 25,
+      "overviews": 24,
       "ok": true
     },
     {
-      "key": "shangri",
-      "title": "Shangri-La Frontier",
-      "id": "205050",
+      "key": "agatherersadventureinisekai",
+      "title": "A Gatherer's Adventure in Isekai",
+      "id": "284442",
       "seasons": {
-        "1": 51
+        "1": 12
       },
-      "episodes": 51,
-      "stills": 50,
-      "overviews": 50,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 11,
       "ok": true
     },
     {
-      "key": "iruma",
-      "title": "Welcome to Demon School! Iruma-kun",
-      "id": "91801",
+      "key": "darkmoonthebloodaltar",
+      "title": "DARK MOON: THE BLOOD ALTAR",
+      "id": "271609",
       "seasons": {
-        "1": 23,
-        "2": 21,
-        "3": 21,
-        "4": 24
+        "1": 12
       },
-      "episodes": 89,
-      "stills": 89,
-      "overviews": 89,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 11,
+      "ok": true
+    },
+    {
+      "key": "mycluelessfirstfriend",
+      "title": "My Clueless First Friend",
+      "id": "214547",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "kunonthesorcerercansee",
+      "title": "Kunon the Sorcerer Can See",
+      "id": "282946",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "anadventurersdailygrindatage29",
+      "title": "An Adventurer's Daily Grind at Age 29",
+      "id": "290667",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "amisanthropeteachesaclassfordemihumans",
+      "title": "A Misanthrope Teaches a Class for Demi-Humans",
+      "id": "303434",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
+      "ok": true
+    },
+    {
+      "key": "tobeherox",
+      "title": "TO BE HERO X",
+      "id": "272059",
+      "seasons": {
+        "1": 24
+      },
+      "emptySeasons": [
+        2
+      ],
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "daemonsoftheshadowrealm",
+      "title": "Daemons of the Shadow Realm",
+      "id": "260463",
+      "seasons": {
+        "1": 24
+      },
+      "emptySeasons": [
+        2
+      ],
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "agentsofthefourseasonsdanceofspring",
+      "title": "Agents of the Four Seasons Dance of Spring",
+      "id": "288659",
+      "seasons": {
+        "1": 14
+      },
+      "episodes": 14,
+      "stills": 14,
+      "overviews": 14,
+      "ok": true
+    },
+    {
+      "key": "snowballearth",
+      "title": "SNOWBALL EARTH",
+      "id": "296232",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
       "ok": true
     }
   ]
