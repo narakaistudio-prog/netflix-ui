@@ -1,63 +1,20 @@
 {
-  "generatedAt": "2026-10-22T11:44:41.443Z",
+  "generatedAt": "2026-10-22T12:33:14.529Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [],
   "summary": {
-    "requested": 7,
-    "harvested": 7,
+    "requested": 4,
+    "harvested": 4,
     "failed": [],
-    "episodes": 255,
-    "stills": 255,
-    "overviews": 255
+    "episodes": 91,
+    "stills": 91,
+    "overviews": 91
   },
   "titles": [
     {
-      "key": "mobilesuitgundamthewitchfrommercury2",
-      "title": "Mobile Suit Gundam: The Witch from Mercury",
-      "id": "196400",
-      "seasons": {
-        "1": 24
-      },
-      "episodes": 24,
-      "stills": 24,
-      "overviews": 24,
-      "ok": true
-    },
-    {
-      "key": "demonslayerkimetsunoyaiba2",
-      "title": "Demon Slayer: Kimetsu no Yaiba",
-      "id": "85937",
-      "seasons": {
-        "1": 26,
-        "2": 7,
-        "3": 11,
-        "4": 11,
-        "5": 8
-      },
-      "episodes": 63,
-      "stills": 63,
-      "overviews": 63,
-      "ok": true
-    },
-    {
-      "key": "drstone3",
-      "title": "Dr. STONE",
-      "id": "86031",
-      "seasons": {
-        "1": 24,
-        "2": 11,
-        "3": 22,
-        "4": 37
-      },
-      "episodes": 94,
-      "stills": 94,
-      "overviews": 94,
-      "ok": true
-    },
-    {
-      "key": "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty",
-      "title": "The Strongest Tank's Labyrinth Raids -A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party-",
-      "id": "236532",
+      "key": "zom100bucketlistofthedead",
+      "title": "Zom 100: Bucket List of the Dead",
+      "id": "217766",
       "seasons": {
         "1": 12
       },
@@ -67,40 +24,40 @@
       "ok": true
     },
     {
-      "key": "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability",
-      "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability",
-      "id": "213830",
+      "key": "assassinationclassroom",
+      "title": "Assassination Classroom",
+      "id": "62110",
       "seasons": {
-        "1": 24
+        "1": 22,
+        "2": 25
       },
-      "episodes": 24,
-      "stills": 24,
-      "overviews": 24,
+      "episodes": 47,
+      "stills": 47,
+      "overviews": 47,
       "ok": true
     },
     {
-      "key": "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside",
-      "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
-      "id": "113256",
+      "key": "dragonballdaima",
+      "title": "Dragon Ball DAIMA",
+      "id": "236994",
       "seasons": {
-        "1": 13,
-        "2": 12
+        "1": 20
       },
-      "episodes": 25,
-      "stills": 25,
-      "overviews": 25,
+      "episodes": 20,
+      "stills": 20,
+      "overviews": 20,
       "ok": true
     },
     {
-      "key": "therewasacutegirlintheherospartysoitriedconfessingtoher",
-      "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
-      "id": "295366",
+      "key": "letsplay",
+      "title": "Let's Play",
+      "id": "293010",
       "seasons": {
-        "1": 13
+        "1": 12
       },
-      "episodes": 13,
-      "stills": 13,
-      "overviews": 13,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     }
   ]

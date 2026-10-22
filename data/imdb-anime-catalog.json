@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T12:30:49.599Z",
+  "updated": "2026-10-22T12:32:57.332Z",
   "entries": [
     {
       "key": "rankingofkings",
@@ -1974,6 +1974,92 @@
       "runtime": "",
       "desc": "Yoki was once a human but reincarnated into a demon. He now holds a middling position serving the Demon King tasked with taking down the hero party. But when he finally faces them, Yoki thinks... \"No way… she's perfect.\" Of all things, he fell in love at first sight with Cecilia, the priest of the hero party! Her serious gaze, her every little gesture, everything about her is too cute! She's an angel! And so, Yoki made up his mind that he would confess his feelings to her.",
       "imdbId": "tt38037498"
+    },
+    {
+      "key": "zom100bucketlistofthedead",
+      "kind": "tv",
+      "id": "217766",
+      "title": "Zom 100: Bucket List of the Dead",
+      "year": "2023",
+      "rating": "3.8",
+      "genres": [
+        "action",
+        "adventure",
+        "fantasy",
+        "science-fiction"
+      ],
+      "img": "https://image.tmdb.org/t/p/w500/XzOeAppGpnsSAiK82idkg0BoCt.jpg",
+      "runtime": "",
+      "desc": "An overworked 24-year-old finally decides to live a little and create a bucket list, when a zombie outbreak hits the country.",
+      "imdbId": "tt25811262"
+    },
+    {
+      "key": "assassinationclassroom",
+      "kind": "tv",
+      "id": "62110",
+      "title": "Assassination Classroom",
+      "year": "2015",
+      "rating": "4.2",
+      "genres": [
+        "drama",
+        "fantasy",
+        "science-fiction"
+      ],
+      "img": "https://image.tmdb.org/t/p/w500/qf0l0nQ2t06Es3cSXflqx6l6vsJ.jpg",
+      "runtime": "",
+      "desc": "The students of Class 3-E have a mission: kill their teacher before graduation. He has already destroyed the moon, and has promised to destroy the Earth if he can not be killed within a year. But how can this class of misfits kill a tentacled monster, capable of reaching Mach 20 speed, who may be the best teacher any of them have ever had?",
+      "imdbId": "tt3837246"
+    },
+    {
+      "key": "dragonballdaima",
+      "kind": "tv",
+      "id": "236994",
+      "title": "Dragon Ball DAIMA",
+      "year": "2024",
+      "rating": "4.1",
+      "genres": [
+        "action",
+        "adventure",
+        "comedy",
+        "fantasy",
+        "science-fiction"
+      ],
+      "img": "https://image.tmdb.org/t/p/w500/lMULbSFZNXUC87MqOZQ4SSV9DXI.jpg",
+      "runtime": "",
+      "desc": "Mysteriously transformed into mini versions of themselves, Goku and his friends travel to the Demon Realm to uncover the truth and find a cure.",
+      "imdbId": "tt29485149"
+    },
+    {
+      "key": "anotherworld",
+      "kind": "movie",
+      "id": "1470329",
+      "title": "Another World",
+      "year": "2025",
+      "rating": "3.7",
+      "genres": [
+        "adventure",
+        "drama",
+        "fantasy"
+      ],
+      "img": "https://image.tmdb.org/t/p/w500/glYJbEs9MBPAGAj2EL0jFPlmEAT.jpg",
+      "runtime": "1h 52m",
+      "desc": "Gudo is a Soul Keeper, a spirit who guides human souls into their next life. When he befriends a young girl named Yuri, he discovers that her untimely death has left her cursed with unresolved rage and regret. As Yuri’s soul teeters on the edge of annihilation, Gudo embarks on a dangerous journey to stop her from unleashing horrible destruction on both the human world and the spirit realm.",
+      "imdbId": "tt34621291"
+    },
+    {
+      "key": "letsplay",
+      "kind": "tv",
+      "id": "293010",
+      "title": "Let's Play",
+      "year": "2025",
+      "rating": "3.5",
+      "genres": [
+        "comedy"
+      ],
+      "img": "https://image.tmdb.org/t/p/w500/tJbyOYE4befDE7SgV03aJzxt8Ja.jpg",
+      "runtime": "",
+      "desc": "Samara “Sam” Young is a developer in Los Angeles who’s about to achieve her dreams with her first video game, Ruminate. That is, until a popular streamer gives the game a scathing review. Even worse, Sam finds out the troublesome critic is now her new neighbor! Get lost in a comedic, romantic, and all-too-real story about gaming, memes, and social anxiety. Come for the plot, stay for the doggo.",
+      "imdbId": "tt37532040"
     }
   ]
 }

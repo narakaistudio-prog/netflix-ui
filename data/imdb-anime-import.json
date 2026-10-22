@@ -1,8 +1,39 @@
 {
   "listId": "ls540527030",
-  "generatedAt": "2026-10-22T11:53:31.142Z",
+  "generatedAt": "2026-10-22T12:32:57.332Z",
   "imdbItems": 156,
-  "added": [],
+  "added": [
+    {
+      "key": "zom100bucketlistofthedead",
+      "title": "Zom 100: Bucket List of the Dead",
+      "nxsha": "tv/217766",
+      "imdb": "tt25811262"
+    },
+    {
+      "key": "assassinationclassroom",
+      "title": "Assassination Classroom",
+      "nxsha": "tv/62110",
+      "imdb": "tt3837246"
+    },
+    {
+      "key": "dragonballdaima",
+      "title": "Dragon Ball DAIMA",
+      "nxsha": "tv/236994",
+      "imdb": "tt29485149"
+    },
+    {
+      "key": "anotherworld",
+      "title": "Another World",
+      "nxsha": "movie/1470329",
+      "imdb": "tt34621291"
+    },
+    {
+      "key": "letsplay",
+      "title": "Let's Play",
+      "nxsha": "tv/293010",
+      "imdb": "tt37532040"
+    }
+  ],
   "skipped": [
     {
       "title": "My Dress-Up Darling",
@@ -193,10 +224,6 @@
       "reason": "already-in-catalog"
     },
     {
-      "title": "Zom 100: Bucket List of the Dead",
-      "reason": "already-in-catalog"
-    },
-    {
       "title": "Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord",
       "reason": "already-in-catalog"
     },
@@ -365,10 +392,6 @@
       "reason": "already-in-catalog"
     },
     {
-      "title": "Assassination Classroom",
-      "reason": "already-in-catalog"
-    },
-    {
       "title": "Mushoku Tensei: Jobless Reincarnation",
       "reason": "already-in-catalog"
     },
@@ -397,15 +420,7 @@
       "reason": "already-in-catalog"
     },
     {
-      "title": "Dragon Ball Daima",
-      "reason": "already-in-catalog"
-    },
-    {
       "title": "Zenshu",
-      "reason": "already-in-catalog"
-    },
-    {
-      "title": "Another World",
       "reason": "already-in-catalog"
     },
     {
@@ -533,10 +548,6 @@
       "reason": "already-in-catalog"
     },
     {
-      "title": "Let's Play",
-      "reason": "already-in-catalog"
-    },
-    {
       "title": "Dark Moon: The Blood Altar",
       "reason": "already-in-catalog"
     },
@@ -629,26 +640,6 @@
     {
       "title": "Easygoing Territory Defense by the Optimistic Lord: Production Magic Turns a Nameless Village into the Strongest Fortified City",
       "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Zom 100: Bucket List of the Dead",
-      "reason": "movie-to-tv: 217766"
-    },
-    {
-      "title": "Assassination Classroom",
-      "reason": "movie-to-tv: 62110"
-    },
-    {
-      "title": "Dragon Ball DAIMA",
-      "reason": "movie-to-tv: 236994"
-    },
-    {
-      "title": "Let's Play",
-      "reason": "movie-to-tv: 293010"
-    },
-    {
-      "title": "Another World",
-      "reason": "movie-to-tv: 4547"
     }
   ],
   "enriched": []

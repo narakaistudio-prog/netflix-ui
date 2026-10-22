@@ -1223,10 +1223,10 @@
     {
       "key": "zom100bucketlistofthedead",
       "title": "Zom 100: Bucket List of the Dead",
-      "kind": "movie",
-      "id": "1070514",
+      "kind": "tv",
+      "id": "217766",
       "seasons": {
-        "1": 1
+        "1": 12
       }
     },
     {
@@ -1517,10 +1517,11 @@
     {
       "key": "assassinationclassroom",
       "title": "Assassination Classroom",
-      "kind": "movie",
-      "id": "349176",
+      "kind": "tv",
+      "id": "62110",
       "seasons": {
-        "1": 1
+        "1": 22,
+        "2": 25
       }
     },
     {
@@ -1571,10 +1572,10 @@
     {
       "key": "dragonballdaima",
       "title": "Dragon Ball DAIMA",
-      "kind": "movie",
-      "id": "1361184",
+      "kind": "tv",
+      "id": "236994",
       "seasons": {
-        "1": 1
+        "1": 20
       }
     },
     {
@@ -1803,10 +1804,10 @@
     {
       "key": "letsplay",
       "title": "Let's Play",
-      "kind": "movie",
-      "id": "1441154",
+      "kind": "tv",
+      "id": "293010",
       "seasons": {
-        "1": 1
+        "1": 12
       }
     },
     {

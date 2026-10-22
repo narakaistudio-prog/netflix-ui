@@ -1768,5 +1768,47 @@
     "seasons": {
       "1": 13
     }
-  }
+  },
+  "zom100bucketlistofthedead": {
+    "id": "217766",
+    "kind": "tv",
+    "title": "Zom 100: Bucket List of the Dead",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "assassinationclassroom": {
+    "id": "62110",
+    "kind": "tv",
+    "title": "Assassination Classroom",
+    "seasons": {
+      "1": 22,
+      "2": 25
+    }
+  },
+  "dragonballdaima": {
+    "id": "236994",
+    "kind": "tv",
+    "title": "Dragon Ball DAIMA",
+    "seasons": {
+      "1": 20
+    }
+  },
+  "anotherworld": {
+    "id": "1470329",
+    "kind": "movie",
+    "title": "Another World",
+    "seasons": {
+      "1": 1
+    }
+  },
+  "letsplay": {
+    "id": "293010",
+    "kind": "tv",
+    "title": "Let's Play",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata."
 }
