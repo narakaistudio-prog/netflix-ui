@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T11:16:49.756Z",
+  "updated": "2026-10-22T11:28:35.414Z",
   "entries": [
     {
       "key": "rankingofkings",
@@ -1490,6 +1490,58 @@
       "runtime": "",
       "desc": "Ten years after saving Earth with his robot friend Yukio, Tetsuo returns to a planet of endless ice and snow.",
       "imdbId": "tt39229727"
+    },
+    {
+      "key": "mobilesuitgundamthewitchfrommercury",
+      "kind": "tv",
+      "id": "196400",
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "year": "2022",
+      "rating": "3.8",
+      "genres": [],
+      "img": "https://image.tmdb.org/t/p/w500/gBkDlMaAVOVMRWWlRUHhkLAhNE3.jpg",
+      "runtime": "",
+      "desc": "A. S. (Ad Stella) 122 ― An era when a multitude of corporations have entered space and built a huge economic system. Suletta Mercury, a lone girl from the remote planet Mercury, transfers to the Asticassia School of Technology, run by the Beneritt Group which dominates the mobile suit industry.",
+      "imdbId": "tt15433166"
+    },
+    {
+      "key": "demonslayerkimetsunoyaiba",
+      "kind": "tv",
+      "id": "85937",
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "year": "2019",
+      "rating": "4.3",
+      "genres": [],
+      "img": "https://image.tmdb.org/t/p/w500/xUfRZu2mi8jH6SzQEJGP6tjBuYj.jpg",
+      "runtime": "",
+      "desc": "After a demon attack leaves his family slain and his sister cursed, Tanjiro embarks upon a perilous journey to find a cure and avenge those he's lost.",
+      "imdbId": "tt9335498"
+    },
+    {
+      "key": "drstone2",
+      "kind": "tv",
+      "id": "86031",
+      "title": "Dr. STONE",
+      "year": "2019",
+      "rating": "4.3",
+      "genres": [],
+      "img": "https://image.tmdb.org/t/p/w500/xbZQ3fDl0y5mt0ARwfeyrgQ4JTw.jpg",
+      "runtime": "",
+      "desc": "One fateful day, all of humanity was petrified by a blinding flash of light. After several millennia, high schooler Taiju awakens and finds himself lost in a world of statues. However, he’s not alone! His science-loving friend Senku’s been up and running for a few months and he's got a grand plan in mind—to kickstart civilization with the power of science!",
+      "imdbId": "tt9679542"
+    },
+    {
+      "key": "anotherworld",
+      "kind": "movie",
+      "id": "1470329",
+      "title": "Another World",
+      "year": "2025",
+      "rating": "3.7",
+      "genres": [],
+      "img": "https://image.tmdb.org/t/p/w500/glYJbEs9MBPAGAj2EL0jFPlmEAT.jpg",
+      "runtime": "1h 52m",
+      "desc": "Gudo is a Soul Keeper, a spirit who guides human souls into their next life. When he befriends a young girl named Yuri, he discovers that her untimely death has left her cursed with unresolved rage and regret. As Yuri’s soul teeters on the edge of annihilation, Gudo embarks on a dangerous journey to stop her from unleashing horrible destruction on both the human world and the spirit realm.",
+      "imdbId": "tt34621291"
     }
   ]
 }

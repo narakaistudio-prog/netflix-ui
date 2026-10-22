@@ -2953,6 +2953,49 @@
       "seasons": {
         "1": 13
       }
+    },
+    {
+      "key": "mobilesuitgundamthewitchfrommercury",
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "kind": "tv",
+      "id": "196400",
+      "seasons": {
+        "1": 24
+      }
+    },
+    {
+      "key": "demonslayerkimetsunoyaiba",
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "kind": "tv",
+      "id": "85937",
+      "seasons": {
+        "1": 26,
+        "2": 7,
+        "3": 11,
+        "4": 11,
+        "5": 8
+      }
+    },
+    {
+      "key": "drstone2",
+      "title": "Dr. STONE",
+      "kind": "tv",
+      "id": "86031",
+      "seasons": {
+        "1": 24,
+        "2": 11,
+        "3": 22,
+        "4": 37
+      }
+    },
+    {
+      "key": "anotherworld",
+      "title": "Another World",
+      "kind": "movie",
+      "id": "1470329",
+      "seasons": {
+        "1": 1
+      }
     }
   ],
   "saoMovieCandidates": [

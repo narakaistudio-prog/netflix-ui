@@ -4423,6 +4423,91 @@
           "base": 0
         }
       }
+    },
+    "mobilesuitgundamthewitchfrommercury": {
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "slug": "mobile-suit-gundam-the-witch-from-mercury",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "demonslayerkimetsunoyaiba": {
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "slug": "demon-slayer-kimetsu-no-yaiba",
+      "seasons": {
+        "1": 26,
+        "2": 18,
+        "3": 11,
+        "4": 8,
+        "5": 1
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "seg": [
+            [
+              2,
+              1,
+              7
+            ],
+            [
+              3,
+              1,
+              11
+            ]
+          ]
+        },
+        "3": {
+          "season": 4,
+          "base": 0
+        },
+        "4": {
+          "season": 5,
+          "base": 0
+        }
+      },
+      "images": {
+        "5": {
+          "1": "https://image.tmdb.org/t/p/w780/1RgPyOhN4DRs225BGTlHJqCudII.jpg"
+        }
+      }
+    },
+    "drstone2": {
+      "title": "Dr. STONE",
+      "slug": "dr-stone",
+      "seasons": {
+        "1": 24,
+        "2": 11,
+        "3": 22,
+        "4": 37
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
     }
   },
   "misses": [

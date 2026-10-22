@@ -2669,5 +2669,44 @@
     "seasons": {
       "1": 13
     }
+  },
+  "mobilesuitgundamthewitchfrommercury": {
+    "id": "196400",
+    "kind": "tv",
+    "title": "Mobile Suit Gundam: The Witch from Mercury",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "demonslayerkimetsunoyaiba": {
+    "id": "85937",
+    "kind": "tv",
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "seasons": {
+      "1": 26,
+      "2": 7,
+      "3": 11,
+      "4": 11,
+      "5": 8
+    }
+  },
+  "drstone2": {
+    "id": "86031",
+    "kind": "tv",
+    "title": "Dr. STONE",
+    "seasons": {
+      "1": 24,
+      "2": 11,
+      "3": 22,
+      "4": 37
+    }
+  },
+  "anotherworld": {
+    "id": "1470329",
+    "kind": "movie",
+    "title": "Another World",
+    "seasons": {
+      "1": 1
+    }
   }
 }
