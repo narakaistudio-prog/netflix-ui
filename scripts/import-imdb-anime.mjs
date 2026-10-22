@@ -400,12 +400,43 @@ async function main() {
     const html = readFileSync(HTML_PATH, 'utf8');
     const registry = JSON.parse(readFileSync(NX_TITLES_PATH, 'utf8'));
 
-    const listUrl = `https://www.imdb.com/list/${listId}/?count=250`;
-    console.log(`IMDb list padh rahe hain: ${listUrl}`);
-    const listHtml = await get(listUrl);
-    const items = parseImdbList(listHtml);
-    console.log(`IMDb items: ${items.length}`);
-    if (items.length < 40) throw new Error(`IMDb list se sirf ${items.length} titles mile — page badal gaya lagta hai`);
+    // IMDb kabhi-kabhi bot check ya chhota "compact" page deta hai — teen URL
+    // try karte hain aur sabse zyada titles wala use karte hain.
+    const listUrls = [
+        `https://www.imdb.com/list/${listId}/?count=250`,
+        `https://www.imdb.com/list/${listId}/?view=compact&count=250`,
+        `https://m.imdb.com/list/${listId}/`,
+    ];
+    let items = [];
+    let listHtml = '';
+    for (const listUrl of listUrls) {
+        try {
+            const response = await fetch(listUrl, {
+                redirect: 'follow',
+                headers: {
+                    'User-Agent': UA,
+                    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                },
+            });
+            const body = await response.text();
+            const parsed = parseImdbList(body);
+            console.log(`IMDb ${response.status} ${body.length} chars -> ${parsed.length} titles (${listUrl})`);
+            if (parsed.length > items.length) {
+                items = parsed;
+                listHtml = body;
+            }
+            if (items.length >= 40) break;
+        } catch (error) {
+            console.log(`IMDb fetch fail (${listUrl}): ${error?.message || error}`);
+        }
+        await sleep(600);
+    }
+    if (items.length < 40) {
+        // Debug ke liye page ka shuru ka hissa log me chhod do (CI log branch me aata hai).
+        console.log(`IMDb page snippet: ${String(listHtml).slice(0, 700).replace(/\s+/g, ' ')}`);
+        throw new Error(`IMDb list se sirf ${items.length} titles mile — page badal gaya lagta hai`);
+    }
 
     const have = new Set(existingCatalogTitles(html).map(normTitle));
     const report = { listId, generatedAt: new Date().toISOString(), added: [], skipped: [], missing: [] };
