@@ -84,50 +84,52 @@ export const MOVIEBOX_STAGE_PAGE_WIDTH = MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_C
  * panel + neeche ki title/rating patti dono bahar.
  */
 /**
- * Phone mobile layout me site ke player ke **neeche** uska apna control bar
- * hota hai (pause, time, quality, CC, volume, settings, fullscreen). Utni
- * extra jagah crop me chahiye — pehle sirf video (16:9) ka hissa dikhta tha,
- * isliye bar aadha kata reh jata tha (owner: "control niche chala gaya hai").
+ * Site ke control bar (pause, time, quality, CC, voice, settings, PiP,
+ * fullscreen) ki approx unchai — sirf **naap/debug** ke liye.
+ *
+ * ⚠️ Ye crop me add NAHI hoti: phone par site ka control bar player container
+ * ke **andar** hota hai, isliye crop container ke bottom par (2:1) band karte
+ * hain — warna uske neeche wali Refresh/Download patti bhi andar aa jati hai
+ * (owner ki screenshot 1).
  */
 export const MOVIEBOX_PHONE_BAR_HEIGHT = 42;
 
 /**
- * 📌 PHONE PLAYER KA SIZE/RATIO — **PRODUCTION KA WAHI NAAP, PERMANENT LOCK**
- * (owner: "jo production me moviebox player ka size hai wahi phone ke liye
- * permanent karo").
+ * 📌 PHONE PLAYER — production jaisa size/ratio, PERMANENT LOCK
+ * (owner: "production me jaisa player hai waisa hi rahe, aur uske neeche
+ * Refresh/Download/Prev/Next wali patti kabhi na aaye").
  * ==========================================================================
- * Ye numbers apne banaye hue nahi hain — jo **production me chal raha hai**
- * (390px phone) wahi hain:
+ * Ye naap **production screenshots se pixel-naap** kar ke nikala gaya hai
+ * (390px phone, modal 366 CSS chaudi):
  *
- *   phone dabba (modal) : 366 × 244   = (viewport − 24) × height(width)
- *   crop (dikhne wala)  : 366 × 230   = site ka 16:9 video + control bar
- *   video               : 342 × 192.4 = dabbe ke andar, dono taraf 12px saans
+ *   player container : 366 × ~183–187  ≈ **2:1**  (video + site ke controls)
+ *   uske neeche      : site ki page patti — Refresh | Download | Prev | Next
+ *   site controls    : container ke **andar** (seek + icons bottom ke paas)
  *
- * Dabbe ki unchai **sirf uski chaudai se** nikalti hai:
+ * Pehle crop `16:9 video + 42px` (≈230) thi — container se ~45px zyada, isliye
+ * jab player load/error state me hota tha to uske neeche wali patti crop ke
+ * andar jhaank jati thi (owner ki screenshot 1). Ab crop **container ke
+ * bottom par hi** khatam hoti hai, isliye wo patti kabhi nahi dikhti.
  *
- *   height = round(width × 9/16) + MOVIEBOX_PHONE_BAR_HEIGHT − 4
+ * Height **sirf chaudai se** aati hai (kabhi window/phone ki unchai se nahi),
+ * isliye phone badle, rotate ho ya fullscreen — shape wahi rehta hai.
  *
- * Isliye phone badle, window resize ho, rotate ho ya fullscreen — shape wahi
- * rehta hai. Na window ki unchai se, na `outerHeight` se, na kisi parent ke
- * guess se.
- *
- * ⚠️ Ise badalna = phone player ka size badalna. `moviebox-crop` test me
- * production ke exact numbers (390 → 366×244, crop 366×230, video 342×192)
- * pin hain — chheda to test fail.
+ * ⚠️ Isse chhedna = phone player ka size badalna. `moviebox-crop` test me
+ * production ke numbers pin hain.
  */
+export const MOVIEBOX_PHONE_PLAYER_ASPECT = 2;
+
+/** Site ka mobile header kaat — video exactly yahin se shuru hota hai. */
 export const MOVIEBOX_PHONE_CROP_TOP = 108;
 
-/** Site ke mobile player ke dono taraf ka saans (12px each side). */
-export const MOVIEBOX_PHONE_SIDE_GUTTER = 12;
-
 /**
- * Phone dabbe ki unchai — **sirf chaudai se** (production ka formula).
+ * Phone player dabbe ki unchai — **sirf chaudai se**: `width / 2`.
  * Modal isi se height lagata hai aur crop bhi isi se, isliye dono kabhi
- * alag-alag shape ke nahi ho sakte.
+ * alag shape ke nahi ho sakte.
  */
 export function getMovieboxPhoneBoxHeight(boxWidth: number): number {
     const w = boxWidth > 0 ? boxWidth : 366;
-    return Math.round((w * 9) / 16) + MOVIEBOX_PHONE_BAR_HEIGHT - 4;
+    return Math.round(w / MOVIEBOX_PHONE_PLAYER_ASPECT);
 }
 
 export const MOVIEBOX_STAGE_PLAYER_WIDTH = 968;
@@ -440,15 +442,14 @@ export function getMovieboxCrop(
      */
     if (options.phone === true && (outerWidth <= 0 || outerWidth < 480)) {
         const hostWidth = outerWidth > 0 ? outerWidth : 390;
-        const contentWidth = Math.max(0, hostWidth - MOVIEBOX_PHONE_SIDE_GUTTER * 2);
         /**
-         * Height **pure width se** — production ka wahi naap (video 16:9 +
-         * site ka control bar). Pehle yahan `outerHeight` se `Math.min` lagi
-         * thi, isliye chhota/lamba host hone par dabba kat jata tha aur shape
-         * badal jati thi. Ab host ki unchai ka koi role nahi: dabba hamesha
-         * `getMovieboxPhoneBoxHeight()` hi hota hai.
+         * Height **pure width se** (`getMovieboxPhoneBoxHeight`) — host/
+         * window ki unchai ka koi role nahi. Isse crop theek player container
+         * ke bottom par khatam hoti hai: site ke apne controls (container ke
+         * andar) poore dikhte hain, aur uske neeche wali Refresh/Download
+         * patti kabhi crop me nahi aati.
          */
-        const height = getMovieboxPhoneBoxHeight(contentWidth);
+        const height = getMovieboxPhoneBoxHeight(hostWidth);
         return {
             frameWidth: Math.round(hostWidth),
             cropTop: MOVIEBOX_PHONE_CROP_TOP,

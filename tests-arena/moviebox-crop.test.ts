@@ -5,7 +5,6 @@ import {
     buildMovieboxPageUrl,
     getMovieboxCrop,
     isMovieboxUrl,
-    MOVIEBOX_PHONE_BAR_HEIGHT,
     getMovieboxPhoneBoxHeight,
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
@@ -207,53 +206,49 @@ describe('getMovieboxCrop', () => {
         expect(crop.cropLeft).toBe(0);
         // header 104 + 4px andar
         expect(crop.cropTop).toBe(108);
-        // video (16:9) + site ka control bar — bar aadha na kate.
-        expect(crop.height).toBe(getMovieboxPhoneBoxHeight(390 - 24));
+        // crop theek player container ke bottom par — 2:1
+        expect(crop.height).toBe(getMovieboxPhoneBoxHeight(390));
         expect(crop.stacked).toBe(false);
         // Site ki fixed bottom nav viewport ke neeche — player ke upar nahi.
         expect(crop.viewportHeight).toBeGreaterThan(crop.height + crop.cropTop + 200);
     });
 
     /**
-     * Owner: "production me moviebox player ka jo size hai wahi phone ke liye
-     * permanent karo". Ye test **production ke exact numbers** pin karta hai
-     * (390px phone) — koi bhi future change inhe hila nahi sakta.
+     * Owner (screenshot 1): crop ke andar player ke neeche site ki
+     * "Refresh | Download | Prev | Next" patti jhaank rahi thi. Screenshot 2
+     * (production, jab player chal raha hai) me wo nahi aati.
+     *
+     * Screenshot se pixel-naap (390px phone → modal 366 CSS):
+     *   player container 366 × ~183–187  (site ke controls container ke andar)
+     *   uske neeche patti  : ~187 CSS se shuru
      */
-    it('phone player ka size/ratio production jaisa hi pin hai (390px phone)', () => {
-        // modal: panel = viewport − 24 = 366 chaudi, height width se = 244
-        expect(getMovieboxPhoneBoxHeight(366)).toBe(244);
-        // dabba 366 × 244, andar crop 366 × 230 (16:9 video + control bar)
-        const crop = getMovieboxCrop(366, 244, { phone: true });
+    it('phone player ke neeche site ki Refresh/Download patti kabhi nahi aati', () => {
+        const boxWidth = 366;
+        // crop container ke bottom par: 366 × 183
+        expect(getMovieboxPhoneBoxHeight(boxWidth)).toBe(183);
+        const crop = getMovieboxCrop(boxWidth, 244, { phone: true });
         expect(crop.frameWidth).toBe(366);
-        expect(crop.height).toBe(230);
+        expect(crop.height).toBe(183);
+        // production me patti ~187 CSS par shuru hoti hai — crop usse pehle band
+        expect(crop.height).toBeLessThanOrEqual(187);
+        // site ke apne controls (container ke andar, neeche) poore crop me
+        expect(crop.height).toBeGreaterThanOrEqual(170);
         expect(crop.scale).toBe(1);
-        // video 342 wide (12px saans dono taraf), 16:9 = 192.375 tall
-        const videoWidth = 366 - 24;
-        const videoHeight = (videoWidth * 9) / 16;
-        expect(videoHeight).toBeCloseTo(192.375, 3);
-        // video + site ka control bar POORA crop me — bas 0.375px rounding
-        // (production me bhi bilkul yahi hota hai)
-        expect(videoHeight + MOVIEBOX_PHONE_BAR_HEIGHT - 4).toBeLessThanOrEqual(
-            crop.height + 0.5,
-        );
     });
 
     it('phone player ka size PERMANENT lock — sirf chaudai par depend karta hai', () => {
         const widths = [320, 360, 375, 390, 414, 430, 479];
         const heights = [480, 568, 640, 667, 740, 844, 932, 1200];
         for (const width of widths) {
-            const lockedHeight = getMovieboxPhoneBoxHeight(width - 24);
+            const lockedHeight = getMovieboxPhoneBoxHeight(width);
             for (const height of heights) {
                 const crop = getMovieboxCrop(width, height, { phone: true });
-                // host ki unchai se koi farq nahi — har phone par same shape
+                // host ki unchai se koi farq nahi — har phone par same size
                 expect(crop.frameWidth).toBe(width);
                 expect(crop.height).toBe(lockedHeight);
-                // native scale (site ke bade touch controls)
+                // 2:1 dabba, native scale (site ke bade touch controls)
+                expect(crop.height).toBe(Math.round(width / 2));
                 expect(crop.scale).toBe(1);
-                // site ka content (16:9 video + bar) poora dabbe me
-                const contentHeight =
-                    ((width - 24) * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4;
-                expect(contentHeight).toBeLessThanOrEqual(crop.height + 0.5);
                 // Site ka header kabhi player ke upar nahi.
                 expect(crop.cropTop).toBe(108);
             }
@@ -265,7 +260,7 @@ describe('getMovieboxCrop', () => {
         const medium = getMovieboxCrop(390, 400, { phone: true });
         const short = getMovieboxCrop(390, 200, { phone: true });
         expect(tall.frameWidth).toBe(390);
-        expect(tall.height).toBe(getMovieboxPhoneBoxHeight(366));
+        expect(tall.height).toBe(195);
         expect(medium.height).toBe(tall.height);
         expect(short.height).toBe(tall.height);
     });

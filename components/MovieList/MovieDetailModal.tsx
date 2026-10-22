@@ -689,11 +689,11 @@ export function MovieDetailModal({
                                         styles.phonePlayerBox,
                                         /**
                                          * Production ka **wahi** naap —
-                                         * `getMovieboxPhoneBoxHeight` (video
-                                         * 16:9 + site ka control bar). Unchai
-                                         * sirf dabbe ki chaudai se aati hai,
-                                         * isliye phone/window badalne par
-                                         * shape kabhi nahi badalta.
+                                         * `getMovieboxPhoneBoxHeight` (site ka
+                                         * mobile player container, 2:1). Isse
+                                         * crop theek player ke bottom par band
+                                         * hoti hai: neeche wali Refresh/
+                                         * Download patti kabhi nahi dikhti.
                                          */
                                         {
                                             height: getMovieboxPhoneBoxHeight(

@@ -426,33 +426,35 @@ nahi".)
     ("player ke andar ke control bahut chhote hai"). Desktop par wahi
     1536-stage crop.
 
-### Phone player ka size/ratio — permanent lock 📌
+### Phone player ka size — permanent lock 📌
 
-Owner: "production me moviebox player ka jo size hai wahi phone ke liye
-permanent karo, kabhi na badle."
+Owner: "production me jaisa player hai waisa hi rahe, aur photo 1 jaisa
+Refresh / Download / Prev / Next neeche na aaye — photo 2 jaisa banao."
 
-Ye numbers **production se hi liye** hain (390px phone) — apne banaye hue nahi:
+Production screenshots se pixel-naap (390px phone → modal 366 CSS chaudi):
 
-| Cheez | Naap | Kaise |
-| --- | --- | --- |
-| phone dabba (modal) | **366 × 244** | `viewport − 24` chaudi, height = `getMovieboxPhoneBoxHeight(width)` |
-| crop (dikhne wala hissa) | **366 × 230** | site ka 16:9 video + uske apne control bar |
-| video | **342 × 192.4** | dabbe ke andar, dono taraf 12px saans |
+| Cheez | Naap |
+| --- | --- |
+| player container (video + site ke controls) | **366 × ~183–187 = 2:1** |
+| site ke controls (seek + play/quality/CC/settings/fullscreen) | container ke **andar**, neeche |
+| uske neeche site ki page patti | **Refresh / Download / Prev / Next** — ~187 CSS se |
 
-- **Ek hi formula**: `height = round(width × 9/16) + MOVIEBOX_PHONE_BAR_HEIGHT − 4`
-  (`getMovieboxPhoneBoxHeight`, `lib/moviebox.ts`). Modal isi se height lagata
-  hai aur `getMovieboxCrop(..., { phone: true })` bhi isi se — dono kabhi
-  alag shape ke nahi ho sakte. Window ki unchai, rotate, fullscreen, route —
-  kisi ka koi role nahi.
-- Pehle do jagah se shape hil sakti thi: (1) crop `outerHeight` par `Math.min`
-  karti thi — host chhota/lamba hone par dabba kat jata tha; (2) modal height
-  window ke naap se lagati thi. Ab (1) hata diya (height sirf width se) aur
-  (2) dono taraf wahi helper use hota hai.
+**Bug:** crop `16:9 video + 42px` (≈230 CSS) thi — container se ~45px zyada.
+Jab player load/error state me hota (owner ki photo 1) to us extra jagah me
+site ki Refresh/Download patti aa jati thi; jab player chal raha hota (photo 2)
+to wahan sirf black hota tha — isliye production me kabhi nahi dikhta tha.
+
+**Fix:** crop ab theek **player container ke bottom par** band hoti hai —
+`width / 2` (2:1). Site ke controls container ke andar hain, isliye poore
+dikhte hain; unke neeche wali patti crop ke bahar reh jati hai.
+
+- Height **sirf chaudai se** — `getMovieboxPhoneBoxHeight(width)` = `round(width / 2)`
+  (modal bhi isi se height lagata hai, crop bhi isi se). Window ki unchai,
+  rotate, fullscreen, route — kisi ka role nahi.
 - **Lock ka test**: `tests-arena/moviebox-crop.test.ts` →
-  *"phone player ka size/ratio production jaisa hi pin hai"* (390 → 366×244,
-  crop 366×230, video 342×192) aur *"size PERMANENT lock"* (7 chaudai × 8
-  unchai par height sirf width se, scale hamesha 1). Formula chheda to test
-  fail.
+  *"phone player ke neeche site ki Refresh/Download patti kabhi nahi aati"*
+  (366 → 183, patti 187 se pehle band) + *"size PERMANENT lock"*
+  (7 chaudai × 8 unchai par height sirf width se, scale hamesha 1).
 
 - **Landscape SIRF fullscreen par** — play dabate hi koi auto-fullscreen/rotation
   nahi (MovieboxPagePlayer ka auto effect aur EmbedPlayer ka auto effect dono
