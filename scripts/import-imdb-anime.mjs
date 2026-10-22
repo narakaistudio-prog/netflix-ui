@@ -524,26 +524,91 @@ const GENRE_MAP = {
 
 const GENRE_ORDER = ['action', 'adventure', 'comedy', 'drama', 'fantasy', 'romance', 'science-fiction', 'sports'];
 
-/** Ek page ke HTML se genres (TMDB/JSON-LD, genre links, ya visible text). */
-export function parseGenres(html) {
-    const source = String(html || '');
+/**
+ * TMDB genre ids -> page ke genre filter ki vocabulary.
+ * 10759 = "Action & Adventure", 10765 = "Sci-Fi & Fantasy" — dono do genres
+ * me khulte hain. Animation (16) sab par hota hai isliye skip.
+ */
+const TMDB_GENRE_IDS = {
+    28: ['action'],
+    12: ['adventure'],
+    16: [],
+    35: ['comedy'],
+    80: ['drama'],
+    99: [],
+    18: ['drama'],
+    10751: ['drama'],
+    14: ['fantasy'],
+    36: ['drama'],
+    27: ['drama'],
+    9648: ['drama'],
+    10749: ['romance'],
+    10752: ['action'],
+    10759: ['action', 'adventure'],
+    10765: ['fantasy', 'science-fiction'],
+    10768: ['drama'],
+    37: ['action'],
+    10762: ['comedy'],
+    10763: [],
+    10764: [],
+    10766: ['drama'],
+    10767: [],
+    10769: [],
+    10770: ['drama'],
+    53: ['drama'],
+};
+
+/**
+ * Ek page ke HTML se genres.
+ *
+ * Nxsha page React ka payload deta hai jisme `"genres":[]` **khaali** hota hai
+ * aur asli jaankari `"genreIds":[16,10765,35,10759]` me hoti hai — isliye ids
+ * ko vocabulary me map karte hain. HTML me quotes escape hote hain (`\"`), to
+ * pehle backslash hata kar match karte hain.
+ */
+export function parseGenres(html, tmdbId = '') {
+    const flat = String(html || '').replace(/\\+/g, '');
+    const wanted = String(tmdbId || '');
+    const ids = [];
+
+    let fallback = null;
+    for (const match of flat.matchAll(/"?genreIds"?\s*:\s*\[([0-9,\s]*)\]/g)) {
+        const list = match[1].split(',').map((value) => Number(value.trim())).filter((value) => Number.isFinite(value) && value > 0);
+        if (!list.length) continue;
+        const before = flat.slice(Math.max(0, match.index - 900), match.index);
+        const near = wanted && (before.includes(`"id":${wanted}`) || before.includes(`tv-${wanted}`) || before.includes(`movie-${wanted}`));
+        if (near) return mapGenreIds(list);
+        if (!fallback) fallback = list;
+    }
+    if (fallback) return mapGenreIds(fallback);
+
+    // Purana rasta (JSON-LD / genre links) — agar payload badal jaye to bhi kuch mile.
     const raw = new Set();
-
-    for (const match of source.matchAll(/"genre[s]?"\s*:\s*\[([^\]]*)\]/gi)) {
-        for (const value of match[1].split(',')) raw.add(value.replace(/["']/g, '').trim());
+    for (const match of flat.matchAll(/"genre[s]?"\s*:\s*\[([^\]]*)\]/gi)) {
+        for (const value of match[1].split(',')) {
+            const clean = value.replace(/["']/g, '').trim();
+            if (clean && !/^\d+$/.test(clean)) raw.add(clean);
+        }
     }
-    for (const match of source.matchAll(/\/genre\/([a-z0-9-]+)/gi)) {
-        raw.add(match[1].replace(/-/g, ' '));
-    }
-    for (const match of source.matchAll(/itemprop="genre"[^>]*>([^<]{2,30})</gi)) {
-        raw.add(match[1].trim());
-    }
-
+    for (const match of flat.matchAll(/\/genre\/([a-z0-9-]+)/gi)) raw.add(match[1].replace(/-/g, ' '));
     const genres = new Set();
     for (const value of raw) {
         const mapped = GENRE_MAP[value.toLowerCase().replace(/\s+/g, ' ').trim()];
         if (mapped) genres.add(mapped);
     }
+    return orderGenres(genres);
+}
+
+function mapGenreIds(ids) {
+    const genres = new Set();
+    for (const id of ids) {
+        for (const genre of TMDB_GENRE_IDS[id] || []) genres.add(genre);
+    }
+    return orderGenres(genres);
+}
+
+/** Page ke dropdown ke order me (deterministic, isliye diff stable rehta hai). */
+function orderGenres(genres) {
     return [...genres].sort((a, b) => GENRE_ORDER.indexOf(a) - GENRE_ORDER.indexOf(b));
 }
 
@@ -675,7 +740,7 @@ async function main() {
         if (entry.genres?.length || !entry.id) continue;
         try {
             const page = await get(`${NX_BASE}/${entry.kind === 'movie' ? 'movie' : 'tv'}/${entry.id}`);
-            const genres = page ? parseGenres(page) : [];
+            const genres = page ? parseGenres(page, entry.id) : [];
             if (genres.length) {
                 entry.genres = genres;
                 report.enriched.push({ key: entry.key, genres });
@@ -721,10 +786,18 @@ async function main() {
     console.log(`Wrote ${ordered.length} catalog entries + registry routes.`);
 }
 
-/** IMDb list: pehle seedha, nahi mila to reader proxy se (markdown). */
+/**
+ * IMDb list: pehle seedha page, phir reader proxy (kyunki IMDb datacenter IPs
+ * ko block karta hai). Saare sources ka result **merge** hota hai — kisi ek
+ * view me koi card chhoot jaye to doosra use le aata hai.
+ */
 let listSnapshot = '';
 async function readImdbList(listId) {
-    let items = [];
+    const merged = new Map();
+    const absorb = (list) => {
+        for (const item of list) if (item?.imdbId && !merged.has(item.imdbId)) merged.set(item.imdbId, item);
+    };
+
     for (const listUrl of [
         `https://www.imdb.com/list/${listId}/?count=250`,
         `https://www.imdb.com/list/${listId}/?view=compact&count=250`,
@@ -742,39 +815,38 @@ async function readImdbList(listId) {
             const body = await response.text();
             const parsed = parseImdbList(body);
             console.log(`IMDb ${response.status} ${body.length} chars -> ${parsed.length} titles (${listUrl})`);
-            if (parsed.length > items.length) {
-                items = parsed;
-                listSnapshot = body;
-            }
-            if (items.length >= 40) return items;
+            absorb(parsed);
+            if (merged.size > parsed.length) listSnapshot += `${body}\n`;
+            else listSnapshot = body;
         } catch (error) {
             console.log(`IMDb fetch fail (${listUrl}): ${error?.message || error}`);
         }
         await sleep(600);
     }
-    // Reader proxy: IMDb datacenter IPs ko block karta hai, ye rasta reliable hai.
+    if (merged.size >= 40) return [...merged.values()];
+
     for (const target of [
         `https://www.imdb.com/list/${listId}/`,
         `https://r.jina.ai/https://www.imdb.com/list/${listId}/`,
+        `https://r.jina.ai/https://www.imdb.com/list/${listId}/?view=grid&count=250`,
     ]) {
         try {
             const body = await get(target, { accept: 'text/plain,text/markdown,*/*' });
             const parsed = parseImdbMarkdown(body || '');
             console.log(`Reader ${target} -> ${parsed.length} titles`);
-            if (parsed.length > items.length) {
-                items = parsed;
-                listSnapshot = body || '';
-            }
+            absorb(parsed);
+            listSnapshot += `${body || ''}\n\n`;
         } catch (error) {
             console.log(`Reader fail (${target}): ${error?.message || error}`);
         }
         await sleep(400);
     }
-    if (items.length < 40) {
+    if (merged.size < 40) {
         console.log(`IMDb page snippet: ${String(listSnapshot).slice(0, 700).replace(/\s+/g, ' ')}`);
-        throw new Error(`IMDb list se sirf ${items.length} titles mile — page badal gaya lagta hai`);
+        throw new Error(`IMDb list se sirf ${merged.size} titles mile — page badal gaya lagta hai`);
     }
-    return items;
+    console.log(`IMDb list (merged): ${merged.size} titles`);
+    return [...merged.values()];
 }
 
 /** Ek IMDb title -> Nxsha route + page metadata, ya null (report me wajah). */
@@ -845,7 +917,7 @@ async function resolveNxsha(item, report) {
         title: verifiedTitle,
         year: info.year || hit.year || item.year || '',
         rating: hit.rating && Number(hit.rating) > 0 ? String((Number(hit.rating) / 2).toFixed(1)) : '',
-        genres: parseGenres(page),
+        genres: parseGenres(page, hit.id),
         img: poster,
         runtime: info.duration || '',
         desc: info.description || item.description || '',
@@ -943,6 +1015,7 @@ export function selfTest() {
     assert(pickNxshaMatch([{ type: 'tv', id: '9', name: 'Something Else', year: '2020' }], 'Blue Lock') === null, 'no loose match');
     assert(slugKey('My Dress-Up Darling') === 'mydressupdarling', 'slug');
     assert(isSameShow('Haikyuu!!', 'HAIKYU!!') && !isSameShow('Haikyuu!!', 'Bleach'), 'fuzzy title');
+    assert(parseGenres('<script>{\"genreIds\":[16,10765,35,10759]}</script>', '5').join() === 'action,adventure,comedy,fantasy,science-fiction', 'tmdb genre ids');
     assert(parseGenres('<a href="/genre/action">Action</a><a href="/genre/sci-fi">Sci-Fi</a>').join() === 'action,science-fiction', 'genre map');
 
     const seeded = parseCatalogLine("dressup:{title:'My Dress-Up Darling',year:2022,rating:'4.2',genres:['romance','comedy'],audio:'Sub & Dub',img:'p.jpg',desc:'Cosplay.'},");
