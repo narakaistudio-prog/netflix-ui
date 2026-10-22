@@ -1,669 +1,135 @@
 {
   "listId": "ls540527030",
-  "generatedAt": "2026-10-22T11:00:12.783Z",
+  "generatedAt": "2026-10-22T11:11:23.210Z",
   "added": [
     {
-      "key": "mydressupdarling",
-      "title": "My Dress-Up Darling",
-      "nxsha": "tv/123249",
-      "imdb": "tt15765670"
+      "key": "rankingofkings",
+      "title": "Ranking of Kings",
+      "nxsha": "tv/112613",
+      "imdb": "tt13409432"
     },
     {
-      "key": "rankingofkingsthetreasurechestofcourage",
-      "title": "Ranking of Kings: The Treasure Chest of Courage",
-      "nxsha": "tv/207743",
-      "imdb": "tt27504251"
+      "key": "reignofthesevenspellblades",
+      "title": "Reign of the Seven Spellblades",
+      "nxsha": "tv/153337",
+      "imdb": "tt27845099"
     },
     {
-      "key": "akebissailoruniform",
-      "title": "Akebi's Sailor Uniform",
-      "nxsha": "tv/121792",
-      "imdb": "tt15533674"
+      "key": "tomochanisagirl",
+      "title": "Tomo-chan Is a Girl!",
+      "nxsha": "tv/205308",
+      "imdb": "tt21210326"
     },
     {
-      "key": "toiletboundhanakokun",
-      "title": "Toilet-Bound Hanako-kun",
-      "nxsha": "tv/95269",
-      "imdb": "tt10777610"
+      "key": "tojimawantstobeakamenrider",
+      "title": "Tojima Wants to Be a Kamen Rider",
+      "nxsha": "tv/285788",
+      "imdb": "tt37532319"
     },
     {
-      "key": "trappedinadatingsimtheworldofotomegamesistoughformobs",
-      "title": "Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs",
-      "nxsha": "tv/139512",
-      "imdb": "tt16255458"
-    },
-    {
-      "key": "misskuroitsufromthemonsterdevelopmentdepartment",
-      "title": "Miss Kuroitsu From the Monster Development Department",
-      "nxsha": "tv/128826",
-      "imdb": "tt15582924"
-    },
-    {
-      "key": "tokyo24thward",
-      "title": "Tokyo 24th Ward",
-      "nxsha": "tv/137045",
-      "imdb": "tt15758108"
-    },
-    {
-      "key": "darlinginthefranxx",
-      "title": "DARLING in the FRANXX",
-      "nxsha": "tv/76121",
-      "imdb": "tt7865090"
-    },
-    {
-      "key": "relife",
-      "title": "ReLIFE",
-      "nxsha": "tv/66941",
-      "imdb": "tt5857720"
-    },
-    {
-      "key": "myonehitkillsister",
-      "title": "My One-Hit Kill Sister",
-      "nxsha": "tv/194829",
-      "imdb": "tt27462671"
-    },
-    {
-      "key": "whyraelianaendedupatthedukesmansion",
-      "title": "Why Raeliana Ended Up at the Duke's Mansion",
-      "nxsha": "tv/205366",
-      "imdb": "tt27484853"
-    },
-    {
-      "key": "thecasestudyofvanitas",
-      "title": "The Case Study of Vanitas",
-      "nxsha": "tv/121964",
-      "imdb": "tt14641098"
-    },
-    {
-      "key": "kamikatsuworkingforgodinagodlessworld",
-      "title": "KamiKatsu: Working for God in a Godless World",
-      "nxsha": "tv/199920",
-      "imdb": "tt27419998"
-    },
-    {
-      "key": "acoupleofcuckoos",
-      "title": "A Couple of Cuckoos",
-      "nxsha": "tv/122587",
-      "imdb": "tt14400866"
-    },
-    {
-      "key": "radiant",
-      "title": "RADIANT",
-      "nxsha": "tv/82879",
-      "imdb": "tt9225320"
-    },
-    {
-      "key": "akudamadrive",
-      "title": "Akudama Drive",
-      "nxsha": "tv/100436",
-      "imdb": "tt12331342"
-    },
-    {
-      "key": "masamunekunsrevenge",
-      "title": "Masamune-kun's Revenge",
-      "nxsha": "tv/69295",
-      "imdb": "tt6402190"
-    },
-    {
-      "key": "myuniqueskillmakesmeopevenatlevel1",
-      "title": "My Unique Skill Makes Me OP Even at Level 1",
-      "nxsha": "tv/201363",
-      "imdb": "tt27990591"
-    },
-    {
-      "key": "rebornasavendingmachineinowwanderthedungeon",
-      "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
-      "nxsha": "tv/207564",
-      "imdb": "tt28100731"
-    },
-    {
-      "key": "thegreatcleric",
-      "title": "The Great Cleric",
-      "nxsha": "tv/220779",
-      "imdb": "tt28101962"
-    },
-    {
-      "key": "horimiyathemissingpieces",
-      "title": "Horimiya: The Missing Pieces",
-      "nxsha": "tv/228663",
-      "imdb": "tt28261206"
-    },
-    {
-      "key": "rentagirlfriend",
-      "title": "Rent-a-Girlfriend",
-      "nxsha": "tv/96316",
-      "imdb": "tt11448214"
-    },
-    {
-      "key": "mytinysenpai",
-      "title": "My Tiny Senpai",
-      "nxsha": "tv/217390",
-      "imdb": "tt27571597"
-    },
-    {
-      "key": "thedetectiveisalreadydead",
-      "title": "The Detective Is Already Dead",
-      "nxsha": "tv/117061",
-      "imdb": "tt13884052"
-    },
-    {
-      "key": "themaidihiredrecentlyismysterious",
-      "title": "The Maid I Hired Recently Is Mysterious",
-      "nxsha": "tv/202160",
-      "imdb": "tt21237634"
-    },
-    {
-      "key": "handymansaitouinanotherworld",
-      "title": "Handyman Saitou in Another World",
-      "nxsha": "tv/155942",
-      "imdb": "tt21844644"
-    },
-    {
-      "key": "sheprofessedherselfpupilofthewiseman",
-      "title": "She Professed Herself Pupil of the Wise Man",
-      "nxsha": "tv/104032",
-      "imdb": "tt14960284"
-    },
-    {
-      "key": "iminlovewiththevillainess",
-      "title": "I'm in Love with the Villainess",
-      "nxsha": "tv/216269",
-      "imdb": "tt29171914"
-    },
-    {
-      "key": "theancientmagusbride",
-      "title": "The Ancient Magus' Bride",
-      "nxsha": "tv/73833",
-      "imdb": "tt7326322"
-    },
-    {
-      "key": "rurounikenshin",
-      "title": "Rurouni Kenshin",
-      "nxsha": "tv/210879",
-      "imdb": "tt22249034"
-    },
-    {
-      "key": "ishallsurviveusingpotions",
-      "title": "I Shall Survive Using Potions!",
-      "nxsha": "tv/221148",
-      "imdb": "tt29171927"
-    },
-    {
-      "key": "morethanamarriedcouplebutnotlovers",
-      "title": "More than a Married Couple, but Not Lovers",
-      "nxsha": "tv/139287",
-      "imdb": "tt16231800"
-    },
-    {
-      "key": "buddydaddies",
-      "title": "Buddy Daddies",
-      "nxsha": "tv/212963",
-      "imdb": "tt22986710"
-    },
-    {
-      "key": "theangelnextdoorspoilsmerotten",
-      "title": "The Angel Next Door Spoils Me Rotten",
-      "nxsha": "tv/154743",
-      "imdb": "tt19064770"
-    },
-    {
-      "key": "thedailylifeoftheimmortalking",
-      "title": "The Daily Life of the Immortal King",
-      "nxsha": "tv/98123",
-      "imdb": "tt11755260"
-    },
-    {
-      "key": "hokkaidogalsaresuperadorable",
-      "title": "Hokkaido Gals Are Super Adorable!",
-      "nxsha": "tv/213181",
-      "imdb": "tt23029874"
-    },
-    {
-      "key": "loghorizon",
-      "title": "Log Horizon",
-      "nxsha": "tv/60846",
-      "imdb": "tt2942218"
-    },
-    {
-      "key": "zom100bucketlistofthedead",
-      "title": "Zom 100: Bucket List of the Dead",
-      "nxsha": "movie/1070514",
-      "imdb": "tt25811262"
-    },
-    {
-      "key": "villainesslevel99imaybethehiddenbossbutimnotthedemonlord",
-      "title": "Villainess Level 99: I May Be the Hidden Boss But I'm Not the Demon Lord",
-      "nxsha": "tv/222930",
-      "imdb": "tt30495119"
-    },
-    {
-      "key": "theicebladesorcerershallruletheworld",
-      "title": "The Iceblade Sorcerer Shall Rule the World",
-      "nxsha": "tv/200777",
-      "imdb": "tt25531288"
-    },
-    {
-      "key": "metallicrouge",
-      "title": "Metallic Rouge",
-      "nxsha": "tv/222787",
-      "imdb": "tt29510641"
-    },
-    {
-      "key": "codegeasslelouchoftherebellion",
-      "title": "Code Geass: Lelouch of the Rebellion",
-      "nxsha": "tv/31724",
-      "imdb": "tt0994314"
-    },
-    {
-      "key": "thereincarnationofthestrongestexorcistinanotherworld",
-      "title": "The Reincarnation of the Strongest Exorcist in Another World",
-      "nxsha": "tv/156563",
-      "imdb": "tt25809288"
-    },
-    {
-      "key": "mylovestorywithyamadakunatlv999",
-      "title": "My Love Story with Yamada-kun at Lv999",
-      "nxsha": "tv/208067",
-      "imdb": "tt22297712"
-    },
-    {
-      "key": "theweakesttamerbeganajourneytopickuptrash",
-      "title": "The Weakest Tamer Began a Journey to Pick Up Trash",
-      "nxsha": "tv/214310",
-      "imdb": "tt30644010"
-    },
-    {
-      "key": "thewrongwaytousehealingmagic",
-      "title": "The Wrong Way to Use Healing Magic",
-      "nxsha": "tv/131365",
-      "imdb": "tt15237152"
-    },
-    {
-      "key": "mashlemagicandmuscles",
-      "title": "MASHLE: MAGIC AND MUSCLES",
-      "nxsha": "tv/204832",
-      "imdb": "tt21209804"
-    },
-    {
-      "key": "bucchigiri",
-      "title": "BUCCHIGIRI?!",
-      "nxsha": "tv/226905",
-      "imdb": "tt28454318"
-    },
-    {
-      "key": "godsgamesweplay",
-      "title": "Gods' Games We Play",
-      "nxsha": "tv/156057",
-      "imdb": "tt31860621"
-    },
-    {
-      "key": "bartenderglassofgod",
-      "title": "BARTENDER Glass of God",
-      "nxsha": "tv/225168",
-      "imdb": "tt29233201"
-    },
-    {
-      "key": "windbreaker",
-      "title": "WIND BREAKER",
-      "nxsha": "tv/223500",
-      "imdb": "tt29605391"
-    },
-    {
-      "key": "aconditioncalledlove",
-      "title": "A Condition Called Love",
-      "nxsha": "tv/239214",
-      "imdb": "tt29899598"
-    },
-    {
-      "key": "asaladbowlofeccentrics",
-      "title": "A Salad Bowl of Eccentrics",
-      "nxsha": "tv/236392",
-      "imdb": "tt31940099"
-    },
-    {
-      "key": "vampiredormitory",
-      "title": "Vampire Dormitory",
-      "nxsha": "tv/238903",
-      "imdb": "tt31976012"
-    },
-    {
-      "key": "themanysidesofvoiceactorradio",
-      "title": "The Many Sides of Voice Actor Radio",
-      "nxsha": "tv/216760",
-      "imdb": "tt31940035"
-    },
-    {
-      "key": "viralhit",
-      "title": "Viral Hit",
-      "nxsha": "tv/246029",
-      "imdb": "tt31975855"
-    },
-    {
-      "key": "anarchdemonsdilemmahowtoloveyourelfbride",
-      "title": "An Archdemon's Dilemma: How to Love Your Elf Bride",
-      "nxsha": "tv/238848",
-      "imdb": "tt31940008"
-    },
-    {
-      "key": "qualityassuranceinanotherworld",
-      "title": "Quality Assurance in Another World",
-      "nxsha": "tv/222925",
-      "imdb": "tt32332918"
-    },
-    {
-      "key": "wistoriawandandsword",
-      "title": "Wistoria: Wand and Sword",
-      "nxsha": "tv/245842",
-      "imdb": "tt31889371"
-    },
-    {
-      "key": "vtuberlegendhowiwentviralafterforgettingtoturnoffmystream",
-      "title": "VTuber Legend: How I Went Viral After Forgetting to Turn Off My Stream",
-      "nxsha": "tv/229743",
-      "imdb": "tt32332792"
-    },
-    {
-      "key": "theelusivesamurai",
-      "title": "The Elusive Samurai",
-      "nxsha": "tv/222623",
-      "imdb": "tt27187054"
-    },
-    {
-      "key": "twilightoutoffocus",
-      "title": "Twilight Out of Focus",
-      "nxsha": "tv/249409",
-      "imdb": "tt32332813"
-    },
-    {
-      "key": "dayswithmystepsister",
-      "title": "Days with My Stepsister",
-      "nxsha": "tv/206629",
-      "imdb": "tt21975478"
-    },
-    {
-      "key": "byebyeearth",
-      "title": "Bye Bye, Earth",
-      "nxsha": "tv/214587",
-      "imdb": "tt23844810"
-    },
-    {
-      "key": "alyasometimeshidesherfeelingsinrussian",
-      "title": "Alya Sometimes Hides Her Feelings in Russian",
-      "nxsha": "tv/235758",
-      "imdb": "tt31131295"
-    },
-    {
-      "key": "whydoesnobodyremembermeinthisworld",
-      "title": "Why Does Nobody Remember Me in This World?",
-      "nxsha": "tv/244672",
-      "imdb": "tt31844529"
-    },
-    {
-      "key": "makeinetoomanylosingheroines",
-      "title": "Makeine: Too Many Losing Heroines!",
-      "nxsha": "tv/241535",
-      "imdb": "tt32332831"
-    },
-    {
-      "key": "nolongerallowedinanotherworld",
-      "title": "No Longer Allowed in Another World",
-      "nxsha": "tv/205743",
-      "imdb": "tt31186547"
-    },
-    {
-      "key": "truebeauty",
-      "title": "True Beauty",
-      "nxsha": "tv/239779",
-      "imdb": "tt33054444"
-    },
-    {
-      "key": "assassinationclassroom",
-      "title": "Assassination Classroom",
-      "nxsha": "movie/349176",
-      "imdb": "tt3837246"
-    },
-    {
-      "key": "ninathestarrybride",
-      "title": "Nina the Starry Bride",
-      "nxsha": "tv/240641",
-      "imdb": "tt32178571"
-    },
-    {
-      "key": "illbecomeavillainesswhogoesdowninhistory",
-      "title": "I'll Become a Villainess Who Goes Down in History",
-      "nxsha": "tv/248817",
-      "imdb": "tt32812118"
-    },
-    {
-      "key": "tyingtheknotwithanamagamisister",
-      "title": "Tying the Knot with an Amagami Sister",
-      "nxsha": "tv/234910",
-      "imdb": "tt29141921"
-    },
-    {
-      "key": "youaremsservant",
-      "title": "You are Ms. Servant",
-      "nxsha": "tv/242143",
-      "imdb": "tt30689669"
-    },
-    {
-      "key": "goodbyedragonlife",
-      "title": "Good Bye, Dragon Life",
-      "nxsha": "tv/259786",
-      "imdb": "tt32832435"
-    },
-    {
-      "key": "dragonballdaima",
-      "title": "Dragon Ball DAIMA",
-      "nxsha": "movie/1361184",
-      "imdb": "tt29485149"
-    },
-    {
-      "key": "zenshu",
-      "title": "ZENSHU",
-      "nxsha": "tv/249882",
-      "imdb": "tt31863730"
-    },
-    {
-      "key": "imgettingmarriedtoagirlihateinmyclass",
-      "title": "I'm Getting Married to a Girl I Hate in My Class",
-      "nxsha": "tv/257790",
-      "imdb": "tt32741637"
-    },
-    {
-      "key": "trilliongame",
-      "title": "TRILLION GAME",
-      "nxsha": "tv/240125",
-      "imdb": "tt33609048"
-    },
-    {
-      "key": "theredrangerbecomesanadventurerinanotherworld",
-      "title": "The Red Ranger Becomes an Adventurer in Another World",
-      "nxsha": "tv/261148",
-      "imdb": "tt33084834"
-    },
-    {
-      "key": "possiblythegreatestalchemistofalltime",
-      "title": "Possibly the Greatest Alchemist of All Time",
-      "nxsha": "tv/261298",
-      "imdb": "tt33478787"
-    },
-    {
-      "key": "theunawareateliermeister",
-      "title": "The Unaware Atelier Meister",
-      "nxsha": "tv/277881",
-      "imdb": "tt35014218"
-    },
-    {
-      "key": "catchmeattheballpark",
-      "title": "Catch Me at the Ballpark!",
-      "nxsha": "tv/277222",
-      "imdb": "tt35994065"
-    },
-    {
-      "key": "sk8theinfinity",
-      "title": "SK8 the Infinity",
-      "nxsha": "tv/110309",
-      "imdb": "tt13129190"
-    },
-    {
-      "key": "onceuponawitchsdeath",
-      "title": "Once Upon a Witch's Death",
-      "nxsha": "tv/258055",
-      "imdb": "tt32779862"
-    },
-    {
-      "key": "thegorillagodsgotogirl",
-      "title": "The Gorilla God's Go-To Girl",
-      "nxsha": "tv/278816",
-      "imdb": "tt35348180"
-    },
-    {
-      "key": "dandadanfirstencounter",
-      "title": "DAN DA DAN: First Encounter",
-      "nxsha": "movie/1308681",
-      "imdb": "tt33343397"
-    },
-    {
-      "key": "berserkofgluttony",
-      "title": "Berserk of Gluttony",
-      "nxsha": "tv/213331",
-      "imdb": "tt28685497"
-    },
-    {
-      "key": "theshiunjifamilychildren",
-      "title": "The Shiunji Family Children",
-      "nxsha": "tv/261091",
-      "imdb": "tt35331428"
-    },
-    {
-      "key": "clevatess",
-      "title": "Clevatess",
-      "nxsha": "tv/258348",
-      "imdb": "tt32991344"
-    },
-    {
-      "key": "newsaga",
-      "title": "New Saga",
-      "nxsha": "tv/212766",
-      "imdb": "tt33050376"
-    },
-    {
-      "key": "lordofmysteries",
-      "title": "Lord of Mysteries",
-      "nxsha": "tv/232230",
-      "imdb": "tt28618556"
-    },
-    {
-      "key": "withyouourlovewillmakeitthrough",
-      "title": "With You, Our Love Will Make It Through",
-      "nxsha": "tv/282662",
-      "imdb": "tt36221414"
-    },
-    {
-      "key": "mechanicalmarie",
-      "title": "Mechanical Marie",
-      "nxsha": "tv/287278",
-      "imdb": "tt36912922"
-    },
-    {
-      "key": "sentencedtobeahero",
-      "title": "Sentenced to Be a Hero",
-      "nxsha": "tv/249907",
-      "imdb": "tt32536168"
-    },
-    {
-      "key": "myheroacademiavigilantes",
-      "title": "My Hero Academia: Vigilantes",
-      "nxsha": "tv/280110",
-      "imdb": "tt35636246"
-    },
-    {
-      "key": "naruto2",
-      "title": "Naruto",
-      "nxsha": "tv/46260",
-      "imdb": "tt0409591"
-    },
-    {
-      "key": "youandiarepolaropposites",
-      "title": "You and I Are Polar Opposites",
-      "nxsha": "tv/278043",
-      "imdb": "tt36034547"
-    },
-    {
-      "key": "hanakimi",
-      "title": "Hana-Kimi",
-      "nxsha": "tv/254492",
-      "imdb": "tt38646611"
-    },
-    {
-      "key": "agatherersadventureinisekai",
-      "title": "A Gatherer's Adventure in Isekai",
-      "nxsha": "tv/284442",
-      "imdb": "tt37430949"
-    },
-    {
-      "key": "letsplay",
-      "title": "Let's Play",
-      "nxsha": "movie/1441154",
-      "imdb": "tt37532040"
-    },
-    {
-      "key": "darkmoonthebloodaltar",
-      "title": "DARK MOON: THE BLOOD ALTAR",
-      "nxsha": "tv/271609",
-      "imdb": "tt38646055"
-    },
-    {
-      "key": "mycluelessfirstfriend",
-      "title": "My Clueless First Friend",
-      "nxsha": "tv/214547",
-      "imdb": "tt23711384"
-    },
-    {
-      "key": "kunonthesorcerercansee",
-      "title": "Kunon the Sorcerer Can See",
-      "nxsha": "tv/282946",
-      "imdb": "tt38646949"
-    },
-    {
-      "key": "anadventurersdailygrindatage29",
-      "title": "An Adventurer's Daily Grind at Age 29",
-      "nxsha": "tv/290667",
-      "imdb": "tt38647627"
-    },
-    {
-      "key": "amisanthropeteachesaclassfordemihumans",
-      "title": "A Misanthrope Teaches a Class for Demi-Humans",
-      "nxsha": "tv/303434",
-      "imdb": "tt38646016"
-    },
-    {
-      "key": "tobeherox",
-      "title": "TO BE HERO X",
-      "nxsha": "tv/272059",
-      "imdb": "tt23139038"
-    },
-    {
-      "key": "daemonsoftheshadowrealm",
-      "title": "Daemons of the Shadow Realm",
-      "nxsha": "tv/260463",
-      "imdb": "tt37532356"
-    },
-    {
-      "key": "agentsofthefourseasonsdanceofspring",
-      "title": "Agents of the Four Seasons Dance of Spring",
-      "nxsha": "tv/288659",
-      "imdb": "tt39267868"
-    },
-    {
-      "key": "snowballearth",
-      "title": "SNOWBALL EARTH",
-      "nxsha": "tv/296232",
-      "imdb": "tt39229727"
+      "key": "yurionice",
+      "title": "Yuri!!! on Ice",
+      "nxsha": "tv/68129",
+      "imdb": "tt6112556"
     }
   ],
   "skipped": [
+    {
+      "title": "My Dress-Up Darling",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Ranking of Kings: The Treasure Chest of Courage",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Akebi's Sailor Uniform",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Toilet-bound Hanako-kun",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Miss Kuroitsu from the Monster Development Department",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tokyo 24th Ward",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Darling in the Franxx",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "ReLIFE",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My One-Hit Kill Sister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Why Raeliana Ended Up at the Duke's Mansion",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Case Study of Vanitas",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "KamiKatsu: Working for God in a Godless World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Couple of Cuckoos",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Radiant",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Akudama Drive",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Masamune-kun's Revenge",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Unique Skill Makes Me OP Even at Level 1",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Fire Force",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Great Cleric",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Horimiya: The Missing Pieces",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Rent-a-Girlfriend",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Tiny Senpai",
+      "reason": "already-in-catalog"
+    },
     {
       "title": "Jujutsu Kaisen",
       "reason": "already-in-catalog"
@@ -673,7 +139,115 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "The Detective Is Already Dead",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Maid I Hired Recently Is Mysterious",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Handyman Saitou in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "She Professed Herself Pupil of the Wise Man",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Vinland Saga",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I'm in Love with the Villainess",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Ancient Magus' Bride",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Rurouni Kenshin",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I Shall Survive Using Potions!",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Shangri-La Frontier",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "More Than a Married Couple, But Not Lovers",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Buddy Daddies",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Angel Next Door Spoils Me Rotten",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Daily Life of the Immortal King",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Hokkaido Gals Are Super Adorable!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Log Horizon",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Zom 100: Bucket List of the Dead",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Metallic Rouge",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Code Geass: Lelouch of the Rebellion",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Reincarnation of the Strongest Exorcist in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tower of God",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Frieren: Beyond Journey's End",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Love Story with Yamada-kun at Lv999",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Weakest Tamer Began a Journey to Pick Up Trash",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Wrong Way to Use Healing Magic",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Spy x Family",
       "reason": "already-in-catalog"
     },
     {
@@ -681,11 +255,55 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Mashle: Magic and Muscles",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "BUCCHIGIRI?!",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Solo Leveling",
       "reason": "already-in-catalog"
     },
     {
+      "title": "Gods' Games We Play",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Kaiju No. 8",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Bartender: Glass of God",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Wind Breaker",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Condition Called Love",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Salad Bowl of Eccentrics",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Vampire Dormitory",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Many Sides of Voice Actor Radio",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Viral Hit",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "An Archdemon's Dilemma: How to Love Your Elf Bride",
       "reason": "already-in-catalog"
     },
     {
@@ -697,7 +315,143 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Quality Assurance in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Wistoria: Wand and Sword",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "VTuber Legend: How I Went Viral after Forgetting to Turn Off My Stream",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Elusive Samurai",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Twilight Out of Focus",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Days with My Stepsister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Bye Bye, Earth",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Alya Sometimes Hides Her Feelings in Russian",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Why Does Nobody Remember Me in This World?",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Makeine: Too Many Losing Heroines!",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "That Time I Got Reincarnated as a Slime",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "No Longer Allowed in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "True Beauty",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Assassination Classroom",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Nina the Starry Bride",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I'll Become a Villainess Who Goes Down in History",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tying the Knot with an Amagami Sister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "You Are Ms. Servant",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Good Bye, Dragon Life.",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dandadan",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dragon Ball Daima",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Zenshu",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I'm Getting Married to a Girl I Hate in My Class",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Trillion Game",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Red Ranger Becomes an Adventurer in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Possibly the Greatest Alchemist of All Time",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Unaware Atelier Meister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Catch Me at the Ballpark!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "SK8 the Infinity",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Once Upon a Witch's Death",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Gorilla God's Go-To Girl",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dan Da Dan: First Encounter",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Berserk of Gluttony",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Shiunji Family Children",
       "reason": "already-in-catalog"
     },
     {
@@ -705,11 +459,27 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Clevatess",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Gachiakuta",
       "reason": "already-in-catalog"
     },
     {
+      "title": "New Saga",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Lord of Mysteries",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "One Punch Man",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "With You, Our Love Will Make It Through",
       "reason": "already-in-catalog"
     },
     {
@@ -725,7 +495,63 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Mechanical Marie",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Sentenced to Be a Hero",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "My Hero Academia",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Hero Academia: Vigilantes",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Naruto",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "You and I Are Polar Opposites",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Hana-Kimi",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Gatherer's Adventure in Isekai",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Let's Play",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dark Moon: The Blood Altar",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Clueless First Friend",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Kunon the Sorcerer Can See",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "An Adventurer's Daily Grind at Age 29",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Misanthrope Teaches a Class for Demi-Humans",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "To Be Hero X",
       "reason": "already-in-catalog"
     },
     {
@@ -733,19 +559,23 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Daemons of the Shadow Realm",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Agents of the Four Seasons: Dance of Spring",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "The Beginning After the End",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Snowball Earth",
       "reason": "already-in-catalog"
     }
   ],
   "missing": [
-    {
-      "title": "Minami Hinata and Ayumu Murase in Ranking of Kings",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Maaya Sakamoto, Rie Kugimiya, Yusuke Kobayashi, and Gakuto Kajiwara in Fire Force",
-      "reason": "no-nxsha-match"
-    },
     {
       "title": "Kana Ichinose in Mobile Suit Gundam: The Witch from Mercury",
       "reason": "no-nxsha-match"
@@ -755,35 +585,11 @@
       "reason": "no-nxsha-match"
     },
     {
-      "title": "Misuzu Yamada, Atsushi Tamaru, Ai Kakuma, Hitomi Ôwada, Shinsuke Sugawara, Yuka Nukui, and Riho Sugiyama in Reign of the Seven Spellblades",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Akio Otsuka, Naoya Uchida, Kenshô Ono, Ken'ichirô Matsuda, Yûto Uemura, and Aleks Le in Vinland Saga",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Sally Amaki, Rina Hidaka, Rie Takahashi, Yoshitsugu Matsuoka, Kaito Ishikawa, and Kohei Amasaki in Tomo-chan Is a Girl!",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Johnny Yong Bosch, Cherami Leigh, Scott Whyte, Valerie Rose Lohman, and Matthew David Rudd in Tower of God",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Chiaki Kobayashi, Atsumi Tanezaki, and Kana Ichinose in Frieren: Beyond Journey's End",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Saori Hayami, Takuya Eguchi, and Atsumi Tanezaki in Spy x Family",
-      "reason": "no-nxsha-match"
-    },
-    {
       "title": "Mugihito, Gen Satô, Aaron Dismuke, Tomoaki Maeno, Kengo Kawanishi, Yusuke Kobayashi, Manami Numakura, Ayumu Murase, Felecia Angelle, Reina Ueda, and Karin Takahashi in Dr. Stone",
       "reason": "no-nxsha-match"
     },
     {
-      "title": "Yu Hayashi, Satoshi Hino, Ayumu Murase, and Kaito Ishikawa in Haikyuu!!",
+      "title": "Haikyuu!!",
       "reason": "no-nxsha-match"
     },
     {
@@ -791,15 +597,7 @@
       "reason": "no-nxsha-match"
     },
     {
-      "title": "Daisuke Namikawa, Tomokazu Sugita, Daisuke Ono, Yumi Uchiyama, Ai Kakuma, and Konomi Kohara in Mushoku Tensei: Jobless Reincarnation",
-      "reason": "no-nxsha-match"
-    },
-    {
       "title": "Demon Lord, Retry! R",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Kazuya Nakai, Mayumi Tanaka, Shion Wakayama, Nana Mizuki, Ayane Sakura, Natsuki Hanae, and Kaito Ishikawa in Dandadan",
       "reason": "no-nxsha-match"
     },
     {
@@ -807,15 +605,7 @@
       "reason": "no-nxsha-match"
     },
     {
-      "title": "Katsuyuki Konishi, Ken'ichi Suzumura, Fairouz Ai, Kenjiro Tsuda, Koki Uchiyama, Ai Kayano, and Soma Saito in Tojima Wants to Be a Kamen Rider",
-      "reason": "no-nxsha-match"
-    },
-    {
       "title": "Oshi ga Budôkan ittekuretara shinu",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Jun'ichi Suwabe, Jerry Jewell, Toshiyuki Toyonaga, Koki Uchiyama, Jessie James Grelle, and Micah Solusod in Yuri!!! On Ice",
       "reason": "no-nxsha-match"
     },
     {

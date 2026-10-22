@@ -1889,6 +1889,51 @@
       "seasons": {
         "1": 13
       }
+    },
+    {
+      "key": "rankingofkings",
+      "title": "Ranking of Kings",
+      "kind": "tv",
+      "id": "112613",
+      "seasons": {
+        "1": 23
+      }
+    },
+    {
+      "key": "reignofthesevenspellblades",
+      "title": "Reign of the Seven Spellblades",
+      "kind": "tv",
+      "id": "153337",
+      "seasons": {
+        "1": 15
+      }
+    },
+    {
+      "key": "tomochanisagirl",
+      "title": "Tomo-chan Is a Girl!",
+      "kind": "tv",
+      "id": "205308",
+      "seasons": {
+        "1": 13
+      }
+    },
+    {
+      "key": "tojimawantstobeakamenrider",
+      "title": "Tojima Wants to Be a Kamen Rider",
+      "kind": "tv",
+      "id": "285788",
+      "seasons": {
+        "1": 24
+      }
+    },
+    {
+      "key": "yurionice",
+      "title": "Yuri!!! on Ice",
+      "kind": "tv",
+      "id": "68129",
+      "seasons": {
+        "1": 12
+      }
     }
   ],
   "saoMovieCandidates": [

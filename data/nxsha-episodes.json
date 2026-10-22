@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T11:03:12.636Z",
+    "generatedAt": "2026-10-22T11:11:36.312Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -73871,6 +73871,869 @@
           "overview": "Turns out Nadare is the humanoid behind the Big Freeze. Tetsuo and Yukio fight the ultimate enemy.",
           "image": "https://image.tmdb.org/t/p/w780/wiqeswxs8kiWCO5TO09Up6FYLTy.jpg",
           "airDate": "2026-06-26",
+          "runtime": 23
+        }
+      ]
+    },
+    "rankingofkings": {
+      "id": "112613",
+      "title": "Ranking of Kings",
+      "seasons": {
+        "1": 23
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 23
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "The Prince's New Clothes",
+          "overview": "Bojji, a prince in a world where kings are ranked by their deeds and skills, is considered unfit to be the next king due to his disabilities. He runs into Kage, a shadow being with whom he can converse, but who also takes advantage of Bojji's kindness.",
+          "image": "https://image.tmdb.org/t/p/w780/tm7ze7FHuGT4HX9cx2Lv8OPrSNW.jpg",
+          "airDate": "2021-10-15",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "The Prince and Kage",
+          "overview": "Kage's tragic childhood following the purge of his people from the Kingdom of Bo is recounted. As the match between Bojji and Daida continues, Bojji's fighting style is denounced as cowardly, and he is instructed by Domas to adopt a more regal style.",
+          "image": "https://image.tmdb.org/t/p/w780/1ddv3GLMjnetSz8zv4UNn9uNrQ.jpg",
+          "airDate": "2021-10-22",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "The New King",
+          "overview": "King Bosse passes away, naming Bojji as the next king. However, the announcement of the new king does not go as Bojji expects. After being told that Kage has gone on a journey without him, Bojji resolves to go on a journey of his own, to Hiling's dismay.",
+          "image": "https://image.tmdb.org/t/p/w780/rQEh1MPJnJLQNlX9DuXbupEMmkV.jpg",
+          "airDate": "2021-10-29",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "His First Journey",
+          "overview": "A panelist from the Ranking of Kings Committee visits the kingdom to give Daida his ranking. While traveling, Bojji encounters an unusual hunter who teaches him about the mystery of life. While eating around a campfire, an attempt is made on Bojji's life.",
+          "image": "https://image.tmdb.org/t/p/w780/wY2EwLMMKKS2QdO63LJFwLi7wFP.jpg",
+          "airDate": "2021-11-05",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Intertwining Plots",
+          "overview": "After the latest attempt on his life, Bojji is overjoyed to discover that he has a secret guardian. Domas is willing to do whatever it takes to gain Daida's trust. The Magic Mirror directs Daida to an elixir that will supposedly grant him Bosse's power.",
+          "image": "https://image.tmdb.org/t/p/w780/xUmpCOWIDMCFqhcBynKguGuSRBE.jpg",
+          "airDate": "2021-11-12",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "The King of the Underworld",
+          "overview": "Bojji and Kage meet Desha, the king of the underworld, who is said to be able to make ordinary men into powerful kings. However, after testing Bojji's skill level, Desha refuses to train him. Apeas finds Daida and the mirror, and must choose a side.",
+          "image": "https://image.tmdb.org/t/p/w780/73hrJoIFG9HvFfd76OgbansukZF.jpg",
+          "airDate": "2021-11-19",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "The Prince's Apprenticeship",
+          "overview": "Kage pleads with Desha's brother Despa to make Bojji powerful enough to be king, and Despa takes Bojji on as an apprentice. After making his assessment, Despa is astounded by how little power Bojji actually has, but refuses to give up on training him.",
+          "image": "https://image.tmdb.org/t/p/w780/cpyBuPlZEv60zWSZbDV53uqU5Y3.jpg",
+          "airDate": "2021-11-26",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "The Sacrifice of Dreams",
+          "overview": "The story of Bosse's rise to power and Bojji's birth is revealed. Domas cautions Hokuro about returning to the castle, and the fate which likely awaits him there, before deciding to walk away himself. A plot to kill one of the royal court takes shape.",
+          "image": "https://image.tmdb.org/t/p/w780/pUsjnGaWY5WVA53TycH96rLOLjm.jpg",
+          "airDate": "2021-12-03",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "The Queen and the Shield",
+          "overview": "Years ago, Bosse pulled Dorshe from his position and made him the bodyguard for a reluctant Hiling, who was trying to win over a wary Bojji. Now, Dorshe is all that stands between Hiling and monsters which have been sent to assassinate her.",
+          "image": "https://image.tmdb.org/t/p/w780/ueRBJKW7vUX9Fn0fbDQXagC29Wc.jpg",
+          "airDate": "2021-12-10",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "The Prince's Sword",
+          "overview": "Bojji, Kage and Despa go out to dinner to celebrate the conclusion of Bojji's training. Kage has misgivings about Bojji's sword until a fight breaks out at dinner, and Bojji has to defend himself. Bojji and Kage must consider what their next step will be.",
+          "image": "https://image.tmdb.org/t/p/w780/8CQRqGI3wXKbSKzDap5JwGH1XXW.jpg",
+          "airDate": "2021-12-17",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Older and Younger Brothers",
+          "overview": "Daida reflects on a lesson once taught to him by Sorii and Bebin about the value of life, and finds out that he is not alone in his dark exile. When six criminals are broken out of their cells in the underworld, Desha sends his knights to go after them.",
+          "image": "https://image.tmdb.org/t/p/w780/492GrkwED3qyKTOlVNao3bKfVaN.jpg",
+          "airDate": "2021-12-24",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "The Footsteps of War",
+          "overview": "Outside the castle, Hiling and her elite force prepare to make their move. Meanwhile, inside the castle, The Magic Mirror and Apeas lead the six criminals toward the throne room. Bojji and Kage take heart at the news that an ally will be joining them.",
+          "image": "https://image.tmdb.org/t/p/w780/bqofHnlNRdNxjPojZH9GqgV8V5c.jpg",
+          "airDate": "2022-01-07",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "The Kingdom in Turmoil",
+          "overview": "Hiling and her band of knights face intense opposition from the forces under the command of the Magic Mirror. When the fighting takes a desperate turn, Apeas's loyalties are tested. In the castle town, Ouken launches his own independent attack.",
+          "image": "https://image.tmdb.org/t/p/w780/z6UqpoLjZBeIPnXALgJrBPbCUC7.jpg",
+          "airDate": "2022-01-14",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "The Return of the Prince",
+          "overview": "Critically wounded, Dorshe makes a desperate effort to protect Hiling, and receives help from an unexpected ally. The situation remains dire, as Gigan, one of the six criminals, continues his powerful assault, until Bojji and Kage return to the castle.",
+          "image": "https://image.tmdb.org/t/p/w780/yV6j3Z8XhufLClCMkwfdBVtBs9h.jpg",
+          "airDate": "2022-01-21",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "The Order of the Underworld",
+          "overview": "Leaving Dorshe and Hiling behind to rest, Bojji and Kage lead a party to the underworld entrance to send the magic beasts home. Domas and Hokuro encounter the Order of the Underworld deep underground on their way to recapture the missing criminals.",
+          "image": "https://image.tmdb.org/t/p/w780/ncexRD2UVevKYGLqY9TwylmFpLj.jpg",
+          "airDate": "2022-01-28",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "Royal Majesty",
+          "overview": "The name \"Miranjo\" triggers a traumatic flashback for Bojji. Desha relates to Bojji the circumstances that turned Gigan into a criminal. After consulting with Despa, Desha makes a change of plans, and decides to return with his knights to the underworld.",
+          "image": "https://image.tmdb.org/t/p/w780/2oS6hmX3trAh0zM7jk4MvXKC9q7.jpg",
+          "airDate": "2022-02-04",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "The Curse of Immortality",
+          "overview": "Bojji and Kage run into Apeas, who tells them about Miranjo's dream. Domas and Hokuro finally reach the entrance to the underworld they were ordered to destroy. The Magic Mirror calls out to Ouken, who escapes Despa's custody to come to her aid.",
+          "image": "https://image.tmdb.org/t/p/w780/3FvKsssNKYquwp1cndYU1GjvknZ.jpg",
+          "airDate": "2022-02-11",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "Battle With the Gods",
+          "overview": "From his cell, Bosse relates to Bebin the story of how he first met Miranjo when she was a little girl. Domas and Hokuro make their apologies to Hiling, then head off to assist Bojji. Bojji has his hands full with Ouken, but receives help from Despa.",
+          "image": "https://image.tmdb.org/t/p/w780/eqqqynvNrDuWmJEAfjalRQDBaRu.jpg",
+          "airDate": "2022-02-18",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "The Last Bastion",
+          "overview": "Bosse tells Bebin the story of when he found the disfigured Miranjo, until Bebin is called away. As Bojji and Despa look on, Kage is faced with a life-or-death decision, and finds help from an unexpected source. The Big Four step forward to face Ouken.",
+          "image": "https://image.tmdb.org/t/p/w780/yPk2CSrXX9X5VrAENZsLXhfKAoA.jpg",
+          "airDate": "2022-02-25",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "Immortal vs. Invincible",
+          "overview": "Miranjo finds herself answering to Shiina and her own mother for her actions. Bojji is faced with the prospect of passing judgment on Miranjo. The situation with Ouken grows even more dire until a new warrior arrives, but is this newcomer really an ally?",
+          "image": "https://image.tmdb.org/t/p/w780/w19u7Xh7jjakDwJNaLxSSpOTD01.jpg",
+          "airDate": "2022-03-04",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "The Swordsmanship of a King",
+          "overview": "Realizing that Bosse did not wish to be brought back to life, Miranjo apologizes. Bosse issues an ultimatum to the others present to either side with him or be killed. Despa fears that Bojji may not measure up as his showdown with Bosse gets underway.",
+          "image": "https://image.tmdb.org/t/p/w780/xqquy2l9f9GTIJKWkP5ZP2gjBTv.jpg",
+          "airDate": "2022-03-11",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "A Promise to the Demon",
+          "overview": "Bosse shows Daida the happy memories of the time he spent with Miranjo, and how he received his strength from the demon. After catching the demon, Despa attempts to get his wish for Ouken granted, but Bojji and Daida have a different wish in mind.",
+          "image": "https://image.tmdb.org/t/p/w780/9eC8z2eKzWi3Ftl7qxf3Ps9kaMi.jpg",
+          "airDate": "2022-03-18",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "The King and the Sun",
+          "overview": "Daida acknowledges and accepts Miranjo's crimes, then forgives her. As part of his atonement, Daida relinquishes the throne to Bojji. However, Kage feels out of place with his friend's new position of distinction, and leaves Bojji to reign on his own.",
+          "image": "https://image.tmdb.org/t/p/w780/vuIULyWBYhtVXhjvuCJQdc4bTz8.jpg",
+          "airDate": "2022-03-25",
+          "runtime": 23
+        }
+      ]
+    },
+    "reignofthesevenspellblades": {
+      "id": "153337",
+      "title": "Reign of the Seven Spellblades",
+      "seasons": {
+        "1": 15
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 15
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Ceremony",
+          "overview": "New student Oliver arrives at Kimberly Magic Academy, a house of learning where 20% of the students don't make it out in one piece.",
+          "image": "https://image.tmdb.org/t/p/w780/uTTKIA2FMguWPdHrUEm5do8NPUP.jpg",
+          "airDate": "2023-07-08",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Sword Arts",
+          "overview": "The new students settle into life at Kimberly, and Oliver has an intense duel with Nanao.",
+          "image": "https://image.tmdb.org/t/p/w780/dLSssuOw0nDXn3ccdCgg62YQFdK.jpg",
+          "airDate": "2023-07-15",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Soldier",
+          "overview": "The new students find themselves trapped in Kimberly at night, with two powerful upperclassmen out to recruit them dead or alive.",
+          "image": "https://image.tmdb.org/t/p/w780/5TjLJMZNzVCZIiFHpB78r9iW6mY.jpg",
+          "airDate": "2023-07-22",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Colosseum",
+          "overview": "After Katie is bullied by the other students, her friends end up in a classroom brawl. But that won't be the only fight they see...",
+          "image": "https://image.tmdb.org/t/p/w780/oYSzyJFSQ7YnnlKP0CoWw3S6TQc.jpg",
+          "airDate": "2023-07-29",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Glare",
+          "overview": "Nanao and Oliver face down a powerful foe who has designs on Katie.",
+          "image": "https://image.tmdb.org/t/p/w780/72qTINFt89Bw9vyDUVHAVmQu6eL.jpg",
+          "airDate": "2023-08-05",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Arise",
+          "overview": "Oliver and Nanao battle a powerful mage with an enchanted eye, and the true purpose of Oliver's coming to Kimberly is revealed.",
+          "image": "https://image.tmdb.org/t/p/w780/3yXj4rbERjeyQ913ab2cZRuXOjx.jpg",
+          "airDate": "2023-08-12",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Reversi",
+          "overview": "Oliver and friends attend their first broomriding class. Meanwhile, Pete discovers something unexpected about himself.",
+          "image": "https://image.tmdb.org/t/p/w780/inXb4poUtCXxe8gwsEkitHOE2hm.jpg",
+          "airDate": "2023-08-19",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Rivals",
+          "overview": "Another student challenges Oliver and his friends to see who's really the strongest of their grade.",
+          "image": "https://image.tmdb.org/t/p/w780/6iGgsMwLcOkqtttF3QAYPZWe85U.jpg",
+          "airDate": "2023-08-26",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Explore",
+          "overview": "Katie is given a workshop, and she and her friends go into the labyrinth to take a look at it.",
+          "image": "https://image.tmdb.org/t/p/w780/8h2ATB7iYbTcg02e14lw7nJuaKz.jpg",
+          "airDate": "2023-09-02",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Master and Knight",
+          "overview": "Oliver and his friends are caught in a brutal team battle against other students deep within the labyrinth.",
+          "image": "https://image.tmdb.org/t/p/w780/i31z3F0Wx2uMeRpyXgOB05Vi1FW.jpg",
+          "airDate": "2023-09-09",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Duty",
+          "overview": "Oliver and Chela fight a duel deep in the labyrinth, against an opponent who will do anything to avoid defeat.",
+          "image": "https://image.tmdb.org/t/p/w780/xALQcvPEEie0BgIeMdRjpJFBw2b.jpg",
+          "airDate": "2023-09-16",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Possibility",
+          "overview": "Oliver and Chela recruit an unexpected ally to help them venture into the labyrinth and get back Pete.",
+          "image": "https://image.tmdb.org/t/p/w780/eyvMsFQ7auDdJy2ldU5jUPF5jhY.jpg",
+          "airDate": "2023-09-23",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "Noisy Forest",
+          "overview": "Nanao, Oliver, and Chela venture through the labyrinth, encountering strange creatures and deadly threats.",
+          "image": "https://image.tmdb.org/t/p/w780/wi4qjWtpRJ4FGve8Jn0Pc4WPTGD.jpg",
+          "airDate": "2023-09-30",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "Salvadori",
+          "overview": "As everyone heads deeper beneath the academy, Godfrey and Carlos think back to Ophelia's past.",
+          "image": "https://image.tmdb.org/t/p/w780/uDO7jtuJ3hySU7afwZG4G61fsft.jpg",
+          "airDate": "2023-10-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "Last Song",
+          "overview": "Ophelia's plan reaches its climax, trapping Oliver and his friends inside another world where she rules.",
+          "image": "https://image.tmdb.org/t/p/w780/4NnIP7L5VVTg7ilyS1G3sV9vhoZ.jpg",
+          "airDate": "2023-10-14",
+          "runtime": 24
+        }
+      ]
+    },
+    "tomochanisagirl": {
+      "id": "205308",
+      "title": "Tomo-chan Is a Girl!",
+      "seasons": {
+        "1": 13
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 13
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "I Want to Be Seen as a Girl!",
+          "overview": "Tomo Aizawa, a tomboy girl, confesses her love to her childhood friend Kubota Junichirō. However, he mistakes her confession as a casual assurance of friendship between boys, disgruntling her. Later on, Tomo asks her best friend Misuzu Gundo for advice. However, Misuzu says she has rightly portrayed herself as a boy because of her lack of femininity.",
+          "image": "https://image.tmdb.org/t/p/w780/kw8OqUhlcxD4MCAVtyH7jCjzbNy.jpg",
+          "airDate": "2023-01-05",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Tomo's Skirt / The School Idol",
+          "overview": "After Tomo is groped by an old man on the bus, Junichiro suggests that she stop wearing skirts. Then Tomo meets Carol, an English girl that all the boys in school admire.",
+          "image": "https://image.tmdb.org/t/p/w780/yZyIZTuHunS3i2Tcsqsa6OoM7Ia.jpg",
+          "airDate": "2023-01-12",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Best Bud's Secret / Let's Go on a Date!",
+          "overview": "Tomo is shocked to learn that Junichiro and Misuzu briefly dated in middle school. Tomo then decides to invite Junichiro out on a date herself, with help from Misuzu and Carol.",
+          "image": "https://image.tmdb.org/t/p/w780/jplnsTQzXCNFoZL12qxsSU6gxwM.jpg",
+          "airDate": "2023-01-19",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "The Reason for Her Smile / I Want to Be Playful Like a Girl / Heroes Fall a Lot",
+          "overview": "Tomo wants to experience some girly interaction, like hugging and hand-holding, so she tries it with all of her girl friends.",
+          "image": "https://image.tmdb.org/t/p/w780/s5O3b2HEQuCMcmAACghgrG8go2p.jpg",
+          "airDate": "2023-01-26",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "The Girls of the Olston Family / A Feeling I Won't Give Up / Heart-Pounding! A Gaming Overnighter",
+          "overview": "Tomo visits each of her best friends' houses. She meets Carol's mom, gets some help studying for midterms at Misuzu's, and... stays overnight at Junichiro's house?!",
+          "image": "https://image.tmdb.org/t/p/w780/ifpS2NWw5WDpHLiaI1cZG9bGeAt.jpg",
+          "airDate": "2023-02-02",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Birthday Present / Burn Up! The Ball Sports Tournament",
+          "overview": "Misuzu and Carol give Tomo an extra-girly makeover and send her to the convenience store, where she unexpectedly runs into Junichiro. Later, Tomo gets fired up for the school's ball sports tournament.",
+          "image": "https://image.tmdb.org/t/p/w780/1NJR63PmaPQNfblkjYwn5ONOiWQ.jpg",
+          "airDate": "2023-02-09",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Junichiro's Promise / When Tomo Puts On a Swimsuit...",
+          "overview": "Junichiro recalls how he and Tomo first met and the four friends spend a day at the beach.",
+          "image": "https://image.tmdb.org/t/p/w780/h252Yt2umjdrkSGfYwkx7nQyHpO.jpg",
+          "airDate": "2023-02-16",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "The Night of the Summer Festival / The Distance Between Them",
+          "overview": "Tomo has noticed that Junichiro is starting to act differently around her. They both try to sort out their feelings while seeing the summer festival fireworks together.",
+          "image": "https://image.tmdb.org/t/p/w780/vc7WVi6ljpa6BQqPeCNd2fxmqCz.jpg",
+          "airDate": "2023-02-23",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "The Angel's True Face",
+          "overview": "Misuzu sees that Misaki and Carol need help expressing their feelings for each other, so she comes up with a plan to get them together... but the results are far beyond what she expected.",
+          "image": "https://image.tmdb.org/t/p/w780/yr6WmNzK5TASYjYNgkJTRXiM0fk.jpg",
+          "airDate": "2023-03-02",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "How the Contest Ends / To Stay Best Friends...",
+          "overview": "Tomo and Junichiro are fired up for the school marathon. They start out neck-and-neck at the head of the pack, but when they reach the girls' turn-around point...",
+          "image": "https://image.tmdb.org/t/p/w780/mikgeMdRwl1XGzHj3ZJpk6Bklpf.jpg",
+          "airDate": "2023-03-09",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "My First Part-Time Job / The Abandoned Cinderella",
+          "overview": "Tomo wants to earn money for a birthday present for Jun, so she works part-time at the ramen restaurant owned by Tanabe's family. Later, their class prepares for its presentation of \"Cinderella\" at the cultural festival.",
+          "image": "https://image.tmdb.org/t/p/w780/8kEFnvz3OgQx72WhXiWQsk5Uxxy.jpg",
+          "airDate": "2023-03-16",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Goodbye, Best Friend",
+          "overview": "Junichiro finally confronts his own feelings for Tomo, and Tomo questions whether she really wants the friendship they have to turn into something else.",
+          "image": "https://image.tmdb.org/t/p/w780/x512E3kbBXiOybFBq9d02MMAfMI.jpg",
+          "airDate": "2023-03-23",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "To Stay by Your Side...",
+          "overview": "Tomo begins to wonder why Junichiro always seems so calm and collected around her, even though she always feels flustered around him. Then she finds out that Junichiro made a certain deal with her father...",
+          "image": "https://image.tmdb.org/t/p/w780/vlf0YYLSaQcACizSgeUEcmlV222.jpg",
+          "airDate": "2023-03-30",
+          "runtime": 24
+        }
+      ]
+    },
+    "tojimawantstobeakamenrider": {
+      "id": "285788",
+      "title": "Tojima Wants to Be a Kamen Rider",
+      "seasons": {
+        "1": 24
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 24
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Tojima Wants to Be a Kamen Rider",
+          "overview": "Tanzaburo Tojima has always idolized Kamen Rider, to the point of wanting to be him. He turns 40 this year...",
+          "image": "https://image.tmdb.org/t/p/w780/uAnJTIJxKJLqytMUYSRrL7pUOit.jpg",
+          "airDate": "2025-10-05",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "I Am Tackle",
+          "overview": "Yuriko Okada has always idolized Electro-Wave Human Tackle. But seeing Tojima forces her into action...",
+          "image": "https://image.tmdb.org/t/p/w780/1A6XM9Q7oLizX55faJUfOmBcSyJ.jpg",
+          "airDate": "2025-10-12",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "I Love the Moment When Hate Turns to Love",
+          "overview": "After their encounter with the real Shocker, Tojima meets someone who knows more about the evil organization.",
+          "image": "https://image.tmdb.org/t/p/w780/z6aWfkTXPu6HqqrBNNCp4mu9A9Z.jpg",
+          "airDate": "2025-10-19",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Who Is the Strongest Kamen Rider?",
+          "overview": "Mitsuba's girlfriend, Yukarisu, transforms into a Shocker Combatant and attacks Yuriko!",
+          "image": "https://image.tmdb.org/t/p/w780/xy2DMm4KEPPctQKvgQv9GSGvpvs.jpg",
+          "airDate": "2025-10-26",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Let Me Be V3 Too",
+          "overview": "Mitsuba's girlfriend, Yukarisu, is a member of Shocker. What will he do protect her from his brother, Ichiyo?",
+          "image": "https://image.tmdb.org/t/p/w780/fxZNgeBSD2uWtjl62DTVHs7bK9E.jpg",
+          "airDate": "2025-11-02",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Order Some Snacks",
+          "overview": "The gang gathers at a pub to discuss what's happened. But it's owner is Ichiyo and Mitsuba's resentful sister.",
+          "image": "https://image.tmdb.org/t/p/w780/1GAzB9XOvofRwqL5w7hTSZSMQWH.jpg",
+          "airDate": "2025-11-09",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Let Me Join Shocker",
+          "overview": "Nakao has a fateful encounter that makes him recount how he ended up as a Shocker-idolizing yakuza.",
+          "image": "https://image.tmdb.org/t/p/w780/mPkOJdDo0uQQGFHynPIjqVvnqqj.jpg",
+          "airDate": "2025-11-16",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "What's a Kamen Rider Do When A Dangerous Enemy Appears?",
+          "overview": "Tojima and the gang now know that both Shocker and monsters are real. What's next?",
+          "image": "https://image.tmdb.org/t/p/w780/29uNzwfha9OV78D3cNEJeLXWmE7.jpg",
+          "airDate": "2025-11-23",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Show Me Your Rider",
+          "overview": "The tournament to decide the strongest begins, with Yukarisu and Tojima facing off.",
+          "image": "https://image.tmdb.org/t/p/w780/mqTAUwrgSvXpK9vRzVKtGNWZ62c.jpg",
+          "airDate": "2025-11-30",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Risk Your Life",
+          "overview": "Yuriko and Tojima clash, with her superior technique frustrated by his bottomless resilience and power...",
+          "image": "https://image.tmdb.org/t/p/w780/zaxPVctomMsCFjThG4UfWoKwIYX.jpg",
+          "airDate": "2025-12-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Tackle is the Strongest",
+          "overview": "Both worn out from their previous battles, the tournament concludes with Mitsuba VS Yuriko.",
+          "image": "https://image.tmdb.org/t/p/w780/9zNd1u0ctH2KMPxJyUnOS89ryJq.jpg",
+          "airDate": "2025-12-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "I'll Take All You Riders On",
+          "overview": "The gang has an unexpected encounter at Futaba's pub.",
+          "image": "https://image.tmdb.org/t/p/w780/egmrWnaqbZGmKWROviOS9HulIjv.jpg",
+          "airDate": "2025-12-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "I Will Fight, and Die, Against Shocker",
+          "overview": "Futaba's rage towards her brother, Ichiyo, reaches it's breaking point.",
+          "image": "https://image.tmdb.org/t/p/w780/lDmPfJJBnthHDMlAkdUTbBXBT0h.jpg",
+          "airDate": "2025-12-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "I Want to Learn More About Humans",
+          "overview": "Will Futaba still be able to deny the existence of Shocker when she finds herself in a fight against Kumota?",
+          "image": "https://image.tmdb.org/t/p/w780/hHQuAuGM884Zof3Obu9xVALPoXx.jpg",
+          "airDate": "2026-01-11",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "The Masked Idol, Heavy Chop",
+          "overview": "An encounter with a man from Sena's past deepens Kumota's curiosity about humans.",
+          "image": "https://image.tmdb.org/t/p/w780/32oIX0RqnR0j0OQb7nBovQb8gKY.jpg",
+          "airDate": "2026-01-18",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "An Imposter Can't Beat the Real Deal",
+          "overview": "Thunder Raiko finally comes for Yukarisu. Will the Riders be able to protect her from the Shocker assassin?",
+          "image": "https://image.tmdb.org/t/p/w780/ymfsbyZjpVcUS9WBsLmbOm1ILOb.jpg",
+          "airDate": "2026-01-25",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "Everyone In The World Will Join Shocker",
+          "overview": "Tojima reels from the most recent battle, while Ito, Sato, and Ishige stumble onto Bat Man's wicked plot...",
+          "image": "https://image.tmdb.org/t/p/w780/6apaFsxP9Bzs6B8IL9THqJ8GZzz.jpg",
+          "airDate": "2026-02-01",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "I'll Fight Shocker Too",
+          "overview": "Nakao and his underlings find a surprising sanctuary, as the Bat Man's Shocker idols continue to hunt them.",
+          "image": "https://image.tmdb.org/t/p/w780/h7HTSZYHo1QvernAPpyGtSEt5l0.jpg",
+          "airDate": "2026-02-08",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "It'd Be an Honor to Die as a Rider",
+          "image": "https://image.tmdb.org/t/p/w780/ff4NEXqQszvdkHTo1C7aYoBoLMU.jpg",
+          "airDate": "2026-02-15",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "I Was Craving a Battle With Shocker",
+          "overview": "Ichiyo introduces Nakao to someone who seems poised to figure out what it is he's lacking.",
+          "image": "https://image.tmdb.org/t/p/w780/79VMugLulwlYtbuOQcGkvN2pbtE.jpg",
+          "airDate": "2026-02-22",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "Becoming the Ultimate Monster",
+          "overview": "Thunder Raiko tracks Nakao down, but his training has made him more than she can handle at first.",
+          "image": "https://image.tmdb.org/t/p/w780/1bYqi32G8EucvO6HVoLYErooxLG.jpg",
+          "airDate": "2026-03-01",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "Shocker is on the Move",
+          "overview": "Tojima and his fellow Riders unite, out to stop the Bat Man's mass recruitment scheme for Shocker.",
+          "image": "https://image.tmdb.org/t/p/w780/uWolCiCQ8Adz2yhLbTBd0t3JYGp.jpg",
+          "airDate": "2026-03-08",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "Let's Do This, Shocker!",
+          "overview": "The Bat Man intends to convert every visitor at an arena into a Shocker Combatant. Can the Riders stop him?",
+          "image": "https://image.tmdb.org/t/p/w780/4cJI6glBj3zumgry0gyEkHrHV0F.jpg",
+          "airDate": "2026-03-15",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "title": "I Wouldn't Mind Dying Today",
+          "overview": "Tojima and the Riders finally square off against the Bat Man. But can humans really defeat a Shocker monster?",
+          "image": "https://image.tmdb.org/t/p/w780/tef4v0xNlFOO6hucmuk14ndfegW.jpg",
+          "airDate": "2026-03-22",
+          "runtime": 24
+        }
+      ]
+    },
+    "yurionice": {
+      "id": "68129",
+      "title": "Yuri!!! on Ice",
+      "seasons": {
+        "1": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 12,
+          "overview": "Figure skater Yuri Katsuki flops in his latest season. When five-time world champion Victor Nikiforov becomes his coach, he gets another chance."
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Easy as Pirozhki!! The Grand Prix Final of Tears",
+          "overview": "Katsuki Yuuri is at a crossroads after suffering a miserable defeat at the Grand Prix Finals. Uncertain whether to retire or to continue, Yuuri holes up in his family home. However, a chance circumstance causes him to catch the eye of five-time world champion Victor Nikiforov...",
+          "image": "https://image.tmdb.org/t/p/w780/wDB25XTLddHq27fD29VwSiikWEJ.jpg",
+          "airDate": "2016-10-06",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Two Yuris?! Drama at Yu-topia",
+          "overview": "Out of nowhere, five-time world champion Victor Nikiforov declares himself Yuuri's coach. When world junior champion Yuri Plisetsky follows Victor to Hasetsu so that he can bring Victor back to Russia, the chaos only deepens...",
+          "image": "https://image.tmdb.org/t/p/w780/fAfsUUa3vgLFwV3FZyBJuVB3uNH.jpg",
+          "airDate": "2016-10-13",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "I Am Eros, and Eros is Me?! Face-Off! Hot Springs on Ice",
+          "overview": "The two Yuris are to face off in Hot Springs on Ice. where they will each debut a short program choreographed by Victor—one to Eros, and one to Agape. Victor claims he will do whatever the winner wants, but...",
+          "image": "https://image.tmdb.org/t/p/w780/fx9oZyTXRA8z2YLtDJ9jFYRkWPc.jpg",
+          "airDate": "2016-10-20",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Love Yourself...Achieved!! The Free Program",
+          "overview": "The two Yuris begin to choreograph their free skate programs at their respective rinks. In Japan, Yuuri feels hesitant to pursue what it means to be uniquely him, but he begins to untangle his past by talking to Victor.",
+          "image": "https://image.tmdb.org/t/p/w780/v7xqPUK9aAfA08KJ0oLLNucAMGs.jpg",
+          "airDate": "2016-10-27",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Face Beet-Red!! It's the First Competition! The Chugoku, Shikoku, and Kyushu Championship",
+          "overview": "It is time for Yuuri's first competition of the season, but Victor's the center of attention as his first competition as a coach. Already anxious, Yuri's nerves don't get a break when Minami Kenjirou, the skater who beat Yuri at last year's nationals, confronts him...",
+          "image": "https://image.tmdb.org/t/p/w780/3uLiIjXzBGZGuyoZfftpdboxCf3.jpg",
+          "airDate": "2016-11-03",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "China's On! The Grand Prix Series Opening Event!! The Cup of China Short Program",
+          "overview": "The Cup of China, a Grand Prix Series event, is here! Realizing that he is the man who took Victor from the world, Yuuri gets worked up before his performance. Victor is concerned to see Yuuri this way for the first time...",
+          "image": "https://image.tmdb.org/t/p/w780/sC0DXtxIdFvEdaIsu029DcWsqIl.jpg",
+          "airDate": "2016-11-10",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "China's On! The Grand Prix Series Opening Event!! The Cup of China Free Skate",
+          "overview": "Having finished the short program in first place—a first-time feat—Yuuri falters under the massive pressure. Can his fragile heart withstand Victor's roughshod intervention?",
+          "image": "https://image.tmdb.org/t/p/w780/jJIR3M5XabmIyey1UPPNmWFMoL6.jpg",
+          "airDate": "2016-11-17",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Yuri vs Yuri! The Horror!! Rostelecom Cup, Short Program",
+          "overview": "Yuuri is determined to show his love to all of Russia in the Rostelecom Cup, the final event of the Grand Prix Series. In contrast, Yurio feels bogged down by his ties to Moscow, and tries to shrug them off. Before them, however, rises JJ, a rising star from North America...",
+          "image": "https://image.tmdb.org/t/p/w780/nKcCeacDBlooorr7TzS8PUnjy40.jpg",
+          "airDate": "2016-11-24",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Yuri vs Yuri! The Horror!! Rostelecom Cup, Free Skate",
+          "overview": "Katsuki Yuuri has already obtained \"love.\" With Victor's fading warmth in his heart, Yuri goes out to the rink for his free skate that will determine whether he'll qualify for the Grand Prix Final. Yurio firms his own resolve after eating special pirozhki, the epitome of love in Moscow.",
+          "image": "https://image.tmdb.org/t/p/w780/wz7Hbiwua1tr9ChgFLcsM38U4oB.jpg",
+          "airDate": "2016-12-01",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Gotta Supercharge it! Pre-Grand Prix Final Special!",
+          "overview": "Barcelona is where the fated final battle will take place. Sightseeing during their free time, Victor is oblivious to Yuuri's resolve. Then, a chance remark reveals a nightmarish event at the banquet last year for Yuuri...",
+          "image": "https://image.tmdb.org/t/p/w780/yfgVkG2zeK6EI6QWkgi7CccXgVr.jpg",
+          "airDate": "2016-12-08",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Gotta Super-Supercharge It!! Grand Prix Final Short Program",
+          "overview": "Now armed with the light of love on his finger along with Victor, Yuuri goes for the gold in the Grand Prix Final as the chosen six competitors clash in the short program.",
+          "image": "https://image.tmdb.org/t/p/w780/sXUWsKTGebtVGyDqusPD7EQnQuL.jpg",
+          "airDate": "2016-12-15",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Gotta Super-Super-Supercharge It!! Grand Prix Final Free Skate",
+          "overview": "\"Let's end this.\" Yuri's words trigger a debate that results in Yuri appearing at the free skate event in his worst condition ever. Can Yuri succeed in skating a program with the highest technical difficulty at their last event together to show the world the love he shares with Victor? What will each conclude once the program is over and it is time to decide their paths after the Grand Prix Final?",
+          "image": "https://image.tmdb.org/t/p/w780/mnHCNflHPfNU1gmKCDO1ETPVqvV.jpg",
+          "airDate": "2016-12-22",
           "runtime": 23
         }
       ]

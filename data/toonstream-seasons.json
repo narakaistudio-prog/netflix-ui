@@ -2846,6 +2846,71 @@
           "base": 0
         }
       }
+    },
+    "rankingofkings": {
+      "title": "Ranking of Kings",
+      "slug": "ranking-of-kings",
+      "seasons": {
+        "1": 23
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "reignofthesevenspellblades": {
+      "title": "Reign of the Seven Spellblades",
+      "slug": "reign-of-the-seven-spellblades",
+      "seasons": {
+        "1": 15
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tomochanisagirl": {
+      "title": "Tomo-chan Is a Girl!",
+      "slug": "tomo-chan-is-a-girl",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tojimawantstobeakamenrider": {
+      "title": "Tojima Wants to Be a Kamen Rider",
+      "slug": "tojima-wants-to-be-a-kamen-rider",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "yurionice": {
+      "title": "Yuri!!! on Ice",
+      "slug": "yuri-on-ice",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
     }
   },
   "misses": [
