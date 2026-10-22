@@ -5,7 +5,7 @@ import {
     buildMovieboxPageUrl,
     getMovieboxCrop,
     isMovieboxUrl,
-    MOVIEBOX_PHONE_BAR_HEIGHT,
+    getMovieboxPhoneBoxHeight,
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
     MOVIEBOX_STAGE_PLAYER_HEIGHT,
@@ -206,14 +206,63 @@ describe('getMovieboxCrop', () => {
         expect(crop.cropLeft).toBe(0);
         // header 104 + 4px andar
         expect(crop.cropTop).toBe(108);
-        const playerW = 390 - 24;
-        // video (16:9) + site ka control bar — bar aadha na kate.
-        expect(crop.height).toBe(
-            Math.round((playerW * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4),
-        );
+        // crop theek player container ke bottom par — 2:1
+        expect(crop.height).toBe(getMovieboxPhoneBoxHeight(390));
         expect(crop.stacked).toBe(false);
         // Site ki fixed bottom nav viewport ke neeche — player ke upar nahi.
         expect(crop.viewportHeight).toBeGreaterThan(crop.height + crop.cropTop + 200);
+    });
+
+    /**
+     * Owner (screenshot 1): crop ke andar player ke neeche site ki
+     * "Refresh | Download | Prev | Next" patti jhaank rahi thi. Screenshot 2
+     * (production, jab player chal raha hai) me wo nahi aati.
+     *
+     * Screenshot se pixel-naap (390px phone → modal 366 CSS):
+     *   player container 366 × ~183–187  (site ke controls container ke andar)
+     *   uske neeche patti  : ~187 CSS se shuru
+     */
+    it('phone player ke neeche site ki Refresh/Download patti kabhi nahi aati', () => {
+        const boxWidth = 366;
+        // crop container ke bottom par: 366 × 183
+        expect(getMovieboxPhoneBoxHeight(boxWidth)).toBe(183);
+        const crop = getMovieboxCrop(boxWidth, 244, { phone: true });
+        expect(crop.frameWidth).toBe(366);
+        expect(crop.height).toBe(183);
+        // production me patti ~187 CSS par shuru hoti hai — crop usse pehle band
+        expect(crop.height).toBeLessThanOrEqual(187);
+        // site ke apne controls (container ke andar, neeche) poore crop me
+        expect(crop.height).toBeGreaterThanOrEqual(170);
+        expect(crop.scale).toBe(1);
+    });
+
+    it('phone player ka size PERMANENT lock — sirf chaudai par depend karta hai', () => {
+        const widths = [320, 360, 375, 390, 414, 430, 479];
+        const heights = [480, 568, 640, 667, 740, 844, 932, 1200];
+        for (const width of widths) {
+            const lockedHeight = getMovieboxPhoneBoxHeight(width);
+            for (const height of heights) {
+                const crop = getMovieboxCrop(width, height, { phone: true });
+                // host ki unchai se koi farq nahi — har phone par same size
+                expect(crop.frameWidth).toBe(width);
+                expect(crop.height).toBe(lockedHeight);
+                // 2:1 dabba, native scale (site ke bade touch controls)
+                expect(crop.height).toBe(Math.round(width / 2));
+                expect(crop.scale).toBe(1);
+                // Site ka header kabhi player ke upar nahi.
+                expect(crop.cropTop).toBe(108);
+            }
+        }
+    });
+
+    it('phone par host ki unchai badalne se player nahi badalta', () => {
+        const tall = getMovieboxCrop(390, 844, { phone: true });
+        const medium = getMovieboxCrop(390, 400, { phone: true });
+        const short = getMovieboxCrop(390, 200, { phone: true });
+        expect(tall.frameWidth).toBe(390);
+        expect(tall.height).toBe(195);
+        expect(medium.height).toBe(tall.height);
+        expect(short.height).toBe(tall.height);
     });
 
     it('landscape fullscreen par wahi desktop stage crop (mobile nav nahi)', () => {

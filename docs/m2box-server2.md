@@ -418,18 +418,44 @@ nahi".)
 
 - **After-play screen (Crunchyroll jaisa)** — `MovieDetailModal` ka phone branch:
   - Top bar: back `<` + title + `S1 • E<n>`.
-  - Player upar — 16:9-ish dabba, andar **site ka asli mobile layout**
-    (`getMovieboxCrop(..., { phone: true })`): iframe phone ki chaudai par
-    (scale 1), crop top ~108px (mobile header ke neeche). Isse site ke apne
-    controls (play/seek/quality/fullscreen) **native size** ke hote hain —
-    pehle 1536 stage chhota hone se wo ~8px ke reh jate the ("player ke andar
-    ke control bahut chhote hai"). Desktop par wahi 1536-stage crop.
-  - Neeche (scroll): series naam (red), `E<n> – <episode name>`, meta
-    (`★ rating • runtime`), `Released on <date>`, description + **SHOW MORE**,
-    **NEXT EPISODE** card (thumb + naam + runtime; tap par wahi episode chalu),
-    **SEE MORE EPISODES** (player band → detail modal ka episode list).
-  - `MovieboxPagePlayer` ko `hideClose` — video par X nahi (top bar ka back hi
-    bahar ka rasta).
+  - Player upar — **ratio permanently locked** (neeche dekho), andar **site ka
+    asli mobile layout** (`getMovieboxCrop(..., { phone: true })`): iframe phone
+    ki chaudai par (scale ~1), crop top 108px (mobile header ke neeche). Isse
+    site ke apne controls (play/seek/quality/fullscreen) **native size** ke
+    hote hain — pehle 1536 stage chhota hone se wo ~8px ke reh jate the
+    ("player ke andar ke control bahut chhote hai"). Desktop par wahi
+    1536-stage crop.
+
+### Phone player ka size — permanent lock 📌
+
+Owner: "production me jaisa player hai waisa hi rahe, aur photo 1 jaisa
+Refresh / Download / Prev / Next neeche na aaye — photo 2 jaisa banao."
+
+Production screenshots se pixel-naap (390px phone → modal 366 CSS chaudi):
+
+| Cheez | Naap |
+| --- | --- |
+| player container (video + site ke controls) | **366 × ~183–187 = 2:1** |
+| site ke controls (seek + play/quality/CC/settings/fullscreen) | container ke **andar**, neeche |
+| uske neeche site ki page patti | **Refresh / Download / Prev / Next** — ~187 CSS se |
+
+**Bug:** crop `16:9 video + 42px` (≈230 CSS) thi — container se ~45px zyada.
+Jab player load/error state me hota (owner ki photo 1) to us extra jagah me
+site ki Refresh/Download patti aa jati thi; jab player chal raha hota (photo 2)
+to wahan sirf black hota tha — isliye production me kabhi nahi dikhta tha.
+
+**Fix:** crop ab theek **player container ke bottom par** band hoti hai —
+`width / 2` (2:1). Site ke controls container ke andar hain, isliye poore
+dikhte hain; unke neeche wali patti crop ke bahar reh jati hai.
+
+- Height **sirf chaudai se** — `getMovieboxPhoneBoxHeight(width)` = `round(width / 2)`
+  (modal bhi isi se height lagata hai, crop bhi isi se). Window ki unchai,
+  rotate, fullscreen, route — kisi ka role nahi.
+- **Lock ka test**: `tests-arena/moviebox-crop.test.ts` →
+  *"phone player ke neeche site ki Refresh/Download patti kabhi nahi aati"*
+  (366 → 183, patti 187 se pehle band) + *"size PERMANENT lock"*
+  (7 chaudai × 8 unchai par height sirf width se, scale hamesha 1).
+
 - **Landscape SIRF fullscreen par** — play dabate hi koi auto-fullscreen/rotation
   nahi (MovieboxPagePlayer ka auto effect aur EmbedPlayer ka auto effect dono
   hataye). `fullscreenchange` par orientation lock `landscape` (Android Chrome;

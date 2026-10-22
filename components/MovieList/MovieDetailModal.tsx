@@ -15,7 +15,10 @@ import {
 } from '@/lib/recentlyWatched';
 import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
-import { MOVIEBOX_PHONE_BAR_HEIGHT, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import {
+    getMovieboxPhoneBoxHeight,
+    MOVIEBOX_SERVER_LABEL,
+} from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
@@ -684,13 +687,18 @@ export function MovieDetailModal({
                                 <View
                                     style={[
                                         styles.phonePlayerBox,
-                                        // Crop ke barabar hi — video (16:9) +
-                                        // site ka control bar, dono poore.
+                                        /**
+                                         * Production ka **wahi** naap —
+                                         * `getMovieboxPhoneBoxHeight` (site ka
+                                         * mobile player container, 2:1). Isse
+                                         * crop theek player ke bottom par band
+                                         * hoti hai: neeche wali Refresh/
+                                         * Download patti kabhi nahi dikhti.
+                                         */
                                         {
-                                            height:
-                                                Math.round(((width - 24) * 9) / 16) +
-                                                MOVIEBOX_PHONE_BAR_HEIGHT -
-                                                4,
+                                            height: getMovieboxPhoneBoxHeight(
+                                                Math.max(0, width - 24),
+                                            ),
                                         },
                                     ]}
                                 >
@@ -840,9 +848,9 @@ const styles = StyleSheet.create({
     phoneTopName: { color: '#fff', fontSize: 19, fontWeight: '800' },
     phoneTopEpisode: { color: '#b0b0b0', fontSize: 13, marginTop: 2 },
     /**
-     * Phone player dabba. Andar site ka **mobile layout** chalta hai (crop
-     * 390×~202) — ye ratio usse thoda lamba hai, taaki crop kabhi kata na
-     * jaye (bache hue kinare kaale hi dikhte hain).
+     * Phone player dabba. Height upar `getMovieboxPhoneBoxHeight` (production
+     * ka naap) se lagti hai — yahan sirf chaudai. Andar site ka mobile layout
+     * (`getMovieboxCrop(..., { phone: true })`) native scale par chalta hai.
      */
     phonePlayerBox: {
         width: '100%',
