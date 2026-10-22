@@ -1,4 +1,6 @@
-IMDb list padh rahe hain: https://www.imdb.com/list/ls540527030/?count=250
-IMDb items: 0
+IMDb 202 1997 chars -> 0 titles (https://www.imdb.com/list/ls540527030/?count=250)
+IMDb 202 1997 chars -> 0 titles (https://www.imdb.com/list/ls540527030/?view=compact&count=250)
+IMDb 202 1997 chars -> 0 titles (https://m.imdb.com/list/ls540527030/)
+IMDb page snippet: 
 import-imdb-anime: Error: IMDb list se sirf 0 titles mile — page badal gaya lagta hai
-    at main (file:///home/runner/work/netflix-ui/netflix-ui/scripts/import-imdb-anime.mjs:408:34)
+    at main (file:///home/runner/work/netflix-ui/netflix-ui/scripts/import-imdb-anime.mjs:438:15)
