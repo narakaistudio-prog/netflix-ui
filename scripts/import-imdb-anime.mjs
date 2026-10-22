@@ -29,7 +29,7 @@
  *
  * Usage: node scripts/import-imdb-anime.mjs [--dry-run] [--list=ls540527030]
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,6 +41,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const NX_TITLES_PATH = resolve(ROOT, 'data', 'nxsha-titles.json');
 const REPORT_PATH = resolve(ROOT, 'data', 'imdb-anime-import.json');
+const CATALOG_STATE_PATH = resolve(ROOT, 'data', 'imdb-anime-catalog.json');
+const LIST_SNAPSHOT_PATH = resolve(ROOT, 'data', 'imdb-anime-list.md');
 
 const NX_BASE = 'https://nxsha.space';
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
@@ -377,7 +379,7 @@ export function mergeRows(html, rows) {
  * Rows ka plan: primary genre ke hisaab se ("Hindi Dub · Action"), aur jo bache
  * unke liye ek catch-all row. Owner: "sab sahi sahi row mae lag jana chiyea".
  */
-export function buildRows(entries, { minPerGenre = 5 } = {}) {
+export function buildRows(entries, { minPerGenre = 5, maxPerRow = 24 } = {}) {
     const genres = new Map();
     const leftovers = [];
     for (const entry of entries) {
@@ -395,7 +397,13 @@ export function buildRows(entries, { minPerGenre = 5 } = {}) {
             leftovers.push(...list);
             continue;
         }
-        rows.push({ title: `Hindi Dub · ${genre.replace(/\b\w/g, (c) => c.toUpperCase())}`, keys: list.map((e) => e.key) });
+        const label = `Hindi Dub · ${genre.replace(/\b\w/g, (c) => c.toUpperCase())}`;
+        // Bahut lambi row ek rail me thik nahi lagti — 24 ke chunk me tor dete hain.
+        for (let index = 0; index < list.length; index += maxPerRow) {
+            const chunk = list.slice(index, index + maxPerRow);
+            const part = index === 0 ? '' : ` · Part ${index / maxPerRow + 1}`;
+            rows.push({ title: `${label}${part}`, keys: chunk.map((entry) => entry.key) });
+        }
     }
     if (leftovers.length) {
         rows.push({ title: 'Hindi Dub on Crunchyroll', keys: leftovers.map((e) => e.key) });
@@ -451,22 +459,259 @@ export function pickNxshaMatch(results, wanted, { kind = '', year = '' } = {}) {
 
 /* --------------------------------------------------------------------- main */
 
+/* ------------------------------------------------------------------ genres */
+
+/**
+ * Nxsha page ka genre text -> page ke genre filter ki vocabulary.
+ *
+ * Crunchyroll page ka dropdown sirf inhi 8 values par filter karta hai
+ * (action / fantasy / adventure / comedy / drama / romance / sports /
+ * science-fiction), isliye TMDB ke lambe naam yahan map hote hain. Jo genre
+ * kahin fit nahi hota use chhod dete hain — galat label se behtar hai koi
+ * label na ho.
+ */
+const GENRE_MAP = {
+    action: 'action',
+    adventure: 'adventure',
+    animation: '',
+    comedy: 'comedy',
+    crime: 'drama',
+    documentary: '',
+    drama: 'drama',
+    family: 'drama',
+    fantasy: 'fantasy',
+    history: 'drama',
+    horror: 'drama',
+    music: 'drama',
+    mystery: 'drama',
+    romance: 'romance',
+    'science fiction': 'science-fiction',
+    'sci fi': 'science-fiction',
+    'sci-fi': 'science-fiction',
+    'tv movie': '',
+    thriller: 'drama',
+    war: 'action',
+    western: 'action',
+    sport: 'sports',
+    sports: 'sports',
+    'slice of life': 'drama',
+    supernatural: 'fantasy',
+    mecha: 'science-fiction',
+    school: 'comedy',
+    shounen: 'action',
+    seinen: 'drama',
+    isekai: 'fantasy',
+    ecchi: '',
+};
+
+const GENRE_ORDER = ['action', 'adventure', 'comedy', 'drama', 'fantasy', 'romance', 'science-fiction', 'sports'];
+
+/** Ek page ke HTML se genres (TMDB/JSON-LD, genre links, ya visible text). */
+export function parseGenres(html) {
+    const source = String(html || '');
+    const raw = new Set();
+
+    for (const match of source.matchAll(/"genre[s]?"\s*:\s*\[([^\]]*)\]/gi)) {
+        for (const value of match[1].split(',')) raw.add(value.replace(/["']/g, '').trim());
+    }
+    for (const match of source.matchAll(/\/genre\/([a-z0-9-]+)/gi)) {
+        raw.add(match[1].replace(/-/g, ' '));
+    }
+    for (const match of source.matchAll(/itemprop="genre"[^>]*>([^<]{2,30})</gi)) {
+        raw.add(match[1].trim());
+    }
+
+    const genres = new Set();
+    for (const value of raw) {
+        const mapped = GENRE_MAP[value.toLowerCase().replace(/\s+/g, ' ').trim()];
+        if (mapped) genres.add(mapped);
+    }
+    return [...genres].sort((a, b) => GENRE_ORDER.indexOf(a) - GENRE_ORDER.indexOf(b));
+}
+
+/* ------------------------------------------------------------- catalog state */
+
+/**
+ * Marker block ki apni lines wapas objects me todo — pehli baar state file
+ * banate waqt purane import ko seed karne ke liye (format hamara hi hai).
+ */
+export function parseCatalogLine(line) {
+    const keyMatch = /^([A-Za-z_][A-Za-z0-9_]*):\{/.exec(line);
+    if (!keyMatch) return null;
+    const entry = { key: keyMatch[1], genres: [] };
+    const readString = (from) => readQuoted(line, from);
+
+    for (const field of ['title', 'rating', 'audio', 'img', 'runtime', 'desc']) {
+        const at = line.indexOf(`${field}:'`);
+        if (at < 0) continue;
+        // `at` field ke naam par hai, quote `field:'` ke baad aata hai.
+        entry[field] = readString(at + field.length + 1).value;
+    }
+    const year = /year:(\d{4})/.exec(line);
+    if (year) entry.year = Number(year[1]);
+    const genresAt = line.indexOf('genres:[');
+    if (genresAt >= 0) {
+        const close = line.indexOf(']', genresAt);
+        if (close > genresAt) {
+            entry.genres = line
+                .slice(genresAt + 'genres:['.length, close)
+                .split(',')
+                .map((value) => value.trim().replace(/^'/, '').replace(/'$/, ''))
+                .filter(Boolean);
+        }
+    }
+    if (line.includes("type:'Movie'")) entry.kind = 'movie';
+    return entry;
+}
+
+/** Page ke marker block se saare entries (import se pehle ke liye). */
+export function readMarkerEntries(html) {
+    const source = String(html);
+    const start = source.indexOf(SHOWS_START);
+    const end = source.indexOf(SHOWS_END, start);
+    if (start < 0 || end < 0) return [];
+    return source.slice(start, end)
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line && !line.startsWith('/*'))
+        .map(parseCatalogLine)
+        .filter(Boolean);
+}
+
+/**
+ * State file (`data/imdb-anime-catalog.json`) hi source of truth hai: isme har
+ * imported title ka poora record hota hai. File na mile to marker block se seed
+ * karte hain (pehla run). Rows aur catalog dono isi se dobara bante hain, isliye
+ * har run par rows/entries ek jaise rehte hain.
+ */
+function loadState(html, registry) {
+    if (existsSync(CATALOG_STATE_PATH)) {
+        return JSON.parse(readFileSync(CATALOG_STATE_PATH, 'utf8'));
+    }
+    const entries = readMarkerEntries(html).map((entry) => {
+        const route = registry[entry.key] || {};
+        return {
+            ...entry,
+            kind: entry.kind || (route.kind === 'movie' ? 'movie' : 'tv'),
+            id: route.id || '',
+            title: entry.title || route.title || '',
+        };
+    });
+    return { entries };
+}
+
+/* --------------------------------------------------------------------- main */
+
 async function main() {
     const dryRun = process.argv.includes('--dry-run');
     const listId = arg('list', 'ls540527030');
     const html = readFileSync(HTML_PATH, 'utf8');
     const registry = JSON.parse(readFileSync(NX_TITLES_PATH, 'utf8'));
+    const state = loadState(html, registry);
+    const entries = new Map(state.entries.map((entry) => [entry.key, entry]));
 
-    // IMDb kabhi-kabhi bot check ya chhota "compact" page deta hai — teen URL
-    // try karte hain aur sabse zyada titles wala use karte hain.
-    const listUrls = [
+    const items = await readImdbList(listId);
+    const report = {
+        listId,
+        generatedAt: new Date().toISOString(),
+        imdbItems: items.length,
+        added: [],
+        skipped: [],
+        missing: [],
+        enriched: [],
+    };
+
+    const have = new Set(existingCatalogTitles(html).map(normTitle));
+    const takenKeys = new Set([...Object.keys(registry), ...entries.keys()]);
+
+    for (const [index, item] of items.entries()) {
+        if (have.has(normTitle(item.title))) {
+            report.skipped.push({ title: item.title, reason: 'already-in-catalog' });
+            continue;
+        }
+        const found = await resolveNxsha(item, report);
+        if (!found) continue;
+        const key = uniqueKey(slugKey(found.hit.name), takenKeys);
+        takenKeys.add(key);
+        entries.set(key, {
+            key,
+            kind: found.kind,
+            id: found.hit.id,
+            title: found.title,
+            year: found.year,
+            rating: found.rating,
+            genres: found.genres,
+            img: found.img,
+            runtime: found.runtime,
+            desc: found.desc,
+            imdbId: item.imdbId,
+        });
+        have.add(normTitle(found.title));
+        report.added.push({ key, title: found.title, nxsha: `${found.hit.type}/${found.hit.id}`, imdb: item.imdbId });
+        if ((index + 1) % 10 === 0) console.log(`… ${index + 1}/${items.length} checked, ${report.added.length} naye mile`);
+    }
+
+    // Purane import ki genres khaali reh gayi ho to page dobara padh kar bharo
+    // (owner: "sab sahi sahi lagna chiyea" — rows genres par banti hain).
+    for (const entry of entries.values()) {
+        if (entry.genres?.length || !entry.id) continue;
+        try {
+            const page = await get(`${NX_BASE}/${entry.kind === 'movie' ? 'movie' : 'tv'}/${entry.id}`);
+            const genres = page ? parseGenres(page) : [];
+            if (genres.length) {
+                entry.genres = genres;
+                report.enriched.push({ key: entry.key, genres });
+            }
+        } catch (error) {
+            console.log(`genre enrich fail ${entry.key}: ${error?.message || error}`);
+        }
+    }
+
+    const ordered = [...entries.values()].filter((entry) => entry.img);
+    for (const entry of [...entries.values()].filter((row) => !row.img)) {
+        report.missing.push({ title: entry.title, reason: 'no-poster' });
+    }
+
+    for (const entry of ordered) {
+        registry[entry.key] = {
+            id: entry.id,
+            kind: entry.kind,
+            title: entry.title,
+            seasons: registry[entry.key]?.seasons && Object.keys(registry[entry.key].seasons).length
+                ? registry[entry.key].seasons
+                : (entry.kind === 'movie' ? { '1': 1 } : {}),
+        };
+    }
+
+    let nextHtml = mergeCatalog(html, ordered.map((entry) => catalogEntryLine(entry.key, entry)));
+    nextHtml = mergeRows(nextHtml, buildRows(ordered));
+
+    // Source ka snapshot repo me rakhte hain — agli baar parser bina network
+    // verify ho jata hai (aur CI log ke bharose nahi rehna padta).
+    writeFileSync(LIST_SNAPSHOT_PATH, String(listSnapshot || '').slice(0, 4_000_000));
+
+    console.log(`Total imported: ${ordered.length} | naye: ${report.added.length} | skip: ${report.skipped.length} | missing: ${report.missing.length} | genres bhare: ${report.enriched.length}`);
+
+    if (dryRun) {
+        console.log('--dry-run: page/state nahi likhe');
+        return;
+    }
+    writeFileSync(HTML_PATH, nextHtml);
+    writeFileSync(NX_TITLES_PATH, `${JSON.stringify(registry, null, 2)}\n`);
+    writeFileSync(CATALOG_STATE_PATH, `${JSON.stringify({ updated: report.generatedAt, entries: ordered }, null, 2)}\n`);
+    writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
+    console.log(`Wrote ${ordered.length} catalog entries + registry routes.`);
+}
+
+/** IMDb list: pehle seedha, nahi mila to reader proxy se (markdown). */
+let listSnapshot = '';
+async function readImdbList(listId) {
+    let items = [];
+    for (const listUrl of [
         `https://www.imdb.com/list/${listId}/?count=250`,
         `https://www.imdb.com/list/${listId}/?view=compact&count=250`,
         `https://m.imdb.com/list/${listId}/`,
-    ];
-    let items = [];
-    let listHtml = '';
-    for (const listUrl of listUrls) {
+    ]) {
         try {
             const response = await fetch(listUrl, {
                 redirect: 'follow',
@@ -481,144 +726,97 @@ async function main() {
             console.log(`IMDb ${response.status} ${body.length} chars -> ${parsed.length} titles (${listUrl})`);
             if (parsed.length > items.length) {
                 items = parsed;
-                listHtml = body;
+                listSnapshot = body;
             }
-            if (items.length >= 40) break;
+            if (items.length >= 40) return items;
         } catch (error) {
             console.log(`IMDb fetch fail (${listUrl}): ${error?.message || error}`);
         }
         await sleep(600);
     }
-    if (items.length < 40) {
-        // Reader proxy: IMDb datacenter IPs ko block karta hai, ye rasta reliable hai.
-        for (const target of [
-            `https://www.imdb.com/list/${listId}/`,
-            `https://r.jina.ai/https://www.imdb.com/list/${listId}/`,
-        ]) {
-            try {
-                const body = await get(target, { accept: 'text/plain,text/markdown,*/*' });
-                const parsed = parseImdbMarkdown(body || '');
-                console.log(`Reader ${target} -> ${parsed.length} titles`);
-                if (parsed.length > items.length) {
-                    items = parsed;
-                    listHtml = body || '';
-                }
-            } catch (error) {
-                console.log(`Reader fail (${target}): ${error?.message || error}`);
+    // Reader proxy: IMDb datacenter IPs ko block karta hai, ye rasta reliable hai.
+    for (const target of [
+        `https://www.imdb.com/list/${listId}/`,
+        `https://r.jina.ai/https://www.imdb.com/list/${listId}/`,
+    ]) {
+        try {
+            const body = await get(target, { accept: 'text/plain,text/markdown,*/*' });
+            const parsed = parseImdbMarkdown(body || '');
+            console.log(`Reader ${target} -> ${parsed.length} titles`);
+            if (parsed.length > items.length) {
+                items = parsed;
+                listSnapshot = body || '';
             }
-            await sleep(400);
+        } catch (error) {
+            console.log(`Reader fail (${target}): ${error?.message || error}`);
         }
+        await sleep(400);
     }
     if (items.length < 40) {
-        // Debug ke liye page ka shuru ka hissa log me chhod do (CI log branch me aata hai).
-        console.log(`IMDb page snippet: ${String(listHtml).slice(0, 700).replace(/\s+/g, ' ')}`);
+        console.log(`IMDb page snippet: ${String(listSnapshot).slice(0, 700).replace(/\s+/g, ' ')}`);
         throw new Error(`IMDb list se sirf ${items.length} titles mile — page badal gaya lagta hai`);
     }
+    return items;
+}
 
-    const have = new Set(existingCatalogTitles(html).map(normTitle));
-    const report = { listId, generatedAt: new Date().toISOString(), added: [], skipped: [], missing: [] };
-    const added = [];
-
-    for (const [index, item] of items.entries()) {
-        if (have.has(normTitle(item.title))) {
-            report.skipped.push({ title: item.title, reason: 'already-in-catalog' });
-            continue;
-        }
-        let search;
+/** Ek IMDb title -> Nxsha route + page metadata, ya null (report me wajah). */
+async function resolveNxsha(item, report) {
+    let search;
+    try {
+        search = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(item.title)}`));
+    } catch (error) {
+        report.missing.push({ title: item.title, reason: `search-failed: ${error?.message || error}` });
+        return null;
+    }
+    const hit = pickNxshaMatch(search, item.title, { kind: item.kind, year: item.year });
+    if (!hit) {
+        report.missing.push({ title: item.title, reason: 'no-nxsha-match' });
+        return null;
+    }
+    let page;
+    try {
+        page = await get(`${NX_BASE}/${hit.type}/${hit.id}`);
+    } catch (error) {
+        report.missing.push({ title: item.title, reason: `page-failed: ${error?.message || error}` });
+        return null;
+    }
+    if (!page) {
+        report.missing.push({ title: item.title, reason: 'page-missing' });
+        return null;
+    }
+    let verifiedTitle = hit.name;
+    if (hit.type === 'tv') {
         try {
-            search = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(item.title)}`));
+            verifiedTitle = parseNxshaSeriesPage(page, hit.name).title;
         } catch (error) {
-            report.missing.push({ title: item.title, reason: `search-failed: ${error?.message || error}` });
-            continue;
+            report.missing.push({ title: item.title, reason: `route-mismatch: ${error?.message || error}` });
+            return null;
         }
-        const hit = pickNxshaMatch(search, item.title, { kind: item.kind, year: item.year });
-        if (!hit) {
-            report.missing.push({ title: item.title, reason: 'no-nxsha-match' });
-            continue;
-        }
-        // Page khol kar confirm: title wahan sach me hai (galat show na ghuse).
-        const pageUrl = `${NX_BASE}/${hit.type}/${hit.id}`;
-        let page;
-        try {
-            page = await get(pageUrl);
-        } catch (error) {
-            report.missing.push({ title: item.title, reason: `page-failed: ${error?.message || error}` });
-            continue;
-        }
-        if (!page) {
-            report.missing.push({ title: item.title, reason: 'page-missing' });
-            continue;
-        }
-        let verifiedTitle = hit.name;
-        if (hit.type === 'tv') {
-            try {
-                verifiedTitle = parseNxshaSeriesPage(page, hit.name).title;
-            } catch (error) {
-                report.missing.push({ title: item.title, reason: `route-mismatch: ${error?.message || error}` });
-                continue;
-            }
-        } else {
-            const info = parseMoviePage(page);
-            if (!info.title || normTitle(info.title) !== normTitle(hit.name)) {
-                report.missing.push({ title: item.title, reason: 'movie-route-mismatch' });
-                continue;
-            }
-            verifiedTitle = info.title;
-        }
+    } else {
         const info = parseMoviePage(page);
-        const year = info.year || hit.year || item.year || '';
-        const rating = hit.rating && Number(hit.rating) > 0 ? String((Number(hit.rating) / 2).toFixed(1)) : '';
-        const key = uniqueKey(slugKey(hit.name), new Set([...Object.keys(registry), ...added.map((row) => row.key)]));
-        added.push({
-            key,
-            kind: hit.type === 'movie' ? 'movie' : 'tv',
-            id: hit.id,
-            title: verifiedTitle,
-            year,
-            rating,
-            genres: (info.genres || []).filter((genre) => /^[a-z][a-z -]{2,24}$/i.test(genre)).slice(0, 4),
-            img: hit.poster || info.backdrop || '',
-            runtime: info.duration || '',
-            desc: info.description || item.description || '',
-            imdbId: item.imdbId,
-        });
-        report.added.push({ key, title: verifiedTitle, nxsha: `${hit.type}/${hit.id}`, imdb: item.imdbId });
-        if ((index + 1) % 10 === 0) console.log(`… ${index + 1}/${items.length} checked, ${added.length} naye mile`);
+        if (!info.title || normTitle(info.title) !== normTitle(hit.name)) {
+            report.missing.push({ title: item.title, reason: 'movie-route-mismatch' });
+            return null;
+        }
+        verifiedTitle = info.title;
     }
-
-    // Poster na ho to card khaali dikhega — aise titles skip (owner: "images sahi sahi").
-    const withPoster = added.filter((entry) => entry.img);
-    for (const entry of added.filter((row) => !row.img)) {
-        report.missing.push({ title: entry.title, reason: 'no-poster' });
+    const info = parseMoviePage(page);
+    const poster = hit.poster || info.backdrop || '';
+    if (!poster) {
+        report.missing.push({ title: item.title, reason: 'no-poster' });
+        return null;
     }
-    console.log(`Naye titles: ${withPoster.length} (skip ${report.skipped.length}, missing ${report.missing.length})`);
-
-    for (const entry of withPoster) {
-        registry[entry.key] = {
-            id: entry.id,
-            kind: entry.kind,
-            title: entry.title,
-            seasons: entry.kind === 'movie' ? { '1': 1 } : {},
-        };
-    }
-
-    let nextHtml = mergeCatalog(html, withPoster.map((entry) => catalogEntryLine(entry.key, entry)));
-    nextHtml = mergeRows(nextHtml, buildRows(withPoster));
-
-    // Source ka snapshot repo me rakhte hain — agli baar parser bina network
-    // verify ho jata hai (aur CI log ke bharose nahi rehna padta).
-    writeFileSync(resolve(ROOT, 'data', 'imdb-anime-list.md'), String(listHtml || '').slice(0, 4_000_000));
-
-    if (dryRun) {
-        console.log('--dry-run: kuch nahi likha');
-        console.log(JSON.stringify(withPoster.slice(0, 3), null, 2));
-        return;
-    }
-    writeFileSync(HTML_PATH, nextHtml);
-    writeFileSync(NX_TITLES_PATH, `${JSON.stringify(registry, null, 2)}\n`);
-    writeFileSync(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
-    console.log(`Wrote ${withPoster.length} catalog entries + registry routes.`);
-    console.log(`Keys: ${withPoster.map((entry) => entry.key).join(',')}`);
+    return {
+        hit,
+        kind: hit.type === 'movie' ? 'movie' : 'tv',
+        title: verifiedTitle,
+        year: info.year || hit.year || item.year || '',
+        rating: hit.rating && Number(hit.rating) > 0 ? String((Number(hit.rating) / 2).toFixed(1)) : '',
+        genres: parseGenres(page),
+        img: poster,
+        runtime: info.duration || '',
+        desc: info.description || item.description || '',
+    };
 }
 
 /** Slug takra jaye to `-2`, `-3` … (keys unique rehne chahiye). */
@@ -711,6 +909,15 @@ export function selfTest() {
     assert(match?.id === '2', 'year tie-break');
     assert(pickNxshaMatch([{ type: 'tv', id: '9', name: 'Something Else', year: '2020' }], 'Blue Lock') === null, 'no loose match');
     assert(slugKey('My Dress-Up Darling') === 'mydressupdarling', 'slug');
+    assert(parseGenres('<a href="/genre/action">Action</a><a href="/genre/sci-fi">Sci-Fi</a>').join() === 'action,science-fiction', 'genre map');
+
+    const seeded = parseCatalogLine("dressup:{title:'My Dress-Up Darling',year:2022,rating:'4.2',genres:['romance','comedy'],audio:'Sub & Dub',img:'p.jpg',desc:'Cosplay.'},");
+    assert(seeded.key === 'dressup' && seeded.title === 'My Dress-Up Darling' && seeded.year === 2022, 'catalog line seed');
+    assert(seeded.genres.join() === 'romance,comedy' && seeded.img === 'p.jpg', 'catalog line genres/img');
+
+    const big = buildRows(Array.from({ length: 30 }, (_, i) => ({ key: `k${i}`, genres: ['action'] })));
+    assert(big.length === 2 && big[0].keys.length === 24 && big[1].title.endsWith('Part 2'), 'lambi row chunk');
+
     console.log('import-imdb-anime self-tests passed');
 }
 

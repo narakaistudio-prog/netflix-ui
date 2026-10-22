@@ -26,14 +26,18 @@ test('asli Crunchyroll page par merge idempotent hai aur purane titles safe reht
         process.execPath,
         ['--input-type=module', '-e', `
 import { readFileSync } from 'node:fs';
-import { catalogEntryLine, existingCatalogTitles, existingRowKeys, mergeCatalog, mergeRows } from './scripts/import-imdb-anime.mjs';
+import { catalogEntryLine, existingCatalogTitles, existingRowKeys, mergeCatalog, mergeRows, readMarkerEntries } from './scripts/import-imdb-anime.mjs';
 
 const path = './assets/crunchyroll/crunchyroll.html';
 const html = readFileSync(path, 'utf8');
 const before = existingCatalogTitles(html);
+// Import wale entries bhi state se aate hain — sirf naya line dene se purane
+// imported titles ud jayenge, isliye seed + naya line dono dete hain.
+const seeded = readMarkerEntries(html).map((entry) => catalogEntryLine(entry.key, entry));
 const line = catalogEntryLine('__test_import__', { title: 'Test Anime', year: 2024, rating: '4.1', genres: ['action'], img: 'https://image.tmdb.org/t/p/w500/x.jpg', desc: "Kya baat" });
-const once = mergeCatalog(html, [line]);
-const twice = mergeCatalog(once, [line]);
+const lines = [...seeded, line];
+const once = mergeCatalog(html, lines);
+const twice = mergeCatalog(once, lines);
 if (existingCatalogTitles(once).length !== before.length + 1) throw new Error('naya title catalog me nahi aaya');
 if (existingCatalogTitles(twice).length !== before.length + 1) throw new Error('re-run par duplicate title');
 if (once !== twice) throw new Error('mergeCatalog idempotent nahi hai');
