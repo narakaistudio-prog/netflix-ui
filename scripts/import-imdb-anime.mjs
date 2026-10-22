@@ -164,27 +164,56 @@ export function parseImdbList(html) {
 /**
  * IMDb ko seedha scrape karna datacenter IPs par block ho jata hai (HTTP 202 +
  * khaali challenge page). Isliye ek reader proxy (r.jina.ai) ka markdown bhi
- * padhte hain — usme har title ka poster + `[](/title/tt…)` link saaf milta hai.
+ * padhte hain.
  *
- * Example line:
+ * Us markdown me har card aisa dikhta hai:
  *   ![Image 3: Akebi's Sailor Uniform (2022)](https://m.media-amazon.com/…jpg)
  *   [](https://www.imdb.com/title/tt15533674/?ref_=ls_i_4)
+ *
+ * Dhyan: IMDb poster ka `alt` kabhi-kabhi **cast photo** ka hota hai, jaise
+ * "Minami Hinata and Ayumu Murase in Ranking of Kings (2021)" — usme asli title
+ * " in " ke baad hota hai. Isliye title nikalte waqt wo prefix hataate hain,
+ * aur jahan `#### [2. Ranking of Kings]` heading mil jaye wahan heading hi
+ * jeetta hai (sabse saaf source).
  */
+export function titleFromAlt(alt) {
+    const noYear = decode(alt).replace(/\s*\((\d{4})[^)]*\)\s*$/, '').replace(/\s+/g, ' ').trim();
+    const inMatch = /^(.+?)\s+in\s+(.+)$/.exec(noYear);
+    if (inMatch) {
+        const prefix = inMatch[1];
+        // Cast list me comma/and hote hain; asli title me aisa nahi ("I Got a
+        // Cheat Skill in Another World…" ka prefix comma-free hota hai).
+        const looksLikeCast = /,|\band\b/.test(prefix) && prefix.length < 120 && !/[?!]/.test(prefix);
+        if (looksLikeCast) return inMatch[2].trim();
+    }
+    return noYear;
+}
+
 export function parseImdbMarkdown(text) {
     const source = String(text || '');
     const rows = new Map();
-    const chunks = source.split('![');
-    for (const chunk of chunks.slice(1)) {
+
+    // 1) Heading titles: `#### [2. Ranking of Kings](…?ref_=ls_t_2)`.
+    const headings = new Map();
+    for (const match of source.matchAll(/\[(?:\d+)\.\s*([^\]]+)\]\((https?:\/\/www\.imdb\.com\/title\/(tt\d+)\/[^)]*)\)/g)) {
+        const title = decode(match[1]).replace(/\s+/g, ' ').trim();
+        if (title && !headings.has(match[3])) headings.set(match[3], title);
+    }
+
+    // 2) Poster/still cards: image alt + uske turant baad ka title link.
+    for (const chunk of source.split('![').slice(1)) {
         const head = /^Image \d+: ([^\]]+?)\]\((https?:\/\/[^)\s]+)\)/.exec(chunk);
         if (!head) continue;
-        const alt = decode(head[1]).replace(/\s+/g, ' ').trim();
-        const poster = head[2];
         const link = /\[\]\((https?:\/\/www\.imdb\.com\/title\/(tt\d+)[^)]*)\)/.exec(chunk);
         if (!link) continue;
+        const imdbId = link[2];
+        const alt = decode(head[1]).replace(/\s+/g, ' ').trim();
         const year = /\((\d{4})[^)]*\)\s*$/.exec(alt)?.[1] || '';
-        const title = alt.replace(/\s*\([^)]*\)\s*$/, '').trim();
+        const title = headings.get(imdbId) || titleFromAlt(alt);
         if (!title) continue;
-        if (!rows.has(link[2])) rows.set(link[2], { imdbId: link[2], title, year, poster, description: '', kind: '' });
+        if (!rows.has(imdbId)) {
+            rows.set(imdbId, { imdbId, title, year, poster: head[2], description: '', kind: '' });
+        }
     }
     return [...rows.values()];
 }
@@ -576,6 +605,10 @@ async function main() {
     let nextHtml = mergeCatalog(html, withPoster.map((entry) => catalogEntryLine(entry.key, entry)));
     nextHtml = mergeRows(nextHtml, buildRows(withPoster));
 
+    // Source ka snapshot repo me rakhte hain — agli baar parser bina network
+    // verify ho jata hai (aur CI log ke bharose nahi rehna padta).
+    writeFileSync(resolve(ROOT, 'data', 'imdb-anime-list.md'), String(listHtml || '').slice(0, 4_000_000));
+
     if (dryRun) {
         console.log('--dry-run: kuch nahi likha');
         console.log(JSON.stringify(withPoster.slice(0, 3), null, 2));
@@ -626,6 +659,9 @@ export function selfTest() {
     const mdItems = parseImdbMarkdown(md);
     assert(mdItems.length === 1 && mdItems[0].imdbId === 'tt15765670' && mdItems[0].title === 'My Dress-Up Darling', 'markdown reader parse');
 
+    assert(titleFromAlt('Minami Hinata and Ayumu Murase in Ranking of Kings (2021)') === 'Ranking of Kings', 'cast-photo alt se title');
+    assert(titleFromAlt("Akebi's Sailor Uniform (2022)") === "Akebi's Sailor Uniform", 'normal alt');
+    assert(titleFromAlt('I Got a Cheat Skill in Another World and Became Unrivaled (2023)') === 'I Got a Cheat Skill in Another World and Became Unrivaled', 'title me "in" ho to na tute');
     const page = `<!doctype html><html><body>
       <script>var shows={
         solo:{title:'Solo Leveling',year:2024,rating:'4.9',genres:['action'],audio:'Sub & Dub',img:'x.jpg',desc:'hi'}
