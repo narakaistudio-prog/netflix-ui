@@ -30,6 +30,9 @@ on:
     paths:
       - '.github/workflows/import-imdb-anime.yml'
       - 'scripts/import-imdb-anime.mjs'
+      # Movies ka ToonStream route isi chain ka hissa hai (Server 2).
+      - 'scripts/harvest-toonstream-movies.mjs'
+      - 'api/toonstream.mjs'
   workflow_dispatch:
     inputs:
       list:
