@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T11:53:31.142Z",
+  "updated": "2026-10-22T12:30:49.599Z",
   "entries": [
     {
       "key": "rankingofkings",
@@ -710,23 +710,6 @@
       "imdbId": "tt2942218"
     },
     {
-      "key": "zom100bucketlistofthedead2",
-      "kind": "tv",
-      "id": "217766",
-      "title": "Zom 100: Bucket List of the Dead",
-      "year": "2023",
-      "rating": "3.3",
-      "genres": [
-        "action",
-        "comedy",
-        "drama"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/kD35dB3KOHrLo1Y3RU5xXJ1hI7.jpg",
-      "runtime": "2h 9m",
-      "desc": "Bullied by his boss, worked around the clock, he's nothing more than a corporate drone. All it takes is a zombie outbreak for him to finally feel alive!",
-      "imdbId": "tt25811262"
-    },
-    {
       "key": "villainesslevel99imaybethehiddenbossbutimnotthedemonlord2",
       "kind": "tv",
       "id": "222930",
@@ -1254,22 +1237,6 @@
       "imdbId": "tt33054444"
     },
     {
-      "key": "assassinationclassroom2",
-      "kind": "tv",
-      "id": "62110",
-      "title": "Assassination Classroom",
-      "year": "2015",
-      "rating": "3.6",
-      "genres": [
-        "action",
-        "comedy"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/h752DXxIvf4diBtnVd6JRQCm0OV.jpg",
-      "runtime": "1h 50m",
-      "desc": "A mysterious creature destroys part of the moon and then warns that, if it is not destroyed before March of the following year, Earth will be next. It also demands to become the homeroom teacher of Class E, a third-year class at Kunugigaoka High School.",
-      "imdbId": "tt3837246"
-    },
-    {
       "key": "ninathestarrybride2",
       "kind": "tv",
       "id": "240641",
@@ -1352,22 +1319,6 @@
       "runtime": "",
       "desc": "Long ago, the most ancient of divine dragons was slain by a human. The mighty dragon accepted its death when suddenly, it was reborn as Dolan, a man who lives in a quiet village. While spending another peaceful day toiling in the fields, he meets Celina, a half-human, half-snake creature looking for a partner. The unlikely duo become friends, but challenges lie ahead that threaten their new bond.",
       "imdbId": "tt32832435"
-    },
-    {
-      "key": "dragonballdaima2",
-      "kind": "tv",
-      "id": "236994",
-      "title": "Dragon Ball DAIMA",
-      "year": "2024",
-      "rating": "3.9",
-      "genres": [
-        "action",
-        "adventure"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/cVxwxuKI6yXsB8zuGj6cDiL8GtU.jpg",
-      "runtime": "1h 14m",
-      "desc": "Mysteriously transformed into mini versions of themselves, Goku and his friends travel to the Demon Realm to uncover the truth and find a cure. The world English dub premiere of Dragon Ball DAIMA, the newest series in the Dragon Ball universe, featuring the first three episodes of the series. Before the film, there will be a special introduction from the Japanese voice of Goku, Masako Nozawa.",
-      "imdbId": "tt29485149"
     },
     {
       "key": "zenshu2",
@@ -1780,21 +1731,6 @@
       "imdbId": "tt37430949"
     },
     {
-      "key": "letsplay2",
-      "kind": "tv",
-      "id": "293010",
-      "title": "Let's Play",
-      "year": "2025",
-      "rating": "",
-      "genres": [
-        "drama"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/rWdWqFv3hMr8XNmik2nffKAtfS6.jpg",
-      "runtime": "2m",
-      "desc": "A young girl is left home alone. Free to do whatever she pleases, she ventures up to the dark, mysterious attic. What fresh horrors await?",
-      "imdbId": "tt37532040"
-    },
-    {
       "key": "darkmoonthebloodaltar2",
       "kind": "tv",
       "id": "271609",
@@ -1966,23 +1902,6 @@
       "runtime": "",
       "desc": "A. S. (Ad Stella) 122 ― An era when a multitude of corporations have entered space and built a huge economic system. Suletta Mercury, a lone girl from the remote planet Mercury, transfers to the Asticassia School of Technology, run by the Beneritt Group which dominates the mobile suit industry.",
       "imdbId": "tt15433166"
-    },
-    {
-      "key": "anotherworld2",
-      "kind": "tv",
-      "id": "4547",
-      "title": "Another World",
-      "year": "2025",
-      "rating": "3.7",
-      "genres": [
-        "adventure",
-        "drama",
-        "fantasy"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/glYJbEs9MBPAGAj2EL0jFPlmEAT.jpg",
-      "runtime": "1h 52m",
-      "desc": "Gudo is a Soul Keeper, a spirit who guides human souls into their next life. When he befriends a young girl named Yuri, he discovers that her untimely death has left her cursed with unresolved rage and regret. As Yuri’s soul teeters on the edge of annihilation, Gudo embarks on a dangerous journey to stop her from unleashing horrible destruction on both the human world and the spirit realm.",
-      "imdbId": "tt34621291"
     },
     {
       "key": "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty",

@@ -5,6 +5,10 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
+const IMPORTED_KEYS = (() => {
+    const state = JSON.parse(readFileSync(join(ROOT, 'data', 'imdb-anime-catalog.json'), 'utf8'));
+    return state.entries.map((entry: { key: string }) => entry.key);
+})();
 
 jest.setTimeout(30000);
 
@@ -68,7 +72,8 @@ test('every catalog key is mapped to Nxsha', async () => {
         dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
 
-    expect(new Set(catalogKeys).size).toBe(64);
+    // 64 purane playable titles + IMDb import (Task 7) ke imported titles.
+    expect(new Set(catalogKeys).size).toBe(64 + IMPORTED_KEYS.length);
     expect(new Set(ghibliKeys).size).toBe(22);
     // Every card the page can open — catalog and Ghibli rail — has a route.
     expect(Object.keys(nxData).sort()).toEqual(

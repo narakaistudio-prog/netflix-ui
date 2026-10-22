@@ -382,6 +382,19 @@ export function mergeCatalog(html, lines) {
     });
 }
 
+/**
+ * Registry me sirf wo routes rakho jinke keys page par `shows` me hain.
+ * Warna fail hue/prune hue attempts ke route bhi bake ho jate hain — page ka
+ * `NX_DATA` phool jata hai (import ke baad 83 -> 320 ho gaya tha, jabki titles
+ * 204 the) aur bundle bekaar bhaari hota hai.
+ */
+export function pruneRegistry(registry, keepKeys) {
+    const keep = new Set(keepKeys);
+    const dropped = Object.keys(registry).filter((key) => !keep.has(key));
+    for (const key of dropped) delete registry[key];
+    return { registry, dropped };
+}
+
 /** Naye rows daalo (marker block ke andar), purane rows jaisa ke taisa. */
 export function mergeRows(html, rows) {
     return upsertBlock(String(html), {
@@ -389,7 +402,10 @@ export function mergeRows(html, rows) {
         closeDelim: '\n      ];',
         startMarker: ROWS_START,
         endMarker: ROWS_END,
-        lines: rows.map((row) => `{title:'${jsString(row.title)}',keys:[${row.keys.join(',')}]},`),
+        // Keys **quoted** strings hi hongi: pehle bare identifiers likhe ja rahe
+        // the (`keys:[rankingofkings,…]`), jo `shows` object ke keys ko variable
+        // me badal deta hai — page par ReferenceError aur saara UI blank.
+        lines: rows.map((row) => `{title:'${jsString(row.title)}',keys:[${row.keys.map((key) => `'${jsString(key)}'`).join(',')}]},`),
     });
 }
 
@@ -663,6 +679,41 @@ export function originalCatalogTitles(html) {
 }
 
 /**
+ * "tv" entry jiska route sirf 1 episode dikha raha hai wo pakka galat match ya
+ * film hai (Assassination Classroom 1/1, Dragon Ball DAIMA 1/1, "Another World"
+ * ka 4547 route…). Owner: "sab sahi sahi" — aise titles row me nahi dikhne
+ * chahiye, warna poster to dikhta hai par guide khaali milta hai.
+ */
+export function dropSingleEpisodeTv(entries, registry) {
+    const kept = [];
+    const dropped = [];
+    for (const entry of entries) {
+        const route = registry[entry.key] || {};
+        const seasons = route.seasons || {};
+        const total = Object.values(seasons).reduce((sum, count) => sum + Number(count || 0), 0);
+        if (entry.kind === 'tv' && total === 1) {
+            dropped.push({ key: entry.key, title: entry.title, reason: 'single-episode-tv-route' });
+            continue;
+        }
+        kept.push(entry);
+    }
+    return { kept, dropped };
+}
+
+/** page ke `shows` block ke saare keys (purane + imported, order ke saath). */
+export function catalogKeysOf(html) {
+    const source = String(html);
+    // `SHOWS_START` marker block ke andar hai, isliye block ka start `var shows={`
+    // hi hai — warna sirf imported keys milti hain aur original 83 routes ud
+    // jate hain.
+    const start = source.indexOf('var shows={');
+    if (start < 0) return [];
+    const end = source.indexOf('var rows=[', start);
+    const slice = source.slice(start, end > start ? end : source.length);
+    return [...slice.matchAll(/\n\s+([A-Za-z0-9_]+):\{title:/g)].map((match) => match[1]);
+}
+
+/**
  * Duplicate aur galat entries hatao.
  *
  * Do jagah se duplicate aate hain:
@@ -743,6 +794,40 @@ async function main() {
         delete registry[drop.key];
     }
 
+    // --rebake: bina network, sirf state se page dobara likho. Import ke baad
+    // state me kuch prune/edit ho (jaise duplicate hataana) to page ko usi ke
+    // hisaab se sync karna zaroori hai — warna rows kisi aise key ko point
+    // karti hain jo `shows` me hai hi nahi aur poora render script crash karta
+    // hai (Ghibli rail khaali dikhi thi).
+    if (process.argv.includes('--rebake')) {
+        const cleaned = dropSingleEpisodeTv([...entries.values()], registry);
+        for (const drop of cleaned.dropped) {
+            console.log(`drop ${drop.key}: ${drop.reason}`);
+            entries.delete(drop.key);
+            delete registry[drop.key];
+        }
+        const ordered = cleaned.kept.filter((entry) => entry.img);
+        for (const entry of ordered) {
+            registry[entry.key] = {
+                id: entry.id,
+                kind: entry.kind,
+                title: entry.title,
+                seasons: registry[entry.key]?.seasons && Object.keys(registry[entry.key].seasons).length
+                    ? registry[entry.key].seasons
+                    : (entry.kind === 'movie' ? { '1': 1 } : {}),
+            };
+        }
+        let rebaked = mergeCatalog(html, ordered.map((entry) => catalogEntryLine(entry.key, entry)));
+        rebaked = mergeRows(rebaked, buildRows(ordered));
+        const baked = pruneRegistry(registry, catalogKeysOf(rebaked));
+        if (baked.dropped.length) console.log(`route prune: ${baked.dropped.length}`);
+        writeFileSync(HTML_PATH, rebaked);
+        writeFileSync(NX_TITLES_PATH, `${JSON.stringify(registry, null, 2)}\n`);
+        writeFileSync(CATALOG_STATE_PATH, `${JSON.stringify({ updated: new Date().toISOString(), entries: ordered }, null, 2)}\n`);
+        console.log(`rebake: ${ordered.length} entries, ${buildRows(ordered).length} rows`);
+        return;
+    }
+
     const items = await readImdbList(listId);
     const report = {
         listId,
@@ -789,27 +874,6 @@ async function main() {
         if ((index + 1) % 10 === 0) console.log(`… ${index + 1}/${items.length} checked, ${report.added.length} naye mile`);
     }
 
-    // Jo titles pehle movie ki tarah match hue the unhe dobara check karo: agar
-    // Nxsha par wahi naam **series** ke roop me bhi hai to series hi sahi hai
-    // (owner ka list anime series ka hai, live-action movie nahi).
-    for (const entry of entries.values()) {
-        if (entry.kind !== 'movie') continue;
-        try {
-            const results = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(entry.title)}`));
-            const series = results.find((row) => row.type === 'tv' && isSameShow(row.name, entry.title));
-            if (!series) continue;
-            const page = await get(`${NX_BASE}/tv/${series.id}`);
-            if (!page) continue;
-            parseNxshaSeriesPage(page, series.name);
-            console.log(`kind fix ${entry.key}: movie -> tv (${series.id})`);
-            entry.kind = 'tv';
-            entry.id = series.id;
-            report.missing.push({ title: entry.title, reason: `movie-to-tv: ${series.id}` });
-        } catch (error) {
-            console.log(`kind audit fail ${entry.key}: ${error?.message || error}`);
-        }
-    }
-
     // Purane import ki genres khaali reh gayi ho to page dobara padh kar bharo
     // (owner: "sab sahi sahi lagna chiyea" — rows genres par banti hain).
     for (const entry of entries.values()) {
@@ -826,7 +890,14 @@ async function main() {
         }
     }
 
-    const ordered = [...entries.values()].filter((entry) => entry.img);
+    const cleanedEntries = dropSingleEpisodeTv([...entries.values()], registry);
+    for (const drop of cleanedEntries.dropped) {
+        console.log(`drop ${drop.key}: ${drop.reason}`);
+        entries.delete(drop.key);
+        delete registry[drop.key];
+        report.missing.push({ title: drop.title, reason: drop.reason });
+    }
+    const ordered = cleanedEntries.kept.filter((entry) => entry.img);
     for (const entry of [...entries.values()].filter((row) => !row.img)) {
         report.missing.push({ title: entry.title, reason: 'no-poster' });
     }
@@ -842,8 +913,15 @@ async function main() {
         };
     }
 
+    const plannedRows = buildRows(ordered);
+    // Rows sirf unhi keys ko point karein jo catalog me hain, warna page ka
+    // render script `shows[key]` par crash karta hai.
+    const knownKeys = new Set([...ordered.map((entry) => entry.key), ...existingCatalogTitles(html)]);
+    const dangling = plannedRows.flatMap((row) => row.keys).filter((key) => !knownKeys.has(key));
+    if (dangling.length) throw new Error(`rows me unknown keys: ${dangling.join(', ')}`);
+
     let nextHtml = mergeCatalog(html, ordered.map((entry) => catalogEntryLine(entry.key, entry)));
-    nextHtml = mergeRows(nextHtml, buildRows(ordered));
+    nextHtml = mergeRows(nextHtml, plannedRows);
 
     // Source ka snapshot repo me rakhte hain — agli baar parser bina network
     // verify ho jata hai (aur CI log ke bharose nahi rehna padta).
@@ -855,6 +933,8 @@ async function main() {
         console.log('--dry-run: page/state nahi likhe');
         return;
     }
+    const bakedRoutes = pruneRegistry(registry, catalogKeysOf(nextHtml));
+    if (bakedRoutes.dropped.length) console.log(`route prune: ${bakedRoutes.dropped.length}`);
     writeFileSync(HTML_PATH, nextHtml);
     writeFileSync(NX_TITLES_PATH, `${JSON.stringify(registry, null, 2)}\n`);
     writeFileSync(CATALOG_STATE_PATH, `${JSON.stringify({ updated: report.generatedAt, entries: ordered }, null, 2)}\n`);
@@ -1080,6 +1160,7 @@ export function selfTest() {
     ]);
     assert(rows[0].title === 'Hindi Dub · Action' && rows[0].keys.length === 5, 'genre row');
     assert(rows[1].title === 'Hindi Dub on Crunchyroll' && rows[1].keys.join() === 'f', 'leftover row');
+    assert(/\{title:'Hindi Dub · Action',keys:\['a','b','c','d','e'\]\}/.test(mergeRows(page, rows)), 'row keys quoted');
 
     const mergedRows = mergeRows(page, rows);
     assert(mergeRows(mergedRows, rows) === mergedRows, 'mergeRows must be idempotent');

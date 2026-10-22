@@ -132,7 +132,12 @@ test('all 83 Crunchyroll titles resolve through the Nxsha table', () => {
     const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
     expect(match).not.toBeNull();
     const data = JSON.parse((match as RegExpMatchArray)[1]);
-    expect(Object.keys(data)).toHaveLength(83);
+    // 83 original + IMDb import (Task 7). Har `shows` key ka route hona chahiye,
+    // aur registry me koi orphan route (pruned attempt) nahi rehna chahiye.
+    const showsBlock = html.slice(html.indexOf('var shows={'), html.indexOf('var rows=['));
+    const showKeys = [...showsBlock.matchAll(/\n\s+([A-Za-z0-9_]+):\{title:/g)].map((row) => row[1]);
+    expect(showKeys.length).toBeGreaterThanOrEqual(83);
+    expect(Object.keys(data).sort()).toEqual([...showKeys].sort());
     for (const entry of Object.values<any>(data)) {
         expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);
         expect(['tv', 'movie']).toContain(entry.kind);
