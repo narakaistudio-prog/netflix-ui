@@ -68,15 +68,20 @@ test('a movie ToonStream does not carry stays without a server', () => {
 
 test('every catalog movie is considered, and only verified ones get a slug', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
+    const routes = JSON.parse(readFileSync(join(ROOT, 'data', 'nxsha-titles.json'), 'utf8'));
     const block = html.slice(html.indexOf('var shows={'), html.indexOf('var rows=['));
     const movieKeys = [...block.matchAll(/\n\s+([A-Za-z0-9_]+):\{title:'((?:\\.|[^'\\])*)'/g)]
         .filter((match) => {
             const next = block.indexOf(':{title:', match.index! + match[0].length);
             const entry = block.slice(match.index!, next === -1 ? block.length : next);
-            return /type:'Movie'/.test(entry);
+            // `type:'Movie'` + purane catalog movies jo NX_DATA me kind movie hain.
+            return /type:'Movie'/.test(entry) || routes[match[1]]?.kind === 'movie';
         })
         .map((match) => match[1]);
-    expect(movieKeys.length).toBeGreaterThanOrEqual(21);
+    // 19 Ghibli + DAN DA DAN movie + Another World + 12 purane catalog movies.
+    expect(movieKeys.length).toBeGreaterThanOrEqual(33);
+    // Wo movies bhi list me hain jinhe pehle series samajh liya jata tha.
+    ['spirited', 'mononoke', 'howl', 'yourname', 'jjk0'].forEach((key) => expect(movieKeys).toContain(key));
 
     const baked = JSON.parse(
         html.match(/var TS_MOVIES=(\{.*?\});/)?.[1] ?? '{}',

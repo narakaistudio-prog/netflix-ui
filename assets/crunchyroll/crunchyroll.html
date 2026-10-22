@@ -1279,7 +1279,12 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
       /*__ANIDISK_CONFIRMED__*/var ANIDISK_CONFIRMED={"solo":{"slug":"solo-leveling","hindi":true,"tags":["hindi","multi-audio"],"source":"manual-research","verified":"2026-10-10"}};/*__END_ANIDISK__*/
       var EP_COUNT=12;
       var playState={key:'solo',season:'1',ep:1};
-      function isMovieKey(k){var s=shows[k];return !!(s&&s.type==='Movie')}
+      /* Movie ka pata do jagah se chalta hai: imported/railOnly entries par
+         `type:'Movie'`, aur purane catalog movies (Spirited Away, Mononoke,
+         Howl's, Your Name, JJK 0 …) par NX_DATA ka `kind:'movie'`. Dono na
+         maane to unka ToonStream server series path se dhoonda jata aur kabhi
+         na milta. */
+      function isMovieKey(k){var s=shows[k];if(!s)return false;if(s.type==='Movie')return true;var n=(typeof NX_DATA!=='undefined'&&NX_DATA[k])||(window.CR_NX_DROPS&&CR_NX_DROPS[k])||null;return !!(n&&n.kind==='movie')}
       function slugify(title){return String(title||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
       function epSlug(k){if(SLUG_OVERRIDES[k])return SLUG_OVERRIDES[k];var s=shows[k];return s?slugify(s.title):k}
       function anidiskUrl(k,s,e){var c=ANIDISK_CONFIRMED[k];if(c&&c.eps&&c.eps[s+':'+e])return c.eps[s+':'+e];var slug=(c&&c.slug)||epSlug(k);return 'https://anidisk.org/watch/'+slug+'/'+s+'/'+e}

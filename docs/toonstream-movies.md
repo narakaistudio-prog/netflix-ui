@@ -20,8 +20,12 @@ api   --- https://toonstream.us/movies/<slug>                    --->  ToonStrea
 api   --- {ok, movieUrl, servers:[{name,url}], chosen}           --->  page
 ```
 
-1. `scripts/harvest-toonstream-movies.mjs` catalog ki har movie
-   (`shows[key].type === 'Movie'`) ke liye slug verify karta hai:
+1. `scripts/harvest-toonstream-movies.mjs` catalog ki har movie ke liye slug
+   verify karta hai. Movie ka pata do jagah se chalta hai:
+   `shows[key].type === 'Movie'` (imported + railOnly) **ya**
+   `data/nxsha-titles.json[key].kind === 'movie'` (purane catalog movies —
+   Spirited Away, Mononoke, Howl's, Your Name, JJK 0 …). Dono na maane to unka
+   server series path se dhoonda jata aur kabhi na milta.
    - pehle baked/state slug, phir site ke slug rule se bane 3 variant,
    - phir `/s?q=<title>` search ke `/movies/<slug>` links,
    - har candidate page par **title match** (wanted se 2 word se zyada lamba

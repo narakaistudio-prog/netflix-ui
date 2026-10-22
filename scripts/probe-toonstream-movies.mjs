@@ -63,7 +63,8 @@ async function main() {
     const only = String(process.argv.find((arg) => arg.startsWith('--only=')) || '').replace('--only=', '');
     const wanted = new Set(only.split(',').map((v) => v.trim()).filter(Boolean));
     const html = readFileSync(HTML_PATH, 'utf8');
-    const movies = catalogMovies(html).filter((movie) => !wanted.size || wanted.has(movie.key));
+    const routes = JSON.parse(readFileSync(resolve(ROOT, 'data', 'nxsha-titles.json'), 'utf8'));
+    const movies = catalogMovies(html, routes).filter((movie) => !wanted.size || wanted.has(movie.key));
     console.log(`Probing ${movies.length} movie(s)`);
 
     const report = { generatedAt: new Date().toISOString(), movies: [] };

@@ -100,7 +100,7 @@ async function dumpSample(slug) {
  * need with the same quote-aware regex the other harvesters use. Imported
  * entries always open with `key:{title:'…'`.
  */
-export function catalogMovies(html) {
+export function catalogMovies(html, routes = {}) {
     const block = String(html).slice(
         String(html).indexOf('var shows={'),
         String(html).indexOf('var rows=['),
@@ -112,7 +112,12 @@ export function catalogMovies(html) {
         // The entry ends at the next entry (or the block's closing brace).
         const next = block.indexOf(':{title:', start + match[0].length);
         const entry = block.slice(start, next === -1 ? block.length : next);
-        if (!/type:'Movie'/.test(entry)) continue;
+        // `type:'Movie'` imported/railOnly entries par hota hai; purane catalog
+        // movies (Spirited Away, Mononoke, Howl's Moving Castle) sirf NX_DATA
+        // route me `kind:'movie'` hain — dono ko movie maanna zaroori hai,
+        // warna unka ToonStream server series path se dhoonda jata hai.
+        const route = routes[match[1]] || {};
+        if (!/type:'Movie'/.test(entry) && route.kind !== 'movie') continue;
         out.push({ key: match[1], title: match[2].replace(/\\'/g, "'") });
     }
     return out;
@@ -135,7 +140,13 @@ export function bake(html, state) {
 
 async function main() {
     const html = readFileSync(HTML_FILE, 'utf8');
-    const movies = catalogMovies(html);
+    let routes = {};
+    try {
+        routes = JSON.parse(readFileSync(resolve(ROOT, 'data', 'nxsha-titles.json'), 'utf8'));
+    } catch {
+        // route file na ho to sirf `type:'Movie'` wale movies milenge
+    }
+    const movies = catalogMovies(html, routes);
     const target = ONLY.length ? movies.filter((movie) => ONLY.includes(movie.key)) : movies;
     console.log(`Movies in catalog: ${movies.length} | checking: ${target.length}`);
 
