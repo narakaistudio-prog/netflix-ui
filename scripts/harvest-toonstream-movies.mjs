@@ -144,13 +144,10 @@ async function main() {
         : { updated: new Date().toISOString(), movies: {} };
 
     if (!FROM_STATE) {
-        // Purane verified slugs rakhte hain — har run network par dobara nahi.
-        try {
-            const previous = JSON.parse(readFileSync(STATE_FILE, 'utf8'));
-            Object.assign(state.movies, previous.movies || {});
-        } catch {
-            // pehla run: state file nahi hai
-        }
+        /* Har run par saari movies dobara verify hoti hain.
+           Pehle purane slugs merge kiye ja rahe the, aur ek galat match
+           ("Another World" -> Re:ZERO Frozen Bond) state me chipka reh gaya —
+           user ko galat server dikhta. Ab state sirf is run ka sach hai. */
         const missed = [];
         for (const movie of target) {
             try {

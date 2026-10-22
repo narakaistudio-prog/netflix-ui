@@ -335,7 +335,10 @@ async function resolveMovie({ title, slug }, steps) {
     if (hit) return hit;
   }
 
-  const search = await getText(`${BASE}/s?q=${encodeURIComponent(title)}&type=movies`, steps, 'movie-search');
+  // NOTE: `&type=movies` **query ko ignore** kar deta hai — site har title ke
+  // liye wahi generic movie list (Shrek, Toy Story…) lauta deta hai. Isliye
+  // plain search, aur usme se sirf /movies/<slug> links.
+  const search = await getText(`${BASE}/s?q=${encodeURIComponent(title)}`, steps, 'movie-search');
   if (search.status !== 200) return null;
   if (steps) steps.push({ step: 'movie-search', status: search.status, links: extractMovieLinks(search.text).length });
   const ranked = extractMovieLinks(search.text)

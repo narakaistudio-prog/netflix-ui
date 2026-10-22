@@ -7,12 +7,6 @@ name: Probe ToonStream movie pages
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - arena/596cf98f-netflix-ui
-    paths:
-      - 'scripts/probe-toonstream-movies.mjs'
-      - '.github/workflows/toonstream-movie-probe.yml'
 
 permissions:
   contents: write
