@@ -180,12 +180,17 @@
     /* Next episode button — player ke andar, video ke bottom-right (MovieBox
        jaisa white pill), idle par gayab. Wrapper pointer-events:none nahi —
        sirf button clickable hai, baaki stage/iframe par click jaata rehta hai. */
-    .next-float{position:absolute;right:16px;bottom:64px;z-index:5;display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;background:rgba(255,255,255,.94);color:#000;font:inherit;font-size:14px;font-weight:800;padding:10px 16px;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
-    .next-float.show{opacity:1;visibility:visible;transform:none}
-    .next-float[hidden]{display:none}
+    .next-float{position:absolute;right:18px;bottom:clamp(56px,15%,150px);z-index:5;display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;background:rgba(255,255,255,.94);color:#000;font:inherit;font-size:14px;font-weight:800;padding:10px 16px;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
+    /* Reveal ke do raaste: activity par JS `show` class, aur jab cursor video
+       (iframe) ke andar ho to CSS :hover — iframe stage ka child hai, isliye
+       parent par :hover chalta rehta hai chahe andar ke mousemove humein na
+       mile. Yahi owner ki shikayat thi: "screen par cursor hai phir bhi next
+       nahi aata". */
+    .next-float.show:not([hidden]),.video-stage:hover .next-float:not([hidden]){opacity:1;visibility:visible;transform:none}
     .next-float svg{width:14px;height:14px;fill:currentColor}
     .next-float:focus-visible{outline:3px solid #fff;outline-offset:3px}
-    @media(max-width:600px){.next-float{right:10px;bottom:52px;font-size:13px;padding:9px 13px}}
+    .next-float[hidden]{display:none}
+    @media(max-width:600px){.next-float{right:10px;bottom:clamp(44px,14%,96px);font-size:13px;padding:9px 13px}}
     .player-shell{position:fixed;inset:0;z-index:120;background:#000;color:#fff;display:flex;flex-direction:column;overflow:auto}
     .player-shell[hidden]{display:none}
     .player-top{min-height:66px;display:flex;align-items:center;gap:15px;padding:10px 3vw;background:#15171b;border-bottom:1px solid #2d2f34;flex:0 0 auto}
@@ -1178,6 +1183,10 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
          slot (S1/S2/S3) par agla episode, warna Nxsha. */
       function reloadAfterEpisodeChange(){nextFloatRefresh();if(TS_MODE){syncPlayerHeading();recordProgress();var tries=0;(function kick(){if(TS.loading){if(tries++<40)setTimeout(kick,500);return}try{playToonstream({server:tsActiveIndex})}catch(e){loadServer(activeServer)}})()}else{loadServer(activeServer)}}
       if(nextFloat)nextFloat.addEventListener('click',function(event){event.preventDefault();goNextEpisode()},false);
+      /* Cursor player se bahar nikla → turant chhupao (MovieBox ka 900ms
+         leave-delay). Video ke andar jaate waqt mouseleave nahi aata —
+         iframe stage ka child hai, isliye :hover bana rehta hai. */
+      (function(){var st=byId('videoStage');if(!st||!nextFloat)return;st.addEventListener('mouseleave',function(){if(nextFloatTimer){clearTimeout(nextFloatTimer);nextFloatTimer=null}nextFloatTimer=setTimeout(function(){removeClass(nextFloat,'show')},900)},false)})();
       (function(){
         function activity(){nextFloatShow()}
         document.addEventListener('mousemove',activity,true);
