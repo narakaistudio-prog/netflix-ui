@@ -30,7 +30,7 @@
  * Env: TS_MOVIES_STATE_FILE / TS_MOVIES_HTML_FILE point the bake elsewhere
  * (tests, previews). TS_MOVIES_ONLY=key1,key2 limits a probe run.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -53,7 +53,45 @@ const ONLY = String(process.env.TS_MOVIES_ONLY || '')
     .map((value) => value.trim())
     .filter(Boolean);
 
+/** Site ka slug rule (series wala hi): lowercase, punctuation hata kar dashes. */
+function guessedSlug(title) {
+    return String(title || '')
+        .toLowerCase()
+        .replace(/['’]/g, '')
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
+
+const BASE = 'https://toonstream.us';
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
+const SAMPLE_FILE = resolve(ROOT, 'data', 'toonstream-movie-sample.html');
+
+async function pageText(url) {
+    try {
+        const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'text/html,*/*' } });
+        return { status: res.status, text: await res.text() };
+    } catch (error) {
+        return { status: 0, text: '', error: String(error?.message || error) };
+    }
+}
+
+/**
+ * Ek failing movie ka raw page repo me rakh dete hain.
+ *
+ * Sandbox se toonstream reach nahi hota, isliye "page hai par server nahi
+ * mila" ka asli karan sirf HTML dekh kar pata chalta hai (slots JS se aate
+ * hain ya site ne markup badla). Sample sirf ek baar likha jata hai.
+ */
+async function dumpSample(slug) {
+    if (existsSync(SAMPLE_FILE)) return;
+    const page = await pageText(`${BASE}/movies/${slug}`);
+    if (!page.text) return;
+    writeFileSync(SAMPLE_FILE, page.text.slice(0, 400_000));
+    console.log(`sample saved: data/toonstream-movie-sample.html (${page.status}, ${slug})`);
+}
 
 /**
  * Movies in the page: every `shows` entry marked `type:'Movie'`.
@@ -116,10 +154,15 @@ async function main() {
         const missed = [];
         for (const movie of target) {
             try {
-                const found = await _internal.resolveMovie({ title: movie.title, slug: '' }, DEBUG ? [] : undefined);
+                const steps = [];
+                const found = await _internal.resolveMovie({ title: movie.title, slug: '' }, steps);
                 if (!found) {
                     missed.push(movie.key);
-                    console.log(`MISS ${movie.key.padEnd(28)} ${movie.title}`);
+                    const detail = steps.map((step) => `${step.step}${step.status ? ':' + step.status : ''}${step.links !== undefined ? ':' + step.links : ''}${step.got ? ':"' + step.got + '"' : ''}`).join(' ');
+                    console.log(`MISS ${movie.key.padEnd(28)} ${movie.title} | ${detail}`);
+                    // Jo sample pehle se hai use nahi chhedte; warna pehla fail.
+                    const lastSlug = guessedSlug(movie.title);
+                    await dumpSample(lastSlug);
                     continue;
                 }
                 const slug = found.movieUrl.replace(/^.*\/movies\//, '');

@@ -299,10 +299,13 @@ async function resolveMovie({ title, slug }, steps) {
     const page = await getText(url, steps, `movie-${via}`);
     if (page.status !== 200) return null;
     const pageTitle = moviePageTitle(page.text);
-    // Search hits can point at a sequel/spin-off: require most tokens to match.
+    // Search hits can point at a sequel/spin-off — "Another World" par search
+    // "Re:ZERO … The Frozen Bond" bhi de deta hai (dono tokens mil jate hain).
+    // Isliye sirf token overlap nahi: page ka title wanted se bahut lamba na ho.
+    const extraWords = pageTitle ? tokens(pageTitle).length - wanted.length : 99;
     const score = pageTitle ? matchScore(wanted, pageTitle) : 0;
-    if (!pageTitle || score < 0.6) {
-      if (steps) steps.push({ step: 'movie-rejected', slug: candidateSlug, got: pageTitle.slice(0, 60), score: +score.toFixed(2) });
+    if (!pageTitle || score < 0.6 || extraWords > 2) {
+      if (steps) steps.push({ step: 'movie-rejected', slug: candidateSlug, got: pageTitle.slice(0, 60), score: +score.toFixed(2), extraWords });
       return null;
     }
     // Movie pages carry the same `options-N` slots as episodes; if the site
@@ -334,6 +337,7 @@ async function resolveMovie({ title, slug }, steps) {
 
   const search = await getText(`${BASE}/s?q=${encodeURIComponent(title)}&type=movies`, steps, 'movie-search');
   if (search.status !== 200) return null;
+  if (steps) steps.push({ step: 'movie-search', status: search.status, links: extractMovieLinks(search.text).length });
   const ranked = extractMovieLinks(search.text)
     .map((candidate) => ({ slug: candidate, score: matchScore(wanted, candidate.replace(/-/g, ' ')) }))
     .filter((row) => row.score >= 0.6)
