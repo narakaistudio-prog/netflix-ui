@@ -132,7 +132,7 @@ jobs:
         run: |
           git config user.name "netflix-catalog-bot"
           git config user.email "netflix-catalog-bot@users.noreply.github.com"
-          git add assets/crunchyroll/crunchyroll.html data/nxsha-titles.json data/imdb-anime-import.json data/imdb-anime-catalog.json data/imdb-anime-list.md
+          git add assets/crunchyroll/crunchyroll.html data/nxsha-titles.json data/imdb-anime-import.json data/imdb-anime-catalog.json data/imdb-anime-list.md data/nxsha-page-sample.html
           for file in data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json data/nxsha-verify.json data/toonstream-seasons.json; do
             if [ -f "$file" ]; then git add "$file"; fi
           done

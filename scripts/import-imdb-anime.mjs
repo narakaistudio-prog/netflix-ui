@@ -43,6 +43,7 @@ const NX_TITLES_PATH = resolve(ROOT, 'data', 'nxsha-titles.json');
 const REPORT_PATH = resolve(ROOT, 'data', 'imdb-anime-import.json');
 const CATALOG_STATE_PATH = resolve(ROOT, 'data', 'imdb-anime-catalog.json');
 const LIST_SNAPSHOT_PATH = resolve(ROOT, 'data', 'imdb-anime-list.md');
+const NX_SAMPLE_PATH = resolve(ROOT, 'data', 'nxsha-page-sample.html');
 
 const NX_BASE = 'https://nxsha.space';
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
@@ -74,6 +75,23 @@ export function normTitle(value) {
         .replace(/&/g, 'and')
         .replace(/[^a-z0-9]+/g, '')
         .trim();
+}
+
+/**
+ * Fuzzy title compare: punctuation/case ke alawa **double letters** bhi ek
+ * maan lo. IMDb "Haikyuu!!" aur page ka "HAIKYU!!" ek hi show hain — bina iske
+ * wahi anime dobara add ho jata (owner: "jo pehle se hai usse chod dena").
+ */
+export function looseTitle(value) {
+    return normTitle(value).replace(/(.)\1+/g, '$1');
+}
+
+/** Do naam ek hi show ke hain? (case/punctuation/double-letter tolerant) */
+export function isSameShow(a, b) {
+    const left = normTitle(a);
+    const right = normTitle(b);
+    if (!left || !right) return false;
+    return left === right || looseTitle(a) === looseTitle(b);
 }
 
 /** Catalog key: "My Dress-Up Darling" -> "mydressupdarling". */
@@ -446,7 +464,7 @@ async function get(url, { accept = 'text/html,*/*' } = {}) {
 export function pickNxshaMatch(results, wanted, { kind = '', year = '' } = {}) {
     const want = normTitle(wanted);
     const usable = (results || []).filter((row) => row.name && row.id);
-    const exact = usable.filter((row) => normTitle(row.name) === want);
+    const exact = usable.filter((row) => isSameShow(row.name, wanted));
     const pool = exact.length ? exact : [];
     if (!pool.length) return null;
     const score = (row) => (
@@ -621,11 +639,11 @@ async function main() {
         enriched: [],
     };
 
-    const have = new Set(existingCatalogTitles(html).map(normTitle));
+    const have = new Set(existingCatalogTitles(html).map(looseTitle));
     const takenKeys = new Set([...Object.keys(registry), ...entries.keys()]);
 
     for (const [index, item] of items.entries()) {
-        if (have.has(normTitle(item.title))) {
+        if (have.has(looseTitle(item.title))) {
             report.skipped.push({ title: item.title, reason: 'already-in-catalog' });
             continue;
         }
@@ -646,7 +664,7 @@ async function main() {
             desc: found.desc,
             imdbId: item.imdbId,
         });
-        have.add(normTitle(found.title));
+        have.add(looseTitle(found.title));
         report.added.push({ key, title: found.title, nxsha: `${found.hit.type}/${found.hit.id}`, imdb: item.imdbId });
         if ((index + 1) % 10 === 0) console.log(`… ${index + 1}/${items.length} checked, ${report.added.length} naye mile`);
     }
@@ -761,14 +779,25 @@ async function readImdbList(listId) {
 
 /** Ek IMDb title -> Nxsha route + page metadata, ya null (report me wajah). */
 async function resolveNxsha(item, report) {
-    let search;
-    try {
-        search = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(item.title)}`));
-    } catch (error) {
-        report.missing.push({ title: item.title, reason: `search-failed: ${error?.message || error}` });
-        return null;
+    const candidates = [item.title];
+    // Poster ka alt kabhi cast photo ka hota hai ("Kana Ichinose in Mobile Suit
+    // Gundam…") — pehla try fail ho to " in " ke baad wala naam bhi try karo.
+    const lastIn = item.title.lastIndexOf(' in ');
+    if (lastIn > 0) candidates.push(item.title.slice(lastIn + 4).trim());
+
+    let hit = null;
+    for (const candidate of candidates) {
+        let search;
+        try {
+            search = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(candidate)}`));
+        } catch (error) {
+            report.missing.push({ title: item.title, reason: `search-failed: ${error?.message || error}` });
+            return null;
+        }
+        hit = pickNxshaMatch(search, candidate, { kind: item.kind, year: item.year });
+        if (hit) break;
+        await sleep(200);
     }
-    const hit = pickNxshaMatch(search, item.title, { kind: item.kind, year: item.year });
     if (!hit) {
         report.missing.push({ title: item.title, reason: 'no-nxsha-match' });
         return null;
@@ -800,6 +829,10 @@ async function resolveNxsha(item, report) {
         }
         verifiedTitle = info.title;
     }
+    // Ek page ka HTML sample repo me rakhte hain taaki genre parser offline
+    // verify ho sake (sandbox se Nxsha reach nahi hota).
+    if (!existsSync(NX_SAMPLE_PATH)) writeFileSync(NX_SAMPLE_PATH, page.slice(0, 300_000));
+
     const info = parseMoviePage(page);
     const poster = hit.poster || info.backdrop || '';
     if (!poster) {
@@ -909,6 +942,7 @@ export function selfTest() {
     assert(match?.id === '2', 'year tie-break');
     assert(pickNxshaMatch([{ type: 'tv', id: '9', name: 'Something Else', year: '2020' }], 'Blue Lock') === null, 'no loose match');
     assert(slugKey('My Dress-Up Darling') === 'mydressupdarling', 'slug');
+    assert(isSameShow('Haikyuu!!', 'HAIKYU!!') && !isSameShow('Haikyuu!!', 'Bleach'), 'fuzzy title');
     assert(parseGenres('<a href="/genre/action">Action</a><a href="/genre/sci-fi">Sci-Fi</a>').join() === 'action,science-fiction', 'genre map');
 
     const seeded = parseCatalogLine("dressup:{title:'My Dress-Up Darling',year:2022,rating:'4.2',genres:['romance','comedy'],audio:'Sub & Dub',img:'p.jpg',desc:'Cosplay.'},");
