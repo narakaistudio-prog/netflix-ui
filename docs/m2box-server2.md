@@ -418,12 +418,37 @@ nahi".)
 
 - **After-play screen (Crunchyroll jaisa)** — `MovieDetailModal` ka phone branch:
   - Top bar: back `<` + title + `S1 • E<n>`.
-  - Player upar — 16:9-ish dabba, andar **site ka asli mobile layout**
-    (`getMovieboxCrop(..., { phone: true })`): iframe phone ki chaudai par
-    (scale 1), crop top ~108px (mobile header ke neeche). Isse site ke apne
-    controls (play/seek/quality/fullscreen) **native size** ke hote hain —
-    pehle 1536 stage chhota hone se wo ~8px ke reh jate the ("player ke andar
-    ke control bahut chhote hai"). Desktop par wahi 1536-stage crop.
+  - Player upar — **ratio permanently locked** (neeche dekho), andar **site ka
+    asli mobile layout** (`getMovieboxCrop(..., { phone: true })`): iframe phone
+    ki chaudai par (scale ~1), crop top 108px (mobile header ke neeche). Isse
+    site ke apne controls (play/seek/quality/fullscreen) **native size** ke
+    hote hain — pehle 1536 stage chhota hone se wo ~8px ke reh jate the
+    ("player ke andar ke control bahut chhote hai"). Desktop par wahi
+    1536-stage crop.
+
+### Phone player ka ratio — permanent lock 📌
+
+Owner: "moviebox ka player ka jo ratio hai wahi humesha ke liye fix rahe, kabhi
+na badle."
+
+- **Ek hi constant**: `MOVIEBOX_PHONE_BOX_ASPECT` (`lib/moviebox.ts`) = **16:10
+  = 1.6** — owner ke chal rahe dabbe (390 × 244 ≈ 1.598) ka hi naap, yaani
+  dikhne me kuch nahi badla, bas pakka ho gaya.
+- Dabbe ki unchai **sirf chaudai se** nikalti hai (`height = width / 1.6`);
+  modal me `phonePlayerBox` ka `aspectRatio` wahi constant hai. Pehle modal
+  `useWindowDimensions().width` se height ka hisaab karta tha — panel ki asli
+  chaudai (viewport − 24) se thoda alag pad jata tha, isliye ratio halka sa
+  badalta tha. Ab window/rotate/fullscreen se koi lena-dena nahi.
+- Crop (`getMovieboxCrop(..., { phone: true })`) bhi wahi ratio deta hai:
+  pehle `outerHeight` se height **cap** hoti thi (chhota/lamba host = alag
+  shape). Ab host chhota ho to poora dabba (chaudai + unchai dono) ek saath
+  chhota hota hai — `contain`, jaise desktop par — aur site ka content
+  (header kaat + 16:9 video + control bar) usi ratio me fit hota hai. Kuch
+  stretch ya cut nahi hota.
+- **Lock ka test**: `tests-arena/moviebox-crop.test.ts` → *"phone player ka
+  ratio PERMANENT lock"* 7 chaudai × 8 unchai (320…479 × 480…1200) par 16:10
+  check karta hai, aur content ke fit hone ki bhi. Constant chheda to test
+  fail — yaani ratio chup-chaap badal nahi sakta.
   - Neeche (scroll): series naam (red), `E<n> – <episode name>`, meta
     (`★ rating • runtime`), `Released on <date>`, description + **SHOW MORE**,
     **NEXT EPISODE** card (thumb + naam + runtime; tap par wahi episode chalu),

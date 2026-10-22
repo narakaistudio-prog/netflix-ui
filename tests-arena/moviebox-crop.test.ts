@@ -6,6 +6,8 @@ import {
     getMovieboxCrop,
     isMovieboxUrl,
     MOVIEBOX_PHONE_BAR_HEIGHT,
+    MOVIEBOX_PHONE_BOX_ASPECT,
+    getMovieboxPhoneBoxHeight,
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
     MOVIEBOX_STAGE_PLAYER_HEIGHT,
@@ -202,18 +204,61 @@ describe('getMovieboxCrop', () => {
         // phone par chhota karne se site ke controls ~8px reh jate the.
         const crop = getMovieboxCrop(390, 244, { phone: true });
         expect(crop.stageWidth).toBe(390);
-        expect(crop.scale).toBe(1);
+        // native ke barabar (contain ki wajah se sub-pixel neeche hi rehta hai)
+        expect(crop.scale).toBeCloseTo(1, 2);
         expect(crop.cropLeft).toBe(0);
         // header 104 + 4px andar
         expect(crop.cropTop).toBe(108);
         const playerW = 390 - 24;
         // video (16:9) + site ka control bar — bar aadha na kate.
-        expect(crop.height).toBe(
-            Math.round((playerW * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4),
-        );
+        const contentHeight = (playerW * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4;
+        expect(crop.height).toBeGreaterThanOrEqual(Math.round(contentHeight) - 1);
         expect(crop.stacked).toBe(false);
         // Site ki fixed bottom nav viewport ke neeche — player ke upar nahi.
         expect(crop.viewportHeight).toBeGreaterThan(crop.height + crop.cropTop + 200);
+    });
+
+    /**
+     * Owner: "moviebox ke player ka ratio wahi humesha ke liye fix rahe, kabhi
+     * na badle". Ye test hi wo lock hai — phone par har chaudai/unchai par
+     * dabba exactly MOVIEBOX_PHONE_BOX_ASPECT (16:10) hi rahega.
+     */
+    it('phone player ka ratio PERMANENT lock — har screen par 16:10', () => {
+        const widths = [320, 360, 375, 390, 414, 430, 479];
+        const heights = [480, 568, 640, 667, 740, 844, 932, 1200];
+        for (const width of widths) {
+            for (const height of heights) {
+                const crop = getMovieboxCrop(width, height, { phone: true });
+                const ratio = crop.frameWidth / crop.height;
+                expect(Math.abs(ratio - MOVIEBOX_PHONE_BOX_ASPECT)).toBeLessThan(
+                    MOVIEBOX_PHONE_BOX_ASPECT * 0.005,
+                );
+                // Site ka content (header ke baad) poora dabbe me fit hota hai —
+                // na video katta hai, na site ka control bar.
+                const contentHeight = ((width - 24) * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4;
+                // contain: content scale hokar dabbe me poora baithta hai
+                expect(contentHeight * crop.scale).toBeLessThanOrEqual(crop.height + 1);
+                expect(crop.stageVisibleHeight).toBeGreaterThanOrEqual(contentHeight - 1);
+                // Site ka header kabhi player ke upar nahi.
+                expect(crop.cropTop).toBe(108);
+            }
+        }
+    });
+
+    it('phone par host ki unchai badalne se ratio nahi badalta', () => {
+        const tall = getMovieboxCrop(390, 844, { phone: true });
+        const medium = getMovieboxCrop(390, 400, { phone: true });
+        expect(tall.frameWidth).toBe(medium.frameWidth);
+        expect(tall.height).toBe(medium.height);
+        expect(tall.height).toBe(getMovieboxPhoneBoxHeight(390));
+        expect(getMovieboxPhoneBoxHeight(390) / 390).toBeCloseTo(1 / MOVIEBOX_PHONE_BOX_ASPECT, 2);
+    });
+
+    it('phone par dabbe se chhota host — poora dabba chhota hota hai, shape wahi', () => {
+        const short = getMovieboxCrop(390, 200, { phone: true });
+        expect(short.frameWidth).toBeLessThan(390);
+        expect(short.height).toBe(200);
+        expect(short.frameWidth / short.height).toBeCloseTo(MOVIEBOX_PHONE_BOX_ASPECT, 2);
     });
 
     it('landscape fullscreen par wahi desktop stage crop (mobile nav nahi)', () => {

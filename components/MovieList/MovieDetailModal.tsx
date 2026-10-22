@@ -15,7 +15,7 @@ import {
 } from '@/lib/recentlyWatched';
 import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
-import { MOVIEBOX_PHONE_BAR_HEIGHT, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { MOVIEBOX_PHONE_BOX_ASPECT, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
@@ -681,21 +681,16 @@ export function MovieDetailModal({
                                     </View>
                                 </View>
 
-                                <View
-                                    style={[
-                                        styles.phonePlayerBox,
-                                        // Crop ke barabar hi — video (16:9) +
-                                        // site ka control bar, dono poore.
-                                        {
-                                            height:
-                                                Math.round(((width - 24) * 9) / 16) +
-                                                MOVIEBOX_PHONE_BAR_HEIGHT -
-                                                4,
-                                        },
-                                    ]}
-                                >
-                                    {playerNode}
-                                </View>
+                                {/*
+                                 * Unchai yahan hisaab se nahi lagti — ratio
+                                 * `styles.phonePlayerBox` ka `aspectRatio`
+                                 * (MOVIEBOX_PHONE_BOX_ASPECT) deta hai, aur
+                                 * width se hi unchai nikalti hai. Isliye
+                                 * phone/window badalne par player ka shape
+                                 * kabhi nahi badalta (owner: "ratio permanent
+                                 * fix rahe").
+                                 */}
+                                <View style={styles.phonePlayerBox}>{playerNode}</View>
 
                                 <ScrollView
                                     style={styles.phoneDetails}
@@ -840,12 +835,19 @@ const styles = StyleSheet.create({
     phoneTopName: { color: '#fff', fontSize: 19, fontWeight: '800' },
     phoneTopEpisode: { color: '#b0b0b0', fontSize: 13, marginTop: 2 },
     /**
-     * Phone player dabba. Andar site ka **mobile layout** chalta hai (crop
-     * 390×~202) — ye ratio usse thoda lamba hai, taaki crop kabhi kata na
-     * jaye (bache hue kinare kaale hi dikhte hain).
+     * Phone player dabba — **ratio yahin lock hai**.
+     *
+     * `aspectRatio` (width se unchai) hi single source of truth hai:
+     * `MOVIEBOX_PHONE_BOX_ASPECT` = 16:10 = 1.6, jo owner ke chal rahe dabbe
+     * (390 × 244) ka hi naap hai. Unchai window ke naap se nahi lagti, isliye
+     * phone/rotate/fullscreen par shape ek hi rehta hai. Andar site ka mobile
+     * layout (`getMovieboxCrop(..., { phone: true })`) usi ratio me contain
+     * hota hai — video (16:9) + site ke control bar, dono poore, kuch katta
+     * nahi.
      */
     phonePlayerBox: {
         width: '100%',
+        aspectRatio: MOVIEBOX_PHONE_BOX_ASPECT,
         backgroundColor: '#000',
     },
     phoneDetails: { flex: 1 },

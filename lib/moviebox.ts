@@ -91,6 +91,43 @@ export const MOVIEBOX_STAGE_PAGE_WIDTH = MOVIEBOX_STAGE_WIDTH - MOVIEBOX_STAGE_C
  */
 export const MOVIEBOX_PHONE_BAR_HEIGHT = 42;
 
+/**
+ * 📌 PHONE PLAYER KA RATIO — **PERMANENT LOCK** (owner: "jo moviebox ka player
+ * ka ratio hai wahi humesha ke liye fix rahe, kabhi na badle").
+ * ==========================================================================
+ * Phone (portrait) par dikhne wale dabbe ka aspect ratio **yahi ek constant**
+ * hai. Isse hi dabbe ki unchai nikalti hai (`height = width / aspect`) — na
+ * phone ki unchai se, na window ke resize se, na parent ke guess se. Isliye
+ * 320, 360, 390, 414, 430… har chaudai par dabba bilkul same shape ka rehta
+ * hai, aur fullscreen/rotate/url badalne par bhi nahi badalta.
+ *
+ * 16:10 = 1.6. Ye owner ke paas chal rahe dabbe (390 × 244 = 1.598) ka hi
+ * naap hai — yaani dikhne me kuch nahi badla, bas ab pakka ho gaya.
+ *
+ * ⚠️ Is constant ko chhedna = phone player ka ratio badalna. `moviebox-crop`
+ * test isko har chaudai par check karta hai (16:10 se 0.5% se zyada hilna
+ * test fail kar dega). Badalna hi ho to pehle owner se poochho.
+ */
+export const MOVIEBOX_PHONE_BOX_ASPECT = 16 / 10;
+
+/**
+ * Phone par site ke mobile layout ka upar wala kaat: header (104) + 4px andar,
+ * taaki site ka header kabhi player ke upar na jhaanke.
+ */
+export const MOVIEBOX_PHONE_CROP_TOP = 108;
+
+/** Site ke mobile player ke dono taraf ka saans (12px each side). */
+export const MOVIEBOX_PHONE_SIDE_GUTTER = 12;
+
+/**
+ * Phone dabbe ki unchai — **sirf chaudai se**, ratio constant se.
+ * Parent (modal/route) ko bhi yahi use karna chahiye, apna hisaab nahi.
+ */
+export function getMovieboxPhoneBoxHeight(width: number): number {
+    const w = width > 0 ? width : 390;
+    return Math.round(w / MOVIEBOX_PHONE_BOX_ASPECT);
+}
+
 export const MOVIEBOX_STAGE_PLAYER_WIDTH = 968;
 export const MOVIEBOX_STAGE_PLAYER_HEIGHT = 545;
 
@@ -400,26 +437,54 @@ export function getMovieboxCrop(
      * uska turant neeche full-width 16:9 hai.
      */
     if (options.phone === true && (outerWidth <= 0 || outerWidth < 480)) {
-        const pw = outerWidth > 0 ? outerWidth : 390;
-        const cropTop = pw >= 480 ? 108 : 104;
-        const playerW = Math.max(0, pw - 24);
-        const playerH = (playerW * 9) / 16;
+        const hostWidth = outerWidth > 0 ? outerWidth : 390;
+        /**
+         * Dabba **sirf chaudai + MOVIEBOX_PHONE_BOX_ASPECT** se banta hai.
+         *
+         * Pehle unchai `outerHeight` se cap hoti thi — phone chhota/lamba hone
+         * par (ya fullscreen me) ratio badal jata tha. Ab host ki unchai sirf
+         * tab kaam aati hai jab wo dabbe se chhoti ho: tab poora dabba
+         * (chaudai + unchai dono) ek saath chhota hota hai — ratio wahi rehta
+         * hai, kuch katta ya stretch nahi hota (`contain`, jaise desktop par).
+         */
+        const boxWidth =
+            outerHeight > 0
+                ? Math.min(hostWidth, outerHeight * MOVIEBOX_PHONE_BOX_ASPECT)
+                : hostWidth;
+        const boxHeight = boxWidth / MOVIEBOX_PHONE_BOX_ASPECT;
+
+        /**
+         * Site ka mobile content native scale par banaya gaya hai: header ka
+         * kaat + 16:9 video (dono taraf 12px saans) + uske apne control bar.
+         * Us content ko dabbe me **contain** karte hain — scale 1 ke aas-paas
+         * (max 1). Isliye box ka ratio kabhi nahi badalta, aur site ke bade
+         * touch controls bhi native size ke rehte hain.
+         */
+        const contentWidth = Math.max(0, hostWidth - MOVIEBOX_PHONE_SIDE_GUTTER * 2);
         // 4px andar se shuru — site ka header kabhi na jhaanke (video ka 4px
         // upar katai dikhta bhi nahi). Neeche control bar ki poori jagah.
-        const want = Math.round(playerH + MOVIEBOX_PHONE_BAR_HEIGHT - 4);
-        const height = outerHeight > 0 ? Math.min(want, Math.round(outerHeight)) : want;
+        const contentHeight = (contentWidth * 9) / 16 + MOVIEBOX_PHONE_BAR_HEIGHT - 4;
+        const scale = Math.min(
+            1,
+            boxWidth / hostWidth,
+            contentHeight > 0 ? boxHeight / contentHeight : 1,
+        );
+
         return {
-            frameWidth: Math.round(pw),
-            cropTop: cropTop + 4,
+            frameWidth: Math.round(boxWidth),
+            cropTop: MOVIEBOX_PHONE_CROP_TOP,
             cropLeft: 0,
-            height,
+            height: Math.round(boxHeight),
             stacked: false,
-            stageWidth: Math.round(pw),
-            scale: 1,
-            stageVisibleWidth: Math.round(pw),
-            stageVisibleHeight: height,
+            stageWidth: Math.round(hostWidth),
+            scale,
+            stageVisibleWidth: Math.round(hostWidth),
+            stageVisibleHeight: Math.round(boxHeight / scale),
             // Site ki fixed bottom nav player ke neeche chali jaye.
-            viewportHeight: Math.max(760, Math.round(height + cropTop + 320)),
+            viewportHeight: Math.max(
+                760,
+                Math.round(MOVIEBOX_PHONE_CROP_TOP + boxHeight / scale + 320),
+            ),
         };
     }
 
