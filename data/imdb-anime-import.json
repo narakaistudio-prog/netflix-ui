@@ -1,0 +1,635 @@
+{
+  "listId": "ls540527030",
+  "generatedAt": "2026-10-22T14:51:01.266Z",
+  "imdbItems": 156,
+  "added": [],
+  "skipped": [
+    {
+      "title": "My Dress-Up Darling",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Ranking of Kings",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Ranking of Kings: The Treasure Chest of Courage",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Akebi's Sailor Uniform",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Toilet-bound Hanako-kun",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Miss Kuroitsu from the Monster Development Department",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tokyo 24th Ward",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Darling in the Franxx",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "ReLIFE",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My One-Hit Kill Sister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Why Raeliana Ended Up at the Duke's Mansion",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Case Study of Vanitas",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "KamiKatsu: Working for God in a Godless World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Couple of Cuckoos",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Radiant",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Akudama Drive",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Masamune-kun's Revenge",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Unique Skill Makes Me OP Even at Level 1",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Fire Force",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Great Cleric",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Horimiya: The Missing Pieces",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Rent-a-Girlfriend",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Tiny Senpai",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Jujutsu Kaisen",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Chainsaw Man",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Reign of the Seven Spellblades",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Detective Is Already Dead",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Maid I Hired Recently Is Mysterious",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Handyman Saitou in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "She Professed Herself Pupil of the Wise Man",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Vinland Saga",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I'm in Love with the Villainess",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Ancient Magus' Bride",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Rurouni Kenshin",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I Shall Survive Using Potions!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Shangri-La Frontier",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "More Than a Married Couple, But Not Lovers",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Buddy Daddies",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Angel Next Door Spoils Me Rotten",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Daily Life of the Immortal King",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Hokkaido Gals Are Super Adorable!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Log Horizon",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tomo-chan Is a Girl!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Zom 100: Bucket List of the Dead",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Metallic Rouge",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Code Geass: Lelouch of the Rebellion",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Reincarnation of the Strongest Exorcist in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tower of God",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Frieren: Beyond Journey's End",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Love Story with Yamada-kun at Lv999",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Weakest Tamer Began a Journey to Pick Up Trash",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Wrong Way to Use Healing Magic",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Spy x Family",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Apothecary Diaries",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Mashle: Magic and Muscles",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "BUCCHIGIRI?!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Solo Leveling",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Gods' Games We Play",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Kaiju No. 8",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Bartender: Glass of God",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Wind Breaker",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Condition Called Love",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Salad Bowl of Eccentrics",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Vampire Dormitory",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Many Sides of Voice Actor Radio",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Viral Hit",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "An Archdemon's Dilemma: How to Love Your Elf Bride",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dr. STONE",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Haikyuu!!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Blue Lock",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tsukimichi: Moonlit Fantasy",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Quality Assurance in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Wistoria: Wand and Sword",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "VTuber Legend: How I Went Viral after Forgetting to Turn Off My Stream",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Elusive Samurai",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Twilight Out of Focus",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Days with My Stepsister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Bye Bye, Earth",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Alya Sometimes Hides Her Feelings in Russian",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Why Does Nobody Remember Me in This World?",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Makeine: Too Many Losing Heroines!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "That Time I Got Reincarnated as a Slime",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "No Longer Allowed in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "True Beauty",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Assassination Classroom",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Mushoku Tensei: Jobless Reincarnation",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Nina the Starry Bride",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I'll Become a Villainess Who Goes Down in History",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tying the Knot with an Amagami Sister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "You Are Ms. Servant",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Good Bye, Dragon Life.",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dandadan",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dragon Ball Daima",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Zenshu",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I'm Getting Married to a Girl I Hate in My Class",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Trillion Game",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Red Ranger Becomes an Adventurer in Another World",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Possibly the Greatest Alchemist of All Time",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Unaware Atelier Meister",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Catch Me at the Ballpark!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "SK8 the Infinity",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Once Upon a Witch's Death",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Gorilla God's Go-To Girl",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dan Da Dan: First Encounter",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Berserk of Gluttony",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Shiunji Family Children",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The God of High School",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Clevatess",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Gachiakuta",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "New Saga",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Lord of Mysteries",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "One Punch Man",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "With You, Our Love Will Make It Through",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Your Name.",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Weathering with You",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Suzume",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Mechanical Marie",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Sentenced to Be a Hero",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Hero Academia",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Tojima Wants to Be a Kamen Rider",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Hero Academia: Vigilantes",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Naruto",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "You and I Are Polar Opposites",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Hana-Kimi",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Gatherer's Adventure in Isekai",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Let's Play",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Dark Moon: The Blood Altar",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "My Clueless First Friend",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Kunon the Sorcerer Can See",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Yuri!!! On Ice",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "An Adventurer's Daily Grind at Age 29",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "A Misanthrope Teaches a Class for Demi-Humans",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "To Be Hero X",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Rising of the Shield Hero",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Daemons of the Shadow Realm",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Agents of the Four Seasons: Dance of Spring",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Beginning After the End",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Snowball Earth",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I Got a Cheat Skill in Another World and Became Unrivaled in the Real World, Too",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "The Strongest Tank's Labyrinth Raids: A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "I Was Reincarnated as the 7th Prince So I Can Take My Time Perfecting My Magical Ability",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "reason": "already-in-catalog"
+    }
+  ],
+  "missing": [
+    {
+      "title": "Demon Lord, Retry! R",
+      "reason": "no-nxsha-match"
+    },
+    {
+      "title": "Trigun Stargaze",
+      "reason": "no-nxsha-match"
+    }
+  ],
+  "enriched": []
+}

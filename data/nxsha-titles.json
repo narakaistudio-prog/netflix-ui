@@ -1,5 +1,4 @@
 {
-  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata.",
   "aot": {
     "id": "tt2560140",
     "kind": "tv",
@@ -811,5 +810,1036 @@
     },
     "title": "Ocean Waves",
     "verified": "2026-10-17"
+  },
+  "rankingofkings": {
+    "id": "112613",
+    "kind": "tv",
+    "title": "Ranking of Kings",
+    "seasons": {
+      "1": 23
+    }
+  },
+  "reignofthesevenspellblades": {
+    "id": "153337",
+    "kind": "tv",
+    "title": "Reign of the Seven Spellblades",
+    "seasons": {
+      "1": 15
+    }
+  },
+  "tomochanisagirl": {
+    "id": "205308",
+    "kind": "tv",
+    "title": "Tomo-chan Is a Girl!",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "tojimawantstobeakamenrider": {
+    "id": "285788",
+    "kind": "tv",
+    "title": "Tojima Wants to Be a Kamen Rider",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "yurionice": {
+    "id": "68129",
+    "kind": "tv",
+    "title": "Yuri!!! on Ice",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "mydressupdarling2": {
+    "id": "123249",
+    "kind": "tv",
+    "title": "My Dress-Up Darling",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "rankingofkingsthetreasurechestofcourage2": {
+    "id": "207743",
+    "kind": "tv",
+    "title": "Ranking of Kings: The Treasure Chest of Courage",
+    "seasons": {
+      "1": 10
+    }
+  },
+  "akebissailoruniform2": {
+    "id": "121792",
+    "kind": "tv",
+    "title": "Akebi's Sailor Uniform",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "toiletboundhanakokun2": {
+    "id": "95269",
+    "kind": "tv",
+    "title": "Toilet-Bound Hanako-kun",
+    "seasons": {
+      "1": 12,
+      "2": 24
+    }
+  },
+  "trappedinadatingsimtheworldofotomegamesistoughformobs2": {
+    "id": "139512",
+    "kind": "tv",
+    "title": "Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "misskuroitsufromthemonsterdevelopmentdepartment2": {
+    "id": "128826",
+    "kind": "tv",
+    "title": "Miss Kuroitsu From the Monster Development Department",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "tokyo24thward2": {
+    "id": "137045",
+    "kind": "tv",
+    "title": "Tokyo 24th Ward",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "darlinginthefranxx2": {
+    "id": "76121",
+    "kind": "tv",
+    "title": "DARLING in the FRANXX",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "relife2": {
+    "id": "66941",
+    "kind": "tv",
+    "title": "ReLIFE",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "myonehitkillsister2": {
+    "id": "194829",
+    "kind": "tv",
+    "title": "My One-Hit Kill Sister",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "whyraelianaendedupatthedukesmansion2": {
+    "id": "205366",
+    "kind": "tv",
+    "title": "Why Raeliana Ended Up at the Duke's Mansion",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "thecasestudyofvanitas2": {
+    "id": "121964",
+    "kind": "tv",
+    "title": "The Case Study of Vanitas",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "kamikatsuworkingforgodinagodlessworld2": {
+    "id": "199920",
+    "kind": "tv",
+    "title": "KamiKatsu: Working for God in a Godless World",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "acoupleofcuckoos2": {
+    "id": "122587",
+    "kind": "tv",
+    "title": "A Couple of Cuckoos",
+    "seasons": {
+      "1": 24,
+      "2": 12
+    }
+  },
+  "radiant2": {
+    "id": "82879",
+    "kind": "tv",
+    "title": "RADIANT",
+    "seasons": {
+      "1": 21,
+      "2": 21
+    }
+  },
+  "akudamadrive2": {
+    "id": "100436",
+    "kind": "tv",
+    "title": "Akudama Drive",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "masamunekunsrevenge2": {
+    "id": "69295",
+    "kind": "tv",
+    "title": "Masamune-kun's Revenge",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "myuniqueskillmakesmeopevenatlevel12": {
+    "id": "201363",
+    "kind": "tv",
+    "title": "My Unique Skill Makes Me OP Even at Level 1",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "rebornasavendingmachineinowwanderthedungeon2": {
+    "id": "207564",
+    "kind": "tv",
+    "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
+    "seasons": {
+      "1": 12,
+      "2": 12,
+      "3": 12
+    }
+  },
+  "thegreatcleric2": {
+    "id": "220779",
+    "kind": "tv",
+    "title": "The Great Cleric",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "horimiyathemissingpieces2": {
+    "id": "228663",
+    "kind": "tv",
+    "title": "Horimiya: The Missing Pieces",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "rentagirlfriend2": {
+    "id": "96316",
+    "kind": "tv",
+    "title": "Rent-a-Girlfriend",
+    "seasons": {
+      "1": 60
+    }
+  },
+  "mytinysenpai2": {
+    "id": "217390",
+    "kind": "tv",
+    "title": "My Tiny Senpai",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "thedetectiveisalreadydead2": {
+    "id": "117061",
+    "kind": "tv",
+    "title": "The Detective Is Already Dead",
+    "seasons": {
+      "1": 12,
+      "2": 13
+    }
+  },
+  "themaidihiredrecentlyismysterious2": {
+    "id": "202160",
+    "kind": "tv",
+    "title": "The Maid I Hired Recently Is Mysterious",
+    "seasons": {
+      "1": 11
+    }
+  },
+  "handymansaitouinanotherworld2": {
+    "id": "155942",
+    "kind": "tv",
+    "title": "Handyman Saitou in Another World",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "sheprofessedherselfpupilofthewiseman2": {
+    "id": "104032",
+    "kind": "tv",
+    "title": "She Professed Herself Pupil of the Wise Man",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "iminlovewiththevillainess2": {
+    "id": "216269",
+    "kind": "tv",
+    "title": "I'm in Love with the Villainess",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "theancientmagusbride2": {
+    "id": "73833",
+    "kind": "tv",
+    "title": "The Ancient Magus' Bride",
+    "seasons": {
+      "1": 24,
+      "2": 24
+    }
+  },
+  "rurounikenshin2": {
+    "id": "210879",
+    "kind": "tv",
+    "title": "Rurouni Kenshin",
+    "seasons": {
+      "1": 47
+    }
+  },
+  "ishallsurviveusingpotions2": {
+    "id": "221148",
+    "kind": "tv",
+    "title": "I Shall Survive Using Potions!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "morethanamarriedcouplebutnotlovers2": {
+    "id": "139287",
+    "kind": "tv",
+    "title": "More than a Married Couple, but Not Lovers",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "buddydaddies2": {
+    "id": "212963",
+    "kind": "tv",
+    "title": "Buddy Daddies",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "theangelnextdoorspoilsmerotten2": {
+    "id": "154743",
+    "kind": "tv",
+    "title": "The Angel Next Door Spoils Me Rotten",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "thedailylifeoftheimmortalking2": {
+    "id": "98123",
+    "kind": "tv",
+    "title": "The Daily Life of the Immortal King",
+    "seasons": {
+      "1": 15,
+      "2": 12,
+      "3": 12,
+      "4": 12,
+      "5": 12
+    }
+  },
+  "hokkaidogalsaresuperadorable2": {
+    "id": "213181",
+    "kind": "tv",
+    "title": "Hokkaido Gals Are Super Adorable!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "loghorizon2": {
+    "id": "60846",
+    "kind": "tv",
+    "title": "Log Horizon",
+    "seasons": {
+      "1": 25,
+      "2": 25,
+      "3": 12
+    }
+  },
+  "villainesslevel99imaybethehiddenbossbutimnotthedemonlord2": {
+    "id": "222930",
+    "kind": "tv",
+    "title": "Villainess Level 99: I May Be the Hidden Boss But I'm Not the Demon Lord",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "theicebladesorcerershallruletheworld2": {
+    "id": "200777",
+    "kind": "tv",
+    "title": "The Iceblade Sorcerer Shall Rule the World",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "metallicrouge2": {
+    "id": "222787",
+    "kind": "tv",
+    "title": "Metallic Rouge",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "codegeasslelouchoftherebellion2": {
+    "id": "31724",
+    "kind": "tv",
+    "title": "Code Geass: Lelouch of the Rebellion",
+    "seasons": {
+      "1": 25,
+      "2": 25
+    }
+  },
+  "thereincarnationofthestrongestexorcistinanotherworld2": {
+    "id": "156563",
+    "kind": "tv",
+    "title": "The Reincarnation of the Strongest Exorcist in Another World",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "mylovestorywithyamadakunatlv9992": {
+    "id": "208067",
+    "kind": "tv",
+    "title": "My Love Story with Yamada-kun at Lv999",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "theweakesttamerbeganajourneytopickuptrash2": {
+    "id": "214310",
+    "kind": "tv",
+    "title": "The Weakest Tamer Began a Journey to Pick Up Trash",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "thewrongwaytousehealingmagic2": {
+    "id": "131365",
+    "kind": "tv",
+    "title": "The Wrong Way to Use Healing Magic",
+    "seasons": {
+      "1": 13,
+      "2": 1
+    }
+  },
+  "mashlemagicandmuscles2": {
+    "id": "204832",
+    "kind": "tv",
+    "title": "MASHLE: MAGIC AND MUSCLES",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "bucchigiri2": {
+    "id": "226905",
+    "kind": "tv",
+    "title": "BUCCHIGIRI?!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "godsgamesweplay2": {
+    "id": "156057",
+    "kind": "tv",
+    "title": "Gods' Games We Play",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "bartenderglassofgod2": {
+    "id": "225168",
+    "kind": "tv",
+    "title": "BARTENDER Glass of God",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "windbreaker2": {
+    "id": "223500",
+    "kind": "tv",
+    "title": "WIND BREAKER",
+    "seasons": {
+      "1": 25
+    }
+  },
+  "aconditioncalledlove2": {
+    "id": "239214",
+    "kind": "tv",
+    "title": "A Condition Called Love",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "asaladbowlofeccentrics2": {
+    "id": "236392",
+    "kind": "tv",
+    "title": "A Salad Bowl of Eccentrics",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "vampiredormitory2": {
+    "id": "238903",
+    "kind": "tv",
+    "title": "Vampire Dormitory",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "themanysidesofvoiceactorradio2": {
+    "id": "216760",
+    "kind": "tv",
+    "title": "The Many Sides of Voice Actor Radio",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "viralhit2": {
+    "id": "246029",
+    "kind": "tv",
+    "title": "Viral Hit",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "anarchdemonsdilemmahowtoloveyourelfbride2": {
+    "id": "238848",
+    "kind": "tv",
+    "title": "An Archdemon's Dilemma: How to Love Your Elf Bride",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "qualityassuranceinanotherworld2": {
+    "id": "222925",
+    "kind": "tv",
+    "title": "Quality Assurance in Another World",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "wistoriawandandsword2": {
+    "id": "245842",
+    "kind": "tv",
+    "title": "Wistoria: Wand and Sword",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "vtuberlegendhowiwentviralafterforgettingtoturnoffmystream2": {
+    "id": "229743",
+    "kind": "tv",
+    "title": "VTuber Legend: How I Went Viral After Forgetting to Turn Off My Stream",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "theelusivesamurai2": {
+    "id": "222623",
+    "kind": "tv",
+    "title": "The Elusive Samurai",
+    "seasons": {
+      "1": 12,
+      "2": 12
+    }
+  },
+  "twilightoutoffocus2": {
+    "id": "249409",
+    "kind": "tv",
+    "title": "Twilight Out of Focus",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "dayswithmystepsister2": {
+    "id": "206629",
+    "kind": "tv",
+    "title": "Days with My Stepsister",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "byebyeearth2": {
+    "id": "214587",
+    "kind": "tv",
+    "title": "Bye Bye, Earth",
+    "seasons": {
+      "1": 20
+    }
+  },
+  "alyasometimeshidesherfeelingsinrussian2": {
+    "id": "235758",
+    "kind": "tv",
+    "title": "Alya Sometimes Hides Her Feelings in Russian",
+    "seasons": {
+      "1": 12,
+      "2": 1
+    }
+  },
+  "whydoesnobodyremembermeinthisworld2": {
+    "id": "244672",
+    "kind": "tv",
+    "title": "Why Does Nobody Remember Me in This World?",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "makeinetoomanylosingheroines2": {
+    "id": "241535",
+    "kind": "tv",
+    "title": "Makeine: Too Many Losing Heroines!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "nolongerallowedinanotherworld2": {
+    "id": "205743",
+    "kind": "tv",
+    "title": "No Longer Allowed in Another World",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "truebeauty2": {
+    "id": "239779",
+    "kind": "tv",
+    "title": "True Beauty",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "ninathestarrybride2": {
+    "id": "240641",
+    "kind": "tv",
+    "title": "Nina the Starry Bride",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "illbecomeavillainesswhogoesdowninhistory2": {
+    "id": "248817",
+    "kind": "tv",
+    "title": "I'll Become a Villainess Who Goes Down in History",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "tyingtheknotwithanamagamisister2": {
+    "id": "234910",
+    "kind": "tv",
+    "title": "Tying the Knot with an Amagami Sister",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "youaremsservant2": {
+    "id": "242143",
+    "kind": "tv",
+    "title": "You are Ms. Servant",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "goodbyedragonlife2": {
+    "id": "259786",
+    "kind": "tv",
+    "title": "Good Bye, Dragon Life",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "zenshu2": {
+    "id": "249882",
+    "kind": "tv",
+    "title": "ZENSHU",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "imgettingmarriedtoagirlihateinmyclass2": {
+    "id": "257790",
+    "kind": "tv",
+    "title": "I'm Getting Married to a Girl I Hate in My Class",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "trilliongame2": {
+    "id": "240125",
+    "kind": "tv",
+    "title": "TRILLION GAME",
+    "seasons": {
+      "1": 26
+    }
+  },
+  "theredrangerbecomesanadventurerinanotherworld2": {
+    "id": "261148",
+    "kind": "tv",
+    "title": "The Red Ranger Becomes an Adventurer in Another World",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "possiblythegreatestalchemistofalltime2": {
+    "id": "261298",
+    "kind": "tv",
+    "title": "Possibly the Greatest Alchemist of All Time",
+    "seasons": {
+      "1": 12,
+      "2": 1
+    }
+  },
+  "theunawareateliermeister2": {
+    "id": "277881",
+    "kind": "tv",
+    "title": "The Unaware Atelier Meister",
+    "seasons": {
+      "1": 12,
+      "2": 1
+    }
+  },
+  "catchmeattheballpark2": {
+    "id": "277222",
+    "kind": "tv",
+    "title": "Catch Me at the Ballpark!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "sk8theinfinity2": {
+    "id": "110309",
+    "kind": "tv",
+    "title": "SK8 the Infinity",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "onceuponawitchsdeath2": {
+    "id": "258055",
+    "kind": "tv",
+    "title": "Once Upon a Witch's Death",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "thegorillagodsgotogirl2": {
+    "id": "278816",
+    "kind": "tv",
+    "title": "The Gorilla God's Go-To Girl",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "dandadanfirstencounter2": {
+    "id": "1308681",
+    "kind": "movie",
+    "title": "DAN DA DAN: First Encounter",
+    "seasons": {
+      "1": 1
+    }
+  },
+  "berserkofgluttony2": {
+    "id": "213331",
+    "kind": "tv",
+    "title": "Berserk of Gluttony",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "theshiunjifamilychildren2": {
+    "id": "261091",
+    "kind": "tv",
+    "title": "The Shiunji Family Children",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "clevatess2": {
+    "id": "258348",
+    "kind": "tv",
+    "title": "Clevatess",
+    "seasons": {
+      "1": 12,
+      "2": 13
+    }
+  },
+  "newsaga2": {
+    "id": "212766",
+    "kind": "tv",
+    "title": "New Saga",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "lordofmysteries2": {
+    "id": "232230",
+    "kind": "tv",
+    "title": "Lord of Mysteries",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "withyouourlovewillmakeitthrough2": {
+    "id": "282662",
+    "kind": "tv",
+    "title": "With You, Our Love Will Make It Through",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "mechanicalmarie2": {
+    "id": "287278",
+    "kind": "tv",
+    "title": "Mechanical Marie",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "sentencedtobeahero2": {
+    "id": "249907",
+    "kind": "tv",
+    "title": "Sentenced to Be a Hero",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "myheroacademiavigilantes2": {
+    "id": "280110",
+    "kind": "tv",
+    "title": "My Hero Academia: Vigilantes",
+    "seasons": {
+      "1": 26
+    }
+  },
+  "naruto3": {
+    "id": "46260",
+    "kind": "tv",
+    "title": "Naruto",
+    "seasons": {
+      "1": 52,
+      "2": 52,
+      "3": 54,
+      "4": 62
+    }
+  },
+  "youandiarepolaropposites2": {
+    "id": "278043",
+    "kind": "tv",
+    "title": "You and I Are Polar Opposites",
+    "seasons": {
+      "1": 25
+    }
+  },
+  "hanakimi2": {
+    "id": "254492",
+    "kind": "tv",
+    "title": "Hana-Kimi",
+    "seasons": {
+      "1": 12,
+      "2": 13
+    }
+  },
+  "agatherersadventureinisekai2": {
+    "id": "284442",
+    "kind": "tv",
+    "title": "A Gatherer's Adventure in Isekai",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "darkmoonthebloodaltar2": {
+    "id": "271609",
+    "kind": "tv",
+    "title": "DARK MOON: THE BLOOD ALTAR",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "mycluelessfirstfriend2": {
+    "id": "214547",
+    "kind": "tv",
+    "title": "My Clueless First Friend",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "kunonthesorcerercansee2": {
+    "id": "282946",
+    "kind": "tv",
+    "title": "Kunon the Sorcerer Can See",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "anadventurersdailygrindatage292": {
+    "id": "290667",
+    "kind": "tv",
+    "title": "An Adventurer's Daily Grind at Age 29",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "amisanthropeteachesaclassfordemihumans2": {
+    "id": "303434",
+    "kind": "tv",
+    "title": "A Misanthrope Teaches a Class for Demi-Humans",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "tobeherox2": {
+    "id": "272059",
+    "kind": "tv",
+    "title": "TO BE HERO X",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "daemonsoftheshadowrealm2": {
+    "id": "260463",
+    "kind": "tv",
+    "title": "Daemons of the Shadow Realm",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "agentsofthefourseasonsdanceofspring2": {
+    "id": "288659",
+    "kind": "tv",
+    "title": "Agents of the Four Seasons Dance of Spring",
+    "seasons": {
+      "1": 14
+    }
+  },
+  "snowballearth2": {
+    "id": "296232",
+    "kind": "tv",
+    "title": "SNOWBALL EARTH",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "mobilesuitgundamthewitchfrommercury": {
+    "id": "196400",
+    "kind": "tv",
+    "title": "Mobile Suit Gundam: The Witch from Mercury",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty": {
+    "id": "236532",
+    "kind": "tv",
+    "title": "The Strongest Tank's Labyrinth Raids -A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party-",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability": {
+    "id": "213830",
+    "kind": "tv",
+    "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability",
+    "seasons": {
+      "1": 24
+    }
+  },
+  "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside": {
+    "id": "113256",
+    "kind": "tv",
+    "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
+    "seasons": {
+      "1": 13,
+      "2": 12
+    }
+  },
+  "therewasacutegirlintheherospartysoitriedconfessingtoher": {
+    "id": "295366",
+    "kind": "tv",
+    "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
+    "seasons": {
+      "1": 13
+    }
+  },
+  "zom100bucketlistofthedead": {
+    "id": "217766",
+    "kind": "tv",
+    "title": "Zom 100: Bucket List of the Dead",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "assassinationclassroom": {
+    "id": "62110",
+    "kind": "tv",
+    "title": "Assassination Classroom",
+    "seasons": {
+      "1": 22,
+      "2": 25
+    }
+  },
+  "dragonballdaima": {
+    "id": "236994",
+    "kind": "tv",
+    "title": "Dragon Ball DAIMA",
+    "seasons": {
+      "1": 20
+    }
+  },
+  "anotherworld": {
+    "id": "1470329",
+    "kind": "movie",
+    "title": "Another World",
+    "seasons": {
+      "1": 1
+    }
+  },
+  "letsplay": {
+    "id": "293010",
+    "kind": "tv",
+    "title": "Let's Play",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "thestrongestmagicianinthedemonlordsarmywasahuman": {
+    "id": "248951",
+    "kind": "tv",
+    "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "ifmyfavoritepopidolmadeittothebudokaniwoulddie": {
+    "id": "91024",
+    "kind": "tv",
+    "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword": {
+    "id": "285357",
+    "kind": "tv",
+    "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "easygoingterritorydefensebytheoptimisticlord": {
+    "id": "288589",
+    "kind": "tv",
+    "title": "Easygoing Territory Defense by the Optimistic Lord",
+    "seasons": {
+      "1": 12
+    }
   }
 }

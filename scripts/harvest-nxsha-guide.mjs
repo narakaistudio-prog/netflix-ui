@@ -392,6 +392,15 @@ async function main() {
     }
 
     Object.assign(merged, shows);
+    // Registry (`data/nxsha-titles.json`) hi keys ka source of truth hai. Purane
+    // runs ki keys registry se hat jati hain (jaise suffix ke bina `akudamadrive`
+    // jab catalog me `akudamadrive2` hai) — page aisi keys kabhi padhta nahi, aur
+    // snapshot me rehne se 110 duplicate shows/guide data bundle me chala jata tha.
+    const manifestKeys = new Set(Object.keys(manifest).filter((key) => !key.startsWith('_')));
+    const prunedKeys = Object.keys(merged).filter((key) => !manifestKeys.has(key));
+    for (const key of prunedKeys) delete merged[key];
+    if (prunedKeys.length) console.log(`prune ${prunedKeys.length} stale guide key(s)`);
+
     const report = {
         generatedAt: new Date().toISOString(),
         source: 'https://nxsha.space/api/tv/{tmdbId}/season/{season}',

@@ -10,6 +10,10 @@ import { JSDOM, VirtualConsole } from 'jsdom';
 
 const ROOT = join(__dirname, '..');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
+const IMPORTED_KEYS = (() => {
+    const state = JSON.parse(readFileSync(join(ROOT, 'data', 'imdb-anime-catalog.json'), 'utf8'));
+    return state.entries.map((entry: { key: string }) => entry.key);
+})();
 const NXSHA_PARAMS = 'server=GbruHindi&lang=hi&sub=hi&color=orange&disable_app_ad=true&disable_dl_button=true';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -150,7 +154,8 @@ test('all 83 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping',
     const ghibliKeys = Array.from(
         dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
-    expect(new Set(catalogKeys).size).toBe(64);
+    // 64 purane playable titles + IMDb import (Task 7) ke imported titles.
+    expect(new Set(catalogKeys).size).toBe(64 + IMPORTED_KEYS.length);
     expect(new Set(ghibliKeys).size).toBe(22);
     expect(Object.keys(nxData).sort()).toEqual(
         [...new Set([...catalogKeys, ...ghibliKeys])].sort(),

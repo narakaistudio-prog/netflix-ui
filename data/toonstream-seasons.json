@@ -1334,6 +1334,1723 @@
           "base": 0
         }
       }
+    },
+    "rankingofkings": {
+      "title": "Ranking of Kings",
+      "slug": "ranking-of-kings",
+      "seasons": {
+        "1": 23
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "reignofthesevenspellblades": {
+      "title": "Reign of the Seven Spellblades",
+      "slug": "reign-of-the-seven-spellblades",
+      "seasons": {
+        "1": 15
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tomochanisagirl": {
+      "title": "Tomo-chan Is a Girl!",
+      "slug": "tomo-chan-is-a-girl",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tojimawantstobeakamenrider": {
+      "title": "Tojima Wants to Be a Kamen Rider",
+      "slug": "tojima-wants-to-be-a-kamen-rider",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "yurionice": {
+      "title": "Yuri!!! on Ice",
+      "slug": "yuri-on-ice",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mydressupdarling2": {
+      "title": "My Dress-Up Darling",
+      "slug": "my-dress-up-darling",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 12
+        }
+      }
+    },
+    "rankingofkingsthetreasurechestofcourage2": {
+      "title": "Ranking of Kings: The Treasure Chest of Courage",
+      "slug": "ranking-of-kings-the-treasure-chest-of-courage",
+      "seasons": {
+        "1": 10
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "akebissailoruniform2": {
+      "title": "Akebi's Sailor Uniform",
+      "slug": "akebis-sailor-uniform",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "toiletboundhanakokun2": {
+      "title": "Toilet-Bound Hanako-kun",
+      "slug": "toilet-bound-hanako-kun",
+      "seasons": {
+        "1": 12,
+        "2": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "trappedinadatingsimtheworldofotomegamesistoughformobs2": {
+      "title": "Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs",
+      "slug": "trapped-in-a-dating-sim-the-world-of-otome",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "misskuroitsufromthemonsterdevelopmentdepartment2": {
+      "title": "Miss Kuroitsu From the Monster Development Department",
+      "slug": "miss-kuroitsu-from-the-monster-development-department",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tokyo24thward2": {
+      "title": "Tokyo 24th Ward",
+      "slug": "tokyo-24th-ward",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "darlinginthefranxx2": {
+      "title": "DARLING in the FRANXX",
+      "slug": "darling-in-the-franxx",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "relife2": {
+      "title": "ReLIFE",
+      "slug": "relife",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "myonehitkillsister2": {
+      "title": "My One-Hit Kill Sister",
+      "slug": "my-one-hit-kill-sister",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "whyraelianaendedupatthedukesmansion2": {
+      "title": "Why Raeliana Ended Up at the Duke's Mansion",
+      "slug": "why-raeliana-ended-up-at-the-dukes-mansion",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "thecasestudyofvanitas2": {
+      "title": "The Case Study of Vanitas",
+      "slug": "case-study-of-vanitas",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "kamikatsuworkingforgodinagodlessworld2": {
+      "title": "KamiKatsu: Working for God in a Godless World",
+      "slug": "kamikatsu-working-for-god-in-a-godless-world",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "acoupleofcuckoos2": {
+      "title": "A Couple of Cuckoos",
+      "slug": "a-couple-of-cuckoos",
+      "seasons": {
+        "1": 24,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "radiant2": {
+      "title": "RADIANT",
+      "slug": "radiant",
+      "seasons": {
+        "1": 21,
+        "2": 21
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "akudamadrive2": {
+      "title": "Akudama Drive",
+      "slug": "akudama-drive",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "masamunekunsrevenge2": {
+      "title": "Masamune-kun's Revenge",
+      "slug": "masamune-kuns-revenge",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "myuniqueskillmakesmeopevenatlevel12": {
+      "title": "My Unique Skill Makes Me OP Even at Level 1",
+      "slug": "my-unique-skill-makes-me-op-even-at-level-1",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "rebornasavendingmachineinowwanderthedungeon2": {
+      "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
+      "slug": "reborn-as-a-vending-machine-i-now-wander-the-dungeon",
+      "seasons": {
+        "1": 12,
+        "2": 12,
+        "3": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        }
+      }
+    },
+    "thegreatcleric2": {
+      "title": "The Great Cleric",
+      "slug": "great-cleric",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "horimiyathemissingpieces2": {
+      "title": "Horimiya: The Missing Pieces",
+      "slug": "horimiya-the-missing-pieces",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "rentagirlfriend2": {
+      "title": "Rent-a-Girlfriend",
+      "slug": "rent-a-girlfriend",
+      "seasons": {
+        "1": 12,
+        "2": 12,
+        "3": 12,
+        "4": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 12
+        },
+        "3": {
+          "season": 1,
+          "base": 24
+        },
+        "4": {
+          "season": 1,
+          "base": 36
+        }
+      }
+    },
+    "mytinysenpai2": {
+      "title": "My Tiny Senpai",
+      "slug": "my-tiny-senpai",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "thedetectiveisalreadydead2": {
+      "title": "The Detective Is Already Dead",
+      "slug": "detective-is-already-dead",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "themaidihiredrecentlyismysterious2": {
+      "title": "The Maid I Hired Recently Is Mysterious",
+      "slug": "maid-i-hired-recently-is-mysterious",
+      "seasons": {
+        "1": 11
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "handymansaitouinanotherworld2": {
+      "title": "Handyman Saitou in Another World",
+      "slug": "handyman-saitou-in-another-world",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "sheprofessedherselfpupilofthewiseman2": {
+      "title": "She Professed Herself Pupil of the Wise Man",
+      "slug": "she-professed-herself-pupil-of-the-wise-man",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "iminlovewiththevillainess2": {
+      "title": "I'm in Love with the Villainess",
+      "slug": "im-in-love-with-the-villainess",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theancientmagusbride2": {
+      "title": "The Ancient Magus' Bride",
+      "slug": "ancient-magus-bride",
+      "seasons": {
+        "1": 24,
+        "2": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "rurounikenshin2": {
+      "title": "Rurouni Kenshin",
+      "slug": "rurouni-kenshin",
+      "seasons": {
+        "1": 24,
+        "2": 23
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 24
+        }
+      }
+    },
+    "ishallsurviveusingpotions2": {
+      "title": "I Shall Survive Using Potions!",
+      "slug": "i-shall-survive-using-potions",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "morethanamarriedcouplebutnotlovers2": {
+      "title": "More than a Married Couple, but Not Lovers",
+      "slug": "more-than-a-married-couple-but-not-lovers",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "buddydaddies2": {
+      "title": "Buddy Daddies",
+      "slug": "buddy-daddies",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theangelnextdoorspoilsmerotten2": {
+      "title": "The Angel Next Door Spoils Me Rotten",
+      "slug": "angel-next-door-spoils-me-rotten",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "thedailylifeoftheimmortalking2": {
+      "title": "The Daily Life of the Immortal King",
+      "slug": "daily-life-of-the-immortal-king",
+      "seasons": {
+        "1": 15,
+        "2": 12,
+        "3": 12,
+        "4": 12,
+        "5": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        },
+        "5": {
+          "season": 5,
+          "base": 0
+        }
+      }
+    },
+    "hokkaidogalsaresuperadorable2": {
+      "title": "Hokkaido Gals Are Super Adorable!",
+      "slug": "hokkaido-gals-are-super-adorable",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "loghorizon2": {
+      "title": "Log Horizon",
+      "slug": "log-horizon",
+      "seasons": {
+        "1": 25,
+        "2": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "villainesslevel99imaybethehiddenbossbutimnotthedemonlord2": {
+      "title": "Villainess Level 99: I May Be the Hidden Boss But I'm Not the Demon Lord",
+      "slug": "villainess-level-99-i-may-be-the-hidden-boss-but-im-not-the-demon-lord",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theicebladesorcerershallruletheworld2": {
+      "title": "The Iceblade Sorcerer Shall Rule the World",
+      "slug": "iceblade-sorcerer-shall-rule-the-world",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "metallicrouge2": {
+      "title": "Metallic Rouge",
+      "slug": "metallic-rouge",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "codegeasslelouchoftherebellion2": {
+      "title": "Code Geass: Lelouch of the Rebellion",
+      "slug": "code-geass-lelouch-of-the-rebellion",
+      "seasons": {
+        "1": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "thereincarnationofthestrongestexorcistinanotherworld2": {
+      "title": "The Reincarnation of the Strongest Exorcist in Another World",
+      "slug": "reincarnation-of-the-strongest-exorcist-in-another-world",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mylovestorywithyamadakunatlv9992": {
+      "title": "My Love Story with Yamada-kun at Lv999",
+      "slug": "my-love-story-with-yamada-kun-at-lv999",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theweakesttamerbeganajourneytopickuptrash2": {
+      "title": "The Weakest Tamer Began a Journey to Pick Up Trash",
+      "slug": "weakest-tamer-began-a-journey-to-pick-up-trash",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "thewrongwaytousehealingmagic2": {
+      "title": "The Wrong Way to Use Healing Magic",
+      "slug": "wrong-way-to-use-healing-magic",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mashlemagicandmuscles2": {
+      "title": "MASHLE: MAGIC AND MUSCLES",
+      "slug": "mashle-magic-and-muscles",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 12
+        }
+      }
+    },
+    "bucchigiri2": {
+      "title": "BUCCHIGIRI?!",
+      "slug": "bucchigiri",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "bartenderglassofgod2": {
+      "title": "BARTENDER Glass of God",
+      "slug": "bartender-glass-of-god",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "windbreaker2": {
+      "title": "WIND BREAKER",
+      "slug": "wind-breaker",
+      "seasons": {
+        "1": 13,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 13
+        }
+      }
+    },
+    "aconditioncalledlove2": {
+      "title": "A Condition Called Love",
+      "slug": "a-condition-called-love",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "asaladbowlofeccentrics2": {
+      "title": "A Salad Bowl of Eccentrics",
+      "slug": "a-salad-bowl-of-eccentrics",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "vampiredormitory2": {
+      "title": "Vampire Dormitory",
+      "slug": "vampire-dormitory",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "themanysidesofvoiceactorradio2": {
+      "title": "The Many Sides of Voice Actor Radio",
+      "slug": "many-sides-of-voice-actor-radio",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "viralhit2": {
+      "title": "Viral Hit",
+      "slug": "viral-hit",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "anarchdemonsdilemmahowtoloveyourelfbride2": {
+      "title": "An Archdemon's Dilemma: How to Love Your Elf Bride",
+      "slug": "an-archdemons-dilemma-how-to-love-your-elf-bride",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "qualityassuranceinanotherworld2": {
+      "title": "Quality Assurance in Another World",
+      "slug": "quality-assurance-in-another-world",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "wistoriawandandsword2": {
+      "title": "Wistoria: Wand and Sword",
+      "slug": "wistoria-wand-and-sword",
+      "seasons": {
+        "1": 12,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "vtuberlegendhowiwentviralafterforgettingtoturnoffmystream2": {
+      "title": "VTuber Legend: How I Went Viral After Forgetting to Turn Off My Stream",
+      "slug": "vtuber-legend-how-i-went-viral-after-forgetting-to-turn-off-my-stream",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theelusivesamurai2": {
+      "title": "The Elusive Samurai",
+      "slug": "elusive-samurai",
+      "seasons": {
+        "1": 12,
+        "2": 11
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "twilightoutoffocus2": {
+      "title": "Twilight Out of Focus",
+      "slug": "twilight-out-of-focus",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "dayswithmystepsister2": {
+      "title": "Days with My Stepsister",
+      "slug": "days-with-my-stepsister",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "byebyeearth2": {
+      "title": "Bye Bye, Earth",
+      "slug": "bye-bye-earth",
+      "seasons": {
+        "1": 10,
+        "2": 10
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 10
+        }
+      }
+    },
+    "alyasometimeshidesherfeelingsinrussian2": {
+      "title": "Alya Sometimes Hides Her Feelings in Russian",
+      "slug": "alya-sometimes-hides-her-feelings-in-russian",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "whydoesnobodyremembermeinthisworld2": {
+      "title": "Why Does Nobody Remember Me in This World?",
+      "slug": "why-does-nobody-remember-me-in-this-world",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "makeinetoomanylosingheroines2": {
+      "title": "Makeine: Too Many Losing Heroines!",
+      "slug": "makeine-too-many-losing-heroines",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "nolongerallowedinanotherworld2": {
+      "title": "No Longer Allowed in Another World",
+      "slug": "no-longer-allowed-in-another-world",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "truebeauty2": {
+      "title": "True Beauty",
+      "slug": "true-beauty",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "ninathestarrybride2": {
+      "title": "Nina the Starry Bride",
+      "slug": "nina-the-starry-bride",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "illbecomeavillainesswhogoesdowninhistory2": {
+      "title": "I'll Become a Villainess Who Goes Down in History",
+      "slug": "ill-become-a-villainess-who-goes-down-in-history",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tyingtheknotwithanamagamisister2": {
+      "title": "Tying the Knot with an Amagami Sister",
+      "slug": "tying-the-knot-with-an-amagami-sister",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "youaremsservant2": {
+      "title": "You are Ms. Servant",
+      "slug": "you-are-ms-servant",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "goodbyedragonlife2": {
+      "title": "Good Bye, Dragon Life",
+      "slug": "good-bye-dragon-life",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "zenshu2": {
+      "title": "ZENSHU",
+      "slug": "zenshu",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "imgettingmarriedtoagirlihateinmyclass2": {
+      "title": "I'm Getting Married to a Girl I Hate in My Class",
+      "slug": "im-getting-married-to-a-girl-i-hate-in-my-class",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "trilliongame2": {
+      "title": "TRILLION GAME",
+      "slug": "trillion-game",
+      "seasons": {
+        "1": 26
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theredrangerbecomesanadventurerinanotherworld2": {
+      "title": "The Red Ranger Becomes an Adventurer in Another World",
+      "slug": "red-ranger-becomes-an-adventurer-in-another-world",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "possiblythegreatestalchemistofalltime2": {
+      "title": "Possibly the Greatest Alchemist of All Time",
+      "slug": "possibly-the-greatest-alchemist-of-all-time",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theunawareateliermeister2": {
+      "title": "The Unaware Atelier Meister",
+      "slug": "unaware-atelier-meister",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "catchmeattheballpark2": {
+      "title": "Catch Me at the Ballpark!",
+      "slug": "catch-me-at-the-ballpark",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "sk8theinfinity2": {
+      "title": "SK8 the Infinity",
+      "slug": "sk8-the-infinity",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "onceuponawitchsdeath2": {
+      "title": "Once Upon a Witch's Death",
+      "slug": "once-upon-a-witchs-death",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "thegorillagodsgotogirl2": {
+      "title": "The Gorilla God's Go-To Girl",
+      "slug": "gorilla-gods-go-to-girl",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "berserkofgluttony2": {
+      "title": "Berserk of Gluttony",
+      "slug": "berserk-of-gluttony",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "theshiunjifamilychildren2": {
+      "title": "The Shiunji Family Children",
+      "slug": "shiunji-family-children",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      },
+      "images": {
+        "1": {
+          "13": "https://image.tmdb.org/t/p/w780/fl8EktBsEv9v8whlYviQMtnvbGh.jpg"
+        }
+      }
+    },
+    "clevatess2": {
+      "title": "Clevatess",
+      "slug": "clevatess",
+      "seasons": {
+        "1": 12,
+        "2": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "newsaga2": {
+      "title": "New Saga",
+      "slug": "new-saga",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "lordofmysteries2": {
+      "title": "Lord of Mysteries",
+      "slug": "lord-of-mysteries",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "withyouourlovewillmakeitthrough2": {
+      "title": "With You, Our Love Will Make It Through",
+      "slug": "with-you-our-love-will-make-it-through",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mechanicalmarie2": {
+      "title": "Mechanical Marie",
+      "slug": "mechanical-marie",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "sentencedtobeahero2": {
+      "title": "Sentenced to Be a Hero",
+      "slug": "sentenced-to-be-a-hero",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "myheroacademiavigilantes2": {
+      "title": "My Hero Academia: Vigilantes",
+      "slug": "my-hero-academia-vigilantes",
+      "seasons": {
+        "1": 13,
+        "2": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 13
+        }
+      }
+    },
+    "naruto3": {
+      "title": "Naruto",
+      "slug": "naruto",
+      "seasons": {
+        "1": 52,
+        "2": 52,
+        "3": 54,
+        "4": 62
+      },
+      "epStart": {
+        "2": 53,
+        "3": 105,
+        "4": 159
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        },
+        "3": {
+          "season": 3,
+          "base": 0
+        },
+        "4": {
+          "season": 4,
+          "base": 0
+        }
+      }
+    },
+    "youandiarepolaropposites2": {
+      "title": "You and I Are Polar Opposites",
+      "slug": "you-and-i-are-polar-opposites",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "hanakimi2": {
+      "title": "Hana-Kimi",
+      "slug": "hana-kimi",
+      "seasons": {
+        "1": 12,
+        "2": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "agatherersadventureinisekai2": {
+      "title": "A Gatherer's Adventure in Isekai",
+      "slug": "a-gatherers-adventure-in-isekai",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "darkmoonthebloodaltar2": {
+      "title": "DARK MOON: THE BLOOD ALTAR",
+      "slug": "dark-moon-the-blood-altar",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mycluelessfirstfriend2": {
+      "title": "My Clueless First Friend",
+      "slug": "my-clueless-first-friend",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "kunonthesorcerercansee2": {
+      "title": "Kunon the Sorcerer Can See",
+      "slug": "kunon-the-sorcerer-can-see",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "anadventurersdailygrindatage292": {
+      "title": "An Adventurer's Daily Grind at Age 29",
+      "slug": "an-adventurers-daily-grind-at-age-29",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "amisanthropeteachesaclassfordemihumans2": {
+      "title": "A Misanthrope Teaches a Class for Demi-Humans",
+      "slug": "a-misanthrope-teaches-a-class-for-demi-humans",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "tobeherox2": {
+      "title": "TO BE HERO X",
+      "slug": "to-be-hero-x",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "daemonsoftheshadowrealm2": {
+      "title": "Daemons of the Shadow Realm",
+      "slug": "daemons-of-the-shadow-realm",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "agentsofthefourseasonsdanceofspring2": {
+      "title": "Agents of the Four Seasons Dance of Spring",
+      "slug": "agents-of-the-four-seasons-dance-of-spring",
+      "seasons": {
+        "1": 14
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "snowballearth2": {
+      "title": "SNOWBALL EARTH",
+      "slug": "snowball-earth",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "mobilesuitgundamthewitchfrommercury": {
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "slug": "mobile-suit-gundam-the-witch-from-mercury",
+      "seasons": {
+        "1": 24
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside": {
+      "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
+      "slug": "banished-from-the-heros-party-i-decided-to-live-a-quiet-life-in-the-countryside",
+      "seasons": {
+        "1": 13,
+        "2": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "therewasacutegirlintheherospartysoitriedconfessingtoher": {
+      "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
+      "slug": "there-was-a-cute-girl-in-the-heros-party-so-i-tried-confessing-to-her",
+      "seasons": {
+        "1": 13
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "zom100bucketlistofthedead": {
+      "title": "Zom 100: Bucket List of the Dead",
+      "slug": "zom-100-bucket-list-of-the-dead",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "assassinationclassroom": {
+      "title": "Assassination Classroom",
+      "slug": "assassination-classroom",
+      "seasons": {
+        "1": 22,
+        "2": 25
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 2,
+          "base": 0
+        }
+      }
+    },
+    "dragonballdaima": {
+      "title": "Dragon Ball DAIMA",
+      "slug": "dragon-ball-daima",
+      "seasons": {
+        "1": 20
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "letsplay": {
+      "title": "Let's Play",
+      "slug": "lets-play",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "thestrongestmagicianinthedemonlordsarmywasahuman": {
+      "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+      "slug": "strongest-magician-in-the-demon-lords-army-was-a-human",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "ifmyfavoritepopidolmadeittothebudokaniwoulddie": {
+      "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+      "slug": "if-my-favorite-pop-idol-made-it-to-the-budokan-i-would-die",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "easygoingterritorydefensebytheoptimisticlord": {
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "slug": "easygoing-territory-defense-by-the-optimistic-lord",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
     }
   },
   "misses": [
@@ -1352,6 +3069,22 @@
     {
       "key": "bluemiburo",
       "title": "Blue Miburo"
+    },
+    {
+      "key": "godsgamesweplay2",
+      "title": "Gods' Games We Play"
+    },
+    {
+      "key": "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty",
+      "title": "The Strongest Tank's Labyrinth Raids -A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party-"
+    },
+    {
+      "key": "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability",
+      "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability"
+    },
+    {
+      "key": "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword",
+      "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!"
     }
   ]
 }

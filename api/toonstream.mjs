@@ -3,6 +3,9 @@
  *
  * GET /api/toonstream?title=<show name>&s=<season>&e=<episode>[&debug=1]
  *   -> { ok: true, episodeUrl, embeds: [...], servers: [{name,quality,url}] }
+ * GET /api/toonstream?type=movie&title=<movie name>[&slug=<site slug>]
+ *   -> { ok: true, movieUrl, embeds: [...], servers: [{name,url}] }
+ *      (movies live on /movies/<slug>; no season/episode coordinates)
  *   -> { ok: false, error, steps? }
  *
  * How it finds the episode (verified against the live site, no guessing):
@@ -244,6 +247,111 @@ const stripTags = (s) =>
     .replace(/&nbsp;/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
+/* ------------------------------------------------------------------ movies */
+
+/**
+ * Movies live on a **different URL shape**: `/movies/<slug>` (plural), while
+ * series use `/series/<slug>` + `/episode/<slug>-<s>x<e>`. Owner: "jo movies
+ * jitna hai na humne unka toonstream server nahi lagya hai unka laga do".
+ * The page markup is the same otherwise, so the server parser is reused.
+ */
+function extractMovieLinks(html) {
+  const out = new Map();
+  // Search cards render the poster + title inside the card and link it from
+  // an anchor whose text is often just "View Movie" — so the slug itself is
+  // what we keep, and it is scored against the wanted title later.
+  const re = /href=["'](?:https?:\/\/toonstream\.us)?(\/movies\/[^"'#?]+)["']/gi;
+  for (const m of html.matchAll(re)) {
+    const slug = m[1].replace(/^\/movies\//, '').replace(/\/+$/, '');
+    if (!slug) continue;
+    out.set(slug, (out.get(slug) || 0) + 1);
+  }
+  return [...out.keys()];
+}
+
+/** "Spirited Away - Movie - ToonStream" -> "Spirited Away". */
+function moviePageTitle(html) {
+  const h1 = /<h1[^>]*>([\s\S]*?)<\/h1>/i.exec(String(html || ''));
+  const raw = h1 ? h1[1] : (/<title[^>]*>([\s\S]*?)<\/title>/i.exec(String(html || ''))?.[1] || '');
+  return stripTags(raw).replace(/\s*[-|]\s*Movie\s*[-|]\s*ToonStream.*$/i, '').trim();
+}
+
+/**
+ * Movie page for one catalog title.
+ *
+ * 1. The baked slug (`TS_MOVIES[key].slug`) is tried first: it came from the
+ *    site itself, so zero guessing.
+ * 2. Otherwise the site search (`/s?q=<title>&type=movies`) is parsed for
+ *    `/movies/<slug>` links, ranked by title-token overlap.
+ * 3. Every candidate page must actually name the movie AND carry player slots
+ *    (`id="options-N"`); a 404 or a title card with no players is rejected, so
+ *    "jisse movie ka na mile usse rehne dena" holds.
+ */
+async function resolveMovie({ title, slug }, steps) {
+  const wanted = tokens(title);
+  const probed = new Set();
+
+  const tryPage = async (candidateSlug, via) => {
+    if (!candidateSlug || probed.has(candidateSlug)) return null;
+    probed.add(candidateSlug);
+    const url = `${BASE}/movies/${candidateSlug}`;
+    const page = await getText(url, steps, `movie-${via}`);
+    if (page.status !== 200) return null;
+    const pageTitle = moviePageTitle(page.text);
+    // Search hits can point at a sequel/spin-off — "Another World" par search
+    // "Re:ZERO … The Frozen Bond" bhi de deta hai (dono tokens mil jate hain).
+    // Isliye sirf token overlap nahi: page ka title wanted se bahut lamba na ho.
+    const extraWords = pageTitle ? tokens(pageTitle).length - wanted.length : 99;
+    const score = pageTitle ? matchScore(wanted, pageTitle) : 0;
+    if (!pageTitle || score < 0.6 || extraWords > 2) {
+      if (steps) steps.push({ step: 'movie-rejected', slug: candidateSlug, got: pageTitle.slice(0, 60), score: +score.toFixed(2), extraWords });
+      return null;
+    }
+    // Movie pages carry the same `options-N` slots as episodes; if the site
+    // ever ships them as bare iframes instead, fall back to those (trailers
+    // are not players, same rule as the episode path).
+    let servers = extractSiteServers(page.text);
+    if (!servers.length) {
+      const iframes = extractIframes(page.text).filter((src) => !/(youtube|youtu\.be|dailymotion)/i.test(src));
+      servers = iframes.slice(0, 3).map((url, index) => ({ name: `S${index + 1}`, url }));
+    }
+    if (!servers.length) {
+      if (steps) steps.push({ step: 'movie-no-servers', slug: candidateSlug });
+      return null;
+    }
+    return { movieUrl: url, html: page.text, via, title: pageTitle, servers, score };
+  };
+
+  if (slug) {
+    const direct = await tryPage(String(slug).trim().replace(/^\/+|\/+$/g, ''), 'baked');
+    if (direct) return direct;
+  }
+
+  // The site's own slug rule, same as series (apostrophes/colons dropped).
+  const guesses = [...new Set([titleSlug(title), titleSlug(title, ':'), titleSlug(title, "'")])];
+  for (const guess of guesses) {
+    const hit = await tryPage(guess, 'guess');
+    if (hit) return hit;
+  }
+
+  // NOTE: `&type=movies` **query ko ignore** kar deta hai — site har title ke
+  // liye wahi generic movie list (Shrek, Toy Story…) lauta deta hai. Isliye
+  // plain search, aur usme se sirf /movies/<slug> links.
+  const search = await getText(`${BASE}/s?q=${encodeURIComponent(title)}`, steps, 'movie-search');
+  if (search.status !== 200) return null;
+  if (steps) steps.push({ step: 'movie-search', status: search.status, links: extractMovieLinks(search.text).length });
+  const ranked = extractMovieLinks(search.text)
+    .map((candidate) => ({ slug: candidate, score: matchScore(wanted, candidate.replace(/-/g, ' ')) }))
+    .filter((row) => row.score >= 0.6)
+    .sort((a, b) => b.score - a.score);
+  if (steps) steps.push({ step: 'movie-candidates', count: ranked.length, names: ranked.slice(0, 6).map((r) => r.slug) });
+  for (const candidate of ranked.slice(0, 4)) {
+    const hit = await tryPage(candidate.slug, 'search');
+    if (hit) return hit;
+  }
+  return null;
+}
 
 /**
  * The home page's "Fresh Drops" rail: whatever the section links (series or
@@ -507,6 +615,8 @@ async function handler(req, res) {
 
   const title = String(req.query.title || '').trim();
   const slug = String(req.query.slug || '').trim();
+  // Movie titles have no season/episode — they resolve through /movies/<slug>.
+  const kind = String(req.query.type || 'tv').toLowerCase() === 'movie' ? 'movie' : 'tv';
   const season = String(Math.max(1, parseInt(String(req.query.s || '1'), 10) || 1));
   const episode = String(Math.max(1, parseInt(String(req.query.e || '1'), 10) || 1));
   const debug = req.query.debug === '1';
@@ -585,6 +695,34 @@ async function handler(req, res) {
   const deadline = Date.now() + TOTAL_BUDGET_MS;
   try {
     if (Date.now() > deadline) throw new Error('budget-exhausted');
+
+    if (kind === 'movie') {
+      const movie = await resolveMovie({ title, slug }, steps);
+      if (!movie) {
+        res.status(200).json({
+          ok: false,
+          error: 'no-movie',
+          ...(debug ? { steps, hint: `${title} is not on toonstream (or spelled differently)` } : {}),
+        });
+        return;
+      }
+      const serverList = movie.servers;
+      const chosen = serverList[0].url;
+      if (steps) steps.push({ step: 'movie-parsed', servers: serverList.length, url: movie.movieUrl });
+      res.status(200).json({
+        ok: true,
+        type: 'movie',
+        title,
+        pageTitle: movie.title,
+        movieUrl: movie.movieUrl,
+        via: movie.via,
+        embeds: serverList.map((server) => server.url),
+        chosen,
+        servers: serverList,
+        ...(debug ? { steps } : {}),
+      });
+      return;
+    }
     const found = await resolveEpisode({ title, slug, season, episode }, steps);
     if (!found) {
       if (String(req.query.raw || '') === '1') {
@@ -706,4 +844,4 @@ export default handler;
 export const config = { maxDuration: 30 };
 
 // Exposed for tests.
-export const _internal = { titleSlug, parseFreshDrops, extractSeriesLinks, extractEpisodeLinks, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractSiteServers, extractServers, matchScore, pickEmbed };
+export const _internal = { titleSlug, parseFreshDrops, extractSeriesLinks, extractEpisodeLinks, extractMovieLinks, moviePageTitle, resolveMovie, findEpisodeLink, extractIframes, extractPlayerSlots, extractServerNames, extractSiteServers, extractServers, matchScore, pickEmbed };

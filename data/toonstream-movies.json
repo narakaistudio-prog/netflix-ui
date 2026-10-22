@@ -1,0 +1,88 @@
+{
+  "updated": "2026-10-22T14:58:03.386Z",
+  "movies": {
+    "yourname": {
+      "slug": "your-name",
+      "pageTitle": "Your Name",
+      "servers": 2
+    },
+    "suzume": {
+      "slug": "suzume",
+      "pageTitle": "Suzume",
+      "servers": 2
+    },
+    "silentvoice": {
+      "slug": "a-silent-voice-the-movie",
+      "pageTitle": "A Silent Voice: The Movie",
+      "servers": 3
+    },
+    "spirited": {
+      "slug": "spirited-away",
+      "pageTitle": "Spirited Away",
+      "servers": 2
+    },
+    "jjk0": {
+      "slug": "jujutsu-kaisen-0",
+      "pageTitle": "Jujutsu Kaisen 0",
+      "servers": 2
+    },
+    "weathering": {
+      "slug": "weathering-with-you",
+      "pageTitle": "Weathering with You",
+      "servers": 2
+    },
+    "howl": {
+      "slug": "howls-moving-castle",
+      "pageTitle": "Howl's Moving Castle",
+      "servers": 2
+    },
+    "mononoke": {
+      "slug": "princess-mononoke",
+      "pageTitle": "Princess Mononoke",
+      "servers": 1
+    },
+    "mhaMovie": {
+      "slug": "my-hero-academia-two-heroes",
+      "pageTitle": "My Hero Academia: Two Heroes",
+      "servers": 1
+    },
+    "fireflies": {
+      "slug": "grave-of-the-fireflies",
+      "pageTitle": "Grave of the Fireflies",
+      "servers": 2
+    },
+    "kiki": {
+      "slug": "kikis-delivery-service",
+      "pageTitle": "Kiki's Delivery Service",
+      "servers": 1
+    },
+    "poppyhill": {
+      "slug": "from-up-on-poppy-hill",
+      "pageTitle": "From Up on Poppy Hill",
+      "servers": 1
+    }
+  },
+  "missed": [
+    "akira",
+    "saoMovie",
+    "demonMovie",
+    "kaguya",
+    "marnie",
+    "arrietty",
+    "pompoko",
+    "onlyyesterday",
+    "totoro",
+    "windrises",
+    "nausicaa",
+    "ponyo",
+    "yamadas",
+    "porco",
+    "castleinthesky",
+    "whisper",
+    "earthsea",
+    "catreturns",
+    "oceanwaves",
+    "dandadanfirstencounter2",
+    "anotherworld"
+  ]
+}

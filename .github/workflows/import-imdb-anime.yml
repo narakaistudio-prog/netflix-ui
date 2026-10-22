@@ -1,0 +1,154 @@
+name: Import the IMDb anime list into Crunchyroll
+
+# Owner: "yaha ka sara anime crunchyroll par laga do sab sahi sahi row mae lag
+# jana chiyea or jo anime pehle se hai usse chod dena nxsha aur toonworld se
+# fetch karoo sabka proper episode guide images season sab sahi sahi lag jana
+# chiyea".
+#
+# Sandbox se IMDb / Nxsha / ToonStream reach nahi hote (wahi baat jo baaki
+# harvester workflows ke comments me likhi hai), isliye ye poora kaam hosted
+# runner par hota hai aur result branch me wapas commit ho jata hai:
+#
+#   1. scripts/import-imdb-anime.mjs
+#        IMDb list -> naye titles (jo catalog me nahi hain) -> Nxsha par match
+#        + page verify -> `var shows={…}` catalog, `var rows=[…]` rows, aur
+#        data/nxsha-titles.json me route.
+#   2. scripts/harvest-nxsha-guide.mjs --merge --only <naye keys>
+#        sirf naye titles ka season + episode guide (naam, synopsis, stills).
+#   3. scripts/harvest-toonstream-seasons.mjs
+#        ToonStream (toonworld) season layout — episode counts/cards ke liye.
+#   4. scripts/bake-animahd-links.mjs + --check
+#        NX_DATA + NXSHA_GUIDE + TS_SEASONS page me bake, phir verify.
+#
+# Sab steps "degrade safely" hain: koi source fail ho to purana block waisa hi
+# rehta hai, page blank nahi hota.
+
+on:
+  push:
+    branches:
+      - arena/596cf98f-netflix-ui
+    paths:
+      - '.github/workflows/import-imdb-anime.yml'
+      - 'scripts/import-imdb-anime.mjs'
+      # Movies ka ToonStream route isi chain ka hissa hai (Server 2).
+      - 'scripts/harvest-toonstream-movies.mjs'
+      - 'api/toonstream.mjs'
+  workflow_dispatch:
+    inputs:
+      list:
+        description: 'IMDb list id (default: ls540527030 — Crunchyroll hindi dub)'
+        required: false
+        default: 'ls540527030'
+
+concurrency:
+  group: import-imdb-anime-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout the requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Self-test the importer (network ke bina)
+        run: node scripts/import-imdb-anime.mjs --self-test
+
+      - name: Import the IMDb list into the Crunchyroll catalog
+        run: |
+          set -o pipefail
+          # Logs Azure blob par jaate hain (sandbox se reachable nahi), isliye
+          # fail hone par aakhri lines check-run annotations me daal dete hain —
+          # wahan se debug karna possible rehta hai.
+          node scripts/import-imdb-anime.mjs --list=${{ github.event.inputs.list || 'ls540527030' }} 2>&1 | tee /tmp/import.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            tail -n 30 /tmp/import.log | while IFS= read -r line; do
+              echo "::error::$(echo "$line" | tr -d '\r' | cut -c1-900)"
+            done
+          fi
+          exit "$status"
+
+      - name: Harvest the Nxsha episode guide for the new titles
+        id: guide
+        continue-on-error: true
+        run: |
+          KEYS=$(node -e "const r=require('./data/imdb-anime-import.json');console.log(r.added.map(a=>a.key).join(','))")
+          if [ -z "$KEYS" ]; then
+            echo "Koi naya title nahi mila — guide harvest skip."
+            exit 0
+          fi
+          echo "Naye keys: $KEYS"
+          node scripts/harvest-nxsha-guide.mjs --merge --only "$KEYS"
+
+      - name: Harvest the ToonStream (toonworld) season layout
+        id: toonstream
+        continue-on-error: true
+        run: node scripts/harvest-toonstream-seasons.mjs
+
+      - name: Harvest ToonStream movie slugs (movies ke liye Server 2)
+        id: toonstream-movies
+        continue-on-error: true
+        run: node scripts/harvest-toonstream-movies.mjs
+
+      - name: Bake the season + episode guide into the page and verify
+        run: |
+          node scripts/bake-animahd-links.mjs
+          node scripts/bake-animahd-links.mjs --check
+          node scripts/harvest-toonstream-movies.mjs --from-state --check
+
+      - name: Keep the import log on failure (debug ke liye)
+        if: failure()
+        run: |
+          if [ -f /tmp/import.log ]; then
+            tail -n 200 /tmp/import.log > data/imdb-import-last-run.log
+            git config user.name "netflix-catalog-bot"
+            git config user.email "netflix-catalog-bot@users.noreply.github.com"
+            git add data/imdb-import-last-run.log
+            git commit -m "chore(import): last run ka log (debug)" || exit 0
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}" || exit 0
+          fi
+
+      - name: Summarize what changed
+        if: always()
+        run: |
+          node -e "
+            const r = require('./data/imdb-anime-import.json');
+            console.log('IMDb items: ' + (r.added.length + r.skipped.length + r.missing.length));
+            console.log('Naye add hue: ' + r.added.length);
+            console.log('Pehle se the (chhode): ' + r.skipped.length);
+            console.log('Nxsha par nahi mile: ' + r.missing.length);
+            if (r.missing.length) console.log(r.missing.map(m => ' - ' + m.title + ' (' + m.reason + ')').join('\n'));
+            try {
+              const g = require('./data/nxsha-harvest-report.json');
+              console.log('Guide: ' + JSON.stringify(g.summary));
+            } catch (e) { console.log('Guide report nahi mila.'); }
+          " | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit the catalog, guide and rows
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add assets/crunchyroll/crunchyroll.html data/nxsha-titles.json data/imdb-anime-import.json data/imdb-anime-catalog.json data/imdb-anime-list.md data/nxsha-page-sample.html
+          for file in data/nxsha-plan.json data/nxsha-episodes.json data/nxsha-harvest-report.json data/nxsha-verify.json data/toonstream-seasons.json data/toonstream-movies.json data/toonstream-movie-sample.html; do
+            if [ -f "$file" ]; then git add "$file"; fi
+          done
+          if git diff --cached --quiet; then
+            echo "Koi change nahi — catalog pehle se up to date."
+            exit 0
+          fi
+          git commit -m "chore(crunchyroll): IMDb anime list se naye titles + Nxsha episode guide"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin HEAD:"${{ github.ref_name }}"
