@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
+import { NetmirrorPlayButton } from '@/components/NetmirrorPlayButton';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import {
     getRecentlyWatched,
@@ -20,6 +21,7 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
+import { NETMIRROR_HOME_URL, NETMIRROR_SERVER_LABEL, isNetmirrorTitle } from '@/lib/netmirror';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import type { Movie } from '@/types/movie';
@@ -109,7 +111,7 @@ export function MovieDetailModal({
      * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
      * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
      */
-    const [server, setServer] = useState<'primary' | 'moviebox'>('moviebox');
+    const [server, setServer] = useState<'primary' | 'moviebox' | 'other'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
 
@@ -136,6 +138,13 @@ export function MovieDetailModal({
         onResolved: () => setMovieboxRevision((n) => n + 1),
     });
     const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
+
+    /**
+     * NetMirror ("Other") server — owner: "test bas Dhurandhar par karna".
+     * Abhi sirf usi title par dikhta hai; net77.cc login + anti-frame hai
+     * isliye ye alag rasta hai (neeche `openNetmirror`).
+     */
+    const netmirrorAvailable = isNetmirrorTitle(movie?.title);
 
     /** Play daba par MovieBox ka jawab pending tha — jawab aate hi wahi karo. */
     const pendingPlayRef = useRef<{ season: number; episode: number } | null>(null);
@@ -169,6 +178,21 @@ export function MovieDetailModal({
         if (!message) return;
         noticeTimer.current = setTimeout(() => setPlayerNotice(null), 4000);
     }, []);
+
+    /**
+     * "Other" server ka Play — NetMirror khud embed nahi hone deta (login +
+     * framing block), isliye unki site new tab me khulti hai: wahan viewer ka
+     * apna NetMirror login chalta hai aur unka player poora kaam karta hai.
+     * Button unke hi Play button ka crop hai (`NetmirrorPlayButton`).
+     */
+    const openNetmirror = useCallback(() => {
+        announce(`Opening ${NETMIRROR_SERVER_LABEL} · NetMirror (login required)`);
+        if (IS_WEB) {
+            window.open(NETMIRROR_HOME_URL, '_blank', 'noopener');
+        } else {
+            Linking.openURL(NETMIRROR_HOME_URL).catch(() => {});
+        }
+    }, [announce]);
 
     /**
      * Phone: landscape SIRF fullscreen par (owner: "jab user full screen karega
@@ -276,7 +300,12 @@ export function MovieDetailModal({
     const genres = movie.genres || [];
 
     /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
-    const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
+    const activeServer: 'primary' | 'moviebox' | 'other' =
+        netmirrorAvailable && server === 'other'
+            ? 'other'
+            : movieboxAvailable && server === 'moviebox'
+              ? 'moviebox'
+              : 'primary';
 
     /** Phone player screen (Crunchyroll jaisa) ka episode data. */
     const isTv = movie.mediaType === 'tv';
@@ -304,6 +333,11 @@ export function MovieDetailModal({
         .join('  •  ');
 
     const handlePlay = (episode?: { season: number; episode: number }) => {
+        // Other server = NetMirror: embed nahi hota, seedha unki site.
+        if (activeServer === 'other') {
+            openNetmirror();
+            return;
+        }
         if (src) {
             const isSeries = movie.mediaType === 'tv';
             const ep = episode ?? episodeRef ?? { season: 1, episode: 1 };
@@ -461,14 +495,22 @@ export function MovieDetailModal({
 
                             <View style={styles.heroContent}>
                                 <Text style={styles.title} numberOfLines={2}>{movie.title || ''}</Text>
-                                <Pressable
-                                    onPress={() => handlePlay()}
-                                    style={styles.playButton}
-                                    accessibilityLabel={`Play ${movie.title || ''}`}
-                                >
-                                    <Ionicons name="play" size={20} color="#000" />
-                                    <Text style={styles.playText}>Play</Text>
-                                </Pressable>
+                                {/* Other server chuna hai to hamara Play button
+                                    hat jata hai aur NetMirror ka asli button
+                                    (crop) wahi baithta hai — owner ka
+                                    "apne play ke button se replace kar dena". */}
+                                {activeServer === 'other' ? (
+                                    <NetmirrorPlayButton height={44} onPress={openNetmirror} />
+                                ) : (
+                                    <Pressable
+                                        onPress={() => handlePlay()}
+                                        style={styles.playButton}
+                                        accessibilityLabel={`Play ${movie.title || ''}`}
+                                    >
+                                        <Ionicons name="play" size={20} color="#000" />
+                                        <Text style={styles.playText}>Play</Text>
+                                    </Pressable>
+                                )}
                             </View>
                         </View>
 
@@ -504,32 +546,36 @@ export function MovieDetailModal({
 
                         {/* Server chunna — owner ke naap par description ke
                             neeche, "Episodes" ke upar. **Hindi = MovieBox**,
-                            **Multi = Nxsha**. MovieBox link na ho to ye option
-                            dikhta hi nahi (Nxsha hi chalta hai). */}
-                        {movieboxAvailable ? (
+                            **Multi = Nxsha**, **Other = NetMirror** (abhi sirf
+                            Dhurandhar par — owner ka test scope). MovieBox
+                            link na ho to Hindi chip nahi aata; Nxsha hamesha
+                            rehta hai. */}
+                        {movieboxAvailable || netmirrorAvailable ? (
                             <View style={[styles.serverRow, wide && styles.serverRowWide]}>
                                 <Text style={styles.serverRowLabel}>Server</Text>
-                                <Pressable
-                                    onPress={() => setServer('moviebox')}
-                                    style={[
-                                        styles.serverChip,
-                                        activeServer === 'moviebox' && styles.serverChipActive,
-                                    ]}
-                                    accessibilityLabel="Hindi server (M2Box)"
-                                    accessibilityRole="button"
-                                    accessibilityState={{ selected: activeServer === 'moviebox' }}
-                                    {...({ dataSet: { selected: activeServer === 'moviebox' ? '1' : '0' } } as any)}
-                                    testID="server-hindi"
-                                >
-                                    <Text
+                                {movieboxAvailable ? (
+                                    <Pressable
+                                        onPress={() => setServer('moviebox')}
                                         style={[
-                                            styles.serverChipText,
-                                            activeServer === 'moviebox' && styles.serverChipTextActive,
+                                            styles.serverChip,
+                                            activeServer === 'moviebox' && styles.serverChipActive,
                                         ]}
+                                        accessibilityLabel="Hindi server (M2Box)"
+                                        accessibilityRole="button"
+                                        accessibilityState={{ selected: activeServer === 'moviebox' }}
+                                        {...({ dataSet: { selected: activeServer === 'moviebox' ? '1' : '0' } } as any)}
+                                        testID="server-hindi"
                                     >
-                                        Hindi
-                                    </Text>
-                                </Pressable>
+                                        <Text
+                                            style={[
+                                                styles.serverChipText,
+                                                activeServer === 'moviebox' && styles.serverChipTextActive,
+                                            ]}
+                                        >
+                                            Hindi
+                                        </Text>
+                                    </Pressable>
+                                ) : null}
                                 <Pressable
                                     onPress={() => setServer('primary')}
                                     style={[
@@ -551,6 +597,29 @@ export function MovieDetailModal({
                                         Multi
                                     </Text>
                                 </Pressable>
+                                {netmirrorAvailable ? (
+                                    <Pressable
+                                        onPress={() => setServer('other')}
+                                        style={[
+                                            styles.serverChip,
+                                            activeServer === 'other' && styles.serverChipActive,
+                                        ]}
+                                        accessibilityLabel="Other server (NetMirror)"
+                                        accessibilityRole="button"
+                                        accessibilityState={{ selected: activeServer === 'other' }}
+                                        {...({ dataSet: { selected: activeServer === 'other' ? '1' : '0' } } as any)}
+                                        testID="server-other"
+                                    >
+                                        <Text
+                                            style={[
+                                                styles.serverChipText,
+                                                activeServer === 'other' && styles.serverChipTextActive,
+                                            ]}
+                                        >
+                                            {NETMIRROR_SERVER_LABEL}
+                                        </Text>
+                                    </Pressable>
+                                ) : null}
                             </View>
                         ) : null}
 
