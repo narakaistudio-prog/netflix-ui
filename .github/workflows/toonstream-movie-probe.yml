@@ -1,0 +1,44 @@
+name: Probe ToonStream movie pages
+
+# Sandbox se toonstream.us reach nahi hota. Movies ka /movies/<slug> markup
+# (search links, player slots) asli HTML se samajhne ke liye ye ek-baar chalta
+# probe hai — output data/toonstream-movie-probe.json me commit hota hai.
+# Sirf manual dispatch par chalta hai, normal push par nahi.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/596cf98f-netflix-ui
+    paths:
+      - 'scripts/probe-toonstream-movies.mjs'
+      - '.github/workflows/toonstream-movie-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe movie pages
+        run: node scripts/probe-toonstream-movies.mjs
+      - name: Commit the probe output
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/toonstream-movie-probe.json data/toonstream-movie-search.html
+          if git diff --cached --quiet; then
+            echo "Koi change nahi."
+            exit 0
+          fi
+          git commit -m "chore(toonstream): movie page probe"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin HEAD:"${{ github.ref_name }}"
