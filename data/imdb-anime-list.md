@@ -1,3 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+        body {
+            font-family: "Arial";
+        }
+    </style>
+    <script type="text/javascript">
+    window.awsWafCookieDomainList = ['imdb.com'];
+    window.gokuProps = {
+"key":"AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AECAczK9Zz+XdGMgGmYCeSdAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMDlyKpg0nk1dRPM/RAgEQgDtOm9UbT7gO4hD4KMBmqRmYfWkLf6fqcU3f3zRhP49cOOk99zvx8BDfKoac/7W3d42MmottMVvv7FNfcA==",
+          "iv":"CgAGcTNHhAAAAbLJ",
+          "context":"HWvVy3moHjNUCKE0pZm99+fAw5pQSF/xKWnARhMzdXdaBMmLByuTvb7Cy0bKxFxzxB8bDCXnP0gbdfzjz+FkO7qw0HIcdAKAhUviKWyGaa55E+AoXgciwFGF2mr7B62inVzyaONWcvoiqh1EiVaZMR99tfA76vzdCKyuybanpPiOhk1FObaSzAAENlDo3tHp4rF70gItH43qXGd7rlVsFieUmVMLSlXvccn96p1Vv8GUb+sHPSeKhJHnwnjOGgO9n4lf1qM1wAVqZasxf7nAMCUx3zeTyFkNYeO+aPsH1nQV9w1fTBQ5+hnsVXoQDm9zdXNdlZd27C8ygmnIOAecTvRDL0M+7a67HB0uy+4qQgq58Uf4zg=="
+};
+    </script>
+    <script src="https://fb423e1ef94f.6277d64d.us-east-1.token.awswaf.com/fb423e1ef94f/c3382d439950/916d943f6a58/challenge.js"></script>
+</head>
+<body>
+    <div id="challenge-container"></div>
+    <script type="text/javascript">
+        AwsWafIntegration.saveReferrer();
+        AwsWafIntegration.checkForceRefresh().then((forceRefresh) => {
+            if (forceRefresh) {
+                AwsWafIntegration.forceRefreshToken().then(() => {
+                    window.location.reload(true);
+                });
+            } else {
+                AwsWafIntegration.getToken().then(() => {
+                    window.location.reload(true);
+                });
+            }
+        });
+    </script>
+    <noscript>
+        <h1>JavaScript is disabled</h1>
+        In order to continue, we need to verify that you're not a robot.
+        This requires JavaScript. Enable JavaScript and then reload the page.
+    </noscript>
+</body>
+</html>
+
 Title: Crunchyroll (hindi dubbed) anime list
 
 URL Source: https://www.imdb.com/list/ls540527030/
@@ -569,3 +614,1592 @@ Stars[Kellen Goff](https://www.imdb.com/name/nm6981965/?ref_=ls_li_1_1)[Ryota Su
 This list was created by a member of the IMDb community and has not been reviewed or verified by IMDb.
 
 ## More to explore
+
+
+Title: Crunchyroll (hindi dubbed) anime list
+
+URL Source: https://www.imdb.com/list/ls540527030/?view=grid&count=250
+
+Markdown Content:
+[Created by arishkhan-72230](https://www.imdb.com/user/p.l5nafr2p7qm3v7u7hmrezan7nq/?ref_=ls_usr_ov)
+674,117 visits
+
+![Image 1: 1. My Dress-Up Darling](https://m.media-amazon.com/images/M/MV5BYmJhYjgzYTQtMzMxYi00NTkyLWI2MWItNTgxNjk1NzU0YmQzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15765670/?ref_=ls_i_1)
+
+7.9(30K)
+
+[1. My Dress-Up Darling](https://www.imdb.com/title/tt15765670/?ref_=ls_t_1)
+
+2022–2025 24 eps
+
+![Image 2: 2. Ranking of Kings](https://m.media-amazon.com/images/M/MV5BNjM3OWRmODQtODVjYS00YzY5LWFiNmQtOGExM2M4OWQ3Nzk1XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13409432/?ref_=ls_i_2)
+
+8.4(17K)
+
+[2. Ranking of Kings](https://www.imdb.com/title/tt13409432/?ref_=ls_t_2)
+
+2021–2022 23 eps
+
+![Image 3: 3. Ranking of Kings: The Treasure Chest of Courage](https://m.media-amazon.com/images/M/MV5BOGQ5Mjk0ZTEtNzc4Ni00NmQyLWExNGQtMjUyMDMzMzQxZDZhXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27504251/?ref_=ls_i_3)
+
+6.9(739)
+
+[3. Ranking of Kings: The Treasure Chest of Courage](https://www.imdb.com/title/tt27504251/?ref_=ls_t_3)
+
+2022–2023 10 eps
+
+![Image 4: 4. Akebi's Sailor Uniform](https://m.media-amazon.com/images/M/MV5BNmMyZWVkOGItNDUyNC00M2ZkLWJlZWYtZTZkNmIwOWUyNjE2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15533674/?ref_=ls_i_4)
+
+7.2(966)
+
+[4. Akebi's Sailor Uniform](https://www.imdb.com/title/tt15533674/?ref_=ls_t_4)
+
+2022 12 eps
+
+![Image 5: 5. Toilet-bound Hanako-kun](https://m.media-amazon.com/images/M/MV5BM2MzMGRlN2QtM2FhMS00Y2FhLWE4MTEtMGNiZTU5YTdiY2JiXkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt10777610/?ref_=ls_i_5)
+
+7.5(4.2K)
+
+[5. Toilet-bound Hanako-kun](https://www.imdb.com/title/tt10777610/?ref_=ls_t_5)
+
+2020–2025 36 eps
+
+![Image 6: 6. Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs](https://m.media-amazon.com/images/M/MV5BNDgxNDRkZDgtMjk2ZC00MGUzLWEwYjUtZDc3YjY0ZTg5NDY0XkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt16255458/?ref_=ls_i_6)
+
+7.3(3.8K)
+
+[6. Trapped in a Dating Sim: The World of Otome Games Is Tough for Mobs](https://www.imdb.com/title/tt16255458/?ref_=ls_t_6)
+
+2022–2026 24 eps
+
+![Image 7: 7. Miss Kuroitsu from the Monster Development Department](https://m.media-amazon.com/images/M/MV5BMGZjNGZkYzgtZjJiNi00YTE4LWIyZDgtYWVmYTdlOGU5OTkyXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15582924/?ref_=ls_i_7)
+
+6.1(242)
+
+[7. Miss Kuroitsu from the Monster Development Department](https://www.imdb.com/title/tt15582924/?ref_=ls_t_7)
+
+2022– 12 eps
+
+![Image 8: 8. Tokyo 24th Ward](https://m.media-amazon.com/images/M/MV5BN2Q3ZTFhZWYtOTgwNC00MjUzLThhNTktNjc4MTY1MzJiM2NiXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15758108/?ref_=ls_i_8)
+
+6.1(323)
+
+[8. Tokyo 24th Ward](https://www.imdb.com/title/tt15758108/?ref_=ls_t_8)
+
+2022 12 eps
+
+![Image 9: 9. Darling in the Franxx](https://m.media-amazon.com/images/M/MV5BYWNlYzk1NGQtNTZkNi00YzJiLWJkMWUtZTYzNjI3YTc5ZDRhXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt7865090/?ref_=ls_i_9)
+
+7.4(22K)
+
+[9. Darling in the Franxx](https://www.imdb.com/title/tt7865090/?ref_=ls_t_9)
+
+2018 26 eps
+
+![Image 10: 10. ReLIFE](https://m.media-amazon.com/images/M/MV5BOGViMzRkYzctM2IyNi00OWFmLTliMDMtNjk1MmE0M2QyM2I1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt5857720/?ref_=ls_i_10)
+
+7.8(9.7K)
+
+[10. ReLIFE](https://www.imdb.com/title/tt5857720/?ref_=ls_t_10)
+
+2016–2018 19 eps
+
+![Image 11: 11. My One-Hit Kill Sister](https://m.media-amazon.com/images/M/MV5BMzVhOGFlNTktMTFiYS00YTQxLTg2MjMtYWMzYTc2MGFmMTZjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27462671/?ref_=ls_i_11)
+
+6.1(824)
+
+[11. My One-Hit Kill Sister](https://www.imdb.com/title/tt27462671/?ref_=ls_t_11)
+
+2023 12 eps
+
+![Image 12: 12. Why Raeliana Ended Up at the Duke's Mansion](https://m.media-amazon.com/images/M/MV5BYmY3MzIyMTktZmU0My00MjkzLTkzNzgtYmQzYjg1NDA0YjBkXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27484853/?ref_=ls_i_12)
+
+7.4(2.7K)
+
+[12. Why Raeliana Ended Up at the Duke's Mansion](https://www.imdb.com/title/tt27484853/?ref_=ls_t_12)
+
+2023 12 eps
+
+![Image 13: 13. The Case Study of Vanitas](https://m.media-amazon.com/images/M/MV5BMzYwMmI1YWMtOTc0My00OGI3LWI3ZDctZmMwYjczYzcxMjI4XkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt14641098/?ref_=ls_i_13)
+
+7.6(4.3K)
+
+[13. The Case Study of Vanitas](https://www.imdb.com/title/tt14641098/?ref_=ls_t_13)
+
+2021–2022 24 eps
+
+![Image 14: 14. KamiKatsu: Working for God in a Godless World](https://m.media-amazon.com/images/M/MV5BNmU3NGQwZjMtNjNkYS00YWZlLTljYmItOTY4YTA5M2M3Nzc0XkEyXkFqcGc@._V1_QL75_UY207_CR8,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27419998/?ref_=ls_i_14)
+
+6.1(1.4K)
+
+[14. KamiKatsu: Working for God in a Godless World](https://www.imdb.com/title/tt27419998/?ref_=ls_t_14)
+
+2023 12 eps
+
+![Image 15: 15. A Couple of Cuckoos](https://m.media-amazon.com/images/M/MV5BYWY3MjQ3OTEtMmEwYi00NTYxLWE4ZWQtZWE5YWY1OTE4MDZlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt14400866/?ref_=ls_i_15)
+
+6.8(3.4K)
+
+[15. A Couple of Cuckoos](https://www.imdb.com/title/tt14400866/?ref_=ls_t_15)
+
+2022–2025 36 eps
+
+![Image 16: 16. Radiant](https://m.media-amazon.com/images/M/MV5BNWMwMDdkYTUtMDI2Yy00YTgwLWIyMTktMjJhMzNmNzMyNWE2XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9225320/?ref_=ls_i_16)
+
+6.7(950)
+
+[16. Radiant](https://www.imdb.com/title/tt9225320/?ref_=ls_t_16)
+
+2018–2020 42 eps
+
+![Image 17: 17. Akudama Drive](https://m.media-amazon.com/images/M/MV5BMzgwYThmYjktMmNiNS00Njc4LTg3ZTAtYmNmYWU5OWE5YmI3XkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt12331342/?ref_=ls_i_17)
+
+7.2(4.1K)
+
+[17. Akudama Drive](https://www.imdb.com/title/tt12331342/?ref_=ls_t_17)
+
+2020 12 eps
+
+![Image 18: 18. Masamune-kun's Revenge](https://m.media-amazon.com/images/M/MV5BNDUyYTUxMzItZjIzNi00ZGFjLWIzZDctYTU1Zjc2YTBiNWQ1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt6402190/?ref_=ls_i_18)
+
+6.6(5.6K)
+
+[18. Masamune-kun's Revenge](https://www.imdb.com/title/tt6402190/?ref_=ls_t_18)
+
+2017–2023 25 eps
+
+![Image 19: 19. My Unique Skill Makes Me OP Even at Level 1](https://m.media-amazon.com/images/M/MV5BOTM4YWQzNGEtZTBiZi00NGIyLWE2NDQtMjcyYzM4NWFmN2Q2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27990591/?ref_=ls_i_19)
+
+6.3(1.6K)
+
+[19. My Unique Skill Makes Me OP Even at Level 1](https://www.imdb.com/title/tt27990591/?ref_=ls_t_19)
+
+2023 12 eps
+
+![Image 20: 20. Fire Force](https://m.media-amazon.com/images/M/MV5BNDRhMDMzYzktYmI3My00YzBlLTkxOTMtMTUxNjZjN2NkOWQ4XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9307686/?ref_=ls_i_20)
+
+7.6(22K)
+
+[20. Fire Force](https://www.imdb.com/title/tt9307686/?ref_=ls_t_20)
+
+2019–2026 73 eps
+
+![Image 21: 21. Mobile Suit Gundam: The Witch from Mercury](https://m.media-amazon.com/images/M/MV5BZGEwNDRlNGMtNGE4NC00YjYzLThjZjUtZWVmZmYzYWU2OTAyXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15433166/?ref_=ls_i_21)
+
+7.4(2.1K)
+
+[21. Mobile Suit Gundam: The Witch from Mercury](https://www.imdb.com/title/tt15433166/?ref_=ls_t_21)
+
+2022–2023 25 eps
+
+![Image 22: 22. Reborn as a Vending Machine, I Now Wander the Dungeon](https://m.media-amazon.com/images/M/MV5BZjQ2MGYyYzgtODlhZi00YjczLWJmZTEtYzIxYWM1NTQ4ZGFlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28100731/?ref_=ls_i_22)
+
+6.2(1.6K)
+
+[22. Reborn as a Vending Machine, I Now Wander the Dungeon](https://www.imdb.com/title/tt28100731/?ref_=ls_t_22)
+
+2023–2026 36 eps
+
+![Image 23: 23. The Great Cleric](https://m.media-amazon.com/images/M/MV5BMTI4MTg3N2UtYzliMy00NjU2LTllYzgtZjYyMGY4NjUyZjY5XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28101962/?ref_=ls_i_23)
+
+6.9(1.9K)
+
+[23. The Great Cleric](https://www.imdb.com/title/tt28101962/?ref_=ls_t_23)
+
+2023 12 eps
+
+![Image 24: 24. Horimiya: The Missing Pieces](https://m.media-amazon.com/images/M/MV5BNGFjM2M0MTYtM2IxMi00MWQ0LWIyNTYtMGE0YzAyMjA1N2ZhXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28261206/?ref_=ls_i_24)
+
+7.8(5K)
+
+[24. Horimiya: The Missing Pieces](https://www.imdb.com/title/tt28261206/?ref_=ls_t_24)
+
+2023 13 eps
+
+![Image 25: 25. Rent-a-Girlfriend](https://m.media-amazon.com/images/M/MV5BNThiMDM2MTktNGMwYi00NTY3LWEyMzQtNDg1NDBlYWIwYTU3XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt11448214/?ref_=ls_i_25)
+
+6.6(13K)
+
+[25. Rent-a-Girlfriend](https://www.imdb.com/title/tt11448214/?ref_=ls_t_25)
+
+2020–2026 60 eps
+
+![Image 26: 26. My Tiny Senpai](https://m.media-amazon.com/images/M/MV5BMWU4YmIyMjItNDZmNi00M2I3LTkxZjAtYTdhM2I0N2I1NzRhXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27571597/?ref_=ls_i_26)
+
+6.7(1.1K)
+
+[26. My Tiny Senpai](https://www.imdb.com/title/tt27571597/?ref_=ls_t_26)
+
+2023 12 eps
+
+![Image 27: 27. Demon Slayer: Kimetsu no Yaiba](https://m.media-amazon.com/images/M/MV5BMWU1OGEwNmQtNGM3MS00YTYyLThmYmMtN2FjYzQzNzNmNTE0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9335498/?ref_=ls_i_27)
+
+8.5(240K)
+
+[27. Demon Slayer: Kimetsu no Yaiba](https://www.imdb.com/title/tt9335498/?ref_=ls_t_27)
+
+2019–2024 63 eps
+
+![Image 28: 28. Jujutsu Kaisen](https://m.media-amazon.com/images/M/MV5BMjBlNTExMDAtMWZjZi00MDc5LWFkMjgtZDU0ZWQ5ODk3YWY5XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt12343534/?ref_=ls_i_28)
+
+8.5(225K)
+
+[28. Jujutsu Kaisen](https://www.imdb.com/title/tt12343534/?ref_=ls_t_28)
+
+2020– 63 eps
+
+![Image 29: 29. Chainsaw Man](https://m.media-amazon.com/images/M/MV5BZGY2ZTM2MWMtNzA2OS00ZjJlLWIwZTMtMDBhN2EwYjZjZjEyXkEyXkFqcGc@._V1_QL75_UY207_CR0,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13616990/?ref_=ls_i_29)
+
+8.3(114K)
+
+[29. Chainsaw Man](https://www.imdb.com/title/tt13616990/?ref_=ls_t_29)
+
+2022 13 eps
+
+![Image 30: 30. Reign of the Seven Spellblades](https://m.media-amazon.com/images/M/MV5BOTAwMTUyNWEtMDY0Zi00MDYzLTkwZDQtZTIyNDA1ZWVkMDAzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27845099/?ref_=ls_i_30)
+
+6.4(1.2K)
+
+[30. Reign of the Seven Spellblades](https://www.imdb.com/title/tt27845099/?ref_=ls_t_30)
+
+2023 15 eps
+
+![Image 31: 31. The Detective Is Already Dead](https://m.media-amazon.com/images/M/MV5BNDBjOWVkMWQtOWMwNS00OWZiLTk0NmItODI5MjkyOWE1OTYyXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13884052/?ref_=ls_i_31)
+
+6.1(2.2K)
+
+[31. The Detective Is Already Dead](https://www.imdb.com/title/tt13884052/?ref_=ls_t_31)
+
+2021–2026 16 eps
+
+![Image 32: 32. The Maid I Hired Recently Is Mysterious](https://m.media-amazon.com/images/M/MV5BZmJmZGNjNzAtMDhjZS00NDZiLTgxMDktMmNhZjU5Y2YxYzMxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21237634/?ref_=ls_i_32)
+
+6.4(805)
+
+[32. The Maid I Hired Recently Is Mysterious](https://www.imdb.com/title/tt21237634/?ref_=ls_t_32)
+
+2022 11 eps
+
+![Image 33: 33. Handyman Saitou in Another World](https://m.media-amazon.com/images/M/MV5BOWE1YzhhMzYtNjc4OS00NDZkLTkzZGItN2YwZTg5YTI0NzBhXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21844644/?ref_=ls_i_33)
+
+6.9(1.7K)
+
+[33. Handyman Saitou in Another World](https://www.imdb.com/title/tt21844644/?ref_=ls_t_33)
+
+2023 12 eps
+
+![Image 34: 34. She Professed Herself Pupil of the Wise Man](https://m.media-amazon.com/images/M/MV5BZGI1YzJhOTEtNDA3Yy00YWQ0LWJlZTktOWMxMTdjNjk2MDEwXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt14960284/?ref_=ls_i_34)
+
+5.9(656)
+
+[34. She Professed Herself Pupil of the Wise Man](https://www.imdb.com/title/tt14960284/?ref_=ls_t_34)
+
+2022 12 eps
+
+![Image 35: 35. Vinland Saga](https://m.media-amazon.com/images/M/MV5BNDA3MGNmZTEtMzFiMy00ZmViLThhNmQtMjQ4ZDc5MDEyN2U1XkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt10233448/?ref_=ls_i_35)
+
+8.9(154K)
+
+[35. Vinland Saga](https://www.imdb.com/title/tt10233448/?ref_=ls_t_35)
+
+2019–2023 48 eps
+
+![Image 36: 36. I'm in Love with the Villainess](https://m.media-amazon.com/images/M/MV5BMGMzMjNkYzYtNWZlMS00MDI3LTk1NjMtZDljZmE5OWRhNzMxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29171914/?ref_=ls_i_36)
+
+7.2(1.8K)
+
+[36. I'm in Love with the Villainess](https://www.imdb.com/title/tt29171914/?ref_=ls_t_36)
+
+2023 12 eps
+
+![Image 37: 37. The Ancient Magus' Bride](https://m.media-amazon.com/images/M/MV5BMDFjNTUxNDQtYjc5Ny00ZDM4LThiMmQtYzAyOTZjYTc2MzIzXkEyXkFqcGc@._V1_QL75_UY207_CR8,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt7326322/?ref_=ls_i_37)
+
+7.6(5.3K)
+
+[37. The Ancient Magus' Bride](https://www.imdb.com/title/tt7326322/?ref_=ls_t_37)
+
+2017–2023 48 eps
+
+![Image 38: 38. Rurouni Kenshin](https://m.media-amazon.com/images/M/MV5BNDU5YzQwNTktZjg2YS00MWRmLWIzNDEtZjgxMGYwNzQzMjYxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt22249034/?ref_=ls_i_38)
+
+8.0(3.4K)
+
+[38. Rurouni Kenshin](https://www.imdb.com/title/tt22249034/?ref_=ls_t_38)
+
+2023– 47 eps
+
+![Image 39: 39. I Shall Survive Using Potions!](https://m.media-amazon.com/images/M/MV5BOWFiZGU5M2UtYTM0Zi00ZjQyLWE4OTgtNjc3ZTYwMzllOGE0XkEyXkFqcGc@._V1_QL75_UY207_CR10,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29171927/?ref_=ls_i_39)
+
+6.3(524)
+
+[39. I Shall Survive Using Potions!](https://www.imdb.com/title/tt29171927/?ref_=ls_t_39)
+
+2023 12 eps
+
+![Image 40: 40. Shangri-La Frontier](https://m.media-amazon.com/images/M/MV5BNjdkOTE4NWItYWUyNS00ZTQ5LWE5ODYtODA1YWUxNThhY2E1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28776190/?ref_=ls_i_40)
+
+7.6(8.1K)
+
+[40. Shangri-La Frontier](https://www.imdb.com/title/tt28776190/?ref_=ls_t_40)
+
+2023–2026 51 eps
+
+![Image 41: 41. More Than a Married Couple, But Not Lovers](https://m.media-amazon.com/images/M/MV5BZDY5ZWE1YTYtMTY4NC00NDdkLTgzNjQtMzM2Nzc1MDBiNzFlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt16231800/?ref_=ls_i_41)
+
+7.6(8.3K)
+
+[41. More Than a Married Couple, But Not Lovers](https://www.imdb.com/title/tt16231800/?ref_=ls_t_41)
+
+2022 12 eps
+
+![Image 42: 42. Buddy Daddies](https://m.media-amazon.com/images/M/MV5BYTNmNGNmNDUtMDhhNC00MDMyLTkyMjAtZDAwOGFmOTMwYTA2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt22986710/?ref_=ls_i_42)
+
+8.0(4.3K)
+
+[42. Buddy Daddies](https://www.imdb.com/title/tt22986710/?ref_=ls_t_42)
+
+2023 13 eps
+
+![Image 43: 43. The Angel Next Door Spoils Me Rotten](https://m.media-amazon.com/images/M/MV5BZjAzYzljMmUtYjZhZS00ZGIzLTg5ZTgtMWFmYmVkZGEwODEyXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt19064770/?ref_=ls_i_43)
+
+7.7(8.5K)
+
+[43. The Angel Next Door Spoils Me Rotten](https://www.imdb.com/title/tt19064770/?ref_=ls_t_43)
+
+2023–2026 24 eps
+
+![Image 44: 44. The Daily Life of the Immortal King](https://m.media-amazon.com/images/M/MV5BYTU2NGRmNTQtYTcyZi00OTNlLTgxMzEtZjRiZjUyNGRhYTM5XkEyXkFqcGc@._V1_QL75_UY207_CR8,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt11755260/?ref_=ls_i_44)
+
+7.1(4.6K)
+
+[44. The Daily Life of the Immortal King](https://www.imdb.com/title/tt11755260/?ref_=ls_t_44)
+
+2020– 64 eps
+
+![Image 45: 45. Hokkaido Gals Are Super Adorable!](https://m.media-amazon.com/images/M/MV5BN2Q4MzE3NDktOTkxZi00OWVlLWJiZTYtYTVmNjlkZDQ0MjRmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt23029874/?ref_=ls_i_45)
+
+6.9(2.5K)
+
+[45. Hokkaido Gals Are Super Adorable!](https://www.imdb.com/title/tt23029874/?ref_=ls_t_45)
+
+2024 13 eps
+
+![Image 46: 46. Log Horizon](https://m.media-amazon.com/images/M/MV5BOTk2MzEwZWItYTlhYS00ZjcwLTk5N2YtOWFkYmRlYTJkOWY4XkEyXkFqcGc@._V1_QL75_UY207_CR5,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt2942218/?ref_=ls_i_46)
+
+7.4(5.9K)
+
+[46. Log Horizon](https://www.imdb.com/title/tt2942218/?ref_=ls_t_46)
+
+2013–2021 62 eps
+
+![Image 47: 47. Tomo-chan Is a Girl!](https://m.media-amazon.com/images/M/MV5BMzQxMzg3N2EtN2MzNC00ZTg0LWJhNGYtZWU2Y2RlZTg1MGNlXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21210326/?ref_=ls_i_47)
+
+7.5(6.1K)
+
+[47. Tomo-chan Is a Girl!](https://www.imdb.com/title/tt21210326/?ref_=ls_t_47)
+
+2023 13 eps
+
+![Image 48: 48. Zom 100: Bucket List of the Dead](https://m.media-amazon.com/images/M/MV5BNzhkNDM2OGUtOGUzZC00NjAzLThmODktOGE4ZjgxZjA3OWQxXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt25811262/?ref_=ls_i_48)
+
+7.3(14K)
+
+[48. Zom 100: Bucket List of the Dead](https://www.imdb.com/title/tt25811262/?ref_=ls_t_48)
+
+2023 12 eps
+
+![Image 49: 49. Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord](https://m.media-amazon.com/images/M/MV5BMDQ3YTBmNDEtYWIzZC00OGYwLWJhYTktZjFjZTA0MzViMjM5XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt30495119/?ref_=ls_i_49)
+
+6.8(1.9K)
+
+[49. Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord](https://www.imdb.com/title/tt30495119/?ref_=ls_t_49)
+
+2024 12 eps
+
+![Image 50: 50. The Iceblade Sorcerer Shall Rule the World](https://m.media-amazon.com/images/M/MV5BMzE1NGIxNDItNmYyZC00NTk4LWJlY2YtZGQ1NjJlYjdmMDAxXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt25531288/?ref_=ls_i_50)
+
+6.4(2K)
+
+[50. The Iceblade Sorcerer Shall Rule the World](https://www.imdb.com/title/tt25531288/?ref_=ls_t_50)
+
+2023– 15 eps
+
+![Image 51: 51. Metallic Rouge](https://m.media-amazon.com/images/M/MV5BYWRhYzQ0ZjAtMmI2Yi00ZDRhLTgzYTYtNWUwMDc5MGIxMTU1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29510641/?ref_=ls_i_51)
+
+5.9(698)
+
+[51. Metallic Rouge](https://www.imdb.com/title/tt29510641/?ref_=ls_t_51)
+
+2024 13 eps
+
+![Image 52: 52. Code Geass: Lelouch of the Rebellion](https://m.media-amazon.com/images/M/MV5BNTk4MWYwNmUtODFjNC00NWJhLWExNGYtMGU4YmRlNzEwOTY1XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt0994314/?ref_=ls_i_52)
+
+8.7(111K)
+
+[52. Code Geass: Lelouch of the Rebellion](https://www.imdb.com/title/tt0994314/?ref_=ls_t_52)
+
+2006–2008 54 eps
+
+![Image 53: 53. I Got a Cheat Skill in Another World and Became Unrivaled in the Real World, Too](https://m.media-amazon.com/images/M/MV5BZWExYjA3OTAtYzliNC00MWMzLWI1NmYtYWY0MDRhNGIyN2IwXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27417996/?ref_=ls_i_53)
+
+6.6(5.5K)
+
+[53. I Got a Cheat Skill in Another World and Became Unrivaled in the Real World, Too](https://www.imdb.com/title/tt27417996/?ref_=ls_t_53)
+
+2023–2026 15 eps
+
+![Image 54: 54. The Reincarnation of the Strongest Exorcist in Another World](https://m.media-amazon.com/images/M/MV5BNDZjNTgyNDktZTJmZi00YzQ3LWJjNGMtOWQ0ODE1OGMwNmMzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt25809288/?ref_=ls_i_54)
+
+7.0(3K)
+
+[54. The Reincarnation of the Strongest Exorcist in Another World](https://www.imdb.com/title/tt25809288/?ref_=ls_t_54)
+
+2023 13 eps
+
+![Image 55: 55. Tower of God](https://m.media-amazon.com/images/M/MV5BZWQwZGY3MGItZjQ3OS00MzYxLTlmMWMtNjZiYTY2ZDk4ZjFhXkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt12057106/?ref_=ls_i_55)
+
+7.4(12K)
+
+[55. Tower of God](https://www.imdb.com/title/tt12057106/?ref_=ls_t_55)
+
+2020–2024 39 eps
+
+![Image 56: 56. Frieren: Beyond Journey's End](https://m.media-amazon.com/images/M/MV5BZTI4ZGMxN2UtODlkYS00MTBjLWE1YzctYzc3NDViMGI0ZmJmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt22248376/?ref_=ls_i_56)
+
+8.9(86K)
+
+[56. Frieren: Beyond Journey's End](https://www.imdb.com/title/tt22248376/?ref_=ls_t_56)
+
+2023– 39 eps
+
+![Image 57: 57. My Love Story with Yamada-kun at Lv999](https://m.media-amazon.com/images/M/MV5BOGU4NzQ3YzQtOTU4MC00ZGMzLThlOGMtODMzODg3YzM1Mzg2XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt22297712/?ref_=ls_i_57)
+
+7.6(7.5K)
+
+[57. My Love Story with Yamada-kun at Lv999](https://www.imdb.com/title/tt22297712/?ref_=ls_t_57)
+
+2023 13 eps
+
+![Image 58: 58. The Weakest Tamer Began a Journey to Pick Up Trash](https://m.media-amazon.com/images/M/MV5BMGFiNzEwNTAtNGQ4Ni00YWZmLWFmNjEtNmZjOGNhMWFhYzgwXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt30644010/?ref_=ls_i_58)
+
+7.3(1.4K)
+
+[58. The Weakest Tamer Began a Journey to Pick Up Trash](https://www.imdb.com/title/tt30644010/?ref_=ls_t_58)
+
+2024 13 eps
+
+![Image 59: 59. The Wrong Way to Use Healing Magic](https://m.media-amazon.com/images/M/MV5BYTMxNDZkYjgtYjI0Ny00NTI4LWFiMDgtYmQyZDdiMzU0NTQzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15237152/?ref_=ls_i_59)
+
+7.3(4.5K)
+
+[59. The Wrong Way to Use Healing Magic](https://www.imdb.com/title/tt15237152/?ref_=ls_t_59)
+
+2024 14 eps
+
+![Image 60: 60. Spy x Family](https://m.media-amazon.com/images/M/MV5BZDkwNjc0NWEtNzJlOC00N2YwLTk4MjktZGFlZDE2Y2QzOWI0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13706018/?ref_=ls_i_60)
+
+8.2(66K)
+
+[60. Spy x Family](https://www.imdb.com/title/tt13706018/?ref_=ls_t_60)
+
+2022– 50 eps
+
+![Image 61: 61. The Apothecary Diaries](https://m.media-amazon.com/images/M/MV5BNjAxMmFjZjgtYjM1ZS00NzdmLTliZDktZmIyMzU5YTBlNDBmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt26743760/?ref_=ls_i_61)
+
+8.6(29K)
+
+[61. The Apothecary Diaries](https://www.imdb.com/title/tt26743760/?ref_=ls_t_61)
+
+2023– 54 eps
+
+![Image 62: 62. Mashle: Magic and Muscles](https://m.media-amazon.com/images/M/MV5BMjMyNjg4MzItMGI3MS00MGVmLWE5MDMtODk4NjIyNzFlOWZlXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21209804/?ref_=ls_i_62)
+
+7.5(18K)
+
+[62. Mashle: Magic and Muscles](https://www.imdb.com/title/tt21209804/?ref_=ls_t_62)
+
+2023– 26 eps
+
+![Image 63: 63. BUCCHIGIRI?!](https://m.media-amazon.com/images/M/MV5BZmM2NDZjMWYtZTA1MS00MjUxLTk0ZjUtMGYzM2NmYzJlNDU5XkEyXkFqcGc@._V1_QL75_UY207_CR2,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28454318/?ref_=ls_i_63)
+
+6.2(1.4K)
+
+[63. BUCCHIGIRI?!](https://www.imdb.com/title/tt28454318/?ref_=ls_t_63)
+
+2024 12 eps
+
+![Image 64: 64. The Strongest Tank's Labyrinth Raids: A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party](https://m.media-amazon.com/images/M/MV5BNjc1MTljZGYtODQzMy00MGVjLTg5ZDQtYjNlYzdkOGZmYmU3XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt30643971/?ref_=ls_i_64)
+
+5.7(664)
+
+[64. The Strongest Tank's Labyrinth Raids: A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party](https://www.imdb.com/title/tt30643971/?ref_=ls_t_64)
+
+2024 12 eps
+
+![Image 65: 65. Solo Leveling](https://m.media-amazon.com/images/M/MV5BM2M4YzdkMTEtMjUyYy00ZWY0LWI5ODQtNGRkZWQ1MzU5MWM2XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21209876/?ref_=ls_i_65)
+
+8.5(123K)
+
+[65. Solo Leveling](https://www.imdb.com/title/tt21209876/?ref_=ls_t_65)
+
+2024– 26 eps
+
+![Image 66: 66. Gods' Games We Play](https://m.media-amazon.com/images/M/MV5BNjc4NGQxY2ItZTE2NC00M2U4LTk4OTUtZTcxNjVlMDVjZDk0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31860621/?ref_=ls_i_66)
+
+5.9(700)
+
+[66. Gods' Games We Play](https://www.imdb.com/title/tt31860621/?ref_=ls_t_66)
+
+2024 13 eps
+
+![Image 67: 67. Kaiju No. 8](https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21975436/?ref_=ls_i_67)
+
+8.2(35K)
+
+[67. Kaiju No. 8](https://www.imdb.com/title/tt21975436/?ref_=ls_t_67)
+
+2024–2025 25 eps
+
+![Image 68: 68. I Was Reincarnated as the 7th Prince So I Can Take My Time Perfecting My Magical Ability](https://m.media-amazon.com/images/M/MV5BMzUzMWUyZmItNjFhZC00NzlmLWJjYjktZjM1ZWNmODA3ZmEyXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31624309/?ref_=ls_i_68)
+
+6.9(3.3K)
+
+[68. I Was Reincarnated as the 7th Prince So I Can Take My Time Perfecting My Magical Ability](https://www.imdb.com/title/tt31624309/?ref_=ls_t_68)
+
+2024– 24 eps
+
+![Image 69: 69. Bartender: Glass of God](https://m.media-amazon.com/images/M/MV5BMWMxMmViZGUtNmVlMi00YTVkLTgxOTMtZmFiMjBmN2E5N2Y4XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29233201/?ref_=ls_i_69)
+
+7.1(1.1K)
+
+[69. Bartender: Glass of God](https://www.imdb.com/title/tt29233201/?ref_=ls_t_69)
+
+2024 12 eps
+
+![Image 70: 70. Wind Breaker](https://m.media-amazon.com/images/M/MV5BNDA2MDRhNTEtMjU4NC00MzZjLWJjM2UtZDg4MWI5OWU3ZjEwXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29605391/?ref_=ls_i_70)
+
+7.4(9.9K)
+
+[70. Wind Breaker](https://www.imdb.com/title/tt29605391/?ref_=ls_t_70)
+
+2024–2025 25 eps
+
+![Image 71: 71. A Condition Called Love](https://m.media-amazon.com/images/M/MV5BNGQ1M2Y4NWMtNDZhYy00NmRkLTkxMmUtMWMwZTkxMDQ2YjRlXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29899598/?ref_=ls_i_71)
+
+6.7(1.3K)
+
+[71. A Condition Called Love](https://www.imdb.com/title/tt29899598/?ref_=ls_t_71)
+
+2024– 12 eps
+
+![Image 72: 72. A Salad Bowl of Eccentrics](https://m.media-amazon.com/images/M/MV5BMGYzMmFlY2QtYzdhZC00YjRkLTlkN2MtZjQyOGY5N2EwZTE5XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31940099/?ref_=ls_i_72)
+
+6.9(420)
+
+[72. A Salad Bowl of Eccentrics](https://www.imdb.com/title/tt31940099/?ref_=ls_t_72)
+
+2024 12 eps
+
+![Image 73: 73. Vampire Dormitory](https://m.media-amazon.com/images/M/MV5BMTUxMzE0YjgtYThmMS00NGFmLWJiYzQtMTBmY2QxNjUzMGI4XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31976012/?ref_=ls_i_73)
+
+6.0(733)
+
+[73. Vampire Dormitory](https://www.imdb.com/title/tt31976012/?ref_=ls_t_73)
+
+2024– 12 eps
+
+![Image 74: 74. The Many Sides of Voice Actor Radio](https://m.media-amazon.com/images/M/MV5BZTAwOTA5MzEtNzVlNS00NWJhLWJjM2MtZTYwYjUyMzQ0NTlmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31940035/?ref_=ls_i_74)
+
+7.0(375)
+
+[74. The Many Sides of Voice Actor Radio](https://www.imdb.com/title/tt31940035/?ref_=ls_t_74)
+
+2024 12 eps
+
+![Image 75: 75. Viral Hit](https://m.media-amazon.com/images/M/MV5BOWM5Yjk3MzUtZmNlYy00ZWQ2LTk0YTctZjExOGY2YThlZmNjXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31975855/?ref_=ls_i_75)
+
+7.1(1.6K)
+
+[75. Viral Hit](https://www.imdb.com/title/tt31975855/?ref_=ls_t_75)
+
+2024– 12 eps
+
+![Image 76: 76. An Archdemon's Dilemma: How to Love Your Elf Bride](https://m.media-amazon.com/images/M/MV5BZGYyNzc1ZTItNDQ2MC00YjA0LTgwZDItY2RjM2RkZGM4NjliXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31940008/?ref_=ls_i_76)
+
+7.3(2.5K)
+
+[76. An Archdemon's Dilemma: How to Love Your Elf Bride](https://www.imdb.com/title/tt31940008/?ref_=ls_t_76)
+
+2024 12 eps
+
+![Image 77: 77. Dr. Stone](https://m.media-amazon.com/images/M/MV5BYzZkYjM1MWMtNTY3Mi00MTMzLTlhNmQtN2ExZjFkYzdjZmFjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9679542/?ref_=ls_i_77)
+
+8.1(47K)
+
+[77. Dr. Stone](https://www.imdb.com/title/tt9679542/?ref_=ls_t_77)
+
+2019–2026 96 eps
+
+![Image 78: 78. Haikyuu!!](https://m.media-amazon.com/images/M/MV5BYjYxMWFlYTAtYTk0YS00NTMxLWJjNTQtM2E0NjdhYTRhNzE4XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt3398540/?ref_=ls_i_78)
+
+8.7(58K)
+
+[78. Haikyuu!!](https://www.imdb.com/title/tt3398540/?ref_=ls_t_78)
+
+2014–2020 89 eps
+
+![Image 79: 79. Blue Lock](https://m.media-amazon.com/images/M/MV5BNWFlNmJkN2YtNGRiZS00NjExLTlmNmEtYzdiMTdiZmMzYzAwXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt15222080/?ref_=ls_i_79)
+
+8.1(35K)
+
+[79. Blue Lock](https://www.imdb.com/title/tt15222080/?ref_=ls_t_79)
+
+2022– 38 eps
+
+![Image 80: 80. Tsukimichi: Moonlit Fantasy](https://m.media-amazon.com/images/M/MV5BZGFjZDJkOWYtOTgwYy00MTI4LWJlNDItZWI1MWY4ZmY1ZDllXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13311344/?ref_=ls_i_80)
+
+7.7(6.7K)
+
+[80. Tsukimichi: Moonlit Fantasy](https://www.imdb.com/title/tt13311344/?ref_=ls_t_80)
+
+2021–2024 37 eps
+
+![Image 81: 81. Quality Assurance in Another World](https://m.media-amazon.com/images/M/MV5BMTc2MGM2M2EtZGIzNS00ODdhLWJhOWMtZGM1N2I3ZTQ3ZWNkXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32332918/?ref_=ls_i_81)
+
+6.0(434)
+
+[81. Quality Assurance in Another World](https://www.imdb.com/title/tt32332918/?ref_=ls_t_81)
+
+2024 13 eps
+
+![Image 82: 82. Wistoria: Wand and Sword](https://m.media-amazon.com/images/M/MV5BNWU1OTgxYTMtZTViMy00MmU0LTg2ZGMtZDVkYTNlYzI4NWRjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31889371/?ref_=ls_i_82)
+
+7.7(8K)
+
+[82. Wistoria: Wand and Sword](https://www.imdb.com/title/tt31889371/?ref_=ls_t_82)
+
+2024– 25 eps
+
+![Image 83: 83. VTuber Legend: How I Went Viral after Forgetting to Turn Off My Stream](https://m.media-amazon.com/images/M/MV5BNDJjNmNmMmYtNDQ1Zi00ZGEyLTg0NTYtZDEyNGFlYTE0NGVlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32332792/?ref_=ls_i_83)
+
+5.6(285)
+
+[83. VTuber Legend: How I Went Viral after Forgetting to Turn Off My Stream](https://www.imdb.com/title/tt32332792/?ref_=ls_t_83)
+
+2024– 12 eps
+
+![Image 84: 84. The Elusive Samurai](https://m.media-amazon.com/images/M/MV5BY2U2NWFlZGEtYTM2NC00YzNiLWFkMmQtMWU5YmU2Y2M1Njc5XkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt27187054/?ref_=ls_i_84)
+
+7.3(2.2K)
+
+[84. The Elusive Samurai](https://www.imdb.com/title/tt27187054/?ref_=ls_t_84)
+
+2024– 25 eps
+
+![Image 85: 85. Twilight Out of Focus](https://m.media-amazon.com/images/M/MV5BOTZhZWQ3ZGUtZjM2NC00OTViLWI3MzItOWJkNzFkY2ZhMzcwXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32332813/?ref_=ls_i_85)
+
+7.2(762)
+
+[85. Twilight Out of Focus](https://www.imdb.com/title/tt32332813/?ref_=ls_t_85)
+
+2024 12 eps
+
+![Image 86: 86. Days with My Stepsister](https://m.media-amazon.com/images/M/MV5BZDU2MWNiYWMtMjIxZS00ZTVlLTkxZDAtYzA5YzFhODBhODAyXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt21975478/?ref_=ls_i_86)
+
+7.1(2.3K)
+
+[86. Days with My Stepsister](https://www.imdb.com/title/tt21975478/?ref_=ls_t_86)
+
+2024 12 eps
+
+![Image 87: 87. Bye Bye, Earth](https://m.media-amazon.com/images/M/MV5BNWIxYzAxZjctNjc4Ny00MTI2LTgwMjAtNjViMzdkMDc4MjUxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt23844810/?ref_=ls_i_87)
+
+5.5(535)
+
+[87. Bye Bye, Earth](https://www.imdb.com/title/tt23844810/?ref_=ls_t_87)
+
+2024– 20 eps
+
+![Image 88: 88. Alya Sometimes Hides Her Feelings in Russian](https://m.media-amazon.com/images/M/MV5BNjg0YTVjNTItZTI1ZC00MDZlLTllYjQtMDY0ODMxNDdlYjY3XkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31131295/?ref_=ls_i_88)
+
+7.3(10K)
+
+[88. Alya Sometimes Hides Her Feelings in Russian](https://www.imdb.com/title/tt31131295/?ref_=ls_t_88)
+
+2024– 13 eps
+
+![Image 89: 91. Why Does Nobody Remember Me in This World?](https://m.media-amazon.com/images/M/MV5BNThkMmVhZDItZWUyMC00NmYzLWE5MDEtNzhjOWM1NDE3ODVjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31844529/?ref_=ls_i_89)
+
+6.2(1.2K)
+
+[89. Why Does Nobody Remember Me in This World?](https://www.imdb.com/title/tt31844529/?ref_=ls_t_89)
+
+2024– 12 eps
+
+![Image 90: 90. Makeine: Too Many Losing Heroines!](https://m.media-amazon.com/images/M/MV5BMzA3MWRiZjQtNzlhNS00ZmFjLTgzNWItOTA4ZWFlOWFjMDBmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32332831/?ref_=ls_i_90)
+
+7.4(3.9K)
+
+[90. Makeine: Too Many Losing Heroines!](https://www.imdb.com/title/tt32332831/?ref_=ls_t_90)
+
+2024 12 eps
+
+![Image 91: 91. Why Does Nobody Remember Me in This World?](https://m.media-amazon.com/images/M/MV5BNThkMmVhZDItZWUyMC00NmYzLWE5MDEtNzhjOWM1NDE3ODVjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31844529/?ref_=ls_i_91)
+
+6.2(1.2K)
+
+[91. Why Does Nobody Remember Me in This World?](https://www.imdb.com/title/tt31844529/?ref_=ls_t_91)
+
+2024– 12 eps
+
+![Image 92: 92. That Time I Got Reincarnated as a Slime](https://m.media-amazon.com/images/M/MV5BOTczMjM3MDUtYmZjMC00YzZhLWE4ODQtNjg5YWU4NTJjNzY2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9054364/?ref_=ls_i_92)
+
+8.0(29K)
+
+[92. That Time I Got Reincarnated as a Slime](https://www.imdb.com/title/tt9054364/?ref_=ls_t_92)
+
+2018– 107 eps
+
+![Image 93: 93. The Strongest Magician in the Demon Lord's Army was a Human](https://m.media-amazon.com/images/M/MV5BN2E5ODQ5MjItMDEzOC00ZWM2LTgxN2QtMjRmZTYzZWQ0NzJiXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32333026/?ref_=ls_i_93)
+
+6.2(1.2K)
+
+[93. The Strongest Magician in the Demon Lord's Army was a Human](https://www.imdb.com/title/tt32333026/?ref_=ls_t_93)
+
+2024 12 eps
+
+![Image 94: 94. No Longer Allowed in Another World](https://m.media-amazon.com/images/M/MV5BMWMwNzEyYTktNzkxYi00NjAxLTgwY2QtNDY0OGIxNDI3MmVlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31186547/?ref_=ls_i_94)
+
+6.8(2.1K)
+
+[94. No Longer Allowed in Another World](https://www.imdb.com/title/tt31186547/?ref_=ls_t_94)
+
+2024 12 eps
+
+![Image 95: 95. True Beauty](https://m.media-amazon.com/images/M/MV5BNzBjYWUyYjYtZmQ1Mi00NzhkLWJmNGEtZjI3OGM1NzcxMWU2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt33054444/?ref_=ls_i_95)
+
+6.7(502)
+
+[95. True Beauty](https://www.imdb.com/title/tt33054444/?ref_=ls_t_95)
+
+2024– 13 eps
+
+![Image 96: 96. Assassination Classroom](https://m.media-amazon.com/images/M/MV5BZjBkYmRiOTAtY2IwOS00ZWU3LTk3YjItNjMzYWZiMDE1MjcyXkEyXkFqcGc@._V1_QL75_UY207_CR10,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt3837246/?ref_=ls_i_96)
+
+7.9(30K)
+
+[96. Assassination Classroom](https://www.imdb.com/title/tt3837246/?ref_=ls_t_96)
+
+2013–2016 50 eps
+
+![Image 97: 97. Mushoku Tensei: Jobless Reincarnation](https://m.media-amazon.com/images/M/MV5BYWQwNjk3MDItNDAxMS00YTQ2LWEyNDctMGYyZTE5OGQxNGQ1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13293588/?ref_=ls_i_97)
+
+8.2(67K)
+
+[97. Mushoku Tensei: Jobless Reincarnation](https://www.imdb.com/title/tt13293588/?ref_=ls_t_97)
+
+2021– 63 eps
+
+![Image 98: 98. Nina the Starry Bride](https://m.media-amazon.com/images/M/MV5BYjRmMWZiODMtOGE3ZC00NGY0LTk0MWUtZGM4OGQwODZmYjNlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32178571/?ref_=ls_i_98)
+
+6.6(1.4K)
+
+[98. Nina the Starry Bride](https://www.imdb.com/title/tt32178571/?ref_=ls_t_98)
+
+2024–2025 13 eps
+
+![Image 99: 99. I'll Become a Villainess Who Goes Down in History](https://m.media-amazon.com/images/M/MV5BOWQ0NzQzOTktYzdkNy00ZmU4LTliYzYtZGQ4MzJiZDE1YmZjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32812118/?ref_=ls_i_99)
+
+7.1(1.6K)
+
+[99. I'll Become a Villainess Who Goes Down in History](https://www.imdb.com/title/tt32812118/?ref_=ls_t_99)
+
+2024 13 eps
+
+![Image 100: 100. Tying the Knot with an Amagami Sister](https://m.media-amazon.com/images/M/MV5BN2E2MTVkZDctY2RjYy00OGRiLTkwM2EtYjg1Njk5MzQ5NzI3XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29141921/?ref_=ls_i_100)
+
+6.6(1.5K)
+
+[100. Tying the Knot with an Amagami Sister](https://www.imdb.com/title/tt29141921/?ref_=ls_t_100)
+
+2024–2025 24 eps
+
+![Image 101: 101. Demon Lord, Retry! R](https://m.media-amazon.com/images/M/MV5BY2Q5ZGE2MzEtZjA5MC00ZTczLWJkYTQtNDFjOTliZGFiNTE2XkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt10443362/?ref_=ls_i_101)
+
+6.5(1.7K)
+
+[101. Demon Lord, Retry! R](https://www.imdb.com/title/tt10443362/?ref_=ls_t_101)
+
+2019–2024 24 eps
+
+![Image 102: 102. You Are Ms. Servant](https://m.media-amazon.com/images/M/MV5BYjYxMThhOGItM2ZkOC00NjRjLTk1MWMtMjcyZDcwOWEwZWI3XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt30689669/?ref_=ls_i_102)
+
+6.1(1.8K)
+
+[102. You Are Ms. Servant](https://www.imdb.com/title/tt30689669/?ref_=ls_t_102)
+
+2024 12 eps
+
+![Image 103: 103. Good Bye, Dragon Life.](https://m.media-amazon.com/images/M/MV5BMmQyYmNjMzctYmY2NS00ZDk0LTk0ZTMtNzMxYzcyYWMyMjM0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32832435/?ref_=ls_i_103)
+
+6.1(803)
+
+[103. Good Bye, Dragon Life.](https://www.imdb.com/title/tt32832435/?ref_=ls_t_103)
+
+2024– 12 eps
+
+![Image 104: 104. Dandadan](https://m.media-amazon.com/images/M/MV5BYWFhOWMxNTYtZThiMi00ZmQ5LTlmODktN2QwNzUyZjMyZGQzXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt30217403/?ref_=ls_i_104)
+
+8.3(60K)
+
+[104. Dandadan](https://www.imdb.com/title/tt30217403/?ref_=ls_t_104)
+
+2024– 25 eps
+
+![Image 105: 105. Dragon Ball Daima](https://m.media-amazon.com/images/M/MV5BYWNjY2MxOTAtYWVjMS00YzJjLTk1ZTYtZGE0ZDA5MmQwNDUzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt29485149/?ref_=ls_i_105)
+
+7.7(20K)
+
+[105. Dragon Ball Daima](https://www.imdb.com/title/tt29485149/?ref_=ls_t_105)
+
+2024–2025 20 eps
+
+![Image 106: 106. Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside](https://m.media-amazon.com/images/M/MV5BNjE5Nzk1ZDctZjNkNy00YTI5LThiY2EtOGY5YjVhZTMyYTI1XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13483212/?ref_=ls_i_106)
+
+6.7(2.7K)
+
+[106. Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside](https://www.imdb.com/title/tt13483212/?ref_=ls_t_106)
+
+2021–2024 25 eps
+
+![Image 107: 107. Zenshu](https://m.media-amazon.com/images/M/MV5BN2E4N2Q2MmItMzEyMC00ZmY3LTljZTktYmVkYWQyNzE1M2VjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt31863730/?ref_=ls_i_107)
+
+7.0(2.2K)
+
+[107. Zenshu](https://www.imdb.com/title/tt31863730/?ref_=ls_t_107)
+
+2024–2025 12 eps
+
+![Image 108: 108. Magic Maker: How to Create Magic in Another World](https://m.media-amazon.com/images/M/MV5BOGU2YTM4NzgtZmJiYi00NWY0LTljZDQtMDRiNTE1NTBlZTMxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt34621291/?ref_=ls_i_108)
+
+6.3(761)
+
+[108. Magic Maker: How to Create Magic in Another World](https://www.imdb.com/title/tt34621291/?ref_=ls_t_108)
+
+2025– 12 eps
+
+![Image 109: 109. I'm Getting Married to a Girl I Hate in My Class](https://m.media-amazon.com/images/M/MV5BYTc1MWFhYzEtYzE1YS00NWFjLTg3OTYtN2JhNzRiNTRkZTNlXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32741637/?ref_=ls_i_109)
+
+6.8(2.9K)
+
+[109. I'm Getting Married to a Girl I Hate in My Class](https://www.imdb.com/title/tt32741637/?ref_=ls_t_109)
+
+2025 12 eps
+
+![Image 110: 110. Trillion Game](https://m.media-amazon.com/images/M/MV5BOWRhNjk4MzItODgyZS00MTFmLWE1MzQtNTFjZDZlNzY5ODhkXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt33609048/?ref_=ls_i_110)
+
+7.2(393)
+
+[110. Trillion Game](https://www.imdb.com/title/tt33609048/?ref_=ls_t_110)
+
+2024– 26 eps
+
+![Image 111: 111. The Red Ranger Becomes an Adventurer in Another World](https://m.media-amazon.com/images/M/MV5BMTcwNTIyYzItMjUxYy00ODZjLWJjMzYtYjI4ZmU0ZTEyM2M1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt33084834/?ref_=ls_i_111)
+
+6.2(652)
+
+[111. The Red Ranger Becomes an Adventurer in Another World](https://www.imdb.com/title/tt33084834/?ref_=ls_t_111)
+
+2025– 12 eps
+
+![Image 112: 112. Possibly the Greatest Alchemist of All Time](https://m.media-amazon.com/images/M/MV5BMTU2ZWFhZTItYzIyZC00MGY4LWI3MzYtMTlhZDY2YmZiYTRiXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt33478787/?ref_=ls_i_112)
+
+6.5(1.7K)
+
+[112. Possibly the Greatest Alchemist of All Time](https://www.imdb.com/title/tt33478787/?ref_=ls_t_112)
+
+2025 12 eps
+
+![Image 113: 113. The Unaware Atelier Meister](https://m.media-amazon.com/images/M/MV5BMGNiMmMzMDgtMzNlZi00NmU2LWJiYTYtYmUzZjEzNGUzM2Y4XkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt35014218/?ref_=ls_i_113)
+
+6.5(1.2K)
+
+[113. The Unaware Atelier Meister](https://www.imdb.com/title/tt35014218/?ref_=ls_t_113)
+
+2025 12 eps
+
+![Image 114: 114. Catch Me at the Ballpark!](https://m.media-amazon.com/images/M/MV5BNGI5MTgxYmMtZmYyYi00M2E1LTg3ZWMtZDBkOTA2OWFhMzhhXkEyXkFqcGc@._V1_QL75_UY207_CR4,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt35994065/?ref_=ls_i_114)
+
+6.7(385)
+
+[114. Catch Me at the Ballpark!](https://www.imdb.com/title/tt35994065/?ref_=ls_t_114)
+
+2025– 12 eps
+
+![Image 115: 115. SK8 the Infinity](https://m.media-amazon.com/images/M/MV5BMjA1YzRjYjAtZDEwZC00NTVkLTk2MWUtYzNmNzcxMDhhMWMwXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt13129190/?ref_=ls_i_115)
+
+8.0(7K)
+
+[115. SK8 the Infinity](https://www.imdb.com/title/tt13129190/?ref_=ls_t_115)
+
+2021– 14 eps
+
+![Image 116: 116. Once Upon a Witch's Death](https://m.media-amazon.com/images/M/MV5BOTliMGEzMzEtM2U4Zi00Y2U3LTg4NDQtZjYyNDM2YTRkYzkxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32779862/?ref_=ls_i_116)
+
+6.7(439)
+
+[116. Once Upon a Witch's Death](https://www.imdb.com/title/tt32779862/?ref_=ls_t_116)
+
+2025– 12 eps
+
+![Image 117: 117. The Gorilla God's Go-To Girl](https://m.media-amazon.com/images/M/MV5BOWFjMjM5OGUtOTIyNC00OTVkLWExM2MtMGQ5ZDE2ODdmNjMyXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt35348180/?ref_=ls_i_117)
+
+6.2(701)
+
+[117. The Gorilla God's Go-To Girl](https://www.imdb.com/title/tt35348180/?ref_=ls_t_117)
+
+2025 12 eps
+
+![Image 118: 118. Dan Da Dan: First Encounter](https://m.media-amazon.com/images/M/MV5BMmE4NGI0NWUtOGFmNS00Yzk4LWFjYWYtYjU2MTAxYTMxMGQ5XkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt33343397/?ref_=ls_i_118)
+
+8.2(4.1K)
+
+[118. Dan Da Dan: First Encounter](https://www.imdb.com/title/tt33343397/?ref_=ls_t_118)
+
+2024 1h 23m
+
+![Image 119: 119. Berserk of Gluttony](https://m.media-amazon.com/images/M/MV5BNGI3NTg0YjEtZmVjZS00OWZjLTg1OTUtYjJmMmJlMTNhZWE3XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28685497/?ref_=ls_i_119)
+
+6.8(3K)
+
+[119. Berserk of Gluttony](https://www.imdb.com/title/tt28685497/?ref_=ls_t_119)
+
+2023–2027 24 eps
+
+![Image 120: 120. The Shiunji Family Children](https://m.media-amazon.com/images/M/MV5BODIwMmVlNDktZmE4OC00OGY3LTgyZmYtYmE5YTQ1MDI4ZTMzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt35331428/?ref_=ls_i_120)
+
+6.8(1.7K)
+
+[120. The Shiunji Family Children](https://www.imdb.com/title/tt35331428/?ref_=ls_t_120)
+
+2025 12 eps
+
+![Image 121: 121. The God of High School](https://m.media-amazon.com/images/M/MV5BODVjODVhNjgtZWZkNy00ODViLTgwMGYtZmU0ZTNkZTI3N2M5XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt12227418/?ref_=ls_i_121)
+
+7.2(10K)
+
+[121. The God of High School](https://www.imdb.com/title/tt12227418/?ref_=ls_t_121)
+
+2020 13 eps
+
+![Image 122: 122. Clevatess](https://m.media-amazon.com/images/M/MV5BZGVkODQ2MDctOTVkYi00YWYwLWJlMmMtOThlOGMzNTZkYzQ4XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32991344/?ref_=ls_i_122)
+
+7.7(4.3K)
+
+[122. Clevatess](https://www.imdb.com/title/tt32991344/?ref_=ls_t_122)
+
+2025– 25 eps
+
+![Image 123: 123. Gachiakuta](https://m.media-amazon.com/images/M/MV5BZDU5ZmEzODYtMDU2OS00NTZiLTk4MWYtYWUyZWUzNGU2ODdjXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32612521/?ref_=ls_i_123)
+
+8.0(17K)
+
+[123. Gachiakuta](https://www.imdb.com/title/tt32612521/?ref_=ls_t_123)
+
+2025– 24 eps
+
+![Image 124: 124. New Saga](https://m.media-amazon.com/images/M/MV5BMGI0NzU4Y2UtYzQwNS00YzdhLTk4YjctYmM5NTZmMDRlM2JiXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt33050376/?ref_=ls_i_124)
+
+6.5(970)
+
+[124. New Saga](https://www.imdb.com/title/tt33050376/?ref_=ls_t_124)
+
+2025 12 eps
+
+![Image 125: 125. Lord of Mysteries](https://m.media-amazon.com/images/M/MV5BMWE1ZWYwZGUtZjRmOS00NzUzLTlkZmUtMTEwMjNhNTVmNDIwXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt28618556/?ref_=ls_i_125)
+
+8.5(17K)
+
+[125. Lord of Mysteries](https://www.imdb.com/title/tt28618556/?ref_=ls_t_125)
+
+2025– 17 eps
+
+![Image 126: 126. One Punch Man](https://m.media-amazon.com/images/M/MV5BNzMwOGQ5MWItNzE3My00ZDYyLTk4NzAtZWIyYWI0NTZhYzY0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt4508902/?ref_=ls_i_126)
+
+8.6(232K)
+
+[126. One Punch Man](https://www.imdb.com/title/tt4508902/?ref_=ls_t_126)
+
+2015– 51 eps
+
+![Image 127: 127. With You, Our Love Will Make It Through](https://m.media-amazon.com/images/M/MV5BYTE4MDBlMmItNWYyZi00MTAzLTgxN2ItZTJhZDNkNDBlOWQyXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt36221414/?ref_=ls_i_127)
+
+6.5(624)
+
+[127. With You, Our Love Will Make It Through](https://www.imdb.com/title/tt36221414/?ref_=ls_t_127)
+
+2025– 12 eps
+
+![Image 128: 128. Your Name.](https://m.media-amazon.com/images/M/MV5BMjI1ODZkYTgtYTY3Yy00ZTJkLWFkOTgtZDUyYWM4MzQwNjk0XkEyXkFqcGc@._V1_QL75_UX140_CR0,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt5311514/?ref_=ls_i_128)
+
+8.4(408K)
+
+[128. Your Name.](https://www.imdb.com/title/tt5311514/?ref_=ls_t_128)
+
+2016 1h 46m
+
+![Image 129: 129. Weathering with You](https://m.media-amazon.com/images/M/MV5BMmJiYWI4ZjktMzgyZS00MjBiLThmOTYtZWJmOTUzOTFkMTFiXkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9426210/?ref_=ls_i_129)
+
+7.5(73K)
+
+[129. Weathering with You](https://www.imdb.com/title/tt9426210/?ref_=ls_t_129)
+
+2019 1h 52m
+
+![Image 130: 130. Suzume](https://m.media-amazon.com/images/M/MV5BODhkNDhmNzktODFmMC00NDZiLWEzN2UtY2YwYzgzYTVlMWZmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt16428256/?ref_=ls_i_130)
+
+7.6(67K)
+
+[130. Suzume](https://www.imdb.com/title/tt16428256/?ref_=ls_t_130)
+
+2022 2h 2m
+
+![Image 131: 131. Mechanical Marie](https://m.media-amazon.com/images/M/MV5BYTlmNmFiNDQtYzkxMS00MGVlLWEzZTUtY2FhNGE4YzhiMzU0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt36912922/?ref_=ls_i_131)
+
+6.3(489)
+
+[131. Mechanical Marie](https://www.imdb.com/title/tt36912922/?ref_=ls_t_131)
+
+2025 12 eps
+
+![Image 132: 132. Sentenced to Be a Hero](https://m.media-amazon.com/images/M/MV5BM2NlNmRlODQtMmNhOS00MDM5LTgwNzEtNzc3M2ZjYzZjNzRkXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt32536168/?ref_=ls_i_132)
+
+7.9(7.3K)
+
+[132. Sentenced to Be a Hero](https://www.imdb.com/title/tt32536168/?ref_=ls_t_132)
+
+2026– 12 eps
+
+![Image 133: 133. My Hero Academia](https://m.media-amazon.com/images/M/MV5BY2QzODA5OTQtYWJlNi00ZjIzLThhNTItMDMwODhlYzYzMjA2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt5626028/?ref_=ls_i_133)
+
+8.2(129K)
+
+[133. My Hero Academia](https://www.imdb.com/title/tt5626028/?ref_=ls_t_133)
+
+2016–2026 183 eps
+
+![Image 134: 134. Tojima Wants to Be a Kamen Rider](https://m.media-amazon.com/images/M/MV5BMmQ2MDhmYzAtNzYxZC00YWM3LTkyMzEtYzcyOGNkYTU4NTIzXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt37532319/?ref_=ls_i_134)
+
+7.6(1.2K)
+
+[134. Tojima Wants to Be a Kamen Rider](https://www.imdb.com/title/tt37532319/?ref_=ls_t_134)
+
+2025– 24 eps
+
+![Image 135: 135. My Hero Academia: Vigilantes](https://m.media-amazon.com/images/M/MV5BOTQzMzIwOGQtMmMzYi00ZjllLWE3OTEtZjIyOGY4ZDBmNmUxXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt35636246/?ref_=ls_i_135)
+
+7.2(3.1K)
+
+[135. My Hero Academia: Vigilantes](https://www.imdb.com/title/tt35636246/?ref_=ls_t_135)
+
+2025– 26 eps
+
+![Image 136: 136. Naruto](https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY207_CR1,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt0409591/?ref_=ls_i_136)
+
+8.4(176K)
+
+[136. Naruto](https://www.imdb.com/title/tt0409591/?ref_=ls_t_136)
+
+2002–2007 220 eps
+
+![Image 137: 137. You and I Are Polar Opposites](https://m.media-amazon.com/images/M/MV5BMmY0YjhhMDYtMDdlMS00MjhjLWJlMWYtMzE2MTI4YjVlYTE0XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt36034547/?ref_=ls_i_137)
+
+8.2(4K)
+
+[137. You and I Are Polar Opposites](https://www.imdb.com/title/tt36034547/?ref_=ls_t_137)
+
+2026 25 eps
+
+![Image 138: 138. Hana-Kimi](https://m.media-amazon.com/images/M/MV5BZGE4N2QxMWYtYTJkMi00YmY0LThlYzctZWZmNjFmZjMxOTc5XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38646611/?ref_=ls_i_138)
+
+6.5(616)
+
+[138. Hana-Kimi](https://www.imdb.com/title/tt38646611/?ref_=ls_t_138)
+
+2026– 25 eps
+
+![Image 139: 139. A Gatherer's Adventure in Isekai](https://m.media-amazon.com/images/M/MV5BMGMwNWEwNWQtYmQ2YS00ZTIzLTlmNmUtOTljZGMwMmMwOTMzXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt37430949/?ref_=ls_i_139)
+
+6.1(902)
+
+[139. A Gatherer's Adventure in Isekai](https://www.imdb.com/title/tt37430949/?ref_=ls_t_139)
+
+2025 12 eps
+
+![Image 140: 140. Let's Play](https://m.media-amazon.com/images/M/MV5BMzY4MjBjODctYjAwZS00Y2EzLTlkMGEtZWUwYmUyZmNhMzE1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt37532040/?ref_=ls_i_140)
+
+6.2(375)
+
+[140. Let's Play](https://www.imdb.com/title/tt37532040/?ref_=ls_t_140)
+
+2025– 12 eps
+
+![Image 141: 141. Dark Moon: The Blood Altar](https://m.media-amazon.com/images/M/MV5BMmVhMWM4N2YtM2M4NS00MWJhLTkyZmEtOThmMjY1MjQ2M2ViXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38646055/?ref_=ls_i_141)
+
+6.2(871)
+
+[141. Dark Moon: The Blood Altar](https://www.imdb.com/title/tt38646055/?ref_=ls_t_141)
+
+2026– 12 eps
+
+![Image 142: 142. Oshi ga Budôkan ittekuretara shinu](https://m.media-amazon.com/images/M/MV5BOGI0YmZmM2UtOTc4NC00MGI1LWEzMTItNjQ2MTVkNTAwZjg2XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt11147864/?ref_=ls_i_142)
+
+6.7(192)
+
+[142. Oshi ga Budôkan ittekuretara shinu](https://www.imdb.com/title/tt11147864/?ref_=ls_t_142)
+
+2020 12 eps
+
+![Image 143: 143. My Clueless First Friend](https://m.media-amazon.com/images/M/MV5BMmYyOTM3NDMtOGIwMy00ZGE5LWFkZmQtZTE1NDliYjMwZjQ1XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt23711384/?ref_=ls_i_143)
+
+7.4(518)
+
+[143. My Clueless First Friend](https://www.imdb.com/title/tt23711384/?ref_=ls_t_143)
+
+2023 13 eps
+
+![Image 144: 144. Kunon the Sorcerer Can See](https://m.media-amazon.com/images/M/MV5BNWJjZTY0MGUtZGFmOC00NmEyLThiZjMtNTkzYWIyMjNhZjllXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38646949/?ref_=ls_i_144)
+
+6.3(650)
+
+[144. Kunon the Sorcerer Can See](https://www.imdb.com/title/tt38646949/?ref_=ls_t_144)
+
+2026 13 eps
+
+![Image 145: 145. There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her](https://m.media-amazon.com/images/M/MV5BMWExNDE0MWYtMGY1Mi00NWY2LWFiN2MtYzU0OGFjMmMyZGY2XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38037498/?ref_=ls_i_145)
+
+5.8(743)
+
+[145. There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her](https://www.imdb.com/title/tt38037498/?ref_=ls_t_145)
+
+2026– 13 eps
+
+![Image 146: 146. Yuri!!! On Ice](https://m.media-amazon.com/images/M/MV5BMjhkMmY4YjktNTNmYy00NGVjLWI5ZTEtOTQzZDg1NzFlMjM3XkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt6112556/?ref_=ls_i_146)
+
+8.2(13K)
+
+[146. Yuri!!! On Ice](https://www.imdb.com/title/tt6112556/?ref_=ls_t_146)
+
+2016–2017 13 eps
+
+![Image 147: 147. Trigun Stargaze](https://m.media-amazon.com/images/M/MV5BNDg0ODE4MTgtYWU0Ni00NTQwLTkwNzQtYzZmYjQxMzg2NzdlXkEyXkFqcGc@._V1_QL75_UY207_CR3,0,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt36294552/?ref_=ls_i_147)
+
+6.5(515)
+
+[147. Trigun Stargaze](https://www.imdb.com/title/tt36294552/?ref_=ls_t_147)
+
+2026– 12 eps
+
+![Image 148: 148. An Adventurer's Daily Grind at Age 29](https://m.media-amazon.com/images/M/MV5BZjhiNDc4MDctNjJmYy00NmQzLTk4MzUtOGFkZTlkOTgzMmU3XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38647627/?ref_=ls_i_148)
+
+6.2(490)
+
+[148. An Adventurer's Daily Grind at Age 29](https://www.imdb.com/title/tt38647627/?ref_=ls_t_148)
+
+2026 12 eps
+
+![Image 149: 149. Roll Over and Die](https://m.media-amazon.com/images/M/MV5BZmE3ZDBiMTgtOWRiYy00YTQzLWIxOGYtYWY2MmY4NDRlZDcwXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt37901124/?ref_=ls_i_149)
+
+5.9(508)
+
+[149. Roll Over and Die](https://www.imdb.com/title/tt37901124/?ref_=ls_t_149)
+
+2026– 12 eps
+
+![Image 150: 150. A Misanthrope Teaches a Class for Demi-Humans](https://m.media-amazon.com/images/M/MV5BOGE1NTMyNTktMDQyMi00ZjcyLWIyYzMtN2RmN2MzNzkxZTZkXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38646016/?ref_=ls_i_150)
+
+5.5(235)
+
+[150. A Misanthrope Teaches a Class for Demi-Humans](https://www.imdb.com/title/tt38646016/?ref_=ls_t_150)
+
+2026 13 eps
+
+![Image 151: 151. To Be Hero X](https://m.media-amazon.com/images/M/MV5BYmZjNzBhYjYtMzY1MS00M2U1LWFjZGQtY2RmY2FiNWE5YzkwXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt23139038/?ref_=ls_i_151)
+
+8.5(11K)
+
+[151. To Be Hero X](https://www.imdb.com/title/tt23139038/?ref_=ls_t_151)
+
+2025 24 eps
+
+![Image 152: 152. Easygoing Territory Defense by the Optimistic Lord: Production Magic Turns a Nameless Village into the Strongest Fortified City](https://m.media-amazon.com/images/M/MV5BOTRhMmEwMmQtNDllNS00YTE2LTgwMDMtOTJhNzY2ZDkzZTliXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt38977386/?ref_=ls_i_152)
+
+6.7(807)
+
+[152. Easygoing Territory Defense by the Optimistic Lord: Production Magic Turns a Nameless Village into the Strongest Fortified City](https://www.imdb.com/title/tt38977386/?ref_=ls_t_152)
+
+2026– 12 eps
+
+![Image 153: 153. The Rising of the Shield Hero](https://m.media-amazon.com/images/M/MV5BZjc4ZGZkNjMtZTRkYS00Mjk4LTgwMzAtMzg1MWZlZjcxNDRhXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt9529546/?ref_=ls_i_153)
+
+7.6(25K)
+
+[153. The Rising of the Shield Hero](https://www.imdb.com/title/tt9529546/?ref_=ls_t_153)
+
+2019– 62 eps
+
+![Image 154: 154. Daemons of the Shadow Realm](https://m.media-amazon.com/images/M/MV5BOWRlZDA5YjUtNjk3MC00YjRkLWEyYTUtM2ExYWUwNDRlN2UxXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt37532356/?ref_=ls_i_154)
+
+7.7(4.1K)
+
+[154. Daemons of the Shadow Realm](https://www.imdb.com/title/tt37532356/?ref_=ls_t_154)
+
+2026– 24 eps
+
+![Image 155: 155. Agents of the Four Seasons: Dance of Spring](https://m.media-amazon.com/images/M/MV5BODE2NjU5ZjItNThkMC00ZDAzLTlmZDgtYTAyZDEwMjA0N2FmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt39267868/?ref_=ls_i_155)
+
+7.4(891)
+
+[155. Agents of the Four Seasons: Dance of Spring](https://www.imdb.com/title/tt39267868/?ref_=ls_t_155)
+
+2026 14 eps
+
+![Image 156: 156. The Beginning After the End](https://m.media-amazon.com/images/M/MV5BYzEyZmYzNjctODRmMi00N2NlLWI1MmEtMjM3NzY2OTU5ZWE0XkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt34119820/?ref_=ls_i_156)
+
+6.0(4.2K)
+
+[156. The Beginning After the End](https://www.imdb.com/title/tt34119820/?ref_=ls_t_156)
+
+2025– 24 eps
+
+![Image 157: 157. Snowball Earth](https://m.media-amazon.com/images/M/MV5BYTI0ZDNjNjUtNzMxOS00MWM3LTgzNzEtNDA4MWZjYjNkNjVmXkEyXkFqcGc@._V1_QL75_UX140_CR0,1,140,207_.jpg)
+
+[](https://www.imdb.com/title/tt39229727/?ref_=ls_i_157)
+
+6.5(478)
+
+[157. Snowball Earth](https://www.imdb.com/title/tt39229727/?ref_=ls_t_157)
+
+2026– 13 eps
+
+This list was created by a member of the IMDb community and has not been reviewed or verified by IMDb.
+
+## More to explore
+
+#### Feedback
+
+[Tell us what you think about this feature.](https://help.imdb.com/article/imdb/general-information/getsatisfaction-community-access-you-re-about-to-leave-imdb-com/GP4FF3REXES9AR3P?ref_=cons_ls_lst_fdbk)[Report this list](https://help.imdb.com/contact?deepLink=list_report&disableLoginPopup=true&list=ls540527030&ref_=ls_ttls_rpt)
+
+

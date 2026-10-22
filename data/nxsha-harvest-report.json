@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-22T11:29:39.069Z",
+  "generatedAt": "2026-10-22T11:44:41.443Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [],
   "summary": {
-    "requested": 3,
-    "harvested": 3,
+    "requested": 7,
+    "harvested": 7,
     "failed": [],
-    "episodes": 181,
-    "stills": 181,
-    "overviews": 181
+    "episodes": 255,
+    "stills": 255,
+    "overviews": 255
   },
   "titles": [
     {
-      "key": "mobilesuitgundamthewitchfrommercury",
+      "key": "mobilesuitgundamthewitchfrommercury2",
       "title": "Mobile Suit Gundam: The Witch from Mercury",
       "id": "196400",
       "seasons": {
@@ -24,7 +24,7 @@
       "ok": true
     },
     {
-      "key": "demonslayerkimetsunoyaiba",
+      "key": "demonslayerkimetsunoyaiba2",
       "title": "Demon Slayer: Kimetsu no Yaiba",
       "id": "85937",
       "seasons": {
@@ -40,7 +40,7 @@
       "ok": true
     },
     {
-      "key": "drstone2",
+      "key": "drstone3",
       "title": "Dr. STONE",
       "id": "86031",
       "seasons": {
@@ -52,6 +52,55 @@
       "episodes": 94,
       "stills": 94,
       "overviews": 94,
+      "ok": true
+    },
+    {
+      "key": "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty",
+      "title": "The Strongest Tank's Labyrinth Raids -A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party-",
+      "id": "236532",
+      "seasons": {
+        "1": 12
+      },
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
+      "ok": true
+    },
+    {
+      "key": "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability",
+      "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability",
+      "id": "213830",
+      "seasons": {
+        "1": 24
+      },
+      "episodes": 24,
+      "stills": 24,
+      "overviews": 24,
+      "ok": true
+    },
+    {
+      "key": "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside",
+      "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
+      "id": "113256",
+      "seasons": {
+        "1": 13,
+        "2": 12
+      },
+      "episodes": 25,
+      "stills": 25,
+      "overviews": 25,
+      "ok": true
+    },
+    {
+      "key": "therewasacutegirlintheherospartysoitriedconfessingtoher",
+      "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
+      "id": "295366",
+      "seasons": {
+        "1": 13
+      },
+      "episodes": 13,
+      "stills": 13,
+      "overviews": 13,
       "ok": true
     }
   ]

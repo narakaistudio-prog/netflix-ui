@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T11:29:39.069Z",
+    "generatedAt": "2026-10-22T11:44:41.443Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -97206,6 +97206,2474 @@
           "overview": "Senku offers Why-Man more exhilaration than they can handle.",
           "image": "https://image.tmdb.org/t/p/w780/fczNt8dQSThm9yCalMDV7Nwc3mG.jpg",
           "airDate": "2026-06-25",
+          "runtime": 24
+        }
+      ]
+    },
+    "mobilesuitgundamthewitchfrommercury2": {
+      "id": "196400",
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "seasons": {
+        "1": 24
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 24,
+          "overview": "A pure-hearted girl from the remote planet of Mercury enrolls into a school run by the corporation dominating the mobile suit industry."
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "The Witch and the Bride",
+          "overview": "A shy girl from Mercury enrolls in the prestigious Asticassia School of Technology and immediately bumps heads with top student Miorine Rembran.",
+          "image": "https://image.tmdb.org/t/p/w780/7Ew6GXJ9moNOxrVHdmy5P7jiYNp.jpg",
+          "airDate": "2022-10-02",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "The Cursed Mobile Suit",
+          "overview": "Before Suletta can take in her victory, she's surrounded and taken into custody on suspicion of utilizing forbidden GUND Format technology.",
+          "image": "https://image.tmdb.org/t/p/w780/gzHFWHXA7UKrQA7tzjH9XUSYu5C.jpg",
+          "airDate": "2022-10-09",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Guel's Pride",
+          "overview": "Miorine insists on helping Suletta in her rematch against Guel. But with his pride in tatters, Guel has no intention of losing a second time.",
+          "image": "https://image.tmdb.org/t/p/w780/yPBX7tYvAaeV53HdfDB4bcT7FYv.jpg",
+          "airDate": "2022-10-16",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Unseen Trap",
+          "overview": "Much to everyone's entertainment, Suletta panics and flees when Guel suddenly proposes to her. But Chuchu from Earth House isn't amused at all.",
+          "image": "https://image.tmdb.org/t/p/w780/1YAQ5DoGQIzYzjVXtIwfi3K8Jwx.jpg",
+          "airDate": "2022-10-23",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Reflection in an Icy Eye",
+          "overview": "Hoping to uncover the Aerial's secrets, Peil Technologies orders Elan to investigate Suletta, who gets flustered when he invites her on an outing.",
+          "image": "https://image.tmdb.org/t/p/w780/7ryJjXsb545hwJGApBjjwhIXM6h.jpg",
+          "airDate": "2022-10-30",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "A Gloomy Song",
+          "overview": "Ahead of her duel with Elan, Suletta feels confused about his change of attitude. Her housemates help her augment the Aerial for better mobility.",
+          "image": "https://image.tmdb.org/t/p/w780/blxgqrx5oUYW8SqFoA9p53Jvvxt.jpg",
+          "airDate": "2022-11-06",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Shall We Gundam?",
+          "overview": "When Suletta receives an invitation to a social event for new business startups, she decides to attend in hopes that Elan will also be there.",
+          "image": "https://image.tmdb.org/t/p/w780/AakN2u9If9NSqUF06EW0T0OKHFN.jpg",
+          "airDate": "2022-11-20",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Their Choice",
+          "overview": "Miorine wastes no time recruiting her housemates for her new company that will handle Gundams, but they must first decide on a business plan.",
+          "image": "https://image.tmdb.org/t/p/w780/nShEjqIRQddAq7r0pJanVCXrOKH.jpg",
+          "airDate": "2022-11-27",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "If I Could Take One Step Toward You",
+          "overview": "Miorine rejects Shaddiq's business offer and challenges him to a duel. They agree on a team battle, but her side lacks mobile suits and pilots.",
+          "image": "https://image.tmdb.org/t/p/w780/cK1K3qQD1hqjAoAbSFzr631UdBp.jpg",
+          "airDate": "2022-12-04",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Circling Thoughts",
+          "overview": "It has been two months since the duel with Shaddiq. Little by little, the launch of GUND-ARM, Inc. is proceeding on track.",
+          "image": "https://image.tmdb.org/t/p/w780/vQdOVrSzKbWKMOQyNesrvwPvCxO.jpg",
+          "airDate": "2022-12-11",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "The Witches from Earth",
+          "overview": "The Earth House members arrive at Plant Quetta to retrieve the refurbished Aerial. Suletta worries about the misunderstanding between her and Miorine.",
+          "image": "https://image.tmdb.org/t/p/w780/nYWlo9GiArnO47I37UcxSqtcPTY.jpg",
+          "airDate": "2022-12-25",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Keep Marching On Instead of Running Off",
+          "overview": "Suletta has to change her attitude if she's going to save Miorine and everyone else. Meanwhile, Miorine and Guel will fight to survive.",
+          "image": "https://image.tmdb.org/t/p/w780/oqRkvpO4EPZQxB1PGI6AZw9gPZq.jpg",
+          "airDate": "2023-01-08",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "Envoys from the Earth",
+          "overview": "It has been two weeks since the attack on Plant Quetta. At first glance, it seems daily life at the school has remained peaceful, but a gag order has been imposed regarding the incident, and the members of Earth House feel suffocated. As preparations get under way for the next day's Open Campus event, a pair of transfer students appear before Suletta.",
+          "image": "https://image.tmdb.org/t/p/w780/6u6eZB2SfmKKDMccqtvYMQD3g7N.jpg",
+          "airDate": "2023-04-09",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "What They Wish For",
+          "overview": "Behind the scenes of the vibrant Open Campus, Suletta learns what Sophie wants to get from their duel. Nina, meanwhile, feels responsible for the situation. As they each pursue their respective desires and strategies, the Rumble Ring kicks off.",
+          "image": "https://image.tmdb.org/t/p/w780/gOdyzJO3htCAsDpmb30rSqnpHGY.jpg",
+          "airDate": "2023-04-16",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "Father and Child",
+          "overview": "Pursued by the Benerit Group's garrison forces, the Dawn of Fold which perpetrated the attack on Plant Quetta is forced to evacuate its hideout. Guel, who was captured by Olcott, is now a prisoner at the hideout. Having slain his own father, Guel remains sunk in deep despair.",
+          "image": "https://image.tmdb.org/t/p/w780/lvEEZex47TCz8yobHIBUFqEy9L5.jpg",
+          "airDate": "2023-04-23",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "Cycle of Sin",
+          "overview": "The school is in chaos as a result of the Open Campus incident. The Benerit Group's coverup of the incident and its aggressive security operations on Earth have been reported to the public, and it decides to hold an election to turn the situation around.",
+          "image": "https://image.tmdb.org/t/p/w780/rTgNiTH4jSymaLQKz16dWlSfnd9.jpg",
+          "airDate": "2023-04-30",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "Precious Things",
+          "overview": "Having learned of the connection between Prospera and Delling, Miorine decides to take over the Quiet Zero project in exchange for Suletta's liberation. Miorine's 17th birthday is imminent. Now the curtain rises on the final duel that will determine her bridegroom.",
+          "image": "https://image.tmdb.org/t/p/w780/bfhdrf3OfNf8s9olmBweYewckr6.jpg",
+          "airDate": "2023-05-07",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "Our Empty Selves",
+          "overview": "Defeated in a duel, Suletta has suddenly lost both Miorine and the Aerial. To shake off her sadness, she throws herself into school life. Miorine is getting ready for the presidential election, just as she promised Prospera. But she is clearly worried as Shaddiq takes the lead.",
+          "image": "https://image.tmdb.org/t/p/w780/wVYZ3oXJeocQexN6IHe2cZQTXgY.jpg",
+          "airDate": "2023-05-21",
+          "runtime": 25
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "Not the Best Way",
+          "overview": "Descending to Earth with the Aerial, Miorine holds discussions with the Earthians leading the protests. Given the grim situation on the ground, it seems peaceful negotiations will be almost impossible. Meanwhile, the members of Earth House are unable to cheer up the despairing Suletta...",
+          "image": "https://image.tmdb.org/t/p/w780/7s0Fthc1onhorvHLb0bjLPqHWN7.jpg",
+          "airDate": "2023-05-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "The End of Hope",
+          "overview": "Guel learns that Shaddiq is the mastermind behind the kidnapping of Sarius.",
+          "image": "https://image.tmdb.org/t/p/w780/xIdvv6fTOxwd2fMO42bzAKAc2rO.jpg",
+          "airDate": "2023-06-04",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "What We Can Do Now",
+          "overview": "The Asticassia School of Technology has been devastated by Norea's rampage. The surviving students are forced to live in evacuation shelters as they wait for relief.",
+          "image": "https://image.tmdb.org/t/p/w780/mw2ELgC0uYCtgFTeuvrDIqTeipo.jpg",
+          "airDate": "2023-06-11",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "The Woven Path",
+          "overview": "Prospera and Ericht activate Quiet Zero.",
+          "image": "https://image.tmdb.org/t/p/w780/ea2aYyFhuGFQIGiKScAGBjKvX5A.jpg",
+          "airDate": "2023-06-18",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "Unrelenting Tenderness",
+          "overview": "Piloting the Calibarn, Suletta confronts Ericht head-on. Guel squares off against Lauda, who is burning with bitter hatred for Miorine. And amid the chaos of battle, a rocket carrying Miorine and the others makes its way to Quiet Zero.",
+          "image": "https://image.tmdb.org/t/p/w780/8sOYhgkqpvX9yNUaawbDy2WHgtt.jpg",
+          "airDate": "2023-06-25",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "title": "May All Blessings Find Their Way to You, I'm Wishing It",
+          "overview": "Relationships that end and others that are formed anew. Sadness and joy. Violence and wishing for peace. Space intermingles everything as a younger generation finds its way in a world where what is right is only a matter of perspective.",
+          "image": "https://image.tmdb.org/t/p/w780/vkvLpdK4fReyhuV6wbY1h2GFytd.jpg",
+          "airDate": "2023-07-02",
+          "runtime": 24
+        }
+      ]
+    },
+    "demonslayerkimetsunoyaiba2": {
+      "id": "85937",
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "seasons": {
+        "1": 26,
+        "2": 7,
+        "3": 11,
+        "4": 11,
+        "5": 8
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Unwavering Resolve Arc",
+          "count": 26,
+          "overview": "It is the Taisho Period in Japan. Tanjiro, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a “demon slayer” so that he can turn his sister back into a human, and kill the demon that massacred his family."
+        },
+        {
+          "season": 2,
+          "name": "Mugen Train Arc",
+          "count": 7,
+          "overview": "Flame Hashira Kyojuro Rengoku receives new orders: Travel to the Mugen Train, where over forty people have gone missing, and conduct an investigation. Leaving the Demon Slayer Corps Headquarters, he sets off on this new mission. Tanjiro's group, fresh from completing their training at the Butterfly Mansion, also head to their next mission, the Mugen Train. There they rendezvous with Rengoku, who arrived ahead of them. On this train running through the darkness, a new battle is about to begin."
+        },
+        {
+          "season": 3,
+          "name": "Entertainment District Arc",
+          "count": 11,
+          "overview": "After visiting the Rengoku residence, Tanjirou and his comrades volunteer for a mission within the Entertainment District, a place where desires are sold and demons dwell. They journey alongside the flashy Sound Hashira, Tengen Uzui, in search of a monstrous foe terrorizing the town. Sworn to slay creatures of the night, the hunt continues."
+        },
+        {
+          "season": 4,
+          "name": "Swordsmith Village Arc",
+          "count": 11,
+          "overview": "Tanjiro’s journey leads him to the Swordsmith Village, where he reunites with two Hashira, members of the Demon Slayer Corps’ highest-ranking swordsmen - Mist Hashira Muichiro Tokito and Love Hashira Mitsuri Kanroji. With the shadows of demons lurking near, a new battle begins for Tanjiro and his comrades."
+        },
+        {
+          "season": 5,
+          "name": "Hashira Training Arc",
+          "count": 8,
+          "overview": "The members of the Demon Slayer Corps and their highest-ranking swordsmen, the Hashira. In preparation for the forthcoming final battle against Muzan Kibutsuji, the Hashira Training commences. While each carry faith and determination within their hearts, Tanjiro and the Hashira enter a new story."
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Cruelty",
+          "overview": "It is the Taisho Period (i.e. 1912-1926). Tanjiro Kamado is living a modest but blissful life in the mountains with his family. One day, when he returns from selling charcoal in town, he finds the remains of his slaughtered family in pools of blood after a demon attack. Tanjiro rushes down the snowy mountain with the sole survivor, his sister Nezuko, on his back. But on the way, Nezuko suddenly snarls, turning on Tanjiro.",
+          "image": "https://image.tmdb.org/t/p/w780/l2C38X6RsbD5gom4iGvFe6yuPEy.jpg",
+          "airDate": "2019-04-06",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Trainer Sakonji Urokodaki",
+          "overview": "At Giyu Tomioka's urging, Tanjiro heads for Mt. Sagiri with his sister Nezuko who's been turned into a demon. During the night, Tanjiro catches the smell of blood from inside a temple. He enters, thinking that someone might be hurt, only to come upon a man-eating demon. When the demon attacks, Tanjiro manages to fight back with his hatchet, but the demon's strength is overwhelming. Just as the demon is about to finish him off, Tanjiro is saved by none other than.",
+          "image": "https://image.tmdb.org/t/p/w780/r2MZH3snLABIpqUPj8YOF9HIaBf.jpg",
+          "airDate": "2019-04-13",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Sabito and Makomo",
+          "overview": "The Demon Slayer Corps... An organization that's been hunting down demons since ancient times. Sakonji Urokodaki starts training Tanjiro for Final Selection, the test for joining the unit. Navigating a mountain riddled with booby traps, dry sword swings, waterfall immersion and breathing techniques... A year later, Urokodaki informs Tanjiro that he has nothing more to teach him, and gives him one last hurdle to overcome in front of a giant boulder.",
+          "image": "https://image.tmdb.org/t/p/w780/m9sWQLtoU1G5jdHOYUnykin0xxw.jpg",
+          "airDate": "2019-04-20",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Final Selection",
+          "overview": "To pass Final Selection, one must survive for seven days on Mt. Fujikasane where demons captured by the Demon Slayers have been imprisoned. So begins the battle for survival between the young swordsmen and the demons. Armed with the breathing techniques and stances he'd learned from Sakonji Urokodaki, Tanjiro slashes demon after demon. His two years of training have not gone to waste. But just then, a morphed demon appears out of nowhere.",
+          "image": "https://image.tmdb.org/t/p/w780/kH6Ir9EWGoqkTMoiQnx5fJmwY2I.jpg",
+          "airDate": "2019-04-27",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "My Own Steel",
+          "overview": "When day breaks, there are only four swordsmen left standing after the seven-day battle. The guides who greet Tanjiro and the other survivors explain the Demon Slayer Corps system. All four are issued uniforms and Kasugai Crows as messengers, after which they must select the ore for their own Nichirin swords. After gazing hard at each lump of ore, and using his keen sense of smell, the one Tanjiro chooses is...",
+          "image": "https://image.tmdb.org/t/p/w780/fWsUsEVYaOHh6bPkgH7HeQxotmP.jpg",
+          "airDate": "2019-05-04",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Swordsman Accompanying a Demon",
+          "overview": "Tanjiro is now clad in the uniform of the Demon Slayer Corps. His Nichirin Sword on his hip, and Nezuko, now awake, in a special box made by Urokodaki on his back, he heads out for his first assignment. A town to the northwest where girls have been vanishing nightly. There, Tanjiro meets Kazumi, haggard with worry after his girlfriend's been abducted. Though he does catch the scent of a demon nearby, there's just no demon in sight. Tanjiro is sure that a demon is behind this sinister incident...",
+          "image": "https://image.tmdb.org/t/p/w780/4GeXmmkzRBduK2KXMGMrLlKYg44.jpg",
+          "airDate": "2019-05-11",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Muzan Kibutsuji",
+          "overview": "Now split into three, the demons have driven Tanjiro into a corner. It is then that Nezuko attacks. Now that she’s become a demon herself, she’s no longer so weak that she needs protection. His mind made up, Tanjiro follows one of the demons into the swamp now spreading across the ground. Waiting for him there is...",
+          "image": "https://image.tmdb.org/t/p/w780/aR1bB3ltg1FjGc6N3xBpiYz7Huo.jpg",
+          "airDate": "2019-05-18",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "The Smell of Enchanting Blood",
+          "overview": "The next mission is in Asakusa, Tokyo. Tanjiro is taken aback by the opulent Taisho Era cityscape, but soon picks up the demon’s scent there. His pursuit of the scent leads him to Muzan Kibutsuji. Tanjiro attempts to strike him down. But Kibutsuji transforms a passerby into demon, triggering a commotion. As Tanjiro desperately tries to get things under control, someone appears before him...",
+          "image": "https://image.tmdb.org/t/p/w780/hnvD3jFov03BLjvGrqTueXZfvwL.jpg",
+          "airDate": "2019-05-25",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Temari Demon and Arrow Demon",
+          "overview": "It was two demons named Tamayo and Yushiro who came to Tanjiro’s rescue. Using the “Eyeblind” spell, Tamayo guides Tanjiro and Nezuko to her house. There, through his conversation with Tamayo, Tanjiro learns that there is a way to return demons to human form. Just then, two demons in pursuit of Tanjiro locate the house and unleash a furious assault...",
+          "image": "https://image.tmdb.org/t/p/w780/pMST9IQizKO4EE6P54yFFMBz7vE.jpg",
+          "airDate": "2019-06-01",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Together Forever",
+          "overview": "Tanjiro’s crisis continues. He uses multiple forms of the Water Breathing technique to hold out against Yahaba’s final Blood Demon Art, the \"Kouketsu Arrow.\" Meanwhile, Nezuko and Susamaru are still battling it out. Worried about the outcome, Tamayo unleashes her own Blood Demon Art.",
+          "image": "https://image.tmdb.org/t/p/w780/nDbVix8vunXKj6zLcVEaxwF7YTq.jpg",
+          "airDate": "2019-06-08",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Tsuzumi Mansion",
+          "overview": "Tanjiro's next destination, according to his Kasugai Crow, is to the south-southeast. On the way, Tanjiro runs into his fellow Final Selection survivor, the swordsman Zenitsu Agatsuma. Tanjiro has a hard time dealing with Zenitsu's passive attitude as they head deep into the mountains. They encounter two children whose older brother was taken away right in front of their house. There, Zenitsu hears the sound of a tsuzumi ringing out from somewhere.",
+          "image": "https://image.tmdb.org/t/p/w780/xKOewshyBZcisLUWrOQjEGe650L.jpg",
+          "airDate": "2019-06-15",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "The Boar Bares Its Fangs, Zenitsu Sleeps",
+          "overview": "Inside the house, where the rooms spin each time the tsuzumi is played, Tanjiro gets separated from Zenitsu Agatsuma. Without Tanjiro by his side, Zenitsu is overcome by fear and despair as he takes Shoichi through the house. Meanwhile, Tanjiro meets the master of the house, the tsuzumi-playing demon, and an odd-looking man wearing a boar’s head mask.",
+          "image": "https://image.tmdb.org/t/p/w780/qrPsA5eNGH4sPwMImUhOvlShd7U.jpg",
+          "airDate": "2019-06-22",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "Something More Important Than Life",
+          "overview": "Every time Kyogai, the master of house, plays his tsuzumi, the room spins and Tanjiro struggles. Debilitated by the fractured bones he sustained in his previous battle, Tanjiro tries to fire himself up as he desperately fights on, but he is overwhelmed by Kyogai's Blood Demon Art. Will he find a way to slice off Kyogai's head?",
+          "image": "https://image.tmdb.org/t/p/w780/5ixd8rC1tTDHf5kSo5o7hbghpOi.jpg",
+          "airDate": "2019-06-29",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "The House With the Wisteria Family Crest",
+          "overview": "After a desperate fight to the death, Tanjiro prevails over Kyogai. He exits the house to find Zenitsu who had escaped earlier. But it is then that he sees the strange circumstances before him... The battered Zenitsu holding the box containing Nezuko in his arms while the man in the boar's head mask stands in the way with two Nichirin Swords drawn.",
+          "image": "https://image.tmdb.org/t/p/w780/AgDZ0yW2Me7pB7ZLVb4ynbBxRZp.jpg",
+          "airDate": "2019-07-06",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "Mount Natagumo",
+          "overview": "Their next destination is to the north-northwest. Tanjiro and Nezuko head towards Mount Natagumo with Zenitsu and Inosuke. This mountain is covered with spider webs and is swarming with innumerable spiders. Leaving the cowering Zenitsu behind, Tanjiro and Inosuke head up the mountain where they run into fellow Demon Slayers entangled in spider webs.",
+          "image": "https://image.tmdb.org/t/p/w780/8CNCZfubtFYzvuo4GgIDCSXBYvj.jpg",
+          "airDate": "2019-07-13",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "Letting Someone Else Go First",
+          "overview": "Tanjiro and Inosuke battle the Demon Slayers trapped by spider webs. After slashing the threads and destroying the webs, they head deeper into the mountain. The farther they advance through the forest, the thicker the threads become, and those under their control start moving in ways impossible for a human being. Stopping the Demon Slayers without hurting them isn't going to be easy, but then Tanjiro makes a certain move...",
+          "image": "https://image.tmdb.org/t/p/w780/5onw1Gg17048SoUZIuoT7FsO90a.jpg",
+          "airDate": "2019-07-20",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "You Must Master a Single Thing",
+          "overview": "One of the Twelve Kizuki, a direct subordinate of Muzan Kibutsuji, is here somewhere. When Tanjiro slays the Mother Spider Demon of Mt. Natagumo, he learns that a demon who might hold the key to turning Nezuko back into a human is somewhere in this very forest. With the battered Inosuke in tow, he heads deeper into the forest. Meanwhile, Zenitsu trudges forlornly through the woods only to encounter a spider with a human face.",
+          "image": "https://image.tmdb.org/t/p/w780/oKOrMhozP1BX6gWiJAcuZVSm6Zd.jpg",
+          "airDate": "2019-07-27",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "A Forged Bond",
+          "overview": "Tanjiro and Inosuke face off against the Father Spider Demon of Mt. Natagumo. Tanjiro unleashes an attack, only to get hurled away by the demon's overwhelming power. Landing near a river, he comes upon the young demon Rui torturing the Sister Spider Demon. When Rui calls their bond of terror and hatred \"a family’s bond,\" Tanjiro is enraged. So begins the battle between Rui and Tanjiro.",
+          "image": "https://image.tmdb.org/t/p/w780/ra7dCRS9E39fnhHieFKF47ldESl.jpg",
+          "airDate": "2019-08-03",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "Hinokami",
+          "overview": "Swordsmen in the Demon Slayer Corps known as Hashiras have arrived on Mt. Natagumo. Giyu Tomioka, the Water Hashira, slays the Father Spider Demon with a single strike. Inosuke, thrilled to see such a display of swordsmanship by someone in a totally different league from himself, challenges Giyu to a duel. Meanwhile, Zenitsu lies near death as the poison circulates throughout his body. Just then, the Insect Hashira, Shinobu Kocho appears before him.",
+          "image": "https://image.tmdb.org/t/p/w780/b4o8DMgM61MJymZMFyR2nRnOifl.jpg",
+          "airDate": "2019-08-10",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "Pretend Family",
+          "overview": "When Rui assaults him with his Blood Demon Art, Tanjiro braces himself for certain death. As his life flashes before his eyes, he suddenly remembers his father's dance, the kagura, and unleashes a new, non-Water Breathing attack. Hinokami Kagura Dance. Knowing that he’ll be receiving a simultaneous blow from the demon, he uses his new move to slice off Rui’s head. As Tanjiro crawls towards Nezuko, who lies on the ground, riddled with wounds, someone appears before him.",
+          "image": "https://image.tmdb.org/t/p/w780/jfdqvWLwsYiFcpR4mGlk2lzIT8g.jpg",
+          "airDate": "2019-08-17",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "Against Corps Rules",
+          "overview": "Seeing Tanjiro try to protect Nezuko even as he collapses triggers memories of Rui’s own past. Once a sickly boy, he became a demon after meeting Muzan Kibutsuji who gave him a share of his blood. But after he turns into a demon, his own parents try to kill him. Ever since then, he has been searching for a family. Seeking a bond that he can never hope to acquire...",
+          "image": "https://image.tmdb.org/t/p/w780/2EX3WZVmtELyqdcDtGLf5KJjZ6.jpg",
+          "airDate": "2019-08-24",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "Master of the Mansion",
+          "overview": "After the battle is over, Tanjiro and Nezuko are taken to the Demon Slayer Corps headquarters. This is where the Hashira Meeting between the Corps leader, Ubuyashiki, and the Hashiras, the most powerful swordsmen in the Corps, is to be held. The Hashiras censure Tanjiro for violating the Demon Slayer Corps by protecting a demon. And then, the Wind Hashira, Sanemi Shinazugawa, raises his sword against Nezuko...",
+          "image": "https://image.tmdb.org/t/p/w780/2bo6M1fLHXz47b3NoW3Y5zesTKB.jpg",
+          "airDate": "2019-08-31",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "Hashira Meeting",
+          "overview": "Ubuyashiki, the leader of the Demon Slayer Corps, finally appears before Tanjiro. He tells him that he will allow Tanjiro and Nezuko to join the Corps. But the Hashiras are unable to accept this decision right away. The Wind Hashira, Sanemi Shinazugawa, slashes his own arm and taunts Nezuko with his blood, trying to get her to show her true colors as a demon.",
+          "image": "https://image.tmdb.org/t/p/w780/gdlEXQbUuVtIzKxuOMWd2BhT4n8.jpg",
+          "airDate": "2019-09-07",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "title": "Rehabilitation Training",
+          "overview": "The injured Tanjiro, Zenitsu and Inosuke are sent to the home of the Insect Hashira, Shinobu Kocho, for treatment. Two weeks later, Tanjiro and Inosuke start rehabilitation training. But the drills are brutal, and they find themselves broken in spirit. Unaware of the grueling regimen, Zenitsu joins them late and is visibly enthusiastic in front of girls, but...",
+          "image": "https://image.tmdb.org/t/p/w780/hhZsnP34Tjx568RJwSTN9nkkCcX.jpg",
+          "airDate": "2019-09-14",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 25,
+          "title": "Tsuguko, Kanao Tsuyuri",
+          "overview": "Tanjiro, who's undergoing rehabilitation training at the Butterfly Mansion, works hard to keep up his Total Concentration Breathing techniques all day long. Though at first, he's helpless against Kanao, a swordswoman in his class who's training him, he slowly but surely begins to make some headway. Seeing Tanjiro devote himself to training every single day, Zenitsu and Inosuke resume training as well, but...",
+          "image": "https://image.tmdb.org/t/p/w780/4VmgnTSJvOPbfy7k51t94T4q88e.jpg",
+          "airDate": "2019-09-21",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 26,
+          "title": "New Mission",
+          "overview": "As Tanjiro and the others are devoted to their rehabilitation training, the absolute master of the demons, Muzan Kibutsuji, gathers the Lower Ranks of the Twelve Kizuki. The demons, too, are preparing to make their next move. As training draws to a close, Tanjiro has improved to the point where he can fight on equal terms with Kanao. Just then, he receives word of a new mission from his Kasugai Crow.",
+          "image": "https://image.tmdb.org/t/p/w780/oa3rVcE4H6PkbwJ8IWbDZ4EMHP0.jpg",
+          "airDate": "2019-09-28",
+          "runtime": 23
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "title": "Flame Hashira: Kyojuro Rengoku",
+          "overview": "Flame Hashira Kyojuro Rengoku receives new orders: Travel to the Mugen Train, where over forty people have gone missing, and conduct an investigation. Leaving the Demon Slayer Corps Headquarters, he sets off on this new mission.",
+          "image": "https://image.tmdb.org/t/p/w780/s25sv0IoUYWL24MhoYbYU5idlZ5.jpg",
+          "airDate": "2021-10-10",
+          "runtime": 26
+        },
+        {
+          "season": 2,
+          "episode": 2,
+          "title": "Deep Sleep",
+          "overview": "Tanjiro's group, fresh from completing their training at the Butterfly Mansion, head to their next mission, the Mugen Train. There they rendezvous with Rengoku, who arrived ahead of them. Tanjiro is overwhelmed by the always-energetic Rengoku, Zenitsu is frightened by the prospect of facing demons as usual, and Inosuke is immensely excited by the sight of the huge machine. But on this train loaded with passengers, a new battle is about to begin.",
+          "image": "https://image.tmdb.org/t/p/w780/3D1Ke4O5eRcKr255ddlDTnwmoa6.jpg",
+          "airDate": "2021-10-17",
+          "runtime": 23
+        },
+        {
+          "season": 2,
+          "episode": 3,
+          "title": "Should Have Been",
+          "overview": "Tanjiro, Nezuko, Zenitsu and Inosuke join Rengoku on the Mugen Train. Having heard that there may be demons on the train, they are on high alert, but they find themselves falling into a slumber. Within his dream, Tanjiro is reunited with his long lost family. However, it is soon revealed that this is a trap set by Enmu (Lower One).",
+          "image": "https://image.tmdb.org/t/p/w780/bsjdWN0H0t9Pe7nPYoxXTHd8KpP.jpg",
+          "airDate": "2021-10-24",
+          "runtime": 25
+        },
+        {
+          "season": 2,
+          "episode": 4,
+          "title": "Insult",
+          "overview": "Tanjiro, Zenitsu, Inosuke and Rengoku have fallen into a deep sleep while under the control of Enmu's Blood Demon Art. As Enmu attempts to use his accomplices to destroy the spiritual cores of Tanjiro and his companions in order to defeat them, Tanjiro realizes that he is inside a dream and searches for a way to wake up. In order to awaken from the dream, Tanjiro makes a decision to use his sword to cut into his own neck.",
+          "image": "https://image.tmdb.org/t/p/w780/eECM3oquq3G8jFOGWTnxaFql3vM.jpg",
+          "airDate": "2021-11-07",
+          "runtime": 23
+        },
+        {
+          "season": 2,
+          "episode": 5,
+          "title": "Move Forward!",
+          "overview": "After waking up from his dream by cutting his own neck, Tanjiro battles Enmu, who is the source of all the turmoil on the train. Enmu appears to be getting pleasure from inflicting pain on the passengers, which only infuriates Tanjiro even more. Tanjiro succeeds in severing Enmu's head, only to discover that Enmu's body is fused with the Mugen Train itself. Tanjiro is backed into a corner, but a freshly-awakened Inosuke comes to assist him and...",
+          "image": "https://image.tmdb.org/t/p/w780/wiyxLpsQtpG6tMO3HjaTwD98SD.jpg",
+          "airDate": "2021-11-14",
+          "runtime": 21
+        },
+        {
+          "season": 2,
+          "episode": 6,
+          "title": "Akaza",
+          "overview": "Nezuko, Zenitsu and Rengoku fight against Enmu to protect the passengers. Meanwhile, Tanjiro and Inosuke discover the location of Enmu's neck. They work in tandem to thwart Enmu's Blood Demon Art and sever Enmu's neck. The Mugen Train writhes in pain and derails. What will be the fate of the 200 or so passengers as well as Tanjiro and his friends?",
+          "image": "https://image.tmdb.org/t/p/w780/9ceXZlhB2SLg6XvWKKjLYjHkETQ.jpg",
+          "airDate": "2021-11-21",
+          "runtime": 23
+        },
+        {
+          "season": 2,
+          "episode": 7,
+          "title": "Set Your Heart Ablaze",
+          "overview": "The demon that appeared before Tanjiro and Rengoku after they defeated Enmu was the Upper Three, Akaza. While injured and on the ground, Tanjiro is almost attacked by Akaza and narrowly escapes death when Rengoku quickly strikes back. During the intense battle between Rengoku and Akaza, Akaza suggests to Rengoku that he should also become a demon. Rengoku vehemently refuses Akaza's offer, but his injured body is exhausted and being pushed past its physical limits...",
+          "image": "https://image.tmdb.org/t/p/w780/bSKs2NzkXd8n0f2bIT8lhEuR7DH.jpg",
+          "airDate": "2021-11-28",
+          "runtime": 26
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "title": "Sound Hashira: Tengen Uzui",
+          "overview": "After the Mugen Train incident, Akaza visits Muzan Kibutsuji. Guided by a crow, Tanjiro Kamado heads off to the Rengoku residence to convey Kyojuro Rengoku's last messages to his father and little brother. Tanjiro's group return to the Butterfly Mansion.",
+          "image": "https://image.tmdb.org/t/p/w780/yHvD7Yhaxcn0Mc3BSI0yAFVrYT8.jpg",
+          "airDate": "2021-12-05",
+          "runtime": 47
+        },
+        {
+          "season": 3,
+          "episode": 2,
+          "title": "Infiltrating the Entertainment District",
+          "overview": "After Tanjiro visits the Rengoku residence and meets Kyojuro's younger brother, Senjuro, to deliver Kyojuro's last message, Tanjiro spends his days training and completing missions. One day, he returns to the Butterfly Mansion to find Sound Hashira, Tengen Uzui, attempting to take Aoi and Naho away on a mission against their will. Tanjiro, Zenitsu and Inosuke offer to go on that mission instead, and they head to their next destination - the Entertainment District.",
+          "image": "https://image.tmdb.org/t/p/w780/mTtIdiS9ntOjlBFaZxGRu5qkZdF.jpg",
+          "airDate": "2021-12-12",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 3,
+          "title": "What Are You?",
+          "overview": "After arriving at the Entertainment District, Tanjiro and his comrades infiltrate each House where Uzui's wives, Suma, Makio and Hinatsuru, work. While working as apprentices and searching for their whereabouts, Inosuke hears that Makio has been shutting herself away from everyone in her room.",
+          "image": "https://image.tmdb.org/t/p/w780/1pEUWW6ynwjeCthb7NqQlSMtxso.jpg",
+          "airDate": "2021-12-19",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 4,
+          "title": "Tonight",
+          "overview": "As Tanjiro close in on the demon that has been preying upon the entertainment district. But even as he closes in, the others continue to follow their leads toward their query. Who will find the demon first? And will they be able to survive the confrontation when they do?",
+          "image": "https://image.tmdb.org/t/p/w780/oyZd3BMT8pH83PLLG07njxhKfkO.jpg",
+          "airDate": "2021-12-26",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 5,
+          "title": "Things Are Gonna Get Real Flashy!!",
+          "overview": "After being told of Zenitsu’s disappearance and to leave the Entertainment District by Uzui, Tanjiro and Inosuke decide that they will rescue Zenitsu. That evening, Tanjiro picks up a scent of a demon, which leads him to Koinatsu Oiran being swallowed by Daki’s belt. With Uzui nowhere in sight, Tanjiro must face the Upper Six demon alone.",
+          "image": "https://image.tmdb.org/t/p/w780/xHobu2pJtnRePBxrvxafUHXKJNr.jpg",
+          "airDate": "2022-01-02",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 6,
+          "title": "Layered Memories",
+          "overview": "During the fierce battle with Daki, Tanjiro continues to unleash the Hinokami Kagura, which causes a huge strain on his body. Meanwhile, Inosuke reaches the Belt Demon’s nest and saves people who have been captured. Makio, Suma, and Zenitsu, who have been freed from the belt, join in on the fight. As the ceiling of the nest is broken, Uzui appears wielding his swords.",
+          "image": "https://image.tmdb.org/t/p/w780/9jSSKfsWXEPwiSz8eCMQK8St5gc.jpg",
+          "airDate": "2022-01-09",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 7,
+          "title": "Transformation",
+          "overview": "Enraged by Daki's contempt for human life, Tanjiro attacks her with more intensity and gradually corners the demon. But he's already gone past his physical limit. As Tanjiro collapses and all seems lost again, Nezuko appears. A vicious battle ensues and Nezuko starts transforming into a more demon-like form...",
+          "image": "https://image.tmdb.org/t/p/w780/6IVxJBaIAOboW9HXzx0Kr0DevAZ.jpg",
+          "airDate": "2022-01-16",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 8,
+          "title": "Gathering",
+          "overview": "After Nezuko attempts to attack innocent bystanders as her demon form advances, Tanjiro is finally able to make her fall asleep by singing a lullaby. Meanwhile, another demon emerges out of Daki's body after being beheaded by Uzui - Gyutaro, Daki's older brother and the other form of Upper Six. Uzui must now face both demons, Daki and Gyutaro.",
+          "image": "https://image.tmdb.org/t/p/w780/5UvxFzLy40MGDue1fvTDFmz2WNj.jpg",
+          "airDate": "2022-01-23",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 9,
+          "title": "Defeating an Upper Rank Demon",
+          "overview": "Tanjiro, Zenitsu and Inosuke have joined Uzui in battle. While Zenitsu and Inosuke take on Daki, Tanjiro and Uzui deal with Gyutaro; however, they struggle as the demons have the upper hand with their coordinated attacks. But thanks to Hinatsuru's help and some teamwork from Uzui, Tanjiro's blade finds its way towards Gyutaro's neck...",
+          "image": "https://image.tmdb.org/t/p/w780/8qmQglGIAYFk3cPGONQrr3EpxQ7.jpg",
+          "airDate": "2022-01-30",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 10,
+          "title": "Never Give Up",
+          "overview": "Tanjiro and Uzui have been separated by Gyutaro’s Blood Demon Art. As Tanjiro joins the struggling Zenitsu and Inosuke, they manage to decapitate Daki at last thanks to their coordinated barrage of sword strikes. However, when Inosuke tries to run off with Daki’s head, he gets pierced by Gyutaro’s scythe. Uzui has also collapsed, leaving Tanjiro and the others with their backs to the wall.",
+          "image": "https://image.tmdb.org/t/p/w780/sn1028m8SPhF9OkfvXpnD11xar7.jpg",
+          "airDate": "2022-02-06",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 11,
+          "title": "No Matter How Many Lives",
+          "overview": "Uzui deflects all of Gyutaro's Blood Demon Art attacks, and despite getting pierced in the jaw, Tanjiro is able to slice off Gyutaro's head. Though wounded from head to toe, Zenitsu and Inosuke also behead Daki, and they succeed in decapitating both demons at the same time. Just when it seems as though they've defeated the Upper Six demons after a fierce struggle, Gyutaro unleashes his Blood Demon Art...",
+          "image": "https://image.tmdb.org/t/p/w780/rO0yt4BIcSZRuIwPlK0QsyhjPZ3.jpg",
+          "airDate": "2022-02-13",
+          "runtime": 32
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "title": "Someone's Dream",
+          "overview": "An Upper Rank Demon has been defeated for the first time in a hundred years by Uzui, Tanjiro, and his comrades' effort. This news causes a ripple effect not only among the members of the Demon Slayer Corps, but also the Upper Rank Demons, who have been summoned by Muzan Kibutsuji. Meanwhile, Tanjiro is recovering at the Butterfly Mansion when he discovers that he has upset his swordsmith Haganezuka after chipping his sword and decides to head to the village where the swordsmiths live to talk to him in person.",
+          "image": "https://image.tmdb.org/t/p/w780/cqDCLZ050JmmumJyTA9FbuQe6a3.jpg",
+          "airDate": "2023-04-09",
+          "runtime": 49
+        },
+        {
+          "season": 4,
+          "episode": 2,
+          "title": "Yoriichi Type Zero",
+          "overview": "Tanjiro intervenes during an argument between a pillar and an apprentice blacksmith and learns of the existence of an amazing training method.",
+          "image": "https://image.tmdb.org/t/p/w780/uvT1yTTx3rfAIP8AtqxtSM0ZxRB.jpg",
+          "airDate": "2023-04-16",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 3,
+          "title": "A Sword From Over 300 Years Ago",
+          "overview": "Tanjiro begins his training with Yoriichi Type Zero and is pushed to the limits by Kotetsu's relentless coaching and extreme training. Through this experience, Tanjiro masters a new skill of predicting where the opponent's next move will hit by using his sense of smell. During his training, Tanjiro lands a blow on Yoriichi Type Zero and ends up destroying it, but a sword from over 300 years ago appears from inside...",
+          "image": "https://image.tmdb.org/t/p/w780/wquxWyBwsXG3lWrDjg7TQKSRfew.jpg",
+          "airDate": "2023-04-23",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 4,
+          "title": "Thank You, Tokito",
+          "overview": "Hantengu's head is slashed by Muichiro and he splits into two clones. Muichiro is blown away by Karaku. Tanjiro, Nezuko and Genya are stunned when the clones split into more clones. Muichiro rescues Kotetsu from a Goldfish Demon.",
+          "image": "https://image.tmdb.org/t/p/w780/7CJiq7TcX6V6OcY9SnhMQMs0exV.jpg",
+          "airDate": "2023-04-30",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 5,
+          "title": "Bright Red Sword",
+          "overview": "Tokito continues advancing through the forest and finds Mr. Kanamori. As soon as they arrive at the work hut in the middle of the forest, they are welcomed by Gyokko. Meanwhile, Tanjiro continues his fight against Hantengu.",
+          "image": "https://image.tmdb.org/t/p/w780/7DvvdeA0bY3VIhicNYRuD19W28N.jpg",
+          "airDate": "2023-05-07",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 6,
+          "title": "Aren't You Going to Become a Hashira?",
+          "overview": "Two simultaneous fights continue, Tanjiro, Nezuko and Genya against Hantengu and Tokito against Gyokko. Genya began to show a demonic form. Tanjiro asks him to look for Hantengu's real body, but memories of the past begin to plague Genya.",
+          "image": "https://image.tmdb.org/t/p/w780/o0HAhA3zeNsPQPtAnoigJlpCCuk.jpg",
+          "airDate": "2023-05-14",
+          "runtime": 23
+        },
+        {
+          "season": 4,
+          "episode": 7,
+          "title": "Awful Villain",
+          "overview": "Genya aims for the neck of the fifth demon that split off from Hantengu, but the demon's neck is shockingly hard, and his sword snaps in half in his attempt to strike it. His gun is also ineffective and Genya is driven into a corner. Realizing that he is unable to sever the neck by himself, he entrusts defeating the fifth demon, which is believed to be the main body, to Tanjiro. Taking on Genya's will, Tanjiro wields his sword against the fleeing demon...",
+          "image": "https://image.tmdb.org/t/p/w780/7jOdHvdpD5oKGsRgixuMCJ5P5vJ.jpg",
+          "airDate": "2023-05-21",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 8,
+          "title": "The Mu in Muichiro",
+          "overview": "Muichiro, with the help of air blown by Kotetsu to him, escapes Gyokko's Water Prison Pot. Muichiro finally recalls his tragic past.",
+          "image": "https://image.tmdb.org/t/p/w780/twKgIalhN0PeahBx8mwk8UaMhvh.jpg",
+          "airDate": "2023-05-28",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 9,
+          "title": "Mist Hashira: Muichiro Tokito",
+          "overview": "Armed with his memories, Muichiro feels powerful and invincible, convinced that the demonic fifth moon has no chance against him.",
+          "image": "https://image.tmdb.org/t/p/w780/6EgVImJC0fn0jshgw12NHRf5Rzd.jpg",
+          "airDate": "2023-06-04",
+          "runtime": 23
+        },
+        {
+          "season": 4,
+          "episode": 10,
+          "title": "Love Hashira: Mitsuri Kanroji",
+          "overview": "Tanjiro, Nezuko, and Genya are struggling through an arduous battle against Zohakuten and his five tree dragons. They are forced to fight defensively against the tree dragons using the four emotion demon's powers, and Tanjiro is swallowed by one of them amidst the fight. Just as Tanjiro is close to meeting his demise, Mitsuri arrives in the nick of time and rescues him. And now, Mitsuri faces off against Zohakuten to rescue the captured Nezuko and Genya...!",
+          "image": "https://image.tmdb.org/t/p/w780/iKD90AUxGHcLHGvbuSKfqq76rbE.jpg",
+          "airDate": "2023-06-11",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 11,
+          "title": "A Connected Bond: Daybreak and First Light",
+          "overview": "Tanjiro continues the fight against Hantengu. Amidst all his injuries and the Superior Four's skill, will he be able to defeat him? As the battle draws to a close, the Demon Slayer Squad must race against time to end the fight before dawn.",
+          "image": "https://image.tmdb.org/t/p/w780/kFvPNnB8215j0xudEtFXa7oJ8F6.jpg",
+          "airDate": "2023-06-18",
+          "runtime": 52
+        },
+        {
+          "season": 5,
+          "episode": 1,
+          "title": "To Defeat Muzan Kibutsuji",
+          "overview": "The Hashira, Sanemi and Iguro, along with their comrades head to an abandoned castle on top of a mountain for a mission, while Tanjiro is being treated at the Butterfly Mansion for the wounds he suffered at the Swordsmith Village. Later on, the Hashira gather at the Ubuyashiki Mansion to hold a Hashira meeting, where Muichiro reveals how the marks manifested. In an effort to strengthen the entire Demon Slayer Corps from the bottom up, the Hashira Training begins...",
+          "image": "https://image.tmdb.org/t/p/w780/rgDvHS8LHTHuU4Xx64sSVvA39gZ.jpg",
+          "airDate": "2024-05-12",
+          "runtime": 49
+        },
+        {
+          "season": 5,
+          "episode": 2,
+          "title": "Water Hashira Giyu Tomioka's Pain",
+          "overview": "Kagaya's Kasugai Crow suddenly appears in front of Tamayo and invites her to the Demon Slayer headquarters — even though she is a demon. Meanwhile, after receiving a letter from Kagaya at the Butterfly Mansion, Tanjiro pays a visit to Giyu, who is not participating in the Hashira Training. At first, Tanjiro is rejected by Giyu but patiently continues to try to talk to him. Giyu, who gives in to Tanjiro's persistence, begins to share the reason why he won't participate in the training.",
+          "image": "https://image.tmdb.org/t/p/w780/wJPkCpsVFmMS6lAgBbLW5zs8Q3f.jpg",
+          "airDate": "2024-05-19",
+          "runtime": 24
+        },
+        {
+          "season": 5,
+          "episode": 3,
+          "title": "Fully Recovered Tanjiro Joins the Hashira Training!!",
+          "overview": "After talking with Tanjiro, Giyu is able to overcome his past self and decides to join the training. Meanwhile, Tanjiro's wounds have healed enough to join the training, and heads to his first training with the former Hashira, Uzui.",
+          "image": "https://image.tmdb.org/t/p/w780/mNiT7VrfYxQXbgVqEEWtyM2EgRu.jpg",
+          "airDate": "2024-05-26",
+          "runtime": 24
+        },
+        {
+          "season": 5,
+          "episode": 4,
+          "title": "To Bring a Smile to One's Face",
+          "overview": "After completing training with Uzui, Tanjiro visits the Tokito residence next. The Demon Slayer swordsmen who have already started the training are dispirited by Muichiro's intense training and harsh words. Tanjiro hears the swordsmen discussing if there's anything they can do about it...",
+          "image": "https://image.tmdb.org/t/p/w780/bQQ0uQ5AJ7sYDbirDIzB33J7FgF.jpg",
+          "airDate": "2024-06-02",
+          "runtime": 24
+        },
+        {
+          "season": 5,
+          "episode": 5,
+          "title": "I Even Ate Demons…",
+          "overview": "After completing Mitsuri's training, Tanjiro heads to train with Iguro. When he arrives at the training site, Iguro is waiting for him, visibly angry. Will he be able to complete this horrifying training where he'll have to fix his sword skills?",
+          "image": "https://image.tmdb.org/t/p/w780/iiKJxsJOT69R86Y5QFtUUQmeha.jpg",
+          "airDate": "2024-06-09",
+          "runtime": 24
+        },
+        {
+          "season": 5,
+          "episode": 6,
+          "title": "The Strongest of the Demon Slayer Corps",
+          "overview": "Tanjiro and Zenitsu head to Himejima's training site deep in the mountains and reunite with Inosuke and Murata. Tanjiro first starts the training by being hit by a waterfall but struggles with the coldness and weight of the water.",
+          "image": "https://image.tmdb.org/t/p/w780/jwAiNnEDDgGathvC8VDTmfXqybH.jpg",
+          "airDate": "2024-06-16",
+          "runtime": 24
+        },
+        {
+          "season": 5,
+          "episode": 7,
+          "title": "Stone Hashira: Gyōmei Himejima",
+          "overview": "Tanjiro was struggling with Himejima's tasks. Now he finally manages to move the boulder after receiving advice from Genya, whom he meets by chance. With this breakthrough, will Tanjiro be able to overcome Himejima's rigorous training?",
+          "image": "https://image.tmdb.org/t/p/w780/1rw2hmzC7yJwtDfXuP9MIYQvJWQ.jpg",
+          "airDate": "2024-06-23",
+          "runtime": 32
+        },
+        {
+          "season": 5,
+          "episode": 8,
+          "title": "The Hashira Unite",
+          "overview": "During a silent night when the moon shines, Kagaya finally meets Muzan Kibutsuji, who appears at the Ubuyashiki Mansion.",
+          "image": "https://image.tmdb.org/t/p/w780/a8QEWBNIfRzXN7g5WOdrPS3QeKy.jpg",
+          "airDate": "2024-06-30",
+          "runtime": 41
+        }
+      ]
+    },
+    "drstone3": {
+      "id": "86031",
+      "title": "Dr. STONE",
+      "seasons": {
+        "1": 24,
+        "2": 11,
+        "3": 22,
+        "4": 37
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 24,
+          "overview": "After five years of harboring unspoken feelings, Taiju Ooki is finally ready to confess his love to Yuzuriha Ogawa. Just when Taiju begins his confession however, a blinding green light strikes the Earth and petrifies mankind around the world—turning every single human into stone. Several millennia later, Taiju awakens to find the modern world completely nonexistent, as nature has flourished in the years humanity stood still. Among a stone world of statues, Taiju encounters one other living human: his science-loving friend Senkuu, who has been active for a few months. Taiju learns that Senkuu has developed a grand scheme—to launch the complete revival of civilization with science. Taiju's brawn and Senkuu's brains combine to forge a formidable partnership, and they soon uncover a method to revive those petrified. However, Senkuu's master plan is threatened when his ideologies are challenged by those who awaken. All the while, the reason for mankind's petrification remains unknown."
+        },
+        {
+          "season": 2,
+          "name": "Stone Wars",
+          "count": 11,
+          "overview": "Senkuu has made it his goal to bring back two million years of human achievement and revive the entirety of those turned to statues. However, one man stands in his way: Tsukasa Shishiou, who believes that only the fittest of those petrified should be revived. As spring approaches, Senkuu and his allies in Ishigami Village finish the preparations for their attack on the Tsukasa Empire. With a reinvented cell phone model now at their disposal, the Kingdom of Science is ready to launch its newest scheme to recruit the sizable numbers of Tsukasa's army to their side. However, it is a race against time; for every day the Kingdom of Science spends perfecting their inventions, the empire rapidly grows in number. Reuniting with old friends and gaining new allies, Senkuu and the Kingdom of Science must stop Tsukasa's forces in order to fulfill their goal of restoring humanity and all its creations. With the two sides each in pursuit of their ideal world, the Stone Wars have now begun!"
+        },
+        {
+          "season": 3,
+          "name": "New World",
+          "count": 22,
+          "overview": "With the ambitious Ryuusui Nanami on board, Senkuu Ishigami and his team are almost ready to sail the seas and reach the other side of the world—where the bizarre green light that petrified humanity originated. Thanks to the revival of a skillful chef, enough food is being prepared for the entire crew, and the incredible reinvention of the GPS promises to ensure safety on the open sea. Preparations for the upcoming journey progress swimmingly until Senkuu receives an eerie message from a mysterious source. More driven than ever, the scientist sets out to explore the new world and discover what it can offer for his scientific cause. Though the uncharted territories may hide unkind surprises, Senkuu, with a little help from science, is ready to take on any challenge."
+        },
+        {
+          "season": 4,
+          "name": "Science Future",
+          "count": 37,
+          "overview": "Having resolved the crisis in the Petrification Kingdom, Senkuu and his companions gear up to deal directly with the mastermind behind the petrification phenomenon—who supposedly resides on the moon. The ambitious spaceship project, however, requires immense manpower and critical resources scattered across the world. Thus, the Kingdom of Science exploration team kick-starts its transcontinental journey on the ship Perseus to gather them all. Equipped with modern technology and bolstered by the new, capable members in their ranks, the exploration team feels confident about setting sail to their first destination: America. They soon realize that the region now hosts adversaries controlling the resources they need, doing so with scientific technology which rivals and even exceeds their own. In a battle of science versus science, Senkuu and his team must outsmart their rivals if they are to have any chance of ensuring the continued survival and rejuvenation of humanity."
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Stone World",
+          "overview": "Several thousand years after a mysterious phenomenon turns all of humanity to stone, the extraordinarily intelligent, science-driven boy, Senku Ishigami, awakens from petrification. Facing a world of stone and the total collapse of civilization, Senku makes up his mind to use science to rebuild the world. Starting with his super strong childhood friend Taiju Oki, who awakened at the same time, they will begin to rebuild civilization from nothing. Depicting two million years of scientific history from the Stone Age to present day, the unprecedented crafting adventure story is about to begin.",
+          "image": "https://image.tmdb.org/t/p/w780/tsySP3maZBXg1XnPK0BcOwYfozS.jpg",
+          "airDate": "2019-07-05",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "King of the Stone World",
+          "overview": "Facing immediate danger from wild animals Senku and Taiju are forced to revive Tsukasa Shishio \"The Strongest High School Primate\". Although Tsukasa has tremendous fighting ability and provides abundant food as their hunter, their new ally harbors an opposing view on restoring humanity.",
+          "image": "https://image.tmdb.org/t/p/w780/l7BW5GPY9EcnoxBZKHXWZfEKeOA.jpg",
+          "airDate": "2019-07-12",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Weapons of Science",
+          "overview": "Senku does not trust the motivation of Shishio, so he will try to hide his plans from a new and unforeseen enemy for his plan to revive civilization.",
+          "image": "https://image.tmdb.org/t/p/w780/n5lpLE1e4njZIn0d6jmb55OWwKH.jpg",
+          "airDate": "2019-07-19",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Fire the Smoke Signal",
+          "overview": "Senku has the idea of ​​creating gunpowder to have a way to balance the scale and have a chance to defeat Shishio. The production of gunpowder causes a fire. Shortly thereafter, Senku and the others discover smoke signals on the horizon. An accident? Hardly likely. Apparently there are other people in the stone world ...",
+          "image": "https://image.tmdb.org/t/p/w780/30pMZkqgpxvpxysB1nlOuKWWTgA.jpg",
+          "airDate": "2019-07-26",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Stone World The Beginning",
+          "overview": "Shishio is determined to end Senku's life if he does not promise at that moment that he will abandon his idea of ​​recovering civilization as it was before the incident.",
+          "image": "https://image.tmdb.org/t/p/w780/mM4UPEQJhUcFp3oTAYgQW90nQDz.jpg",
+          "airDate": "2019-08-02",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Two Nations of the Stone World",
+          "overview": "Taiju and Yuzuriha figure out Senku's secret to reviving him. But now that he's back, they need to deal with Tsukasa.",
+          "image": "https://image.tmdb.org/t/p/w780/71MPjVE59eUssTmByfFBYC5p8ad.jpg",
+          "airDate": "2019-08-09",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Where Two Million Years Have Gone",
+          "overview": "Kohaku shows Senku to her village, but it's going to take some convincing before they let him in. In the meantime, he makes friends with a like-minded, promising \"sorcerer.\"",
+          "image": "https://image.tmdb.org/t/p/w780/w3Ybj8vPIEViNhvCjqmyGCj67ZT.jpg",
+          "airDate": "2019-08-16",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Stone Road",
+          "overview": "Kohaku's sister, village priestess Ruri, is gravely ill. Senku, Chrome and Kohaku begin their quest to make antibiotics to save her life.",
+          "image": "https://image.tmdb.org/t/p/w780/vgeIE6xvK8wTDH345bBsz6eMIOO.jpg",
+          "airDate": "2019-08-23",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Let There Be the Light of Science",
+          "overview": "Senku starts a ramen stand in hopes of winning over support for his kingdom of science, but some people are too principled to take such a bribe. Mentalist Asagiri Gen is not one of them.",
+          "image": "https://image.tmdb.org/t/p/w780/kVRz1t86UbFH6ILg9Lw9z1sqxL1.jpg",
+          "airDate": "2019-08-30",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "A Flimsy Alliance",
+          "overview": "Senku and his kingdom of science successfully test the first lightbulb since the collapse. Meanwhile, Asagiri Gen, a spy from Tsukasa's empire, is killed by an unknown attacker.",
+          "image": "https://image.tmdb.org/t/p/w780/sxqp8JCFDumCKbyQvX9hgGHqxsN.jpg",
+          "airDate": "2019-09-06",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Clear World",
+          "overview": "The development of glassworks, an important step for making sulfa drugs and for chemistry as a whole, turns out to have a surprising benefit for Suika.",
+          "image": "https://image.tmdb.org/t/p/w780/bTpVChtIatCqNywNRdKMo1q612Z.jpg",
+          "airDate": "2019-09-13",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Buddies Back to Back",
+          "overview": "To make antibiotics, Senku and his kingdom need to obtain sulfuric acid from a fountain of the stuff. The team goes prepared, but there's no guarantee that they'll make it back alive.",
+          "image": "https://image.tmdb.org/t/p/w780/yRZzEHHNfA9ZrxzgcxD0TS6ANJ6.jpg",
+          "airDate": "2019-09-20",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "Masked Warrior",
+          "overview": "All that's needed to make antibiotics is alcohol. The best way to get some is to win the Grand Bout, which the Senku and his kingdom will also need to do in order to keep Magma away from Ruri and give her the drug.",
+          "image": "https://image.tmdb.org/t/p/w780/9gbwAqikwaXPcOUoe9Xbr4WjlJE.jpg",
+          "airDate": "2019-09-27",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "Master of Flame",
+          "overview": "After Magma's series of tricks to reach the final match, Chrome reveals a trick of his own! With a little extra help from Gen, Chrome just may be able to pull this one off!",
+          "image": "https://image.tmdb.org/t/p/w780/mtoDxCqcZJGk2tDZZlMQrOLpwaI.jpg",
+          "airDate": "2019-10-04",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "The Culmination of Two Million Years",
+          "overview": "After Senku's unlikely victory, quick marriage, and even hastier divorce, the kingdom of science is back to work to finally finish Ruri's medicine!",
+          "image": "https://image.tmdb.org/t/p/w780/b4JdwngG7o59Pp3fOXO0oC1vZD3.jpg",
+          "airDate": "2019-10-11",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "A Tale for the Ages",
+          "overview": "Ruri reveals the origin of the village's name and Senku learns of his father's fate!",
+          "image": "https://image.tmdb.org/t/p/w780/28Yz2QuiXD0Y9QmwnumXx82Xa2t.jpg",
+          "airDate": "2019-10-18",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "A Hundred Nights and a Thousand Skies",
+          "overview": "Byakuya and the astronauts' story continues, and Senku's connection to Ishigami Village and the Hundred Tales is finally revealed.",
+          "image": "https://image.tmdb.org/t/p/w780/wPRqE3dJPZsraso2gKoyoIqagZN.jpg",
+          "airDate": "2019-10-25",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "Stone Wars",
+          "overview": "Tsukasa's army is coming! Kinro struggles to hold the bridge against the deadly spearman Hyoga and his shock troops, but Senku and the villagers are ready with deadly new weapons of science!",
+          "image": "https://image.tmdb.org/t/p/w780/ojACONcUoDGtDTAGdjeRhyNM38g.jpg",
+          "airDate": "2019-11-01",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "To Modernity",
+          "overview": "Hyoga is disarmed, but the kingdom of science is still in danger - Ishigami village is in flames! And Tsukasa will soon know that Senku is still alive... How will the villagers fight off the coming invasion?",
+          "image": "https://image.tmdb.org/t/p/w780/pflOejXjo7Sv6M30ONwpnR9hAzd.jpg",
+          "airDate": "2019-11-08",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "The Age of Energy",
+          "overview": "Work begins on creating the components for Senku's cell phone, but spinning gold wire is proving to be quite the task! Luckily, Chrome and Kaseki \"invent\" the water wheel and drastically improve the process!",
+          "image": "https://image.tmdb.org/t/p/w780/r4CvVy6gVY7WBPbZic2IPrV8Wcs.jpg",
+          "airDate": "2019-11-15",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "Spartan Crafts Club",
+          "overview": "With Chrome and Kaseki’s water wheel finished, Ishigami Village moves into the age of electricity! But with the primitive materials available to him, will Senku be able to create a filament that can withstand the intense heat of operating a vacuum tube?",
+          "image": "https://image.tmdb.org/t/p/w780/vKq2lSipWkHjwz6dtzAKIiZYTya.jpg",
+          "airDate": "2019-11-22",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "The Treasure",
+          "overview": "Senku, Chrome, and Magma venture into a cave in search of Tungsten, but there's a suspicious accident that leaves Senku and Chrome trapped at the bottom of a pit! What is Magma up to?!",
+          "image": "https://image.tmdb.org/t/p/w780/pzYT1Dynwqp99Md54mch3l9HLzE.jpg",
+          "airDate": "2019-11-29",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "Wave of Science",
+          "overview": "Senku and the rest of the village get to work on making the components for the cell phone. It's hard work but everyone is pumped!",
+          "image": "https://image.tmdb.org/t/p/w780/fmsDl2bBSCy6g2WyQ6ecTjkIeOY.jpg",
+          "airDate": "2019-12-06",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "title": "Voices Over Infinite Distance",
+          "overview": "After a successful test of their new cell phone, Senku learns of a mysterious tale about a bee named Speaker who can play the voices of the dead.",
+          "image": "https://image.tmdb.org/t/p/w780/mJC54TEmf2Sug3DLZT9fhqiGuxW.jpg",
+          "airDate": "2019-12-13",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "title": "Stone Wars Beginning",
+          "overview": "Senku continues in trying to advance the Stone World, this time he makes \"space food\", it is in actuality cup noodles. After Senku finishes his project, Gen has an epiphany and devises a plan to take down Tsukasa's army without violence.",
+          "image": "https://image.tmdb.org/t/p/w780/cW1XaeCWJya4PIgoDjijM2Qk3Vc.jpg",
+          "airDate": "2021-01-14",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 2,
+          "title": "Hot Line",
+          "overview": "While Senku's diversion buys Gen and others some time, soon Homura realizes something is not right.",
+          "image": "https://image.tmdb.org/t/p/w780/kyRkW4ICLl1AZwvWk5lo9IAJwQj.jpg",
+          "airDate": "2021-01-21",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 3,
+          "title": "Call from the Dead",
+          "overview": "Taiju and Yuzuriha are on the verge of tears after they hear Senku's voice, and Senku informs them of his plan to win the war without any bloodshed.",
+          "image": "https://image.tmdb.org/t/p/w780/fOM5gNKdSaFAOtetiZpUUP2ZZaW.jpg",
+          "airDate": "2021-01-28",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 4,
+          "title": "Full Assault",
+          "overview": "Chrome and Magma struggle with Ukyo, while Senku, gets his hands busy with building up an invention; a new hope.",
+          "image": "https://image.tmdb.org/t/p/w780/7W3gH6WhfPED2iCimeI5zOI7yZQ.jpg",
+          "airDate": "2021-02-04",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 5,
+          "title": "Steam Gorilla",
+          "overview": "The final touches to the automobile are made and it is used to transport the science supplies to a fortified cliffside that's close to the Tsukasa empire. From there the automobile is upgraded into a tank, but unbeknownst to the rescue group preparations by the empire have been made to counter any vehicular attack.",
+          "image": "https://image.tmdb.org/t/p/w780/xdDdZDajj5l0o7sOnovnGEi7Sov.jpg",
+          "airDate": "2021-02-11",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 6,
+          "title": "Prison Break",
+          "overview": "Chrome must use all of his scientific knowledge to escape from his prison and save Senku and others.",
+          "image": "https://image.tmdb.org/t/p/w780/5wtdap5BlXlgmIIseNTSFFFhgEo.jpg",
+          "airDate": "2021-02-18",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 7,
+          "title": "Secret Mission",
+          "overview": "Senku decides to use the Steam-Gorilla to capture The Miracle Cave. Using Lillian's recording, Senku gains the trust of more of Tsukasa's men. Ukyo reveals he saw Yuzuriha's secret mission to reassemble the fragments of statues Tsukasa destroyed.",
+          "image": "https://image.tmdb.org/t/p/w780/dLDk4u9n6aXCmP2TDgS4BodHYRo.jpg",
+          "airDate": "2021-02-25",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 8,
+          "title": "Final Battle",
+          "overview": "The Final Battle for the miracle cave starts as Senku and the Kingdom of Science conduct a frontal assault on the cave.",
+          "image": "https://image.tmdb.org/t/p/w780/oZusPVxwvyvnbwfPXQAlWUox8OB.jpg",
+          "airDate": "2021-03-04",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 9,
+          "title": "To Destroy and to Save",
+          "overview": "Tsukasa and Hyoga are coming to capture the miracle cave. The Kingdom of Science must buy Senku and Chrome some time to turn the tide, or it is all over.",
+          "image": "https://image.tmdb.org/t/p/w780/1pMkShY92cz8P4nrWAd3MlkKo9V.jpg",
+          "airDate": "2021-03-11",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 10,
+          "title": "Humanity's Strongest Tag Team",
+          "overview": "Senku demands a truce from Tsukasa in return for reviving his sister, Mirai, who Tsukasa comes to know is alive, but a new problem shows up when Hyoga shows his true self.",
+          "image": "https://image.tmdb.org/t/p/w780/8Na2zGSLtavAygx3MuAeOj651QS.jpg",
+          "airDate": "2021-03-18",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 11,
+          "title": "PROLOGUE OF Dr. STONE",
+          "overview": "The Kingdom of Science is victorious, however it is not over for Senku. Senku must use all of his knowledge to cure Tsukasa who is severly injured.",
+          "image": "https://image.tmdb.org/t/p/w780/1ZAvZGt0teLnh4R0W9yhS3EjwK3.jpg",
+          "airDate": "2021-03-25",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "title": "NEW WORLD MAP",
+          "overview": "While continuing to use the hot air balloon to search for the oil, it's decided that Ishigami Village needs to take up agriculture to prevent future food shortages, as well as to produce preserved food for their upcoming sea voyage.",
+          "image": "https://image.tmdb.org/t/p/w780/x3hrsz8A6WX1crKV5WLiMkvUuvo.jpg",
+          "airDate": "2023-04-06",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 2,
+          "title": "Greed Equals Justice",
+          "overview": "The Kingdom of Science will need rations to last them through their voyage to the other side of the world. But Senku, being no professional, burns all the bread he attempts to bake.",
+          "image": "https://image.tmdb.org/t/p/w780/o15nnT0jmjhMfxLPn00PgkSisR7.jpg",
+          "airDate": "2023-04-13",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 3,
+          "title": "First Contact",
+          "overview": "Senku, brings along a team to look for the Sagara Oil Fields. Meanwhile, Suika and Francois go truffle hunting.",
+          "image": "https://image.tmdb.org/t/p/w780/7uRDjro0Z42MHQFT5AyFaUxvY6M.jpg",
+          "airDate": "2023-04-20",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 4,
+          "title": "Eyes of Science",
+          "overview": "The morse code signal reading \"WHY\" saturates the airwaves too much for Ukyo to pinpoint a direction, so the Kingdom of Science works on a way to visualize the signal.",
+          "image": "https://image.tmdb.org/t/p/w780/aVA397LlFUhOTIrEt9k3F7OKk6M.jpg",
+          "airDate": "2023-04-27",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 5,
+          "title": "Science Vessel Perseus",
+          "overview": "Kaseki's efforts to build the science vessel Perseus hit a roadblock when he realizes that it's impossible to get all the parts to fit in practice.",
+          "image": "https://image.tmdb.org/t/p/w780/3IjMInLbkq1mygdPzWSmj6Mrdp8.jpg",
+          "airDate": "2023-05-04",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 6,
+          "title": "TREASURE BOX",
+          "overview": "The Perseus crew are on their way to the treasure island, the birthplace of the Hundred Tales, where they hope to locate the treasure box left behind by the Soyuz crew.",
+          "image": "https://image.tmdb.org/t/p/w780/v8hh3pmeXKH4MtPFajLqOQ3Hvqr.jpg",
+          "airDate": "2023-05-11",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 7,
+          "title": "Ray of Despair, Ray of Hope",
+          "overview": "The Perseus arrives at the treasure island. A recon squad consisting of Senku, Soyuz, Kohaku, and Gen set off to locate the platinum and make contact with the islanders. Ukyo later discovers something on the seafloor and send Ginro to investigate.",
+          "image": "https://image.tmdb.org/t/p/w780/4fgL5cLY8SqjUOyO3KC1ycPSBaB.jpg",
+          "airDate": "2023-05-18",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 8,
+          "title": "The Trump Card Aboard the Science Vessel",
+          "overview": "Amaryllis explains how she evaded petrification and how she came to her decision to sneak into the inner palace.",
+          "image": "https://image.tmdb.org/t/p/w780/n1yumf39DunOziTGMZWcCkgkS4b.jpg",
+          "airDate": "2023-05-25",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 9,
+          "title": "Beautiful Science",
+          "overview": "Suika and Ginro work together to rescue the mobile lab from the Perseus. Reunited with Senku and the others, the group works on items to help Kohaku with the selection process.",
+          "image": "https://image.tmdb.org/t/p/w780/7LhbWIVc3mJf0cjshNwpVWJDLAQ.jpg",
+          "airDate": "2023-06-01",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 10,
+          "title": "SCIENCE WARS",
+          "overview": "Amaryllis, Ginro and Kohaku are chosen to join the inner palace. The science team will need a way to communicate with them in secret, and, eventually, a way for them with the science team.",
+          "image": "https://image.tmdb.org/t/p/w780/7OeCecH8SqkaKXDV9aS9vyMyKQz.jpg",
+          "airDate": "2023-06-08",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 11,
+          "title": "With This Fist, a Miracle",
+          "overview": "Kohaku has located the treasure left behind by Byakuya and the others, but it's encased in concrete. Senku has to devise a plan to quietly get at the contents inside, so as to not alert the guards.",
+          "image": "https://image.tmdb.org/t/p/w780/b577K4Y15J2zop96edjtQRjeG5S.jpg",
+          "airDate": "2023-06-15",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 12,
+          "title": "The Kingdom of Science's Counterattack",
+          "overview": "Kohaku is forced to destroy Ryusui's statue to prove that she isn't a spy.",
+          "image": "https://image.tmdb.org/t/p/w780/wK4bbwqbPk1PbLljcazH6KzWVvx.jpg",
+          "airDate": "2023-10-12",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 13,
+          "title": "The Medusa's True Face",
+          "overview": "The team revives Kaseki to work on the drone. Meanwhile, Ginro is called to see the Master.",
+          "image": "https://image.tmdb.org/t/p/w780/gTfHFLH8RNvq2KirV7aPemhzXW8.jpg",
+          "airDate": "2023-10-19",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 14,
+          "title": "Deal Game, Test of Wit",
+          "overview": "More of the Kingdom of Science is brought back from petrification, but they are discovered in the cave by Moz.",
+          "image": "https://image.tmdb.org/t/p/w780/mHFWnsigkolhX6GyhV8Z4wb9rtp.jpg",
+          "airDate": "2023-10-26",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 15,
+          "title": "Battle in Three Dimensions",
+          "overview": "Moz and the Kingdom of Science form a tenuous, temporary alliance against Ibara. How long it will last is a question they can't afford to concern themselves with just yet.",
+          "image": "https://image.tmdb.org/t/p/w780/i5WrLPDOESOxntDuoJ1AqVgYR9I.jpg",
+          "airDate": "2023-11-02",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 16,
+          "title": "Total War",
+          "overview": "The Kingdom of Science attacks and tries to execute their plan to steal the petrification device. Moz convinces Kirisame to use the device, but Ryusui's instincts tell him something is off about the situation.",
+          "image": "https://image.tmdb.org/t/p/w780/uJGNLytepCwHWmUXl7MjPfOtZAa.jpg",
+          "airDate": "2023-11-09",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 17,
+          "title": "JOKER",
+          "overview": "The Kingdom of Science members launch an attack on the islanders aboard the Perseus, but Moz isn't far behind and Senku and the others are forced to retreat inside the vessel. Ibara has them cornered, but Senku unleashes his Joker card.",
+          "image": "https://image.tmdb.org/t/p/w780/6v7V8kljFknyT2NhVRsHK9tESC1.jpg",
+          "airDate": "2023-11-16",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 18,
+          "title": "Flicker of Doom",
+          "overview": "Yo and the Kingdom of Science capture the petrification device, but Ibara isn't going down without a fight.",
+          "image": "https://image.tmdb.org/t/p/w780/93wkryYnttiGIYLbBpfK1ZsRtWV.jpg",
+          "airDate": "2023-11-23",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 19,
+          "title": "LAST MAN STANDING",
+          "overview": "Much to Ibara's shock and dismay, Senku devised a plan and managed to escape petrification. Now the two enter into a head-to-head battle for control of the Medusa device.",
+          "image": "https://image.tmdb.org/t/p/w780/4PlCnfRS4V6Ij8RR7qLtK2akqKW.jpg",
+          "airDate": "2023-11-30",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 20,
+          "title": "FIRST DREAM",
+          "overview": "Senku stands victorious. He then works on reviving the others and fixing their communications device, but while they are talking with Ruri they encounter a strong interference with the signal.",
+          "image": "https://image.tmdb.org/t/p/w780/8nhV9hoZ1k6qcUVHMZ5MV8jc0TJ.jpg",
+          "airDate": "2023-12-07",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 21,
+          "title": "Treasure Island",
+          "overview": "To the moon! That's the plan, at least. Senku and the Kingdom of Science need to devise a means with which to go to the moon and deal with Why-Man. The first step is allying with the people of Treasure Island and enlisting their help with some new crafts.",
+          "image": "https://image.tmdb.org/t/p/w780/r2YtNnc9wgcbC6pZTrFhi5LBHpm.jpg",
+          "airDate": "2023-12-14",
+          "runtime": 24
+        },
+        {
+          "season": 3,
+          "episode": 22,
+          "title": "BEYOND THE NEW WORLD",
+          "overview": "With the petrification device in the Kingdom's hands, it's time to revive Tsukasa. But there's just one problem: the device is out of batteries.",
+          "image": "https://image.tmdb.org/t/p/w780/2GB1NNoz7KsQC6yaMOpQs8xvVZO.jpg",
+          "airDate": "2023-12-21",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 1,
+          "title": "RYUSUI VS. SENKU",
+          "overview": "Senku and his companions finally set off for America in search of corn. However, a dispute arises between Ryusui and Senku shortly after they depart.",
+          "image": "https://image.tmdb.org/t/p/w780/nEe13H2dzeMLZsKgxoZWtMLsN5y.jpg",
+          "airDate": "2025-01-09",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 2,
+          "title": "SCIENCE JOURNEY",
+          "overview": "Maintaining morale will be critical on the long journey to the Americas. Knowing where on the ocean you are is pretty important, too. The crew of the Perseus discuss.",
+          "image": "https://image.tmdb.org/t/p/w780/9g0A6XVGIkXNXz56w9xjCp3zVOq.jpg",
+          "airDate": "2025-01-16",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 3,
+          "title": "Light Trap in the Darkness",
+          "overview": "The Perseus lands in the Americas. They first head to Northern California in search of yellow dent corn, but discover a lot more than that.",
+          "image": "https://image.tmdb.org/t/p/w780/jroZEcETT7etBtv03Kf1SsydZ4.jpg",
+          "airDate": "2025-01-23",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 4,
+          "title": "Dr. X",
+          "overview": "The search party narrowly escaped enemy machine gun fire. Unfortunately, the respite was short-lived.",
+          "image": "https://image.tmdb.org/t/p/w780/ttjeTBt1ZLIUjhaOu1PO6S74Zw0.jpg",
+          "airDate": "2025-01-30",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 5,
+          "title": "DOCTOR VS. DOCTOR",
+          "overview": "Tensions rise as Dr. Xeno makes his introductions to the Perseus.",
+          "image": "https://image.tmdb.org/t/p/w780/w0Cf0omdaTfnxKikdLOHTLCeKtB.jpg",
+          "airDate": "2025-02-06",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 6,
+          "title": "SCIENCE IS ELEGANT",
+          "overview": "Stanley orders Luna to infiltrate the Perseus and identify Doctor Taiju. Things go sideways when it turns out to be a little too easy.",
+          "image": "https://image.tmdb.org/t/p/w780/lLFi5q8mRqS48TXOQdxc8VG9Tpl.jpg",
+          "airDate": "2025-02-13",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 7,
+          "title": "The Two Scientists",
+          "overview": "Senku had gotten his start in rocket building through an email exchange with Doctor Xeno. Their approaches to science soon diverged.",
+          "image": "https://image.tmdb.org/t/p/w780/53oHxXkmiPselcrT9A74SGItjt4.jpg",
+          "airDate": "2025-02-20",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 8,
+          "title": "LOCK ON",
+          "overview": "NASA scientist Dr. Xeno attempts to pick off the leader of the Kingdom of Science.",
+          "image": "https://image.tmdb.org/t/p/w780/8QuD8JwRQKVutOVNCQi6cP0wHrV.jpg",
+          "airDate": "2025-02-27",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 9,
+          "title": "Light of Science",
+          "overview": "With Senku having been shot, the Kingdom of Science plots its retaliation against Dr. Xeno.",
+          "image": "https://image.tmdb.org/t/p/w780/hG4fOlbgdt7EmD54N3AxjLmkouI.jpg",
+          "airDate": "2025-03-06",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 10,
+          "title": "Dirty Roads",
+          "overview": "With Senku still confined to the bed, Chrome's team begins work on the tunnel to Xeno's base.",
+          "image": "https://image.tmdb.org/t/p/w780/m8JSOafuanBZHm5AvYc5qzKZ7hO.jpg",
+          "airDate": "2025-03-13",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 11,
+          "title": "Those Who Know the Rules; Those Who Make Them",
+          "overview": "Ryusui and Senku take to the skies in a science versus science dogfight while Xeno's forces mount a ground counterattack.",
+          "image": "https://image.tmdb.org/t/p/w780/m41G97oBvIzc6eTfH8vXZdKo8Vh.jpg",
+          "airDate": "2025-03-20",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 12,
+          "title": "Reunion",
+          "overview": "Xeno's army attacks and when all seems lost, Chrome and his friends finish the tunnel and capture Xeno.",
+          "image": "https://image.tmdb.org/t/p/w780/4f8yWqwIz2nu0XTaH8wPzjP8KCz.jpg",
+          "airDate": "2025-03-27",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 13,
+          "title": "Watching the Same Moon",
+          "overview": "The team head to the source of the petrification beam in South America as they flee from Stanley's ship.",
+          "image": "https://image.tmdb.org/t/p/w780/x9Q7jNLYl1vYQrKHLGjrkplL3lc.jpg",
+          "airDate": "2025-07-10",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 14,
+          "title": "EARTH RACE",
+          "overview": "Senku and company must flee from Stanley's ship, but they have to make stops to refuel.",
+          "image": "https://image.tmdb.org/t/p/w780/usXgtCw8S7vIdZFHiFPibh8cwuP.jpg",
+          "airDate": "2025-07-17",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 15,
+          "title": "The Escape",
+          "overview": "With Stanley's ship hot on their tail, can science help Senku and company escape?",
+          "image": "https://image.tmdb.org/t/p/w780/A8DX2r9WMKB0mfw6jvxaZpXXisL.jpg",
+          "airDate": "2025-07-24",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 16,
+          "title": "Medusa Mechanism",
+          "overview": "The team is going to need a weapon for when Stanley inevitably catches up to them.",
+          "image": "https://image.tmdb.org/t/p/w780/3VdFxpg5qXwbwqByUFt8QcVSExT.jpg",
+          "airDate": "2025-07-31",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 17,
+          "title": "Sickening Yet Beautiful",
+          "overview": "Senku and his team have lost Stanley for now, but they aren't out of — or rather, in — the woods just yet.",
+          "image": "https://image.tmdb.org/t/p/w780/i1FRetXyFN5ssjk0j3JNMFLOTFp.jpg",
+          "airDate": "2025-08-07",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 18,
+          "title": "Diamond Heart",
+          "overview": "The team discovers a giant pile of petrification devices. They take them apart to see what makes them tick.",
+          "image": "https://image.tmdb.org/t/p/w780/361yLkrsLhw4OccVhswCCnVMNFo.jpg",
+          "airDate": "2025-08-14",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 19,
+          "title": "Stone Sanctuary",
+          "overview": "The team begins making, digging for, and polishing diamonds to replace the burnt-out ones inside the devices.",
+          "image": "https://image.tmdb.org/t/p/w780/sysrBgyqcTQAkIV0FyGbr8wGElU.jpg",
+          "airDate": "2025-08-21",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 20,
+          "title": "What I Once Sought to Destroy",
+          "overview": "Suika is in charge of making sure Senku's plan works, but her kindness becomes an obstacle.",
+          "image": "https://image.tmdb.org/t/p/w780/xCcnSYPMgYwx0kSXapNcExw9wUu.jpg",
+          "airDate": "2025-08-28",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 21,
+          "title": "Our Dr. Stone",
+          "overview": "With the revival team captured, it's up to Luna and Chelsea to revive everyone when the time comes.",
+          "image": "https://image.tmdb.org/t/p/w780/wi00k5SHH4Rx1imtUnSnc3iHS7k.jpg",
+          "airDate": "2025-09-04",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 22,
+          "title": "Until We Meet Again",
+          "overview": "With the petrification beam approaching, who will get their hands on the revival fluid?",
+          "image": "https://image.tmdb.org/t/p/w780/3Y5FMnjRwZDPGE9QKPzzXNprljb.jpg",
+          "airDate": "2025-09-11",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 23,
+          "title": "Scientist, All Alone",
+          "overview": "Suika gathers the team's statues, sets up camp and gets to work doing science.",
+          "image": "https://image.tmdb.org/t/p/w780/3pU6DdwnNabhBVtzBCypFcM4omn.jpg",
+          "airDate": "2025-09-18",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 24,
+          "title": "Whole New World",
+          "overview": "With Senku back, it's only a matter of time before the rest of the Kingdom of Science is revived.",
+          "image": "https://image.tmdb.org/t/p/w780/FV01DRaIiI76EI2EPglHDMAkd4.jpg",
+          "airDate": "2025-09-25",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 25,
+          "title": "Future Engine",
+          "overview": "Senku and Dr. Xeno team up to gather the materials needed to make a rocket engine.",
+          "image": "https://image.tmdb.org/t/p/w780/9SQwAuFoBSWvr9LauVe4zLbyRPb.jpg",
+          "airDate": "2026-04-02",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 26,
+          "title": "Fire",
+          "overview": "The crew arrives in Spain, where they collect fluorite, olive oil and some treats.",
+          "image": "https://image.tmdb.org/t/p/w780/8hLkiFYfTh2p3oWPB8U25A4LdVP.jpg",
+          "airDate": "2026-04-09",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 27,
+          "title": "The Universe Is Written in the Language of Mathematics",
+          "overview": "The New Perseus sets out to India to recruit mathematicians for the space program.",
+          "image": "https://image.tmdb.org/t/p/w780/gjuKWor2G4xZ1wivKtIereGD7Q9.jpg",
+          "airDate": "2026-04-16",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 28,
+          "title": "Dawn of the Computer",
+          "overview": "The computer that the team is building is a series of toroidal tubes. Senku explains.",
+          "image": "https://image.tmdb.org/t/p/w780/fEIJ898viPqr0j7CnoBovvwWEyf.jpg",
+          "airDate": "2026-04-23",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 29,
+          "title": "The Truth About the Rocket",
+          "overview": "The team gets to work wiring up several megabits' worth of memory donuts for their computer.",
+          "image": "https://image.tmdb.org/t/p/w780/2JaWJ9SygDxdmbpTJ8UMwTWA3TW.jpg",
+          "airDate": "2026-04-30",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 30,
+          "title": "Stone to Space",
+          "overview": "The team will need a stupidly insane amount of electricity to turn their bauxite into an aluminum rocket body.",
+          "image": "https://image.tmdb.org/t/p/w780/t4TIQWHDCy43rdpi5atiVsl7Ypa.jpg",
+          "airDate": "2026-05-07",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 31,
+          "title": "Unknown Known",
+          "overview": "With the computer completed, the team will need a user interface: a TV.",
+          "image": "https://image.tmdb.org/t/p/w780/kLhKTqF1ag0cc5nRBKwi6kchka1.jpg",
+          "airDate": "2026-05-14",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 32,
+          "title": "Challengers of Science",
+          "overview": "The Kingdom of Science's rocket launches are mired by a string of rapid unscheduled disassemblies.",
+          "image": "https://image.tmdb.org/t/p/w780/5Tdm4g6yJoP1OpO6HZhG9ZnbRhj.jpg",
+          "airDate": "2026-05-21",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 33,
+          "title": "Wanting Everything",
+          "overview": "The team is too small to build a round-trip rocket. They'll need to enlist help from around the world.",
+          "image": "https://image.tmdb.org/t/p/w780/6qKflZD73Xq2gBDP8ixqaWweujr.jpg",
+          "airDate": "2026-05-28",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 34,
+          "title": "Countdown",
+          "overview": "Ryusui may need to defer to a better pilot for the moon mission.",
+          "image": "https://image.tmdb.org/t/p/w780/oZSCdIHRYa98xvlK2quaWm4fhNZ.jpg",
+          "airDate": "2026-06-04",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 35,
+          "title": "Giant Step",
+          "overview": "The rocket needs to be assembled in space. Not an easy feat in the 21st century, let alone in the stone world.",
+          "image": "https://image.tmdb.org/t/p/w780/l3ZUyE6Fc9koO6AnTiX50qYNYM4.jpg",
+          "airDate": "2026-06-11",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 36,
+          "title": "Why-Man",
+          "overview": "The team sets foot on the moon to confront Why-Man.",
+          "image": "https://image.tmdb.org/t/p/w780/naIL06ri39kGGTlru5YZmvrk9uN.jpg",
+          "airDate": "2026-06-18",
+          "runtime": 24
+        },
+        {
+          "season": 4,
+          "episode": 37,
+          "title": "Ushers of an Exhilarating Future",
+          "overview": "Senku offers Why-Man more exhilaration than they can handle.",
+          "image": "https://image.tmdb.org/t/p/w780/fczNt8dQSThm9yCalMDV7Nwc3mG.jpg",
+          "airDate": "2026-06-25",
+          "runtime": 24
+        }
+      ]
+    },
+    "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty": {
+      "id": "236532",
+      "title": "The Strongest Tank's Labyrinth Raids -A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party-",
+      "seasons": {
+        "1": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 12,
+          "overview": "After being expelled from the Hero’s Party, Rud returns to Avancia and discovers the true power of his extraordinary defensive abilities. Joined by new and familiar companions, he begins conquering labyrinths, protecting his hometown and pursuing the legendary treasure that could cure his beloved sister. However, increasingly dangerous monsters and powerful Demon Kings soon threaten everything he has built."
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Kicked from the Party",
+          "overview": "Rud joins the Hero’s Party in raiding labyrinths, hoping to find a legendary treasure capable of curing his ailing sister. After being blamed for a failed expedition and expelled from the group, he begins the journey home. Along the way, an unexpected encounter starts to reveal the true nature of his mysterious abilities.",
+          "image": "https://image.tmdb.org/t/p/w780/80cJylUX1yB2u9mQGqWxxUk2ZWV.jpg",
+          "airDate": "2024-01-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Return to Avancia",
+          "overview": "Returning to Avancia with Luna, Rud reunites with his beloved sister, Manicia, and begins settling back into life at home. Although Luna remains uneasy around others, the siblings’ warm welcome gradually helps her lower her guard and consider a new place for herself.",
+          "image": "https://image.tmdb.org/t/p/w780/2iBwTYRSKyYr5J1hIo1IotuJXvv.jpg",
+          "airDate": "2024-01-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "An Unknown Monster",
+          "overview": "Manicia worries that her illness is preventing Rud from pursuing his own future, while Nin arrives in Avancia with troubling news about the Hero’s Party. When a powerful monster threatens the town’s orchard, Rud must use his newly discovered abilities to protect those closest to him.",
+          "image": "https://image.tmdb.org/t/p/w780/lZTBZQ71rVJZM9t0SkVwsGj6Vqa.jpg",
+          "airDate": "2024-01-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Selfish",
+          "overview": "After a series of unusual monster attacks, Rud and his companions discover a new labyrinth near Avancia. As they prepare to investigate the danger, Manicia struggles with the belief that her condition is holding Rud back from the life he truly wants.",
+          "image": "https://image.tmdb.org/t/p/w780/kj3sM3OHC5AtCBUVlfvRfpq3VdD.jpg",
+          "airDate": "2024-01-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Self-indulgence",
+          "overview": "Determined to save Manicia and protect Avancia, Rud leads his companions into the newly discovered labyrinth. As the group battles through increasingly dangerous monsters and advances toward its deepest level, Rud must confront the risks of involving his friends in a quest driven by his own deeply personal dream.",
+          "image": "https://image.tmdb.org/t/p/w780/nx4j4TGm23jcfcll8rM65Q6vKmK.jpg",
+          "airDate": "2024-02-04",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "The Labyrinth's Manager",
+          "overview": "With Manicia’s condition improving, Rud is asked by Marius to take control of the newly conquered labyrinth. Reluctantly accepting the responsibility, he begins learning how to manage it while the growing demands on his clan—and two unexpected invitations—present new decisions about their future.",
+          "image": "https://image.tmdb.org/t/p/w780/sAxtX7TNBX0Gmsen7A5HB1v0Wvy.jpg",
+          "airDate": "2024-02-11",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "In Keild",
+          "overview": "While preparing to raid the Keild Labyrinth, Rud learns about Lilia and Lily’s painful past. Inside, Lily steps forward to command the party, leaving her protective sister conflicted by the change. As the expedition advances, Marius shares a surprising truth that could alter the group’s journey.",
+          "image": "https://image.tmdb.org/t/p/w780/eNe4DEunUGxKOpTvlF8q025Mx36.jpg",
+          "airDate": "2024-02-18",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Lilia and Lily",
+          "overview": "As Lily grows more confident, Lilia struggles with the fear that her sister no longer needs her. Rud helps her regain perspective before the party returns to the Keild Labyrinth, where a dark skeleton’s unusual attack forces Lilia to confront painful memories from her past.",
+          "image": "https://image.tmdb.org/t/p/w780/4gyqgAyHDSkTEWZlgaXhXpnvL01.jpg",
+          "airDate": "2024-02-25",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Amon Sloth",
+          "overview": "At the deepest level of the Keild Labyrinth, Rud’s party confronts Amon Sloth, a Demon King whose powerful wind magic and extraordinary speed overwhelm them. Forced to rely on careful coordination and the trust they have built, the group searches for a way to withstand her relentless assault.",
+          "image": "https://image.tmdb.org/t/p/w780/6AUrwmuE6hxLgzvWFGJHiOcEAhx.jpg",
+          "airDate": "2024-03-03",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Exotic Homunculus",
+          "overview": "When a wounded girl arrives seeking help, Rud discovers a group of homunculi who fled a neighbouring kingdom under pursuit by combat models. After intervening in the conflict, he offers the refugees protection in Avancia, but their arrival leaves Luna worried that her own hidden identity may finally be exposed.",
+          "image": "https://image.tmdb.org/t/p/w780/l0xepxqVkhlE6f1iCLwyeNYI2Dz.jpg",
+          "airDate": "2024-03-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Monster Attack",
+          "overview": "Aware that Demon King Greed poses a growing threat, Rud intensifies his training inside the labyrinth. Meanwhile, the homunculi complete a public bathhouse, helping them earn Avancia’s acceptance. Just as peace begins to settle over the town, alarming news arrives that a vast horde of monsters is approaching.",
+          "image": "https://image.tmdb.org/t/p/w780/rPxkIu41MEA74rIMUOAP5Ldyp4S.jpg",
+          "airDate": "2024-03-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Demonic Power",
+          "overview": "At the lowest level of the labyrinth, Rud and his companions confront Greed, the mastermind behind the illegal homunculi. Enraged by his cruel experiments, the party prepares to stop him, but Greed undergoes a terrifying transformation and unleashes overwhelming demonic power that pushes Rud’s defences and the group’s resolve to their limits.",
+          "image": "https://image.tmdb.org/t/p/w780/jVRX1YBBWkDA1o3t9e7w7oEuaeC.jpg",
+          "airDate": "2024-03-24",
+          "runtime": 24
+        }
+      ]
+    },
+    "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability": {
+      "id": "213830",
+      "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability",
+      "seasons": {
+        "1": 24
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 24
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "I Reincarnated as the Seventh Prince",
+          "overview": "A mage, lacking both talent and lineage, is burned to death by the magic he loves. He's reborn as Lloyd, seventh prince of the Saloum Kingdom, with his past memories intact. One day, in a forbidden library, he awakens a demon that wields ancient magic...",
+          "image": "https://image.tmdb.org/t/p/w780/1VZawiNOorcQWt1KnYBqA7iHzvJ.jpg",
+          "airDate": "2024-04-02",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "I Encountered an Adventurer",
+          "overview": "After making the Demon Grimoire his familiar, Lloyd sets out in pursuit of a dungeon with magically enchanted items and encounters Tao, a martial artist who uses Qi techniques. Lloyd assumes the alter ego of Robert and heads deep into a dungeon with her.",
+          "image": "https://image.tmdb.org/t/p/w780/tmtTdMysmR0RXUU7ntOgikGgCdQ.jpg",
+          "airDate": "2024-04-09",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Like Qi Techniques and Enchantment Magic",
+          "overview": "Deep within the dungeon lies a demonic lich that has laid many adventurers to rest. After forcing Robert to escape, Tao faces the threat alone, but is overwhelmed by the difference in power. However, just as the lich is about to finish her off...",
+          "image": "https://image.tmdb.org/t/p/w780/1uHq6kw49kGf89KQiEFsihA86Xu.jpg",
+          "airDate": "2024-04-16",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Headed Out for a Monster Hunt",
+          "overview": "With an interest in weapon enchantments and their effectiveness, Lloyd joins Albert and Sylpha on a monster hunt. After meeting Tao and reaching their destination the group encounters a pack of bearwolves, who regenerate unnaturally quickly.",
+          "image": "https://image.tmdb.org/t/p/w780/mQpR5xgzoPjF55rOZKqRUZgIY0m.jpg",
+          "airDate": "2024-04-23",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "The Demon Is Angry",
+          "overview": "Just when it seemed Sylpha was able to overpower the pack of bearwolves, the demon Pazuzu emits a miasma that has the knights collapsing to the ground. Once even Sylpha and Tao are rendered unable to retaliate, Lloyd finally makes his move.",
+          "image": "https://image.tmdb.org/t/p/w780/eGSYFOognJMmX4G5YUleJeAq5kA.jpg",
+          "airDate": "2024-04-30",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Sisters, Monsters, Spellbound Swords, and Brothers",
+          "overview": "With his new bearwolf, Shiro, in tow, Lloyd visits his sister, Alieze, in order to learn how to communicate with monsters. Afterward Lloyd is reunited with another brother, Dian, a blacksmith who is seeking to create the ultimate Spellbound Sword.",
+          "image": "https://image.tmdb.org/t/p/w780/8WaKFBFYXeMvsiDnfXzf6k5MSMV.jpg",
+          "airDate": "2024-05-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "I'm Going to Battle Some Assassins",
+          "overview": "The kingdom has been infiltrated by a girl named Ren from the Assassin's Guild. Upon learning of her special ability as the Poison Blighted, Lloyd tracks her back to her hideout, sneaks in, and is attacked by a group of assassins with unique abilities.",
+          "image": "https://image.tmdb.org/t/p/w780/3w8g0KbUgNWSFJITNCUgOr2mJxW.jpg",
+          "airDate": "2024-05-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "I'm Going to Meet Jade",
+          "overview": "Having formed a connection with the Assassin's Guild members, Lloyd's curiosity is captured by the leader Jade's teleportation ability. Lloyd and the others head to Lordost Manor, where the guild is happy to be reunited with Jade, until...",
+          "image": "https://image.tmdb.org/t/p/w780/dfFbnT9DkywmQLQMJUjNbW9AaIc.jpg",
+          "airDate": "2024-05-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "The Calamity Named Guisarme",
+          "overview": "Ren is confronted by the demon lord Guisarme, who has stolen Jade's body and teleportation power. Guisarme is intent on seizing the bodies of the Assassin's Guild as well, when Lloyd arrives in the neck of time to defend them.",
+          "image": "https://image.tmdb.org/t/p/w780/g7o2uXRq3EVTGvwRVT6PC6ISn5s.jpg",
+          "airDate": "2024-05-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Sylpha's Blade",
+          "overview": "As Lloyd and Guisarme engage in fierce combat, the members of the Assassin's Guild are cornered by a horde of demons. Using the control of their abilities given to them by Lloyd's spell, the Guild resists, but are gradually overwhelmed by their enemies.",
+          "image": "https://image.tmdb.org/t/p/w780/uelBJfc9NfSK14BR0rwWhauk7em.jpg",
+          "airDate": "2024-06-04",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Jade's Last Words",
+          "overview": "Guisarme's teleportation-powered offensive barrage leaves Lloyd perplexed. Having come to a realization, he attempts a physical attack with a magic-absorbing sword named Spelltaker, aiming to decipher the nature of Jade's stolen power.",
+          "image": "https://image.tmdb.org/t/p/w780/dr7mjDKVSLtZCz3tgOilXGOBOxT.jpg",
+          "airDate": "2024-06-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Lloyd's Answer",
+          "overview": "Guided by Jade's will, Lloyd deciphers the spell for teleportation. Pushed to the brink, Guisarme unleashes an attack powerful enough to reduce anything to oblivion, the Mortal Dark Sphere. At long last, this climactic magic battle comes to a conclusion.",
+          "image": "https://image.tmdb.org/t/p/w780/mgkwK3nxtT7YuBmHqb6dQigI1ez.jpg",
+          "airDate": "2024-06-18",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "I'll Join the Church!",
+          "overview": "Lloyd's interest in divine sorcery is piqued as a means of fighting off further demonic invasions.",
+          "image": "https://image.tmdb.org/t/p/w780/1jz6YT4dEW6ifueLh0PsjTj1G5U.jpg",
+          "airDate": "2025-07-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 14,
+          "title": "Jihriel's Miracles",
+          "overview": "After teleporting in the direction of a presence he sensed, Lloyd and Grim arrive in the realm of angels.",
+          "image": "https://image.tmdb.org/t/p/w780/HfJVXTjWNQtan0ihTiMB3uXLc6.jpg",
+          "airDate": "2025-07-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 15,
+          "title": "Ghoul Hunting",
+          "overview": "Having learned the divine sorcery he was looking for, Lloyd searches for some undead to test it on.",
+          "image": "https://image.tmdb.org/t/p/w780/lCw26LxxdbZB7lVhymTdGAKKrOr.jpg",
+          "airDate": "2025-07-24",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 16,
+          "title": "Civil War",
+          "overview": "Tao, Ren, and Sylpha encounter an undead with an incredibly dangerous power in the sewers.",
+          "image": "https://image.tmdb.org/t/p/w780/dsHxg6aLSjsJ6o8ACUSdX8MA4yl.jpg",
+          "airDate": "2025-07-31",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 17,
+          "title": "The Church's Secret",
+          "overview": "After Babylon's brutal defeat by the mysterious pastor, Lloyd's friends search for clues to his identity.",
+          "image": "https://image.tmdb.org/t/p/w780/mrVubM5O9ur3oN8bHkjaLmAmx23.jpg",
+          "airDate": "2025-08-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 18,
+          "title": "Escher's Will",
+          "overview": "Lloyd's group discovers a gruesome secret beneath the church, leaving Escher to question her faith.",
+          "image": "https://image.tmdb.org/t/p/w780/3WyqjORcACZsK8thHPrOL5rYdaz.jpg",
+          "airDate": "2025-08-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 19,
+          "title": "The Great Advent Festival",
+          "overview": "Lloyd's group organizes to protect the bishops during the Advent festival.",
+          "image": "https://image.tmdb.org/t/p/w780/cB1zemL74GAgXfXGrGNP5GC10HI.jpg",
+          "airDate": "2025-08-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 20,
+          "title": "Invasion",
+          "overview": "Battle breaks out through the city as Lloyd's friends seek to defend against the unholy legion.",
+          "image": "https://image.tmdb.org/t/p/w780/8XMnMV9BKktZB9ZEw6qVaiNQQv5.jpg",
+          "airDate": "2025-08-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 21,
+          "title": "The Moon and Tonkatsu",
+          "overview": "As Babylon contends with an immortal, infinitely regenerating pig chimera, Sylpha struggles without a sword.",
+          "image": "https://image.tmdb.org/t/p/w780/eh9vXNL7J9J6ME8Ci3h8ccJcBo2.jpg",
+          "airDate": "2025-09-04",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 22,
+          "title": "Black Dragon",
+          "overview": "Lloyd's friends are exhausted, but there's still the giant, infernal, dragon chimera to deal with.",
+          "image": "https://image.tmdb.org/t/p/w780/1OBk4li2pTaCCYwK28Ikj6NPU4T.jpg",
+          "airDate": "2025-09-11",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 23,
+          "title": "The Battle Above the Clouds",
+          "overview": "Lloyd and Guitane's clash, with the fate of Saloum in the balance, enters it's final stage.",
+          "image": "https://image.tmdb.org/t/p/w780/n0xNZgaCMDr82uITFb1dpzm5hZn.jpg",
+          "airDate": "2025-09-18",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 24,
+          "title": "In the Light",
+          "overview": "Lloyd's overwhelming magic forces Guitane to confront his own doubts about god.",
+          "image": "https://image.tmdb.org/t/p/w780/8wonsY7MsQF8VTJf1G7ufCPdVUF.jpg",
+          "airDate": "2025-09-25",
+          "runtime": 24
+        }
+      ]
+    },
+    "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside": {
+      "id": "113256",
+      "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
+      "seasons": {
+        "1": 13,
+        "2": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 13,
+          "overview": "Far away from the reaches of demons and war, near the borderland of Zoltan, D-Rank adventurer Red lives a normal existence. Through perseverance and hard work, his dream of starting his own apothecary and peaceful life in the countryside finally came true. Abruptly, Red gets a live-in partner and assistant named Rit—the princess of Duchy Loggervia and an adventurer herself—who gives everything up to join him. Although honest, kind, and loved by all, Red has a secret shared only with Rit: his real name is Gideon, brother of Ruti Ragnason, the \"Hero\" and a former member of her party. Ares Drowa, the \"Sage,\" kicked Red out of their party after their war against the Demon Lord after deciding he was weak and insignificant. Now, even though Red has left the Hero's party behind by assuming a new life together with Rit, his past has yet to let go of him."
+        },
+        {
+          "season": 2,
+          "name": "Season 2",
+          "count": 12,
+          "overview": "Red, a hero who was once kicked out of his adventuring party for not being a \"true comrade.\" He now spends his days in peace, relaxing and running a herb store in a remote area with his lifelong love, the princess Rit, and his sister Ruti, a former hero who is very important to him. Sharing blissful moments with those he loves. Going on trips to acquire the finest gems, having delicious meals with a spectacular view, soaking in pleasant hot springs. No matter what happens to the world around them, these happy moments will be unchanged."
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "You're Not a True Comrade",
+          "overview": "Red enjoys the slow life, gathering medicinal herbs and saving to open a shop. His life wasn't always so simple, but he's keeping that to himself. When a local boy falls ill, Red springs into action. Rit is intrigued when she hears of this, but why?",
+          "image": "https://image.tmdb.org/t/p/w780/rWAvB1BOuZzf8taHLUE7w9K1ULT.jpg",
+          "airDate": "2021-10-06",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "The Princess Who Didn't Join the Hero's Party",
+          "overview": "Red hoped for the slow life but not slow business. Rit offers to help, but is it more than he wants? Red reflects on their history together and how Rit has changed. The Hero's party welcomes a new member and prepares for a new quest.",
+          "image": "https://image.tmdb.org/t/p/w780/cJiTi2o63xuoqgoD4NWna0azFx3.jpg",
+          "airDate": "2021-10-13",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Let's Start Our Quiet Life Together",
+          "overview": "Red and Rit's partnership begins. Red explains how Blessings works to Tanta and his friend. Rit helps try to get Red's new concoction approved. Red tries a new product to boost sales. Some of the Heroes' party have second thoughts about Gideon leaving.",
+          "image": "https://image.tmdb.org/t/p/w780/gY0LwTq3jico0ga8otN6XOIK4zy.jpg",
+          "airDate": "2021-10-20",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Of Mead and Motives",
+          "overview": "Red ponders his new life. Rit has a hankering for mead. Red gets an unfriendly visit. A sauna trip turns into a \"heated\" contest. Zeff's sauna business is in need of saving. Red finally learns what caused Rit's hankering. The Hero's party is on the rocks.",
+          "image": "https://image.tmdb.org/t/p/w780/hXlRFysVbo6OBxhJu3zV5prGJTm.jpg",
+          "airDate": "2021-10-27",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "The Amber Ring",
+          "overview": "Rit has some important visitors who want her back in the guild, and they're not the only ones. Red gives Rit a gift, and she recalls the time she spent with him in the Hero's party. Rit has a run-in with Dir. Ruti recalls how she felt when Red left.",
+          "image": "https://image.tmdb.org/t/p/w780/l0Wr94GvEmiqammt42pPFBhvwmS.jpg",
+          "airDate": "2021-11-03",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "The Rampage Begins",
+          "overview": "Red's visit with Dr. Newman becomes an emergency. Red and Rit have fun by the river. Will they take it to the next level? The Hero's Party seeks the former Demon Lord's weapon. Red reminisces about Ruti. A stormy night is suddenly interrupted.",
+          "image": "https://image.tmdb.org/t/p/w780/vwKLY9r0XMl0JIU4tOLVMItkWOQ.jpg",
+          "airDate": "2021-11-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "The Chaos After the Storm",
+          "overview": "Al is injured, but where are his parents? Ademi vanishes after accusations arise, and the people rise in protest. Red springs into action when Tanta is hauled in for questioning. The Hero's party's quest for the previous Demon Lord's weapon ends.",
+          "image": "https://image.tmdb.org/t/p/w780/6xwBrfib4jtnLH8T7NUy8NDrrKF.jpg",
+          "airDate": "2021-11-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "The Man Who Would Be a Hero",
+          "overview": "The double bed finally arrives. Rit tries to thwart a plot. Bighawk unveils his plan. When one of his own is in danger, Red comes to the rescue. Albert's quest for glory takes a dark turn. Al defuses an angry mob and heads off on his first adventure.",
+          "image": "https://image.tmdb.org/t/p/w780/eEW65bE6BOkW3N07UeDejJhH6l5.jpg",
+          "airDate": "2021-11-24",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Days of Peace and Ease",
+          "overview": "Ruti and Tisse go on a quest for a certain medicine, but can they avoid attracting attention? Red and Rit try to drum up business. Red and Tisse unwittingly cross paths. Rit and Red aid a sick fay. Ruti finds what she's looking for and then some.",
+          "image": "https://image.tmdb.org/t/p/w780/nn0OhNw49ENSTFdF77p0GPBwoT7.jpg",
+          "airDate": "2021-12-01",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Saving the Hero",
+          "overview": "Ruti reunites with Gideon and tries to get him to rejoin her party. But seeing how happy he is, she has to make a tough choice. Tisse and Ruti have a communication breakdown. Bui hunts for something he needs. Ruti opens up about her emotions.",
+          "image": "https://image.tmdb.org/t/p/w780/1S0O8v1ULLGXiZ1EUiyfaIYTgxg.jpg",
+          "airDate": "2021-12-08",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "A Gathering of Champions",
+          "overview": "Tisse gets Red up to speed about Ruti's situation. Red and Danan catch up. Ares encounters Danan, too, but something doesn't add up. Red and company head for an ancient ruins to find Ruti, but a fateful showdown awaits when former comrades cross paths.",
+          "image": "https://image.tmdb.org/t/p/w780/80QgQPtufA63Nbx2exRZg5gYt1Z.jpg",
+          "airDate": "2021-12-15",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "A Parting of Ways",
+          "overview": "Red and company seek Ares in the ancient elven ruins. Ares tries to make Ruti return to her role as the Hero. Danan confronts and exposes Bui and Theodora makes a shocking move. Friendships are tested and comrades betrayed in a climactic battle.",
+          "image": "https://image.tmdb.org/t/p/w780/ckSIT7WwTvtIvqcmd4NSiAgcZX1.jpg",
+          "airDate": "2021-12-22",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "The Guide",
+          "overview": "Ruti learns what it means to be the Hero, and Theodora has a change of heart. Ruti enjoys the slow life. Red and company attend Ares' funeral and ponder the mystery of the holy swords. Red and Rit grow even closer, but is a complication on the horizon?",
+          "image": "https://image.tmdb.org/t/p/w780/ouyzTu834aPl0yQm89c1gKtnEfS.jpg",
+          "airDate": "2021-12-29",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "title": "Let's Go On a Quiet Little Journey",
+          "overview": "Red heads for a mountain range called the Wall at the World's End with his lover Rit and sister Ruti. It was supposed to be an easy trip to get materials for an engagement ring to give to Rit, but...",
+          "image": "https://image.tmdb.org/t/p/w780/bCjRv6JeuH8dEd3SDjQwrxoZe0l.jpg",
+          "airDate": "2024-01-07",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 2,
+          "title": "The Gem Beast",
+          "overview": "Red and Rit reunite with Yarandrala and she suggests they move to the Kiramin Kingdom. Yarandrala's persistence on the subject leaves them a bit confused. Afterward, everyone takes a dip in the hot spring at Tisse's recommendation.",
+          "image": "https://image.tmdb.org/t/p/w780/1TV9MQ2j3XQiw8Oad51mWh3vWGT.jpg",
+          "airDate": "2024-01-14",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 3,
+          "title": "Zoltan's Solstice Festival",
+          "overview": "Cardinal Ljubo takes an interest in Zoltan's airship. Meanwhile, Zoltan is celebrating the Solstice Festival and it is bustling with activity. Red and his friends are enjoying the festival, but they come across a fight between some young people.",
+          "image": "https://image.tmdb.org/t/p/w780/2XMj3OKZ9LjX2iFaPMISkxvJ7XG.jpg",
+          "airDate": "2024-01-21",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 4,
+          "title": "The Daily Life of the Former Hero and the Assassin",
+          "overview": "It's morning as usual. Ruti reconsiders her ordinary daily life that she had abandoned as a hero. That morning, Tisse seemed to be acting strangely. Ruti tries to ask her about the previous night, but...",
+          "image": "https://image.tmdb.org/t/p/w780/uHFIvKvMIgpLfQiIeQNA4HLJbB2.jpg",
+          "airDate": "2024-01-28",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 5,
+          "title": "The Man Who Doesn't Get Chill Living",
+          "overview": "Danan, who's been undergoing medical treatment, is on the mend. Before leaving town, Danan asks to arrange a deal with Red. Red readily accepts and a special training camp with the former hero party commences.",
+          "image": "https://image.tmdb.org/t/p/w780/oXW4qfTkGtgXIT5DAKRrKzLifeW.jpg",
+          "airDate": "2024-02-04",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 6,
+          "title": "A Long Vacation",
+          "overview": "Van and the others are headed to Zoltan. If Ruti's existence should come to light, there could be trouble, so Red and Rit decide they should take Ruti on a trip.",
+          "image": "https://image.tmdb.org/t/p/w780/a6mh9OyEVpd7K3jN5lpw4Iehmpk.jpg",
+          "airDate": "2024-02-11",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 7,
+          "title": "The Two Heroes",
+          "overview": "While Red and his companions are vacationing in St. Durant, they receive word of an ogre king that attacked the village. When Red and his friends go looking, the situation turns out to be more serious than expected.",
+          "image": "https://image.tmdb.org/t/p/w780/piXxRi4Cx0jpVoFleTM4swNeleH.jpg",
+          "airDate": "2024-02-18",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 8,
+          "title": "All for Blessings and Faith",
+          "overview": "Tisse, who accompanied Van on his quest to defeat the hill giant, is shocked by Van's twisted sense of justice. His justice is directed at the Zoltan people who welcome the hero, and a large-scale commotion develops.",
+          "image": "https://image.tmdb.org/t/p/w780/jjGotT7nkzH73kWD9p4fFZI3v0e.jpg",
+          "airDate": "2024-02-25",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 9,
+          "title": "Take Out the Fairy in Love and the Greedy Cardinal",
+          "overview": "In order to drive Van away from Zoltan, Red and his friends aim to appease Ljubo and Lavender. Rit is the one who volunteers to negotiate with Lavender. The method she utilizes is... love stories?!",
+          "image": "https://image.tmdb.org/t/p/w780/lYRozLsy0Kd8iKzmg2Bgbcl57yJ.jpg",
+          "airDate": "2024-03-03",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 10,
+          "title": "The Hero and the Guide",
+          "overview": "Van and the others rush into Red's shop, accusing Esta of betrayal. Red, who encountered Van's values during their discussion, makes a bold move to make contact with him in an attempt to overturn his rigid thinking.",
+          "image": "https://image.tmdb.org/t/p/w780/yPdS3gwXJngff6trWC40ToFGPbj.jpg",
+          "airDate": "2024-03-10",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 11,
+          "title": "The Hero's Challenge",
+          "overview": "At Tisse's request, Albert heads off to search for a girl who has disappeared in the forest. Although she is found to be safe, Van, who has also come to rescue her, takes issue with the creature that led her astray which culminates in a skirmish.",
+          "image": "https://image.tmdb.org/t/p/w780/rMh7KWPikObfzOcGMbyok2Cg5pa.jpg",
+          "airDate": "2024-03-17",
+          "runtime": 24
+        },
+        {
+          "season": 2,
+          "episode": 12,
+          "title": "The Conclusion and the Start of a New Journey",
+          "overview": "Red, who dominates with his skill, and Van, who attacks with his tenacity, engage in a back-and-forth battle. Meanwhile, Lavender is furious at Van's predicament. A huge shadow flows from her body attacking Rit and the others.",
+          "image": "https://image.tmdb.org/t/p/w780/zi2TcqjhzZmyOcNl8lyQeEmgxv.jpg",
+          "airDate": "2024-03-24",
+          "runtime": 24
+        }
+      ]
+    },
+    "therewasacutegirlintheherospartysoitriedconfessingtoher": {
+      "id": "295366",
+      "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
+      "seasons": {
+        "1": 13
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 13
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "I Tried Confessing",
+          "overview": "A subordinate of the Demon King falls in love with a priestess in the hero's party.",
+          "image": "https://image.tmdb.org/t/p/w780/8Nk0NMiooAD8muhVRnj6fDNDna5.jpg",
+          "airDate": "2026-01-06",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "I Tried Going on a Date",
+          "overview": "Celia asks Yoki to take Cecilia out on a date as a break from her daily stresses and obligations.",
+          "image": "https://image.tmdb.org/t/p/w780/d3ELjlL0lAmPRYyxCwPJL79rBUd.jpg",
+          "airDate": "2026-01-13",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "I Tried Giving Love Advice",
+          "overview": "While Yoki is helping Raven win over his crush, they run into another old friend in need of love advice.",
+          "image": "https://image.tmdb.org/t/p/w780/hA1aUaMEihsM3bS14pDK6I7GYIq.jpg",
+          "airDate": "2026-01-20",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "I Gave the Hero a Lecture",
+          "overview": "After Raven and Mikana, Yuga is next to seek advice from Yoki.",
+          "image": "https://image.tmdb.org/t/p/w780/tTecFzJthg5XEKISxirRtBV3s4k.jpg",
+          "airDate": "2026-01-27",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "I Tried Being a Demon Again",
+          "overview": "While helping a village that's been attacked by bandits, Yoki and Cecilia encounter a new threat.",
+          "image": "https://image.tmdb.org/t/p/w780/wh50CNGpRA8SUm2jfsAZCZU2Z9G.jpg",
+          "airDate": "2026-02-03",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "I Tried Flying",
+          "overview": "Teal takes a turn for the worse, and at the same time, Gar is in peril. Can Yoki save both of them in time?",
+          "image": "https://image.tmdb.org/t/p/w780/2zZ1iPHbuzxBcUPxjDOyCTGjPpW.jpg",
+          "airDate": "2026-02-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "I Tried Receiving Chocolates",
+          "overview": "Valentine's Day is for giving chocolate to someone special, but not everyone agrees.",
+          "image": "https://image.tmdb.org/t/p/w780/ppDGblDm0RrzaFecIIvODVZBKK9.jpg",
+          "airDate": "2026-02-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "I Tried Saving a Mermaid",
+          "overview": "Yoki accepts a quest to stop a string of thefts on merchant ships in a port town.",
+          "image": "https://image.tmdb.org/t/p/w780/i5OH8881g8jk1J41X40ICpnXEkr.jpg",
+          "airDate": "2026-02-24",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "I Tried Learning More About the Girl I Love",
+          "overview": "Yoki realizes he doesn't know much about Cecilia, so he tries going on a quest with her to learn more.",
+          "image": "https://image.tmdb.org/t/p/w780/qTsjsgErDpJf5ufQRamkArBU8HM.jpg",
+          "airDate": "2026-03-03",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "I Tried Hearing Out the Guardian Deity's Troubles",
+          "overview": "Gar decides to work and make money on his own to repay his debt to Teal.",
+          "image": "https://image.tmdb.org/t/p/w780/qjLxbQHydsx71X3lmb22AyjSghb.jpg",
+          "airDate": "2026-03-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "I Tried Watching Over My Friend and My Former Subordinate",
+          "overview": "Raven starts to feel like his own weakness and powerlessness are hurting his chances with Happiness.",
+          "image": "https://image.tmdb.org/t/p/w780/hMBS6Mq7HLoqfLiI7IXE8p0hFhk.jpg",
+          "airDate": "2026-03-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "I Tried Listening to My Crush's Arranged Marriage Plan",
+          "overview": "Cecilia is meeting the man that the king wants her to marry. How will Yoki take the news?",
+          "image": "https://image.tmdb.org/t/p/w780/du2m90A2R93Z5mOg3IoJwsIUFF7.jpg",
+          "airDate": "2026-03-24",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 13,
+          "title": "I Tried Being in a... with My Crush",
+          "overview": "A mysterious figure who looks just like Yoki's alter-ego is causing chaos in the capital.",
+          "image": "https://image.tmdb.org/t/p/w780/qWS2c7GLbfm1hwuTCoLGPft10E2.jpg",
+          "airDate": "2026-03-31",
           "runtime": 24
         }
       ]

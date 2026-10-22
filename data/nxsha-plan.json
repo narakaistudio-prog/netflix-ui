@@ -2996,6 +2996,86 @@
       "seasons": {
         "1": 1
       }
+    },
+    {
+      "key": "mobilesuitgundamthewitchfrommercury2",
+      "title": "Mobile Suit Gundam: The Witch from Mercury",
+      "kind": "tv",
+      "id": "196400",
+      "seasons": {
+        "1": 24
+      }
+    },
+    {
+      "key": "demonslayerkimetsunoyaiba2",
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "kind": "tv",
+      "id": "85937",
+      "seasons": {
+        "1": 26,
+        "2": 7,
+        "3": 11,
+        "4": 11,
+        "5": 8
+      }
+    },
+    {
+      "key": "drstone3",
+      "title": "Dr. STONE",
+      "kind": "tv",
+      "id": "86031",
+      "seasons": {
+        "1": 24,
+        "2": 11,
+        "3": 22,
+        "4": 37
+      }
+    },
+    {
+      "key": "anotherworld2",
+      "title": "Another World",
+      "kind": "movie",
+      "id": "1470329",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "thestrongesttankslabyrinthraidsatankwitharare9999resistanceskillgotkickedfromtheherosparty",
+      "title": "The Strongest Tank's Labyrinth Raids -A Tank with a Rare 9999 Resistance Skill Got Kicked from the Hero's Party-",
+      "kind": "tv",
+      "id": "236532",
+      "seasons": {
+        "1": 12
+      }
+    },
+    {
+      "key": "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability",
+      "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability",
+      "kind": "tv",
+      "id": "213830",
+      "seasons": {
+        "1": 24
+      }
+    },
+    {
+      "key": "banishedfromtheherospartyidecidedtoliveaquietlifeinthecountryside",
+      "title": "Banished from the Hero's Party, I Decided to Live a Quiet Life in the Countryside",
+      "kind": "tv",
+      "id": "113256",
+      "seasons": {
+        "1": 13,
+        "2": 12
+      }
+    },
+    {
+      "key": "therewasacutegirlintheherospartysoitriedconfessingtoher",
+      "title": "There Was a Cute Girl in the Hero's Party, So I Tried Confessing to Her",
+      "kind": "tv",
+      "id": "295366",
+      "seasons": {
+        "1": 13
+      }
     }
   ],
   "saoMovieCandidates": [
