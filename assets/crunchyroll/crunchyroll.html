@@ -1436,7 +1436,7 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
            nahi hota — isliye alag query. Slug harvest se baked aata hai
            (TS_MOVIES); jis movie ka slug nahi mila uske liye server bhi nahi
            (owner: "jisse movie ka na mile usse rehne dena"). */
-        var tsMovie=(window.TS_MOVIES&&TS_MOVIES[playState.key])||null;
+        var tsMovie=(typeof TS_MOVIES!=='undefined'&&TS_MOVIES[playState.key])||null;
         var q;
         if(isMovieKey(playState.key)){
           q='type=movie&title='+encodeURIComponent(tsTitle())+(tsMovie&&tsMovie.slug?'&slug='+encodeURIComponent(tsMovie.slug):'');

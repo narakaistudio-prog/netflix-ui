@@ -4,6 +4,7 @@
 // usse rehne dena" — isliye movie na mile to uske liye koi baked slug nahi
 // hona chahiye.
 import { spawnSync } from 'node:child_process';
+import { JSDOM, VirtualConsole } from 'jsdom';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -94,6 +95,40 @@ test('every catalog movie is considered, and only verified ones get a slug', () 
         expect(movieKeys).toContain(key);
         expect(entry.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     }
+});
+
+test('the player sends a movie query (no season/episode) for a baked movie', async () => {
+    const dom = new JSDOM(readFileSync(HTML_PATH, 'utf8'), {
+        runScripts: 'dangerously',
+        pretendToBeVisual: true,
+        url: 'https://app.local/crunchyroll',
+        virtualConsole: new VirtualConsole(),
+    });
+    const win = dom.window as any;
+    const doc = win.document;
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    const click = (element: Element | null) => element?.dispatchEvent(new win.MouseEvent('click', { bubbles: true }));
+    // Spirited Away: purana catalog movie (NX_DATA me kind movie, type nahi).
+    click(doc.querySelector('#catalogGrid [data-open="spirited"]'));
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    click(doc.getElementById('demoPlay'));
+    await new Promise((resolve) => setTimeout(resolve, 120));
+
+    let asked = '';
+    win.fetch = async (url: string) => {
+        asked = String(url);
+        return { json: async () => ({ ok: false, error: 'test' }) };
+    };
+    click(doc.getElementById('tsServerBtn'));
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+
+    expect(asked).toContain('type=movie');
+    expect(asked).toContain('slug=spirited-away');
+    expect(asked).not.toContain('&s=');
+    // Movie par season/episode ka label nahi.
+    expect(doc.getElementById('watchEpTitle')?.textContent).toBe('Spirited Away');
+    win.close();
 });
 
 test('the bake is idempotent and --from-state --check matches the page', () => {
