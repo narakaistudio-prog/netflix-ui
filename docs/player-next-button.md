@@ -18,9 +18,14 @@ video ke **bottom-right** me (MovieBox me bhi wahin hai):
 │                                          │
 │            ( Nxsha / ToonStream )        │
 │                                          │
-│                        [ ▶ Next · E2 ]   │  ← 64px upar, 16px daayein
-└──────────────────────────────────────────┘
+│                        [ ▶ Next · E2 ]   │  ← control bar se upar,
+└──────────────────────────────────────────┘     daayein kinare se 18px
 ```
+
+Jagah owner ke red-mark se: video ke bottom-right, site ke control bar ke
+**upar** — `bottom: clamp(56px, 15%, 150px)` (phone `clamp(44px, 14%, 96px)`),
+`right: 18px` (phone 10px). Percentage se har player size par wahi naap rehti
+hai, px clamp chhote players par overlap rokta hai.
 
 - White pill, kaala text + play icon (`border-radius: 6px` — MovieBox jaisa).
 - Site ke apne control bar se **upar** (bottom 64px / phone 52px), taaki uske
@@ -36,13 +41,17 @@ signals:
 - `mousemove` / `mousedown` / `touchstart` (capture, poori screen par),
 - pointer iframe ke andar gaya → `mouseout` jiska `relatedTarget` null hai
   (cross-origin iframe me ghusne par parent ko sirf yahi signal milta hai),
-- `keydown`, `wheel`, `scroll`, window `focus`.
+- `keydown`, `wheel`, `scroll`, window `focus`,
+- aur **CSS `:hover`** — `.video-stage:hover .next-float`. Ye zaroori hai:
+  cursor jab video (iframe) ke **andar** hota hai to browser parent ko koi
+  mousemove nahi deta, isliye pehle button 3.2s me gayab ho ke wapas nahi
+  aata tha (owner ki screenshot: "screen par cursor hai phir bhi next nahi
+  aaya"). Iframe stage ka child hai, isliye stage par `:hover` bana rehta
+  hai — button cursor player par hone tak dikhta rehta hai.
 
-Matlab: cursor hilao → button aa jata hai; haath hatao → 3.2s me gayab.
-Agar pointer video (iframe) ke andar lagatar ghum raha hai to browser humein
-mousemove nahi deta — us haalat me bhi 3.2s baad button chhup jata hai, aur
-pointer ek baar bahar-nikal ke wapas aaye (ya click ho) to turant dikh jata
-hai. Yahi limitation MovieBox me bhi hai.
+Matlab: cursor player par aate hi button dikhta hai, hilne par bhi; player se
+bahar nikalte hi 900ms me chhup jata hai (MovieBox ka leave-delay), aur
+3.2s idle timer tab kaam aata hai jab cursor player ke bahar ho.
 
 ## Kab dikhta hai
 
@@ -73,8 +82,10 @@ Label bhi update hota hai: `Next · E2` → `Next · E3`.
 
 `tests-arena/player-next-button.test.ts` (real page, JSDOM):
 
-- button stage ke andar + idle timing + listeners,
-- episode chalte hi dikhta hai → 3.2s idle par gayab → mousemove par wapas,
+- button stage ke andar + jagah (control bar ke upar) + idle timing + listeners
+  + `:hover` reveal rule + leave-hide,
+- episode chalte hi dikhta hai → 3.2s idle par gayab → mousemove par wapas →
+  player se bahar nikalne par chhup jata hai,
 - click par agla episode usi player me,
 - movie par nahi,
 - last episode (Chainsaw Man S1E12) par nahi.

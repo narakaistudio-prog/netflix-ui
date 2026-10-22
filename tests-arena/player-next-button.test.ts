@@ -77,9 +77,16 @@ test('button player ke stage ke andar hai — MovieBox jaisa pill, autohide timi
     expect(stage).toContain('id="nextFloat"');
     expect(stage).toContain('next-float');
     expect(stage).toContain('Next Episode');
+    // Jagah: video ke bottom-right, control bar se upar (owner ka red mark).
+    expect(html).toContain('bottom:clamp(56px,15%,150px)');
     // Autohide: idle timer + activity listeners.
     expect(html).toContain('var NEXT_IDLE_MS=3200;');
     expect(html).toContain("document.addEventListener('mousemove',activity,true);");
+    // Cursor video (iframe) ke andar ho tab bhi dikhe — iframe ke andar ka
+    // mousemove parent ko nahi milta, isliye CSS :hover wala raasta.
+    expect(html).toContain('.video-stage:hover .next-float:not([hidden])');
+    // Player se bahar nikalte hi chhup jaye.
+    expect(html).toContain("st.addEventListener('mouseleave'");
     expect(html).toContain("document.addEventListener('mouseout',function(e){if(!e.relatedTarget)activity()},false);");
     expect(html).toContain('function nextFloatShow(');
     expect(html).toContain('function nextFloatHide(');
@@ -109,6 +116,11 @@ test('episode chalte hi button dikhta hai, 3.2s idle par gayab, cursor hilne par
     await wait(60);
     expect(btn.classList.contains('show')).toBe(true);
     expect(btn.hidden).toBe(false);
+
+    // Player se bahar nikalte hi (900ms leave-delay ke baad) chhup jata hai.
+    doc.getElementById('videoStage')!.dispatchEvent(new dom.window.MouseEvent('mouseleave', { bubbles: false }));
+    await wait(1100);
+    expect(btn.classList.contains('show')).toBe(false);
 });
 
 test('button dabane par agla episode usi player me lag jata hai', async () => {
