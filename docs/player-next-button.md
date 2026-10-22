@@ -22,8 +22,8 @@ video ke **bottom-right** me (MovieBox me bhi wahin hai):
 └──────────────────────────────────────────┘     daayein kinare se 18px
 ```
 
-Jagah owner ke red-mark se: video ke bottom-right, site ke control bar ke
-**upar** — `bottom: clamp(56px, 15%, 150px)` (phone `clamp(44px, 14%, 96px)`),
+Jagah owner ke red-mark se: video ke bottom-right, control bar se kaafi
+**upar** — `bottom: clamp(56px, 30%, 300px)` (phone `clamp(44px, 26%, 140px)`),
 `right: 18px` (phone 10px). Percentage se har player size par wahi naap rehti
 hai, px clamp chhote players par overlap rokta hai.
 
@@ -33,30 +33,41 @@ hai, px clamp chhote players par overlap rokta hai.
 - Sirf button clickable hai — baaki stage par click seedha iframe (video) ko
   jaata hai, player ke apne controls kabhi block nahi hote.
 
-## Autohide (MovieBox ka wahi pattern)
+## Autohide — cursor chhupe to button bhi chhupe
 
-`NEXT_IDLE_MS = 3200` — 3.2 second tak kuch na ho to fade-out. Dikhane wale
-signals:
+`NEXT_IDLE_MS = 3200` — 3.2 second (site ke chrome jitna) kuch na ho to
+fade-out. Dikhane ke signals:
 
 - `mousemove` / `mousedown` / `touchstart` (capture, poori screen par),
-- pointer iframe ke andar gaya → `mouseout` jiska `relatedTarget` null hai
-  (cross-origin iframe me ghusne par parent ko sirf yahi signal milta hai),
-- `keydown`, `wheel`, `scroll`, window `focus`,
-- aur **CSS `:hover`** — `.video-stage:hover .next-float`. Ye zaroori hai:
-  cursor jab video (iframe) ke **andar** hota hai to browser parent ko koi
-  mousemove nahi deta, isliye pehle button 3.2s me gayab ho ke wapas nahi
-  aata tha (owner ki screenshot: "screen par cursor hai phir bhi next nahi
-  aaya"). Iframe stage ka child hai, isliye stage par `:hover` bana rehta
-  hai — button cursor player par hone tak dikhta rehta hai.
+- pointer iframe ke andar gaya → `mouseout` jiska `relatedTarget` null hai,
+- `keydown`, `wheel`, `scroll`, window `focus`.
 
-Matlab: cursor player par aate hi button dikhta hai, hilne par bhi; player se
-bahar nikalte hi 900ms me chhup jata hai (MovieBox ka leave-delay), aur
-3.2s idle timer tab kaam aata hai jab cursor player ke bahar ho.
+### Asli problem: iframe ke andar ka movement
+
+Video cross-origin iframe hai — uske **andar** cursor ghumane par parent page ko
+`mousemove` kabhi nahi milta. Isliye pehle do problem thi:
+
+1. cursor video par rehne par button 3.2s me gayab ho jata tha aur wapas nahi
+   aata tha ("screen par cursor hai phir bhi next nahi aaya"),
+2. CSS `:hover` se hamesha dikhta tha, to jab player apna cursor/controls
+   chhupa deta tha tab bhi button pada rehta tha.
+
+Ab **idle-probe** hai: button chhupne ke baad stage par `stage-idle` class lagti
+hai → `.video-stage.stage-idle iframe{pointer-events:none}`. Isse cursor jab
+video par wapas aata hai, wahi pehli movement parent page ko mil jati hai →
+probe turant hat jati hai (iframe dobara clickable) aur button dikh jata hai.
+Bas 3.2s tak kuch na ho to button + probe dono idle rehte hain — bilkul site ke
+cursor ki tarah.
+
+Probe sirf mouse-wale devices par (`hover:hover and pointer:fine`) on hota hai;
+phone par purana touch-activity wala behaviour.
 
 ## Kab dikhta hai
 
 Sirf jab:
 
+- **ToonStream mode** ho (`TS_MODE`) — Nxsha par ye button nahi hai
+  (owner: "nxsha server par ye next lagana jaruri nahi"),
 - player khula ho aur episode chalu ho (`stageInjected`),
 - agla episode maujood ho (`neighborEpisode(1)`) — **last episode** par nahi,
 - title **movie** na ho (movie ka next episode nahi hota).
@@ -82,10 +93,10 @@ Label bhi update hota hai: `Next · E2` → `Next · E3`.
 
 `tests-arena/player-next-button.test.ts` (real page, JSDOM):
 
-- button stage ke andar + jagah (control bar ke upar) + idle timing + listeners
-  + `:hover` reveal rule + leave-hide,
-- episode chalte hi dikhta hai → 3.2s idle par gayab → mousemove par wapas →
-  player se bahar nikalne par chhup jata hai,
+- button stage ke andar + naya mark (30%) + idle timing + probe rule,
+- Nxsha par button nahi (activity ke baad bhi hidden),
+- ToonStream par: dikhta hai → 3.2s idle par gayab + `stage-idle` → mousemove
+  par wapas (probe off) → player se bahar nikalne par chhup jata hai,
 - click par agla episode usi player me,
 - movie par nahi,
 - last episode (Chainsaw Man S1E12) par nahi.

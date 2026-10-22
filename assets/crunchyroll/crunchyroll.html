@@ -180,17 +180,20 @@
     /* Next episode button — player ke andar, video ke bottom-right (MovieBox
        jaisa white pill), idle par gayab. Wrapper pointer-events:none nahi —
        sirf button clickable hai, baaki stage/iframe par click jaata rehta hai. */
-    .next-float{position:absolute;right:18px;bottom:clamp(56px,15%,150px);z-index:5;display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;background:rgba(255,255,255,.94);color:#000;font:inherit;font-size:14px;font-weight:800;padding:10px 16px;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
-    /* Reveal ke do raaste: activity par JS `show` class, aur jab cursor video
-       (iframe) ke andar ho to CSS :hover — iframe stage ka child hai, isliye
-       parent par :hover chalta rehta hai chahe andar ke mousemove humein na
-       mile. Yahi owner ki shikayat thi: "screen par cursor hai phir bhi next
-       nahi aata". */
-    .next-float.show:not([hidden]),.video-stage:hover .next-float:not([hidden]){opacity:1;visibility:visible;transform:none}
+    .next-float{position:absolute;right:18px;bottom:clamp(56px,30%,300px);z-index:5;display:-webkit-inline-flex;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;background:rgba(255,255,255,.94);color:#000;font:inherit;font-size:14px;font-weight:800;padding:10px 16px;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease,visibility .18s}
+    /* Reveal activity se hota hai (JS `show` class); idle 3.2s me hide —
+       yani jab player apna cursor/controls chhupa de to ye bhi chhup jata
+       hai. Neeche `stage-idle` probe wapas dikhne ka raasta banata hai. */
+    .next-float.show:not([hidden]){opacity:1;visibility:visible;transform:none}
+    /* Idle-probe: button chhupne ke baad iframe click-through ho jata hai,
+       taaki cursor wapas video par aane ki pehli movement parent ko mile.
+       (Cross-origin iframe ke andar ka mousemove parent ko kabhi nahi milta.)
+       Koi bhi movement turant probe hata deti hai — click normal chalte hain. */
+    .video-stage.stage-idle iframe{pointer-events:none}
     .next-float svg{width:14px;height:14px;fill:currentColor}
     .next-float:focus-visible{outline:3px solid #fff;outline-offset:3px}
     .next-float[hidden]{display:none}
-    @media(max-width:600px){.next-float{right:10px;bottom:clamp(44px,14%,96px);font-size:13px;padding:9px 13px}}
+    @media(max-width:600px){.next-float{right:10px;bottom:clamp(44px,26%,140px);font-size:13px;padding:9px 13px}}
     .player-shell{position:fixed;inset:0;z-index:120;background:#000;color:#fff;display:flex;flex-direction:column;overflow:auto}
     .player-shell[hidden]{display:none}
     .player-top{min-height:66px;display:flex;align-items:center;gap:15px;padding:10px 3vw;background:#15171b;border-bottom:1px solid #2d2f34;flex:0 0 auto}
@@ -1170,14 +1173,25 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
          Button sirf tab milta hai jab player chalu ho aur agla episode ho
          (last episode / movie par nahi). */
       var NEXT_IDLE_MS=3200;
+      /* Idle-probe sirf mouse-wale devices par: button chhupne ke baad iframe
+         par `pointer-events:none` lagta hai, isliye cursor wapas video par
+         aane ki pehli movement parent page ko mil jati hai (cross-origin
+         iframe ke andar ki movement kabhi nahi milti). Movement milte hi
+         probe hat jata hai — player ke apne click/hover normal chalte hain. */
+      var nextFloatProbeOk=(function(){try{return !!(window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches)}catch(e){return false}})();
       var nextFloat=byId('nextFloat'),nextFloatLabel=byId('nextFloatLabel'),nextFloatTimer=null;
       var tsActiveIndex=1;
       function nextFloatTarget(){var st=playState;if(!st||isMovieKey(st.key))return null;return neighborEpisode(1)}
-      function nextFloatEligible(){return !!(stageInjected&&playerShell&&!playerShell.hidden&&nextFloatTarget())}
-      function nextFloatHide(){if(nextFloatTimer){clearTimeout(nextFloatTimer);nextFloatTimer=null}if(!nextFloat)return;removeClass(nextFloat,'show');nextFloat.setAttribute('aria-hidden','true')}
-      function nextFloatShow(){if(!nextFloat)return;if(!nextFloatEligible()){nextFloatHide();return}setHidden(nextFloat,false);addClass(nextFloat,'show');nextFloat.setAttribute('aria-hidden','false');if(nextFloatTimer)clearTimeout(nextFloatTimer);nextFloatTimer=setTimeout(nextFloatHide,NEXT_IDLE_MS)}
+      /* Owner: "nxsha server par ye next lagana jaruri nahi" — button sirf
+         ToonStream (TS_MODE) par, Nxsha par nahi. */
+      function nextFloatEligible(){return !!(TS_MODE&&stageInjected&&playerShell&&!playerShell.hidden&&nextFloatTarget())}
+      function nextFloatProbe(on){if(!videoStage||!nextFloatProbeOk)return;setClass(videoStage,'stage-idle',!!on)}
+      function nextFloatHide(){if(nextFloatTimer){clearTimeout(nextFloatTimer);nextFloatTimer=null}if(!nextFloat)return;removeClass(nextFloat,'show');nextFloat.setAttribute('aria-hidden','true');/* Chhupne ke baad probe on — cursor wapas video par aaye to turant
+           dikhega, aur idle rehne par chhupa hi rahega (site ke cursor ki
+           tarah). */if(nextFloatEligible())nextFloatProbe(true)}
+      function nextFloatShow(){if(!nextFloat)return;if(!nextFloatEligible()){nextFloatHide();return}nextFloatProbe(false);setHidden(nextFloat,false);addClass(nextFloat,'show');nextFloat.setAttribute('aria-hidden','false');if(nextFloatTimer)clearTimeout(nextFloatTimer);nextFloatTimer=setTimeout(nextFloatHide,NEXT_IDLE_MS)}
       /* Episode badla / player (re)load hua to label aur availability refresh. */
-      function nextFloatRefresh(){if(!nextFloat)return;var nxt=nextFloatTarget(),ok=!!(stageInjected&&playerShell&&!playerShell.hidden&&nxt);setHidden(nextFloat,!ok);if(!ok){nextFloatHide();return}if(nextFloatLabel)nextFloatLabel.textContent='Next · E'+nxt.ep}
+      function nextFloatRefresh(){if(!nextFloat)return;var nxt=nextFloatTarget(),ok=!!(TS_MODE&&stageInjected&&playerShell&&!playerShell.hidden&&nxt);setHidden(nextFloat,!ok);if(!ok){nextFloatProbe(false);nextFloatHide();return}if(nextFloatLabel)nextFloatLabel.textContent='Next · E'+nxt.ep}
       function goNextEpisode(){var st=playState,nxt=nextFloatTarget();if(!st||!nxt){showToast((st&&isMovieKey(st.key))?'Movie hai — agla episode nahi':'Last episode hai — agla episode nahi');return false}/* Episode khatam maan ke Continue Watching se hata do, warna wahi episode 99% par pada rehta hai. */PLAY.ended=true;rebasePlayhead();flushPlayhead(true);st.season=String(nxt.season);st.ep=nxt.ep;showToast('Next episode · S'+nxt.season+' E'+nxt.ep);reloadAfterEpisodeChange();return true}
       /* Episode badalne par wahi source chalta rahe: ToonStream par the to usi
          slot (S1/S2/S3) par agla episode, warna Nxsha. */
@@ -1186,7 +1200,7 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
       /* Cursor player se bahar nikla → turant chhupao (MovieBox ka 900ms
          leave-delay). Video ke andar jaate waqt mouseleave nahi aata —
          iframe stage ka child hai, isliye :hover bana rehta hai. */
-      (function(){var st=byId('videoStage');if(!st||!nextFloat)return;st.addEventListener('mouseleave',function(){if(nextFloatTimer){clearTimeout(nextFloatTimer);nextFloatTimer=null}nextFloatTimer=setTimeout(function(){removeClass(nextFloat,'show')},900)},false)})();
+      (function(){var st=byId('videoStage');if(!st||!nextFloat)return;st.addEventListener('mouseleave',function(){if(nextFloatTimer){clearTimeout(nextFloatTimer);nextFloatTimer=null}nextFloatTimer=setTimeout(nextFloatHide,900)},false)})();
       (function(){
         function activity(){nextFloatShow()}
         document.addEventListener('mousemove',activity,true);
@@ -1264,7 +1278,7 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
         var want=Number(opts.server)||0;
         if(TS.loading)return;
         var info=tsKey(),cached=TS.cache[info];
-        TS_MODE=true;tsSetButtons();
+        TS_MODE=true;tsSetButtons();nextFloatRefresh();nextFloatShow();
         /* Chuna hua slot (S1/S2/S3) bacha rahe — auto-next usi server par. */
         function pickSlot(){var i=(want&&tsSites[want-1])?want:1;tsActiveIndex=i;var hit=tsSites[i-1];return (hit&&hit.url)||''}
         if(cached&&cached.embed){tsSites=cached.sites||[{name:'S1',url:cached.embed}];tsSetButtons();tsInject(pickSlot()||cached.embed);showToast('ToonStream player');return}
@@ -1295,7 +1309,7 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
         TS.loading=false;
       }
       byId('tsServerBtn').addEventListener('click',function(){playToonstream()},false);
-      byId('nxServerBtn').addEventListener('click',function(){TS_MODE=false;tsSetButtons();loadServer(PLAYER_DEFAULT_SERVER);showToast('Nxsha player')},false);
+      byId('nxServerBtn').addEventListener('click',function(){TS_MODE=false;tsSetButtons();nextFloatRefresh();loadServer(PLAYER_DEFAULT_SERVER);showToast('Nxsha player')},false);
       (function(){var makeHandler=function(i){return function(){var st=tsSites[i-1];if(!st)return;tsActiveIndex=i;tsInject(st.url);if(serverName)serverName.textContent='ToonStream '+i+' \u00b7 '+st.name;showToast('ToonStream '+i+': '+st.name)}};for(var j=1;j<=3;j++){var b=byId('tsS'+j+'Btn');if(b)b.addEventListener('click',makeHandler(j),false)}})();
       byId('blockedOpen').addEventListener('click',function(){if(noticeAction==='retry'){loadServer(PLAYER_DEFAULT_SERVER);showToast('Retrying player')}else{var u=serverUrl(PLAYER_DEFAULT_SERVER);if(u){try{window.open(u,'_blank','noopener')}catch(e){}showToast('Opened in new tab')}}},false);
       var serverHelpBtn=byId('serverHelp');if(serverHelpBtn)serverHelpBtn.addEventListener('click',function(){disarmWatchdog();onServerTimeout()},false);
