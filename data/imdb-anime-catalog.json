@@ -2005,23 +2005,6 @@
       "imdbId": "tt9679542"
     },
     {
-      "key": "anotherworld",
-      "kind": "movie",
-      "id": "1470329",
-      "title": "Another World",
-      "year": "2025",
-      "rating": "3.7",
-      "genres": [
-        "adventure",
-        "drama",
-        "fantasy"
-      ],
-      "img": "https://image.tmdb.org/t/p/w500/glYJbEs9MBPAGAj2EL0jFPlmEAT.jpg",
-      "runtime": "1h 52m",
-      "desc": "Gudo is a Soul Keeper, a spirit who guides human souls into their next life. When he befriends a young girl named Yuri, he discovers that her untimely death has left her cursed with unresolved rage and regret. As Yuri’s soul teeters on the edge of annihilation, Gudo embarks on a dangerous journey to stop her from unleashing horrible destruction on both the human world and the spirit realm.",
-      "imdbId": "tt34621291"
-    },
-    {
       "key": "mobilesuitgundamthewitchfrommercury2",
       "kind": "tv",
       "id": "196400",

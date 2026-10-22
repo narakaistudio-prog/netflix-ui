@@ -467,9 +467,13 @@ export function pickNxshaMatch(results, wanted, { kind = '', year = '' } = {}) {
     const exact = usable.filter((row) => isSameShow(row.name, wanted));
     const pool = exact.length ? exact : [];
     if (!pool.length) return null;
+    // IMDb list ka type har card me nahi hota; aisi list me ~90% series hote
+    // hain, isliye default preference **tv** hai — warna same naam ki live-action
+    // movie jeet jati hai (Zom 100, Dragon Ball DAIMA jaise cases).
+    const prefer = kind || 'tv';
     const score = (row) => (
         (row.year && year && String(row.year) === String(year) ? 4 : 0)
-        + (row.type === kind ? 2 : 0)
+        + (row.type === prefer ? 2 : 0)
         + (row.poster ? 1 : 0)
     );
     return [...pool].sort((a, b) => score(b) - score(a))[0];
@@ -647,6 +651,47 @@ export function parseCatalogLine(line) {
     return entry;
 }
 
+/** Marker block ke **bahar** wale titles = page ke apne (purane) catalog titles. */
+export function originalCatalogTitles(html) {
+    const source = String(html);
+    const start = source.indexOf(SHOWS_START);
+    const end = source.indexOf(SHOWS_END, start);
+    const withoutBlock = start >= 0 && end >= 0
+        ? source.slice(0, start) + source.slice(end + SHOWS_END.length)
+        : source;
+    return existingCatalogTitles(withoutBlock);
+}
+
+/**
+ * Duplicate aur galat entries hatao.
+ *
+ * Do jagah se duplicate aate hain:
+ *   1. IMDb card ka poster alt cast photo hota hai ("…in Demon Slayer"), to
+ *      retry se wahi show dobara match ho jata — owner: "jo pehle se hai usse
+ *      chod dena".
+ *   2. Ek hi Nxsha id do keys par (dobara import hone par).
+ */
+export function pruneEntries(entries, originalTitles) {
+    const original = new Set(originalTitles.map(looseTitle));
+    const seen = new Set();
+    const kept = [];
+    const dropped = [];
+    for (const entry of entries) {
+        const routeId = `${entry.kind}:${entry.id}`;
+        if (original.has(looseTitle(entry.title))) {
+            dropped.push({ key: entry.key, title: entry.title, reason: 'already-in-catalog' });
+            continue;
+        }
+        if (entry.id && seen.has(routeId)) {
+            dropped.push({ key: entry.key, title: entry.title, reason: 'duplicate-nxsha-route' });
+            continue;
+        }
+        seen.add(routeId);
+        kept.push(entry);
+    }
+    return { kept, dropped };
+}
+
 /** Page ke marker block se saare entries (import se pehle ke liye). */
 export function readMarkerEntries(html) {
     const source = String(html);
@@ -691,7 +736,12 @@ async function main() {
     const html = readFileSync(HTML_PATH, 'utf8');
     const registry = JSON.parse(readFileSync(NX_TITLES_PATH, 'utf8'));
     const state = loadState(html, registry);
-    const entries = new Map(state.entries.map((entry) => [entry.key, entry]));
+    const pruned = pruneEntries(state.entries, originalCatalogTitles(html));
+    const entries = new Map(pruned.kept.map((entry) => [entry.key, entry]));
+    for (const drop of pruned.dropped) {
+        console.log(`prune ${drop.key}: ${drop.reason}`);
+        delete registry[drop.key];
+    }
 
     const items = await readImdbList(listId);
     const report = {
@@ -714,6 +764,11 @@ async function main() {
         }
         const found = await resolveNxsha(item, report);
         if (!found) continue;
+        // Resolve ke baad phir check: Nxsha ka asli naam pehle se catalog me ho.
+        if (have.has(looseTitle(found.title))) {
+            report.skipped.push({ title: found.title, reason: 'already-in-catalog' });
+            continue;
+        }
         const key = uniqueKey(slugKey(found.hit.name), takenKeys);
         takenKeys.add(key);
         entries.set(key, {
@@ -732,6 +787,27 @@ async function main() {
         have.add(looseTitle(found.title));
         report.added.push({ key, title: found.title, nxsha: `${found.hit.type}/${found.hit.id}`, imdb: item.imdbId });
         if ((index + 1) % 10 === 0) console.log(`… ${index + 1}/${items.length} checked, ${report.added.length} naye mile`);
+    }
+
+    // Jo titles pehle movie ki tarah match hue the unhe dobara check karo: agar
+    // Nxsha par wahi naam **series** ke roop me bhi hai to series hi sahi hai
+    // (owner ka list anime series ka hai, live-action movie nahi).
+    for (const entry of entries.values()) {
+        if (entry.kind !== 'movie') continue;
+        try {
+            const results = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(entry.title)}`));
+            const series = results.find((row) => row.type === 'tv' && isSameShow(row.name, entry.title));
+            if (!series) continue;
+            const page = await get(`${NX_BASE}/tv/${series.id}`);
+            if (!page) continue;
+            parseNxshaSeriesPage(page, series.name);
+            console.log(`kind fix ${entry.key}: movie -> tv (${series.id})`);
+            entry.kind = 'tv';
+            entry.id = series.id;
+            report.missing.push({ title: entry.title, reason: `movie-to-tv: ${series.id}` });
+        } catch (error) {
+            console.log(`kind audit fail ${entry.key}: ${error?.message || error}`);
+        }
     }
 
     // Purane import ki genres khaali reh gayi ho to page dobara padh kar bharo
@@ -867,6 +943,11 @@ async function resolveNxsha(item, report) {
             return null;
         }
         hit = pickNxshaMatch(search, candidate, { kind: item.kind, year: item.year });
+        // " in " ke baad wala chhota naam generic ho sakta hai ("Another World"),
+        // isliye retry par saal match hona zaroori hai.
+        if (hit && candidate !== item.title && item.year && hit.year && String(hit.year) !== String(item.year)) {
+            hit = null;
+        }
         if (hit) break;
         await sleep(200);
     }
