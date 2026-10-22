@@ -99,6 +99,19 @@ jobs:
           node scripts/bake-animahd-links.mjs
           node scripts/bake-animahd-links.mjs --check
 
+      - name: Keep the import log on failure (debug ke liye)
+        if: failure()
+        run: |
+          if [ -f /tmp/import.log ]; then
+            tail -n 200 /tmp/import.log > data/imdb-import-last-run.log
+            git config user.name "netflix-catalog-bot"
+            git config user.email "netflix-catalog-bot@users.noreply.github.com"
+            git add data/imdb-import-last-run.log
+            git commit -m "chore(import): last run ka log (debug)" || exit 0
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}" || exit 0
+          fi
+
       - name: Summarize what changed
         if: always()
         run: |
