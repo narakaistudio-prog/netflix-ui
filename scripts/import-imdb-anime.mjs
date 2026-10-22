@@ -161,6 +161,34 @@ export function parseImdbList(html) {
     return [...byId.values()].filter((row) => row.title);
 }
 
+/**
+ * IMDb ko seedha scrape karna datacenter IPs par block ho jata hai (HTTP 202 +
+ * khaali challenge page). Isliye ek reader proxy (r.jina.ai) ka markdown bhi
+ * padhte hain — usme har title ka poster + `[](/title/tt…)` link saaf milta hai.
+ *
+ * Example line:
+ *   ![Image 3: Akebi's Sailor Uniform (2022)](https://m.media-amazon.com/…jpg)
+ *   [](https://www.imdb.com/title/tt15533674/?ref_=ls_i_4)
+ */
+export function parseImdbMarkdown(text) {
+    const source = String(text || '');
+    const rows = new Map();
+    const chunks = source.split('![');
+    for (const chunk of chunks.slice(1)) {
+        const head = /^Image \d+: ([^\]]+?)\]\((https?:\/\/[^)\s]+)\)/.exec(chunk);
+        if (!head) continue;
+        const alt = decode(head[1]).replace(/\s+/g, ' ').trim();
+        const poster = head[2];
+        const link = /\[\]\((https?:\/\/www\.imdb\.com\/title\/(tt\d+)[^)]*)\)/.exec(chunk);
+        if (!link) continue;
+        const year = /\((\d{4})[^)]*\)\s*$/.exec(alt)?.[1] || '';
+        const title = alt.replace(/\s*\([^)]*\)\s*$/, '').trim();
+        if (!title) continue;
+        if (!rows.has(link[2])) rows.set(link[2], { imdbId: link[2], title, year, poster, description: '', kind: '' });
+    }
+    return [...rows.values()];
+}
+
 /* ------------------------------------------------------------------ catalog */
 
 /**
@@ -433,6 +461,26 @@ async function main() {
         await sleep(600);
     }
     if (items.length < 40) {
+        // Reader proxy: IMDb datacenter IPs ko block karta hai, ye rasta reliable hai.
+        for (const target of [
+            `https://www.imdb.com/list/${listId}/`,
+            `https://r.jina.ai/https://www.imdb.com/list/${listId}/`,
+        ]) {
+            try {
+                const body = await get(target, { accept: 'text/plain,text/markdown,*/*' });
+                const parsed = parseImdbMarkdown(body || '');
+                console.log(`Reader ${target} -> ${parsed.length} titles`);
+                if (parsed.length > items.length) {
+                    items = parsed;
+                    listHtml = body || '';
+                }
+            } catch (error) {
+                console.log(`Reader fail (${target}): ${error?.message || error}`);
+            }
+            await sleep(400);
+        }
+    }
+    if (items.length < 40) {
         // Debug ke liye page ka shuru ka hissa log me chhod do (CI log branch me aata hai).
         console.log(`IMDb page snippet: ${String(listHtml).slice(0, 700).replace(/\s+/g, ' ')}`);
         throw new Error(`IMDb list se sirf ${items.length} titles mile — page badal gaya lagta hai`);
@@ -573,6 +621,10 @@ export function selfTest() {
     assert(items.find((row) => row.imdbId === 'tt13409432')?.year === '2021', 'anchor year');
     assert(items.find((row) => row.imdbId === 'tt0245429')?.kind === 'movie', 'JSON-LD movie kind');
     assert(items.find((row) => row.imdbId === 'tt15765670')?.title === 'My Dress-Up Darling', 'JSON-LD title');
+
+    const md = '![Image 1: My Dress-Up Darling (2022)](https://x/a.jpg)\n\n[](https://www.imdb.com/title/tt15765670/?ref_=ls_i_1) x\n';
+    const mdItems = parseImdbMarkdown(md);
+    assert(mdItems.length === 1 && mdItems[0].imdbId === 'tt15765670' && mdItems[0].title === 'My Dress-Up Darling', 'markdown reader parse');
 
     const page = `<!doctype html><html><body>
       <script>var shows={
