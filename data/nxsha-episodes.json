@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-21T04:44:20.000Z",
+    "generatedAt": "2026-10-22T04:42:06.623Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -1320,8 +1320,10 @@
         {
           "season": 1,
           "episode": 54,
-          "title": "Episode 54",
-          "airDate": "2026-10-24"
+          "title": "Give Me a Hand",
+          "image": "https://image.tmdb.org/t/p/w780/cbn990l4IEFdMquTTjfSe2U3cQ7.jpg",
+          "airDate": "2026-10-24",
+          "runtime": 24
         },
         {
           "season": 1,
