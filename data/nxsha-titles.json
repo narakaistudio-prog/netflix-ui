@@ -1810,5 +1810,37 @@
       "1": 12
     }
   },
+  "thestrongestmagicianinthedemonlordsarmywasahuman": {
+    "id": "248951",
+    "kind": "tv",
+    "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "ifmyfavoritepopidolmadeittothebudokaniwoulddie": {
+    "id": "91024",
+    "kind": "tv",
+    "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword": {
+    "id": "285357",
+    "kind": "tv",
+    "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!",
+    "seasons": {
+      "1": 12
+    }
+  },
+  "easygoingterritorydefensebytheoptimisticlord": {
+    "id": "288589",
+    "kind": "tv",
+    "title": "Easygoing Territory Defense by the Optimistic Lord",
+    "seasons": {
+      "1": 12
+    }
+  },
   "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata."
 }

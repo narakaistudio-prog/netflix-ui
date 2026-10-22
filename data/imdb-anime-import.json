@@ -1,37 +1,31 @@
 {
   "listId": "ls540527030",
-  "generatedAt": "2026-10-22T12:32:57.332Z",
+  "generatedAt": "2026-10-22T12:42:27.984Z",
   "imdbItems": 156,
   "added": [
     {
-      "key": "zom100bucketlistofthedead",
-      "title": "Zom 100: Bucket List of the Dead",
-      "nxsha": "tv/217766",
-      "imdb": "tt25811262"
+      "key": "thestrongestmagicianinthedemonlordsarmywasahuman",
+      "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+      "nxsha": "tv/248951",
+      "imdb": "tt32333026"
     },
     {
-      "key": "assassinationclassroom",
-      "title": "Assassination Classroom",
-      "nxsha": "tv/62110",
-      "imdb": "tt3837246"
+      "key": "ifmyfavoritepopidolmadeittothebudokaniwoulddie",
+      "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+      "nxsha": "tv/91024",
+      "imdb": "tt11147864"
     },
     {
-      "key": "dragonballdaima",
-      "title": "Dragon Ball DAIMA",
-      "nxsha": "tv/236994",
-      "imdb": "tt29485149"
+      "key": "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword",
+      "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!",
+      "nxsha": "tv/285357",
+      "imdb": "tt37901124"
     },
     {
-      "key": "anotherworld",
-      "title": "Another World",
-      "nxsha": "movie/1470329",
-      "imdb": "tt34621291"
-    },
-    {
-      "key": "letsplay",
-      "title": "Let's Play",
-      "nxsha": "tv/293010",
-      "imdb": "tt37532040"
+      "key": "easygoingterritorydefensebytheoptimisticlord",
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "nxsha": "tv/288589",
+      "imdb": "tt38977386"
     }
   ],
   "skipped": [
@@ -224,6 +218,10 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Zom 100: Bucket List of the Dead",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Villainess Level 99: I May Be the Hidden Boss but I'm Not the Demon Lord",
       "reason": "already-in-catalog"
     },
@@ -392,6 +390,10 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Assassination Classroom",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Mushoku Tensei: Jobless Reincarnation",
       "reason": "already-in-catalog"
     },
@@ -420,7 +422,15 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Dragon Ball Daima",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Zenshu",
+      "reason": "already-in-catalog"
+    },
+    {
+      "title": "Another World",
       "reason": "already-in-catalog"
     },
     {
@@ -548,6 +558,10 @@
       "reason": "already-in-catalog"
     },
     {
+      "title": "Let's Play",
+      "reason": "already-in-catalog"
+    },
+    {
       "title": "Dark Moon: The Blood Altar",
       "reason": "already-in-catalog"
     },
@@ -618,27 +632,11 @@
   ],
   "missing": [
     {
-      "title": "Jun Fukuyama in The Strongest Magician in the Demon Lord's Army was a Human",
-      "reason": "no-nxsha-match"
-    },
-    {
       "title": "Demon Lord, Retry! R",
       "reason": "no-nxsha-match"
     },
     {
-      "title": "Oshi ga Budôkan ittekuretara shinu",
-      "reason": "no-nxsha-match"
-    },
-    {
       "title": "Trigun Stargaze",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Roll Over and Die",
-      "reason": "no-nxsha-match"
-    },
-    {
-      "title": "Easygoing Territory Defense by the Optimistic Lord: Production Magic Turns a Nameless Village into the Strongest Fortified City",
       "reason": "no-nxsha-match"
     }
   ],

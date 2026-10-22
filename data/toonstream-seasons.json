@@ -3012,6 +3012,45 @@
           "base": 0
         }
       }
+    },
+    "thestrongestmagicianinthedemonlordsarmywasahuman": {
+      "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+      "slug": "strongest-magician-in-the-demon-lords-army-was-a-human",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "ifmyfavoritepopidolmadeittothebudokaniwoulddie": {
+      "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+      "slug": "if-my-favorite-pop-idol-made-it-to-the-budokan-i-would-die",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "easygoingterritorydefensebytheoptimisticlord": {
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "slug": "easygoing-territory-defense-by-the-optimistic-lord",
+      "seasons": {
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
     }
   },
   "misses": [
@@ -3042,6 +3081,10 @@
     {
       "key": "iwasreincarnatedasthe7thprincesoicantakemytimeperfectingmymagicalability",
       "title": "I Was Reincarnated as the 7th Prince so I Can Take My Time Perfecting My Magical Ability"
+    },
+    {
+      "key": "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword",
+      "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!"
     }
   ]
 }

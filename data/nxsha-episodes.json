@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T12:33:14.529Z",
+    "generatedAt": "2026-10-22T12:42:42.708Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -76598,6 +76598,490 @@
           "image": "https://image.tmdb.org/t/p/w780/wTxbIPirimTdGxAIYVS74Fe4PWv.jpg",
           "airDate": "2025-12-18",
           "runtime": 23
+        }
+      ]
+    },
+    "thestrongestmagicianinthedemonlordsarmywasahuman": {
+      "id": "248951",
+      "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+      "seasons": {
+        "1": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 12
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Ike, Commander of the Undying Brigade",
+          "overview": "The Demon King's army continues to fight against humans. Ike, the leader of the Undying Brigade, is the grandson of the great magician Romberg. Despite being respected, Ike hides his human identity, fearing the disaster it would cause should it be known.",
+          "image": "https://image.tmdb.org/t/p/w780/opcqmO0abfOyeggfGR5CdFiAaEh.jpg",
+          "airDate": "2024-07-03",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Alistair, Leader of the White Rose Knights",
+          "overview": "Ike and Satie attempt to gather information about the next human attack. Meanwhile, Alistair from the White Rose Knights is already gathering her troops behind him...",
+          "image": "https://image.tmdb.org/t/p/w780/m8YBslE30D5rYTVblclpTuannvC.jpg",
+          "airDate": "2024-07-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Traitor",
+          "overview": "A traitor is revealed in the Demon Lord's army, and Ike begins to hunt them down...",
+          "image": "https://image.tmdb.org/t/p/w780/vshvVzVlgrfuCXdG0IwL1S7K8j9.jpg",
+          "airDate": "2024-07-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Duel",
+          "overview": "Dairokuten demands Cefiro fight a duel with one of the other Corps commanders. But Cefiro has something else in mind...",
+          "image": "https://image.tmdb.org/t/p/w780/kSfiu48yYmTMzWBoS4QBHWRWtus.jpg",
+          "airDate": "2024-07-24",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Ambition",
+          "overview": "Ike battles the treacherous Basteo and his undead legions.",
+          "image": "https://image.tmdb.org/t/p/w780/vutvazwX6bIN3BlEuYprYwhb4ae.jpg",
+          "airDate": "2024-07-31",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Dwarf King",
+          "overview": "Ike seeks the aid of another race for the upcoming battle with the humans.",
+          "image": "https://image.tmdb.org/t/p/w780/zZdsBVsGJJRPhIB6FRT93QornE6.jpg",
+          "airDate": "2024-08-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "War Begins",
+          "overview": "The Alliance of Kings begins their assault on Ike's forces.",
+          "image": "https://image.tmdb.org/t/p/w780/m7nxq4a5ff5U8BLwiViASDGFcQr.jpg",
+          "airDate": "2024-08-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "The Final Battle at Ivalias",
+          "overview": "Ike begins his counterattack to defend Ivalias from the human army.",
+          "image": "https://image.tmdb.org/t/p/w780/1JfGNbNFHvC4kstduMbUwBmgkIR.jpg",
+          "airDate": "2024-08-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Negotiations",
+          "overview": "Ike goes to negotiate with the Trade Federation for badly-needed supplies.",
+          "image": "https://image.tmdb.org/t/p/w780/4nYPQe6Y3pvHdD36b4pLrIYfDRI.jpg",
+          "airDate": "2024-08-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Pirates",
+          "overview": "When Satie is kidnapped by pirates, Ike goes all-out to rescue her.",
+          "image": "https://image.tmdb.org/t/p/w780/54toDEwFuTzvn5X8uXzYUFXEBK1.jpg",
+          "airDate": "2024-09-04",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Cefiro is Defeated",
+          "overview": "Cefiro is defeated, and Ike rushes to her aid.",
+          "image": "https://image.tmdb.org/t/p/w780/hp1RsUQKxPyqVteNDAp620NrbJ4.jpg",
+          "airDate": "2024-09-11",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "General E. Rudle",
+          "overview": "Ike arrives to save Cefiro, and uses a cunning plan and new weapons in his battle against the brilliant enemy general.",
+          "image": "https://image.tmdb.org/t/p/w780/wYVsvynK7DFXC5ksMLuom5GWn6I.jpg",
+          "airDate": "2024-09-18",
+          "runtime": 24
+        }
+      ]
+    },
+    "ifmyfavoritepopidolmadeittothebudokaniwoulddie": {
+      "id": "91024",
+      "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+      "seasons": {
+        "1": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 12
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "But I Love That Maina",
+          "overview": "Eripiyo is a super fan of Maina, who is a member of the underground idol group Cham Jam. Eripiyo uses all of her money to support Maina to the point that she only wears a red tracksuit. However, Maina always seems to act cold and distant towards Eripiyo.",
+          "image": "https://image.tmdb.org/t/p/w780/uNRUvlZgBJR2K0h6yhD3LTq5evX.jpg",
+          "airDate": "2020-01-09"
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "I Always Want to Love You the Most",
+          "overview": "Eripiyo and Kumasa go to Okayama Girls' Festa after learning some of the ChamJam girls are set to appear. Meanwhile, Maina reveals that she's never gotten a fan letter, so Sorane and Reo try to figure out a way to convince Eripiyo to write one.",
+          "image": "https://image.tmdb.org/t/p/w780/3IOi8Tf9er7EMkNQ42Gx6jI6FdL.jpg",
+          "airDate": "2020-01-16"
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Do You Like Me?",
+          "overview": "Motoi introduces Eripiyo and Kumasa to his little sister, Rena, who went to the Okayama Girls' Festa with him. She tags along with him to see ChamJam perform after seeing them at Girls' Festa and her favorite just happens to be Maina.",
+          "image": "https://image.tmdb.org/t/p/w780/4NgSOWKJUTTIRFCmnC0hQi9ff5v.jpg",
+          "airDate": "2020-01-23"
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "I Promise to Make You Number 1",
+          "overview": "ChamJam competes at the Autumn Sports Festival and also has voting for their popularity ranking coming up. Meanwhile, Reo's birthday is coming up and Kumasa tries to get things ready for the celebration.",
+          "image": "https://image.tmdb.org/t/p/w780/nLkTMVhkqm3mtxWsBGYGGJzwsmx.jpg",
+          "airDate": "2020-01-30"
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "I Can Only Wait",
+          "overview": "Maina notices that Eripiyo hasn't been able to buy as many CDs and starts to worry, especially since she hears rumors of her switching favorites. Meanwhile, Yumeri's rank goes up, and she wonders if that'll cause a rift between her and Maki.",
+          "image": "https://image.tmdb.org/t/p/w780/qlOGuhCpO5JeQmaa6Wd03ixUsyA.jpg",
+          "airDate": "2020-02-06"
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "You Were My Everything",
+          "overview": "Sorane thinks back on how she became an idol and how much she looks up to Reo. Meanwhile, Motoi is crushed to hear rumors that Sorane was seen walking with a guy.",
+          "image": "https://image.tmdb.org/t/p/w780/dslUgsqmdY8SOrHepnkGPzucjHU.jpg",
+          "airDate": "2020-02-13"
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Run for Maina's Sake",
+          "overview": "Eripiyo finally recovers from her broken leg and goes right back to work so she can support Maina on the last day of voting for the popularity ranking. However, she overworks herself again and...",
+          "image": "https://image.tmdb.org/t/p/w780/rARRFKuDZqQ7LPQ0MkeJzXwIKwd.jpg",
+          "airDate": "2020-02-20"
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "I Want You in My Future",
+          "overview": "There are rumors that Sorane and Aya aren't getting along. Meanwhile, the ChamJam girls prepare for their Christmas concert and Eripiyo hopes she gets to see Maina in a Santa outfit this year.",
+          "image": "https://image.tmdb.org/t/p/w780/lVbcK7D1chXch8re0Vq8qJXyjzE.jpg",
+          "airDate": "2020-02-27"
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Not as a Wota, but as a Person",
+          "overview": "Eripiyo and the other fans spend the last day of the year with ChamJam at their show. Reo appears on a New Year's countdown show and the others head to the shrine for their first visit of the new year.",
+          "image": "https://image.tmdb.org/t/p/w780/4OBPxzdPAHepXv6XQevjpo59O1y.jpg",
+          "airDate": "2020-03-05"
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Your Fave Isn't Your Friend",
+          "overview": "ChamJam has their first concert of the new year, but Eripiyo is sick and misses Maina being in the front row. Eripiyo later damages her throat even more, making her unable to talk, even though the ChamJam Valentine's Day event is coming up...",
+          "image": "https://image.tmdb.org/t/p/w780/b3rVPdV49V836VjhwtXv7uVFp21.jpg",
+          "airDate": "2020-03-12"
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "The Closest Miracle to Me",
+          "overview": "ChamJam gets ready for the 16th Setouchi Idol Festival, and Reo gets a message from a girl who was in her previous group. Meanwhile, Eripiyo invites a friend over from work so they can witness the moment ChamJam and Maina appear briefly on TV.",
+          "image": "https://image.tmdb.org/t/p/w780/tWUGxRfnxcB8FBew4bHzQHi08RB.jpg",
+          "airDate": "2020-03-19"
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "If My Favorite Pop Idol Made It to the Budokan",
+          "overview": "ChamJam is set to perform at the Setouchi Idol Festival, but Reo seems nervous for some reason. After their performance, Eripiyo reaffirms her love for Maina once again.",
+          "image": "https://image.tmdb.org/t/p/w780/bpnvF29Zjt43MQcRDUoWS56mDbI.jpg",
+          "airDate": "2020-03-26"
+        }
+      ]
+    },
+    "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword": {
+      "id": "285357",
+      "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!",
+      "seasons": {
+        "1": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 12
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "The Beginning and the End",
+          "overview": "Flum Apricot's journey gets off to a horrible start as she goes from hero to zero.",
+          "image": "https://image.tmdb.org/t/p/w780/oHs4GdG4ZTRAknvqeA8Z9OrPOol.jpg",
+          "airDate": "2026-01-09",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Coincidence and Fate",
+          "overview": "Flum heads off in search of the werewolf from the job request, but she encounters more than she bargained for.",
+          "image": "https://image.tmdb.org/t/p/w780/AgeoZyq5ml0tbvJx7ujOARdJ7Y1.jpg",
+          "airDate": "2026-01-16",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Purity and Corruption",
+          "overview": "Flum helps out a troubled man and finds herself with an unexpected job request.",
+          "image": "https://image.tmdb.org/t/p/w780/xPiyNaGOFYn8DO0F0sn1fg23HyW.jpg",
+          "airDate": "2026-01-23",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Darkness and Light",
+          "overview": "Flum and Sara, on the run from the beast, stumble upon a shady underground ruin.",
+          "image": "https://image.tmdb.org/t/p/w780/qUIWRCICGSy7bafGOQ3rUPllM34.jpg",
+          "airDate": "2026-01-30",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Cruelty and Camaraderie",
+          "overview": "What do Flum and Sara find when they return from the caves?",
+          "image": "https://image.tmdb.org/t/p/w780/4uWVsOHLxrMx0gp1vYfXpa5fPUx.jpg",
+          "airDate": "2026-02-06",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "An Ordinary Life",
+          "overview": "Now back in the capital, Flum starts to get used to her new living circumstances.",
+          "image": "https://image.tmdb.org/t/p/w780/nUUiIwMGktAze8lzG44G1ETCqwh.jpg",
+          "airDate": "2026-02-13",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Meetings and Partings",
+          "overview": "Flum finds herself in trouble up against Dein's gang and the corrupt guard.",
+          "image": "https://image.tmdb.org/t/p/w780/vAFOgjim3fgdXp1f35TDcqrcusJ.jpg",
+          "airDate": "2026-02-20",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Budding and Withering",
+          "overview": "The gang try to learn more about the blind girl with amnesia they suddenly find themselves with.",
+          "image": "https://image.tmdb.org/t/p/w780/8SZehazq0Ugjjf2v4f6hQ1yswHz.jpg",
+          "airDate": "2026-02-27",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Solitude and Family",
+          "overview": "Ed, Johnny, Maria, and Sara grew up together like family, and they consider themselves siblings.",
+          "image": "https://image.tmdb.org/t/p/w780/tAt9Frif99eRCy3hVfriX4UUd2I.jpg",
+          "airDate": "2026-03-06",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Truth and Reality",
+          "overview": "Flum learns that several of her friends have disappeared and blames herself for getting them in trouble.",
+          "image": "https://image.tmdb.org/t/p/w780/qoSDyJObdo2WHOi42GKk57TJo0q.jpg",
+          "airDate": "2026-03-13",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "Dein and Flum",
+          "overview": "Flum struggles to come to terms with the state she saw Ink in, and Dein shows up to complicate matters.",
+          "image": "https://image.tmdb.org/t/p/w780/nrXYhQoJGAuMPBRTmsGAPoVnXo3.jpg",
+          "airDate": "2026-03-20",
+          "runtime": 23
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "The End and the Beginning",
+          "overview": "With Dein taken care of, Flum moves on to saving Milkit.",
+          "image": "https://image.tmdb.org/t/p/w780/t2HeyeIjoQdP7f6vFHFQT3e7voh.jpg",
+          "airDate": "2026-03-27",
+          "runtime": 23
+        }
+      ]
+    },
+    "easygoingterritorydefensebytheoptimisticlord": {
+      "id": "288589",
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "seasons": {
+        "1": 12
+      },
+      "seasonDetails": [
+        {
+          "season": 1,
+          "name": "Season 1",
+          "count": 12
+        }
+      ],
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "The Young Genius's Harsh Expulsion From His Home",
+          "overview": "A reincarnated Van trains relentlessly until his powerful magic leads his dismayed father to cast him out.",
+          "image": "https://image.tmdb.org/t/p/w780/5kBAwIN524QBChz8vafsdLo5uMD.jpg",
+          "airDate": "2026-01-10",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "The Proper Way to Use Weak Magic",
+          "overview": "Van arrives to find his new village under attack, so he defends his people, then plans for their future.",
+          "image": "https://image.tmdb.org/t/p/w780/7b69mbRHuOc6o2vqZ0O4tQTTpv8.jpg",
+          "airDate": "2026-01-17",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "The Wonderful Renovation of an Impoverished Frontier",
+          "overview": "Van strengthens village defenses as adventurers uncover signs of a nearby dungeon.",
+          "image": "https://image.tmdb.org/t/p/w780/qSRxaYBTDJtfEUcvDjObDBd7Dau.jpg",
+          "airDate": "2026-01-24",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Rushed Hosting and a Busy Emissary Visit",
+          "overview": "Van's victory is followed by visits from merchants and then an emissary from the neighboring county.",
+          "image": "https://image.tmdb.org/t/p/w780/rKXFA4bB80xaMoV0KwbUWRMzZXS.jpg",
+          "airDate": "2026-01-31",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "A Rare Species' Passionate Engagement Competition",
+          "overview": "Apkallu appear on the shores of Van's lake and Van gets dragged into a competition with his marriage at stake.",
+          "image": "https://image.tmdb.org/t/p/w780/OUnh3ebFgmPV3q6lntEIgcdwwS.jpg",
+          "airDate": "2026-02-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Slaying a Dangerous Forest Dragon with Large Ballistae",
+          "overview": "A forest dragon attacks the village, so Van rallies his forces who fight for the survival of the village.",
+          "image": "https://image.tmdb.org/t/p/w780/dLo9nw5bbM4ak7Ur4jaE5ISJfKY.jpg",
+          "airDate": "2026-02-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Earnest Merchants and Receiving a Proud Title",
+          "overview": "Bell & Rango refuse to let Van be swindled. Panamera visits the capital to secure a title for Van.",
+          "image": "https://image.tmdb.org/t/p/w780/uMioe2K8Uje8aw71Oeu8N3AdbW3.jpg",
+          "airDate": "2026-02-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "A Postapocalyptic Band's Rowdy Dungeon Exploration",
+          "overview": "Ortho's party accidentally discovers the dungeon, forcing them to report it, which attracts wild adventurers.",
+          "image": "https://image.tmdb.org/t/p/w780/oUuPFuj2N5zVAG0YsMOLnWT3En6.jpg",
+          "airDate": "2026-02-28",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "The Timid Girl's Beautiful Marionette Dance",
+          "overview": "Arte puts on a dance performance with her marionette magic, and the king visits to see Van's handiwork.",
+          "image": "https://image.tmdb.org/t/p/w780/e0Z791YGUpndy6qkcm8Rcc6jEbA.jpg",
+          "airDate": "2026-03-07",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "A Secret Weapon's Villainous Attack on the Homeland",
+          "overview": "After defending Seatoh Village from the Kingdom of Yelenetta, Van's forces must ride to Scudett's defense.",
+          "image": "https://image.tmdb.org/t/p/w780/lckuMZLWwckPXGoZpiab2PSLznP.jpg",
+          "airDate": "2026-03-14",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 11,
+          "title": "The Ultimate Squad's Proud Counterattack",
+          "overview": "Scuderia's forces carry out the operation to retake Scudett Fortress.",
+          "image": "https://image.tmdb.org/t/p/w780/hQAhVDhcqj0wUKpk7ob8OquK4uS.jpg",
+          "airDate": "2026-03-21",
+          "runtime": 24
+        },
+        {
+          "season": 1,
+          "episode": 12,
+          "title": "Easygoing Territory Defense by the Optimistic Lord",
+          "overview": "Arte defends her homeland from Yelenetta Kingdom's assault.",
+          "image": "https://image.tmdb.org/t/p/w780/2Z7244TAGEH7i1xaT4QrVI8U5uw.jpg",
+          "airDate": "2026-03-28",
+          "runtime": 24
         }
       ]
     }

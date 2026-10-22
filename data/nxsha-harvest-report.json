@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-22T12:33:14.529Z",
+  "generatedAt": "2026-10-22T12:42:42.708Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [],
   "summary": {
     "requested": 4,
     "harvested": 4,
     "failed": [],
-    "episodes": 91,
-    "stills": 91,
-    "overviews": 91
+    "episodes": 48,
+    "stills": 48,
+    "overviews": 48
   },
   "titles": [
     {
-      "key": "zom100bucketlistofthedead",
-      "title": "Zom 100: Bucket List of the Dead",
-      "id": "217766",
+      "key": "thestrongestmagicianinthedemonlordsarmywasahuman",
+      "title": "The Strongest Magician in the Demon Lord's Army Was a Human",
+      "id": "248951",
       "seasons": {
         "1": 12
       },
@@ -24,34 +24,33 @@
       "ok": true
     },
     {
-      "key": "assassinationclassroom",
-      "title": "Assassination Classroom",
-      "id": "62110",
+      "key": "ifmyfavoritepopidolmadeittothebudokaniwoulddie",
+      "title": "If My Favorite Pop Idol Made It to the Budokan, I Would Die",
+      "id": "91024",
       "seasons": {
-        "1": 22,
-        "2": 25
+        "1": 12
       },
-      "episodes": 47,
-      "stills": 47,
-      "overviews": 47,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "dragonballdaima",
-      "title": "Dragon Ball DAIMA",
-      "id": "236994",
+      "key": "rolloveranddieiwillfightforanordinarylifewithmyloveandcursedsword",
+      "title": "ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!",
+      "id": "285357",
       "seasons": {
-        "1": 20
+        "1": 12
       },
-      "episodes": 20,
-      "stills": 20,
-      "overviews": 20,
+      "episodes": 12,
+      "stills": 12,
+      "overviews": 12,
       "ok": true
     },
     {
-      "key": "letsplay",
-      "title": "Let's Play",
-      "id": "293010",
+      "key": "easygoingterritorydefensebytheoptimisticlord",
+      "title": "Easygoing Territory Defense by the Optimistic Lord",
+      "id": "288589",
       "seasons": {
         "1": 12
       },
