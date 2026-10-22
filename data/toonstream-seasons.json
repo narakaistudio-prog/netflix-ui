@@ -231,7 +231,6 @@
         "13": 101,
         "14": 58,
         "15": 62,
-        "16": 50,
         "17": 56,
         "18": 55,
         "19": 74,
@@ -255,7 +254,6 @@
         "13": 422,
         "14": 523,
         "15": 581,
-        "16": 643,
         "17": 693,
         "18": 749,
         "19": 804,
@@ -322,10 +320,6 @@
         },
         "15": {
           "season": 15,
-          "base": 0
-        },
-        "16": {
-          "season": 16,
           "base": 0
         },
         "17": {
@@ -446,7 +440,7 @@
         "14": 25,
         "15": 28,
         "16": 13,
-        "17": 5
+        "17": 6
       },
       "epStart": {
         "2": 33,
@@ -537,67 +531,6 @@
         }
       }
     },
-    "deathnote": {
-      "title": "Death Note",
-      "slug": "death-note-1",
-      "seasons": {
-        "1": 2
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "mha": {
-      "title": "My Hero Academia",
-      "slug": "my-hero-academia",
-      "seasons": {
-        "1": 13,
-        "2": 25,
-        "3": 25,
-        "4": 25,
-        "5": 25,
-        "6": 25,
-        "7": 21,
-        "8": 12
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
-          "base": 0
-        },
-        "4": {
-          "season": 4,
-          "base": 0
-        },
-        "5": {
-          "season": 5,
-          "base": 0
-        },
-        "6": {
-          "season": 6,
-          "base": 0
-        },
-        "7": {
-          "season": 7,
-          "base": 0
-        },
-        "8": {
-          "season": 8,
-          "base": 0
-        }
-      }
-    },
     "opm": {
       "title": "One Punch Man",
       "slug": "one-punch-man",
@@ -639,17 +572,13 @@
         }
       }
     },
-    "hxh": {
-      "title": "Hunter x Hunter",
-      "slug": "hunter-x-hunter-hindi-dub",
+    "mob": {
+      "title": "Mob Psycho 100",
+      "slug": "mob-psycho-100-english-dub",
       "seasons": {
-        "1": 62,
-        "2": 74,
+        "1": 12,
+        "2": 13,
         "3": 12
-      },
-      "epStart": {
-        "2": 63,
-        "3": 137
       },
       "nxMap": {
         "1": {
@@ -662,19 +591,6 @@
         },
         "3": {
           "season": 3,
-          "base": 0
-        }
-      }
-    },
-    "mob": {
-      "title": "Mob Psycho 100",
-      "slug": "mob-psycho-100",
-      "seasons": {
-        "1": 12
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
           "base": 0
         }
       }
@@ -833,29 +749,6 @@
         }
       }
     },
-    "fireforce": {
-      "title": "Fire Force",
-      "slug": "fire-force",
-      "seasons": {
-        "1": 24,
-        "2": 24,
-        "3": 25
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
-          "base": 0
-        }
-      }
-    },
     "cheatskill": {
       "title": "I Got a Cheat Skill in Another World and Became Unrivaled in The Real World, Too",
       "slug": "i-got-a-cheat-skill-in-another-world-and-became-unrivaled-in-the-real-world-too",
@@ -969,213 +862,20 @@
         }
       }
     },
-    "dbz": {
-      "title": "Dragon Ball Z",
-      "slug": "dragon-ball-z-kai",
-      "seasons": {
-        "1": 26,
-        "2": 26,
-        "3": 25,
-        "4": 20,
-        "5": 35,
-        "6": 26,
-        "7": 9
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "seg": [
-            [
-              1,
-              27,
-              13
-            ],
-            [
-              2,
-              1,
-              13
-            ]
-          ]
-        },
-        "3": {
-          "seg": [
-            [
-              2,
-              14,
-              22
-            ],
-            [
-              3,
-              1,
-              3
-            ]
-          ]
-        },
-        "4": {
-          "season": 3,
-          "base": 3
-        },
-        "5": {
-          "seg": [
-            [
-              3,
-              24,
-              10
-            ],
-            [
-              4,
-              1,
-              25
-            ]
-          ]
-        },
-        "6": {
-          "seg": [
-            [
-              4,
-              26,
-              7
-            ],
-            [
-              5,
-              1,
-              19
-            ]
-          ]
-        },
-        "7": {
-          "seg": [
-            [
-              5,
-              20,
-              7
-            ],
-            [
-              6,
-              1,
-              2
-            ]
-          ]
-        }
-      }
-    },
-    "gachiakuta": {
-      "title": "Gachiakuta",
-      "slug": "gachiakuta",
-      "seasons": {
-        "1": 24
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "hellsparadise": {
-      "title": "Hell's Paradise",
-      "slug": "hells-paradise-english-dub",
-      "seasons": {
-        "1": 25
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "beginningend": {
-      "title": "The Beginning After the End",
-      "slug": "beginning-after-the-end",
-      "seasons": {
-        "1": 12,
-        "2": 12
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        }
-      }
-    },
-    "mushoku": {
-      "title": "Mushoku Tensei: Jobless Reincarnation",
-      "slug": "mushoku-tensei-jobless-reincarnation",
-      "seasons": {
-        "1": 24,
-        "2": 24,
-        "3": 8
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
-          "base": 0
-        }
-      },
-      "images": {
-        "1": {
-          "24": "https://image.tmdb.org/t/p/w780/cYCkG8rH4DmkpAgpxNf6nKGUZ8t.jpg"
-        }
-      }
-    },
-    "tsukimichi": {
-      "title": "TSUKIMICHI -Moonlit Fantasy-",
-      "slug": "tsukimichi-moonlit-fantasy",
-      "seasons": {
-        "1": 12,
-        "2": 13
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        }
-      }
-    },
     "shieldhero": {
       "title": "The Rising of the Shield Hero",
       "slug": "rising-of-the-shield-hero",
       "seasons": {
         "1": 25,
-        "2": 13,
-        "3": 12,
-        "4": 12
+        "3": 12
       },
       "nxMap": {
         "1": {
           "season": 1,
           "base": 0
         },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
         "3": {
           "season": 3,
-          "base": 0
-        },
-        "4": {
-          "season": 4,
           "base": 0
         }
       }
@@ -1185,130 +885,16 @@
       "slug": "fairy-tail",
       "seasons": {
         "1": 48,
-        "2": 48,
-        "3": 28,
-        "5": 25,
-        "6": 25,
-        "7": 90,
-        "8": 12
+        "5": 25
       },
       "nxMap": {
         "1": {
           "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
           "base": 0
         },
         "5": {
-          "season": 3,
-          "base": 28
-        },
-        "6": {
-          "seg": [
-            [
-              3,
-              54,
-              1
-            ],
-            [
-              4,
-              1,
-              24
-            ]
-          ]
-        },
-        "7": {
-          "seg": [
-            [
-              4,
-              25,
-              1
-            ],
-            [
-              5,
-              1,
-              51
-            ],
-            [
-              6,
-              1,
-              38
-            ]
-          ]
-        },
-        "8": {
-          "seg": [
-            [
-              6,
-              39,
-              1
-            ],
-            [
-              7,
-              1,
-              11
-            ]
-          ]
-        }
-      }
-    },
-    "yourlie": {
-      "title": "Your Lie in April",
-      "slug": "your-lie-in-april",
-      "seasons": {
-        "1": 22
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "jojo": {
-      "title": "JoJo's Bizarre Adventure",
-      "slug": "jojos-bizarre-adventure",
-      "seasons": {
-        "1": 26,
-        "2": 32,
-        "6": 1
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
           "season": 2,
           "base": 0
-        },
-        "6": {
-          "season": 2,
-          "base": 32
-        }
-      }
-    },
-    "shangri": {
-      "title": "Shangri-La Frontier",
-      "slug": "shangri-la-frontier",
-      "seasons": {
-        "1": 25,
-        "2": 25
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 1,
-          "base": 25
         }
       }
     },
@@ -1316,69 +902,7 @@
       "title": "Welcome to Demon School! Iruma-kun",
       "slug": "welcome-to-demon-school-iruma-kun",
       "seasons": {
-        "1": 23,
-        "2": 21,
-        "3": 21
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        },
-        "3": {
-          "season": 3,
-          "base": 0
-        }
-      }
-    },
-    "rankingofkings": {
-      "title": "Ranking of Kings",
-      "slug": "ranking-of-kings",
-      "seasons": {
         "1": 23
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "reignofthesevenspellblades": {
-      "title": "Reign of the Seven Spellblades",
-      "slug": "reign-of-the-seven-spellblades",
-      "seasons": {
-        "1": 15
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "tomochanisagirl": {
-      "title": "Tomo-chan Is a Girl!",
-      "slug": "tomo-chan-is-a-girl",
-      "seasons": {
-        "1": 13
-      },
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "tojimawantstobeakamenrider": {
-      "title": "Tojima Wants to Be a Kamen Rider",
-      "slug": "tojima-wants-to-be-a-kamen-rider",
-      "seasons": {
-        "1": 24
       },
       "nxMap": {
         "1": {
@@ -3055,8 +2579,24 @@
   },
   "misses": [
     {
+      "key": "deathnote",
+      "title": "Death Note"
+    },
+    {
+      "key": "mha",
+      "title": "My Hero Academia"
+    },
+    {
+      "key": "hxh",
+      "title": "Hunter x Hunter"
+    },
+    {
       "key": "goldenkamuy",
       "title": "Golden Kamuy"
+    },
+    {
+      "key": "fireforce",
+      "title": "Fire Force"
     },
     {
       "key": "fatestrange",
@@ -3069,6 +2609,58 @@
     {
       "key": "bluemiburo",
       "title": "Blue Miburo"
+    },
+    {
+      "key": "dbz",
+      "title": "Dragon Ball Z"
+    },
+    {
+      "key": "gachiakuta",
+      "title": "Gachiakuta"
+    },
+    {
+      "key": "hellsparadise",
+      "title": "Hell's Paradise"
+    },
+    {
+      "key": "beginningend",
+      "title": "The Beginning After the End"
+    },
+    {
+      "key": "mushoku",
+      "title": "Mushoku Tensei: Jobless Reincarnation"
+    },
+    {
+      "key": "tsukimichi",
+      "title": "TSUKIMICHI -Moonlit Fantasy-"
+    },
+    {
+      "key": "yourlie",
+      "title": "Your Lie in April"
+    },
+    {
+      "key": "jojo",
+      "title": "JoJo's Bizarre Adventure"
+    },
+    {
+      "key": "shangri",
+      "title": "Shangri-La Frontier"
+    },
+    {
+      "key": "rankingofkings",
+      "title": "Ranking of Kings"
+    },
+    {
+      "key": "reignofthesevenspellblades",
+      "title": "Reign of the Seven Spellblades"
+    },
+    {
+      "key": "tomochanisagirl",
+      "title": "Tomo-chan Is a Girl!"
+    },
+    {
+      "key": "tojimawantstobeakamenrider",
+      "title": "Tojima Wants to Be a Kamen Rider"
     },
     {
       "key": "godsgamesweplay2",
