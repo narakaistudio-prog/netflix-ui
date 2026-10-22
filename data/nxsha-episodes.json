@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T04:42:06.623Z",
+    "generatedAt": "2026-10-22T09:29:11.705Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -51781,7 +51781,7 @@
         {
           "season": 6,
           "episode": 6,
-          "title": "Episode 6",
+          "title": "Gyro Zeppeli’s Destiny",
           "airDate": "2026-10-23"
         },
         {
