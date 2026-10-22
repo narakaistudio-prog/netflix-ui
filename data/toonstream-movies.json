@@ -1,5 +1,44 @@
 {
-  "updated": "",
-  "movies": {},
-  "missed": []
+  "updated": "2026-10-22T13:57:13.927Z",
+  "movies": {
+    "fireflies": {
+      "slug": "grave-of-the-fireflies",
+      "pageTitle": "Grave of the Fireflies",
+      "servers": 2
+    },
+    "kiki": {
+      "slug": "kikis-delivery-service",
+      "pageTitle": "Kiki's Delivery Service",
+      "servers": 1
+    },
+    "poppyhill": {
+      "slug": "from-up-on-poppy-hill",
+      "pageTitle": "From Up on Poppy Hill",
+      "servers": 1
+    },
+    "anotherworld": {
+      "slug": "rezero-starting-life-in-another-world-the-frozen-bond",
+      "pageTitle": "Re:ZERO -Starting Life in Another World- The Frozen Bond",
+      "servers": 2
+    }
+  },
+  "missed": [
+    "kaguya",
+    "marnie",
+    "arrietty",
+    "pompoko",
+    "onlyyesterday",
+    "totoro",
+    "windrises",
+    "nausicaa",
+    "ponyo",
+    "yamadas",
+    "porco",
+    "castleinthesky",
+    "whisper",
+    "earthsea",
+    "catreturns",
+    "oceanwaves",
+    "dandadanfirstencounter2"
+  ]
 }
