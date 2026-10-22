@@ -44,6 +44,12 @@ const REPORT_PATH = resolve(ROOT, 'data', 'imdb-anime-import.json');
 const CATALOG_STATE_PATH = resolve(ROOT, 'data', 'imdb-anime-catalog.json');
 const LIST_SNAPSHOT_PATH = resolve(ROOT, 'data', 'imdb-anime-list.md');
 const NX_SAMPLE_PATH = resolve(ROOT, 'data', 'nxsha-page-sample.html');
+// Kuch titles IMDb par Japanese/romaji naam se hote hain aur Nxsha par English
+// naam se ("Oshi ga Budôkan ittekuretara shinu" = "If My Favorite Pop Idol Made
+// It to the Budokan, I Would Die"). Aise hi cases ke liye chhoti alias file.
+const ALIAS_PATH = resolve(ROOT, 'data', 'imdb-anime-aliases.json');
+
+const ALIASES = existsSync(ALIAS_PATH) ? JSON.parse(readFileSync(ALIAS_PATH, 'utf8')) : {};
 
 const NX_BASE = 'https://nxsha.space';
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
@@ -477,11 +483,48 @@ async function get(url, { accept = 'text/html,*/*' } = {}) {
 }
 
 /** Search results me se sahi card chuno: exact naam, phir saal, phir type. */
+/**
+ * Title ka base = subtitle se pehle ka hissa.
+ *
+ * Nxsha aur IMDb ek hi show ko alag naam se rakhte hain: IMDb par poora
+ * subtitle hota hai ("Easygoing Territory Defense by the Optimistic Lord:
+ * Production Magic Turns…") aur Nxsha par chhota naam, ya ulta ("ROLL OVER AND
+ * DIE: I Will Fight for an Ordinary Life…"). Sirf colon/wali subtitle hata kar
+ * compare karte hain — "Naruto" vs "Naruto Shippuden" jaise alag shows na match
+ * hon (wahan separator hi nahi hai).
+ */
+export function baseTitle(value) {
+    return decode(value)
+        .split(/\s*[:–—]\s*|\s+-\s+/)[0]
+        .trim();
+}
+
+/**
+ * Ek hi show? Exact naam, ya subtitle hata kar exact naam.
+ *
+ * Short names par ye rule nahi lagta (min 12 chars): warna "Naruto" aur
+ * "Naruto: Shippuden" ek maan liye jate.
+ */
+export function looksLikeSameShow(a, b) {
+    if (isSameShow(a, b)) return true;
+    const left = baseTitle(a);
+    const right = baseTitle(b);
+    const common = normTitle(right).length >= 12 ? normTitle(left) : '';
+    return common ? normTitle(left) === normTitle(right) : false;
+}
+
 export function pickNxshaMatch(results, wanted, { kind = '', year = '' } = {}) {
     const want = normTitle(wanted);
     const usable = (results || []).filter((row) => row.name && row.id);
     const exact = usable.filter((row) => isSameShow(row.name, wanted));
-    const pool = exact.length ? exact : [];
+    // Subtitle wale naam (IMDb par poora, Nxsha par chhota — ya ulta) bhi match
+    // karo, par tabhi jab saal match ho: warna "Trigun Stargaze" jaisa naya
+    // season purane "TRIGUN STAMPEDE" se jud jata hai.
+    const subtitled = usable.filter((row) => (
+        looksLikeSameShow(row.name, wanted)
+        && (!year || !row.year || String(row.year) === String(year))
+    ));
+    const pool = exact.length ? exact : subtitled;
     if (!pool.length) return null;
     // IMDb list ka type har card me nahi hota; aisi list me ~90% series hote
     // hain, isliye default preference **tv** hai — warna same naam ki live-action
@@ -1007,25 +1050,32 @@ async function readImdbList(listId) {
 
 /** Ek IMDb title -> Nxsha route + page metadata, ya null (report me wajah). */
 async function resolveNxsha(item, report) {
-    const candidates = [item.title];
+    const alias = ALIASES[normTitle(item.title)];
+    const candidates = [{ query: item.title, year: item.year }];
     // Poster ka alt kabhi cast photo ka hota hai ("Kana Ichinose in Mobile Suit
     // Gundam…") — pehla try fail ho to " in " ke baad wala naam bhi try karo.
+    // Pehla " in " bhi try karo: "Jun Fukuyama in The Strongest Magician in the
+    // Demon Lord's Army was a Human" me aakhri " in " ke baad ka hissa galat
+    // naam deta hai, pehle ke baad wala sahi title hai.
+    const firstIn = item.title.indexOf(' in ');
+    if (firstIn > 0) candidates.push({ query: item.title.slice(firstIn + 4).trim(), year: item.year });
     const lastIn = item.title.lastIndexOf(' in ');
-    if (lastIn > 0) candidates.push(item.title.slice(lastIn + 4).trim());
+    if (lastIn > 0) candidates.push({ query: item.title.slice(lastIn + 4).trim(), year: item.year });
+    if (alias?.q) candidates.push({ query: alias.q, year: alias.year || item.year });
 
     let hit = null;
     for (const candidate of candidates) {
         let search;
         try {
-            search = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(candidate)}`));
+            search = parseSearchResults(await get(`${NX_BASE}/search?q=${encodeURIComponent(candidate.query)}`));
         } catch (error) {
             report.missing.push({ title: item.title, reason: `search-failed: ${error?.message || error}` });
             return null;
         }
-        hit = pickNxshaMatch(search, candidate, { kind: item.kind, year: item.year });
-        // " in " ke baad wala chhota naam generic ho sakta hai ("Another World"),
-        // isliye retry par saal match hona zaroori hai.
-        if (hit && candidate !== item.title && item.year && hit.year && String(hit.year) !== String(item.year)) {
+        hit = pickNxshaMatch(search, candidate.query, { kind: item.kind, year: candidate.year });
+        // Retry wale chhote naam generic ho sakte hain ("Another World"), isliye
+        // original title ke alawa har candidate par saal match hona zaroori hai.
+        if (hit && candidate.query !== item.title && candidate.year && hit.year && String(hit.year) !== String(candidate.year)) {
             hit = null;
         }
         if (hit) break;
@@ -1183,6 +1233,19 @@ export function selfTest() {
     const seeded = parseCatalogLine("dressup:{title:'My Dress-Up Darling',year:2022,rating:'4.2',genres:['romance','comedy'],audio:'Sub & Dub',img:'p.jpg',desc:'Cosplay.'},");
     assert(seeded.key === 'dressup' && seeded.title === 'My Dress-Up Darling' && seeded.year === 2022, 'catalog line seed');
     assert(seeded.genres.join() === 'romance,comedy' && seeded.img === 'p.jpg', 'catalog line genres/img');
+
+    // Subtitle matching: IMDb poora naam deta hai, Nxsha chhota (ya ulta) —
+    // par "Naruto" aur "Naruto: Shippuden" alag shows hi rehte hain.
+    assert(looksLikeSameShow(
+        'Easygoing Territory Defense by the Optimistic Lord: Production Magic Turns a Nameless Village into the Strongest Fortified City',
+        'Easygoing Territory Defense by the Optimistic Lord',
+    ), 'subtitle match (IMDb lamba)');
+    assert(looksLikeSameShow(
+        'Roll Over and Die',
+        'ROLL OVER AND DIE: I Will Fight for an Ordinary Life with My Love and Cursed Sword!',
+    ), 'subtitle match (Nxsha lamba)');
+    assert(!looksLikeSameShow('Naruto', 'Naruto: Shippuden'), 'naruto shippuden alag hai');
+    assert(!looksLikeSameShow('Trigun Stargaze', 'TRIGUN STAMPEDE'), 'alag season match na ho');
 
     const big = buildRows(Array.from({ length: 30 }, (_, i) => ({ key: `k${i}`, genres: ['action'] })));
     assert(big.length === 2 && big[0].keys.length === 24 && big[1].title.endsWith('Part 2'), 'lambi row chunk');
