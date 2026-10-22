@@ -19071,7 +19071,7 @@
                 {
                     "id": "netflix-genre-83197640",
                     "title": "Pradhama Drishtiya Kuttakkar",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/1pjYeZxNJ0OyXSYWaMcXflVvNAW.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/yJ78kbekUBZMcxla1lXABI9o2wL.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
                     "tmdb_id": "1544847",
@@ -19844,6 +19844,7 @@
                         "Jang Jae-hyeon",
                         "Kim So-ri",
                         "Jo Ha-ram",
+                        "Thirunavukkarasu",
                         "Jenson Dhivakar"
                     ],
                     "genres": [
@@ -24198,7 +24199,7 @@
                 {
                     "id": "netflix-genre-83197640",
                     "title": "Pradhama Drishtiya Kuttakkar",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/1pjYeZxNJ0OyXSYWaMcXflVvNAW.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/yJ78kbekUBZMcxla1lXABI9o2wL.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
                     "tmdb_id": "1544847",
@@ -26963,6 +26964,7 @@
                         "Jang Jae-hyeon",
                         "Kim So-ri",
                         "Jo Ha-ram",
+                        "Thirunavukkarasu",
                         "Jenson Dhivakar"
                     ],
                     "genres": [
@@ -38526,7 +38528,7 @@
                     "cast": [
                         "Park Seo-jun",
                         "Han So-hee",
-                        "이찬양"
+                        "Lee Chan-yang"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/peVe0NQNdZMXwtTohnv8iwJQb2d.jpg"
                 },
@@ -39337,7 +39339,8 @@
                         "Hyun Woo-seok",
                         "Lee Hyo-je",
                         "Roh Jae-won",
-                        "Jeon So-nee"
+                        "Jeon So-nee",
+                        "Yoon Sa-bong"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/5BzfcAW5ZI2m7QypeJBbYNjBuR0.jpg"
                 },
@@ -40710,6 +40713,7 @@
                         "Yura",
                         "Lee Sung-wook",
                         "Moon Tae-yu",
+                        "Yoon Sa-bong",
                         "Chae Seo-eun",
                         "Kwon Hae-hyo",
                         "Kim Mi-kyung"
@@ -41513,6 +41517,7 @@
                         "Yura",
                         "Lee Sung-wook",
                         "Moon Tae-yu",
+                        "Yoon Sa-bong",
                         "Chae Seo-eun",
                         "Kwon Hae-hyo",
                         "Kim Mi-kyung"
@@ -42128,7 +42133,8 @@
                         "Hyun Woo-seok",
                         "Lee Hyo-je",
                         "Roh Jae-won",
-                        "Jeon So-nee"
+                        "Jeon So-nee",
+                        "Yoon Sa-bong"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/5BzfcAW5ZI2m7QypeJBbYNjBuR0.jpg"
                 },
@@ -43653,7 +43659,7 @@
                         "Park Min-young",
                         "Kim Jae-uck",
                         "Ahn Bo-hyun",
-                        "Jung Jae-won",
+                        "One",
                         "Kim Bo-ra",
                         "Park Jin-joo",
                         "Kim Mi-kyung"
@@ -43725,7 +43731,7 @@
                         "Lee Hae-eun",
                         "Lee Yeon-doo",
                         "Lee Su-hyun",
-                        "An Woo-yeon",
+                        "Ahn Woo-yeon",
                         "Kim Nam-hee",
                         "Kim So-min"
                     ],
