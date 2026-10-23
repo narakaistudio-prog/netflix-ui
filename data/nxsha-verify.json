@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T08:04:12.577Z",
+  "generatedAt": "2026-10-23T09:14:27.312Z",
   "titles": [
     {
       "key": "aot",
@@ -16122,31 +16122,37 @@
       "key": "rezemovie",
       "kind": "movie",
       "id": "1218925",
+      "url": "https://nxsha.space/embed/movie/1218925?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Chainsaw Man - The Movie: Reze Arc",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
-      "checks": [
-        {
-          "url": "https://nxsha.space/embed/movie/1218925",
-          "status": 200,
-          "ok": true,
-          "embedTitle": "Chainsaw Man - The Movie: Reze Arc"
-        }
-      ],
-      "verifiedBy": "scripts/probe-anime-movies.mjs (2026-10-23T08:48:15.116Z)"
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
     },
     {
       "key": "infinitycastle",
       "kind": "movie",
       "id": "1311031",
+      "url": "https://nxsha.space/embed/movie/1311031?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
+      "status": 200,
+      "embedTitle": "Watch Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+      "framing": {
+        "xFrameOptions": "",
+        "csp": ""
+      },
       "ok": true,
-      "checks": [
-        {
-          "url": "https://nxsha.space/embed/movie/1311031",
-          "status": 200,
-          "ok": true,
-          "embedTitle": "Demon Slayer: Kimetsu no Yaiba Infinity Castle"
-        }
-      ],
-      "verifiedBy": "scripts/probe-anime-movies.mjs (2026-10-23T08:48:15.116Z)"
+      "seasonList": {
+        "seasonNumbers": [],
+        "epPairs": [],
+        "totalEpisodes": null
+      }
     }
   ],
   "saoMovie": [
@@ -16275,7 +16281,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13638,
+      "bytes": 13552,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -16352,8 +16358,8 @@
     }
   ],
   "summary": {
-    "titles": 324,
-    "ok": 322,
+    "titles": 326,
+    "ok": 324,
     "bad": [
       "arrietty",
       "nausicaa"
