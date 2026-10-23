@@ -10,9 +10,18 @@ import { join } from 'node:path';
 const ROOT = join(__dirname, '..');
 const SCRIPT = join(ROOT, 'scripts', 'harvest-toonstream-drops.mjs');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
+const OFFLINE_STUB = join(__dirname, 'fixtures', 'toonstream-offline.mjs');
 
 function run(args: string[], env: Record<string, string> = {}) {
     return execFileSync(process.execPath, [SCRIPT, ...args], {
+        encoding: 'utf8',
+        env: { ...process.env, ...env },
+    });
+}
+
+/** The real harvest, with `fetch` replaced by the offline stub fixture. */
+function runOffline(args: string[], env: Record<string, string> = {}) {
+    return execFileSync(process.execPath, ['--import', OFFLINE_STUB, SCRIPT, ...args], {
         encoding: 'utf8',
         env: { ...process.env, ...env },
     });
@@ -129,6 +138,45 @@ test('Nxsha search results parse and match by full title only', () => {
     expect(parsed.miss).toBeNull();
     expect(parsed.block.startsWith('/*TS_DROPS_START*/')).toBe(true);
     expect(parsed.block).toContain('"season":2');
+});
+
+test('one broken series page cannot kill the day (the 2026-10-23 outage)', () => {
+    // toonstream.us/series/naruto-shippūden/ answered 500 for days; getText
+    // threw, harvest() died, and the row stayed on the 2026-10-19 state while
+    // the workflow's continue-on-error hid it. Now a bad page is a warning:
+    // every drop still lands in the state, with its own S/E from the rail.
+    const dir = mkdtempSync(join(tmpdir(), 'ts-drops-offline-'));
+    const state = join(dir, 'toonstream-drops.json');
+    const html = join(dir, 'crunchyroll.html');
+    writeFileSync(html, readFileSync(HTML_PATH, 'utf8'));
+
+    const out = runOffline([], {
+        TS_DROPS_STATE_FILE: state,
+        TS_DROPS_HTML_FILE: html,
+        TS_DROPS_DATE: '2026-10-23',
+    });
+    expect(out).toContain('2 fresh drops');
+
+    const baked = JSON.parse(readFileSync(state, 'utf8'));
+    expect(baked.updated).toBe('2026-10-23');
+    expect(Object.keys(baked.items).sort()).toEqual(['broken-show', 'the-ramparts-of-ice']);
+
+    // The drop whose series page 500'd keeps its rail S/E and stays playable.
+    const ramparts = baked.items['the-ramparts-of-ice'];
+    expect(ramparts.season).toBe(2);
+    expect(ramparts.episode).toBe(4);
+    expect(ramparts.episodeUrl).toBe('https://toonstream.us/episode/the-ramparts-of-ice-2x4/');
+    // …and its Nxsha guide still gets built from the rail's own S/E fallback.
+    expect(ramparts.guide).toBeTruthy();
+
+    // No Nxsha show → no guide, but the card is still baked.
+    const broken = baked.items['broken-show'];
+    expect(broken.season).toBe(1);
+    expect(broken.episode).toBe(3);
+    expect(broken.guide).toBeUndefined();
+
+    const items = bakedItems(readFileSync(html, 'utf8'));
+    expect(items.map((item: any) => item.slug).sort()).toEqual(['broken-show', 'the-ramparts-of-ice']);
 });
 
 test('ToonStream decides the seasons; Nxsha only fills the metadata', () => {

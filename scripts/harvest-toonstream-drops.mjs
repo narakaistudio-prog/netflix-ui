@@ -80,8 +80,18 @@ function readJson(file, fallback) {
     }
 }
 
+/**
+ * One HTTP GET with retries.
+ *
+ * Pehle yeh har non-200 par throw karta tha, aur wahi daily job ka killer tha:
+ * ToonStream ne ek series page (naruto-shippūden) par 500 diya, poora harvest
+ * crash hua, aur row 2026-10-19 ke state par jam gayi (workflow ka
+ * continue-on-error usse chhupa deta hai). Ab yeh kabhi throw nahi karta —
+ * status ({status:0} = network/timeout) wapas karta hai, aur caller decide
+ * karta hai ki us item ko skip karna hai ya poora run fail karna hai.
+ */
 async function getText(url, { json = false, retries = 2 } = {}) {
-    let lastError;
+    let lastError = null;
     for (let attempt = 0; attempt <= retries; attempt += 1) {
         try {
             const res = await fetch(url, {
@@ -93,14 +103,17 @@ async function getText(url, { json = false, retries = 2 } = {}) {
                 redirect: 'follow',
             });
             if (res.status === 200) return { status: 200, text: await res.text() };
+            // 404 aur 500 dono "is page par kuch nahi/abhi nahi" hain — retry
+            // sirf 5xx/timeout par kaam ka hai, isliye 4xx turant laut jate hain.
             if (res.status === 404) return { status: 404, text: '' };
-            lastError = new Error(`HTTP ${res.status} for ${url}`);
+            lastError = `HTTP ${res.status}`;
+            if (res.status < 500) return { status: res.status, text: '', error: lastError };
         } catch (error) {
-            lastError = error;
+            lastError = String(error?.message || error);
         }
-        await sleep(700 * (attempt + 1));
+        if (attempt < retries) await sleep(700 * (attempt + 1));
     }
-    throw lastError || new Error(`request failed: ${url}`);
+    return { status: 0, text: '', error: lastError || `request failed: ${url}` };
 }
 
 /**
@@ -219,11 +232,25 @@ async function fetchNxshaSeasons(id, report) {
  */
 async function fetchToonSeasons(seriesSlug, report) {
     if (!seriesSlug) return null;
-    const series = await getText(`${BASE}/series/${seriesSlug}/`);
-    if (series.status !== 200) {
-        report.push({ step: 'toon-series', slug: seriesSlug, status: series.status });
-        return null;
+    // ToonStream ke naye slugs me macron aa gaya (naruto-shippūden) aur uska
+    // series page 500 deta hai. Isliye plain-ASCII variant bhi try karte hain —
+    // jo pehle 200 de, wahi slug bake hota hai.
+    const plain = seriesSlug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const candidates = [...new Set([seriesSlug, plain])].filter(Boolean);
+    let series = null;
+    let usedSlug = seriesSlug;
+    for (const slug of candidates) {
+        const res = await getText(`${BASE}/series/${slug}/`);
+        if (res.status === 200) {
+            series = res;
+            usedSlug = slug;
+            break;
+        }
+        report.push({ step: 'toon-series', slug, status: res.status, ...(res.error ? { error: res.error } : {}) });
+        await sleep(150);
     }
+    if (!series) return null;
+    seriesSlug = usedSlug;
     const links = parseToonSeasons(series.text);
     const seasons = [];
     if (links.length) {
@@ -329,6 +356,11 @@ async function resolveNxsha(title, indexHit, report) {
     for (const variant of titleVariants(title)) {
         try {
             const res = await getText(`${NX_BASE}/search/tv?q=${encodeURIComponent(variant)}`);
+            if (res.status !== 200) {
+                report.push({ step: 'search', title: variant, status: res.status });
+                await sleep(120);
+                continue;
+            }
             const hit = pickSearchHit(parseNxshaSearchTv(res.text), variant);
             if (hit) return { id: hit.id, from: 'search' };
         } catch (error) {
@@ -413,7 +445,9 @@ async function harvest() {
     const home = await getText(`${BASE}/home`);
     const drops = _internal.parseFreshDrops(home.text || '');
     if (!drops.length) {
-        throw new Error('toonstream.us/home returned no Fresh Drop cards (site down or markup changed)');
+        throw new Error(
+            `toonstream.us/home returned no Fresh Drop cards (HTTP ${home.status}${home.error ? `, ${home.error}` : ''}) — site down or markup changed`,
+        );
     }
 
     // One card per anime: the same show can appear for two seasons in a row.
@@ -459,44 +493,58 @@ async function harvest() {
             continue;
         }
 
-        const resolved = await resolveNxsha(title, hit, report);
-        const nxId = resolved?.id || hit?.id || '';
-        if (!nxId) {
-            incoming[drop.slug] = record;
-            continue;
-        }
-        record.nxId = nxId;
+        // Yahan se neeche sab network calls hain. Koi ek anime fail ho jaye
+        // (500, timeout, kharab JSON) to poora daily run nahi girna chahiye —
+        // baaki drops ka state aur card usi din chad jate hain, aur yahi item
+        // apna title/slug/S-E le kar row me chala jata hai (play hone par
+        // /api/toonstream khud resolve karta hai). Sirf report me warning.
+        try {
+            const resolved = await resolveNxsha(title, hit, report);
+            const nxId = resolved?.id || hit?.id || '';
+            if (!nxId) {
+                // Nxsha par show hi nahi mila — card phir bhi row me jayega,
+                // bas guide (episode naam/still) ke bina.
+                incoming[drop.slug] = record;
+                continue;
+            }
+            record.nxId = nxId;
 
-        // Season layout is ToonStream's: its series page lists the seasons and
-        // each season page lists the real episode numbers. Nxsha only supplies
-        // the stills/titles/synopses mapped onto those seasons.
-        const seriesSlug = seriesSlugFromEpisode(record.episodeUrl) || drop.slug;
-        const toon = await fetchToonSeasons(seriesSlug, report);
-        if (toon) record.tsSlug = toon.slug;
-        const tsSeasons = toon?.seasons?.length
-            ? toon.seasons
-            : season
-                ? [{ n: season, count: episode || 1 }] // series page failed: keep the drop season playable
-                : [];
-        const nxSeasons = await fetchNxshaSeasons(nxId, report);
-        const built = buildShowGuide(tsSeasons, nxSeasons);
-        if (built.guide) {
-            record.guide = built.guide;
-            record.seasons = built.seasons;
-            record.nxMap = built.nxMap;
+            // Season layout is ToonStream's: its series page lists the seasons and
+            // each season page lists the real episode numbers. Nxsha only supplies
+            // the stills/titles/synopses mapped onto those seasons.
+            const seriesSlug = seriesSlugFromEpisode(record.episodeUrl) || drop.slug;
+            const toon = await fetchToonSeasons(seriesSlug, report);
+            if (toon) record.tsSlug = toon.slug;
+            const tsSeasons = toon?.seasons?.length
+                ? toon.seasons
+                : season
+                    ? [{ n: season, count: episode || 1 }] // series page failed: keep the drop season playable
+                    : [];
+            const nxSeasons = await fetchNxshaSeasons(nxId, report);
+            const built = buildShowGuide(tsSeasons, nxSeasons);
+            if (built.guide) {
+                record.guide = built.guide;
+                record.seasons = built.seasons;
+                record.nxMap = built.nxMap;
+            }
+            const epStart = {};
+            for (const ts of tsSeasons) {
+                if (Number(ts.first) > 1) epStart[String(ts.n)] = Number(ts.first);
+            }
+            if (Object.keys(epStart).length) record.epStart = epStart;
+            if (report.length > 40) report.length = 40;
+            const layout = tsSeasons.map((s) => `S${s.n}:${s.count}`).join(' ');
+            const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);
+            console.log(
+                `  ${title.slice(0, 40).padEnd(42)} nx=${nxId} ts=[${layout}] ` +
+                    `guide=${guideCount}${toon ? '' : ' (series fetch failed)'}`,
+            );
+        } catch (error) {
+            report.push({ step: 'drop', slug: drop.slug, error: String(error?.message || error) });
+            console.log(`  ${title.slice(0, 40).padEnd(42)} skipped: ${error?.message || error}`);
         }
-        const epStart = {};
-        for (const ts of tsSeasons) {
-            if (Number(ts.first) > 1) epStart[String(ts.n)] = Number(ts.first);
-        }
-        if (Object.keys(epStart).length) record.epStart = epStart;
-        if (report.length > 40) report.length = 40;
-        const layout = tsSeasons.map((s) => `S${s.n}:${s.count}`).join(' ');
-        const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);
-        console.log(
-            `  ${title.slice(0, 40).padEnd(42)} nx=${nxId} ts=[${layout}] ` +
-                `guide=${guideCount}${toon ? '' : ' (series fetch failed)'}`,
-        );
+        // Har drop ka record hamesha state me jata hai — guide na mile to bhi
+        // card dikhega (owner: "wo sara apne fresh drop row mae dikhna chiyea").
         incoming[drop.slug] = record;
     }
 
