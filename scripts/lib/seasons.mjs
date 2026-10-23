@@ -170,7 +170,13 @@ export function parseSeasonCards(html) {
 /** Episode numbers a season page links to: count + any gaps. */
 export function parseSeasonEpisodes(html) {
     const nums = new Set();
-    for (const m of String(html || '').matchAll(/\/episode\/[^"'#]*?-(\d+)x(\d+)\/?(?=["'#])/g)) {
+    // Slug me HTML entity aa sakta hai: ToonStream JoJo ke season 3/4/6 par
+    // `/episode/jojo&#39;s-bizarre-adventure-3x1/` likhta hai. Pehle regex `#`
+    // ko bhi block karta tha, isliye un seasons ka count 0 aata tha aur JoJo ka
+    // poora layout (S3 39, S4 12, S6 5) gayab ho jata tha. Ab `#`, `&` aur
+    // semicolon slug ke andar allowed hain — link phir bhi `-NxM/` par hi match
+    // hota hai, isliye fragment wali links galti se nahi ginti.
+    for (const m of String(html || '').matchAll(/\/episode\/[^"'\s<>]*?-(\d+)x(\d+)\/?(?=["'#\s<>]|$)/g)) {
         nums.add(Number(m[2]));
     }
     const sorted = [...nums].filter((n) => n > 0).sort((a, b) => a - b);
@@ -185,4 +191,58 @@ export function parseSeasonEpisodes(html) {
         last,
         missing: sorted.filter((n, i) => n !== first + i).slice(0, 5),
     };
+}
+
+/**
+ * Same pin, guide ke liye: `buildSeasonMap` ka plan apne andar `start` rakhta
+ * hai (flat Nxsha list me index), aur pinned season kahin aur hota hai — isliye
+ * `start` + `segments` dobara banta hai, warna season ka number to badal jata
+ * par episode naam purane season ke aate rehte (JoJo S6 = Steel Ball Run ke
+ * cards Golden Wind ke naam dikha rahe the).
+ */
+export function pinGuideSeasons(map, flat, overrides) {
+    let applied = 0;
+    for (const [tsSeason, pin] of Object.entries(overrides || {})) {
+        if (!pin || typeof pin !== 'object' || !pin.season) continue;
+        const key = Number(tsSeason);
+        const plan = map[key];
+        if (!plan) continue; // ToonStream season hi nahi mila, pin ka koi matlab nahi
+        const season = Number(pin.season);
+        const base = Math.max(0, Number(pin.base) || 0);
+        const start = flat.findIndex((hit) => hit.season === season);
+        if (start < 0) continue; // Nxsha ne wo season fetch hi nahi kiya
+        const room = flat.filter((hit) => hit.season === season).length - base;
+        const count = Math.max(0, Math.min(Number(plan.count) || 0, room));
+        map[key] = {
+            ...plan,
+            season,
+            base,
+            start: start + base,
+            segments: count ? [{ season, from: base + 1, count }] : [],
+        };
+        applied += 1;
+    }
+    return applied;
+}
+
+/**
+ * Manual pins for seasons the automatic mapping gets wrong.
+ *
+ * `buildSeasonMap` anchors a ToonStream season to the Nxsha season with the
+ * same number only when the counts are within an episode or two. JoJo breaks
+ * that rule: ToonStream's S6 has 5 episodes (the rest is not uploaded yet)
+ * while Nxsha's S6 has 12, so the cumulative fallback dropped JoJo's newest
+ * season into Nxsha's S4 (Golden Wind) and every card showed the wrong episode
+ * name. Loosening the anchor globally did fix JoJo but re-mapped DBZ and Fairy
+ * Tail (whose Nxsha seasons are genuinely merged), so the exception lives in
+ * data/toonstream-season-overrides.json, per show and per season.
+ */
+export function applySeasonOverrides(nxMap, overrides) {
+    let applied = 0;
+    for (const [season, plan] of Object.entries(overrides || {})) {
+        if (!plan || typeof plan !== 'object' || !plan.season) continue;
+        nxMap[season] = { season: Number(plan.season), base: Number(plan.base) || 0 };
+        applied += 1;
+    }
+    return applied;
 }

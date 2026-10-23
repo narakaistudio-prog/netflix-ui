@@ -1,0 +1,6 @@
+{
+  "_note": "Jahan ToonStream ka season layout Nxsha se itna alag ho ki automatic mapping galat episode kholta ho, wahan season ko yahan pin karo: { catalogKey: { toonstreamSeason: { season: nxSeason, base: 0 } } }. Compact plan ({season, base}) hi chalta hai, isliye base 0 ka matlab us Nxsha season ka pehla episode.",
+  "jojo": {
+    "6": { "season": 6, "base": 0 }
+  }
+}

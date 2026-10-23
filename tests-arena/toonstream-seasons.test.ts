@@ -53,9 +53,10 @@ test('the committed TS_SEASONS block matches the state file', () => {
 
 test('Nxsha is mapped by cumulative position, not by season number', () => {
     const code = `
-        const { buildSeasonMap, compactPlan, parseSeasonEpisodes } = await import(${JSON.stringify(
+        const seasonsMod = await import(${JSON.stringify(
             new URL(`file://${join(ROOT, 'scripts', 'lib', 'seasons.mjs')}`).href,
         )});
+        const { applySeasonOverrides, buildSeasonMap, compactPlan, parseSeasonEpisodes, pinGuideSeasons } = seasonsMod;
         const merged = buildSeasonMap(
           [{ n: 1, count: 24 }, { n: 2, count: 23 }, { n: 3, count: 12 }],
           [{ season: { season_number: 1 }, count: 59 }],
@@ -86,6 +87,47 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           [{ n: 1, count: 12 }, { n: 2, count: 12 }],
           [{ season: { season_number: 1 }, count: 11 }, { season: { season_number: 2 }, count: 12 }],
         );
+        // ToonStream's JoJo season pages link episodes with an HTML-encoded
+        // apostrophe (jojo&#39;s-bizarre-adventure-3x1). Those 39 episodes used to
+        // parse as 0 and JoJo's whole layout (S3/S4/S6) vanished.
+        const entityEncoded = parseSeasonEpisodes(
+          Array.from({ length: 39 }, (_, i) => '<a href="/episode/jojo&#39;s-bizarre-adventure-3x' + (i + 1) + '/">x</a>').join(''),
+        );
+        // JoJo: ToonStream carries fewer episodes than Nxsha for the same season
+        // (S6: 5 vs 12 — the rest is not uploaded yet). The automatic mapping
+        // alone lands S6 in Nxsha's Golden Wind (S4), so the pin in
+        // data/toonstream-season-overrides.json corrects it.
+        const jojoBase = buildSeasonMap(
+          [{ n: 1, count: 26 }, { n: 2, count: 32 }, { n: 3, count: 39 }, { n: 4, count: 12 }, { n: 6, count: 5 }],
+          [
+            { season: { season_number: 1 }, count: 26 },
+            { season: { season_number: 2 }, count: 48 },
+            { season: { season_number: 3 }, count: 39 },
+            { season: { season_number: 4 }, count: 39 },
+            { season: { season_number: 5 }, count: 38 },
+            { season: { season_number: 6 }, count: 12 },
+          ],
+        );
+        const { readFileSync: readBaked } = await import('node:fs');
+        const jojoPins = JSON.parse(readBaked(${JSON.stringify(join(process.cwd(), 'data', 'toonstream-season-overrides.json'))}, 'utf8')).jojo;
+        const jojoMap = Object.fromEntries(Object.entries(jojoBase.map).map(([season, plan]) => [season, compactPlan(plan)]));
+        const jojo = {
+          map: jojoMap,
+          pinned: (() => {
+            const copy = { ...jojoMap };
+            applySeasonOverrides(copy, jojoPins);
+            return copy;
+          })(),
+        };
+        // Guide wahi pin use karta hai, par usme start (flat Nxsha index) aur
+        // segments bhi dobara banne chahiye — warna episode naam purane season
+        // se aate hain (JoJo S6 ke cards Golden Wind ke naam dikha rahe the).
+        const jojoGuide = (() => {
+          const copy = { ...jojoBase.map };
+          const applied = pinGuideSeasons(copy, jojoBase.flat, jojoPins);
+          const plan = copy[6];
+          return { applied, season: plan.season, base: plan.base, segments: plan.segments, firstSeason: jojoBase.flat[plan.start].season };
+        })();
         // A Hindi-dub season numbers episodes absolutely: S2 starts at 33.
         const absolute = parseSeasonEpisodes(
           Array.from({ length: 21 }, (_, i) => '<a href="/episode/naruto-shippuden-hindi-dub-2x' + (33 + i) + '/">x</a>').join(''),
@@ -97,6 +139,10 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           offset: offset.map,
           anchored: anchored.map,
           absolute,
+          entityEncoded,
+          jojo: jojo.map,
+          jojoPinned: jojo.pinned,
+          jojoGuide,
         }));
     `;
     const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
@@ -117,6 +163,25 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
     expect(parsed.anchored['2']).toMatchObject({ season: 2, base: 0, start: 11, count: 12 });
     // Absolute numbering: 21 episodes starting at 33, not 53.
     expect(parsed.absolute).toEqual({ count: 21, first: 33, last: 53, missing: [] });
+    // Entity-encoded episode links parse like plain ones.
+    expect(parsed.entityEncoded).toEqual({ count: 39, first: 1, last: 39, missing: [] });
+    // JoJo: S1–S4 already map correctly, S6 does not (ToonStream has only 5 of
+    // Nxsha's 12 episodes, so the cumulative fallback picks Golden Wind).
+    expect(parsed.jojo['1']).toMatchObject({ season: 1, base: 0 });
+    expect(parsed.jojo['4']).toMatchObject({ season: 4, base: 0 });
+    expect(parsed.jojo['6']).toEqual({ season: 4, base: 12 });
+    // …and the committed pin puts it on Nxsha's Steel Ball Run season instead.
+    expect(parsed.jojoPinned['6']).toEqual({ season: 6, base: 0 });
+    expect(parsed.jojoPinned['3']).toEqual({ season: 3, base: 0 });
+    // Guide bhi usi pinned season se shuru ho (NX S6E1 = Steel Ball Run), na ki
+    // cumulative position se (jo Golden Wind E13 hota hai).
+    expect(parsed.jojoGuide).toMatchObject({
+        applied: 1,
+        season: 6,
+        base: 0,
+        firstSeason: 6,
+        segments: [{ season: 6, from: 1, count: 5 }],
+    });
 });
 
 test('the bake writes epStart and the Nxsha map for every found show', () => {
