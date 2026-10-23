@@ -90,6 +90,9 @@ function titleSlug(title, keep = false) {
 const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const tokens = (t) => norm(t).split(' ').filter(Boolean);
 
+/** Fresh Drop rail ka safety ceiling — asli row isse chhoti hoti hai. */
+const MAX_FRESH_DROPS = 200;
+
 /** Jaccard-style overlap so "Kaiju No. 8" still matches "Kaiju No.8 (Hindi)". */
 function matchScore(queryTokens, candidate) {
   const have = new Set(tokens(candidate));
@@ -428,7 +431,11 @@ function parseFreshDrops(html) {
       ...(season ? { season } : {}),
       ...(ep ? { ep } : {}),
     });
-    if (items.length >= 40) break;
+    // Owner: "toonstream mae abhi jitna anime fresh drop row mae hai wo sara
+    // apne fresh drop row mae dikhna chiyea" — isliye koi 40-card cap nahi.
+    // Sirf ek safety ceiling, taaki markup badal jaye to hazaaron cards na
+    // bake ho jayein.
+    if (items.length >= MAX_FRESH_DROPS) break;
   }
   if (items.length) return items;
 
@@ -476,7 +483,7 @@ function parseFreshDrops(html) {
       ...(episode ? { episode } : {}),
       ...(season ? { season, ep } : {}),
     });
-    if (items.length >= 40) break;
+    if (items.length >= MAX_FRESH_DROPS) break;
   }
   return items;
 }

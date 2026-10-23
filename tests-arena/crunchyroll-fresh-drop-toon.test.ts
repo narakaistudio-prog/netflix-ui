@@ -179,9 +179,15 @@ test('Fresh Drop Toon rail renders from the home API and plays the exact drop ep
     expect(doc.body.textContent).toContain('New on toonstream.us right now');
     expect(calls.some((c) => c.url.indexOf('/api/toonstream?home=1') !== -1)).toBe(true);
 
-    // JoJo is already on the page (a DeadToons Fresh Drops card), so the live
-    // fallback must not add a second card for it.
+    // JoJo is already in the catalog, so the live fallback must not mint a
+    // second ("twin") card for it — but the owner wants *every* drop in the
+    // row, so its own catalog card is what shows up there.
     expect(doc.querySelectorAll('#homeRows [data-open^="tsd-"]').length).toBe(1);
+    const row = doc.querySelector('#homeRows section') as HTMLElement;
+    const jojoCard = row.querySelector('[data-open="jojo"]') as HTMLElement;
+    expect(jojoCard).toBeTruthy();
+    expect(jojoCard.textContent).toContain('S6 · E5');
+    expect(jojoCard.querySelector('.fresh-flag')).toBeTruthy();
 
     // Cards carry the site's own poster, title and source label.
     const cards = Array.from(doc.querySelectorAll('#homeRows .rail-card'));
@@ -256,12 +262,31 @@ test('a baked row carries the Nxsha guide and never repeats an anime', async () 
     const cards = Array.from(row!.querySelectorAll('.rail-card'));
     const titles = cards.map((card) => card.querySelector('.rail-copy h3')?.textContent || '');
     expect(titles).toContain('Overgeared');
-    // JoJo already lives in the catalog rails; it must not get a twin card.
-    expect(titles.some((title) => title.includes("JoJo"))).toBe(false);
+    // "Kaunsa episode aaya" — card par number ke saath episode ka naam bhi.
+    const overgearedCard = cards.find((card) => (card.textContent || '').includes('Overgeared'))!;
+    expect(overgearedCard.textContent).toContain('S1 · E4');
+    expect(overgearedCard.textContent).toContain('Item Crafting Face-Off');
+    // JoJo already lives in the catalog: it must appear in the row through its
+    // own card (no twin `tsd-jojo` card), carrying the drop's exact episode.
+    expect(titles.some((title) => title.includes('JoJo'))).toBe(true);
+    expect(row!.querySelectorAll('[data-open="jojo"]')).toHaveLength(1);
+    expect(row!.querySelectorAll('[data-open^="tsd-jojo"]')).toHaveLength(0);
+    const jojo = row!.querySelector('[data-open="jojo"]') as HTMLElement;
+    expect(jojo.textContent).toContain('S6 · E5');
+    expect(jojo.textContent).toContain('New');
+    expect(jojo.querySelector('.fresh-flag')).toBeTruthy();
     // Two ToonStream entries for one anime collapse into a single card.
     expect(titles.filter((title) => title === 'Mizuki')).toHaveLength(1);
     // …and the site slug is remembered for the catalog card's ToonStream pill.
     expect((dom.window as any).TS_SLUGS.jojo).toBe("jojo's-bizarre-adventure");
+    // The catalog card keeps its own layout/guide source: we only borrow the
+    // drop's episode, never ToonStream's season map (that would shift episodes).
+    const jojoRec = (dom.window as any).CR_NX_DROPS.jojo;
+    expect(jojoRec.season).toBe(6);
+    expect(jojoRec.episode).toBe(5);
+    expect(jojoRec.src).toBe('toonstream');
+    expect(jojoRec.seasons).toBeUndefined();
+    expect(jojoRec.guide).toBeUndefined();
     // The bake must not hit the network for the row itself.
     expect(calls.some((call) => call.url.indexOf('home=1') !== -1)).toBe(false);
 
@@ -290,9 +315,9 @@ test('a baked row carries the Nxsha guide and never repeats an anime', async () 
     dom.window.close();
 });
 
-test('a stale bake (anime already dropped on the page) renders no duplicate', async () => {
-    // A catalog title left in the bake without onSite: the page still dedupes
-    // by title, so it can never show up twice.
+test('a catalog title in the bake keeps one card, now inside the row', async () => {
+    // A catalog title left in the bake without onSite: it still shows up in the
+    // row, but through its existing card — never a second one.
     const { dom } = bootWithBake([
         { title: 'Solo Leveling', slug: 'solo-leveling', season: 2, episode: 13, nxId: '127532' },
     ]);
@@ -301,8 +326,51 @@ test('a stale bake (anime already dropped on the page) renders no duplicate', as
     const row = Array.from(doc.querySelectorAll('#homeRows section')).find((section) =>
         (section.querySelector('h2')?.textContent || '').includes('Fresh Drop Toon'),
     );
-    expect(row).toBeFalsy();
+    expect(row).toBeTruthy();
+    const cards = Array.from(row!.querySelectorAll('.rail-card'));
+    expect(cards).toHaveLength(1);
+    expect(cards[0].getAttribute('data-open')).toBe('solo');
+    expect(cards[0].textContent).toContain('S2 · E13');
+    expect(cards[0].textContent).toContain('New');
+    // Every other row still has the same single Solo card (no duplication).
+    expect(doc.querySelectorAll('#homeRows [data-open="solo"]').length).toBeGreaterThan(1);
+    expect(doc.querySelectorAll('#homeRows [data-open^="tsd-solo"]').length).toBe(0);
     expect((dom.window as any).TS_SLUGS.solo).toBe('solo-leveling');
+    dom.window.close();
+});
+
+test('an on-site title plays its drop episode with the site\'s new slug, older seasons with the catalog slug', async () => {
+    // ToonStream re-slugged Naruto Shippuden to `naruto-shippūden` for the new
+    // episode (S17E368), while its older seasons still answer to the catalog
+    // slug. The drop episode is also absolutely numbered on the site (S17 is
+    // 362..368), so no epStart offset may be applied to E368 itself.
+    const { dom, calls } = bootWithBake([
+        {
+            title: 'Naruto Shippuden',
+            slug: 'naruto-shippūden',
+            season: 17,
+            episode: 368,
+            episodeUrl: 'https://toonstream.us/episode/naruto-shippūden-17x368/',
+            nxId: '31910',
+            onSite: true,
+            firstSeen: '2026-10-23',
+        },
+    ]);
+    const doc = dom.window.document;
+    await wait(400);
+
+    const row = doc.querySelector('#homeRows section') as HTMLElement;
+    expect(row.querySelector('[data-open="naruto"]')).toBeTruthy();
+    expect(row.querySelector('[data-open^="tsd-naruto"]')).toBeFalsy();
+
+    // The row's Play button opens the drop episode with the site's own slug and
+    // its own episode number.
+    click(dom.window, row.querySelector('[data-quick-play="naruto"]'));
+    await waitFor(() => calls.some((call) => call.url.indexOf('/api/toonstream?title=') !== -1));
+    const dropUrl = decodeURIComponent(calls.find((call) => call.url.indexOf('/api/toonstream?title=') !== -1)!.url);
+    expect(dropUrl).toContain('slug=naruto-shippūden');
+    expect(dropUrl).toContain('s=17&e=368');
+
     dom.window.close();
 });
 

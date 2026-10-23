@@ -15,6 +15,29 @@ const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * Reads one of the page's baked `var X={...}` blocks back as JSON. Tests must
+ * never hardcode a season/episode count: the daily harvest refreshes them from
+ * ToonStream, so a hardcoded number goes stale the moment the site edits a
+ * season (ToonStream dropped One Piece season 16, then MHA's row disappeared
+ * from its season harvest).
+ */
+function bakedVar<T = any>(name: string): T {
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const start = html.indexOf(`var ${name}=`);
+    if (start === -1) throw new Error(`baked ${name} block not found`);
+    const open = html.indexOf('{', start);
+    let depth = 0;
+    for (let i = open; i < html.length; i += 1) {
+        if (html[i] === '{') depth += 1;
+        else if (html[i] === '}') {
+            depth -= 1;
+            if (!depth) return JSON.parse(html.slice(open, i + 1)) as T;
+        }
+    }
+    throw new Error(`unbalanced ${name} block`);
+}
+
 function run(args: string[], env: Record<string, string> = {}) {
     return execFileSync(process.execPath, [SCRIPT, ...args], {
         encoding: 'utf8',
@@ -219,7 +242,11 @@ test('an absolutely numbered dub season plays the right ToonStream episode', asy
     await wait(300);
     await openCard(dom.window, 'naruto');
     const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
-    expect(select.value).toBe('1');
+    // Naruto is also on today's Fresh Drop rail (ToonStream S17E368), so the
+    // detail opens on the dropped season first — exactly like every other drop
+    // card. Season 1 stays one click away, and its layout is still ToonStream's.
+    expect(select.value).toBe('17');
+    expect(select.options[0].textContent).toContain('Season 1 (');
     select.value = '2';
     select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
     await wait(100);
@@ -251,9 +278,17 @@ test('One Piece shows every ToonStream season and its own Nxsha guide', async ()
     await openCard(dom.window, 'onepiece');
     const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
     const options = Array.from(select.options).map((option) => (option.textContent || '').trim());
-    expect(options).toHaveLength(22);
+    // Data-driven: every season ToonStream currently lists must be offered, and
+    // nothing else. The list skips numbers the site has taken down (season 16
+    // vanished from One Piece's ToonStream layout), so the option count follows
+    // the bake instead of a hardcoded 22.
+    const onePiece = bakedVar<Record<string, any>>('TS_SEASONS').onepiece.seasons as Record<string, number>;
+    const seasonNumbers = Object.keys(onePiece).sort((a, b) => Number(a) - Number(b));
+    expect(options).toHaveLength(seasonNumbers.length);
     expect(options[0]).toBe('Season 1 (56)');
-    expect(options[21]).toBe('Season 22 (64)');
+    expect(options[seasonNumbers.length - 1]).toBe(
+        `Season ${seasonNumbers[seasonNumbers.length - 1]} (${onePiece[seasonNumbers[seasonNumbers.length - 1]]})`,
+    );
     const list = doc.getElementById('episodeList')!;
     expect(list.querySelectorAll('.episode-card')).toHaveLength(56);
     // ToonStream's S1 starts at absolute episode 6, so the first card is Nxsha's episode 6.
@@ -313,22 +348,23 @@ test('a ToonStream season that crosses an Nxsha boundary keeps every episode', a
 });
 
 test('a missing Nxsha still falls back to the ToonStream episode image', async () => {
-    // MHA S8E12 has Nxsha metadata but no still; ToonStream has the card image.
+    // ToonStream lists one more Trigun episode (12) than Nxsha has metadata for
+    // (11), so that last card has no Nxsha still and must borrow the site's own
+    // card image from TS_EP_IMAGES.
+    const seasons = bakedVar<Record<string, any>>('TS_SEASONS').trigun.seasons as Record<string, number>;
+    const lastEp = seasons['1'];
+    expect(lastEp).toBeGreaterThan(11); // fixture guard: still ahead of Nxsha
     const baked = readFileSync(HTML_PATH, 'utf8').replace(
         /var TS_EP_IMAGES=\{.*?\};\n/,
-        'var TS_EP_IMAGES={"mha":{"8":{"12":"https://image.tmdb.org/t/p/w780/toonstream-still.jpg"}}};\n',
+        `var TS_EP_IMAGES={"trigun":{"1":{"${lastEp}":"https://image.tmdb.org/t/p/w780/toonstream-still.jpg"}}};\n`,
     );
     const { dom } = boot(baked);
     const doc = dom.window.document;
     await wait(300);
-    await openCard(dom.window, 'mha');
-    const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
-    select.value = '8';
-    select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
-    await wait(120);
+    await openCard(dom.window, 'trigun');
     const cards = Array.from(doc.querySelectorAll('#episodeList .episode-card'));
-    expect(cards).toHaveLength(12);
-    expect(cards[11].querySelector('img')?.getAttribute('data-src')).toBe(
+    expect(cards).toHaveLength(lastEp);
+    expect(cards[lastEp - 1].querySelector('img')?.getAttribute('data-src')).toBe(
         'https://image.tmdb.org/t/p/w780/toonstream-still.jpg',
     );
     dom.window.close();

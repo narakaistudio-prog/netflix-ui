@@ -24,7 +24,10 @@ on:
     - cron: '0 4 * * *'
   push:
     branches:
-      - arena/167ea7f6-netflix-ui
+      # Har kaam wali branch par bhi ek run — taaki bake usi branch me chade
+      # jahan page ka code badla. Purani branch list stale thi, isliye naye
+      # pushes par row refresh nahi hoti thi.
+      - arena/bc5f6d17-netflix-ui
       - main
     paths:
       - '.github/workflows/crunchyroll-daily-drops.yml'
@@ -122,6 +125,17 @@ jobs:
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin HEAD:"${{ github.ref_name }}"
           fi
+
+      # 2026-10-23 tak drops harvest chup-chaap fail ho raha tha (series page par
+      # HTTP 500) aur `continue-on-error` ki wajah se run green dikhta tha —
+      # row 4 din purani state par jam gayi. Ab kaam ke baad run red hoga, taaki
+      # pata chale ki aaj ka refresh nahi hua.
+      - name: Fail loudly when a harvest did not complete
+        if: steps.seasons.outcome != 'success' || steps.toonstream.outcome != 'success'
+        run: |
+          echo "ToonStream harvest did not complete — yesterday's block was kept."
+          echo "seasons=${{ steps.seasons.outcome }} drops=${{ steps.toonstream.outcome }}"
+          exit 1
 
       - name: Trigger the production Vercel deploy hook when configured
         if: github.ref_name == 'main'

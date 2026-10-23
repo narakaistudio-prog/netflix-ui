@@ -316,6 +316,30 @@ test('fresh drops parse from the home page markup', () => {
     expect(items.map((i: { slug: string }) => i.slug)).not.toContain('popular-one');
 });
 
+test('fresh drops are not capped at 40 cards', () => {
+    // Owner: "toonstream mae abhi jitna anime fresh drop row mae hai wo sara".
+    // The rail can be longer than 40 on a busy day, so the parser keeps every
+    // card in the section (only a 200-card safety ceiling exists).
+    const many = Array.from({ length: 45 }, (_, i) => {
+        const slug = `show-${i + 1}`;
+        return `<article class="post dfx fcl movies">
+          <div class="post-thumbnail">
+            <figure><img src="https://img/${slug}.jpg" alt="${slug}"></figure>
+            <span class="post-ql">Season 1</span><span class="year">EP ${i + 1}</span>
+          </div>
+          <header class="entry-header"><h2 class="entry-title">Show ${i + 1}</h2></header>
+          <a href="/episode/${slug}-1x${i + 1}/" class="lnk-blk"></a>
+        </article>`;
+    }).join('\n');
+    const home = `<section><header class="section-header"><h3 class="section-title">Fresh Drop</h3></header>${many}</section>
+      <section><h2 class="section-title">Popular</h2><a href="/series/other-one/">Other</a></section>`;
+    const { results } = runScenario({ mode: 'unit', calls: [['parseFreshDrops', [home]]] });
+    const items = results[0];
+    expect(items).toHaveLength(45);
+    expect(items[44].slug).toBe('show-45');
+    expect(items[44].ep).toBe(45);
+});
+
 test('fresh drops fall back to anchor markup when cards are absent', () => {
     const home = `<section><h3 class="section-title">Fresh Drops</h3>
       <a href="/episode/jojo's-bizarre-adventure-4x1/"><img src="https://img/jojo.jpg" alt="">JoJo</a>
