@@ -127,7 +127,7 @@ test('player has Nxsha failure handling with retry and no fallback tab', () => {
     expect(html).not.toContain('function nextServer(');
 });
 
-test('all 83 Crunchyroll titles resolve through the Nxsha table', () => {
+test('all 85 Crunchyroll titles resolve through the Nxsha table', () => {
     const html = readFileSync(HTML_PATH, 'utf8');
     const match = html.match(/\/\*__NXSHA__\*\/var NX_DATA=(\{.*?\});\/\*__END_NXSHA__\*\//);
     expect(match).not.toBeNull();
@@ -136,7 +136,7 @@ test('all 83 Crunchyroll titles resolve through the Nxsha table', () => {
     // aur registry me koi orphan route (pruned attempt) nahi rehna chahiye.
     const showsBlock = html.slice(html.indexOf('var shows={'), html.indexOf('var rows=['));
     const showKeys = [...showsBlock.matchAll(/\n\s+([A-Za-z0-9_]+):\{title:/g)].map((row) => row[1]);
-    expect(showKeys.length).toBeGreaterThanOrEqual(83);
+    expect(showKeys.length).toBeGreaterThanOrEqual(85);
     expect(Object.keys(data).sort()).toEqual([...showKeys].sort());
     for (const entry of Object.values<any>(data)) {
         expect(entry.id).toMatch(/^(tt\d{6,10}|\d{1,9})$/);

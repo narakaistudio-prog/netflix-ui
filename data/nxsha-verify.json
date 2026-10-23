@@ -16117,6 +16117,36 @@
         ],
         "totalEpisodes": null
       }
+    },
+    {
+      "key": "rezemovie",
+      "kind": "movie",
+      "id": "1218925",
+      "ok": true,
+      "checks": [
+        {
+          "url": "https://nxsha.space/embed/movie/1218925",
+          "status": 200,
+          "ok": true,
+          "embedTitle": "Chainsaw Man - The Movie: Reze Arc"
+        }
+      ],
+      "verifiedBy": "scripts/probe-anime-movies.mjs (2026-10-23T08:48:15.116Z)"
+    },
+    {
+      "key": "infinitycastle",
+      "kind": "movie",
+      "id": "1311031",
+      "ok": true,
+      "checks": [
+        {
+          "url": "https://nxsha.space/embed/movie/1311031",
+          "status": 200,
+          "ok": true,
+          "embedTitle": "Demon Slayer: Kimetsu no Yaiba Infinity Castle"
+        }
+      ],
+      "verifiedBy": "scripts/probe-anime-movies.mjs (2026-10-23T08:48:15.116Z)"
     }
   ],
   "saoMovie": [

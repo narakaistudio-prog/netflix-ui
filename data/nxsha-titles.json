@@ -1842,5 +1842,21 @@
       "1": 12
     }
   },
-  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata."
+  "_comment": "Nxsha route registry for the Crunchyroll catalog. When adding a title, add its catalog key here with the Nxsha page id, title, and kind; daily refresh discovers every TV entry, syncs the verification plan, and bakes episode metadata.",
+  "rezemovie": {
+    "id": "1218925",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Chainsaw Man - The Movie: Reze Arc"
+  },
+  "infinitycastle": {
+    "id": "1311031",
+    "kind": "movie",
+    "seasons": {
+      "1": 1
+    },
+    "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle"
+  }
 }

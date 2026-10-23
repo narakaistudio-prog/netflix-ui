@@ -136,3 +136,64 @@ test('the bake is idempotent and --from-state --check matches the page', () => {
     expect(String(res.stdout)).toContain('TS_MOVIES in sync');
     expect(res.status).toBe(0);
 });
+
+test('Reze Arc aur Infinity Castle catalog me hain — Nxsha route + ToonStream slug ke saath', () => {
+    // Owner: "crunchyroll ke andar movie mae chainsaw man reze movie or demon
+    // slayer infinity castle laga do". Dono ke id/slug live probe se aaye
+    // (data/anime-movie-probe.json) — yahan sirf pakka karte hain ki page,
+    // Nxsha route aur ToonStream bake teeno ek hi baat kehte hain.
+    const html = readFileSync(HTML_PATH, 'utf8');
+    const routes = JSON.parse(readFileSync(join(ROOT, 'data', 'nxsha-titles.json'), 'utf8'));
+    const baked = JSON.parse(html.match(/var TS_MOVIES=(\{.*?\});/)?.[1] ?? '{}') as Record<string, { slug: string }>;
+    const movieKeysSrc = html.match(/var movieKeys=(\[[^\]]*\])/)?.[1] ?? '[]';
+    const showsBlock = html.slice(html.indexOf('var shows={'), html.indexOf('var rows=['));
+
+    const expected = [
+        { key: 'rezemovie', title: 'Chainsaw Man – The Movie: Reze Arc', nxsha: '1218925', slug: 'chainsaw-man-the-movie-reze-arc' },
+        { key: 'infinitycastle', title: 'Demon Slayer: Kimetsu no Yaiba Infinity Castle', nxsha: '1311031', slug: 'demon-slayer-kimetsu-no-yaiba-infinity-castle' },
+    ];
+    for (const movie of expected) {
+        // Card catalog me (Movies rail + grid dono isi array se bante hain).
+        expect(movieKeysSrc).toContain(`'${movie.key}'`);
+        const entry = showsBlock.slice(showsBlock.indexOf(`\n        ${movie.key}:{`));
+        expect(entry.slice(0, 400)).toContain(`title:'${movie.title}'`);
+        expect(entry.slice(0, 400)).toContain("type:'Movie'");
+        expect(entry.slice(0, 400)).toContain('img:\'https://image.tmdb.org/t/p/w500/');
+        // Nxsha playback (movie embed) ke liye route.
+        expect(routes[movie.key]).toMatchObject({ id: movie.nxsha, kind: 'movie', seasons: { 1: 1 } });
+        // ToonStream (doosra server) ka verified /movies/<slug>.
+        expect(baked[movie.key]).toEqual({ slug: movie.slug, title: expect.any(String) });
+    }
+});
+
+test('nayi movie Nxsha ke movie embed par chalti hai (season/episode ke bina)', async () => {
+    const dom = new JSDOM(readFileSync(HTML_PATH, 'utf8'), {
+        runScripts: 'dangerously',
+        pretendToBeVisual: true,
+        url: 'https://app.local/crunchyroll',
+        virtualConsole: new VirtualConsole(),
+    });
+    const win = dom.window as any;
+    const doc = win.document;
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const click = (element: Element | null) => element?.dispatchEvent(new win.MouseEvent('click', { bubbles: true }));
+    click(doc.querySelector('#movieGrid [data-open="rezemovie"]'));
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    expect(doc.getElementById('detailTitle')?.textContent).toBe('Chainsaw Man – The Movie: Reze Arc');
+    click(doc.getElementById('demoPlay'));
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    const frame = doc.getElementById('serverFrame') as HTMLIFrameElement;
+    const ready = await (async () => {
+        for (let i = 0; i < 40; i += 1) {
+            if ((frame.getAttribute('src') || '').indexOf('nxsha.space/embed/movie/1218925') !== -1) return true;
+            await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        return false;
+    })();
+    expect(ready).toBe(true);
+    // Movie hai — S/E label nahi.
+    expect(doc.getElementById('watchEpTitle')?.textContent).toBe('Chainsaw Man – The Movie: Reze Arc');
+    win.close();
+});
