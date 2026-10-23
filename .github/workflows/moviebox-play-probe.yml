@@ -9,6 +9,10 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
+      title:
+        description: 'Search title (stream wala test)'
+        required: false
+        default: 'Avatar'
       subject_id:
         description: 'MovieBox subjectId'
         required: false
@@ -39,13 +43,12 @@ jobs:
         with:
           node-version: '20'
       - name: Probe MovieBox play API + CDN headers
+        env:
+          PROBE_TITLE: ${{ inputs.title || 'Avatar' }}
         run: |
           set -o pipefail
-          node scripts/probe-moviebox-play.mjs \
-            "${{ inputs.subject_id || '4151920426815471968' }}" \
-            "${{ inputs.detail_path || 'mandaadi-hindi-qxUx1r3QHW4' }}" \
-            "${{ inputs.se || '0' }}" \
-            "${{ inputs.ep || '0' }}" 2>&1 | tee probe.log
+          # --title par pehle search hoti hai (jo title asli me stream deta hai).
+          node scripts/probe-moviebox-play.mjs --title "${PROBE_TITLE:-Avatar}" 2>&1 | tee probe.log
       # Runner ke logs alag host par hote hain; result PR comment me daal dete
       # hain, taaki `gh api` se hi padha ja sake.
       - name: Post result as PR comment

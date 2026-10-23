@@ -25,8 +25,17 @@ const HOST = 'moviebox.ph';
 const UA =
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
 
-const subjectId = process.argv[2] || '4151920426815471968';
-const detailPath = process.argv[3] || 'mandaadi-hindi-qxUx1r3QHW4';
+/**
+ * Do tareeke:
+ *   node scripts/probe-moviebox-play.mjs --title "Avatar"
+ *   node scripts/probe-moviebox-play.mjs <subjectId> <detailPath> [se] [ep]
+ * `--title` par pehle search hoti hai (jo title asli me stream deta hai, wahi
+ * test ke liye chahiye).
+ */
+const titleArg = process.argv.indexOf('--title');
+const searchTitle = titleArg > -1 ? process.argv[titleArg + 1] || 'Avatar' : '';
+const subjectId = searchTitle ? '' : process.argv[2] || '4151920426815471968';
+const detailPath = searchTitle ? '' : process.argv[3] || 'mandaadi-hindi-qxUx1r3QHW4';
 const se = process.argv[4] || '0';
 const ep = process.argv[5] || '0';
 
@@ -98,18 +107,61 @@ async function main() {
         `&se=${encodeURIComponent(se)}&ep=${encodeURIComponent(ep)}` +
         `&detailPath=${encodeURIComponent(detailPath)}&streamSignType=1`;
 
-    log('[3] /subject/play …', playUrl);
-    const playRes = await fetch(playUrl, { headers: headers(auth) });
-    const playText = await playRes.text();
-    log('    status', playRes.status, 'bytes', playText.length);
-    let streams = [];
-    try {
-        const json = JSON.parse(playText);
-        streams = json?.data?.streams || json?.streams || [];
-        log('    keys:', Object.keys(json?.data || {}).join(','));
-    } catch {
-        log('    body (not json):', playText.slice(0, 300));
+    let candidates = [{ subjectId, detailPath }];
+    if (searchTitle) {
+        log('[2b] search:', searchTitle);
+        const found = await fetch(`${H5}/subject/search`, {
+            method: 'POST',
+            headers: headers({ 'Content-Type': 'application/json', ...auth }),
+            body: JSON.stringify({ keyword: searchTitle, page: 1, perPage: 0, subjectType: 0 }),
+        });
+        const text = await found.text();
+        let items = [];
+        try {
+            const json = JSON.parse(text);
+            items = json?.data?.items || [];
+        } catch {
+            log('    body:', text.slice(0, 200));
+        }
+        log('    status', found.status, 'items', items.length);
+        candidates = items.slice(0, 4).map((item) => ({
+            subjectId: String(item.subjectId || ''),
+            detailPath: String(item.detailPath || ''),
+            title: item.title,
+        }));
+        candidates.forEach((c, i) => log(`    [${i}]`, c.subjectId, '|', c.title, '|', c.detailPath));
     }
+
+    log('[3] /subject/play …');
+    let streams = [];
+    for (const candidate of candidates) {
+        if (!candidate.subjectId) continue;
+        const url =
+            `${playBase}/subject/play?subjectId=${encodeURIComponent(candidate.subjectId)}` +
+            `&se=${encodeURIComponent(se)}&ep=${encodeURIComponent(ep)}` +
+            `&detailPath=${encodeURIComponent(candidate.detailPath || '')}&streamSignType=1`;
+        const res = await fetch(url, { headers: headers(auth) });
+        const body = await res.text();
+        let json = null;
+        try {
+            json = JSON.parse(body);
+        } catch {
+            /* ignore */
+        }
+        const list = json?.data?.streams || [];
+        log(
+            `    ${candidate.subjectId} ${candidate.title || ''} → status ${res.status}, streams ${list.length}`,
+            '| dash', (json?.data?.dash || []).length,
+            '| hls', (json?.data?.hls || []).length,
+            '| hasResource', json?.data?.hasResource,
+        );
+        if (list.length) {
+            streams = list;
+            log('    body:', body.slice(0, 500));
+            break;
+        }
+    }
+
     log('    streams:', streams.length);
     streams.slice(0, 4).forEach((s, i) => {
         log(`    [${i}]`, JSON.stringify({
