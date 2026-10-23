@@ -85,9 +85,14 @@ test('player time events pin the exact position, the card renders it, and resumi
     expect(entry.sec).toBeLessThanOrEqual(375);
     expect(entry.dur).toBe(1440);
 
-    // The card shows where playback stopped, how much is left, and a progress bar.
+    // Card (image-3 design): poster + play overlay, progress bar, aur neeche
+    // sirf real timing — "6:12 / 24:00" (owner: "fake timing mat dikhana").
     const card = doc.querySelector('#continueGrid .continue-card') as HTMLElement;
-    expect(card.querySelector('em')!.textContent).toMatch(/^S1 · EP1 · 6:1\d in · 18 min left · just now$/);
+    expect(card.querySelector('.continue-thumb img')).not.toBeNull();
+    expect(card.querySelector('.continue-thumb .continue-play')).not.toBeNull();
+    // Meta line image-3 jaisi: S1 · E1 · “episode title”.
+    expect(card.querySelector('.continue-sub small')!.textContent).toMatch(/^S1 · E1 · “.+”$/);
+    expect(card.querySelector('.continue-sub em')!.textContent).toMatch(/^6:1\d \/ 24:00$/);
     const bar = card.querySelector('.progress i') as HTMLElement;
     expect(bar.style.width).toMatch(/^2[5-7]%$/);
 
@@ -136,9 +141,10 @@ test('with no player events, the wall-clock estimator still records the playback
     expect(entry.sec).toBeLessThanOrEqual(6);
     expect(entry.dur).toBe(1440);
 
-    // A barely-started entry keeps the classic label format (no position clutter).
-    const em = doc.querySelector('#continueGrid .continue-card em');
-    expect(em!.textContent).toBe('S1 · EP1 · just now');
+    // Abhi shuru hua episode: koi clock nahi (position/duration bharosemand
+    // nahi hai), aur koi "just now" jaisa andaza bhi nahi.
+    expect(doc.querySelector('#continueGrid .continue-card em')).toBeNull();
+    expect(doc.querySelector('#continueGrid .continue-sub small')!.textContent).toMatch(/^S1 · E1 · “.+”$/);
     dom.window.close();
 });
 
