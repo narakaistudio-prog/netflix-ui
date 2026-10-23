@@ -1,0 +1,40 @@
+name: MovieBox play probe
+
+# Diagnostic only — manual dispatch. Answers: kya MovieBox ke stream URL seedha
+# browser me chal sakte hain (bina proxy), ya nahi. Kuch deploy nahi karta.
+on:
+  workflow_dispatch:
+    inputs:
+      subject_id:
+        description: 'MovieBox subjectId'
+        required: false
+        default: '4151920426815471968'
+      detail_path:
+        description: 'MovieBox detailPath (slug)'
+        required: false
+        default: 'mandaadi-hindi-qxUx1r3QHW4'
+      se:
+        description: 'Season (0 = movie)'
+        required: false
+        default: '0'
+      ep:
+        description: 'Episode (0 = movie)'
+        required: false
+        default: '0'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Probe MovieBox play API + CDN headers
+        run: |
+          node scripts/probe-moviebox-play.mjs \
+            "${{ inputs.subject_id }}" \
+            "${{ inputs.detail_path }}" \
+            "${{ inputs.se }}" \
+            "${{ inputs.ep }}"
