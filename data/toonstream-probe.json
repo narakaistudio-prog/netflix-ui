@@ -1,6 +1,0 @@
-{
-  "dryRunExitCode": 1,
-  "stderr": "harvest-toonstream-drops: HTTP 500 for https://toonstream.us/series/naruto-shippūden/\n",
-  "stdoutBytes": 228,
-  "dryRunItems": 0
-}

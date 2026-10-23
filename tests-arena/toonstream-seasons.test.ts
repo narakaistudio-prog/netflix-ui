@@ -242,7 +242,11 @@ test('an absolutely numbered dub season plays the right ToonStream episode', asy
     await wait(300);
     await openCard(dom.window, 'naruto');
     const select = doc.getElementById('seasonSelect') as HTMLSelectElement;
-    expect(select.value).toBe('1');
+    // Naruto is also on today's Fresh Drop rail (ToonStream S17E368), so the
+    // detail opens on the dropped season first — exactly like every other drop
+    // card. Season 1 stays one click away, and its layout is still ToonStream's.
+    expect(select.value).toBe('17');
+    expect(select.options[0].textContent).toContain('Season 1 (');
     select.value = '2';
     select.dispatchEvent(new dom.window.Event('change', { bubbles: true }));
     await wait(100);

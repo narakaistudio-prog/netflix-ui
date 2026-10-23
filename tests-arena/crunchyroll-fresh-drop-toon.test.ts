@@ -339,6 +339,41 @@ test('a catalog title in the bake keeps one card, now inside the row', async () 
     dom.window.close();
 });
 
+test('an on-site title plays its drop episode with the site\'s new slug, older seasons with the catalog slug', async () => {
+    // ToonStream re-slugged Naruto Shippuden to `naruto-shippūden` for the new
+    // episode (S17E368), while its older seasons still answer to the catalog
+    // slug. The drop episode is also absolutely numbered on the site (S17 is
+    // 362..368), so no epStart offset may be applied to E368 itself.
+    const { dom, calls } = bootWithBake([
+        {
+            title: 'Naruto Shippuden',
+            slug: 'naruto-shippūden',
+            season: 17,
+            episode: 368,
+            episodeUrl: 'https://toonstream.us/episode/naruto-shippūden-17x368/',
+            nxId: '31910',
+            onSite: true,
+            firstSeen: '2026-10-23',
+        },
+    ]);
+    const doc = dom.window.document;
+    await wait(400);
+
+    const row = doc.querySelector('#homeRows section') as HTMLElement;
+    expect(row.querySelector('[data-open="naruto"]')).toBeTruthy();
+    expect(row.querySelector('[data-open^="tsd-naruto"]')).toBeFalsy();
+
+    // The row's Play button opens the drop episode with the site's own slug and
+    // its own episode number.
+    click(dom.window, row.querySelector('[data-quick-play="naruto"]'));
+    await waitFor(() => calls.some((call) => call.url.indexOf('/api/toonstream?title=') !== -1));
+    const dropUrl = decodeURIComponent(calls.find((call) => call.url.indexOf('/api/toonstream?title=') !== -1)!.url);
+    expect(dropUrl).toContain('slug=naruto-shippūden');
+    expect(dropUrl).toContain('s=17&e=368');
+
+    dom.window.close();
+});
+
 test('ToonStream seasons drive the card; Nxsha fills the guide and the mapped embed', async () => {
     // Ranma: ToonStream has S1 12, S2 12, S3 3. Nxsha merged all of it into one
     // 36-episode season, so the drop (S3E3) is really Nxsha S1E27. The card must

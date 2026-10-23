@@ -1488,7 +1488,18 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         /* ToonStream's own slug (baked with the fresh drops) keeps punctuation
            the site uses (jojo's-bizarre-adventure); EP_DATA is the fallback. */
         var tsDrop=dropInfo(playState.key)||{};
-        var epSlug=(window.TS_SLUGS&&TS_SLUGS[playState.key])||tsDrop.tsSlug||(EP_DATA[playState.key]||{}).slug||'';
+        /* Slug season ke hisaab se: jo anime page par pehle se hai (Naruto),
+           uska naya episode ToonStream ke NAYE slug par hai
+           (naruto-shippūden-17x368), par uske purane seasons abhi bhi purane
+           slug par hain (naruto-shippuden-hindi-dub). Drop record wala slug
+           sirf drop season ke liye — baaki seasons catalog ka slug lete hain,
+           warna S2E33 par "episode nahi mila" aata hai. */
+        var lay=tsLayout(playState.key)||{};
+        var dropSeason=(tsDrop.season===0||tsDrop.season)?String(tsDrop.season):'';
+        var isDropSeason=!!dropSeason&&dropSeason===String(playState.season||'');
+        var epSlug=isDropSeason
+          ? (tsDrop.tsSlug||(window.TS_SLUGS&&TS_SLUGS[playState.key])||lay.slug||(EP_DATA[playState.key]||{}).slug||'')
+          : (lay.slug||(window.TS_SLUGS&&TS_SLUGS[playState.key])||tsDrop.tsSlug||(EP_DATA[playState.key]||{}).slug||'');
         /* Movies ka ToonStream page /movies/<slug> par hota hai, season/episode
            nahi hota — isliye alag query. Slug harvest se baked aata hai
            (TS_MOVIES); jis movie ka slug nahi mila uske liye server bhi nahi
@@ -1498,8 +1509,15 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         if(isMovieKey(playState.key)){
           q='type=movie&title='+encodeURIComponent(tsTitle())+(tsMovie&&tsMovie.slug?'&slug='+encodeURIComponent(tsMovie.slug):'');
         }else{
-          var lay=tsLayout(playState.key)||{},starts=lay.epStart||{},startEp=Number(starts[String(playState.season)])||1;
-          q='title='+encodeURIComponent(tsTitle())+(epSlug?'&slug='+encodeURIComponent(epSlug):'')+'&s='+(playState.season||1)+'&e='+(startEp+(Number(playState.ep||1)-1));
+          var starts=lay.epStart||{},startEp=Number(starts[String(playState.season)])||1;
+          /* ToonStream ke season me episode numbers absolute ho sakte hain
+             (Naruto S17 = 362..368). Drop ka `episode` site ka apna number hai,
+             isliye jab bilkul wahi episode khul raha ho use bina offset bhejo;
+             catalog ki "EP n" list 1-based hai, sirf usi par epStart lagta hai. */
+          var epNo=(isDropSeason&&Number(tsDrop.episode)===Number(playState.ep))
+            ? Number(tsDrop.episode)
+            : (startEp+(Number(playState.ep||1)-1));
+          q='title='+encodeURIComponent(tsTitle())+(epSlug?'&slug='+encodeURIComponent(epSlug):'')+'&s='+(playState.season||1)+'&e='+epNo;
         }
         TS.loading=true;setHidden(frameLoader,false);setHidden(stagePoster,true);
         var ctl=null;try{ctl=new AbortController();setTimeout(function(){try{ctl.abort()}catch(e){}},20000)}catch(e){}
