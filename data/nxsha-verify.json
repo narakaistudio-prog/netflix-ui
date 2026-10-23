@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T13:22:02.576Z",
+  "generatedAt": "2026-10-23T14:02:19.320Z",
   "titles": [
     {
       "key": "aot",
@@ -9245,7 +9245,7 @@
       "key": "theshiunjifamilychildren",
       "kind": "tv",
       "id": "261091",
-      "ok": true,
+      "ok": false,
       "checks": [
         {
           "season": 1,
@@ -9262,12 +9262,7 @@
           "season": 1,
           "episode": 12,
           "url": "https://nxsha.space/embed/tv/261091/1/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "embedTitle": "Watch The Shiunji Family Children - S1:E12",
-          "ok": true,
-          "foundName": "The Shiunji Family Children",
-          "foundSeason": 1,
-          "foundEpisode": 12
+          "error": "fetch failed"
         }
       ],
       "seasonList": {
@@ -16281,7 +16276,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13552,
+      "bytes": 13638,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -16359,10 +16354,11 @@
   ],
   "summary": {
     "titles": 326,
-    "ok": 324,
+    "ok": 323,
     "bad": [
       "arrietty",
-      "nausicaa"
+      "nausicaa",
+      "theshiunjifamilychildren"
     ],
     "saoMovieMatch": [
       "413594"
