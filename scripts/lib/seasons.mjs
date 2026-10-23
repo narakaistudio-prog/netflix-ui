@@ -77,20 +77,7 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
         // within an episode or two, trust the season number instead of the
         // running total: Trigun's ToonStream S1 carries one extra card, and a
         // cumulative mapping would shift all 12 episodes of S2 by one.
-        // Do case anchor hote hain:
-        //   1. counts lagbhag same (Trigun ka ek extra card),
-        //   2. site ke paas us season ke kam episode hain (JoJo: ToonStream par
-        //      S6 me 5 episode, Nxsha S6 me 12 — poori series abhi upload nahi
-        //      hui). Aise waqt bhi season number par bharosa karo, warna
-        //      cumulative mapping S6 ko Nxsha S4 (Golden Wind) me daal deta hai
-        //      aur guide me galat episode naam dikhte hain.
-        // `start` wali seasons (One Piece S1 absolute 6 se) anchor nahi hoti —
-        // unka offset hi unki pehchaan hai.
-        const startsAtOne = (Number(ts?.start) || 0) <= 1;
-        const anchor =
-            same &&
-            !consumed.has(number) &&
-            (Math.abs(same.length - count) <= 2 || (startsAtOne && count <= same.length));
+        const anchor = same && !consumed.has(number) && Math.abs(same.length - count) <= 2;
         let startIndex;
         let budget;
         if (anchor) {
@@ -204,4 +191,26 @@ export function parseSeasonEpisodes(html) {
         last,
         missing: sorted.filter((n, i) => n !== first + i).slice(0, 5),
     };
+}
+
+/**
+ * Manual pins for seasons the automatic mapping gets wrong.
+ *
+ * `buildSeasonMap` anchors a ToonStream season to the Nxsha season with the
+ * same number only when the counts are within an episode or two. JoJo breaks
+ * that rule: ToonStream's S6 has 5 episodes (the rest is not uploaded yet)
+ * while Nxsha's S6 has 12, so the cumulative fallback dropped JoJo's newest
+ * season into Nxsha's S4 (Golden Wind) and every card showed the wrong episode
+ * name. Loosening the anchor globally did fix JoJo but re-mapped DBZ and Fairy
+ * Tail (whose Nxsha seasons are genuinely merged), so the exception lives in
+ * data/toonstream-season-overrides.json, per show and per season.
+ */
+export function applySeasonOverrides(nxMap, overrides) {
+    let applied = 0;
+    for (const [season, plan] of Object.entries(overrides || {})) {
+        if (!plan || typeof plan !== 'object' || !plan.season) continue;
+        nxMap[season] = { season: Number(plan.season), base: Number(plan.base) || 0 };
+        applied += 1;
+    }
+    return applied;
 }

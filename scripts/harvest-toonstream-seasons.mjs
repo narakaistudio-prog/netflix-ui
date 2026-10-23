@@ -31,11 +31,12 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
 import { decodeEntities, titleKey, titleVariants } from './lib/text.mjs';
-import { buildSeasonMap, compactPlan, parseSeasonCards, parseSeasonEpisodes, parseToonSeasons } from './lib/seasons.mjs';
+import { applySeasonOverrides, buildSeasonMap, compactPlan, parseSeasonCards, parseSeasonEpisodes, parseToonSeasons } from './lib/seasons.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REGISTRY_FILE = resolve(ROOT, 'data', 'nxsha-titles.json');
 const EPISODES_FILE = resolve(ROOT, 'data', 'nxsha-episodes.json');
+const OVERRIDES_FILE = resolve(process.env.TS_SEASONS_OVERRIDES_FILE || resolve(ROOT, 'data', 'toonstream-season-overrides.json'));
 const STATE_FILE = resolve(process.env.TS_SEASONS_STATE_FILE || resolve(ROOT, 'data', 'toonstream-seasons.json'));
 const HTML_FILE = resolve(process.env.TS_SEASONS_HTML_FILE || resolve(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html'));
 const BASE = 'https://toonstream.us';
@@ -358,6 +359,7 @@ function remapNx(shows) {
         const { map } = buildSeasonMap(tsSeasons, nxSeasons);
         const nxMap = {};
         for (const [season, plan] of Object.entries(map)) nxMap[season] = compactPlan(plan);
+        applySeasonOverrides(nxMap, readJson(OVERRIDES_FILE, {})[key]);
         out[key] = { ...entry, ...(Object.keys(nxMap).length ? { nxMap } : {}) };
     }
     return out;
@@ -389,6 +391,8 @@ async function harvest() {
         const { map } = buildSeasonMap(found.seasons, nxSeasons);
         const nxMap = {};
         for (const [season, plan] of Object.entries(map)) nxMap[season] = compactPlan(plan);
+        const pinned = applySeasonOverrides(nxMap, readJson(OVERRIDES_FILE, {})[key]);
+        if (pinned) console.log(`     ${entry.title}: ${pinned} season(s) pinned from toonstream-season-overrides.json`);
         const seasonsMap = {};
         const epStart = {};
         const haveImage = nxImageIndex(nxEpisodesData[key]);
