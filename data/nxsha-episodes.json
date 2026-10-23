@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-23T15:06:56.518Z",
+    "generatedAt": "2026-10-23T15:35:56.763Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -51775,7 +51775,7 @@
           "episode": 5,
           "title": "The Terrorist from a Faraway Country",
           "overview": "At a checkpoint, Oye — a man who knows Gyro's past — confronts the duo. His power to turn anything he touches into a bomb leaves them with nowhere to run.",
-          "image": "https://image.tmdb.org/t/p/w780/2c7ajDu8SXa4re1FfsCLA2IVZTq.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/2RyXZdAgak77KuwwzERU1GEKnOU.jpg",
           "airDate": "2026-10-16",
           "runtime": 25
         },
@@ -51783,7 +51783,10 @@
           "season": 6,
           "episode": 6,
           "title": "Gyro Zeppeli’s Destiny",
-          "airDate": "2026-10-23"
+          "overview": "Wounded and weary, the duo finds the Zombie Horse. As Gyro patches himself up, memories surface — revealing a family legacy steeped in duty and sacrifice.",
+          "image": "https://image.tmdb.org/t/p/w780/d6TCAa1j3gwGTonTujmR6VNdcP6.jpg",
+          "airDate": "2026-10-23",
+          "runtime": 25
         },
         {
           "season": 6,
