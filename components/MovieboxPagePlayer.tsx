@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { MovieboxCroppedFrame } from './MovieboxCroppedFrame';
+import { MovieboxDirectPlayer } from './MovieboxDirectPlayer';
 import { MovieboxLinkPanel } from './MovieboxLinkPanel';
 import {
     buildMovieboxFrameProxyUrl,
@@ -11,6 +12,7 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
+import { resolveDirectStreams, type DirectStream } from '@/lib/movieboxDirect';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import { resolveMovieboxLive } from '@/lib/movieboxResolve';
 
@@ -139,6 +141,15 @@ export function MovieboxPagePlayer({
      * Parent episode/link badle to override saaf.
      */
     const [episodeOverride, setEpisodeOverride] = useState<number | null>(null);
+    /**
+     * Phone par seedha (bina proxy) player: MovieBox ki API se stream URL
+     * `lib/movieboxDirect.ts` laata hai aur video hamare apne `<video>` me
+     * chalta hai — tab ±10s possible hai.
+     *
+     * Kuch bhi na mile / video na chale to `null` reh jata hai aur neeche wala
+     * purana cropped iframe hi chalta hai (koi regression nahi).
+     */
+    const [directStreams, setDirectStreams] = useState<DirectStream[] | null>(null);
     /** Player ka apna naap — overlays ko video ke dabbe par align karne ke liye. */
     const [rootSize, setRootSize] = useState({ width: 0, height: 0 });
     /** Site ke controls jaisa: idle par gayab. */
@@ -260,6 +271,39 @@ export function MovieboxPagePlayer({
 
     /** Frame me search results khule hain (watch page nahi). */
     const isSearchFrame = Boolean(searchUrl);
+
+    /**
+     * Phone par pehla rasta: seedha stream (bina proxy).
+     *
+     * Sirf phone par — desktop ka player bila-shak purana hi rehta hai. Page URL
+     * se hi subjectId/detailPath/season/episode nikalte hain, isliye link paste
+     * karne wale raste par bhi chalta hai. Fail hone par chup-chaap iframe.
+     */
+    useEffect(() => {
+        if (!isPhone || !pageUrl || isSearchFrame) {
+            setDirectStreams(null);
+            return;
+        }
+        let cancelled = false;
+        setDirectStreams(null);
+        resolveDirectStreams({
+            link: pageUrl,
+            se: season,
+            ep: activeEpisode ?? undefined,
+        })
+            .then((result) => {
+                if (cancelled) return;
+                if (result.ok && result.streams.length) setDirectStreams(result.streams);
+                // Debug: kaunsa rasta chuna gaya (console me hi, UI me kuch nahi).
+                else console.info('[m2box-direct] fallback:', result.reason || 'no-streams');
+            })
+            .catch(() => {
+                // iframe hi chalega
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [activeEpisode, isPhone, isSearchFrame, pageUrl, season]);
 
     /**
      * Video ka asli dabba screen par kahan hai.
@@ -523,7 +567,20 @@ export function MovieboxPagePlayer({
             }}
             {...({ dataSet: { tvScope: 'player' } } as any)}
         >
-            {frameSrc ? (
+            {directStreams && directStreams.length > 0 && !isSearchFrame ? (
+                <MovieboxDirectPlayer
+                    streams={directStreams}
+                    title={title}
+                    onUnavailable={(reason) => {
+                        // Stream nahi chala (format/CDN/region) — turant purana
+                        // cropped iframe, warna phone par kaala dabba reh jata.
+                        console.info('[m2box-direct] fallback:', reason);
+                        setDirectStreams(null);
+                        setLoading(true);
+                        setTimedOut(false);
+                    }}
+                />
+            ) : frameSrc ? (
                 <MovieboxCroppedFrame
                     key={frameSrc}
                     src={frameSrc}
@@ -564,7 +621,7 @@ export function MovieboxPagePlayer({
             {/* Kaala parda: page load hone tak + site ka shell (header/footer)
                 player ban jaye tab tak. Isse server lagate hi seedha player
                 dikhta hai, M2Box ka apna page nahi. */}
-            {frameSrc && (loading || covered) ? (
+            {!directStreams && frameSrc && (loading || covered) ? (
                 <View style={styles.frameCover} pointerEvents="none" testID="moviebox-cover">
                     <ActivityIndicator size="large" color="#E50914" />
                     <Text style={styles.loadingText}>Loading…</Text>
