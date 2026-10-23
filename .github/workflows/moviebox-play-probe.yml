@@ -3,6 +3,10 @@ name: MovieBox play probe
 # Diagnostic only — manual dispatch. Answers: kya MovieBox ke stream URL seedha
 # browser me chal sakte hain (bina proxy), ya nahi. Kuch deploy nahi karta.
 on:
+  # GitHub `workflow_dispatch` sirf default branch ki file par chalta hai, isliye
+  # branch par test karne ka rasta: draft PR + pull_request event.
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       subject_id:
