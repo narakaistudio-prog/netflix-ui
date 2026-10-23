@@ -11,7 +11,46 @@
       "episodeUrl": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
       "firstSeen": "2026-10-19",
       "onSite": true,
-      "nxId": "45790"
+      "nxId": "45790",
+      "guide": {
+        "6": {
+          "1": {
+            "title": "Dio the Invader",
+            "overview": "England, 1868. A thief tries to raid an overturned carriage, but discovers that two of the occupants, a man and his young son are still alive. The man, George Joestar, proclaims he will forever be ind",
+            "image": "https://image.tmdb.org/t/p/w300/kiqwzS6w9rL4h4yYiZ9gyTlg0qC.jpg",
+            "airDate": "2012-10-06",
+            "runtime": 24
+          },
+          "2": {
+            "title": "A Letter from the Past",
+            "overview": "Seven years later in 1888, JoJo and Dio are supposedly getting along, though JoJo is still fearful of Dio. Meanwhile, Dio plots to liberate the Joestar family of their fortune.",
+            "image": "https://image.tmdb.org/t/p/w300/tGAWqP45ZjkoIH1eUtsYQrQwDKo.jpg",
+            "airDate": "2012-10-13",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Youth with Dio",
+            "overview": "JoJo prepares to turn Dio in to the police.",
+            "image": "https://image.tmdb.org/t/p/w300/hizMKHp69STEV4kodk4ASUmc9xO.jpg",
+            "airDate": "2012-10-20",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Overdrive",
+            "overview": "Three days after the incident, JoJo awakens to find Erina nursing him back to health in the hospital. As they rekindle their friendship, they encounter a strange man named Will A. Zeppeli.",
+            "image": "https://image.tmdb.org/t/p/w300/yS2cIgNCIuYt0YNsKulLBXBDryi.jpg",
+            "airDate": "2012-10-27",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Dark Knights",
+            "overview": "A talented young pickpocket named Poco unwittingly lures JoJo and company into an encounter with Dio, Tarukus, and Blueford.",
+            "image": "https://image.tmdb.org/t/p/w300/haJRk3SMHuuemXQGYPjfTrMJNLH.jpg",
+            "airDate": "2012-11-03",
+            "runtime": 24
+          }
+        }
+      }
     },
     "the-exiled-heavy-knight-knows-how-to-game-the-system": {
       "title": "The Exiled Heavy Knight Knows How to Game the System",
@@ -2053,7 +2092,67 @@
       "episodeUrl": "https://toonstream.us/episode/mushoku-tensei:-jobless-reincarnation-3x8/",
       "firstSeen": "2026-10-19",
       "onSite": true,
-      "nxId": "94664"
+      "nxId": "94664",
+      "guide": {
+        "3": {
+          "1": {
+            "title": "Jobless Reincarnation",
+            "overview": "A 34-year-old unemployed recluse get hit by a truck... and wakes up as a newborn baby in a fantasy world! With loving parents, a lifetime of regrets, and a beginner’s magic textbook, he sets out to ma",
+            "image": "https://image.tmdb.org/t/p/w300/sS93JaHkWvhecsmgSdg5MFel3y5.jpg",
+            "airDate": "2021-01-11",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Master",
+            "overview": "Rudy begins training with his new magic tutor and learning swordsmanship from his father. He makes rapid progress, but traumatic memories from his past life leave him too afraid to go outside. Is his ",
+            "image": "https://image.tmdb.org/t/p/w300/gjktze6OF0wESkbHU4h3dxcWNoe.jpg",
+            "airDate": "2021-01-18",
+            "runtime": 24
+          },
+          "3": {
+            "title": "A Friend",
+            "overview": "Rudy begins to explore the village and rescues a green-haired child from a group of bullies. The two grow close practicing magic, but is there more to Rudy’s new friend than he thinks?",
+            "image": "https://image.tmdb.org/t/p/w300/d29kiiic7xbvsxCnJ4syiO3JxYy.jpg",
+            "airDate": "2021-01-25",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Emergency Family Meeting",
+            "overview": "The Greyrat family is overjoyed when Zenith announces that she’s pregnant with a second child, but the mood takes a dour turn when Lilia reveals that she is also pregnant and Paul is the father. Will ",
+            "image": "https://image.tmdb.org/t/p/w300/uVN34pxWO1N1eFchpHdPXFMrMx0.jpg",
+            "airDate": "2021-02-01",
+            "runtime": 24
+          },
+          "5": {
+            "title": "A Young Lady and Violence",
+            "overview": "Rudy arrives in the city of Roa, where he’s supposed to spend the next five years tutoring the daughter of the local lord. His student, however, is more than he bargained for, and he’ll have to fight ",
+            "image": "https://image.tmdb.org/t/p/w300/2oiW3SSj752soSVpj8LST72d4Ib.jpg",
+            "airDate": "2021-02-08",
+            "runtime": 24
+          },
+          "6": {
+            "title": "A Day Off in Roa",
+            "overview": "Rudy is officially Eris’s tutor, but she doesn’t want to learn anything but magic. As Rudy struggles to get her interested in other subjects, he realizes that non-stop lessons are causing her stress a",
+            "image": "https://image.tmdb.org/t/p/w300/tSBi3Ob8qWKMlpG6pMeukJUhT25.jpg",
+            "airDate": "2021-02-15",
+            "runtime": 24
+          },
+          "7": {
+            "title": "What Lies Beyond Effort",
+            "overview": "Eris’s 10th birthday is fast approaching, and her grandfather has invited nobles from across the kingdom to a dance party to celebrate. There’s just one problem: Eris can’t dance, and she’s quickly lo",
+            "image": "https://image.tmdb.org/t/p/w300/rrEKdSZXOT0cEX1fSEmty0Q6lD1.jpg",
+            "airDate": "2021-02-22",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Turning Point 1",
+            "overview": "Rudy reaches his 10th birthday, and Eris and her family plan a surprise party for him. Meanwhile, the strange orb hovering over the city remains a mystery as powerful entities across the world begin t",
+            "image": "https://image.tmdb.org/t/p/w300/A68qEBAuk5ubUWdt6zTqiT2NiAB.jpg",
+            "airDate": "2021-03-01",
+            "runtime": 24
+          }
+        }
+      }
     },
     "overgeared": {
       "title": "Overgeared",
