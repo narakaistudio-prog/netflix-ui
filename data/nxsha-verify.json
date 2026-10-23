@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T14:02:19.320Z",
+  "generatedAt": "2026-10-23T14:27:52.310Z",
   "titles": [
     {
       "key": "aot",
@@ -5434,7 +5434,7 @@
       "key": "toiletboundhanakokun",
       "kind": "tv",
       "id": "95269",
-      "ok": true,
+      "ok": false,
       "checks": [
         {
           "season": 1,
@@ -5473,12 +5473,7 @@
           "season": 2,
           "episode": 24,
           "url": "https://nxsha.space/embed/tv/95269/2/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "embedTitle": "Watch Toilet-Bound Hanako-kun - S2:E24",
-          "ok": true,
-          "foundName": "Toilet-Bound Hanako-kun",
-          "foundSeason": 2,
-          "foundEpisode": 24
+          "error": "fetch failed"
         }
       ],
       "seasonList": {
@@ -7037,7 +7032,7 @@
       "key": "loghorizon",
       "kind": "tv",
       "id": "60846",
-      "ok": true,
+      "ok": false,
       "checks": [
         {
           "season": 1,
@@ -7076,12 +7071,7 @@
           "season": 2,
           "episode": 25,
           "url": "https://nxsha.space/embed/tv/60846/2/25?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "embedTitle": "Watch Log Horizon - S2:E25",
-          "ok": true,
-          "foundName": "Log Horizon",
-          "foundSeason": 2,
-          "foundEpisode": 25
+          "error": "This operation was aborted"
         },
         {
           "season": 3,
@@ -9245,7 +9235,7 @@
       "key": "theshiunjifamilychildren",
       "kind": "tv",
       "id": "261091",
-      "ok": false,
+      "ok": true,
       "checks": [
         {
           "season": 1,
@@ -9262,7 +9252,12 @@
           "season": 1,
           "episode": 12,
           "url": "https://nxsha.space/embed/tv/261091/1/12?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "error": "fetch failed"
+          "status": 200,
+          "embedTitle": "Watch The Shiunji Family Children - S1:E12",
+          "ok": true,
+          "foundName": "The Shiunji Family Children",
+          "foundSeason": 1,
+          "foundEpisode": 12
         }
       ],
       "seasonList": {
@@ -16276,7 +16271,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13638,
+      "bytes": 13552,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],
@@ -16354,11 +16349,12 @@
   ],
   "summary": {
     "titles": 326,
-    "ok": 323,
+    "ok": 322,
     "bad": [
       "arrietty",
       "nausicaa",
-      "theshiunjifamilychildren"
+      "toiletboundhanakokun",
+      "loghorizon"
     ],
     "saoMovieMatch": [
       "413594"
