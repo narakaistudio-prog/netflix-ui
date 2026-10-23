@@ -542,7 +542,7 @@ export function MovieboxPagePlayer({
             ) : resolving ? (
                 <View style={styles.resolving} {...({ dataSet: { movieboxResolving: '1' } } as any)}>
                     <ActivityIndicator size="large" color="#E50914" />
-                    <Text style={styles.resolvingTitle}>Server 2 taiyaar ho raha hai</Text>
+                    <Text style={styles.resolvingTitle}>Preparing server 2</Text>
                     <Text style={styles.resolvingText}>
                         MovieBox par “{title}” dhoondha ja raha hai — link khud lag jayega.
                     </Text>
@@ -551,7 +551,7 @@ export function MovieboxPagePlayer({
                 <MovieboxLinkPanel
                     title={title}
                     notice={
-                        'MovieBox par is title ka watch page nahi mila. Wahan se link copy karke yahan paste kar do, ya thodi der baad dobara try karo.'
+                        'No MovieBox watch page found for this title. Copy the link from MovieBox and paste it here, or try again in a little while.'
                     }
                     initialLink={link}
                     initialProxy={proxy}
@@ -753,11 +753,11 @@ export function MovieboxPagePlayer({
                         <Pressable
                             style={styles.searchBarButton}
                             onPress={editLink}
-                            accessibilityLabel="Link paste karo"
+                            accessibilityLabel="Paste link"
                             testID="moviebox-manual-link"
                         >
                             <Ionicons name="link-outline" size={13} color="#000" />
-                            <Text style={styles.searchBarButtonText}>Link paste karo</Text>
+                            <Text style={styles.searchBarButtonText}>Paste link</Text>
                         </Pressable>
                     </View>
                 </View>

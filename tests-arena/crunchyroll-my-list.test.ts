@@ -44,6 +44,8 @@ const resumeItem = (key: string, season: string, ep: number, sec: number) => ({
     at: Date.now(),
     sec,
     dur: 1440,
+    // Player ne khud duration bheji thi (guess nahi) — isliye clock dikhta hai.
+    durReal: 1,
 });
 
 describe('Continue Watching card size + My List real data', () => {

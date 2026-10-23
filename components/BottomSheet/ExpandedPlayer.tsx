@@ -834,7 +834,7 @@ function TrailerVideo({ yt, title, onBail }: {
         return (
             <View style={[styles.video, trailerStyles.noteCard]}>
                 <Ionicons name="alert-circle-outline" size={30} color="#e5e5e5" />
-                <Text style={trailerStyles.noteTitle}>Trailer stream abhi nahi mila</Text>
+                <Text style={trailerStyles.noteTitle}>No trailer stream available yet</Text>
                 <Text style={trailerStyles.noteText}>
                     Public streaming servers busy hain. Retry karo, ya title details par wapas jao.
                 </Text>
@@ -858,7 +858,7 @@ function TrailerVideo({ yt, title, onBail }: {
         <View style={[styles.video, trailerStyles.noteCard]}>
             <ActivityIndicator size="large" color="#E50914" />
             <Text style={trailerStyles.noteText}>
-                {title ? `${title} — ` : ''}trailer load ho raha hai…
+                {title ? `${title} — ` : ''}loading trailer…
             </Text>
         </View>
     );

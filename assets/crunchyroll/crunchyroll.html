@@ -560,6 +560,15 @@
 
     .video-stage iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:#000}
     .video-stage.s16x9{padding-bottom:56.25%}
+    /* Owner: "video player ka size sahi karo, bahut zyada bada hai, niche tak
+       jata hai". Pehle stage 16:9 ko width se banata tha (padding-bottom:56.25%),
+       isliye 1400px wide desktop par height ~790px ho jati thi aur header ke
+       saath page scroll karta tha. Ab width ko bhi height se bandha gaya hai:
+       stage ki height = 100vh - (top bar + layout padding), width wahi se
+       nikalta hai (16:9), aur stage center me baithta hai. Isse video poora
+       ek hi screen me fit hota hai — koi andar/niche scroll nahi. */
+    @media(min-width:701px){.player-shell .video-stage{width:min(100%,calc((100vh - 124px) * 1.77778));aspect-ratio:16/9;height:auto;padding-bottom:0;margin-left:auto;margin-right:auto}}
+    @supports (height:100dvh){@media(min-width:701px){.player-shell .video-stage{width:min(100%,calc((100dvh - 124px) * 1.77778))}}}
     .stage-poster{position:absolute;inset:0;z-index:20;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050505;overflow:hidden;cursor:pointer}
     .stage-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
     .stage-poster .poster-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.78))}
@@ -865,9 +874,9 @@
           <div class="watch-actions-row">
             <button class="watch-react" id="tsServerBtn" aria-label="Play from ToonStream (Server 1, default)" title="Server 1 (default): ToonStream"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b><span class="srv-n">1</span>ToonStream</b></button>
             <button class="watch-react" id="nxServerBtn" aria-label="Back to the Nxsha player (Server 2)" title="Server 2: Nxsha" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b><span class="srv-n">2</span>Nxsha</b></button>
-            <button class="watch-react" id="tsS1Btn" aria-label="ToonStream pehla server" title="ToonStream S1" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b id="tsS1Label">S1</b></button>
-            <button class="watch-react" id="tsS2Btn" aria-label="ToonStream doosra server" title="ToonStream S2" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b id="tsS2Label">S2</b></button>
-            <button class="watch-react" id="tsS3Btn" aria-label="ToonStream teesra server" title="ToonStream S3" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b id="tsS3Label">S3</b></button>
+            <button class="watch-react" id="tsS1Btn" aria-label="ToonStream server 1" title="ToonStream S1" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b id="tsS1Label">S1</b></button>
+            <button class="watch-react" id="tsS2Btn" aria-label="ToonStream server 2" title="ToonStream S2" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b id="tsS2Label">S2</b></button>
+            <button class="watch-react" id="tsS3Btn" aria-label="ToonStream server 3" title="ToonStream S3" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M10 9l5 3-5 3z" fill="currentColor"></path></svg><b id="tsS3Label">S3</b></button>
             <button class="watch-react" id="watchLike" aria-label="Like episode" title="Like"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12M15 5.9 14 10h5.8a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7V10l4-8a2.4 2.4 0 0 1 2.4 2.4Z"></path></svg><b id="watchLikeCount" hidden>1</b></button>
             <button class="watch-react" id="watchDislike" aria-label="Dislike episode" title="Dislike"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2M9 18.1 10 14H4.2a2 2 0 0 1-2-2.4l1.4-7a2 2 0 0 1 2-1.6H17v12l-4 8a2.4 2.4 0 0 1-2.4-2.4Z"></path></svg><b id="watchDislikeCount" hidden>1</b></button>
             <button class="watch-react" id="watchShare" aria-label="Share episode" title="Share"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg><b>Share</b></button>
@@ -913,7 +922,7 @@
     </form>
     <div class="cr-guest" id="crGuestBox">
       <strong>Sign in to comment</strong>
-      <span>Comments Supabase me save hote hain. Padhna sabke liye free hai, likhne ke liye sign in karo.</span>
+      <span>Comments are saved in Supabase. Reading is free for everyone — sign in to post.</span>
       <button type="button" class="cr-signin-btn" id="crGuestSignIn">Sign in</button>
     </div>
     <div class="cr-list" id="crList" aria-live="polite"></div>
@@ -923,7 +932,7 @@
     <div class="cr-auth-box" role="dialog" aria-modal="true" aria-labelledby="crAuthTitle">
       <button type="button" class="cr-auth-close" id="crAuthClose" aria-label="Close sign in">×</button>
       <h2 id="crAuthTitle">Join the conversation</h2>
-      <p class="cr-auth-sub" id="crAuthSub">Comment karne ke liye sign in karo — tumhara naam aur comment dono Supabase me save hote hain.</p>
+      <p class="cr-auth-sub" id="crAuthSub">Sign in to comment — your name and comment are saved in Supabase.</p>
       <div class="cr-auth-tabs" id="crAuthTabs" role="tablist">
         <button type="button" class="active" data-cr-auth-mode="signin" role="tab" aria-selected="true">Sign in</button>
         <button type="button" data-cr-auth-mode="signup" role="tab" aria-selected="false">Create account</button>
@@ -931,7 +940,7 @@
       <form id="crAuthForm" novalidate>
         <label class="cr-field" id="crNameField" hidden>Display name<input id="crDisplayName" autocomplete="nickname" maxlength="32" placeholder="AnimeLover_007"></label>
         <label class="cr-field">Email<input id="crEmail" type="email" autocomplete="email" placeholder="you@example.com"></label>
-        <label class="cr-field">Password<input id="crPassword" type="password" autocomplete="current-password" placeholder="Kam se kam 6 characters"></label>
+        <label class="cr-field">Password<input id="crPassword" type="password" autocomplete="current-password" placeholder="At least 6 characters"></label>
         <button type="submit" class="cr-auth-submit" id="crAuthSubmit">Sign in</button>
         <p class="cr-auth-error" id="crAuthError" role="alert"></p>
       </form>
@@ -1487,7 +1496,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function resumeStore(){var raw=lsGet(RESUME_KEY),list=raw?JSON.parse(raw):[];if(!Array.isArray(list))return [];return list.filter(function(e){return e&&e.key&&shows[e.key]})}
       function resumeSave(list){lsSet(RESUME_KEY,JSON.stringify(list.slice(0,8)))}
       function relTime(t){var m=Math.round((Date.now()-t)/60000);if(m<1)return 'just now';if(m<60)return m+'m ago';var h=Math.floor(m/60);if(h<24)return h+'h ago';var d=Math.floor(h/24);return d===1?'yesterday':d+'d ago'}
-      var pendingResumeSec=0,lastResumeToastAt=0,winBlurred=false,PLAY={key:null,season:'1',ep:1,baseSec:0,baseStamp:0,dur:0,ended:false,paused:false};
+      var pendingResumeSec=0,lastResumeToastAt=0,winBlurred=false,PLAY={key:null,season:'1',ep:1,baseSec:0,baseStamp:0,dur:0,durReal:false,ended:false,paused:false};
       function resumeToast(msg){var now=Date.now();if(now-lastResumeToastAt<2500)return;lastResumeToastAt=now;showToast(msg)}
       function fmtClock(sec){sec=Math.max(0,Math.floor(sec||0));var h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;return h?(h+':'+zeropad(m)+':'+zeropad(s)):(m+':'+zeropad(s))}
       function zeropad(n){return n<10?'0'+n:String(n)}
@@ -1498,8 +1507,9 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function rebasePlayhead(includeLive){if(!PLAY.key)return;var s=PLAY.baseSec;if(PLAY.baseStamp&&(includeLive||playClockRunning()))s+=(Date.now()-PLAY.baseStamp)/1000;PLAY.baseSec=Math.max(0,s);PLAY.baseStamp=Date.now()}
       function guessNum(v){v=Number(v);return (v===0||isFinite(v)&&v>0)&&v<=86400?v:null}
       function sniffTimeEvent(d){if(d==null)return null;if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){return null}}if(typeof d!=='object')return null;var body=(d.data&&typeof d.data==='object'&&!(d.data instanceof Array))?d.data:d;for(var i=0;i<2;i++){var t=guessNum(body.currentTime)||guessNum(body.time)||guessNum(body.seconds)||guessNum(body.position)||guessNum(body.progress);if(t!=null){var u=guessNum(body.duration)||guessNum(body.total)||guessNum(body.length),evName=String(d.event||d.type||d.name||body.event||'').toLowerCase();if(/progress|timeupdate|seek|play|pause|time|tick/.test(evName)||d.type==='MEDIA_DATA'||d.type==='PLAYER_EVENT'||d.event==='timeupdate')return {t:t,dur:u}}if(body!==d)body=d;else break}return null}
-      function setPlayheadFromEvent(sec,dur){if(!PLAY.key)return;rebasePlayhead();PLAY.baseSec=Math.max(0,Math.floor(sec));PLAY.baseStamp=Date.now();if(dur)PLAY.dur=dur;if(PLAY.dur&&PLAY.baseSec<PLAY.dur*0.9)PLAY.ended=false;flushPlayhead(true)}
-      function flushPlayhead(eventFlush){if(!PLAY.key||!shows[PLAY.key])return;var sec=Math.max(0,Math.floor(playheadSec()));if(!eventFlush&&sec<=3)return;var total=PLAY.dur||guessDur(PLAY.key,PLAY.season,PLAY.ep),list=resumeStore();if(total&&PLAY.ended&&sec>=total*0.95)sec=total;else if(total&&sec>total)sec=total;for(var i=0;i<list.length;i++){var e=list[i];if(e.key===PLAY.key&&String(e.season)===String(PLAY.season)&&Number(e.ep)===Number(PLAY.ep)){if(total&&PLAY.ended&&sec>=total*0.985){list.splice(i,1);resumeSave(list);PLAY.baseSec=0;var nxt=(typeof neighborEpisode==='function')?neighborEpisode(1):null;showToast('Marked as watched'+(nxt?(' · Up next: S'+nxt.season+' E'+nxt.ep):''));renderContinueWatching();return}if(!eventFlush&&Math.abs(sec-(e.sec||0))<2)return;e.sec=sec;if(PLAY.dur)e.dur=PLAY.dur;else if(total&&!e.dur)e.dur=total;e.at=Date.now();resumeSave(list);renderContinueWatching();return}}}
+      function setPlayheadFromEvent(sec,dur){if(!PLAY.key)return;rebasePlayhead();PLAY.baseSec=Math.max(0,Math.floor(sec));PLAY.baseStamp=Date.now();if(dur){PLAY.dur=dur;PLAY.durReal=true}if(PLAY.dur&&PLAY.baseSec<PLAY.dur*0.9)PLAY.ended=false;flushPlayhead(true)}
+      function flushPlayhead(eventFlush){if(!PLAY.key||!shows[PLAY.key])return;var sec=Math.max(0,Math.floor(playheadSec()));if(!eventFlush&&sec<=3)return;var total=PLAY.dur||guessDur(PLAY.key,PLAY.season,PLAY.ep),list=resumeStore();if(total&&PLAY.ended&&sec>=total*0.95)sec=total;else if(total&&sec>total)sec=total;for(var i=0;i<list.length;i++){var e=list[i];if(e.key===PLAY.key&&String(e.season)===String(PLAY.season)&&Number(e.ep)===Number(PLAY.ep)){if(total&&PLAY.ended&&sec>=total*0.985){list.splice(i,1);resumeSave(list);PLAY.baseSec=0;var nxt=(typeof neighborEpisode==='function')?neighborEpisode(1):null;showToast('Marked as watched'+(nxt?(' · Up next: S'+nxt.season+' E'+nxt.ep):''));renderContinueWatching();return}if(!eventFlush&&Math.abs(sec-(e.sec||0))<2)return;e.sec=sec;/* durReal: player ne khud duration bheji (guess nahi) — Continue
+             Watching ka clock sirf tab dikhta hai. */if(PLAY.dur){e.dur=PLAY.dur;e.durReal=PLAY.durReal?1:0}else if(total&&!e.dur){e.dur=total;e.durReal=0}e.at=Date.now();resumeSave(list);renderContinueWatching();return}}}
       document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'){rebasePlayhead(true);flushPlayhead(true)}else if(PLAY.key)PLAY.baseStamp=Date.now()},false);
       window.addEventListener('blur',function(){setTimeout(function(){if(!PLAY.key||document.activeElement===serverFrame)return;winBlurred=true;rebasePlayhead(true);flushPlayhead(false)},80)},false);
       window.addEventListener('focus',function(){if(winBlurred){winBlurred=false;if(PLAY.key)PLAY.baseStamp=Date.now()}},false);
@@ -1516,7 +1526,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var hit=sniffTimeEvent(ev&&ev.data);if(hit)setPlayheadFromEvent(hit.t,hit.dur)},false);
       setInterval(function(){if(PLAY.key&&playClockRunning())flushPlayhead(false)},5000);
       function seekIfPending(tk){var s=Math.floor(pendingResumeSec||0);pendingResumeSec=0;if(!s||s<5)return;resumeToast('Resuming at '+fmtClock(s));if(PLAY.key){PLAY.baseSec=s;PLAY.baseStamp=Date.now()}var msgs=[{type:'seek',seconds:s},{type:'seek',time:s},{event:'seek',time:s},{command:'seek',time:s},{action:'seek',time:s},{type:'PLAYER_COMMAND',data:{command:'seek',time:s}},{type:'media-seek',currentTime:s}];[400,1500,3500,7000,12000].forEach(function(dly){setTimeout(function(){if(tk!==loadToken)return;if(!serverFrame||!serverFrame.contentWindow)return;for(var i=0;i<msgs.length;i++){try{serverFrame.contentWindow.postMessage(msgs[i],'*')}catch(err){}}try{serverFrame.contentWindow.postMessage(JSON.stringify({event:'seek',time:s}),'*')}catch(err2){}},dly)})}
-      function recordProgress(){var st=playState;if(!st||!shows[st.key]||!serverUrl(PLAYER_DEFAULT_SERVER))return;var prior=null,list=resumeStore().filter(function(e){if(e.key===st.key)prior=e;return e.key!==st.key}),keep=(prior&&String(prior.season)===String(st.season)&&Number(prior.ep)===Number(st.ep))?prior:null,sec=keep&&keep.sec?Math.floor(keep.sec):0;list.unshift({key:st.key,season:String(st.season),ep:st.ep,at:Date.now(),sec:keep&&keep.sec?Math.floor(keep.sec):0,dur:keep&&keep.dur?Math.floor(keep.dur):0});resumeSave(list);PLAY.key=st.key;PLAY.season=String(st.season);PLAY.ep=st.ep;PLAY.baseSec=sec;PLAY.baseStamp=Date.now();PLAY.dur=keep&&keep.dur?Math.floor(keep.dur):guessDur(st.key,st.season,st.ep);PLAY.ended=false;PLAY.paused=false;if(sec>=5&&!pendingResumeSec)pendingResumeSec=sec;renderContinueWatching()}
+      function recordProgress(){var st=playState;if(!st||!shows[st.key]||!serverUrl(PLAYER_DEFAULT_SERVER))return;var prior=null,list=resumeStore().filter(function(e){if(e.key===st.key)prior=e;return e.key!==st.key}),keep=(prior&&String(prior.season)===String(st.season)&&Number(prior.ep)===Number(st.ep))?prior:null,sec=keep&&keep.sec?Math.floor(keep.sec):0;list.unshift({key:st.key,season:String(st.season),ep:st.ep,at:Date.now(),sec:keep&&keep.sec?Math.floor(keep.sec):0,dur:keep&&keep.dur?Math.floor(keep.dur):0,durReal:keep&&keep.durReal?1:0});resumeSave(list);PLAY.key=st.key;PLAY.season=String(st.season);PLAY.ep=st.ep;PLAY.baseSec=sec;PLAY.baseStamp=Date.now();PLAY.dur=keep&&keep.dur?Math.floor(keep.dur):guessDur(st.key,st.season,st.ep);PLAY.durReal=!!(keep&&keep.durReal);PLAY.ended=false;PLAY.paused=false;if(sec>=5&&!pendingResumeSec)pendingResumeSec=sec;renderContinueWatching()}
       function renderContinueWatching(){
         var sec=byId('continueWatching'),grid=byId('continueGrid');
         if(!sec||!grid)return;
@@ -1533,7 +1543,11 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
           /* Owner: "fake timing mat dikhana". Clock sirf tab dikhta hai jab
              player ne sach me currentTime + duration diye (sec>=10, dur>sec).
              Purana "12 min left / just now" andaza hata diya. */
-          var t=Math.floor(e.sec||0),dur=Math.floor(e.dur||0),clock='';
+          /* Owner: "agar exact timing na mile to timing mat likho". e.durReal
+             sirf tab set hota hai jab player ne khud duration bheji ho; warna
+             guessDur() ka andaza hota hai — us par clock/progress dikhana jhoot
+             hoga, isliye dono chhup jaate hain. */
+          var t=Math.floor(e.sec||0),dur=(e.durReal?Math.floor(e.dur||0):0),clock='';
           if(t>=10&&dur>t)clock=fmtClock(t)+' / '+fmtClock(dur);
           var pct=(t>0&&dur>0)?Math.max(2,Math.min(100,Math.round(t/dur*100))):0;
           html+='<article class="continue-card" data-continue-card data-resume-index="'+i+'">'
@@ -1652,7 +1666,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function nextFloatShow(){if(!pageAlive()||!nextFloat)return;if(!nextFloatEligible()){nextFloatHide();return}nextFloatProbe(false);setHidden(nextFloat,false);addClass(nextFloat,'show');nextFloat.setAttribute('aria-hidden','false');if(nextFloatTimer)clearTimeout(nextFloatTimer);nextFloatTimer=setTimeout(nextFloatHide,NEXT_IDLE_MS)}
       /* Episode badla / player (re)load hua to label aur availability refresh. */
       function nextFloatRefresh(){if(!pageAlive()||!nextFloat)return;var nxt=nextFloatTarget(),ok=!!(TS_MODE&&stageInjected&&playerShell&&!playerShell.hidden&&nxt);setHidden(nextFloat,!ok);if(!ok){nextFloatProbe(false);nextFloatHide();return}if(nextFloatLabel)nextFloatLabel.textContent='Next · E'+nxt.ep}
-      function goNextEpisode(){var st=playState,nxt=nextFloatTarget();if(!st||!nxt){showToast((st&&isMovieKey(st.key))?'Movie hai — agla episode nahi':'Last episode hai — agla episode nahi');return false}/* Episode khatam maan ke Continue Watching se hata do, warna wahi episode 99% par pada rehta hai. */PLAY.ended=true;rebasePlayhead();flushPlayhead(true);st.season=String(nxt.season);st.ep=nxt.ep;showToast('Next episode · S'+nxt.season+' E'+nxt.ep);reloadAfterEpisodeChange();return true}
+      function goNextEpisode(){var st=playState,nxt=nextFloatTarget();if(!st||!nxt){showToast((st&&isMovieKey(st.key))?'Movies have no next episode':'That was the last episode');return false}/* Episode khatam maan ke Continue Watching se hata do, warna wahi episode 99% par pada rehta hai. */PLAY.ended=true;rebasePlayhead();flushPlayhead(true);st.season=String(nxt.season);st.ep=nxt.ep;showToast('Next episode · S'+nxt.season+' E'+nxt.ep);reloadAfterEpisodeChange();return true}
       /* Episode badalne par wahi source chalta rahe: ToonStream par the to usi
          slot (S1/S2/S3) par agla episode, warna Nxsha. */
       function reloadAfterEpisodeChange(){nextFloatRefresh();if(TS_MODE){syncPlayerHeading();recordProgress();var tries=0;(function kick(){if(TS.loading){if(tries++<40)setTimeout(kick,500);return}try{playToonstream({server:tsActiveIndex})}catch(e){loadServer(activeServer)}})()}else{loadServer(activeServer)}}
@@ -1801,16 +1815,16 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
             disarmWatchdog();tsInject(pickSlot()||embed);showToast('ToonStream player');
           }else if(body&&body.ok&&(body.episodeUrl||body.movieUrl)){
             setHidden(frameLoader,true);
-            if(!tsFallback('ToonStream par embed nahi, Nxsha server 2 chalu')){
-              showToast('Embed nahi mila - ToonStream page khul raha hai');tsOpenPage(body.episodeUrl||body.movieUrl);
+            if(!tsFallback('No ToonStream embed — switching to Nxsha (server 2)')){
+              showToast('No embed found — opening the ToonStream page');tsOpenPage(body.episodeUrl||body.movieUrl);
             }
           }else{
             setHidden(frameLoader,true);
-            if(!tsFallback('ToonStream par nahi mila, Nxsha server 2 chalu'))showToast('ToonStream: '+((body&&body.error)||'episode nahi mila'));
+            if(!tsFallback('Not on ToonStream — switching to Nxsha (server 2)'))showToast('ToonStream: '+((body&&body.error)||'episode not found'));
           }
         }catch(e){
           setHidden(frameLoader,true);
-          if(!tsFallback('ToonStream resolve fail, Nxsha server 2 chalu'))showToast('ToonStream resolve fail hua');
+          if(!tsFallback('ToonStream lookup failed — switching to Nxsha (server 2)'))showToast('ToonStream lookup failed');
         }
         TS.loading=false;
       }
@@ -1883,11 +1897,11 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var raw=String((data&&(data.message||data.msg||data.error_description||data.error))||'');
         if(/SIGN_IN_REQUIRED|JWT expired|invalid claim|invalid JWT/i.test(raw))return 'SIGN_IN_REQUIRED';
         if(status===401||status===403)return 'SIGN_IN_REQUIRED';
-        if(/COMMENT_TOO_SHORT/i.test(raw))return 'Comment bahut chhota hai.';
-        if(/COMMENT_TOO_LONG/i.test(raw))return 'Comment 1200 characters se lamba hai.';
-        if(/PARENT_NOT_FOUND/i.test(raw))return 'Jis comment ka reply kar rahe the wo delete ho gaya.';
+        if(/COMMENT_TOO_SHORT/i.test(raw))return 'Comment is too short.';
+        if(/COMMENT_TOO_LONG/i.test(raw))return 'Comment is longer than 1200 characters.';
+        if(/PARENT_NOT_FOUND/i.test(raw))return 'The comment you were replying to was deleted.';
         if(/COMMENT_NOT_FOUND/i.test(raw))return 'Comment delete ho chuka hai.';
-        return raw||('Request fail hua (HTTP '+status+')');
+        return raw||('Request failed (HTTP '+status+')');
       }
 
       async function crHttp(path,opts){
@@ -1912,7 +1926,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var res=await fetch(CR_SB.url+path,{method:'POST',headers:{apikey:CR_SB.key,'Content-Type':'application/json'},body:JSON.stringify(body||{})});
         var data=null;
         try{data=await res.json()}catch(e){}
-        if(!res.ok)throw new Error(String((data&&(data.msg||data.error_description||data.message||data.error))||'Sign in fail hua'));
+        if(!res.ok)throw new Error(String((data&&(data.msg||data.error_description||data.message||data.error))||'Sign in failed'));
         return data;
       }
 
@@ -1972,7 +1986,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var input=byId('crInput'),post=byId('crPost'),hint=byId('crHint');
         var len=input?String(input.value||'').trim().length:0;
         if(post)post.disabled=CR.busy||len<2||len>1200;
-        if(hint)hint.textContent=len>1200?'1200 characters se zyada ho gaya.':'';
+        if(hint)hint.textContent=len>1200?'That is over 1200 characters.':'';
       }
 
       function crItemHtml(c,isReply){
@@ -1993,9 +2007,9 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function crRender(){
         var list=byId('crList');
         if(!list)return;
-        if(CR.loading){list.innerHTML='<div class="cr-empty"><span class="cr-spin"></span>Comments load ho rahe hain…</div>';return}
+        if(CR.loading){list.innerHTML='<div class="cr-empty"><span class="cr-spin"></span>Loading comments…</div>';return}
         if(CR.error){list.innerHTML='<div class="cr-empty">'+escapeHtml(CR.error)+'</div>';return}
-        if(!CR.items.length){list.innerHTML='<div class="cr-empty">Abhi koi comment nahi hai.<br>Pehla comment tumhara ho sakta hai 👀</div>';return}
+        if(!CR.items.length){list.innerHTML='<div class="cr-empty">No comments yet.<br>Be the first to comment 👀</div>';return}
         /* Reply ko parent ke neeche hi dikhana hai — isliye roots aur children
            alag karke render karte hain (server se flat list aati hai). */
         var roots=[],kids={},byIdMap={};
@@ -2025,7 +2039,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
           if(!CR.open)return;
           CR.items=Array.isArray(rows)?rows:[];
         }catch(e){
-          CR.items=[];CR.error=(String(e&&e.message)===('SIGN_IN_REQUIRED'))?'Comments dekhne ke liye dobara sign in karo.':'Comments load nahi ho paaye. Connection check karke dobara try karo.';
+          CR.items=[];CR.error=(String(e&&e.message)===('SIGN_IN_REQUIRED'))?'Sign in again to view comments.':'Comments could not load. Check your connection and try again.';
         }
         CR.loading=false;crRender();crPaintCount();
       }
@@ -2047,7 +2061,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       }
 
       async function crVote(id,value){
-        if(!crUser()){showToast('Vote karne ke liye sign in karo');crOpenAuth('signin');return}
+        if(!crUser()){showToast('Sign in to vote');crOpenAuth('signin');return}
         try{
           var rows=await crRpc('cr_vote_comment',{p_comment_id:id,p_value:value});
           var row=Array.isArray(rows)?rows[0]:rows;
@@ -2061,20 +2075,20 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
           crRender();
         }catch(e){
           if(String(e&&e.message)==='SIGN_IN_REQUIRED'){crClearSession();crOpenAuth('signin');return}
-          showToast('Vote save nahi hua');
+          showToast('Your vote was not saved');
         }
       }
 
       async function crDelete(id){
         if(!crUser())return;
         var ok=true;
-        try{ok=window.confirm('Apna comment delete karna hai?')}catch(e){ok=true}
+        try{ok=window.confirm('Delete your comment?')}catch(e){ok=true}
         if(!ok)return;
         try{
           await crHttp('/rest/v1/cr_comments?id=eq.'+encodeURIComponent(id),{method:'DELETE'});
           CR.items=CR.items.filter(function(c){return String(c.id)!==String(id)&&String(c.parent_id||'')!==String(id)});
-          crRender();crPaintCount();crRefreshCount();showToast('Comment delete ho gaya');
-        }catch(e){showToast('Delete nahi hua')}
+          crRender();crPaintCount();crRefreshCount();showToast('Comment deleted');
+        }catch(e){showToast('Delete failed')}
       }
 
       async function crSubmit(){
@@ -2082,8 +2096,8 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         if(!crUser()){crOpenAuth('signin');return}
         var input=byId('crInput'),post=byId('crPost');
         var body=String(input?input.value:'').trim();
-        if(body.length<2){showToast('Comment bahut chhota hai');return}
-        if(body.length>1200){showToast('Comment 1200 characters se lamba hai');return}
+        if(body.length<2){showToast('Comment is too short');return}
+        if(body.length>1200){showToast('Comment is longer than 1200 characters');return}
         var ep=crEpisode();
         CR.busy=true;crSyncPostState();
         if(post)post.textContent='Posting…';
@@ -2092,11 +2106,11 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
           if(input)input.value='';
           CR.reply=null;crPaintReply();
           await crLoad();await crRefreshCount();
-          showToast('Comment post ho gaya');
+          showToast('Comment posted');
         }catch(e){
           var msg=String(e&&e.message||e);
-          if(msg==='SIGN_IN_REQUIRED'){crClearSession();showToast('Session expire ho gaya — dobara sign in karo');crOpenAuth('signin')}
-          else showToast(msg||'Comment save nahi hua');
+          if(msg==='SIGN_IN_REQUIRED'){crClearSession();showToast('Session expired — please sign in again');crOpenAuth('signin')}
+          else showToast(msg||'Comment was not saved');
         }
         CR.busy=false;crSyncPostState();
         if(post)post.textContent='Post';
@@ -2112,7 +2126,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         setHidden(byId('crNameField'),signedIn||CR_AUTH_MODE!=='signup');
         var title=byId('crAuthTitle'),sub=byId('crAuthSub'),submit=byId('crAuthSubmit'),err=byId('crAuthError');
         if(title)title.textContent=signedIn?'Your account':(CR_AUTH_MODE==='signup'?'Create your account':'Welcome back');
-        if(sub)sub.textContent=signedIn?'Yahin se sign out kar sakte ho. Tumhare comments Supabase me safe hain.':(CR_AUTH_MODE==='signup'?'Naya account banao — display name comment par dikhega.':'Wahi email/password daalo jo account banate waqt use kiya tha.');
+        if(sub)sub.textContent=signedIn?'You can sign out here. Your comments are saved in Supabase.':(CR_AUTH_MODE==='signup'?'Create an account — your display name appears on your comments.':'Use the email and password you signed up with.');
         if(submit)submit.textContent=CR_AUTH_MODE==='signup'?'Create account':'Sign in';
         if(err)err.textContent='';
         var accName=byId('crAccountName');if(accName)accName.textContent=(crUser()&&(crUser().email||crName()))||'';
@@ -2138,14 +2152,14 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var name=String((byId('crDisplayName')||{}).value||'').trim();
         var err=byId('crAuthError'),submit=byId('crAuthSubmit');
         if(err)err.textContent='';
-        if(!email||email.indexOf('@')<1){if(err)err.textContent='Sahi email daalo.';return}
-        if(password.length<6){if(err)err.textContent='Password kam se kam 6 characters ka hona chahiye.';return}
-        if(submit){submit.disabled=true;submit.textContent=CR_AUTH_MODE==='signup'?'Banaya ja raha hai…':'Sign in ho raha hai…'}
+        if(!email||email.indexOf('@')<1){if(err)err.textContent='Enter a valid email address.';return}
+        if(password.length<6){if(err)err.textContent='Password must be at least 6 characters.';return}
+        if(submit){submit.disabled=true;submit.textContent=CR_AUTH_MODE==='signup'?'Creating account…':'Signing in…'}
         try{
           var data;
           if(CR_AUTH_MODE==='signup'){
             data=await crAuthCall('/auth/v1/signup',{email:email,password:password,data:{display_name:name||email.split('@')[0]}});
-            if(!data||!data.access_token)throw new Error('Email confirm karna padega — mail box check karo.');
+            if(!data||!data.access_token)throw new Error('Please confirm your email first — check your inbox.');
           }else{
             data=await crAuthCall('/auth/v1/token?grant_type=password',{email:email,password:password});
           }
@@ -2158,7 +2172,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         }catch(e){
           var text=String(e&&e.message||e);
           if(/Invalid login credentials/i.test(text))text='Email ya password galat hai.';
-          else if(/already registered/i.test(text))text='Ye email pehle se registered hai — Sign in tab use karo.';
+          else if(/already registered/i.test(text))text='This email is already registered — use the Sign in tab.';
           if(err)err.textContent=text;
         }
         if(submit){submit.disabled=false;submit.textContent=CR_AUTH_MODE==='signup'?'Create account':'Sign in'}
@@ -2168,7 +2182,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var token=crSession&&crSession.access_token;
         crClearSession();crCloseAuth();
         if(token)try{await fetch(CR_SB.url+'/auth/v1/logout',{method:'POST',headers:{apikey:CR_SB.key,Authorization:'Bearer '+token}})}catch(e){}
-        showToast('Sign out ho gaya');
+        showToast('Signed out');
         CR.items=[];crRender();
         if(CR.open)crLoad();
         crRefreshCount();
@@ -2234,9 +2248,9 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       async function crLoadReaction(){var sc=crReactionScope();if(!sc.key)return;try{crApplyReaction(await crRpc('cr_reaction_counts',{p_show_key:sc.key,p_season:sc.season,p_episode:sc.episode}))}catch(e){/* offline: counts 0 hi rahenge, page block nahi hota */}}
       async function crToggleReaction(value){
         var sc=crReactionScope();if(!sc.key)return;
-        if(!crUser()){showToast('Like save karne ke liye sign in karo');crOpenAuth('signin');return}
+        if(!crUser()){showToast('Sign in to save your like');crOpenAuth('signin');return}
         try{crApplyReaction(await crRpc('cr_toggle_reaction',{p_show_key:sc.key,p_season:sc.season,p_episode:sc.episode,p_value:value}))}
-        catch(e){var msg=String(e&&e.message||e);if(msg==='SIGN_IN_REQUIRED'){crClearSession();crOpenAuth('signin');return}showToast('Like save nahi hua')}
+        catch(e){var msg=String(e&&e.message||e);if(msg==='SIGN_IN_REQUIRED'){crClearSession();crOpenAuth('signin');return}showToast('Your like was not saved')}
       }
 
       /* ================= SHARE =================
@@ -2263,8 +2277,8 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         var label=t.movie?t.title:(t.title+' — S'+t.season+' E'+t.episode);
         if(navigator.share){try{navigator.share({title:label,text:label,url:url}).then(function(){},function(){});return}catch(e){}}
         crCopyText(url).then(function(ok){
-          if(ok){showToast('Link copy ho gaya — '+label);return}
-          showToast('Link copy nahi hua, address bar se copy karo');
+          if(ok){showToast('Link copied — '+label);return}
+          showToast('Could not copy the link — copy it from the address bar');
         });
       }
       /* Shared link (app URL par ?show=aot&s=1&e=3) seedha wahi episode kholta hai. */

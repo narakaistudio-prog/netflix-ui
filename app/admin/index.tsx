@@ -167,13 +167,13 @@ export default function AdminScreen() {
             if (genUseManual) {
                 const s = parseInt(genManualSeason, 10);
                 const c = parseInt(genManualCount, 10);
-                if (!s || !c || s < 1 || c < 1) throw new Error('Season/Count positive integers hone chahiye');
+                if (!s || !c || s < 1 || c < 1) throw new Error('Season and count must be positive integers');
                 const r = await generateEpisodes(undefined, { season: s, episodeCount: c });
                 setGenResults(r);
             } else {
-                if (!genTmdb.trim()) throw new Error('TMDB ID daalo ya Manual mode use karo');
+                if (!genTmdb.trim()) throw new Error('Enter a TMDB ID or use Manual mode');
                 const r = await generateEpisodes(genTmdb.trim(), null);
-                if (!r.length) throw new Error('Koi episodes nahi mile — TMDB ID sahi hai?');
+                if (!r.length) throw new Error('No episodes found — is the TMDB ID correct?');
                 setGenResults(r);
             }
         } catch (e: any) {
@@ -296,7 +296,7 @@ export default function AdminScreen() {
                         style={styles.input}
                         value={settings.nhdApiKey}
                         onChangeText={v => patch({ nhdApiKey: v })}
-                        placeholder="Sirf paid/JSON endpoints ke liye (embed ke liye zaruri nahi)"
+                        placeholder="Only for paid/JSON endpoints (not needed for embeds)"
                         placeholderTextColor="#666"
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -307,14 +307,14 @@ export default function AdminScreen() {
                 {/* -------- Server 2: M2Box -------- */}
                 <Section title="Server 2 — M2Box (MovieBox)">
                     <Hint>
-                        MovieBox ka koi official embed nahi hota. Isliye uska poora watch page ek
-                        frame me khol kar sirf player + episode list bacha kar dikhaya jata hai
-                        (logo, menu, sidebar, title sab kata hua). Catalog ke {movieboxCatalogSize()}{' '}
-                        titles ke MovieBox links pehle se baked hain (roz ka harvester), isliye
-                        player me server pill se M2Box seedha chal jata hai — kuch paste nahi karna.
-                        Jo title bake nahi hua uske liye panel link maangta hai. Kisi link ko
-                        permanent override karna ho to{' '}
-                        {'data/moviebox-pins.json'} me daal do.
+                        MovieBox has no official embed. So its full watch page is opened in a
+                        frame and cropped down to just the player + episode list
+                        (logo, menu, sidebar and title are all trimmed). MovieBox links for{' '}
+                        {movieboxCatalogSize()} catalog titles are baked in (daily harvester), so
+                        M2Box plays straight from the server pill inside the player — no pasting.
+                        Titles that are not baked yet get the link panel. To permanently override
+                        any link, add it to{' '}
+                        {'data/moviebox-pins.json'}.
                     </Hint>
                     <View style={styles.row}>
                         <Pressable

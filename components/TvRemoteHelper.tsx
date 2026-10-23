@@ -105,7 +105,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                             >
                                 <Ionicons name={isTvMode ? 'checkmark-circle' : 'tv-outline'} size={20} color="#fff" />
                                 <Text style={styles.primaryBtnText}>
-                                    {isTvMode ? 'TV Mode ON — Netflix TV app jaisa' : 'TV Mode ON karein'}
+                                    {isTvMode ? 'TV Mode ON — like the Netflix TV app' : 'Turn TV Mode on'}
                                 </Text>
                             </Pressable>
 
@@ -113,29 +113,28 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                             <View style={styles.tipBox}>
                                 <View style={styles.tipTitleRow}>
                                     <Ionicons name="bulb-outline" size={22} color="#f5c518" />
-                                    <Text style={styles.tipHeading}>TV ka mouse arrow? Koi setting badalne ki zaroorat nahi</Text>
+                                    <Text style={styles.tipHeading}>Mouse arrow on your TV? No settings change needed</Text>
                                 </View>
                                 <Text style={styles.tipText}>
-                                    <Text style={styles.bold}>Kaam kaise karta hai: </Text>
-                                    Chahe TV ka D-pad apna on-screen arrow chalaye ya seedhe arrow keys bheje — dono me site chalti
-                                    hai. Jab TV ka arrow chalta hai, hamara <Text style={styles.bold}>white ring</Text> usi card par
-                                    chala jaata hai, row apne aap scroll hoti hai, aur <Text style={styles.bold}>OK</Text> dabane par
-                                    wahi title khulta hai.
+                                    <Text style={styles.bold}>How it works: </Text>
+                                    Whether the TV's D-pad drives its own on-screen arrow or sends raw arrow keys, the site handles
+                                    both. When the TV arrow moves, our <Text style={styles.bold}>white ring</Text> follows it to the same
+                                    card, the row scrolls by itself, and pressing <Text style={styles.bold}>OK</Text> opens that title.
                                 </Text>
                                 <Text style={styles.tipText}>
-                                    <Text style={styles.bold}>Screen ke kinare: </Text>
-                                    arrow ko screen ke top ya bottom kinare par le jaayein — shelf apne aap scroll hogi (pehle
-                                    yahi kaam nahi karta tha).
+                                    <Text style={styles.bold}>Screen edges: </Text>
+                                    move the arrow to the top or bottom edge of the screen — the shelf scrolls by itself (this
+                                    did not work before).
                                 </Text>
                                 <Text style={styles.tipText}>
-                                    <Text style={styles.bold}>TV ka arrow dikhta rehta hai: </Text>
-                                    woh TV browser khud draw karta hai, website use hataa nahi sakti — par hamara highlight uske
-                                    saath chalta hai, isliye remote kabhi dead nahi hota. Koi TV setting badalne ki zaroorat nahi.
+                                    <Text style={styles.bold}>The TV arrow stays visible: </Text>
+                                    the TV browser draws it itself and a website cannot remove it — but our highlight follows
+                                    it, so the remote never goes dead. No TV setting needs changing.
                                 </Text>
                             </View>
 
                             {/* Manual remote-style override */}
-                            <Text style={styles.sectionHeader}>Mera remote kaise chalta hai?</Text>
+                            <Text style={styles.sectionHeader}>How does my remote work?</Text>
                             <View style={styles.modeRow}>
                                 <Pressable
                                     onPress={() => setPointerPreference('auto')}
@@ -150,7 +149,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     ]}
                                 >
                                     <Text style={styles.modeTitle}>Auto detect (recommended)</Text>
-                                    <Text style={styles.modeDesc}>Site khud pehchaan leti hai</Text>
+                                    <Text style={styles.modeDesc}>Detected automatically</Text>
                                 </Pressable>
 
                                 <Pressable
@@ -166,7 +165,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     ]}
                                 >
                                     <Text style={styles.modeTitle}>Pointer arrow</Text>
-                                    <Text style={styles.modeDesc}>Remote ek mouse arrow chalata hai</Text>
+                                    <Text style={styles.modeDesc}>The remote drives a mouse arrow</Text>
                                 </Pressable>
 
                                 <Pressable
@@ -182,12 +181,12 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     ]}
                                 >
                                     <Text style={styles.modeTitle}>Arrow keys</Text>
-                                    <Text style={styles.modeDesc}>Remote seedhe arrow keys bhejta hai</Text>
+                                    <Text style={styles.modeDesc}>The remote sends arrow keys directly</Text>
                                 </Pressable>
                             </View>
                             <Text style={styles.modeHint}>
-                                Agar up/down kaam na kare to <Text style={styles.bold}>Pointer arrow</Text> chun lein — TV ka arrow
-                                chalu hote hi highlight usko follow karega. Filhaal: {pointerPreference}
+                                If up/down does not respond, pick <Text style={styles.bold}>Pointer arrow</Text> — the highlight
+                                follows the TV arrow as soon as it moves. Currently: {pointerPreference}
                             </Text>
 
                             {/* Remote buttons legend */}
@@ -199,7 +198,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     </View>
                                     <View style={styles.controlTextCol}>
                                         <Text style={styles.controlTitle}>D-Pad</Text>
-                                        <Text style={styles.controlDesc}>Rows aur cards ke beech move karein</Text>
+                                        <Text style={styles.controlDesc}>Move between rows and cards</Text>
                                     </View>
                                 </View>
 
@@ -209,7 +208,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     </View>
                                     <View style={styles.controlTextCol}>
                                         <Text style={styles.controlTitle}>Select / Play</Text>
-                                        <Text style={styles.controlDesc}>Highlighted title kholein ya video play karein</Text>
+                                        <Text style={styles.controlDesc}>Open the highlighted title or play the video</Text>
                                     </View>
                                 </View>
 
@@ -219,7 +218,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     </View>
                                     <View style={styles.controlTextCol}>
                                         <Text style={styles.controlTitle}>Back</Text>
-                                        <Text style={styles.controlDesc}>Player / detail band karke wapas jayein</Text>
+                                        <Text style={styles.controlDesc}>Close the player / details and go back</Text>
                                     </View>
                                 </View>
 
@@ -229,7 +228,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     </View>
                                     <View style={styles.controlTextCol}>
                                         <Text style={styles.controlTitle}>Media Keys</Text>
-                                        <Text style={styles.controlDesc}>Video pause ya resume karein</Text>
+                                        <Text style={styles.controlDesc}>Pause or resume the video</Text>
                                     </View>
                                 </View>
                             </View>
@@ -245,7 +244,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                             >
                                 <Ionicons name="pulse-outline" size={16} color="#8ab4f8" />
                                 <Text style={styles.diagToggleText}>
-                                    {showDiagnostics ? 'Input diagnostics band karein' : 'Mere TV se kya aa raha hai? (diagnostics)'}
+                                    {showDiagnostics ? 'Hide input diagnostics' : 'What is my TV sending? (diagnostics)'}
                                 </Text>
                             </Pressable>
 
@@ -257,8 +256,8 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                     <Text style={styles.diagLine}>TV Mode: {String(isTvMode)}</Text>
                                     <Text style={styles.diagLine}>Remote style setting: {pointerPreference}</Text>
                                     <Text style={styles.diagHint}>
-                                        Remote par koi bhi arrow dabayein — yahan 'keys' ya 'pointer' turant badlega.
-                                        Kuch na badle to upar 'Pointer arrow' chun lein.
+                                        Press any arrow key on the remote — 'keys' or 'pointer' updates here instantly.
+                                        If nothing changes, pick 'Pointer arrow' above.
                                     </Text>
                                 </View>
                             )}
@@ -271,7 +270,7 @@ export function TvRemoteHelper({ isOpen: controlledIsOpen, onClose }: Props) {
                                 {...tv({ tvFocusable: 'true', tvRow: 'tv-modal', tvIndex: '8' })}
                                 style={({ hovered }: any) => [styles.darkBtn, hovered && { backgroundColor: '#2a2a2a' }]}
                             >
-                                <Text style={styles.darkBtnText}>Ho gaya, browse karein</Text>
+                                <Text style={styles.darkBtnText}>Done, go browse</Text>
                             </Pressable>
                         </View>
                     </ScrollView>
