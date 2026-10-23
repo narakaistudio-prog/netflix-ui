@@ -11,6 +11,12 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
+import {
+    buildSeekFrameUrl,
+    isMovieboxSeekMessage,
+    isMovieboxSeekOff,
+    markMovieboxSeekOff,
+} from '@/lib/movieboxSeek';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import { resolveMovieboxLive } from '@/lib/movieboxResolve';
 
@@ -119,6 +125,12 @@ export function MovieboxPagePlayer({
 }: MovieboxPagePlayerProps) {
     const [link, setLink] = useState<string | null>(null);
     const [proxy, setProxy] = useState(false);
+    /**
+     * Phone par ±10s wala rasta kabhi fail hua? (is session me)
+     * `no-media` message aane par `true` — phir seedha frame (bina proxy) hi
+     * khulta hai, taaki proxy na chalne ki soorat me phone par player band na ho.
+     */
+    const [seekFrameOff, setSeekFrameOff] = useState(false);
     const [loading, setLoading] = useState(false);
     /** Page khulte waqt ka kaala parda (site ka shell na dikhe). */
     const [covered, setCovered] = useState(false);
@@ -162,6 +174,36 @@ export function MovieboxPagePlayer({
     useEffect(() => {
         setEpisodeOverride(null);
     }, [linkKey, episode]);
+
+    /**
+     * Frame se khabar: `media` (video mil gaya → ±10s live), `no-media`
+     * (11s tak video nahi) ya `stalled` (video mila par stream nahi chali).
+     * Aakhri do ka matlab ek hi — proxy ka rasta is device par kaam nahi kar
+     * raha — isliye turant seedha frame kholte hain, warna phone par kaala
+     * dabba (ya ruka hua player) hi reh jata.
+     */
+    useEffect(() => {
+        if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+        if (typeof window.addEventListener !== 'function') return;
+        const onMessage = (event: MessageEvent) => {
+            const data = event?.data;
+            if (!isMovieboxSeekMessage(data)) return;
+            if (data.type === 'no-media' || data.type === 'stalled') {
+                markMovieboxSeekOff();
+                setSeekFrameOff(true);
+                setLoading(true);
+                setTimedOut(false);
+            }
+        };
+        window.addEventListener('message', onMessage);
+        return () => window.removeEventListener('message', onMessage);
+    }, []);
+
+    /** Pehle hi pata ho (is session me fail hua tha) to seedha frame. */
+    useEffect(() => {
+        if (seekFrameOff) return;
+        if (isMovieboxSeekOff()) setSeekFrameOff(true);
+    }, [seekFrameOff]);
 
     /* ---------------------------- Link ---------------------------- */
 
@@ -252,14 +294,26 @@ export function MovieboxPagePlayer({
         [searchFallback, link, title],
     );
 
+    /** Frame me search results khule hain (watch page nahi). */
+    const isSearchFrame = Boolean(searchUrl);
+
+    /**
+     * Phone par ±10s: gesture script sirf **proxy page** ke andar ja sakta hai
+     * (seedha frame cross-origin hai — uske `<video>` tak koi rasta nahi).
+     * Isliye phone par watch page default taur par proxy se khulta hai; agar
+     * wahan video na mile to `no-media` aata hai aur hum seedha frame par
+     * wapas chale jate hain (is session ke liye).
+     *
+     * Search-results frame (page mode) par ye nahi — wahan video hota hi nahi.
+     */
+    const wantsSeek = isPhone && !seekFrameOff && !isSearchFrame && Boolean(pageUrl);
+
     const frameSrc = useMemo(() => {
         if (searchUrl) return searchUrl;
         if (!pageUrl) return null;
+        if (wantsSeek) return buildSeekFrameUrl(pageUrl);
         return proxy ? buildMovieboxFrameProxyUrl(pageUrl) : pageUrl;
-    }, [pageUrl, proxy, searchUrl]);
-
-    /** Frame me search results khule hain (watch page nahi). */
-    const isSearchFrame = Boolean(searchUrl);
+    }, [pageUrl, proxy, searchUrl, wantsSeek]);
 
     /**
      * Video ka asli dabba screen par kahan hai.
@@ -764,7 +818,7 @@ export function MovieboxPagePlayer({
             ) : null}
 
             {/* Seedha frame khali aaya (frame-blocking) — proxy ka rasta do. */}
-            {frameSrc && timedOut && !proxy ? (
+            {frameSrc && timedOut && !proxy && !wantsSeek ? (
                 <View style={styles.hintBar} pointerEvents="box-none">
                     <Text style={styles.hintText}>
                         Frame khali laga? M2Box framing rok raha ho to proxy se kholo.
