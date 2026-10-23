@@ -1,0 +1,125 @@
+name: Probe JoJo on ToonStream (temporary)
+
+# TEMPORARY: JoJo's Bizarre Adventure's ToonStream layout is wrong in
+# data/toonstream-seasons.json (slug "jojos-bizarre-adventure" with seasons
+# 1:26, 2:32, 6:1), so its season list and episode guide are unusable. The
+# sandbox cannot reach toonstream.us, so this probe asks the GH runner for the
+# real series page(s) and commits the parsed shape. Delete after the fix.
+on:
+  push:
+    branches:
+      - arena/4756fb25-netflix-ui
+    paths:
+      - '.github/workflows/probe-jojo.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe the JoJo series pages
+        run: |
+          node --input-type=module -e "
+            import { writeFileSync } from 'node:fs';
+            import { parseToonSeasons, parseSeasonEpisodes, parseSeasonCards } from './scripts/lib/seasons.mjs';
+            import { _internal } from './api/toonstream.mjs';
+            const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
+            const BASE = 'https://toonstream.us';
+            const get = async (url) => {
+              try {
+                const res = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(30000) });
+                return { status: res.status, url: res.url, text: await res.text() };
+              } catch (error) {
+                return { status: 0, url, text: '', error: String(error?.message || error) };
+              }
+            };
+            const title = (html) => {
+              const m = /<title>([^<]*)<\/title>/i.exec(html || '');
+              return (m ? m[1] : '').trim();
+            };
+            const out = { ranAt: new Date().toISOString() };
+            const slugs = [
+              \"jojo's-bizarre-adventure\",
+              'jojos-bizarre-adventure',
+              'jojo-bizarre-adventure',
+              \"jojo's-bizarre-adventure-hindi-dub\",
+              \"jojo's-bizarre-adventure-dub\",
+            ];
+            out.series = {};
+            for (const slug of slugs) {
+              const page = await get(BASE + '/series/' + encodeURIComponent(slug) + '/');
+              const row = { status: page.status, finalUrl: page.url, docTitle: title(page.text), bytes: (page.text || '').length };
+              if (page.status === 200) {
+                const buttons = parseToonSeasons(page.text);
+                row.buttons = buttons;
+                const inline = parseSeasonEpisodes(page.text);
+                row.inline = { count: inline.count, first: inline.first, last: inline.last, missing: inline.missing.slice(0, 8) };
+                row.seasons = [];
+                for (const button of buttons) {
+                  const url = button.url.startsWith('http') ? button.url : BASE + button.url;
+                  const seasonPage = await get(url.endsWith('/') ? url : url + '/');
+                  const info = parseSeasonEpisodes(seasonPage.text || '');
+                  const cards = parseSeasonCards(seasonPage.text || '');
+                  row.seasons.push({
+                    n: button.n,
+                    status: seasonPage.status,
+                    count: info.count,
+                    first: info.first,
+                    last: info.last,
+                    missing: info.missing.slice(0, 8),
+                    cards: cards.size,
+                    sampleTitles: [...String(seasonPage.text || '').matchAll(/class=\"entry-title\"[^>]*>([^<]{2,80})</g)].slice(0, 3).map((m) => m[1].trim()),
+                  });
+                  if (page.text && row.seasons.length > 40) break;
+                }
+              }
+              if (page.error) row.error = page.error;
+              out.series[slug] = row;
+            }
+            const ep = await get(BASE + \"/episode/jojo's-bizarre-adventure-6x5/\");
+            out.episodePage = {
+              status: ep.status,
+              finalUrl: ep.url,
+              docTitle: title(ep.text),
+              seriesLinks: _internal.extractSeriesLinks(ep.text || '').slice(0, 8),
+            };
+            const search = await get(BASE + '/s?q=jojo');
+            out.search = {
+              status: search.status,
+              links: _internal.extractSeriesLinks(search.text || '').slice(0, 15),
+            };
+            out.nxsha = {};
+            for (const n of [1, 2, 3, 4, 5, 6]) {
+              const res = await get('https://nxsha.space/api/tv/45790/season/' + n);
+              let episodes = 0;
+              let sample = [];
+              try {
+                const body = JSON.parse(res.text);
+                episodes = Array.isArray(body.episodes) ? body.episodes.length : 0;
+                sample = (body.episodes || []).slice(0, 2).map((e) => e.name);
+              } catch {}
+              out.nxsha[n] = { status: res.status, episodes, sample };
+            }
+            writeFileSync('data/jojo-probe.json', JSON.stringify(out, null, 2) + '\n');
+          "
+      - name: Commit the probe result
+        run: |
+          git config user.name "netflix-catalog-bot"
+          git config user.email "netflix-catalog-bot@users.noreply.github.com"
+          git add data/jojo-probe.json
+          if git diff --cached --quiet; then
+            echo "No probe file."
+          else
+            git commit -m "chore: jojo probe"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi
