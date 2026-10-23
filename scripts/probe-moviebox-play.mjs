@@ -48,8 +48,6 @@ function headers(site = HOST, extra = {}) {
         'Accept-Language': 'en-US,en;q=0.9',
         'X-Client-Info': '{"timezone":"Asia/Kolkata"}',
         'X-Request-Lang': 'en',
-        'X-Play-Mode': '2',
-        'X-Client-Token': clientToken(),
         Referer: `${origin}/`,
         Origin: origin,
         ...extra,
@@ -123,6 +121,7 @@ async function main() {
     const foundText = await found.text();
     const items = j(foundText)?.data?.items || [];
     log('    status', found.status, 'items', items.length);
+    if (!items.length) log('    search body:', foundText.slice(0, 300));
     const item = items[0] || {};
     const subjectId = String(item.subjectId || '');
     const detailPath = String(item.detailPath || '');
@@ -143,7 +142,7 @@ async function main() {
             `${base}/subject/play?subjectId=${encodeURIComponent(subjectId)}` +
             `&se=1&ep=1&detailPath=${encodeURIComponent(detailPath)}&streamSignType=1`;
         log(`[A/${label}] ${url}`);
-        const res = await fetch(url, { headers: headers(site, auth) });
+        const res = await fetch(url, { headers: headers(site, { ...auth, 'X-Play-Mode': '2' }) });
         const body = await res.text();
         const json = j(body);
         log(
