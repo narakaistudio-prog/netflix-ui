@@ -21,6 +21,7 @@ jest.mock('@expo/vector-icons', () => {
 
 import { MovieboxCroppedFrame } from '../components/MovieboxCroppedFrame';
 import { MovieboxPagePlayer } from '../components/MovieboxPagePlayer';
+import { MOVIEBOX_SEEK_OFF_KEY, MOVIEBOX_SEEK_SOURCE } from '../lib/movieboxSeek';
 import {
     MOVIEBOX_STAGE_CROP_LEFT,
     MOVIEBOX_STAGE_CROP_TOP,
@@ -71,6 +72,7 @@ afterEach(() => {
     container.remove();
     rectSpy?.mockRestore();
     localStorage.clear();
+    sessionStorage.clear();
 });
 
 const frame = () => document.querySelector('iframe[data-m2box="frame"]') as HTMLIFrameElement | null;
@@ -764,5 +766,99 @@ describe('MovieboxPagePlayer (Server 2)', () => {
         const src = frame()!.getAttribute('src');
         expect(src.startsWith('/api/moviebox-frame?url=')).toBe(true);
         expect(decodeURIComponent(src.split('url=')[1])).toBe(PAGE);
+    });
+});
+
+/**
+ * Phone par ±10s (owner: "moviebox ke player mae 10 sec aage ya peeche karne ka
+ * koi tarika nhi hai … invisible chiyea koi button nhi mainly ye phone ke liyea
+ * karna").
+ *
+ * MovieBox ka player cross-origin iframe me hai — uske `<video>` tak sirf tab
+ * pahuncha ja sakta hai jab page **hamare** origin se aaye (proxy). Isliye phone
+ * par watch page proxy se khulta hai aur uske andar gesture script jaata hai.
+ * Proxy se video na mile to frame seedha (bina proxy) khul jata hai.
+ */
+describe('M2Box phone ±10s seek', () => {
+    const UA = 'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36';
+    const original = navigator.userAgent;
+
+    const setPhone = () => {
+        Object.defineProperty(navigator, 'userAgent', { configurable: true, value: UA });
+    };
+    const setDesktop = () => {
+        Object.defineProperty(navigator, 'userAgent', { configurable: true, value: original });
+    };
+
+    afterEach(() => {
+        setDesktop();
+    });
+
+    const post = (data: any) => {
+        act(() => {
+            window.dispatchEvent(new MessageEvent('message', { data }));
+        });
+    };
+
+    it('phone par watch page proxy + seek=1 se khulta hai', () => {
+        setPhone();
+        act(() => {
+            root.render(<MovieboxPagePlayer linkKey="tmdb:7:movie" initialLink={PAGE} onClose={() => {}} />);
+        });
+        const src = frame()!.getAttribute('src') || '';
+        expect(src.startsWith('/api/moviebox-frame?url=')).toBe(true);
+        expect(src.endsWith('&seek=1')).toBe(true);
+        expect(decodeURIComponent(src.split('url=')[1].split('&seek=')[0])).toBe(PAGE);
+    });
+
+    it('desktop par seedha frame hi rehta hai (kuch nahi badla)', () => {
+        setDesktop();
+        act(() => {
+            root.render(<MovieboxPagePlayer linkKey="tmdb:8:movie" initialLink={PAGE} onClose={() => {}} />);
+        });
+        expect(frame()!.getAttribute('src')).toBe(PAGE);
+    });
+
+    it('proxy se video na mile (no-media) to seedha frame + session me yaad', () => {
+        setPhone();
+        act(() => {
+            root.render(<MovieboxPagePlayer linkKey="tmdb:9:movie" initialLink={PAGE} onClose={() => {}} />);
+        });
+        expect(frame()!.getAttribute('src')).toContain('&seek=1');
+
+        post({ source: MOVIEBOX_SEEK_SOURCE, type: 'no-media' });
+        expect(frame()!.getAttribute('src')).toBe(PAGE);
+        expect(sessionStorage.getItem(MOVIEBOX_SEEK_OFF_KEY)).toBe('1');
+    });
+
+    it('doosri baar (session me fail hone ke baad) seedha frame — 11s ka intezaar nahi', () => {
+        setPhone();
+        sessionStorage.setItem(MOVIEBOX_SEEK_OFF_KEY, '1');
+        act(() => {
+            root.render(<MovieboxPagePlayer linkKey="tmdb:10:movie" initialLink={PAGE} onClose={() => {}} />);
+        });
+        expect(frame()!.getAttribute('src')).toBe(PAGE);
+    });
+
+    it('stream hi na chale (stalled) to bhi seedha frame par wapas', () => {
+        setPhone();
+        act(() => {
+            root.render(<MovieboxPagePlayer linkKey="tmdb:12:movie" initialLink={PAGE} onClose={() => {}} />);
+        });
+        expect(frame()!.getAttribute('src')).toContain('&seek=1');
+        // Video mila par CDN ne chalne hi nahi diya — gestures bekaar hain.
+        post({ source: MOVIEBOX_SEEK_SOURCE, type: 'stalled' });
+        expect(frame()!.getAttribute('src')).toBe(PAGE);
+    });
+
+    it('`media` message par kuch nahi badalta (gestures frame ke andar chal rahe hain)', () => {
+        setPhone();
+        act(() => {
+            root.render(<MovieboxPagePlayer linkKey="tmdb:11:movie" initialLink={PAGE} onClose={() => {}} />);
+        });
+        const before = frame()!.getAttribute('src');
+        post({ source: MOVIEBOX_SEEK_SOURCE, type: 'media' });
+        expect(frame()!.getAttribute('src')).toBe(before);
+        expect(sessionStorage.getItem(MOVIEBOX_SEEK_OFF_KEY)).toBeNull();
     });
 });
