@@ -2,7 +2,6 @@ import React from 'react';
 import { Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
-import { useUser } from '@/contexts/UserContext';
 import { CrunchyrollIcon } from '@/icons/Crunchyroll';
 import { isPhoneWidth, PHONE_TAB_BAR_HEIGHT, showsPhoneTabBar } from '@/lib/layout';
 
@@ -23,9 +22,9 @@ const TABS = [
 export function PhoneTabBar() {
     const router = useRouter();
     const pathname = usePathname();
-    const { selectedProfile } = useUser();
     const { width } = useWindowDimensions();
-    if (!selectedProfile || !showsPhoneTabBar(pathname, isPhoneWidth(width), Platform.OS === 'web')) return null;
+    // Guest bhi navigate kar sakta hai — account gate nahi (owner: fake profile hatao).
+    if (!showsPhoneTabBar(pathname, isPhoneWidth(width), Platform.OS === 'web')) return null;
 
     return (
         <View style={styles.bar} {...({ dataSet: { playerChrome: 'true' } } as any)}>

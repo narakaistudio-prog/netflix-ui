@@ -1,11 +1,10 @@
 import { Tabs, useRouter, usePathname } from 'expo-router';
 import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Platform, StyleSheet, Image, View, Pressable } from 'react-native';
+import { Platform, StyleSheet, Image, View, Pressable, Text } from 'react-native';
 import { impactAsync, ImpactFeedbackStyle } from '@/utils/haptics';
 import { useUser } from '@/contexts/UserContext';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
-import { ProfileBadge } from '@/components/ProfileBadge';
 import { Home } from '@/icons/Home';
 import { CrunchyrollIcon } from '@/icons/Crunchyroll';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,23 +16,32 @@ function TabIcon({ ionIcon, color }: { ionIcon: 'person' | 'home-sharp' | 'play-
   return <TabBarIcon name={ionIcon} color={color} />;
 }
 
-// Netflix profile badge component (DP-less)
+// Account tab icon — asli signed-in account ka pehla letter (fake profile nahi).
 function ProfileImage({ focused }: { focused: boolean }) {
-  const { selectedProfile } = useUser();
+  const { account, signedIn } = useUser();
+  const initial = (account?.name || account?.email || '?').trim().charAt(0).toUpperCase();
 
   return (
     <React.Fragment>
-      <ProfileBadge
-        name={selectedProfile?.name ?? '?'}
-        id={selectedProfile?.id}
-        size={24}
-        borderRadius={4}
+      <View
         style={{
-          opacity: focused ? 1 : 0.5,
+          width: 24,
+          height: 24,
+          borderRadius: 4,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: signedIn ? '#E50914' : '#3a3a3a',
+          opacity: focused ? 1 : 0.6,
           borderWidth: 2,
           borderColor: focused ? 'white' : 'transparent',
         }}
-      />
+      >
+        {signedIn ? (
+          <Text style={{ color: '#fff', fontSize: 12, fontWeight: '800' }}>{initial}</Text>
+        ) : (
+          <Ionicons name="person" size={13} color="#fff" />
+        )}
+      </View>
       <View
         style={{
           position: 'absolute',

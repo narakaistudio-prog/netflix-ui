@@ -27,7 +27,7 @@ function WebMediaWatchdog() {
     }, [pathname]);
     return null;
 }
-import {WhoIsWatching} from '@/components/WhoIsWatching';
+import {SignInDialog} from '@/components/SignInDialog';
 import {UserProvider} from '@/contexts/UserContext';
 import {useUser} from '@/contexts/UserContext';
 import useCachedResources from '@/hooks/useCachedResources';
@@ -47,7 +47,6 @@ function AnimatedStack() {
     const reserveTabBar = showsPhoneTabBar(pathname, isPhoneWidth(windowWidth), Platform.OS === 'web');
     const [isModalActive, setIsModalActive] = useState(false);
     const [canBlur, setCanBlur] = useState(false);
-    const {selectedProfile, selectProfile} = useUser();
     const colorScheme = useColorScheme();
     const animatedStyle = useAnimatedStyle(() => {
         return {
@@ -61,12 +60,9 @@ function AnimatedStack() {
     });
     const { isVisionOS } = useVisionOS();
 
-    // return <WhoIsWatching onProfileSelect={selectProfile} />;
-
-
-    if (!selectedProfile) {
-        return <WhoIsWatching onProfileSelect={selectProfile}/>;
-    }
+    // Guest bhi poora app browse kar sakta hai — pehle yahan fake "Who is
+    // watching?" gate lagta tha (owner: "fake sara profile hta do"). Sign in
+    // ab navbar ke red button se hota hai (SignInDialog, neeche render).
 
     return (
         <View style={[
@@ -111,26 +107,6 @@ function AnimatedStack() {
                         }}
                     />
                     <Stack.Screen
-                        name="switch-profile"
-                        options={{
-                            presentation: 'transparentModal',
-                            headerShown: false,
-                            contentStyle: {
-                                backgroundColor: 'transparent',
-                            },
-                        }}
-                        listeners={{
-                            focus: () => {
-                                setIsModalActive(true);
-                                setCanBlur(false);
-                            },
-                            beforeRemove: () => {
-                                setIsModalActive(false);
-                                setCanBlur(false);
-                            },
-                        }}
-                    />
-                    <Stack.Screen
                         name="search"
                         options={{
                             headerShown: false,
@@ -155,23 +131,12 @@ function AnimatedStack() {
 
                     />
 
-                    <Stack.Screen
-                        name="admin/index"
-                        options={{
-                            headerShown: false,
-                            contentStyle: {
-                                backgroundColor: '#000',
-                            },
-                        }}
-                    />
                     <Stack.Screen name="+not-found"/>
                 </Stack>
 
             </Animated.View>
 
-            {/* {!selectedProfile && (
-        <WhoIsWatching onProfileSelect={selectProfile} />
-      )} */}
+            <SignInDialog />
 
 
         </View>

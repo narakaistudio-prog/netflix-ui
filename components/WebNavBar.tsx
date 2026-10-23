@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '@/contexts/UserContext';
 import { SafeImage } from '@/components/SafeImage';
-import { ProfileBadge } from '@/components/ProfileBadge';
 import { CrunchyrollIcon } from '@/icons/Crunchyroll';
 import { TvRemoteHelper } from '@/components/TvRemoteHelper';
 import { useTvMode } from '@/hooks/useTvNavigation';
@@ -38,7 +37,8 @@ const NAV_LINKS = [
 export function WebNavBar() {
     const router = useRouter();
     const pathname = usePathname();
-    const { selectedProfile } = useUser();
+    // Owner: "fake sara profile hta do" — ab yahan sirf asli account hai.
+    const { account, signedIn, signOut, openSignIn } = useUser();
     const [scrolled, setScrolled] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -112,7 +112,8 @@ export function WebNavBar() {
 
     // Full immersion: the Crunchyroll OTT page brings its own chrome, so the
     // Netflix navbar stays hidden while it is open.
-    if (Platform.OS !== 'web' || !selectedProfile || pathname.startsWith('/crunchyroll')) return null;
+    // Guest ke liye bhi navbar dikhta hai — sign in optional hai, gate nahi.
+    if (Platform.OS !== 'web' || pathname.startsWith('/crunchyroll')) return null;
 
     const handleSearchSubmit = () => {
         const query = searchQuery.trim();
@@ -378,96 +379,89 @@ export function WebNavBar() {
                         )}
                     </View>
 
-                    {/* Profile Avatar + Dropdown */}
+                    {/* Account: signed out = Netflix-red "Sign in"; signed in = avatar + menu */}
                     <View style={styles.profileContainer}>
-                        <Pressable
-                            onPress={() => {
-                                setShowProfileMenu((prev) => !prev);
-                                setShowBellMenu(false);
-                            }}
-                            tabIndex={0}
-                            accessibilityRole="button"
-                            accessibilityLabel={`Profile ${selectedProfile.name}`}
-                            {...({
-                                dataSet: {
-                                    tvFocusable: 'true',
-                                    tvRow: 'navbar',
-                                    tvIndex: '13',
-                                },
-                            } as any)}
-                            style={styles.profileBtn}
-                        >
-                            <ProfileBadge
-                                name={selectedProfile.name}
-                                id={selectedProfile.id}
-                                size={32}
-                                borderRadius={4}
-                                style={styles.avatar}
-                            />
-                            <Ionicons
-                                name={showProfileMenu ? 'caret-up' : 'caret-down'}
-                                size={12}
-                                color="#fff"
-                            />
-                        </Pressable>
+                        {!signedIn ? (
+                            <Pressable
+                                onPress={openSignIn}
+                                tabIndex={0}
+                                accessibilityRole="button"
+                                accessibilityLabel="Sign in"
+                                {...({
+                                    dataSet: { tvFocusable: 'true', tvRow: 'navbar', tvIndex: '13' },
+                                } as any)}
+                                style={({ hovered }: any) => [styles.signInBtn, hovered && { backgroundColor: '#f6121d' }]}
+                            >
+                                <Text style={styles.signInBtnText}>Sign In</Text>
+                            </Pressable>
+                        ) : (
+                            <>
+                                <Pressable
+                                    onPress={() => {
+                                        setShowProfileMenu((prev) => !prev);
+                                        setShowBellMenu(false);
+                                    }}
+                                    tabIndex={0}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={`Account ${account?.name || account?.email || ''}`}
+                                    {...({
+                                        dataSet: { tvFocusable: 'true', tvRow: 'navbar', tvIndex: '13' },
+                                    } as any)}
+                                    style={styles.profileBtn}
+                                >
+                                    <View style={styles.accountAvatar}>
+                                        <Text style={styles.accountAvatarText}>
+                                            {(account?.name || account?.email || '?').trim().charAt(0).toUpperCase()}
+                                        </Text>
+                                    </View>
+                                    <Ionicons name={showProfileMenu ? 'caret-up' : 'caret-down'} size={12} color="#fff" />
+                                </Pressable>
 
-                        {/* Profile Dropdown Menu */}
-                        {showProfileMenu && (
-                            <View style={[styles.dropdownMenu, styles.profileDropdown]}>
-                                <View style={styles.profileHeaderRow}>
-                                    <ProfileBadge
-                                        name={selectedProfile.name}
-                                        id={selectedProfile.id}
-                                        size={28}
-                                        borderRadius={4}
-                                        style={styles.avatarSmall}
-                                    />
-                                    <Text style={styles.profileName}>{selectedProfile.name}</Text>
-                                </View>
-                                <View style={styles.menuDivider} />
-                                <Pressable
-                                    style={styles.menuItem}
-                                    onPress={() => {
-                                        setShowProfileMenu(false);
-                                        router.push('/profile');
-                                    }}
-                                >
-                                    <Ionicons name="person-outline" size={16} color="#aaa" />
-                                    <Text style={styles.menuItemText}>Account & Settings</Text>
-                                </Pressable>
-                                <Pressable
-                                    style={styles.menuItem}
-                                    onPress={() => {
-                                        setShowProfileMenu(false);
-                                        router.push('/profile');
-                                    }}
-                                >
-                                    <Ionicons name="bookmark-outline" size={16} color="#aaa" />
-                                    <Text style={styles.menuItemText}>My List</Text>
-                                </Pressable>
-                                <Pressable
-                                    style={styles.menuItem}
-                                    onPress={() => {
-                                        setShowProfileMenu(false);
-                                        router.push('/admin');
-                                    }}
-                                >
-                                    <Ionicons name="settings-outline" size={16} color="#aaa" />
-                                    <Text style={styles.menuItemText}>Admin Panel</Text>
-                                </Pressable>
-                                <View style={styles.menuDivider} />
-                                <Pressable
-                                    style={styles.menuItem}
-                                    onPress={() => {
-                                        setShowProfileMenu(false);
-                                        router.push('/profile');
-                                    }}
-                                >
-                                    <Text style={[styles.menuItemText, { color: '#e5e5e5' }]}>
-                                        Sign out of Netflix
-                                    </Text>
-                                </Pressable>
-                            </View>
+                                {showProfileMenu && (
+                                    <View style={[styles.dropdownMenu, styles.profileDropdown]}>
+                                        <View style={styles.profileHeaderRow}>
+                                            <View style={styles.accountAvatarSmall}>
+                                                <Text style={styles.accountAvatarText}>
+                                                    {(account?.name || account?.email || '?').trim().charAt(0).toUpperCase()}
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 1, minWidth: 0 }}>
+                                                <Text style={styles.profileName} numberOfLines={1}>
+                                                    {account?.name || 'Account'}
+                                                </Text>
+                                                {!!account?.email && (
+                                                    <Text style={styles.accountEmail} numberOfLines={1}>
+                                                        {account.email}
+                                                    </Text>
+                                                )}
+                                            </View>
+                                        </View>
+                                        <View style={styles.menuDivider} />
+                                        <Pressable
+                                            style={styles.menuItem}
+                                            onPress={() => {
+                                                setShowProfileMenu(false);
+                                                router.push('/profile');
+                                            }}
+                                        >
+                                            <Ionicons name="bookmark-outline" size={16} color="#aaa" />
+                                            <Text style={styles.menuItemText}>My List</Text>
+                                        </Pressable>
+                                        <View style={styles.menuDivider} />
+                                        <Pressable
+                                            style={styles.menuItem}
+                                            onPress={async () => {
+                                                setShowProfileMenu(false);
+                                                await signOut();
+                                            }}
+                                        >
+                                            <Text style={[styles.menuItemText, { color: '#e5e5e5' }]}>
+                                                Sign out of Netflix
+                                            </Text>
+                                        </Pressable>
+                                    </View>
+                                )}
+                            </>
                         )}
                     </View>
                 </View>
@@ -611,6 +605,44 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
+    },
+    signInBtn: {
+        backgroundColor: '#E50914',
+        paddingHorizontal: 18,
+        paddingVertical: 7,
+        borderRadius: 4,
+    },
+    signInBtnText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '700',
+        letterSpacing: 0.2,
+    },
+    accountAvatar: {
+        width: 32,
+        height: 32,
+        borderRadius: 4,
+        backgroundColor: '#E50914',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    accountAvatarSmall: {
+        width: 30,
+        height: 30,
+        borderRadius: 4,
+        backgroundColor: '#E50914',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    accountAvatarText: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: '800',
+    },
+    accountEmail: {
+        color: '#8f8f8f',
+        fontSize: 11,
+        marginTop: 2,
     },
     avatar: {
         width: 32,

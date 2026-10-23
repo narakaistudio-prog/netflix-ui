@@ -997,13 +997,9 @@ class SpatialNavigationManager {
         const player = document.querySelector('[data-tv-scope="player"]') as HTMLElement | null;
         if (player && this.isVisible(player)) return player;
 
-        // Modal dialog (Movie Details / switch profile / etc.)
+        // Modal dialog (movie details / sign-in dialog)
         const modal = document.querySelector('[data-tv-scope="modal"]') as HTMLElement | null;
         if (modal && this.isVisible(modal)) return modal;
-
-        // WhoIsWatching screen
-        const whoIsWatching = document.querySelector('[data-tv-scope="who-is-watching"]') as HTMLElement | null;
-        if (whoIsWatching && this.isVisible(whoIsWatching)) return whoIsWatching;
 
         return document.body;
     }

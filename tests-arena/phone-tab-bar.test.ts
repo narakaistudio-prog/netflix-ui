@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { isPhoneWidth, PHONE_MAX_WIDTH, showsPhoneTabBar } from '@/lib/layout';
 
 describe('phone layout rules', () => {
@@ -22,6 +24,8 @@ describe('phone layout rules', () => {
         // Netflix bar must not cover it.
         expect(showsPhoneTabBar('/crunchyroll', true, true)).toBe(false);
         expect(showsPhoneTabBar('/movie/netflix-genre-1', true, true)).toBe(false);
-        expect(showsPhoneTabBar('/switch-profile', true, true)).toBe(false);
+        // Fake profile switcher aur admin screen ab exist nahi karte (owner: hata do).
+        expect(existsSync(join(__dirname, '..', 'app', 'switch-profile.tsx'))).toBe(false);
+        expect(existsSync(join(__dirname, '..', 'app', 'admin', 'index.tsx'))).toBe(false);
     });
 });
