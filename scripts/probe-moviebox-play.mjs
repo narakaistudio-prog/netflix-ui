@@ -1,43 +1,36 @@
 /**
- * Probe: MovieBox (M2Box) ke stream URLs asli hain ya nahi — aur browser unhe
- * seedha chala sakta hai ya nahi.
- * ==================================================================
+ * Probe: MovieBox (M2Box) ke stream URLs — kya browser unhe seedha chala sakta
+ * hai (bina kisi proxy ke)?
+ * ========================================================================
  * Kyun: server 2 ka player cross-origin iframe hai, isliye phone par ±10s ka
- * koi rasta nahi. Agar stream URL seedha browser me chal jaye to hamara apna
- * `<video>` (aur usme invisible double-tap) possible hai — bina kisi proxy ke.
- * Ye script teen sawaalon ka jawab deta hai:
+ * koi rasta nahi. Agar stream URL seedha `<video>` me chal jaye to hamara apna
+ * player (aur usme invisible double-tap) possible hai. Ye script har rasta
+ * try karke sach batata hai:
  *
- *   1. H5 API se guest token milta hai?
- *   2. `/subject/play` streams lauta raha hai? (player domain alag hota hai)
- *   3. CDN response me `Access-Control-Allow-Origin` hai? aur bina MovieBox
- *      referer ke kya hota hai? (browser `<video>` yahi depend karta hai)
+ *   A. /subject/play player-domain par (referer mzfi.me) + X-Play-Mode
+ *   B. /subject/play h5-api par (referer moviebox.ph)
+ *   C. /detail → resourceDetectors[].resolutionList[] (Oct 2026 ke baad asli
+ *      links yahan aate hain)
+ *   D. mobile BFF: api6.aoneroom.com/wefeed-mobile-bff/subject-api/play-info
+ *   E. jo URL mile uspar CDN headers (ACAO) + referer test — browser `<video>`
+ *      ke liye decisive
  *
- * GitHub Actions par chalta hai (runner ke paas internet hai) — workflows me
- * sirf manual dispatch se. Kuch bhi save nahi karta, sirf log.
+ * GitHub Actions par chalta hai (runner ke paas internet hai), sirf manual
+ * dispatch ya draft PR par. Kuch save nahi karta.
  *
- *   node scripts/probe-moviebox-play.mjs [subjectId] [detailPath] [se] [ep]
+ *   node scripts/probe-moviebox-play.mjs --title "Avatar"
  */
 
 import { createHash } from 'node:crypto';
 
 const H5 = 'https://h5-api.aoneroom.com/wefeed-h5api-bff';
+const MOBILE = 'https://api6.aoneroom.com/wefeed-mobile-bff';
 const HOST = 'moviebox.ph';
 const UA =
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
 
-/**
- * Do tareeke:
- *   node scripts/probe-moviebox-play.mjs --title "Avatar"
- *   node scripts/probe-moviebox-play.mjs <subjectId> <detailPath> [se] [ep]
- * `--title` par pehle search hoti hai (jo title asli me stream deta hai, wahi
- * test ke liye chahiye).
- */
 const titleArg = process.argv.indexOf('--title');
-const searchTitle = titleArg > -1 ? process.argv[titleArg + 1] || 'Avatar' : '';
-const subjectId = searchTitle ? '' : process.argv[2] || '4151920426815471968';
-const detailPath = searchTitle ? '' : process.argv[3] || 'mandaadi-hindi-qxUx1r3QHW4';
-const se = process.argv[4] || '0';
-const ep = process.argv[5] || '0';
+const searchTitle = titleArg > -1 ? process.argv[titleArg + 1] || 'Avatar' : 'Avatar';
 
 const log = (...args) => console.log(...args);
 
@@ -46,15 +39,19 @@ function clientToken(now = Date.now()) {
     return `${sec},${createHash('md5').update(sec.split('').reverse().join('')).digest('hex')}`;
 }
 
-function headers(extra = {}) {
+/** `site` = kis domain ka referer/origin bhejna hai (API aur player alag hote hain). */
+function headers(site = HOST, extra = {}) {
+    const origin = `https://${site.replace(/^https?:\/\//, '').replace(/\/$/, '')}`;
     return {
         'User-Agent': UA,
         Accept: 'application/json',
         'Accept-Language': 'en-US,en;q=0.9',
         'X-Client-Info': '{"timezone":"Asia/Kolkata"}',
         'X-Request-Lang': 'en',
-        Referer: `https://${HOST}/`,
-        Origin: `https://${HOST}`,
+        'X-Play-Mode': '2',
+        'X-Client-Token': clientToken(),
+        Referer: `${origin}/`,
+        Origin: origin,
         ...extra,
     };
 }
@@ -72,137 +69,149 @@ function tokenFrom(xUser, cookies) {
     return match ? match[1] : '';
 }
 
+const j = (value) => {
+    try {
+        return JSON.parse(value);
+    } catch {
+        return null;
+    }
+};
+
+/** Kisi bhi JSON se media URLs nikaalo (streams / hls / dash / resolutionList). */
+function mediaUrls(node, out = [], depth = 0) {
+    if (!node || depth > 8) return out;
+    if (Array.isArray(node)) {
+        node.forEach((item) => mediaUrls(item, out, depth + 1));
+        return out;
+    }
+    if (typeof node !== 'object') return out;
+    for (const [key, value] of Object.entries(node)) {
+        if (typeof value === 'string' && /^https?:\/\//.test(value) && /\.(m3u8|mp4|mpd)(\?|$)/i.test(value)) {
+            out.push({ key, url: value, resolution: node.resolution || node.resolutions || node.quality });
+        } else if (value && typeof value === 'object') {
+            mediaUrls(value, out, depth + 1);
+        }
+    }
+    return out;
+}
+
 async function main() {
     log('[1] guest token…');
     const home = await fetch(`${H5}/home?host=${encodeURIComponent(HOST)}`, { headers: headers() });
     let token = tokenFrom(home.headers.get('x-user'), home.headers.get('set-cookie'));
     log('    /home', home.status, 'token:', token ? 'yes' : 'no');
-    if (!token) {
-        const mint = await fetch(`${H5}/subject/search-suggest`, {
-            method: 'POST',
-            headers: headers({ 'Content-Type': 'application/json', 'X-Client-Token': clientToken() }),
-            body: JSON.stringify({ keyword: 'a', perPage: 10 }),
-        });
-        token = tokenFrom(mint.headers.get('x-user'), mint.headers.get('set-cookie'));
-        log('    search-suggest', mint.status, 'token:', token ? 'yes' : 'no');
-    }
     const auth = token ? { Authorization: `Bearer ${token}` } : {};
 
     log('[2] player domain…');
-    const domainRes = await fetch(`${H5}/media-player/get-domain`, { headers: headers(auth) });
+    const domainRes = await fetch(`${H5}/media-player/get-domain`, { headers: headers(HOST, auth) });
     const domainText = await domainRes.text();
-    let player = '';
+    let playerHost = '';
     try {
         const json = JSON.parse(domainText);
-        player = String(json?.data?.domain || json?.data?.url || json?.data || '').trim();
+        playerHost = String(json?.data?.domain || json?.data || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
     } catch {
-        player = domainText.trim();
+        /* ignore */
     }
-    if (player && !/^https?:\/\//.test(player)) player = `https://${player}`;
-    log('    status', domainRes.status, 'player:', player || '(none)', '| body:', domainText.slice(0, 200));
+    log('    status', domainRes.status, 'player:', playerHost || '(none)');
 
-    const playBase = player ? `${player.replace(/\/$/, '')}/wefeed-h5api-bff` : H5;
-    const playUrl =
-        `${playBase}/subject/play?subjectId=${encodeURIComponent(subjectId)}` +
-        `&se=${encodeURIComponent(se)}&ep=${encodeURIComponent(ep)}` +
-        `&detailPath=${encodeURIComponent(detailPath)}&streamSignType=1`;
-
-    let candidates = [{ subjectId, detailPath }];
-    if (searchTitle) {
-        log('[2b] search:', searchTitle);
-        const found = await fetch(`${H5}/subject/search`, {
-            method: 'POST',
-            headers: headers({ 'Content-Type': 'application/json', ...auth }),
-            body: JSON.stringify({ keyword: searchTitle, page: 1, perPage: 0, subjectType: 0 }),
-        });
-        const text = await found.text();
-        let items = [];
-        try {
-            const json = JSON.parse(text);
-            items = json?.data?.items || [];
-        } catch {
-            log('    body:', text.slice(0, 200));
-        }
-        log('    status', found.status, 'items', items.length);
-        candidates = items.slice(0, 4).map((item) => ({
-            subjectId: String(item.subjectId || ''),
-            detailPath: String(item.detailPath || ''),
-            title: item.title,
-        }));
-        candidates.forEach((c, i) => log(`    [${i}]`, c.subjectId, '|', c.title, '|', c.detailPath));
-    }
-
-    log('[3] /subject/play …');
-    let streams = [];
-    for (const candidate of candidates) {
-        if (!candidate.subjectId) continue;
-        const url =
-            `${playBase}/subject/play?subjectId=${encodeURIComponent(candidate.subjectId)}` +
-            `&se=${encodeURIComponent(se)}&ep=${encodeURIComponent(ep)}` +
-            `&detailPath=${encodeURIComponent(candidate.detailPath || '')}&streamSignType=1`;
-        const res = await fetch(url, { headers: headers(auth) });
-        const body = await res.text();
-        let json = null;
-        try {
-            json = JSON.parse(body);
-        } catch {
-            /* ignore */
-        }
-        const list = json?.data?.streams || [];
-        log(
-            `    ${candidate.subjectId} ${candidate.title || ''} → status ${res.status}, streams ${list.length}`,
-            '| dash', (json?.data?.dash || []).length,
-            '| hls', (json?.data?.hls || []).length,
-            '| hasResource', json?.data?.hasResource,
-        );
-        if (list.length) {
-            streams = list;
-            log('    body:', body.slice(0, 500));
-            break;
-        }
-    }
-
-    log('    streams:', streams.length);
-    streams.slice(0, 4).forEach((s, i) => {
-        log(`    [${i}]`, JSON.stringify({
-            url: String(s.url || '').slice(0, 160),
-            resolutions: s.resolutions,
-            size: s.size,
-            format: s.format,
-            vipLocked: s.vipLocked,
-        }));
+    log('[2b] search:', searchTitle);
+    const found = await fetch(`${H5}/subject/search`, {
+        method: 'POST',
+        headers: headers(HOST, { 'Content-Type': 'application/json', ...auth }),
+        body: JSON.stringify({ keyword: searchTitle, page: 1, perPage: 0, subjectType: 0 }),
     });
-
-    const first = streams[0]?.url;
-    if (!first) {
-        log('[4] koi stream nahi — CDN test skip');
-        log('    raw body:', playText.slice(0, 400));
+    const foundText = await found.text();
+    const items = j(foundText)?.data?.items || [];
+    log('    status', found.status, 'items', items.length);
+    const item = items[0] || {};
+    const subjectId = String(item.subjectId || '');
+    const detailPath = String(item.detailPath || '');
+    log('    picked:', subjectId, '|', item.title, '|', detailPath);
+    if (!subjectId) {
+        log('    kuch nahi mila — ruk gaya');
         return;
     }
 
-    log('[4] CDN headers (browser <video> ke liye decisive)…');
+    const bases = [
+        ['player', playerHost ? `https://${playerHost}/wefeed-h5api-bff` : '', playerHost || HOST],
+        ['h5-api', H5, HOST],
+    ];
+
+    for (const [label, base, site] of bases) {
+        if (!base) continue;
+        const url =
+            `${base}/subject/play?subjectId=${encodeURIComponent(subjectId)}` +
+            `&se=1&ep=1&detailPath=${encodeURIComponent(detailPath)}&streamSignType=1`;
+        log(`[A/${label}] ${url}`);
+        const res = await fetch(url, { headers: headers(site, auth) });
+        const body = await res.text();
+        const json = j(body);
+        log(
+            '    status', res.status,
+            '| streams', (json?.data?.streams || []).length,
+            '| hls', (json?.data?.hls || []).length,
+            '| dash', (json?.data?.dash || []).length,
+            '| hasResource', json?.data?.hasResource,
+            '| maxRes', json?.data?.playConfig?.maxResolution,
+        );
+        log('    body:', body.slice(0, 350));
+    }
+
+    log('[C] /detail → resourceDetectors…');
+    const detailRes = await fetch(
+        `${H5}/detail?subjectId=${encodeURIComponent(subjectId)}&detailPath=${encodeURIComponent(detailPath)}`,
+        { headers: headers(HOST, auth) },
+    );
+    const detailText = await detailRes.text();
+    const detailJson = j(detailText);
+    const subject = detailJson?.data?.data?.subject || detailJson?.data?.subject || {};
+    log('    status', detailRes.status, '| subject keys:', Object.keys(subject).join(','));
+    const detectors = subject.resourceDetectors || [];
+    log('    resourceDetectors:', Array.isArray(detectors) ? detectors.length : 0);
+    if (Array.isArray(detectors)) {
+        detectors.slice(0, 2).forEach((d, i) => {
+            log(`    [${i}]`, JSON.stringify(d).slice(0, 700));
+        });
+    }
+    const detailMedia = mediaUrls(subject);
+    log('    media urls in detail:', detailMedia.length);
+    detailMedia.slice(0, 3).forEach((m) => log('     ', m.key, m.resolution, '|', m.url.slice(0, 140)));
+
+    log('[D] mobile BFF play-info…');
+    const mobileUrl =
+        `${MOBILE}/subject-api/play-info?subjectId=${encodeURIComponent(subjectId)}` +
+        `&se=1&ep=1&detailPath=${encodeURIComponent(detailPath)}`;
+    try {
+        const res = await fetch(mobileUrl, { headers: headers(HOST, auth) });
+        const body = await res.text();
+        log('    status', res.status, '| body:', body.slice(0, 400));
+    } catch (error) {
+        log('    failed', String(error && error.message).slice(0, 120));
+    }
+
+    const candidate = detailMedia[0]?.url;
+    if (!candidate) {
+        log('[E] koi media URL nahi mila — CDN test skip');
+        return;
+    }
+
+    log('[E] CDN headers (browser <video> ke liye decisive)…');
     for (const [label, extra] of [
         ['moviebox referer', { Referer: `https://${HOST}/`, Origin: `https://${HOST}` }],
         ['our origin referer', { Referer: 'https://net-ki15.vercel.app/', Origin: 'https://net-ki15.vercel.app' }],
         ['no referer', {}],
     ]) {
         try {
-            const res = await fetch(first, {
-                headers: {
-                    'User-Agent': UA,
-                    Range: 'bytes=0-1023',
-                    ...(extra.Referer ? { Referer: extra.Referer } : {}),
-                    ...(extra.Origin ? { Origin: extra.Origin } : {}),
-                },
+            const res = await fetch(candidate, {
+                headers: { 'User-Agent': UA, Range: 'bytes=0-1023', ...extra },
             });
             log(
-                `    ${label}: status ${res.status}`,
+                `    ${label}: ${res.status}`,
                 '| ACAO:', res.headers.get('access-control-allow-origin') || '(none)',
                 '| type:', res.headers.get('content-type') || '?',
-                '| len:', res.headers.get('content-length') || '?',
             );
         } catch (error) {
-            log(`    ${label}: failed`, String(error && error.message).slice(0, 120));
+            log(`    ${label}: failed`, String(error && error.message).slice(0, 100));
         }
     }
 }
