@@ -1,208 +1,70 @@
 {
-  "ranAt": "2026-10-23T06:24:29.175Z",
+  "ranAt": "2026-10-23T06:31:04.745Z",
   "seasons": {
     "1": {
       "status": 200,
-      "bytes": 21344,
-      "hrefs": [
-        "/episode/jojos-bizarre-adventure-1x1/",
-        "/episode/jojos-bizarre-adventure-1x2/",
-        "/episode/jojos-bizarre-adventure-1x3/",
-        "/episode/jojos-bizarre-adventure-1x4/",
-        "/episode/jojos-bizarre-adventure-1x5/",
-        "/episode/jojos-bizarre-adventure-1x6/",
-        "/episode/jojos-bizarre-adventure-1x7/",
-        "/episode/jojos-bizarre-adventure-1x8/"
-      ],
-      "hrefCount": 26,
-      "anyLinks": [
-        "/episode/jojos-bizarre-adventure-1x1/",
-        "/episode/jojos-bizarre-adventure-1x2/",
-        "/episode/jojos-bizarre-adventure-1x3/",
-        "/episode/jojos-bizarre-adventure-1x4/",
-        "/episode/jojos-bizarre-adventure-1x5/",
-        "/episode/jojos-bizarre-adventure-1x6/",
-        "/episode/jojos-bizarre-adventure-1x7/",
-        "/episode/jojos-bizarre-adventure-1x8/"
-      ],
-      "anyLinkCount": 26,
-      "numbered": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8
-      ],
-      "numberedCount": 26,
-      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/kiqwzS6w9rL4h4yYiZ9gyTlg0qC.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 1x1 </span> <span class=\"play fa-pl",
-      "seasonButtons": []
+      "titles": [],
+      "titleCount": 0,
+      "articles": 26,
+      "rawArticle": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/kiqwzS6w9rL4h4yYiZ9gyTlg0qC.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 1x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-title1\" > S 1 | E 1 </h5> <span class=\"view\"> View </span> </header> <a href=\"/episode/jojos-bizarre-adventure-1x1/\" class=\"lnk-blk\"> </a> </article> </li> <li> <article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbna"
     },
     "2": {
       "status": 200,
-      "bytes": 26277,
-      "hrefs": [
-        "/episode/jojos-bizarre-adventure-2x1/",
-        "/episode/jojos-bizarre-adventure-2x2/",
-        "/episode/jojos-bizarre-adventure-2x3/",
-        "/episode/jojos-bizarre-adventure-2x4/",
-        "/episode/jojos-bizarre-adventure-2x5/",
-        "/episode/jojos-bizarre-adventure-2x6/",
-        "/episode/jojos-bizarre-adventure-2x7/",
-        "/episode/jojos-bizarre-adventure-2x8/"
-      ],
-      "hrefCount": 32,
-      "anyLinks": [
-        "/episode/jojos-bizarre-adventure-2x1/",
-        "/episode/jojos-bizarre-adventure-2x2/",
-        "/episode/jojos-bizarre-adventure-2x3/",
-        "/episode/jojos-bizarre-adventure-2x4/",
-        "/episode/jojos-bizarre-adventure-2x5/",
-        "/episode/jojos-bizarre-adventure-2x6/",
-        "/episode/jojos-bizarre-adventure-2x7/",
-        "/episode/jojos-bizarre-adventure-2x8/"
-      ],
-      "anyLinkCount": 32,
-      "numbered": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8
-      ],
-      "numberedCount": 32,
-      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/scuOivodwsDs5BNZkUY2jS13sg8.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 2x1 </span> <span class=\"play fa-pl",
-      "seasonButtons": []
+      "titles": [],
+      "titleCount": 0,
+      "articles": 32,
+      "rawArticle": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/scuOivodwsDs5BNZkUY2jS13sg8.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 2x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-title1\" > S 2 | E 1 </h5> <span class=\"view\"> View </span> </header> <a href=\"/episode/jojos-bizarre-adventure-2x1/\" class=\"lnk-blk\"> </a> </article> </li> <li> <article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbna"
     },
     "3": {
       "status": 200,
-      "bytes": 32226,
-      "hrefs": [
-        "/episode/jojo&#39;s-bizarre-adventure-3x1/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x2/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x3/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x4/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x5/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x6/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x7/",
-        "/episode/jojo&#39;s-bizarre-adventure-3x8/"
-      ],
-      "hrefCount": 39,
-      "anyLinks": [
-        "/episode/jojo&"
-      ],
-      "anyLinkCount": 1,
-      "numbered": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8
-      ],
-      "numberedCount": 39,
-      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/nBHOE8hz1XC2h09y2rgoTsjlZeO.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 3x1 </span> <span class=\"play fa-pl",
-      "seasonButtons": []
+      "titles": [],
+      "titleCount": 0,
+      "articles": 39,
+      "rawArticle": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/nBHOE8hz1XC2h09y2rgoTsjlZeO.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 3x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-title1\" > S 3 | E 1 </h5> <span class=\"view\"> View </span> </header> <a href=\"/episode/jojo&#39;s-bizarre-adventure-3x1/\" class=\"lnk-blk\"> </a> </article> </li> <li> <article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-th"
     },
     "4": {
       "status": 200,
-      "bytes": 9897,
-      "hrefs": [
-        "/episode/jojo&#39;s-bizarre-adventure-4x1/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x2/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x3/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x4/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x5/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x6/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x7/",
-        "/episode/jojo&#39;s-bizarre-adventure-4x8/"
-      ],
-      "hrefCount": 12,
-      "anyLinks": [
-        "/episode/jojo&"
-      ],
-      "anyLinkCount": 1,
-      "numbered": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8
-      ],
-      "numberedCount": 12,
-      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 4x1 </span> <span class=\"play fa-pl",
-      "seasonButtons": []
-    },
-    "5": {
-      "status": 500,
-      "bytes": 55807,
-      "hrefs": [],
-      "hrefCount": 0,
-      "anyLinks": [],
-      "anyLinkCount": 0,
-      "numbered": [],
-      "numberedCount": 0,
-      "article": "",
-      "seasonButtons": []
+      "titles": [],
+      "titleCount": 0,
+      "articles": 12,
+      "rawArticle": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 4x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-title1\" > S 4 | E 1 </h5> <span class=\"view\"> View </span> </header> <a href=\"/episode/jojo&#39;s-bizarre-adventure-4x1/\" class=\"lnk-blk\"> </a> </article> </li> <li> <article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-th"
     },
     "6": {
       "status": 200,
-      "bytes": 4027,
-      "hrefs": [
-        "/episode/jojos-bizarre-adventure-6x1/",
-        "/episode/jojo&#39;s-bizarre-adventure-6x2/",
-        "/episode/jojo&#39;s-bizarre-adventure-6x3/",
-        "/episode/jojo&#39;s-bizarre-adventure-6x4/",
-        "/episode/jojo&#39;s-bizarre-adventure-6x5/"
-      ],
-      "hrefCount": 5,
-      "anyLinks": [
-        "/episode/jojos-bizarre-adventure-6x1/",
-        "/episode/jojo&"
-      ],
-      "anyLinkCount": 2,
-      "numbered": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "numberedCount": 5,
-      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/4ATJwDwspxLCYEZaRbCpIyxd7Wo.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 6x1 </span> <span class=\"play fa-pl",
-      "seasonButtons": []
+      "titles": [],
+      "titleCount": 0,
+      "articles": 5,
+      "rawArticle": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/4ATJwDwspxLCYEZaRbCpIyxd7Wo.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 6x1 </span> <span class=\"play fa-play\"></span> </div> <h5 class=\"entry-title1\" > S 6 | E 1 </h5> <span class=\"view\"> View </span> </header> <a href=\"/episode/jojos-bizarre-adventure-6x1/\" class=\"lnk-blk\"> </a> </article> </li> <li> <article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbna"
     }
   },
-  "season6NoSlash": {
-    "status": 200,
-    "hrefs": [
-      "/episode/jojos-bizarre-adventure-6x1/",
-      "/episode/jojo&#39;s-bizarre-adventure-6x2/",
-      "/episode/jojo&#39;s-bizarre-adventure-6x3/",
-      "/episode/jojo&#39;s-bizarre-adventure-6x4/",
-      "/episode/jojo&#39;s-bizarre-adventure-6x5/"
-    ]
-  },
-  "search": {
-    "status": 200,
-    "links": [
-      "/series/jojos-bizarre-adventure",
-      "/series/horimiya-the-missing-pieces",
-      "/series/ben-10-alien-force",
-      "/series/i-got-a-cheat-skill-in-another-world-and-became-unrivaled-in-the-real-world-too",
-      "/series/oni-thunder-gods-tale",
-      "/series/lookism",
-      "/series/plastic-memories-eng-sub"
-    ]
+  "episodes": {
+    "/episode/jojo&#39;s-bizarre-adventure-6x5/": {
+      "status": 404,
+      "docTitle": "",
+      "titles": [],
+      "h1": "",
+      "breadcrumbs": []
+    },
+    "/episode/jojos-bizarre-adventure-6x1/": {
+      "status": 200,
+      "docTitle": "JoJo&#39;s Bizarre Adventure 6x1 - ToonStream",
+      "titles": [
+        "JoJo&#39;s Bizarre Adventure\r\n\r\n        \r\n\r\n        6x1",
+        "Witch Hat Atelier",
+        "ERASED",
+        "ROLL OVER AND DIE",
+        "Tokyo Ghoul (Crunchyroll Dub)",
+        "Fire Force"
+      ],
+      "h1": "JoJo&#39;s Bizarre Adventure\r\n\r\n        \r\n\r\n        6x1\r\n\r\n        \r\n      ",
+      "breadcrumbs": []
+    },
+    "/episode/jojo&#39;s-bizarre-adventure-3x1/": {
+      "status": 404,
+      "docTitle": "",
+      "titles": [],
+      "h1": "",
+      "breadcrumbs": []
+    }
   }
 }
