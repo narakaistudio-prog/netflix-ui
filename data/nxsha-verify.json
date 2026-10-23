@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T14:41:02.828Z",
+  "generatedAt": "2026-10-23T15:06:56.606Z",
   "titles": [
     {
       "key": "aot",
@@ -14702,13 +14702,18 @@
       "key": "youandiarepolaropposites2",
       "kind": "tv",
       "id": "278043",
-      "ok": false,
+      "ok": true,
       "checks": [
         {
           "season": 1,
           "episode": 1,
           "url": "https://nxsha.space/embed/tv/278043/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "error": "fetch failed"
+          "status": 200,
+          "embedTitle": "Watch You and I Are Polar Opposites - S1:E1",
+          "ok": true,
+          "foundName": "You and I Are Polar Opposites",
+          "foundSeason": 1,
+          "foundEpisode": 1
         },
         {
           "season": 1,
@@ -14722,7 +14727,15 @@
           "foundEpisode": 25
         }
       ],
-      "seasonList": {}
+      "seasonList": {
+        "seasonNumbers": [
+          1
+        ],
+        "epPairs": [
+          "1:1"
+        ],
+        "totalEpisodes": null
+      }
     },
     {
       "key": "hanakimi2",
@@ -16346,11 +16359,10 @@
   ],
   "summary": {
     "titles": 326,
-    "ok": 323,
+    "ok": 324,
     "bad": [
       "arrietty",
-      "nausicaa",
-      "youandiarepolaropposites2"
+      "nausicaa"
     ],
     "saoMovieMatch": [
       "413594"
