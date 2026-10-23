@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-23T09:14:27.228Z",
+    "generatedAt": "2026-10-23T13:22:02.486Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -1321,6 +1321,7 @@
           "season": 1,
           "episode": 54,
           "title": "Give Me a Hand",
+          "overview": "Takemichi plays the videotape Mikey slipped into the time capsule, which includes a message meant just for him. Mikey from twelve years ago reveals a darkness inside him that Shinichiro, Emma, and Baji had kept at bay. Having lost everyone who could stop him, Mikey has cut ties with Tokyo Manji Gang, distancing himself from his friends. After learning of Mikey's anguish, Takemichi ignores the danger and tries to make contact.",
           "image": "https://image.tmdb.org/t/p/w780/cbn990l4IEFdMquTTjfSe2U3cQ7.jpg",
           "airDate": "2026-10-24",
           "runtime": 24
