@@ -1,237 +1,208 @@
 {
-  "ranAt": "2026-10-23T06:19:21.846Z",
-  "series": {
-    "jojo's-bizarre-adventure": {
-      "status": 500,
-      "finalUrl": "https://toonstream.us/series/jojo's-bizarre-adventure/",
-      "docTitle": "404 Not Found - ToonStream",
-      "bytes": 55807
-    },
-    "jojos-bizarre-adventure": {
+  "ranAt": "2026-10-23T06:24:29.175Z",
+  "seasons": {
+    "1": {
       "status": 200,
-      "finalUrl": "https://toonstream.us/series/jojos-bizarre-adventure/",
-      "docTitle": "JoJo&#39;s Bizarre Adventure Series - ToonStream",
-      "bytes": 113752,
-      "buttons": [
-        {
-          "n": 1,
-          "url": "/series/jojos-bizarre-adventure/season/1"
-        },
-        {
-          "n": 2,
-          "url": "/series/jojos-bizarre-adventure/season/2"
-        },
-        {
-          "n": 3,
-          "url": "/series/jojos-bizarre-adventure/season/3"
-        },
-        {
-          "n": 4,
-          "url": "/series/jojos-bizarre-adventure/season/4"
-        },
-        {
-          "n": 6,
-          "url": "/series/jojos-bizarre-adventure/season/6"
-        }
+      "bytes": 21344,
+      "hrefs": [
+        "/episode/jojos-bizarre-adventure-1x1/",
+        "/episode/jojos-bizarre-adventure-1x2/",
+        "/episode/jojos-bizarre-adventure-1x3/",
+        "/episode/jojos-bizarre-adventure-1x4/",
+        "/episode/jojos-bizarre-adventure-1x5/",
+        "/episode/jojos-bizarre-adventure-1x6/",
+        "/episode/jojos-bizarre-adventure-1x7/",
+        "/episode/jojos-bizarre-adventure-1x8/"
       ],
-      "inline": {
-        "count": 26,
-        "first": 1,
-        "last": 26,
-        "missing": []
-      },
-      "seasons": [
-        {
-          "n": 1,
-          "status": 200,
-          "count": 26,
-          "first": 1,
-          "last": 26,
-          "missing": [],
-          "cards": 26,
-          "sampleTitles": []
-        },
-        {
-          "n": 2,
-          "status": 200,
-          "count": 32,
-          "first": 1,
-          "last": 32,
-          "missing": [],
-          "cards": 32,
-          "sampleTitles": []
-        },
-        {
-          "n": 3,
-          "status": 200,
-          "count": 0,
-          "first": 0,
-          "last": 0,
-          "missing": [],
-          "cards": 39,
-          "sampleTitles": []
-        },
-        {
-          "n": 4,
-          "status": 200,
-          "count": 0,
-          "first": 0,
-          "last": 0,
-          "missing": [],
-          "cards": 12,
-          "sampleTitles": []
-        },
-        {
-          "n": 6,
-          "status": 200,
-          "count": 1,
-          "first": 1,
-          "last": 1,
-          "missing": [],
-          "cards": 1,
-          "sampleTitles": []
-        }
-      ]
+      "hrefCount": 26,
+      "anyLinks": [
+        "/episode/jojos-bizarre-adventure-1x1/",
+        "/episode/jojos-bizarre-adventure-1x2/",
+        "/episode/jojos-bizarre-adventure-1x3/",
+        "/episode/jojos-bizarre-adventure-1x4/",
+        "/episode/jojos-bizarre-adventure-1x5/",
+        "/episode/jojos-bizarre-adventure-1x6/",
+        "/episode/jojos-bizarre-adventure-1x7/",
+        "/episode/jojos-bizarre-adventure-1x8/"
+      ],
+      "anyLinkCount": 26,
+      "numbered": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "numberedCount": 26,
+      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/kiqwzS6w9rL4h4yYiZ9gyTlg0qC.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 1x1 </span> <span class=\"play fa-pl",
+      "seasonButtons": []
     },
-    "jojo-bizarre-adventure": {
-      "status": 500,
-      "finalUrl": "https://toonstream.us/series/jojo-bizarre-adventure/",
-      "docTitle": "404 Not Found - ToonStream",
-      "bytes": 55807
+    "2": {
+      "status": 200,
+      "bytes": 26277,
+      "hrefs": [
+        "/episode/jojos-bizarre-adventure-2x1/",
+        "/episode/jojos-bizarre-adventure-2x2/",
+        "/episode/jojos-bizarre-adventure-2x3/",
+        "/episode/jojos-bizarre-adventure-2x4/",
+        "/episode/jojos-bizarre-adventure-2x5/",
+        "/episode/jojos-bizarre-adventure-2x6/",
+        "/episode/jojos-bizarre-adventure-2x7/",
+        "/episode/jojos-bizarre-adventure-2x8/"
+      ],
+      "hrefCount": 32,
+      "anyLinks": [
+        "/episode/jojos-bizarre-adventure-2x1/",
+        "/episode/jojos-bizarre-adventure-2x2/",
+        "/episode/jojos-bizarre-adventure-2x3/",
+        "/episode/jojos-bizarre-adventure-2x4/",
+        "/episode/jojos-bizarre-adventure-2x5/",
+        "/episode/jojos-bizarre-adventure-2x6/",
+        "/episode/jojos-bizarre-adventure-2x7/",
+        "/episode/jojos-bizarre-adventure-2x8/"
+      ],
+      "anyLinkCount": 32,
+      "numbered": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "numberedCount": 32,
+      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/scuOivodwsDs5BNZkUY2jS13sg8.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 2x1 </span> <span class=\"play fa-pl",
+      "seasonButtons": []
     },
-    "jojo's-bizarre-adventure-hindi-dub": {
-      "status": 500,
-      "finalUrl": "https://toonstream.us/series/jojo's-bizarre-adventure-hindi-dub/",
-      "docTitle": "404 Not Found - ToonStream",
-      "bytes": 55807
+    "3": {
+      "status": 200,
+      "bytes": 32226,
+      "hrefs": [
+        "/episode/jojo&#39;s-bizarre-adventure-3x1/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x2/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x3/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x4/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x5/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x6/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x7/",
+        "/episode/jojo&#39;s-bizarre-adventure-3x8/"
+      ],
+      "hrefCount": 39,
+      "anyLinks": [
+        "/episode/jojo&"
+      ],
+      "anyLinkCount": 1,
+      "numbered": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "numberedCount": 39,
+      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/nBHOE8hz1XC2h09y2rgoTsjlZeO.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 3x1 </span> <span class=\"play fa-pl",
+      "seasonButtons": []
     },
-    "jojo's-bizarre-adventure-dub": {
+    "4": {
+      "status": 200,
+      "bytes": 9897,
+      "hrefs": [
+        "/episode/jojo&#39;s-bizarre-adventure-4x1/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x2/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x3/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x4/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x5/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x6/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x7/",
+        "/episode/jojo&#39;s-bizarre-adventure-4x8/"
+      ],
+      "hrefCount": 12,
+      "anyLinks": [
+        "/episode/jojo&"
+      ],
+      "anyLinkCount": 1,
+      "numbered": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "numberedCount": 12,
+      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 4x1 </span> <span class=\"play fa-pl",
+      "seasonButtons": []
+    },
+    "5": {
       "status": 500,
-      "finalUrl": "https://toonstream.us/series/jojo's-bizarre-adventure-dub/",
-      "docTitle": "404 Not Found - ToonStream",
-      "bytes": 55807
+      "bytes": 55807,
+      "hrefs": [],
+      "hrefCount": 0,
+      "anyLinks": [],
+      "anyLinkCount": 0,
+      "numbered": [],
+      "numberedCount": 0,
+      "article": "",
+      "seasonButtons": []
+    },
+    "6": {
+      "status": 200,
+      "bytes": 4027,
+      "hrefs": [
+        "/episode/jojos-bizarre-adventure-6x1/",
+        "/episode/jojo&#39;s-bizarre-adventure-6x2/",
+        "/episode/jojo&#39;s-bizarre-adventure-6x3/",
+        "/episode/jojo&#39;s-bizarre-adventure-6x4/",
+        "/episode/jojo&#39;s-bizarre-adventure-6x5/"
+      ],
+      "hrefCount": 5,
+      "anyLinks": [
+        "/episode/jojos-bizarre-adventure-6x1/",
+        "/episode/jojo&"
+      ],
+      "anyLinkCount": 2,
+      "numbered": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "numberedCount": 5,
+      "article": "<article class=\"post dfx fcl episodes fa-play-circle lg\"> <div class=\"post-thumbnail2\"> <figure> <img loading=\"lazy\" src=\"https://image.tmdb.org/t/p/w780/4ATJwDwspxLCYEZaRbCpIyxd7Wo.jpg\" > </figure> </div> <header class=\"entry-header\"> <div style=\"display:flex;align-items:center;justify-content:space-between;gap:10px;\"> <span class=\"num-epi\"> 6x1 </span> <span class=\"play fa-pl",
+      "seasonButtons": []
     }
   },
-  "episodePage": {
+  "season6NoSlash": {
     "status": 200,
-    "finalUrl": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
-    "docTitle": "JoJo&#39;s Bizarre Adventure 6x5 - ToonStream",
-    "seriesLinks": [
-      {
-        "slug": "/series/jojos-bizarre-adventure",
-        "text": "Season 6"
-      },
-      {
-        "slug": "/series/attack-on-titan-muse-dub",
-        "text": ""
-      },
-      {
-        "slug": "/series/a-salad-bowl-of-eccentrics",
-        "text": ""
-      },
-      {
-        "slug": "/series/black-torch",
-        "text": ""
-      },
-      {
-        "slug": "/series/the-ancient-magus-bride-those-awaiting-a-star",
-        "text": ""
-      },
-      {
-        "slug": "/series/gantz",
-        "text": ""
-      },
-      {
-        "slug": "/series/hyouka",
-        "text": ""
-      },
-      {
-        "slug": "/series/ranking-of-kings",
-        "text": ""
-      }
+    "hrefs": [
+      "/episode/jojos-bizarre-adventure-6x1/",
+      "/episode/jojo&#39;s-bizarre-adventure-6x2/",
+      "/episode/jojo&#39;s-bizarre-adventure-6x3/",
+      "/episode/jojo&#39;s-bizarre-adventure-6x4/",
+      "/episode/jojo&#39;s-bizarre-adventure-6x5/"
     ]
   },
   "search": {
     "status": 200,
     "links": [
-      {
-        "slug": "/series/jojos-bizarre-adventure",
-        "text": ""
-      },
-      {
-        "slug": "/series/guin-saga",
-        "text": ""
-      },
-      {
-        "slug": "/series/snowball-earth",
-        "text": ""
-      },
-      {
-        "slug": "/series/junji-ito-maniac-japanese-tales-of-the-macabre",
-        "text": ""
-      },
-      {
-        "slug": "/series/she-hulk-attorney-at-law",
-        "text": ""
-      },
-      {
-        "slug": "/series/blade",
-        "text": ""
-      },
-      {
-        "slug": "/series/tomb-raider-the-legend-of-lara-croft",
-        "text": ""
-      }
+      "/series/jojos-bizarre-adventure",
+      "/series/horimiya-the-missing-pieces",
+      "/series/ben-10-alien-force",
+      "/series/i-got-a-cheat-skill-in-another-world-and-became-unrivaled-in-the-real-world-too",
+      "/series/oni-thunder-gods-tale",
+      "/series/lookism",
+      "/series/plastic-memories-eng-sub"
     ]
-  },
-  "nxsha": {
-    "1": {
-      "status": 200,
-      "episodes": 26,
-      "sample": [
-        "Dio the Invader",
-        "A Letter from the Past"
-      ]
-    },
-    "2": {
-      "status": 200,
-      "episodes": 48,
-      "sample": [
-        "The Man Possessed by an Evil Spirit",
-        "Who Will Be the Judge!?"
-      ]
-    },
-    "3": {
-      "status": 200,
-      "episodes": 39,
-      "sample": [
-        "Jotaro Kujo! Meets Josuke Higashikata",
-        "Josuke Higashikata! Meets Angelo"
-      ]
-    },
-    "4": {
-      "status": 200,
-      "episodes": 39,
-      "sample": [
-        "Golden Wind",
-        "Bucciarati Is Coming"
-      ]
-    },
-    "5": {
-      "status": 200,
-      "episodes": 38,
-      "sample": [
-        "Stone Ocean",
-        "Prisoner FE40536: Jolyne Cujoh"
-      ]
-    },
-    "6": {
-      "status": 200,
-      "episodes": 12,
-      "sample": [
-        "STEEL BALL RUN",
-        "The Sheriff's Request to Mountain Tim"
-      ]
-    }
   }
 }
