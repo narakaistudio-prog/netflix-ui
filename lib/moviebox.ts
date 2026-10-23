@@ -528,16 +528,6 @@ export function getMovieboxCrop(
  * HTML hamare hi origin se deta hai (frame-rokne wale headers aage nahi
  * jate). Best-effort fallback hai, not the default.
  */
-export function buildMovieboxFrameProxyUrl(
-    pageUrl: string,
-    base: string = '/api/moviebox-frame',
-    options: { seek?: boolean } = {},
-): string {
-    const url = `${base}?url=${encodeURIComponent(cleanMovieboxInput(pageUrl))}`;
-    /**
-     * `seek=1` → proxy page ke andar ±10s wala script bhi jaata hai
-     * (`api/moviebox-frame.mjs`). Cross-origin frame me `<video>` tak
-     * pahunchne ka yehi ek rasta hai (dekho `lib/movieboxSeek.ts`).
-     */
-    return options.seek ? `${url}&seek=1` : url;
+export function buildMovieboxFrameProxyUrl(pageUrl: string, base: string = '/api/moviebox-frame'): string {
+    return `${base}?url=${encodeURIComponent(cleanMovieboxInput(pageUrl))}`;
 }

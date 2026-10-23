@@ -51,13 +51,6 @@ const req = {
 const res = makeRes();
 try {
     await mod.default(req, res);
-    /**
-     * `withSeekScript` — gesture script ka source wapas bhejo, taaki jest usko
-     * asli jsdom window me chala kar double-tap khud check kar sake.
-     */
-    if (scenario.withSeekScript && mod._internal?.buildSeekScript) {
-        res._out.seekScript = mod._internal.buildSeekScript();
-    }
     process.stdout.write(`__RESULT__${JSON.stringify(res._out)}`);
 } catch (error) {
     process.stdout.write(
