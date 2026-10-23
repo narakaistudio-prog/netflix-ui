@@ -1107,7 +1107,10 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       (function(){var all=(typeof TS_SEASONS!=='undefined'&&TS_SEASONS)||{};for(var tk in all){if(all.hasOwnProperty(tk)&&all[tk]&&all[tk].slug)window.TS_SLUGS[tk]=all[tk].slug}})();
       (function(){
         var seenKey={};
-        function tnorm(value){return String(value||'').toLowerCase().replace(/[^a-z0-9]+/g,'')}
+        /* Diacritics pehle hatao: ToonStream "Naruto Shippūden" likhta hai aur
+           catalog "Naruto Shippuden" — bina iske ek hi anime ke do card ban
+           jate the (ū strip hone se "shippden" ban jata tha). */
+        function tnorm(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'')}
         function siteKeyForTitle(title){
           var want=tnorm(title),k;
           for(k in shows){if(shows.hasOwnProperty(k)&&tnorm(shows[k].title)===want)return k}

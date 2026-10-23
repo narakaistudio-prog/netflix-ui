@@ -487,11 +487,11 @@ async function harvest() {
         };
 
         // A catalog title already ships NX_EPISODE_DATA — do not bake a twin.
-        if (hit?.key) {
-            record.nxId = hit.id || '';
-            incoming[drop.slug] = record;
-            continue;
-        }
+        // Guide phir bhi fetch karte hain: page usse sirf "konsa episode aaya"
+        // ka naam padhta hai (seasons/nxMap/epStart catalog ke hi rehte hain,
+        // warna ToonStream ki numbering Nxsha ke episode khol ke galat karti).
+        const onSite = !!(hit && hit.key);
+        if (onSite) record.nxId = hit.id || '';
 
         // Yahan se neeche sab network calls hain. Koi ek anime fail ho jaye
         // (500, timeout, kharab JSON) to poora daily run nahi girna chahiye —
@@ -499,7 +499,7 @@ async function harvest() {
         // apna title/slug/S-E le kar row me chala jata hai (play hone par
         // /api/toonstream khud resolve karta hai). Sirf report me warning.
         try {
-            const resolved = await resolveNxsha(title, hit, report);
+            const resolved = onSite ? null : await resolveNxsha(title, hit, report);
             const nxId = resolved?.id || hit?.id || '';
             if (!nxId) {
                 // Nxsha par show hi nahi mila — card phir bhi row me jayega,
@@ -524,14 +524,18 @@ async function harvest() {
             const built = buildShowGuide(tsSeasons, nxSeasons);
             if (built.guide) {
                 record.guide = built.guide;
-                record.seasons = built.seasons;
-                record.nxMap = built.nxMap;
+                if (!onSite) {
+                    record.seasons = built.seasons;
+                    record.nxMap = built.nxMap;
+                }
             }
-            const epStart = {};
-            for (const ts of tsSeasons) {
-                if (Number(ts.first) > 1) epStart[String(ts.n)] = Number(ts.first);
+            if (!onSite) {
+                const epStart = {};
+                for (const ts of tsSeasons) {
+                    if (Number(ts.first) > 1) epStart[String(ts.n)] = Number(ts.first);
+                }
+                if (Object.keys(epStart).length) record.epStart = epStart;
             }
-            if (Object.keys(epStart).length) record.epStart = epStart;
             if (report.length > 40) report.length = 40;
             const layout = tsSeasons.map((s) => `S${s.n}:${s.count}`).join(' ');
             const guideCount = Object.values(record.seasons || {}).reduce((sum, n) => sum + n, 0);
