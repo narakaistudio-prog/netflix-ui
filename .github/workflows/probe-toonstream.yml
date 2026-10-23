@@ -57,6 +57,26 @@ jobs:
             }
             writeFileSync('data/toonstream-probe.json', JSON.stringify(out, null, 2) + '\n');
           " || echo "probe node failed"
+      - name: Run the real drop harvest and capture its error
+        run: |
+          set +e
+          node scripts/harvest-toonstream-drops.mjs --dry-run > /tmp/drops-out.json 2> /tmp/drops-err.txt
+          CODE=$?
+          set -e
+          node --input-type=module -e "
+            import { readFileSync, writeFileSync } from 'node:fs';
+            const err = readFileSync('/tmp/drops-err.txt', 'utf8');
+            const out = readFileSync('/tmp/drops-out.json', 'utf8');
+            let items = 0;
+            try { items = Object.keys(JSON.parse(out).state.items).length; } catch {}
+            writeFileSync('data/toonstream-probe.json', JSON.stringify({
+              dryRunExitCode: $CODE,
+              stderr: err.slice(0, 4000),
+              stdoutBytes: out.length,
+              dryRunItems: items,
+            }, null, 2) + '\n');
+          "
+
       - name: Commit the probe result
         run: |
           git config user.name "netflix-catalog-bot"
