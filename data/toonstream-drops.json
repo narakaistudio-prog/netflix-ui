@@ -4,11 +4,11 @@
   "items": {
     "jojo's-bizarre-adventure": {
       "title": "JoJo's Bizarre Adventure",
-      "slug": "jojo's-bizarre-adventure",
+      "slug": "jojos-bizarre-adventure",
       "img": "https://image.tmdb.org/t/p/w780/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
       "season": 6,
       "episode": 5,
-      "episodeUrl": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
+      "episodeUrl": "https://toonstream.us/episode/jojos-bizarre-adventure-6x5/",
       "firstSeen": "2026-10-19",
       "onSite": true,
       "nxId": "45790",
@@ -786,39 +786,39 @@
         },
         "6": {
           "1": {
-            "title": "Mirror Man and Purple Smoke",
-            "overview": "The person hiding in the mirror was Illuso from the Hitman Team. Fugo ends up being dragged into the mirror by Illuso's Stand, Man in the Mirror. Fugo then summons his own Stand, Purple Haze. Despite ",
-            "image": "https://image.tmdb.org/t/p/w300/c0NOQHXT0Y7qz32SWq8mRy7yNBe.jpg",
-            "airDate": "2018-12-29",
-            "runtime": 24
+            "title": "STEEL BALL RUN",
+            "overview": "After a fateful encounter with outlaw Gyro Zeppeli, former racing prodigy Johnny Joestar enters the Steel Ball Run, the first horse race across America.",
+            "image": "https://image.tmdb.org/t/p/w300/4ATJwDwspxLCYEZaRbCpIyxd7Wo.jpg",
+            "airDate": "2026-03-19",
+            "runtime": 49
           },
           "2": {
-            "title": "Express Train to Florence",
-            "overview": "\"Take Trish to Venice.\" With their next order from the boss, Bucciarati and his crew head to Naples Station. \"Use the key at the water fountain with the turtle on the 6th platform.\" They find the wate",
-            "image": "https://image.tmdb.org/t/p/w300/5vFWluhNOxjKTqkl31ED8SrUYi1.jpg",
-            "airDate": "2019-01-12",
-            "runtime": 24
+            "title": "The Sheriff's Request to Mountain Tim",
+            "overview": "After a shocking end to the 1st STAGE, abnormal murders unfold. Legendary cowboy Mountain Tim steps in to investigate as the tense 2nd STAGE begins.",
+            "image": "https://image.tmdb.org/t/p/w300/nVjUqzoZXDGXajjged1ZhUpj1jr.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 25
           },
           "3": {
-            "title": "The Thankful Death (1)",
-            "overview": "The Grateful Dead slowly begins to age everybody on the train. With his teammates affected, Mista goes alone to confront the enemy, only to encounter Pesci and his Beach Boy.",
-            "image": "https://image.tmdb.org/t/p/w300/dVr69pW9q8W29VN3fEqzXsRJh4e.jpg",
-            "airDate": "2019-01-19",
-            "runtime": 24
+            "title": "The Desert-Born Outlaws",
+            "overview": "At camp, Johnny catches a glimpse of Gyro's past. Then the Boomboom Family strikes with an otherworldly power. The duo escape — or so they think.",
+            "image": "https://image.tmdb.org/t/p/w300/mb2QqkvlxNJ1y3MEa98blJwIqKV.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 25
           },
           "4": {
-            "title": "The Thankful Death (2)",
-            "overview": "Number Six from Sex Pistols manages to warn Bucciarati about the enemies and fights back, but The Grateful Dead's powers are taking a toll on him. Bucciarati steels his resolve and throws himself out ",
-            "image": "https://image.tmdb.org/t/p/w300/t8fQij6xEWmvQA87xwe1njvUF24.jpg",
-            "airDate": "2019-01-26",
-            "runtime": 24
+            "title": "The Devil's Palm",
+            "overview": "Caught in the Boombooms' trap, a magnetic force threatens to tear Johnny, Gyro and Mountain Tim apart. They learn about \"Stands\" and Johnny's body reacts.",
+            "image": "https://image.tmdb.org/t/p/w300/qy1wfzBxL1HIplRlUXATSEKLErC.jpg",
+            "airDate": "2026-10-09",
+            "runtime": 25
           },
           "5": {
-            "title": "Babyhead",
-            "overview": "After defeating Proscuitto and Pesci, Bucciarati and the others head to Venice in a car. Melone from the Hitman Team finds some of Bucciarati's blood at the scene where the train had stopped and then ",
-            "image": "https://image.tmdb.org/t/p/w300/kZN5uUJwhJtqSRauFBEWQFbw550.jpg",
-            "airDate": "2019-02-02",
-            "runtime": 24
+            "title": "The Terrorist from a Faraway Country",
+            "overview": "At a checkpoint, Oye — a man who knows Gyro's past — confronts the duo. His power to turn anything he touches into a bomb leaves them with nowhere to run.",
+            "image": "https://image.tmdb.org/t/p/w300/2c7ajDu8SXa4re1FfsCLA2IVZTq.jpg",
+            "airDate": "2026-10-16",
+            "runtime": 25
           }
         }
       },

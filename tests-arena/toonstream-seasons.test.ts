@@ -56,7 +56,7 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
         const seasonsMod = await import(${JSON.stringify(
             new URL(`file://${join(ROOT, 'scripts', 'lib', 'seasons.mjs')}`).href,
         )});
-        const { applySeasonOverrides, buildSeasonMap, compactPlan, parseSeasonEpisodes } = seasonsMod;
+        const { applySeasonOverrides, buildSeasonMap, compactPlan, parseSeasonEpisodes, pinGuideSeasons } = seasonsMod;
         const merged = buildSeasonMap(
           [{ n: 1, count: 24 }, { n: 2, count: 23 }, { n: 3, count: 12 }],
           [{ season: { season_number: 1 }, count: 59 }],
@@ -119,6 +119,15 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
             return copy;
           })(),
         };
+        // Guide wahi pin use karta hai, par usme start (flat Nxsha index) aur
+        // segments bhi dobara banne chahiye — warna episode naam purane season
+        // se aate hain (JoJo S6 ke cards Golden Wind ke naam dikha rahe the).
+        const jojoGuide = (() => {
+          const copy = { ...jojoBase.map };
+          const applied = pinGuideSeasons(copy, jojoBase.flat, jojoPins);
+          const plan = copy[6];
+          return { applied, season: plan.season, base: plan.base, segments: plan.segments, firstSeason: jojoBase.flat[plan.start].season };
+        })();
         // A Hindi-dub season numbers episodes absolutely: S2 starts at 33.
         const absolute = parseSeasonEpisodes(
           Array.from({ length: 21 }, (_, i) => '<a href="/episode/naruto-shippuden-hindi-dub-2x' + (33 + i) + '/">x</a>').join(''),
@@ -133,6 +142,7 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           entityEncoded,
           jojo: jojo.map,
           jojoPinned: jojo.pinned,
+          jojoGuide,
         }));
     `;
     const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
@@ -163,6 +173,15 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
     // …and the committed pin puts it on Nxsha's Steel Ball Run season instead.
     expect(parsed.jojoPinned['6']).toEqual({ season: 6, base: 0 });
     expect(parsed.jojoPinned['3']).toEqual({ season: 3, base: 0 });
+    // Guide bhi usi pinned season se shuru ho (NX S6E1 = Steel Ball Run), na ki
+    // cumulative position se (jo Golden Wind E13 hota hai).
+    expect(parsed.jojoGuide).toMatchObject({
+        applied: 1,
+        season: 6,
+        base: 0,
+        firstSeason: 6,
+        segments: [{ season: 6, from: 1, count: 5 }],
+    });
 });
 
 test('the bake writes epStart and the Nxsha map for every found show', () => {

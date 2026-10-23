@@ -39,7 +39,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { _internal } from '../api/toonstream.mjs';
 import { decodeEntities, titleKey, titleVariants } from './lib/text.mjs';
-import { buildSeasonMap, compactPlan, nxEpisodes, nxSeasonNumber, parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode } from './lib/seasons.mjs';
+import { buildSeasonMap, compactPlan, nxEpisodes, nxSeasonNumber, parseSeasonEpisodes, parseToonSeasons, pinGuideSeasons, seriesSlugFromEpisode } from './lib/seasons.mjs';
 export { parseSeasonEpisodes, parseToonSeasons, seriesSlugFromEpisode };
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -49,6 +49,9 @@ const HTML_FILE = resolve(
 );
 const REGISTRY_FILE = resolve(ROOT, 'data', 'nxsha-titles.json');
 const EPISODES_FILE = resolve(ROOT, 'data', 'nxsha-episodes.json');
+// Per-show pins (data/toonstream-season-overrides.json) — wahi file jo seasons
+// harvester padhta hai, taaki guide aur page ka nxMap kabhi alag na ho jaye.
+const OVERRIDES_FILE = resolve(process.env.TS_SEASONS_OVERRIDES_FILE || resolve(ROOT, 'data', 'toonstream-season-overrides.json'));
 
 const BASE = 'https://toonstream.us';
 const NX_BASE = 'https://nxsha.space';
@@ -321,12 +324,15 @@ function guideEpisode(episode, overviewLimit) {
  * `nxMap[s] = {season, base}` lets the page build the Nxsha embed URL for any
  * ToonStream episode: nxEpisode = base + episode.
  */
-export function buildShowGuide(tsSeasons, nxSeasons, { maxEpisodes = 200, overviewLimit = 200 } = {}) {
+export function buildShowGuide(tsSeasons, nxSeasons, { key = '', maxEpisodes = 200, overviewLimit = 200 } = {}) {
     if (!Array.isArray(tsSeasons) || !tsSeasons.length || !Array.isArray(nxSeasons) || !nxSeasons.length) {
         return { guide: null, seasons: null, nxMap: null };
     }
     const { flat, map } = buildSeasonMap(tsSeasons, nxSeasons);
     if (!flat.length) return { guide: null, seasons: null, nxMap: null };
+    // Manual pin pehle, warna JoJo S6 (Steel Ball Run) ka guide Golden Wind ke
+    // naam uthata hai — episode card ka S/E to sahi hota hai, naam galat.
+    if (key) pinGuideSeasons(map, flat, readJson(OVERRIDES_FILE, {})[key]);
 
     const guide = {};
     const seasons = {};
@@ -517,14 +523,24 @@ async function harvest() {
             // the stills/titles/synopses mapped onto those seasons.
             const seriesSlug = seriesSlugFromEpisode(record.episodeUrl) || drop.slug;
             const toon = await fetchToonSeasons(seriesSlug, report);
-            if (toon) record.tsSlug = toon.slug;
+            if (toon) {
+                record.tsSlug = toon.slug;
+                // Fresh Drop card par jo slug hota hai wo hamesha series page ka
+                // hota hai nahi (JoJo ka `jojo's-…` 500 deta hai). Jis slug par
+                // series page khula wahi canonical hai — usi se playable episode
+                // URL banao, warna player 404 par land karta hai.
+                if (toon.slug !== record.slug && season && episode) {
+                    record.slug = toon.slug;
+                    record.episodeUrl = `${BASE}/episode/${toon.slug}-${season}x${episode}/`;
+                }
+            }
             const tsSeasons = toon?.seasons?.length
                 ? toon.seasons
                 : season
                     ? [{ n: season, count: episode || 1 }] // series page failed: keep the drop season playable
                     : [];
             const nxSeasons = await fetchNxshaSeasons(nxId, report);
-            const built = buildShowGuide(tsSeasons, nxSeasons);
+            const built = buildShowGuide(tsSeasons, nxSeasons, { key: hit?.key || '' });
             if (built.guide) {
                 record.guide = built.guide;
                 if (!onSite) {

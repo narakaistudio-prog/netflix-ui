@@ -194,6 +194,38 @@ export function parseSeasonEpisodes(html) {
 }
 
 /**
+ * Same pin, guide ke liye: `buildSeasonMap` ka plan apne andar `start` rakhta
+ * hai (flat Nxsha list me index), aur pinned season kahin aur hota hai — isliye
+ * `start` + `segments` dobara banta hai, warna season ka number to badal jata
+ * par episode naam purane season ke aate rehte (JoJo S6 = Steel Ball Run ke
+ * cards Golden Wind ke naam dikha rahe the).
+ */
+export function pinGuideSeasons(map, flat, overrides) {
+    let applied = 0;
+    for (const [tsSeason, pin] of Object.entries(overrides || {})) {
+        if (!pin || typeof pin !== 'object' || !pin.season) continue;
+        const key = Number(tsSeason);
+        const plan = map[key];
+        if (!plan) continue; // ToonStream season hi nahi mila, pin ka koi matlab nahi
+        const season = Number(pin.season);
+        const base = Math.max(0, Number(pin.base) || 0);
+        const start = flat.findIndex((hit) => hit.season === season);
+        if (start < 0) continue; // Nxsha ne wo season fetch hi nahi kiya
+        const room = flat.filter((hit) => hit.season === season).length - base;
+        const count = Math.max(0, Math.min(Number(plan.count) || 0, room));
+        map[key] = {
+            ...plan,
+            season,
+            base,
+            start: start + base,
+            segments: count ? [{ season, from: base + 1, count }] : [],
+        };
+        applied += 1;
+    }
+    return applied;
+}
+
+/**
  * Manual pins for seasons the automatic mapping gets wrong.
  *
  * `buildSeasonMap` anchors a ToonStream season to the Nxsha season with the
