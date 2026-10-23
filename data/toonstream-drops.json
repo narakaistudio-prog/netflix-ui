@@ -13,7 +13,7 @@
       "onSite": true,
       "nxId": "45790",
       "guide": {
-        "6": {
+        "1": {
           "1": {
             "title": "Dio the Invader",
             "overview": "England, 1868. A thief tries to raid an overturned carriage, but discovers that two of the occupants, a man and his young son are still alive. The man, George Joestar, proclaims he will forever be ind",
@@ -48,9 +48,781 @@
             "image": "https://image.tmdb.org/t/p/w300/haJRk3SMHuuemXQGYPjfTrMJNLH.jpg",
             "airDate": "2012-11-03",
             "runtime": 24
+          },
+          "6": {
+            "title": "Tomorrow's Courage",
+            "overview": "The encounter between JoJo and the Knights continues.",
+            "image": "https://image.tmdb.org/t/p/w300/3MFnoOuLi2XDJOv07JqXQjIZ0Ir.jpg",
+            "airDate": "2012-11-10",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Sorrowful Successor",
+            "overview": "The encounter against Tarukus comes to an end. Poco's family is in grave danger. JoJo meets Dire, Straizo, and Tonpetty.",
+            "image": "https://image.tmdb.org/t/p/w300/2siQRWUBiDJptmBA0JuIBFTaJrg.jpg",
+            "airDate": "2012-11-17",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Bloody Battle! JoJo & Dio",
+            "overview": "The party are received by Doobie. Dire faces off against Dio. Straizo takes on Pajyu, Jones, Pluton, and Barnum.",
+            "image": "https://image.tmdb.org/t/p/w300/LzSUjDo8qoNySPF5Yyfu11QJ4g.jpg",
+            "airDate": "2012-11-24",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The Final Ripple!",
+            "overview": "As Dio falls following his battle with JoJo, he decapitates himself before the ripple reaches his head, which is recovered by his zombie servant Wang Chung.",
+            "image": "https://image.tmdb.org/t/p/w300/dkKVrQZl55QazoySIXMPA2wPfKU.jpg",
+            "airDate": "2012-12-01",
+            "runtime": 24
+          },
+          "10": {
+            "title": "New York's JoJo",
+            "overview": "In 1938, 49 years after Jonathan Joestar's death, Speedwagon and Straizo travel to Mexico, where they discover an underground room filled with similar looking masks and a petrified body believed to be",
+            "image": "https://image.tmdb.org/t/p/w300/yjg2iTRgFaJpjOO8Ofkfk2NfzeV.jpg",
+            "airDate": "2012-12-08",
+            "runtime": 24
+          },
+          "11": {
+            "title": "The Game Master",
+            "overview": "As expected, Straizo recovers from Joseph's attack and uses the laser eye attack Dio used to seemingly pierce through JoJo's head and neck. However, this turns out to be a clever trick by Joseph.",
+            "image": "https://image.tmdb.org/t/p/w300/3daivEmX75UfB76yXaWeVQnRgLP.jpg",
+            "airDate": "2012-12-15",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Pillar Man",
+            "overview": "Joseph is confronted by one of Stroheim's men, Donovan, but manages to subdue him, learning that Speedwagon is still alive.",
+            "image": "https://image.tmdb.org/t/p/w300/wcOjVIOEzb5Y0RX3fQjR9r9QROH.jpg",
+            "airDate": "2012-12-22",
+            "runtime": 24
+          },
+          "13": {
+            "title": "JoJo vs. the Ultimate Lifeform",
+            "overview": "As Joseph begins to fight against Santana, Joseph finds his Ripple to not be effective against Santana, but it still helps protect him from the Pillar Man's attacks. Joseph appears to be unconscious a",
+            "image": "https://image.tmdb.org/t/p/w300/uI6BRy2weamun8NpvHri4vW7nIJ.jpg",
+            "airDate": "2013-01-05",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Ultimate Warriors from Ancient Times",
+            "overview": "Speedwagon brings statued remains of Santana to the headquarters of his foundation in Washington, D.C., where it is shown Santana is still alive, but his scientists are able to keep him dormant throug",
+            "image": "https://image.tmdb.org/t/p/w300/m39kBMOulcDWzj7kmWb6DdJtuRy.jpg",
+            "airDate": "2013-01-12",
+            "runtime": 24
+          },
+          "15": {
+            "title": "A Hero's Proof",
+            "overview": "Caesar engages Wamuu in battle for killing Mark, using his Bubble Launcher technique to surround the Pillar Man in Ripple enfused bubbles.",
+            "image": "https://image.tmdb.org/t/p/w300/2amKo6qHPILzrzooFDzjKJjBMMH.jpg",
+            "airDate": "2013-01-19",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Lisa Lisa, Hamon Coach",
+            "overview": "Wanting to teach JoJo to control his Ripple powers, Caesar takes him to Venice to meet his teacher, Lisa Lisa.",
+            "image": "https://image.tmdb.org/t/p/w300/u77DNcSXAeGIURVkHNGrrREdEGo.jpg",
+            "airDate": "2013-01-26",
+            "runtime": 24
+          },
+          "17": {
+            "title": "The Deeper Plan",
+            "overview": "Lisa Lisa explains to JoJo and Caesar how the creator of the Stone Mask, Kars, is seeking a perfectly cut Red Stone of Aja known as the Super Aja to power the Stone Mask and become the ultimate life f",
+            "image": "https://image.tmdb.org/t/p/w300/5HWdIVR8TA5qqIr6M3H1WFzSZjh.jpg",
+            "airDate": "2013-02-02",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Von Stroheim's Revenge",
+            "overview": "As JoJo awaits to warn Lisa Lisa about the Pillar Men, Esidisi's brain takes over the body of Suzi Q and sends the Super Aja off on a boat bound for Venice before confronting Lisa Lisa.",
+            "image": "https://image.tmdb.org/t/p/w300/jiNmwMUqX0AKaP20tyQ626E4dMK.jpg",
+            "airDate": "2013-02-09",
+            "runtime": 24
+          },
+          "19": {
+            "title": "A Race Toward the Brink",
+            "overview": "Stroheim starts using his new mechanical body, which was designed to surpass Santana, to fight against Kars. However, it proves futile against Kars' Light Mode.",
+            "image": "https://image.tmdb.org/t/p/w300/pU27dEESLs2WqOq8iuzB8q82bS4.jpg",
+            "airDate": "2013-02-16",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Young Caesar",
+            "overview": "Lisa Lisa tells JoJo of Caesar's childhood, in which he took to crime at a young age after being abandoned by his debt-ridden father, Mario.",
+            "image": "https://image.tmdb.org/t/p/w300/nKENXHCZPBmjLCx54xHC1aFOkiR.jpg",
+            "airDate": "2013-02-23",
+            "runtime": 24
+          },
+          "21": {
+            "title": "A Hundred Against Two",
+            "overview": "Whilst following Wamuu's trail of blood, JoJo and Lisa Lisa encounter another vampire named Wired Beck.",
+            "image": "https://image.tmdb.org/t/p/w300/dFwk5GFZ0znKMP5EkI7GjmrqwEa.jpg",
+            "airDate": "2013-03-02",
+            "runtime": 24
+          },
+          "22": {
+            "title": "A True Warrior",
+            "overview": "Before JoJo's and Wamuu's race begins, it is revealed that during each lap, there will be a different weapon for whoever can grab it from a pillar first.",
+            "image": "https://image.tmdb.org/t/p/w300/tlaWFTAuCVr9Fjq4HsHRcCPozQk.jpg",
+            "airDate": "2013-03-09",
+            "runtime": 24
+          },
+          "23": {
+            "title": "The Warrior of Wind",
+            "overview": "Launching his Final Mode attack, Gathering Gale, which starts peeling away his own body, Wamuu begins firing a stream of wind capable of cutting stone towards JoJo.",
+            "image": "https://image.tmdb.org/t/p/w300/tE3JdcRBT6LurWwSJv3p77JEfKe.jpg",
+            "airDate": "2013-03-16",
+            "runtime": 24
+          },
+          "24": {
+            "title": "The Ties That Bind JoJo",
+            "overview": "Being forced to cling onto a rope to stop Lisa Lisa from falling to her death, JoJo is at a huge disadvantage against Kars.",
+            "image": "https://image.tmdb.org/t/p/w300/rXZcKRYzNoNQ4r67jM4Nlwb9iFa.jpg",
+            "airDate": "2013-03-23",
+            "runtime": 24
+          },
+          "25": {
+            "title": "The Birth of a Superbeing",
+            "overview": "Kars demonstrates his new powers, turning his hand into a flesh-eating squirrel that deals damage to Stroheim. The sun rises, leaving a shocking discovery.",
+            "image": "https://image.tmdb.org/t/p/w300/8vrQgzGpFcfMEo2DOkhhRKFLIai.jpg",
+            "airDate": "2013-03-30",
+            "runtime": 24
+          },
+          "26": {
+            "title": "The Ascendant One",
+            "overview": "JoJo's victory, along with his arm, is cut short when Kars manages to survive the volcano by forming a shield of air bubbles to protect him from its deadly lava.",
+            "image": "https://image.tmdb.org/t/p/w300/hj5zHiMl8eQsVhtXTwRhIS8U4pX.jpg",
+            "airDate": "2013-04-06",
+            "runtime": 23
+          }
+        },
+        "2": {
+          "1": {
+            "title": "The Man Possessed by an Evil Spirit",
+            "overview": "In 1987, in Japan, a boy named Jotaro Kujo has willingly turned himself into jail, refusing to leave. Jotaro's mother, Holly, requests help from her father, Joseph Joestar, who travels to Japan alongs",
+            "image": "https://image.tmdb.org/t/p/w300/scuOivodwsDs5BNZkUY2jS13sg8.jpg",
+            "airDate": "2014-04-05",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Who Will Be the Judge!?",
+            "overview": "Jotaro heads to school and encounters a mysterious transfer student named Noriaki Kakyoin.",
+            "image": "https://image.tmdb.org/t/p/w300/6JCNGcKc2R7Zq7LGC3cFj3UGfio.jpg",
+            "airDate": "2014-04-12",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Curse of DIO",
+            "overview": "Jotaro is able to defeat Kakyoin. He takes the wounded Kakyoin back to his house, hoping to get some information about DIO.",
+            "image": "https://image.tmdb.org/t/p/w300/2X1Zfstzr1BW52HNjRMRsKnZdL4.jpg",
+            "airDate": "2014-04-19",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Tower of Grey",
+            "overview": "If they do not defeat DIO within 50 days, Holly could die - Jotaro and crew head to Egypt, where they think DIO is hiding. While on the plane, they run into another one of DIO's assassins.",
+            "image": "https://image.tmdb.org/t/p/w300/nlp95NrM938sMl1kKB8osMAtLLT.jpg",
+            "airDate": "2014-04-26",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Silver Chariot",
+            "overview": "DIO's next assassin, Polnareff attacks Jotaro and crew, Abdul faces him with his Magician's Red.",
+            "image": "https://image.tmdb.org/t/p/w300/AghzF1rmCHZGDdsXN3SMKNRTr8i.jpg",
+            "airDate": "2014-05-03",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Dark Blue Moon",
+            "overview": "With a new person in their party, they head to Singapore with the boat the Speedwagon Foundation provided them, during their journey Jotaro is targeted by an enemy Stand from within the water.",
+            "image": "https://image.tmdb.org/t/p/w300/jhdE6sVVhwSsxK0xK9RB3qpyy8j.jpg",
+            "airDate": "2014-05-10",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Strength",
+            "overview": "A giant ship shows itself. On board, they realize they can't seem to find a crew, but an orangutan.",
+            "image": "https://image.tmdb.org/t/p/w300/xjsHMznSir3akHtnH16BIDcshKc.jpg",
+            "airDate": "2014-05-17",
+            "runtime": 24
+          },
+          "8": {
+            "title": "The Devil",
+            "overview": "Arrived in Singapore, Jotaro's group stays at a hotel individually. A new Stand owner who is known as \"Devo the Cursed\" is awaiting Polnareff in his room. Devo's Stand increases its power as its user'",
+            "image": "https://image.tmdb.org/t/p/w300/3rYTunOs5VGdfaGrCxDXgF86ysu.jpg",
+            "airDate": "2014-05-24",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Yellow Temperance",
+            "overview": "Joseph uses Hermit Purple to create a message using the TV, which tells them that Kakyoin is a traitor.",
+            "image": "https://image.tmdb.org/t/p/w300/dUET3TBGxt9thWuzUrFe3tpfaCr.jpg",
+            "airDate": "2014-05-31",
+            "runtime": 24
+          },
+          "10": {
+            "title": "The Emperor and the Hanged Man (1)",
+            "overview": "The group travels to India. In a restaurant Polnareff is attacked by a mysterious Stand that is inside a mirror.",
+            "image": "https://image.tmdb.org/t/p/w300/a8nRTcBGY1Vw03jjYkwFYEPKFzv.jpg",
+            "airDate": "2014-06-07",
+            "runtime": 24
+          },
+          "11": {
+            "title": "The Emperor and the Hanged Man (2)",
+            "overview": "In an effort to save Polnareff, Abdul is injured by the enemy. Then J. Geil's Stand, Hanged Man attacks.",
+            "image": "https://image.tmdb.org/t/p/w300/mfj3aCnfgvcXOfl3tDAtv4o737Y.jpg",
+            "airDate": "2014-06-14",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Empress",
+            "overview": "The group heads toward Varanasi. On the way, Joseph realizes his arm is quite swollen.",
+            "image": "https://image.tmdb.org/t/p/w300/3QC9GTMDCFMpKAQV4YquiNffeVO.jpg",
+            "airDate": "2014-06-21",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Wheel of Fortune",
+            "overview": "Jotaro and the others head toward Pakistan in a car. Polnareff is driving the car on a very dangerous mountain road, and recklessly passes a slow moving vehicle that was in front of him.",
+            "image": "https://image.tmdb.org/t/p/w300/l8YemAEaMUomMc2JSZ7ARVUwxzP.jpg",
+            "airDate": "2014-06-28",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Justice (1)",
+            "overview": "Jotaro and the others successfully survive another attack from the enemy Stand users and make it into Pakistan. However, they decide to find an inn at a nearby village because of the dense fog they su",
+            "image": "https://image.tmdb.org/t/p/w300/zf52X5JVA4svjbcd2fYjZDLvLT1.jpg",
+            "airDate": "2014-07-05",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Justice (2)",
+            "overview": "Polnareff finally realizes that Enyaba is another assassin from DIO. He tries to warn the others, but Enyaba's Stand, Justice, has the ability to take control of people's bodies and corpses, and he is",
+            "image": "https://image.tmdb.org/t/p/w300/ae3To4PGIz11AJYVTWhT9SYaVEt.jpg",
+            "airDate": "2014-07-12",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Lovers (1)",
+            "overview": "After surviving Enyaba's attack, Jotaro and crew make it to Pakistan's capital, Karachi. There, they encounter DIO's next assassin, Steely Dan. Following DIO's orders, Steely Dan ruthlessly kills Enya",
+            "image": "https://image.tmdb.org/t/p/w300/zRVljMFwpT6Hoi5pBqGJ173KqYO.jpg",
+            "airDate": "2014-07-19",
+            "runtime": 24
+          },
+          "17": {
+            "title": "Lovers (2)",
+            "overview": "Steely Dan's Stand, The Lovers, has entered Joseph's brain. Dan puts himself at an advantage, with having Joseph's life on the line, and tells Jotaro to do various things for him, knowing Jotaro has n",
+            "image": "https://image.tmdb.org/t/p/w300/ideF7jyIvlj1C1oXyknK5XOiYkj.jpg",
+            "airDate": "2014-07-26",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Sun",
+            "overview": "Jotaro and the others continue their journey through the desert, trying to get to Cairo. They travel with camels and can't shake the feeling that someone is following them, but no one is in sight. Tra",
+            "image": "https://image.tmdb.org/t/p/w300/aENpJDDr3ushwPog85QES5yrgRP.jpg",
+            "airDate": "2014-08-02",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Death 13 (1)",
+            "overview": "Kakyoin is dreaming and dreams about being in a strange amusement park, where he encounters the Death tarot card. While in the dream, he witnesses Death 13 cut down a dog. Kakyoin wakes up screaming, ",
+            "image": "https://image.tmdb.org/t/p/w300/4r3BvItPiJr4MrfzMoSRSGhRp1z.jpg",
+            "airDate": "2014-08-09",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Death 13 (2)",
+            "overview": "Kakyoin tries to convince the others that the baby is suspicious, but that backfires and his friends start to doubt his sanity. Kakyoin then tries to convince them that he's not crazy, and shows them ",
+            "image": "https://image.tmdb.org/t/p/w300/5maqmVMqvLRa8upCTFsDb0eeygD.jpg",
+            "airDate": "2014-08-16",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Judgement (1)",
+            "overview": "While on an island on the edge of the Red Sea where Mohammed Abdul's father is said to live, Polnareff uncovers a magic lamp and its genie Cameo offers him three wishes, although all is not as it seem",
+            "image": "https://image.tmdb.org/t/p/w300/e5139qNppxsh1F7fHjG6O9dKxjT.jpg",
+            "airDate": "2014-08-23",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Judgement (2)",
+            "overview": "Polnareff must find out a way to escape the attacks of Cameo and his Stand Judgement who has apparently turned his sister Cherie and Abdul into zombies.",
+            "image": "https://image.tmdb.org/t/p/w300/or6DarOe0ZcIMkl5TA224tz07JA.jpg",
+            "airDate": "2014-08-30",
+            "runtime": 24
+          },
+          "23": {
+            "title": "High Priestess (1)",
+            "overview": "Jotaro and the others obtain a submarine as a new means of travel. Through the Red Sea, they try to head toward Egypt where DIO awaits. Using the sonar to detect any threats on the outside, the submar",
+            "image": "https://image.tmdb.org/t/p/w300/gK8xfRGEpShOqIJZOnbaiZSRCwz.jpg",
+            "airDate": "2014-09-06",
+            "runtime": 24
+          },
+          "24": {
+            "title": "High Priestess (2)",
+            "overview": "The group must find a way off of the submarine and away from the attacks of High Priestess.",
+            "image": "https://image.tmdb.org/t/p/w300/ybjDqAtZlcQqX1crhjfucCK2Gl1.jpg",
+            "airDate": "2014-09-13",
+            "runtime": 24
+          },
+          "25": {
+            "title": "Iggy the Fool and Geb's N'Doul (1)",
+            "overview": "Jotaro's group encounters N'Doul's Stand \"Geb\", and Iggy's \"The Fool\".",
+            "image": "https://image.tmdb.org/t/p/w300/3XwUNDyCQAei6IePlSk5JFRIwRe.jpg",
+            "airDate": "2015-01-10",
+            "runtime": 24
+          },
+          "26": {
+            "title": "Iggy the Fool and Geb's N'Doul (2)",
+            "overview": "The group's encounter with \"Geb\" and \"The Fool\" continues.",
+            "image": "https://image.tmdb.org/t/p/w300/db0YUJSa3uBYfDP4mstU36wYaMJ.jpg",
+            "airDate": "2015-01-17",
+            "runtime": 24
+          },
+          "27": {
+            "title": "Khnum's Zenyatta and Thoth's Mondatta",
+            "overview": "As the Joestar group arrives in Aswan they encounter Oingo's Stand \"Khnum\" and Boingo's Stand \"Thoth\".",
+            "image": "https://image.tmdb.org/t/p/w300/9lfYDhmJG3sGAXK13PoqHAGMB22.jpg",
+            "airDate": "2015-01-24",
+            "runtime": 24
+          },
+          "28": {
+            "title": "Anubis (1)",
+            "overview": "Jotaro's group encounters the Stand \"Anubis\".",
+            "image": "https://image.tmdb.org/t/p/w300/nE1IrnhJ5WU13z4tqv8oOtK1iZw.jpg",
+            "airDate": "2015-01-31",
+            "runtime": 24
+          },
+          "29": {
+            "title": "Anubis (2)",
+            "overview": "The encounter with the Stand \"Anubis\" continues.",
+            "image": "https://image.tmdb.org/t/p/w300/bnCgizSKrtxcqNrich0nCux2qgG.jpg",
+            "airDate": "2015-02-07",
+            "runtime": 24
+          },
+          "30": {
+            "title": "Mariah's Divine Bastet (1)",
+            "overview": "Jotaro and the others arrive in Luxor. While heading there, Joseph notices an electrical outlet in a rock. Obviously fascinated by the electrical outlet in the rock, Joseph gets closer, and he gets sh",
+            "image": "https://image.tmdb.org/t/p/w300/mKGaC0WiexoA4Jd2nUFFhFOqgHf.jpg",
+            "airDate": "2015-02-14",
+            "runtime": 24
+          },
+          "31": {
+            "title": "Mariah's Divine Bastet (2)",
+            "overview": "Due to the powers of an enemy Stand, Joseph's body becomes magnetised. While chasing after the woman that seemed to be the Stand user, Abdul also touches the electrical outlet and becomes magnetised a",
+            "image": "https://image.tmdb.org/t/p/w300/uMUJQK3VKOCYa43uDJijIl5Gm9c.jpg",
+            "airDate": "2015-02-21",
+            "runtime": 24
+          },
+          "32": {
+            "title": "Alessi's Divine Set (1)",
+            "overview": "While Joseph and Avdol were fighting with Mariah, Jotaro gets concerned that they haven't shown up yet, and goes to look for them around Luxor. Then, Polnareff senses someone following them and confro",
+            "image": "https://image.tmdb.org/t/p/w300/38depNzJoAwTiPrTMcnKkiTYzmT.jpg",
+            "airDate": "2015-02-28",
+            "runtime": 24
+          }
+        },
+        "3": {
+          "1": {
+            "title": "Jotaro Kujo! Meets Josuke Higashikata",
+            "overview": "April 1999. Jotaro Kujo arrives to Morioh City in search of someone named Higashikata, and ends up running into a young man surrounded by delinquents. Jotaro then finds out that his name is Josuke Hig",
+            "image": "https://image.tmdb.org/t/p/w300/nBHOE8hz1XC2h09y2rgoTsjlZeO.jpg",
+            "airDate": "2016-04-02",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Josuke Higashikata! Meets Angelo",
+            "overview": "Josuke spots the terrible and violent villain Angelo's Stand, and tells Jotaro about that incident. Jotaro figures it's a Stand that can somehow enter people, so he warns Josuke to not eat or drink an",
+            "image": "https://image.tmdb.org/t/p/w300/kz4xzFmVJ9P2ehjGuJ5TAQRylE6.jpg",
+            "airDate": "2016-04-09",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Nijimura Brothers (1)",
+            "overview": "Angelo's Stand ability was brought forth by the mysterious bow and arrow, and apparently they're also connected to Dio. After defeating Angelo, Jotaro thought that the danger had left the city, and tr",
+            "image": "https://image.tmdb.org/t/p/w300/cQ3jZIlqROZ3uG251lDPtz92ERL.jpg",
+            "airDate": "2016-04-16",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Nijimura Brothers (2)",
+            "overview": "In order to save Koichi, Josuke goes further into the Nijimura household. Suddenly, he's attacked from many tiny beams of light. Josuke manages to dodge the attack, but it hits Okuyasu right in the fa",
+            "image": "https://image.tmdb.org/t/p/w300/kyjpYQr58x0mpjdZXcSOsKVdIBU.jpg",
+            "airDate": "2016-04-23",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Nijimura Brothers (3)",
+            "overview": "Josuke and Koichi defeat Keicho. They go further into the Nijimura house, in order to destroy the bow and arrow to make sure there will be no more victims. However, they end up hearing strange noises ",
+            "image": "https://image.tmdb.org/t/p/w300/cqsP1QLw9gBB0YlCqJGr6jBmlut.jpg",
+            "airDate": "2016-04-30",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Koichi Hirose (Reverb)",
+            "overview": "Riding his bike to school, Koichi accidentally runs over a bag that was in the road that had a cat inside. Koichi is instantly overwhelmed by what happend. Then suddenly, a man named Tamami Kobayashi ",
+            "image": "https://image.tmdb.org/t/p/w300/eRGaYheGtR4ww7pLpbMOPXJHd7m.jpg",
+            "airDate": "2016-05-07",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Toshikazu Hazamada (Show Off)",
+            "overview": "Josuke and Koichi hear from Tamami that a high school student named Hazamada might also be a Stand user, so the two go to the school and investigate. Josuke checks inside Hazamada's locker, and finds ",
+            "image": "https://image.tmdb.org/t/p/w300/2Kk0aWd0Vilvh6csch62bfAGG0c.jpg",
+            "airDate": "2016-05-14",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Yukako Yamagishi Falls in Love (1)",
+            "overview": "Koichi is asked out by another student in his grade named Yukako Yamagishi. At first, he couldn't hide his joy from being asked out, but quickly has second thoughts when she suddenly loses her temper ",
+            "image": "https://image.tmdb.org/t/p/w300/zzce3y2XifFmUdJgYYMTOPcIJff.jpg",
+            "airDate": "2016-05-21",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Yukako Yamagishi Falls in Love (2)",
+            "overview": "Koichi can't handle living in captivity any longer and tries to plan his escape. While talking to Yukako, Koichi finds out that there's a payphone nearby, and has Echoes go find it. He tries to contac",
+            "image": "https://image.tmdb.org/t/p/w300/4WSpnV1JiRZYsEPRjcqn7QkgcS2.jpg",
+            "airDate": "2016-05-28",
+            "runtime": 23
+          },
+          "10": {
+            "title": "Let's Go Eat Some Italian Food",
+            "overview": "Josuke and Okuyasu visit a brand new Italian restaurant in Morioh. Rather than customers choosing items from a menu, the chef, Tonio, decides what the customer will eat after he looks at them. Tonio w",
+            "image": "https://image.tmdb.org/t/p/w300/72Ix6MaHxA1QfejiMrQotYbDuBe.jpg",
+            "airDate": "2016-06-04",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Chili Pepper (1)",
+            "overview": "Red Hot Chili Pepper shows himself in front of Josuke. He seems to be more powerful than Jotaro, and is able to travel anywhere where electricity flows. Jotaro summons Josuke, Okuyasu, and Koichi and ",
+            "image": "https://image.tmdb.org/t/p/w300/jVQPG7NTEbvb1tAkP1sWB5yyx1z.jpg",
+            "airDate": "2016-06-11",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Chili Pepper (2)",
+            "overview": "In order to defeat Red Hot Chili Pepper, who intends on killing Joseph Joestar, Josuke and the others head to the harbor. Jotaro believes that Red Hot Chili Pepper will try to get to Joseph's boat wit",
+            "image": "https://image.tmdb.org/t/p/w300/qyBxMuZ9E477IBIRDtMYgqDpeUh.jpg",
+            "airDate": "2016-06-18",
+            "runtime": 24
+          },
+          "13": {
+            "title": "We Picked Up Something Crazy!",
+            "overview": "Josuke and the others successfully capture Akira Otoishi and safely retrieve the bow and arrow. Peace is back in Morioh, but Josuke still faces a big problem... He still can't seem to get closer to hi",
+            "image": "https://image.tmdb.org/t/p/w300/9wV8WX4tqHxi7HAOWiT5zI6bzke.jpg",
+            "airDate": "2016-06-25",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Let's Go to the Manga Artist's House (1)",
+            "overview": "Koichi and Hazamada find out that the famous comic artist, Rohan Kishibe, who draws \"Pink Dark Boy,\" lives in Morioh and they go to his house to get an autograph. Not only did Rohan promise them autog",
+            "image": "https://image.tmdb.org/t/p/w300/hbIcD5XByQwUe7KyIfIdX9mV182.jpg",
+            "airDate": "2016-07-02",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Let's Go to the Manga Artist's House (2)",
+            "overview": "Koichi suddenly arrives at Rohan's house. Koichi carefully goes inside and finds Rohan drawing manga at an incredible speed. Apparently he can't stop himself from drawing after reading about Koichi's ",
+            "image": "https://image.tmdb.org/t/p/w300/5kkHGP1JYv8vkANnLAxLhiytmwt.jpg",
+            "airDate": "2016-07-09",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Let's Go Hunting!",
+            "overview": "Josuke suddenly gets invited to go hunting by Jotaro. The purpose of this hunting trip was to hunt down the rat that gained Stand abilities after Akira Otoishi shot it with the bow and arrow. As they ",
+            "image": "https://image.tmdb.org/t/p/w300/cM6pzt2M3qdfFAm4ZIyswO1owtf.jpg",
+            "airDate": "2016-07-16",
+            "runtime": 24
+          },
+          "17": {
+            "title": "Rohan Kishibe's Adventure",
+            "overview": "Koichi and Rohan discover a bizarre sight. Before them lies an alley that's not listed on any map. They decide to go down the alley and find only empty houses that are also not listed on the map. Whil",
+            "image": "https://image.tmdb.org/t/p/w300/tg5kE9phoGwf3C7vYcInf8Bfzfk.jpg",
+            "airDate": "2016-07-23",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Shigechi's Harvest (1)",
+            "overview": "As Josuke was worrying about not having any money, a tiny little Stand holding a 1-yen coin appeared in front of him. A surprised Josuke follows it and encounters a new Stand user name Shigekiyo Yangy",
+            "image": "https://image.tmdb.org/t/p/w300/4MNmmBeZEf2CuMxXUHLEr4bzTwI.jpg",
+            "airDate": "2016-07-30",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Shigechi's Harvest (2)",
+            "overview": "Josuke and the others head to the bank with their lottery ticket, but the bank is suspicious if that ticket really belongs to them. Josuke insists that they bought the ticket, but they find out that s",
+            "image": "https://image.tmdb.org/t/p/w300/znhHggYeACwTiB5f55WLEbQsIOv.jpg",
+            "airDate": "2016-08-06",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Yukako Yamagishi Dreams of Cinderella",
+            "overview": "Yukako, who was depressed because Koichi wouldn't look her way, sees a mysterious shop one day called Salon Cinderella. Unlike other salons, apparently this was a salon that created faces to bring peo",
+            "image": "https://image.tmdb.org/t/p/w300/lAwFK8mqXQ7GhdqNHGOyRI8Kkgo.jpg",
+            "airDate": "2016-08-13",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Yoshikage Kira Just Wants to Live Quietly (1)",
+            "overview": "As Yoshikage walked through the town at lunchtime, declined the offer to eat lunch with his female coworkers, and heads to a bakery to buy lunch. While enjoying his lunch outdoors, Shigechi walks by a",
+            "image": "https://image.tmdb.org/t/p/w300/cWl518A9VpDd0G9cRKLvzlzX8rZ.jpg",
+            "airDate": "2016-08-20",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Yoshikage Kira Just Wants to Live Quietly (2)",
+            "overview": "Yoshikage Kira was the killer hiding in Morioh and is also a Stand user. Shigechi finds out this secret, so Kira tries to dispose of him, but Shigechi fights back with Harvest. However, because of Kir",
+            "image": "https://image.tmdb.org/t/p/w300/10hLjMFGoPXYop9YpWoRB53RB8u.jpg",
+            "airDate": "2016-08-27",
+            "runtime": 24
+          },
+          "23": {
+            "title": "Heart Attack (1)",
+            "overview": "Jotaro and Koichi try to track down the owner of the button and run into the murderer, Yoshikage Kira and his Stand, Killer Queen's bomb, Heart Attack at Centipede Shoes. Koichi wants to go after Kira",
+            "image": "https://image.tmdb.org/t/p/w300/1uOILrGnaL2TvY3HFnr6LPk64f1.jpg",
+            "airDate": "2016-09-03",
+            "runtime": 24
+          },
+          "24": {
+            "title": "Heart Attack (2)",
+            "overview": "Koichi manages to survive because Echoes Act 3 made Sheer Heart Attack heavy, but then the murderer, Yoshikage Kira shows up! Feeling intense anger against the murderer, Koichi fights Kira with Act 3,",
+            "image": "https://image.tmdb.org/t/p/w300/oNKFFuVbZX4sPY5Jr0pjSdVdjPP.jpg",
+            "airDate": "2016-09-10",
+            "runtime": 24
+          },
+          "25": {
+            "title": "Heart Father",
+            "overview": "Josuke and the others head to the house that Yoshikage Kira used to live to try to find some clues on him. Kira had very few unique characteristics, but Jotaro comes to the conclusion that he hid all ",
+            "image": "https://image.tmdb.org/t/p/w300/xxvGbyoDI566zDbxJhrEQheJaew.jpg",
+            "airDate": "2016-09-17",
+            "runtime": 24
+          },
+          "26": {
+            "title": "Janken Boy Is Coming!",
+            "overview": "Yoshihiro successfully steals the bow and arrow from Josuke and the others and is on the run to try to find other people to make into potential Stand users to protect his son, Yoshikage. He tells the ",
+            "image": "https://image.tmdb.org/t/p/w300/xIdSSpFYUQuKxWl27fw08RMY5pc.jpg",
+            "airDate": "2016-09-24",
+            "runtime": 24
+          },
+          "27": {
+            "title": "I'm an Alien",
+            "overview": "Kira had been living as Kosaku Kawajiri ever since he stole his face, but he starts to realize just how hard it is to live controlling his urge to kill. Kira sees a woman pass by and he wants to show ",
+            "image": "https://image.tmdb.org/t/p/w300/f6QKZJ6pBvoLtFdpdgkqrivHB02.jpg",
+            "airDate": "2016-10-01",
+            "runtime": 24
+          },
+          "28": {
+            "title": "Highway Go Go (1)",
+            "overview": "Rohan has a feeling that Josuke is cheating at cee-lo, and cuts off his own pinky. If he is unable to figure out Josuke's trick in the next round, he says he will pay him 2 million yen to have him use",
+            "image": "https://image.tmdb.org/t/p/w300/axUnNAcBraDA7zlyIbwGMvKJ1qs.jpg",
+            "airDate": "2016-10-08",
+            "runtime": 24
+          },
+          "29": {
+            "title": "Highway Go Go (2)",
+            "overview": "Jotaro tries to track down the mysterious foot print Stand's user. He manages to outrun the Stand with a motorcycle, and thinks to call Koichi and ask him to find the user by using Echoes. Meanwhile, ",
+            "image": "https://image.tmdb.org/t/p/w300/ij231eqNzgKgKn4pzJbHTBKFfZV.jpg",
+            "airDate": "2016-10-15",
+            "runtime": 24
+          },
+          "30": {
+            "title": "Cats Love Yoshikage Kira",
+            "overview": "Kawajiri hears from Shinobu that there is a British Blue cat in the basement with a hole in its neck. Kawajiri wonders if it was shot with the arrow, and goes down to check, however all he finds is a ",
+            "image": "https://image.tmdb.org/t/p/w300/bo1hKP4TCgthCDJ1lceOobF3CkH.jpg",
+            "airDate": "2016-10-22",
+            "runtime": 24
+          },
+          "31": {
+            "title": "July 15th (Thurs) (1)",
+            "overview": "Yoshihiro looks for his missing son, Yoshikage Kira, when he spots Kosaku Kawajiri. He is convinced that he is his son, Yoshikage, and tries to get close, but the he spots Hayato taking video of him. ",
+            "image": "https://image.tmdb.org/t/p/w300/uqEfSckZjB82cjXKlWAiRZGFAxw.jpg",
+            "airDate": "2016-10-29",
+            "runtime": 24
+          },
+          "32": {
+            "title": "July 15th (Thurs) (2)",
+            "overview": "In order to get estimates for the fire damage and restoration costs to Rohan's house, the architect, Masazo Kinoto comes by. Rohan invites him into his house, but Rohan can't help but wonder about Kin",
+            "image": "https://image.tmdb.org/t/p/w300/ufGdAkIc65SP5mNAKVt925JW8TK.jpg",
+            "airDate": "2016-11-05",
+            "runtime": 24
+          },
+          "33": {
+            "title": "July 15th (Thurs) (3)",
+            "overview": "Rohan ends up looking at Masazo Kinoto's back, and becomes possessed by the Stand Cheap Trick. Because any attack on Cheap Trick would just come back to Rohan, he can't attack it, which puts him into ",
+            "image": "https://image.tmdb.org/t/p/w300/dyl2OpHI8SEKTeir6x8eNkJ40sS.jpg",
+            "airDate": "2016-11-12",
+            "runtime": 24
+          },
+          "34": {
+            "title": "July 15th (Thurs) (4)",
+            "overview": "At his wit's end with Cheap Trick, Rohan calls Koichi over to his house and asks him for help. Rohan does everything in his power not to show Koichi the Stand that's on his back, which just makes Koic",
+            "image": "https://image.tmdb.org/t/p/w300/ehSgrfwoFm16uPwrKNALBGkL8fE.jpg",
+            "airDate": "2016-11-19",
+            "runtime": 24
+          },
+          "35": {
+            "title": "Bites the Dust (1)",
+            "overview": "After being cornered, Kosaku Kawajiri gets rid of Hayato. Though he made it look like an accident, Rohan and the others have spotted Hayato, and were coming to the Kawajiri household the next day to a",
+            "image": "https://image.tmdb.org/t/p/w300/1ZDZ6PPR25Nt3yapK6p00oMONmP.jpg",
+            "airDate": "2016-11-26",
+            "runtime": 24
+          },
+          "36": {
+            "title": "Bites the Dust (2)",
+            "overview": "After blowing up Rohan Kishibe with Killer Queen's third ability, Bites the Dust, Hayato is told by Kira as to what happened and returns to the same morning. He then thinks that the only people who co",
+            "image": "https://image.tmdb.org/t/p/w300/pncmBSW4wEOvtF9obbClNvoAMOF.jpg",
+            "airDate": "2016-12-03",
+            "runtime": 24
+          },
+          "37": {
+            "title": "Shining D (Diamond) Is Unbreakable (1)",
+            "overview": "Hayato's plan to kill Kira with Stray Cat's air bullets failed. Kira realizes that Hayato has repeated the same morning numerous times, and realizes that it's becoming dangerous for Hayato to repeat t",
+            "image": "https://image.tmdb.org/t/p/w300/cS42UnHkd4KKrNbcYMnQlGBIQbZ.jpg",
+            "airDate": "2016-12-10",
+            "runtime": 24
+          },
+          "38": {
+            "title": "Shining D (Diamond) Is Unbreakable (2)",
+            "overview": "Josuke and Hayato try to force Killer Queen and Stray Cat into close-quarters combat by going into a nearby house. However, air bullets start to show up in the house. Josuke tries to dodge them by thr",
+            "image": "https://image.tmdb.org/t/p/w300/4mVjtApmnqodo4SZMKjCSOgCqv1.jpg",
+            "airDate": "2016-12-17",
+            "runtime": 24
+          },
+          "39": {
+            "title": "Goodbye, Morioh – The Heart of Gold",
+            "overview": "Josuke and the others finally corner Kira. Jotaro also arrives but Kira uses Bites the Dust on a paramedic who came to help and tries to blow away time gain. He tells the woman his true identity, caus",
+            "image": "https://image.tmdb.org/t/p/w300/bsB2pjF5ttSILzRlUgK3BFriHLa.jpg",
+            "airDate": "2016-12-24",
+            "runtime": 24
+          }
+        },
+        "4": {
+          "1": {
+            "title": "Golden Wind",
+            "overview": "Koichi arrives in Italy on a mission from Jotaro to find Giorno; they meet haphazardly when Giorno steals Koichi's luggage, and the ensuing chase leads Giorno into a Stand battle with the gangster Lea",
+            "image": "https://image.tmdb.org/t/p/w300/iPT7iMdv1W5ThQDgPhWpBTAkX3T.jpg",
+            "airDate": "2018-10-06",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Bucciarati Is Coming",
+            "overview": "Faced with Bucciarati's Stand, Sticky Fingers, Giorno desperately uses Gold Experience to defend himself.",
+            "image": "https://image.tmdb.org/t/p/w300/gepvDGsqxqZvBE1MYrm47ATeMkl.jpg",
+            "airDate": "2018-10-13",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Meet the Gangster Behind the Wall",
+            "overview": "Giorno is interviewed by a strange man to enter the Passione gang and achieve his dream of becoming a \"Gang-Star\".",
+            "image": "https://image.tmdb.org/t/p/w300/4JY2DLRtU1pQ6msmk7KIhLjEIyH.jpg",
+            "airDate": "2018-10-20",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Joining the Gang",
+            "overview": "After apparently failing Polpo's test, Giorno is attacked by his stand, Black Sabbath, who tries to pierce his soul with a stand arrow.",
+            "image": "https://image.tmdb.org/t/p/w300/6ZasibIf547XQezQ4UnCBWJfZ8Y.jpg",
+            "airDate": "2018-10-27",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Find Polpo's Fortune!",
+            "overview": "News of Polpo's death reach the organization, along with word that he had a huge fortune hidden somewhere. Meanwhile, Giorno meets Bucciarati's gang.",
+            "image": "https://image.tmdb.org/t/p/w300/73Cvk4yoiEguhVowm5D0ZS2vh0H.jpg",
+            "airDate": "2018-11-03",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Moody Jazz's Counterattack",
+            "overview": "Bucciarati and Abbacchio are the only members of the gang left in the yacht. They have to find out where the enemy stand is hiding and how does it work.",
+            "image": "https://image.tmdb.org/t/p/w300/pYJdaOurSUmVJLFeYBtM6QQHZn1.jpg",
+            "airDate": "2018-11-10",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Six Bullets Appears (1)",
+            "overview": "After defeating Zucchero, the gang realizes that he has already told someone else where they were going and why.",
+            "image": "https://image.tmdb.org/t/p/w300/cwfWwzuLyR07kKgzK5pulnKrmfU.jpg",
+            "airDate": "2018-11-17",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Six Bullets Appears (2)",
+            "overview": "Mista chases a Passione member named Sale to stop him from finding Polpo's treasure.",
+            "image": "https://image.tmdb.org/t/p/w300/u5x4cAwSzvX3CgYEGtStyORWnCM.jpg",
+            "airDate": "2018-11-24",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The First Mission from the Boss",
+            "overview": "After being promoted to capo, Bucciarati and his gang are tasked to protect the boss' daughter.",
+            "image": "https://image.tmdb.org/t/p/w300/tCIGtBjOQFfb1dZh9YpZSYtt3wG.jpg",
+            "airDate": "2018-12-01",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Hitman Team",
+            "overview": "Narancia discovers that he is slowly shrinking due to the wound Formaggio's stand, Little Feet, had inflicted on him.",
+            "image": "https://image.tmdb.org/t/p/w300/48YJp0INCiFKl8YiCtUNYQWLnOv.jpg",
+            "airDate": "2018-12-08",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Narancia's Li'l Bomber",
+            "overview": "Formaggio traps the now miniature Narancia beneath his foot and attempts to interrogate him, but Narancia resists. A flashback shows Narancia's early life on the streets and his rescue by Bucciarati.",
+            "image": "https://image.tmdb.org/t/p/w300/hd07kXQQxPmL4wz32cZdJcleaCO.jpg",
+            "airDate": "2018-12-15",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Second Mission from the Boss",
+            "overview": "In order to protect Trish from the Hitman Team, Bucciarati and crew's second mission from the boss was to go find a key in Pompei for some kind of vehicle that should aid them later on. Following orde",
+            "image": "https://image.tmdb.org/t/p/w300/rjnnRvZPCzQSIlFl8jsWSX0xEfH.jpg",
+            "airDate": "2018-12-22",
+            "runtime": 24
+          }
+        },
+        "6": {
+          "1": {
+            "title": "STEEL BALL RUN",
+            "overview": "After a fateful encounter with outlaw Gyro Zeppeli, former racing prodigy Johnny Joestar enters the Steel Ball Run, the first horse race across America.",
+            "image": "https://image.tmdb.org/t/p/w300/4ATJwDwspxLCYEZaRbCpIyxd7Wo.jpg",
+            "airDate": "2026-03-19",
+            "runtime": 49
+          },
+          "2": {
+            "title": "The Sheriff's Request to Mountain Tim",
+            "overview": "After a shocking end to the 1st STAGE, abnormal murders unfold. Legendary cowboy Mountain Tim steps in to investigate as the tense 2nd STAGE begins.",
+            "image": "https://image.tmdb.org/t/p/w300/nVjUqzoZXDGXajjged1ZhUpj1jr.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 25
+          },
+          "3": {
+            "title": "The Desert-Born Outlaws",
+            "overview": "At camp, Johnny catches a glimpse of Gyro's past. Then the Boomboom Family strikes with an otherworldly power. The duo escape — or so they think.",
+            "image": "https://image.tmdb.org/t/p/w300/mb2QqkvlxNJ1y3MEa98blJwIqKV.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 25
+          },
+          "4": {
+            "title": "The Devil's Palm",
+            "overview": "Caught in the Boombooms' trap, a magnetic force threatens to tear Johnny, Gyro and Mountain Tim apart. They learn about \"Stands\" and Johnny's body reacts.",
+            "image": "https://image.tmdb.org/t/p/w300/qy1wfzBxL1HIplRlUXATSEKLErC.jpg",
+            "airDate": "2026-10-09",
+            "runtime": 25
+          },
+          "5": {
+            "title": "The Terrorist from a Faraway Country",
+            "overview": "At a checkpoint, Oye — a man who knows Gyro's past — confronts the duo. His power to turn anything he touches into a bomb leaves them with nowhere to run.",
+            "image": "https://image.tmdb.org/t/p/w300/2c7ajDu8SXa4re1FfsCLA2IVZTq.jpg",
+            "airDate": "2026-10-16",
+            "runtime": 25
           }
         }
-      }
+      },
+      "tsSlug": "jojos-bizarre-adventure"
     },
     "the-exiled-heavy-knight-knows-how-to-game-the-system": {
       "title": "The Exiled Heavy Knight Knows How to Game the System",
@@ -2096,59 +2868,59 @@
       "guide": {
         "3": {
           "1": {
-            "title": "Jobless Reincarnation",
-            "overview": "A 34-year-old unemployed recluse get hit by a truck... and wakes up as a newborn baby in a fantasy world! With loving parents, a lifetime of regrets, and a beginner’s magic textbook, he sets out to ma",
-            "image": "https://image.tmdb.org/t/p/w300/sS93JaHkWvhecsmgSdg5MFel3y5.jpg",
-            "airDate": "2021-01-11",
+            "title": "Burn Bright, Mad Dog",
+            "overview": "Ghislaine takes Eris to train under the Sword God, but Eris's brash attitude angers the other disciples.",
+            "image": "https://image.tmdb.org/t/p/w300/9qTNrEMxqBtcGcY45S0otQsiDTa.jpg",
+            "airDate": "2026-07-04",
             "runtime": 24
           },
           "2": {
-            "title": "Master",
-            "overview": "Rudy begins training with his new magic tutor and learning swordsmanship from his father. He makes rapid progress, but traumatic memories from his past life leave him too afraid to go outside. Is his ",
-            "image": "https://image.tmdb.org/t/p/w300/gjktze6OF0wESkbHU4h3dxcWNoe.jpg",
-            "airDate": "2021-01-18",
+            "title": "Howl, Mad Dog",
+            "overview": "Nina continues to eye Eris as a rival, but training with masters of other styles sparks new discoveries.",
+            "image": "https://image.tmdb.org/t/p/w300/8LbtykFB7jK5pC5CmZQL9GoAQxh.jpg",
+            "airDate": "2026-07-04",
             "runtime": 24
           },
           "3": {
-            "title": "A Friend",
-            "overview": "Rudy begins to explore the village and rescues a green-haired child from a group of bullies. The two grow close practicing magic, but is there more to Rudy’s new friend than he thinks?",
-            "image": "https://image.tmdb.org/t/p/w300/d29kiiic7xbvsxCnJ4syiO3JxYy.jpg",
-            "airDate": "2021-01-25",
+            "title": "Life Back at Home",
+            "overview": "Rudeus starts a new life with Roxy and Sylphiette, but not all his friends approve of his second marriage.",
+            "image": "https://image.tmdb.org/t/p/w300/zMv1IruZ7cJdmisb4gmTFuZU8jB.jpg",
+            "airDate": "2026-07-13",
             "runtime": 24
           },
           "4": {
-            "title": "Emergency Family Meeting",
-            "overview": "The Greyrat family is overjoyed when Zenith announces that she’s pregnant with a second child, but the mood takes a dour turn when Lilia reveals that she is also pregnant and Paul is the father. Will ",
-            "image": "https://image.tmdb.org/t/p/w300/uVN34pxWO1N1eFchpHdPXFMrMx0.jpg",
-            "airDate": "2021-02-01",
+            "title": "A King-Class Water Mage",
+            "overview": "Fearful of losing more loved ones, Rudeus begs Roxy to teach him a more potent form of magic.",
+            "image": "https://image.tmdb.org/t/p/w300/n5rzMFaXeEliZbXtjDswvU4T0Ss.jpg",
+            "airDate": "2026-07-20",
             "runtime": 24
           },
           "5": {
-            "title": "A Young Lady and Violence",
-            "overview": "Rudy arrives in the city of Roa, where he’s supposed to spend the next five years tutoring the daughter of the local lord. His student, however, is more than he bargained for, and he’ll have to fight ",
-            "image": "https://image.tmdb.org/t/p/w300/2oiW3SSj752soSVpj8LST72d4Ib.jpg",
-            "airDate": "2021-02-08",
+            "title": "Celebrations",
+            "overview": "Rudeus attends Cliff and Elinalise's wedding and goes shopping for his sisters' birthday presents.",
+            "image": "https://image.tmdb.org/t/p/w300/7yeKe0EZ4Mosk8FMrsHEyNhIavU.jpg",
+            "airDate": "2026-07-27",
             "runtime": 24
           },
           "6": {
-            "title": "A Day Off in Roa",
-            "overview": "Rudy is officially Eris’s tutor, but she doesn’t want to learn anything but magic. As Rudy struggles to get her interested in other subjects, he realizes that non-stop lessons are causing her stress a",
-            "image": "https://image.tmdb.org/t/p/w300/tSBi3Ob8qWKMlpG6pMeukJUhT25.jpg",
-            "airDate": "2021-02-15",
+            "title": "Another Domestic Disaster?",
+            "overview": "Rudeus accompanies Roxy on a bodyguard mission and runs into an unexpected face from his past.",
+            "image": "https://image.tmdb.org/t/p/w300/6381zSllVVPtSsMUx2UazOTj0wM.jpg",
+            "airDate": "2026-08-03",
             "runtime": 24
           },
           "7": {
-            "title": "What Lies Beyond Effort",
-            "overview": "Eris’s 10th birthday is fast approaching, and her grandfather has invited nobles from across the kingdom to a dance party to celebrate. There’s just one problem: Eris can’t dance, and she’s quickly lo",
-            "image": "https://image.tmdb.org/t/p/w300/rrEKdSZXOT0cEX1fSEmty0Q6lD1.jpg",
-            "airDate": "2021-02-22",
+            "title": "Phase Four",
+            "overview": "Following a successful summoning experiment, Nanahoshi offers Rudeus a reward.",
+            "image": "https://image.tmdb.org/t/p/w300/rE5aRuoAGoKUMRuxlCgZCN61PvC.jpg",
+            "airDate": "2026-08-10",
             "runtime": 24
           },
           "8": {
-            "title": "Turning Point 1",
-            "overview": "Rudy reaches his 10th birthday, and Eris and her family plan a surprise party for him. Meanwhile, the strange orb hovering over the city remains a mystery as powerful entities across the world begin t",
-            "image": "https://image.tmdb.org/t/p/w300/A68qEBAuk5ubUWdt6zTqiT2NiAB.jpg",
-            "airDate": "2021-03-01",
+            "title": "The Flying Fortress",
+            "overview": "Rudeus seeks an audience with the hero Perugius, hoping to find a cure for his mother's condition.",
+            "image": "https://image.tmdb.org/t/p/w300/38UxygrYWG3Ln7ql3hjfoFjvfjZ.jpg",
+            "airDate": "2026-08-17",
             "runtime": 24
           }
         }
