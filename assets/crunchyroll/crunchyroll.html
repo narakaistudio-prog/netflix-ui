@@ -280,21 +280,25 @@
        meta line (S3 · E3 · “Episode name” + clock). Owner: "fake timing mat
        dikhana" — isliye koi andaza/relative time nahi; clock sirf tab jab
        player ne sach me position + duration batayi ho (sec>=10 aur dur>sec). */
-    .continue-grid{display:-webkit-flex;display:flex;gap:16px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin}
-    .continue-card{position:relative;-webkit-flex:1 1 0;flex:1 1 0;min-width:220px;background:#15171b;border:1px solid #2c2e33;border-radius:8px;overflow:hidden;transition:border-color .18s ease,transform .18s ease}
+    .continue-grid{display:-webkit-flex;display:flex;align-items:flex-start;gap:16px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin}
+    /* Owner: "continue watching bahut bada hai, player ke jitna bada hai — chota karo".
+       Pehle card `flex:1 1 0` tha, isliye ek hi resume item poori row me phail kar
+       ~790px ka poster ban jata tha. Ab rail ke baaki cards jaisa fixed hissa:
+       ek row me 5 card (gap 16px × 4 hata kar), narrow screen par horizontal scroll. */
+    .continue-card{position:relative;-webkit-flex:0 0 calc(20% - 13px);flex:0 0 calc(20% - 13px);width:calc(20% - 13px);min-width:0;background:#15171b;border:1px solid #2c2e33;border-radius:8px;overflow:hidden;transition:border-color .18s ease,transform .18s ease}
     .continue-card:hover,.continue-card:focus-within{border-color:#f47521;transform:translateY(-2px)}
     .continue-main{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;width:100%;border:0;background:transparent;color:inherit;padding:0;text-align:left;cursor:pointer}
     .continue-thumb{position:relative;display:block;width:100%;height:0;padding-bottom:56.25%;overflow:hidden;background:#0b0c0f}
     .continue-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
     .continue-thumb:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%);pointer-events:none}
-    .continue-play{position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:rgba(10,11,14,.55);border:2px solid rgba(255,255,255,.9);z-index:2;display:-webkit-flex;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s,color .18s}
-    .continue-play:before{content:'';width:0;height:0;margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent currentColor}
+    .continue-play{position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(10,11,14,.55);border:2px solid rgba(255,255,255,.9);z-index:2;display:-webkit-flex;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .18s,border-color .18s,color .18s}
+    .continue-play:before{content:'';width:0;height:0;margin-left:3px;border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent currentColor}
     .continue-card:hover .continue-play{background:#f47521;border-color:#f47521;color:#111}
-    .continue-copy{display:block;padding:11px 13px 13px}
-    .continue-copy strong{display:block;font-size:14.5px;line-height:1.3;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .continue-copy{display:block;padding:10px 12px 12px}
+    .continue-copy strong{display:block;font-size:13.5px;line-height:1.3;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .continue-sub{display:-webkit-flex;display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:5px;min-height:15px}
-    .continue-sub small{font-size:11.5px;color:#9aa0ab;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .continue-sub em{font-style:normal;font-size:11.5px;color:#7f8590;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .continue-sub small{font-size:11px;color:#9aa0ab;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .continue-sub em{font-style:normal;font-size:11px;color:#7f8590;white-space:nowrap;font-variant-numeric:tabular-nums}
     .continue-thumb .progress{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.22);z-index:2;margin:0}
     .continue-thumb .progress i{display:block;height:100%;background:#f47521}
     .dismiss{position:absolute;right:8px;top:8px;z-index:3;border:0;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;width:28px;height:28px;cursor:pointer;font-size:18px;line-height:1;opacity:0;transition:opacity .18s,background .18s}
@@ -331,7 +335,7 @@
     }
 
     @media(max-width:900px){.browse-tools{}.stat-grid{}.mini-list{}.recommend-track{}.episode-card{}.episode-card img{width:150px}.episode-runtime{display:none}.watch-body{flex-direction:column;gap:26px;padding-bottom:44px}.watch-side{flex:1 1 auto;width:100%}.watch-ep{font-size:22px}.season-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:700px){.season-grid{grid-template-columns:1fr}.season-modal{padding:0}.season-modal-box{max-height:100vh;height:100%;border-radius:0;border:0}.continue-grid{}.continue-main{}.continue-main img{height:110px}.browse-tools{}.stat-grid{}.stat-grid article:last-child{}.list-tabs{display:-webkit-flex;display:flex;}.list-tabs button{white-space:normal;padding:11px 8px}.mini-list{}.request-form{padding:16px}.request-form label:last-of-type{}.search-discovery{gap:15px}.detail-hero{min-height:620px}.detail-hero-inner{gap:15px;padding:90px 15px 24px;align-items:end}.detail-poster{width:112px}.detail-intro h2{font-size:36px}.detail-intro .detail-actions{}.detail-intro .detail-actions .primary{width:100%}.detail-intro .detail-actions .secondary{padding:8px 9px;min-height:40px}.stats-strip{}.stats-strip article{padding:14px}.episode-head{display:block}.episode-tools{margin-top:14px}.episode-card{gap:10px}.episode-card img{width:105px}.episode-no{font-size:15px}.episode-copy{}.episode-copy p{display:none}.recommend-track{}.comments-panel{width:100%;margin-bottom:0}.comment-form{}.notification-panel{right:12px;top:97px}.profile-hero{padding:16px}.profile-avatar{width:52px;height:52px}.dashboard-section,.my-list-section,.request-section{padding-top:48px}}
+    @media(max-width:700px){.season-grid{grid-template-columns:1fr}.season-modal{padding:0}.season-modal-box{max-height:100vh;height:100%;border-radius:0;border:0}.continue-grid{gap:12px}.continue-card{-webkit-flex:0 0 68%;flex:0 0 68%;width:68%}.continue-play{width:44px;height:44px}.browse-tools{}.stat-grid{}.stat-grid article:last-child{}.list-tabs{display:-webkit-flex;display:flex;}.list-tabs button{white-space:normal;padding:11px 8px}.mini-list{}.request-form{padding:16px}.request-form label:last-of-type{}.search-discovery{gap:15px}.detail-hero{min-height:620px}.detail-hero-inner{gap:15px;padding:90px 15px 24px;align-items:end}.detail-poster{width:112px}.detail-intro h2{font-size:36px}.detail-intro .detail-actions{}.detail-intro .detail-actions .primary{width:100%}.detail-intro .detail-actions .secondary{padding:8px 9px;min-height:40px}.stats-strip{}.stats-strip article{padding:14px}.episode-head{display:block}.episode-tools{margin-top:14px}.episode-card{gap:10px}.episode-card img{width:105px}.episode-no{font-size:15px}.episode-copy{}.episode-copy p{display:none}.recommend-track{}.comments-panel{width:100%;margin-bottom:0}.comment-form{}.notification-panel{right:12px;top:97px}.profile-hero{padding:16px}.profile-avatar{width:52px;height:52px}.dashboard-section,.my-list-section,.request-section{padding-top:48px}}
 
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
@@ -752,8 +756,8 @@
     </section>
 
     <section class="content-section my-list-section" id="myList" aria-labelledby="my-list-title" hidden>
-      <div class="section-head"><h2 id="my-list-title"><span class="orange-line"></span>My List</h2><p>Organized for this guest session</p></div>
-      <div class="list-tabs" role="tablist"><button class="active" data-list-tab="continue">Continue <b>2</b></button><button data-list-tab="favorites">Favorites <b>3</b></button><button data-list-tab="watchlater">Watch later <b>4</b></button><button data-list-tab="history">History <b>12</b></button></div>
+      <div class="section-head"><h2 id="my-list-title"><span class="orange-line"></span>My List</h2><p>Saved on this device</p></div>
+      <div class="list-tabs" role="tablist"><button class="active" data-list-tab="continue">Continue <b>0</b></button><button data-list-tab="favorites">Favorites <b>0</b></button><button data-list-tab="watchlater">Watch later <b>0</b></button></div>
       <div class="mini-list" id="miniList"></div>
     </section>
 
@@ -1383,7 +1387,16 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         }catch(e){}
       })();
       renderHomeRows();renderCatalog();renderMovies('all');renderGhibliRow();
-      var saved={};var favorites={solo:true,jjk:true,demon:true};var activeKey='solo';
+      /* Owner: "my list ka fake data htaoo". Pehle `favorites={solo,jjk,demon}`
+         aur `listSets` (Continue 2 / Favorites 3 / Watch later 4 / History 12)
+         hardcoded the — ye kuch bhi nahi tha. Ab My List sirf asli store se
+         bharti hai: continue = resumeStore(), favorites/save = user ke apne tap,
+         aur dono localStorage me rehte hain (isliye subtitle "Saved on this
+         device" sach hai). History tab hata diya — uska koi real store nahi tha. */
+      var LIST_KEY='cr-list-v1';
+      function listStore(){var raw=lsGet(LIST_KEY),o=null;try{o=raw?JSON.parse(raw):null}catch(e){o=null}if(!o||typeof o!=='object')o={};return {saved:(o.saved&&typeof o.saved==='object')?o.saved:{},favorites:(o.favorites&&typeof o.favorites==='object')?o.favorites:{}}}
+      function listPersist(){lsSet(LIST_KEY,JSON.stringify({saved:saved,favorites:favorites}))}
+      var storedLists=listStore(),saved=storedLists.saved,favorites=storedLists.favorites,activeKey='solo';
       var dialog=byId('detailDialog'),toast=document.querySelector('.toast'),toastTimer,playerShell=byId('playerShell'),videoStage=byId('videoStage');
       function showToast(message,ms){clearTimeout(toastTimer);toast.innerHTML=escapeHtml(message);addClass(toast,'show');toastTimer=setTimeout(function(){removeClass(toast,'show')},ms||2200)}
       
@@ -1395,7 +1408,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       
       
       function syncSaved(key){each(all('[data-save-key="'+key+'"]'),function(el){setClass(el,'saved',!!saved[key]);el.setAttribute('aria-pressed',saved[key]?'true':'false');if(hasClass(el,'secondary')){el.innerHTML=saved[key]?'− Remove from watchlist':'+ Add to watchlist'}});if(activeKey===key){setClass(byId('detailSave'),'active',!!saved[key]);byId('detailSave').setAttribute('aria-pressed',saved[key]?'true':'false')}}
-      function toggleSave(key){saved[key]=!saved[key];syncSaved(key);showToast(saved[key]?'Added to watchlist for this session':'Removed from watchlist')}
+      function toggleSave(key){saved[key]=!saved[key];syncSaved(key);listPersist();refreshMyList();showToast(saved[key]?'Added to Watch later':'Removed from Watch later')}
       function nxFor(key){return (typeof NX_DATA!=='undefined'&&NX_DATA[key])?NX_DATA[key]:((window.CR_NX_DROPS&&CR_NX_DROPS[key])||null)}
       function tsImage(key,season,ep){var all=(typeof TS_EP_IMAGES!=='undefined'&&TS_EP_IMAGES)||{},show=all[key];if(!show)return '';var bySeason=show[String(season)];if(!bySeason)return '';return bySeason[String(ep)]||''}
       function tsLayout(key){var drop=(typeof CR_NX_DROPS!=='undefined'&&CR_NX_DROPS[key])||null;if(drop&&drop.seasons&&Object.keys(drop.seasons).length)return {slug:drop.tsSlug||'',seasons:drop.seasons,epStart:drop.epStart||null,nxMap:drop.nxMap||null};var all=(typeof TS_SEASONS!=='undefined'&&TS_SEASONS)||{},m=all[key];if(m&&m.seasons&&Object.keys(m.seasons).length)return m;return null}
@@ -1425,6 +1438,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         node=closest(target,'[data-dismiss-continue]');if(node){if(event.stopPropagation)event.stopPropagation();var card=closest(node,'[data-continue-card]');if(card&&card.parentNode)card.parentNode.removeChild(card);showToast('Removed from Continue Watching');return}
         node=closest(target,'[data-detail-genre]');if(node){dialogClose();byId('genreFilter').value=attr(node,'data-detail-genre');applyBrowseFilters();showView('browse');return}
         node=closest(target,'[data-save-key]');if(node){if(event.stopPropagation)event.stopPropagation();toggleSave(attr(node,'data-save-key'));return}
+        node=closest(target,'[data-resume-index]');if(node){if(event.stopPropagation)event.stopPropagation();var riNode=attr(node,'data-resume-index'),riList=resumeStore(),riEntry=(riNode===null)?null:riList[parseInt(riNode,10)];if(riEntry){pendingResumeSec=Math.floor(riEntry.sec||0);openEpisode(riEntry.key,riEntry.season,riEntry.ep)}return}
         node=closest(target,'[data-open]');if(node){openDetail(attr(node,'data-open'));return}
         node=closest(target,'[data-scroll]');if(node){if(event.preventDefault)event.preventDefault();key=attr(node,'data-scroll');showView(key);return}
       }
@@ -1437,7 +1451,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       byId('detailSearch').addEventListener('click',function(){dialogClose();openSearch()},false);
       byId('detailNotifications').addEventListener('click',function(){dialogClose();openNotifications()},false);
       byId('demoPlay').addEventListener('click',function(){var esv=byId('seasonSelect'),dd=dropInfo(activeKey);openEpisode(activeKey,(dd&&dd.season)?String(dd.season):(esv?esv.value:'1'),(dd&&dd.episode)?dd.episode:1)},false);byId('detailSave').addEventListener('click',function(){toggleSave(activeKey)},false);
-      byId('detailFavorite').addEventListener('click',function(){favorites[activeKey]=!favorites[activeKey];setClass(this,'active',favorites[activeKey]);this.setAttribute('aria-pressed',favorites[activeKey]?'true':'false');showToast(favorites[activeKey]?'Added to favorites':'Removed from favorites')},false);
+      byId('detailFavorite').addEventListener('click',function(){favorites[activeKey]=!favorites[activeKey];setClass(this,'active',favorites[activeKey]);this.setAttribute('aria-pressed',favorites[activeKey]?'true':'false');listPersist();refreshMyList();showToast(favorites[activeKey]?'Added to favorites':'Removed from favorites')},false);
       byId('readMore').addEventListener('click',function(){var more=byId('detailMore'),show=more.hidden;setHidden(more,!show);setClass(byId('detailDescription'),'expanded',show);this.innerHTML=show?'Show less⌃':'Read more⌄'},false);
       byId('seasonSelect').addEventListener('change',function(){renderEpisodes(byId('episodeSearch').value)},false);byId('episodeSearch').addEventListener('input',function(){renderEpisodes(this.value)},false);
       byId('recommendPrev').addEventListener('click',function(){scrollTrack(byId('recommendTrack'),-570)},false);byId('recommendNext').addEventListener('click',function(){scrollTrack(byId('recommendTrack'),570)},false);
@@ -1451,8 +1465,21 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function openSearch(){addClass(searchPanel,'open');searchPanel.setAttribute('aria-hidden','false');renderResults('');setTimeout(function(){searchInput.focus()},80)}
       each(all('.search-trigger'),function(button){button.addEventListener('click',openSearch,false)});document.querySelector('.close-search').addEventListener('click',function(){removeClass(searchPanel,'open');searchPanel.setAttribute('aria-hidden','true')},false);searchInput.addEventListener('input',function(){renderResults(this.value)},false);each(all('[data-search-chip]'),function(button){button.addEventListener('click',function(){searchInput.value=attr(button,'data-search-chip');renderResults(searchInput.value);searchInput.focus()},false)});
       results.addEventListener('click',function(event){var button=closest(event.target||event.srcElement,'[data-search-open]');if(button){removeClass(searchPanel,'open');searchPanel.setAttribute('aria-hidden','true');openDetail(attr(button,'data-search-open'))}},false);
-      var listSets={continue:['solo','jjk'],favorites:['solo','jjk','demon'],watchlater:['frieren','kaiju','bluelock','spy'],history:['aot','naruto','deathnote','vinland']};
-      function renderMiniList(tab){var source=listSets[tab],selected=[],html='';if(tab==='watchlater'){each(keysOf(saved),function(key){if(saved[key])selected.push(key)});if(selected.length)source=selected}each(source,function(key){var show=shows[key];html+='<button class="mini-item" data-open="'+key+'">'+posterImage(show.img,show.title+' poster',true)+'<span><strong>'+show.title+'</strong><small>'+(tab==='continue'?'Continue episode':'★ '+show.rating+' · '+genreText(show))+'</small></span></button>'});byId('miniList').innerHTML=html;queueLazy()}
+      var currentListTab='continue';
+      function listEntries(tab){var out=[],store,rs,i;
+        if(tab==='continue'){rs=resumeStore();for(i=0;i<rs.length;i++){if(rs[i]&&shows[rs[i].key])out.push({key:rs[i].key,index:i,entry:rs[i]})}return out}
+        store=(tab==='favorites')?favorites:saved;
+        each(keysOf(store),function(key){if(store[key]&&shows[key])out.push({key:key})});
+        return out}
+      function listEmptyMessage(tab){if(tab==='favorites')return 'No favorites yet. Open a show and tap the heart.';if(tab==='watchlater')return 'Watch later is empty. Use the save button on any show.';return 'Nothing to continue yet. Play any episode and it shows up here.'}
+      function syncListTabCounts(){each(all('[data-list-tab]'),function(button){var b=button.querySelector('b'),n=listEntries(attr(button,'data-list-tab')).length;if(b)b.textContent=String(n)})}
+      function renderMiniList(tab){var host=byId('miniList');if(!host)return;currentListTab=tab||currentListTab;var entries=listEntries(currentListTab),html='';
+        each(entries,function(item){var show=shows[item.key],sub='';
+          if(currentListTab==='continue'){var e=item.entry,sec=Math.floor(e.sec||0);sub=isMovieKey(item.key)?'Movie':('S'+e.season+' · E'+e.ep+(sec>=10?(' · '+fmtClock(sec)):''))}
+          else sub='★ '+show.rating+' · '+genreText(show);
+          html+='<button class="mini-item" data-open="'+item.key+'"'+(item.index===undefined?'':' data-resume-index="'+item.index+'"')+'>'+posterImage(show.img,show.title+' poster',true)+'<span><strong>'+escapeHtml(show.title)+'</strong><small>'+escapeHtml(sub)+'</small></span></button>'});
+        host.innerHTML=html||('<p class="empty">'+escapeHtml(listEmptyMessage(currentListTab))+'</p>');syncListTabCounts();queueLazy()}
+      function refreshMyList(){if(byId('miniList'))renderMiniList(currentListTab)}
       renderMiniList('continue');each(all('[data-list-tab]'),function(button){button.addEventListener('click',function(){each(all('[data-list-tab]'),function(item){setClass(item,'active',item===button)});renderMiniList(attr(button,'data-list-tab'))},false)});
       var RESUME_KEY='cr-resume-v1',resumeMem=null;
       function lsGet(k){try{return window.localStorage.getItem(k)}catch(e){return resumeMem&&resumeMem[k]!==undefined?resumeMem[k]:null}}
@@ -1536,7 +1563,10 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function renderNotifications(){var drops=(typeof TS_DROPS!=='undefined'&&TS_DROPS.length)?TS_DROPS:[],list=byId('noticeList'),dot=byId('notifyCount'),html='',count=0,fresh=0,latest='',seen=lsGet(NOTICE_SEEN_KEY)||'',i;for(i=0;i<drops.length;i++){if(drops[i]&&drops[i].firstSeen&&drops[i].firstSeen>latest)latest=drops[i].firstSeen}for(i=0;i<drops.length;i++){var d=drops[i];if(!d||!d.title)continue;if(d.firstSeen&&(!seen||d.firstSeen>seen))fresh++;if(count>=5)continue;var se=d.season?('S'+d.season+(d.episode?' · E'+d.episode:'')):'';var text=d.firstSeen===latest?((se?se+' · ':'')+'Added today'):((se?se+' · ':'')+'Added on '+watchDate(d.firstSeen));html+='<button data-notice-open="'+tsdKey(d,i)+'"><span class="notice-dot"></span><strong>'+escapeHtml(d.title)+'</strong><small>'+escapeHtml(text)+'</small></button>';count++}
         if(list){list.innerHTML=html||'<p class="empty">No new episodes right now.</p>';list.addEventListener('click',function(ev){var b=closest(ev.target,'[data-notice-open]');if(!b)return;setHidden(notificationPanel,true);notificationButton.setAttribute('aria-expanded','false');openDetail(attr(b,'data-notice-open'))},false)}
         if(dot){dot.textContent=fresh>9?'9+':String(fresh);setHidden(dot,!fresh)}}
-      renderNotifications();renderContinueWatching();
+      /* My List ka continue tab resumeStore() padhta hai, jo is line se pehle
+         define hota hai — isliye boot par hi ek baar dobara render (warna
+         tab count 0 dikhta tha jabki rail me cards aa jate the). */
+      renderNotifications();renderContinueWatching();if(byId('miniList'))renderMiniList(currentListTab);
       byId('requestForm').addEventListener('submit',function(event){event.preventDefault();var title=this.elements.title.value.replace(/^\s+|\s+$/g,''),language=this.elements.language.value;if(!title)return;byId('requestQueue').insertAdjacentHTML('afterbegin','<article class="request-ticket"><strong>'+escapeHtml(title)+'</strong><span>'+escapeHtml(language)+' · Added to this session’s request queue</span></article>');this.reset();showToast('Anime request added for this session')},false);
       function focusables(){var result=[],nodes=all('a[href],button,input,select,textarea,[tabindex="0"]');each(nodes,function(node){if(!node.disabled&&node.getAttribute('aria-hidden')!=='true'&&node.offsetWidth>0&&node.offsetHeight>0){result.push(node)}});return result}
       function moveFocus(direction){var current=document.activeElement,list=focusables();if(!list.length)return;if(!current||list.indexOf(current)<0){list[0].focus();return}var from=current.getBoundingClientRect(),fx=from.left+from.width/2,fy=from.top+from.height/2,best=null,bestScore=Infinity;each(list,function(item){if(item===current)return;var rect=item.getBoundingClientRect(),x=rect.left+rect.width/2,y=rect.top+rect.height/2,dx=x-fx,dy=y-fy,valid=(direction==='left'&&dx<-4)||(direction==='right'&&dx>4)||(direction==='up'&&dy<-4)||(direction==='down'&&dy>4);if(!valid)return;var primary=(direction==='left'||direction==='right')?Math.abs(dx):Math.abs(dy),cross=(direction==='left'||direction==='right')?Math.abs(dy):Math.abs(dx),score=primary+cross*2.5;if(score<bestScore){bestScore=score;best=item}});if(best){best.focus();if(best.scrollIntoView)best.scrollIntoView(false)}}

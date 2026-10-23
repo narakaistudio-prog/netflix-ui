@@ -1,5 +1,4 @@
 import historyData from '@/data/tudum-top10-india-history.json';
-import toonstreamDrops from '@/data/toonstream-drops.json';
 
 /**
  * Bell notifications come from real catalog updates only. Each weekly Tudum Top 10
@@ -46,28 +45,11 @@ export function unseenCount(items: ContentNotification[], seenDate: string | nul
     return items.filter((item) => !seenDate || item.date > seenDate).length;
 }
 
-/** The daily ToonStream bake (scripts/harvest-toonstream-drops.mjs). */
-export interface ToonStreamDropsState {
-    updated: string | null;
-    items: Record<string, { title: string; firstSeen: string }>;
-}
-
-/**
- * One notification per anime that landed on the ToonStream rail today
- * (`firstSeen` === the bake's `updated` day). Older drops stay quiet.
+/*
+ * Crunchyroll (ToonStream "Fresh Drop") ki entries Netflix ke bell me NAHI aati.
+ * Owner: "crunchyroll ka notification netflix mae nhi aana chiyea" — Crunchyroll
+ * ke naye drops us page ke apne bell me dikhte hain (crunchyroll.html ke TS_DROPS
+ * se), Netflix app ka bell sirf Netflix/Tudum catalog update dikhata hai.
  */
-export function notificationsFromCrunchyroll(state: ToonStreamDropsState): ContentNotification[] {
-    return Object.entries(state.items || {})
-        .filter(([, item]) => item.firstSeen && item.firstSeen === state.updated)
-        .map(([slug, item]) => ({
-            id: `ts-${slug}`,
-            date: item.firstSeen,
-            title: 'New on Crunchyroll',
-            text: `${item.title} was just added to Fresh Drop Toon.`,
-        }));
-}
 
-export const NOTIFICATIONS: ContentNotification[] = [
-    ...notificationsFromCrunchyroll(toonstreamDrops as ToonStreamDropsState),
-    ...notificationsFromHistory(historyData as TudumHistory),
-].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+export const NOTIFICATIONS: ContentNotification[] = notificationsFromHistory(historyData as TudumHistory);

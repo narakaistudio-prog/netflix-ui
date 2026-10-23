@@ -34,23 +34,12 @@ describe('bell notifications', () => {
     });
 });
 
-import { notificationsFromCrunchyroll } from '@/lib/notifications';
-
-describe('crunchyroll fresh-drop notifications', () => {
-    test('only the drops baked today notify', () => {
-        const items = notificationsFromCrunchyroll({
-            updated: '2026-10-14',
-            items: {
-                old: { title: 'Old One', firstSeen: '2026-10-13' },
-                new: { title: 'New One', firstSeen: '2026-10-14' },
-            },
-        });
-        expect(items.map(i => i.id)).toEqual(['ts-new']);
-        expect(items[0].text).toBe('New One was just added to Fresh Drop Toon.');
-        expect(items[0].date).toBe('2026-10-14');
-    });
-
-    test('an empty state gives no notifications', () => {
-        expect(notificationsFromCrunchyroll({ updated: null, items: {} })).toEqual([]);
+// Owner: "crunchyroll ka notification netflix mae nhi aana chiyea" — Crunchyroll
+// drops Netflix ke bell me nahi aate, isliye NOTIFICATIONS me koi `ts-` id nahi
+// hona chahiye (aur helper bhi list se hata diya gaya hai).
+describe('crunchyroll drops netflix bell se bahar', () => {
+    test('bell me sirf netflix/tudum items hain', () => {
+        expect(NOTIFICATIONS.every((i) => !i.id.startsWith('ts-'))).toBe(true);
+        expect(NOTIFICATIONS.every((i) => !/Fresh Drop Toon/i.test(i.text))).toBe(true);
     });
 });

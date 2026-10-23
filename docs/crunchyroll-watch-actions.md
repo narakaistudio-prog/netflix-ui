@@ -96,3 +96,62 @@ tha. Account entry point ab sirf asli `Sign in` / account button hai
 deep link, deep link boot, notification badge, G7 removal, Continue Watching
 card & no-fake-timing, aur reaction SQL ka RLS check.
 `tests-arena/crunchyroll-resume.test.ts` — naye card markup ke hisaab se update.
+
+---
+
+# Follow-up #2 (owner ke 3 aur points)
+
+> “continue watching bahut bada hai isse chota karoo sala ye player ke jitna bada
+> hai … normal jaisa”, “my list ka fake data htaoo”, “crunchyroll ka
+> notification netflix mae nhi aana chiyea”.
+
+## Continue Watching ka size
+
+Pehle `.continue-card` par `flex:1 1 0; min-width:220px` tha — matlab card
+**barabar hisse le kar stretch** karta tha. Ek hi resume item hone par wo poori
+row (~1200px) bharta tha, yaani player jitna bada. Ab:
+
+```css
+.continue-card{flex:0 0 calc(20% - 13px); width:calc(20% - 13px); min-width:0}
+```
+
+- Ek row me 5 card (gap 16px × 4 nikal kar), aur zyada items hon to rail
+  horizontal scroll karti hai (Crunchyroll ke home rails jaisa).
+- Mobile (≤700px) par ek card ~68% width ka (agla card peek karta hai) —
+  purana `.continue-main img{height:110px}` leftover bhi hata diya.
+- Poster/overlay/copy thoda chhota: play button 44px, title 13.5px, meta 11px.
+
+## My List ka fake data
+
+Pehle sab kuch hardcoded tha:
+
+```js
+favorites = {solo:true, jjk:true, demon:true};
+listSets = {continue:['solo','jjk'], favorites:[…3], watchlater:[…4], history:[…12]};
+```
+
+- **Favorites**: ab khaali `{}` se shuru, sirf detail page ka heart bharta hai.
+- **Watch later**: sirf save button (`detailSave`) se.
+- **Continue**: seedha `resumeStore()` (jo player sach me likhta hai) — sub-line
+  `S1 · E3 · 12:48` asli progress hai, “Continue episode” nahi.
+- **History** tab hata diya: uska koi real store hi nahi tha (sirf 12 fake
+  titles), isliye dikha kar jhoot nahi bolte.
+- Tab ke counts har render par store se ginte hain; kuch na ho to empty
+  message: “Nothing to continue yet…”, “No favorites yet…”, “Watch later is
+  empty…”.
+- Dono lists `localStorage['cr-list-v1']` me (`{saved:{}, favorites:{}}`), isliye
+  reload par bhi rehti hain — section ka subtitle ab sach bolta hai:
+  “Saved on this device”.
+- My List ke continue card par tap = wahi episode resume (`data-resume-index`),
+  detail dialog nahi.
+
+## Netflix bell se Crunchyroll notifications
+
+`lib/notifications.ts` se `notificationsFromCrunchyroll()` (ToonStream/Fresh Drop
+bake) `NOTIFICATIONS` list se hata diya — Netflix ka bell ab sirf Netflix/Tudum
+India Top 10 updates dikhata hai. Crunchyroll ke naye drops us page ke apne bell
+me hain (`crunchyroll.html` ke `TS_DROPS` + `cr-notices-seen`), jahan unka
+context sahi hai.
+
+Tests: `tests-arena/crunchyroll-my-list.test.ts` (5) + `notifications.test.ts`
+ka naya guard (bell me koi `ts-` item nahi).
