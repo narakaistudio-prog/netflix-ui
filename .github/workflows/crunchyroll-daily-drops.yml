@@ -25,10 +25,11 @@ on:
   push:
     branches:
       # Har kaam wali branch par bhi ek run — taaki bake usi branch me chade
-      # jahan page ka code badla. Purani branch list stale thi, isliye naye
-      # pushes par row refresh nahi hoti thi.
-      - arena/bc5f6d17-netflix-ui
+      # jahan page ka code badla. Pehle yahan ek hardcoded branch naam tha jo
+      # har session ke baad stale ho jata tha (isliye naye branch par row
+      # refresh nahi hoti thi). Ab sabhi arena branches.
       - main
+      - 'arena/**'
     paths:
       - '.github/workflows/crunchyroll-daily-drops.yml'
       - 'scripts/harvest-toonstream-seasons.mjs'
