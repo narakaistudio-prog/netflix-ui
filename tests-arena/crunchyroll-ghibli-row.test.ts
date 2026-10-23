@@ -78,13 +78,13 @@ test('Movies ships a Ghibli Movies rail with all 22 IMDb-list films', async () =
     const browse = new Set(
         Array.from(doc.querySelectorAll('#catalogGrid [data-open]')).map((node) => node.getAttribute('data-open')),
     );
-    // IMDb import (Task 7) ke baad Browse grid = purane 64 playable titles +
-    // imported titles. Fixed number likhne se har import par test tootta hai,
-    // isliye ginti state file se aati hai.
+    // IMDb import (Task 7) ke baad Browse grid = purane 66 playable titles
+    // (Reze Arc + Infinity Castle movies included) + imported titles. Fixed
+    // number likhne se har import par test tootta hai, isliye ginti state file se aati hai.
     const imported = JSON.parse(
         readFileSync(join(ROOT, 'data', 'imdb-anime-catalog.json'), 'utf8'),
     ).entries as Array<{ key: string }>;
-    expect(browse.size).toBe(64 + imported.length);
+    expect(browse.size).toBe(66 + imported.length);
     ['kaguya', 'totoro', 'fireflies'].forEach((key) => expect(browse.has(key)).toBe(false));
     ['spirited', 'mononoke', 'howl'].forEach((key) => expect(browse.has(key)).toBe(true));
     imported.forEach((entry) => expect(browse.has(entry.key)).toBe(true));

@@ -72,8 +72,9 @@ test('every catalog key is mapped to Nxsha', async () => {
         dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
 
-    // 64 purane playable titles + IMDb import (Task 7) ke imported titles.
-    expect(new Set(catalogKeys).size).toBe(64 + IMPORTED_KEYS.length);
+    // 66 purane playable titles (2025 theatrical movies Chainsaw Man Reze Arc +
+    // Demon Slayer Infinity Castle included) + IMDb import (Task 7) ke imported titles.
+    expect(new Set(catalogKeys).size).toBe(66 + IMPORTED_KEYS.length);
     expect(new Set(ghibliKeys).size).toBe(22);
     // Every card the page can open — catalog and Ghibli rail — has a route.
     expect(Object.keys(nxData).sort()).toEqual(

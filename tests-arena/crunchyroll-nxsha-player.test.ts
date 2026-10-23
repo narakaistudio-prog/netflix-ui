@@ -154,8 +154,9 @@ test('all 83 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping',
     const ghibliKeys = Array.from(
         dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
-    // 64 purane playable titles + IMDb import (Task 7) ke imported titles.
-    expect(new Set(catalogKeys).size).toBe(64 + IMPORTED_KEYS.length);
+    // 66 purane playable titles (Reze Arc + Infinity Castle movies included) +
+    // IMDb import (Task 7) ke imported titles.
+    expect(new Set(catalogKeys).size).toBe(66 + IMPORTED_KEYS.length);
     expect(new Set(ghibliKeys).size).toBe(22);
     expect(Object.keys(nxData).sort()).toEqual(
         [...new Set([...catalogKeys, ...ghibliKeys])].sort(),

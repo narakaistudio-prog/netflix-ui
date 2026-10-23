@@ -3113,6 +3113,24 @@
       "seasons": {
         "1": 12
       }
+    },
+    {
+      "key": "chainsawreze",
+      "title": "Chainsaw Man - The Movie: Reze Arc",
+      "kind": "movie",
+      "id": "tt30472557",
+      "seasons": {
+        "1": 1
+      }
+    },
+    {
+      "key": "infinitycastle",
+      "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+      "kind": "movie",
+      "id": "tt32820897",
+      "seasons": {
+        "1": 1
+      }
     }
   ],
   "saoMovieCandidates": [
