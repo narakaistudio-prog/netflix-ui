@@ -557,6 +557,106 @@
 
     .blocked-alt{background:transparent;border:1px solid rgba(255,255,255,.25);color:#f7f7f7;font-weight:800;font-size:12.5px;border-radius:10px;padding:9px 16px;cursor:pointer}
     .blocked-alt:hover{border-color:#f47521;color:#f47521}
+    /* ---------- Episode comments (Supabase) ----------
+       Owner ne reference diya: player ke neeche pill “Comment <count>”, click
+       par right side me drawer. Accent violet rakha hai — reference me bhi
+       comment ka hissa baaki orange player buttons se alag dikhta hai, isliye
+       yahan bhi wahi treatment (like/share jaise orange pills se differentiate).
+       Drawer `transform` se slide hota hai (display:none se transition nahi
+       chalti) aur band hone par visibility:hidden — warna hidden panel ke
+       buttons keyboard focus le lete hain. */
+    .watch-comment{position:relative;display:-webkit-flex;display:flex;align-items:center;gap:8px;border:1px solid rgba(139,92,246,.55);border-radius:999px;background:linear-gradient(180deg,rgba(111,76,255,.26),rgba(76,52,190,.13));color:#ded4ff;font-size:13px;font-weight:800;padding:9px 15px;cursor:pointer;box-shadow:0 0 0 1px rgba(139,92,246,.1),0 10px 24px rgba(76,52,190,.22);transition:border-color .18s,color .18s,background .18s}
+    .watch-comment:hover,.watch-comment[aria-expanded="true"]{border-color:#b49bff;color:#fff;background:linear-gradient(180deg,rgba(139,92,246,.42),rgba(76,52,190,.22))}
+    .watch-comment svg.cr-ico{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2}
+    .watch-comment svg.cr-spark{position:absolute;top:-8px;right:-7px;width:16px;height:16px;fill:currentColor;stroke:none;color:#c9b6ff;opacity:.9}
+    .watch-comment b.cr-count{min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#7c5cff;color:#fff;font-size:11.5px;font-weight:900;display:-webkit-flex;display:flex;align-items:center;justify-content:center}
+    .watch-comment b.cr-count[hidden]{display:none}
+    .auth-btn{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#f2f2f7;font-size:12px;font-weight:900;border-radius:999px;padding:8px 15px;cursor:pointer;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .auth-btn:hover,.auth-btn[data-cr-auth="in"]{border-color:#a78bfa;color:#fff}
+
+    .comments-drawer{position:fixed;top:0;right:0;bottom:0;z-index:145;width:min(430px,100%);display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;background:#0b0d17;border-left:1px solid rgba(139,92,246,.3);box-shadow:-40px 0 90px rgba(0,0,0,.65);transform:translateX(102%);visibility:hidden;transition:transform .26s ease,visibility .26s}
+    .comments-drawer.open{transform:none;visibility:visible}
+    .comments-head{display:-webkit-flex;display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.07);flex:0 0 auto}
+    .comments-head h2{margin:0;font-size:17px;font-weight:900;display:-webkit-flex;display:flex;align-items:center;gap:9px}
+    .comments-head h2 svg{width:20px;height:20px;fill:none;stroke:#a78bfa;stroke-width:2}
+    .comments-head #crHeaderCount{color:#8f93a3;font-weight:700;font-size:14px}
+    .comments-close{margin-left:auto;width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#9aa0ae;font-size:22px;line-height:1;cursor:pointer}
+    .comments-close:hover{background:rgba(255,255,255,.08);color:#fff}
+
+    .cr-tabs{display:-webkit-flex;display:flex;gap:8px;padding:14px 16px 2px;flex:0 0 auto}
+    .cr-tab{border:1px solid rgba(255,255,255,.1);background:transparent;color:#9aa0ae;font-size:11.5px;font-weight:800;padding:6px 13px;border-radius:999px;cursor:pointer}
+    .cr-tab.active{background:#7c5cff;border-color:#7c5cff;color:#fff}
+
+    .cr-composer{display:-webkit-flex;display:flex;gap:10px;padding:14px 16px 10px;flex:0 0 auto}
+    .cr-composer[hidden]{display:none}
+    .cr-avatar{width:36px;height:36px;border-radius:50%;flex:0 0 auto;display:-webkit-flex;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;background:#7c5cff;overflow:hidden}
+    .cr-me{background:linear-gradient(135deg,#8b5cf6,#4c34be);box-shadow:0 0 0 2px rgba(139,92,246,.25)}
+    .cr-compose-main{flex:1 1 auto;min-width:0}
+    .cr-input-wrap{position:relative}
+    .cr-input{width:100%;resize:none;min-height:44px;max-height:140px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#12141f;color:#f2f2f7;font-size:13px;line-height:1.5;padding:12px 38px 12px 12px;outline:0;font-family:inherit;box-sizing:border-box}
+    .cr-input:focus{border-color:#8b5cf6}
+    .cr-input::placeholder{color:#7f8496}
+    .cr-emoji{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:#8b90a0;font-size:16px;pointer-events:none}
+    .cr-compose-foot{display:-webkit-flex;display:flex;align-items:center;gap:10px;margin-top:8px}
+    .cr-hint{font-size:11.5px;color:#ff8b8b;flex:1 1 auto;min-width:0}
+    .cr-post{margin-left:auto;border:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#6d4bff);color:#fff;font-weight:900;font-size:12.5px;padding:9px 22px;cursor:pointer}
+    .cr-post:disabled{opacity:.45;cursor:default}
+    .cr-reply-chip{display:-webkit-flex;display:flex;align-items:center;gap:8px;font-size:11.5px;color:#b9a8ff;margin-bottom:7px}
+    .cr-reply-chip[hidden]{display:none}
+    .cr-reply-chip b{color:#fff}
+    .cr-reply-chip button{border:0;background:transparent;color:#8b90a0;cursor:pointer;font-size:15px;line-height:1;padding:0 2px}
+
+    .cr-guest{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:9px;padding:16px;margin:12px 16px 6px;border:1px dashed rgba(139,92,246,.4);border-radius:14px;background:rgba(139,92,246,.07);font-size:12.5px;line-height:1.55;color:#a9adba}
+    .cr-guest[hidden]{display:none}
+    .cr-guest strong{color:#fff;font-size:13.5px}
+    .cr-signin-btn{align-self:flex-start;border:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#6d4bff);color:#fff;font-weight:900;font-size:12.5px;padding:10px 18px;cursor:pointer}
+
+    .cr-list{flex:1 1 auto;overflow-y:auto;padding:6px 16px 26px;scrollbar-width:thin}
+    .cr-item{display:-webkit-flex;display:flex;gap:11px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.055)}
+    .cr-item:last-child{border-bottom:0}
+    .cr-main{min-width:0;flex:1 1 auto}
+    .cr-meta{display:-webkit-flex;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+    .cr-meta strong{font-size:12.5px;color:#fff}
+    .cr-meta span{font-size:11.5px;color:#8b90a0}
+    .cr-body{margin:5px 0 8px;font-size:13px;line-height:1.55;color:#dfe1ea;word-break:break-word;white-space:pre-wrap}
+    .cr-actions{display:-webkit-flex;display:flex;align-items:center;gap:15px}
+    .cr-act{display:-webkit-flex;display:flex;align-items:center;gap:5px;border:0;background:transparent;color:#8b90a0;font-size:12px;font-weight:700;padding:2px 0;cursor:pointer}
+    .cr-act svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
+    .cr-act:hover{color:#c9b6ff}
+    .cr-act.on{color:#a78bfa}
+    .cr-del:hover{color:#ff8b8b}
+    .cr-reply{margin-left:34px;border-left:2px solid rgba(139,92,246,.28);padding-left:11px}
+    .cr-empty{padding:34px 10px;text-align:center;color:#8b90a0;font-size:13px;line-height:1.6}
+    .cr-spin{display:inline-block;width:15px;height:15px;margin-right:7px;border:2px solid rgba(255,255,255,.25);border-top-color:#a78bfa;border-radius:50%;vertical-align:-3px;animation:crSpin .8s linear infinite}
+    @keyframes crSpin{to{transform:rotate(360deg)}}
+
+    .cr-auth{position:fixed;inset:0;z-index:160;background:rgba(4,5,10,.8);display:-webkit-flex;display:flex;align-items:center;justify-content:center;padding:20px}
+    .cr-auth[hidden]{display:none}
+    .cr-auth-box{position:relative;width:min(420px,100%);max-height:92vh;overflow-y:auto;background:#101223;border:1px solid rgba(139,92,246,.35);border-radius:18px;padding:26px 24px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
+    .cr-auth-box h2{margin:0 0 6px;font-size:21px}
+    .cr-auth-sub{margin:0 0 16px;color:#9aa0ae;font-size:12.5px;line-height:1.6}
+    .cr-auth-close{position:absolute;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#9aa0ae;font-size:22px;line-height:1;cursor:pointer}
+    .cr-auth-close:hover{background:rgba(255,255,255,.08);color:#fff}
+    .cr-auth-tabs{display:-webkit-flex;display:flex;gap:6px;background:#0a0c17;border-radius:10px;padding:4px;margin-bottom:16px}
+    .cr-auth-tabs[hidden]{display:none}
+    .cr-auth-tabs button{flex:1 1 0;border:0;border-radius:8px;background:transparent;color:#9aa0ae;font-weight:800;font-size:12.5px;padding:9px 0;cursor:pointer}
+    .cr-auth-tabs button.active{background:#7c5cff;color:#fff}
+    .cr-field{display:block;margin-bottom:11px;font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:#a9adba}
+    .cr-field[hidden]{display:none}
+    .cr-field input{display:block;width:100%;margin-top:6px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#0a0c17;color:#fff;padding:11px 12px;font-size:13px;outline:0;font-family:inherit;text-transform:none;letter-spacing:0;box-sizing:border-box}
+    .cr-field input:focus{border-color:#8b5cf6}
+    .cr-auth-submit{width:100%;margin-top:6px;border:0;border-radius:10px;background:linear-gradient(90deg,#8b5cf6,#6d4bff);color:#fff;font-weight:900;font-size:13.5px;padding:12px;cursor:pointer}
+    .cr-auth-submit:disabled{opacity:.6;cursor:default}
+    .cr-auth-error{margin:10px 0 0;color:#ff8b8b;font-size:12px;min-height:16px}
+    .cr-auth-account{margin:0 0 14px;font-size:13px;color:#dfe1ea;line-height:1.6}
+    .cr-auth-account b{color:#fff;word-break:break-all}
+    #crAuthAccount[hidden]{display:none}
+    #crAuthForm[hidden]{display:none}
+
+    /* Mobile par drawer poori width leta hai, aur toast (z-index 100) uske
+       peeche chhup jata tha — sirf drawer khula ho tab toast upar uthao. */
+    .comments-drawer.open ~ .toast{z-index:170}
+    @media(max-width:700px){.comments-drawer{width:100%;border-left:0}.watch-actions-row{flex-wrap:wrap}.watch-comment{order:9}}
 </style>
 </head>
 <body>
@@ -578,7 +678,7 @@
       <button class="icon-btn search-trigger" aria-label="Search anime"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button>
       <button class="icon-btn" aria-label="My list" data-watchlist-view><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
       <button class="icon-btn notification-trigger" aria-label="Notifications" id="notificationButton" aria-expanded="false"><span class="notify-dot" id="notifyCount" hidden></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></button>
-      <button class="avatar" aria-label="Open guest profile" data-scroll="guestProfile">G7</button>
+      <button type="button" class="auth-btn" id="authButton" aria-haspopup="dialog" data-cr-auth="out">Sign in</button><button class="avatar" aria-label="Open guest profile" data-scroll="guestProfile">G7</button>
     </div>
   </header>
 
@@ -749,6 +849,7 @@
             <button class="watch-react" id="watchLike" aria-label="Like episode" title="Like"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12M15 5.9 14 10h5.8a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7V10l4-8a2.4 2.4 0 0 1 2.4 2.4Z"></path></svg><b id="watchLikeCount" hidden>1</b></button>
             <button class="watch-react" id="watchDislike" aria-label="Dislike episode" title="Dislike"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2M9 18.1 10 14H4.2a2 2 0 0 1-2-2.4l1.4-7a2 2 0 0 1 2-1.6H17v12l-4 8a2.4 2.4 0 0 1-2.4-2.4Z"></path></svg><b id="watchDislikeCount" hidden>1</b></button>
             <button class="watch-react" id="watchShare" aria-label="Share episode" title="Share"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg><b>Share</b></button>
+            <button type="button" class="watch-comment" id="watchCommentsBtn" aria-label="Open comments" aria-expanded="false"><svg class="cr-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.9 8.9 0 0 1-3.8-.8L3 21l1.8-5.7A8.5 8.5 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"></path></svg><span>Comment</span><b class="cr-count" id="crBadge" hidden>0</b><svg class="cr-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l2.2 6.4 6.3 2.2-6.3 2.2L12 18.7l-2.2-6.4L3.5 10l6.3-2.2z"></path></svg></button>
           </div>
           <p class="watch-desc" id="watchDesc"></p>
           <button class="text-button watch-desc-toggle" id="watchDescToggle" hidden>SHOW MORE</button>
@@ -767,6 +868,55 @@
     <div class="season-modal-box" role="dialog" aria-modal="true" aria-labelledby="seasonModalTitle">
       <header class="season-modal-head"><h2 id="seasonModalTitle">Season 1</h2><button id="closeSeasonModal" aria-label="Close episode guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></header>
       <div class="season-grid" id="seasonGrid"></div>
+    </div>
+  </div>
+
+  <aside class="comments-drawer" id="commentsDrawer" aria-hidden="true" aria-labelledby="crPanelTitle">
+    <header class="comments-head">
+      <h2 id="crPanelTitle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.9 8.9 0 0 1-3.8-.8L3 21l1.8-5.7A8.5 8.5 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"></path></svg>Comments <span id="crHeaderCount"></span></h2>
+      <button type="button" class="comments-close" id="crClose" aria-label="Close comments">×</button>
+    </header>
+    <div class="cr-tabs" role="tablist" aria-label="Sort comments">
+      <button type="button" class="cr-tab active" data-cr-sort="top" role="tab" aria-selected="true">Top</button>
+      <button type="button" class="cr-tab" data-cr-sort="new" role="tab" aria-selected="false">Newest</button>
+      <button type="button" class="cr-tab" data-cr-sort="old" role="tab" aria-selected="false">Oldest</button>
+    </div>
+    <form class="cr-composer" id="crComposer" hidden>
+      <span class="cr-avatar cr-me" id="crMeAvatar">?</span>
+      <div class="cr-compose-main">
+        <div class="cr-reply-chip" id="crReplyChip" hidden>Replying to <b id="crReplyName"></b><button type="button" id="crReplyCancel" aria-label="Cancel reply">×</button></div>
+        <div class="cr-input-wrap"><textarea class="cr-input" id="crInput" rows="2" maxlength="1200" placeholder="Add a comment..." aria-label="Write a comment"></textarea><span class="cr-emoji" aria-hidden="true">☺</span></div>
+        <div class="cr-compose-foot"><span class="cr-hint" id="crHint"></span><button type="submit" class="cr-post" id="crPost" disabled>Post</button></div>
+      </div>
+    </form>
+    <div class="cr-guest" id="crGuestBox">
+      <strong>Sign in to comment</strong>
+      <span>Comments Supabase me save hote hain. Padhna sabke liye free hai, likhne ke liye sign in karo.</span>
+      <button type="button" class="cr-signin-btn" id="crGuestSignIn">Sign in</button>
+    </div>
+    <div class="cr-list" id="crList" aria-live="polite"></div>
+  </aside>
+
+  <div class="cr-auth" id="crAuthModal" hidden>
+    <div class="cr-auth-box" role="dialog" aria-modal="true" aria-labelledby="crAuthTitle">
+      <button type="button" class="cr-auth-close" id="crAuthClose" aria-label="Close sign in">×</button>
+      <h2 id="crAuthTitle">Join the conversation</h2>
+      <p class="cr-auth-sub" id="crAuthSub">Comment karne ke liye sign in karo — tumhara naam aur comment dono Supabase me save hote hain.</p>
+      <div class="cr-auth-tabs" id="crAuthTabs" role="tablist">
+        <button type="button" class="active" data-cr-auth-mode="signin" role="tab" aria-selected="true">Sign in</button>
+        <button type="button" data-cr-auth-mode="signup" role="tab" aria-selected="false">Create account</button>
+      </div>
+      <form id="crAuthForm" novalidate>
+        <label class="cr-field" id="crNameField" hidden>Display name<input id="crDisplayName" autocomplete="nickname" maxlength="32" placeholder="AnimeLover_007"></label>
+        <label class="cr-field">Email<input id="crEmail" type="email" autocomplete="email" placeholder="you@example.com"></label>
+        <label class="cr-field">Password<input id="crPassword" type="password" autocomplete="current-password" placeholder="Kam se kam 6 characters"></label>
+        <button type="submit" class="cr-auth-submit" id="crAuthSubmit">Sign in</button>
+        <p class="cr-auth-error" id="crAuthError" role="alert"></p>
+      </form>
+      <div id="crAuthAccount" hidden>
+        <p class="cr-auth-account">Signed in as <b id="crAccountName"></b></p>
+        <button type="button" class="cr-auth-submit" id="crSignOut">Sign out</button>
+      </div>
     </div>
   </div>
 
@@ -1597,7 +1747,401 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
       function disarmWatchdog(){loadToken++;if(loadTimer){clearTimeout(loadTimer);loadTimer=null}}
       function onServerTimeout(){noticeTitle.innerHTML='<span>Player</span>';noticeText.innerHTML='The server is not responding (slow or blocked).<br>Retry the player or open it in a new tab.';noticeBtn.textContent='Retry';noticeAction='retry';setHidden(noticeBtn,false);try{serverFrame.src='about:blank'}catch(e){}setHidden(frameLoader,true);setHidden(serverBlocked,false)}
       if(serverFrame){serverFrame.addEventListener('load',function(){if(serverFrame.src==='about:blank')return;disarmWatchdog();setHidden(frameLoader,false);var lt=loadToken;seekIfPending(lt);if(PLAY.key){PLAY.baseStamp=Date.now();flushPlayhead(false)}setTimeout(function(){if(lt===loadToken)setHidden(frameLoader,true)},800)},false)}
-      
+            /* ================= COMMENTS (Supabase) =================
+         Owner: player ke neeche “Comment” pill, click par right side drawer,
+         har comment Supabase me save, aur sirf signed-in user hi likh sake.
+
+         Kyun ye design:
+         - Supabase ka anon key public hota hai (ye normal hai) — asli security
+           RLS + SECURITY DEFINER RPC se aati hai. Tables par direct insert
+           policy hi nahi hai, isliye browser se apna `user_id`/`author_name`
+           forge karke comment daalna possible nahi (`supabase/migrations/`
+           me poora schema hai).
+         - Session localStorage me rakhte hain, warna iframe reload / episode
+           change par har baar sign-in maangta.
+         - Guest bhi comments padh sakta hai (panel khaali na lage), par
+           composer ki jagah sign-in CTA dikhta hai — posting gate wahi hai jo
+           owner ne bola: “sirf sign in karne wala hi comment kar sakta hai”.
+         - Har network call fail-safe: Supabase down ho to panel “load nahi hua”
+           dikhata hai, page kahin crash nahi karta.
+      */
+      var CR_SB={url:'https://wavzzkbemvujvgdaczqq.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhdnp6a2JlbXZ1anZnZGFjenFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3NTYyODksImV4cCI6MjEwODMzMjI4OX0.ZBwn1ulT7wdC7WRVOucoOhXlhTLy7TUzx3nO7aa6wos'};
+      var CR_STORE='cr_comment_session_v1';
+      var crSession=null;
+      try{crSession=JSON.parse(window.localStorage.getItem(CR_STORE)||'null')}catch(e){crSession=null}
+      if(crSession&&!crSession.access_token)crSession=null;
+      var CR={open:false,sort:'top',items:[],loading:false,reply:null,error:'',busy:false};
+      var CR_AUTH_MODE='signin';
+
+      function crSaveSession(){try{if(crSession)window.localStorage.setItem(CR_STORE,JSON.stringify(crSession));else window.localStorage.removeItem(CR_STORE)}catch(e){}}
+      function crUser(){return (crSession&&crSession.user)||null}
+      function crToken(){return (crSession&&crSession.access_token)||CR_SB.key}
+      function crName(){var u=crUser();if(!u)return '';return u.display_name||(u.email?u.email.split('@')[0]:'')||'Anime fan'}
+      function crEpisode(){var st=playState||{},m=isMovieKey(st.key);return {key:st.key||'',season:m?1:Number(st.season||1),episode:m?1:Number(st.ep||1)}}
+      function crInitials(name){var parts=String(name||'').replace(/[^A-Za-z0-9 _.-]/g,' ').trim().split(/[\s_.-]+/);var out='';for(var i=0;i<parts.length&&out.length<2;i++){if(parts[i])out+=parts[i].charAt(0)}return (out||'?').toUpperCase()}
+      function crTint(name){var h=0,s=String(name||'anime fan');for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))%360}return 'hsl('+h+',62%,46%)'}
+      function crAgo(iso){var t=Date.parse(iso);if(!t)return 'just now';var sec=Math.max(1,Math.floor((Date.now()-t)/1000));if(sec<60)return sec+'s ago';var min=Math.floor(sec/60);if(min<60)return min+'m ago';var hr=Math.floor(min/60);if(hr<24)return hr+'h ago';var day=Math.floor(hr/24);if(day<7)return day+'d ago';var wk=Math.floor(day/7);if(wk<5)return wk+'w ago';try{return new Date(t).toLocaleDateString()}catch(e){return Math.floor(day/30)+'mo ago'}}
+
+      /* Supabase error body ka `message` seedha UI me dikhana galat hoga (kabhi
+         kabhi English DB text/long detail hota hai). Isliye known codes ko
+         chhote Hinglish messages me map karte hain. */
+      function crHttpError(data,status){
+        var raw=String((data&&(data.message||data.msg||data.error_description||data.error))||'');
+        if(/SIGN_IN_REQUIRED|JWT expired|invalid claim|invalid JWT/i.test(raw))return 'SIGN_IN_REQUIRED';
+        if(status===401||status===403)return 'SIGN_IN_REQUIRED';
+        if(/COMMENT_TOO_SHORT/i.test(raw))return 'Comment bahut chhota hai.';
+        if(/COMMENT_TOO_LONG/i.test(raw))return 'Comment 1200 characters se lamba hai.';
+        if(/PARENT_NOT_FOUND/i.test(raw))return 'Jis comment ka reply kar rahe the wo delete ho gaya.';
+        if(/COMMENT_NOT_FOUND/i.test(raw))return 'Comment delete ho chuka hai.';
+        return raw||('Request fail hua (HTTP '+status+')');
+      }
+
+      async function crHttp(path,opts){
+        opts=opts||{};
+        var headers={apikey:CR_SB.key,'Content-Type':'application/json',Authorization:'Bearer '+crToken()};
+        var res=await fetch(CR_SB.url+path,{method:opts.method||'GET',headers:headers,body:opts.body===undefined?undefined:JSON.stringify(opts.body)});
+        var text='';
+        try{text=await res.text()}catch(e){}
+        var data=null;
+        try{data=text?JSON.parse(text):null}catch(e){data=text}
+        if(!res.ok){
+          /* Access token 1 ghante me expire hota hai — ek refresh try, phir hi
+             user ko dobara sign-in bolte hain. */
+          if(res.status===401&&!opts.retried&&await crRefreshToken())return crHttp(path,{method:opts.method,body:opts.body,retried:true});
+          var err=new Error(crHttpError(data,res.status));err.status=res.status;throw err;
+        }
+        return data;
+      }
+      function crRpc(name,args){return crHttp('/rest/v1/rpc/'+name,{method:'POST',body:args||{}})}
+
+      async function crAuthCall(path,body){
+        var res=await fetch(CR_SB.url+path,{method:'POST',headers:{apikey:CR_SB.key,'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+        var data=null;
+        try{data=await res.json()}catch(e){}
+        if(!res.ok)throw new Error(String((data&&(data.msg||data.error_description||data.message||data.error))||'Sign in fail hua'));
+        return data;
+      }
+
+      function crStoreSession(data){
+        if(!data||!data.access_token)return false;
+        var meta=(data.user&&data.user.user_metadata)||{};
+        crSession={
+          access_token:data.access_token,
+          refresh_token:data.refresh_token||(crSession&&crSession.refresh_token)||'',
+          expires_at:Date.now()+(Math.max(Number(data.expires_in)||3600,120)-60)*1000,
+          user:{id:(data.user&&data.user.id)||'',email:(data.user&&data.user.email)||'',display_name:meta.display_name||''}
+        };
+        crSaveSession();crPaintAuth();return true;
+      }
+      async function crRefreshToken(){
+        if(!crSession||!crSession.refresh_token)return false;
+        try{return crStoreSession(await crAuthCall('/auth/v1/token?grant_type=refresh_token',{refresh_token:crSession.refresh_token}))}catch(e){crClearSession();return false}
+      }
+      function crClearSession(){crSession=null;crSaveSession();crPaintAuth()}
+
+      function crPaintAuth(){
+        var u=crUser(),name=crName(),btn=byId('authButton');
+        if(btn){btn.textContent=u?(name||'Account'):'Sign in';btn.setAttribute('data-cr-auth',u?'in':'out');btn.setAttribute('aria-label',u?('Account: '+((u&&u.email)||name)):'Sign in to comment')}
+        var me=byId('crMeAvatar');if(me)me.textContent=crInitials(name||'Me');
+        setHidden(byId('crComposer'),!u);
+        setHidden(byId('crGuestBox'),!!u);
+      }
+
+      /* ---------- panel ---------- */
+      function crIsOpen(){return CR.open}
+      function crOpenPanel(){
+        var panel=byId('commentsDrawer'),btn=byId('watchCommentsBtn');
+        CR.open=true;CR.reply=null;crPaintReply();
+        setHidden(panel,false);addClass(panel,'open');panel.setAttribute('aria-hidden','false');
+        if(btn)btn.setAttribute('aria-expanded','true');
+        crPaintAuth();crLoad();crRefreshCount();
+        var close=byId('crClose');if(close)try{close.focus()}catch(e){}
+      }
+      function crClosePanel(){
+        var panel=byId('commentsDrawer'),btn=byId('watchCommentsBtn');
+        CR.open=false;CR.reply=null;crPaintReply();
+        removeClass(panel,'open');panel.setAttribute('aria-hidden','true');
+        if(btn)btn.setAttribute('aria-expanded','false');
+      }
+      function crTogglePanel(){if(CR.open)crClosePanel();else crOpenPanel()}
+
+      function crPaintReply(){
+        var chip=byId('crReplyChip');
+        if(!chip)return;
+        setHidden(chip,!CR.reply);
+        var nm=byId('crReplyName');if(nm)nm.textContent=CR.reply?(CR.reply.author||'comment'):'';
+        var input=byId('crInput');
+        if(input)input.placeholder=CR.reply?('Reply to '+(CR.reply.author||'comment')+'…'):'Add a comment...';
+      }
+
+      function crSyncPostState(){
+        var input=byId('crInput'),post=byId('crPost'),hint=byId('crHint');
+        var len=input?String(input.value||'').trim().length:0;
+        if(post)post.disabled=CR.busy||len<2||len>1200;
+        if(hint)hint.textContent=len>1200?'1200 characters se zyada ho gaya.':'';
+      }
+
+      function crItemHtml(c,isReply){
+        var voted=Number(c.my_vote)||0,id=escapeHtml(String(c.id||''));
+        return '<article class="cr-item'+(isReply?' cr-reply':'')+'" data-cr-id="'+id+'">'
+          +'<span class="cr-avatar" style="background:'+crTint(c.author_name)+'">'+escapeHtml(crInitials(c.author_name))+'</span>'
+          +'<div class="cr-main">'
+          +'<div class="cr-meta"><strong>'+escapeHtml(c.author_name||'Anime fan')+'</strong><span>'+escapeHtml((c.mine?'You · ':'')+crAgo(c.created_at))+'</span></div>'
+          +'<p class="cr-body">'+escapeHtml(c.body||'')+'</p>'
+          +'<div class="cr-actions">'
+          +'<button type="button" class="cr-act'+(voted===1?' on':'')+'" data-cr-vote="1" aria-label="Like comment" aria-pressed="'+(voted===1?'true':'false')+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v12M15 5.9 14 10h5.8a2 2 0 0 1 2 2.4l-1.4 7a2 2 0 0 1-2 1.6H7V10l4-8a2.4 2.4 0 0 1 2.4 2.4Z"></path></svg><b>'+(Number(c.like_count)||0)+'</b></button>'
+          +'<button type="button" class="cr-act'+(voted===-1?' on':'')+'" data-cr-vote="-1" aria-label="Dislike comment" aria-pressed="'+(voted===-1?'true':'false')+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 14V2M9 18.1 10 14H4.2a2 2 0 0 1-2-2.4l1.4-7a2 2 0 0 1 2-1.6H17v12l-4 8a2.4 2.4 0 0 1-2.4-2.4Z"></path></svg><b>'+(Number(c.dislike_count)||0)+'</b></button>'
+          +'<button type="button" class="cr-act" data-cr-reply="'+id+'" data-cr-author="'+escapeHtml(c.author_name||'Anime fan')+'">Reply</button>'
+          +(c.mine?'<button type="button" class="cr-act cr-del" data-cr-del="'+id+'" aria-label="Delete your comment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg><b>Delete</b></button>':'')
+          +'</div></div></article>';
+      }
+
+      function crRender(){
+        var list=byId('crList');
+        if(!list)return;
+        if(CR.loading){list.innerHTML='<div class="cr-empty"><span class="cr-spin"></span>Comments load ho rahe hain…</div>';return}
+        if(CR.error){list.innerHTML='<div class="cr-empty">'+escapeHtml(CR.error)+'</div>';return}
+        if(!CR.items.length){list.innerHTML='<div class="cr-empty">Abhi koi comment nahi hai.<br>Pehla comment tumhara ho sakta hai 👀</div>';return}
+        /* Reply ko parent ke neeche hi dikhana hai — isliye roots aur children
+           alag karke render karte hain (server se flat list aati hai). */
+        var roots=[],kids={},byIdMap={};
+        for(var i=0;i<CR.items.length;i++){
+          var c=CR.items[i];byIdMap[String(c.id)]=c;
+          if(c.parent_id&&byIdMap[String(c.parent_id)]){(kids[String(c.parent_id)]=kids[String(c.parent_id)]||[]).push(c)}
+          else if(c.parent_id){(kids[String(c.parent_id)]=kids[String(c.parent_id)]||[]).push(c)}
+          else roots.push(c);
+        }
+        var html='';
+        for(var r=0;r<roots.length;r++){
+          html+=crItemHtml(roots[r],false);
+          var children=kids[String(roots[r].id)]||[];
+          for(var k=0;k<children.length;k++)html+=crItemHtml(children[k],true);
+        }
+        /* Orphan replies (parent deleted ya page ke bahar) top-level par dikhein,
+           taaki comment gayab na ho. */
+        if(!html)html=crItemHtml(CR.items[0],false);
+        list.innerHTML=html;
+      }
+
+      async function crLoad(){
+        var ep=crEpisode(),list=byId('crList');
+        CR.loading=true;CR.error='';crRender();
+        try{
+          var rows=await crRpc('cr_list_comments',{p_show_key:ep.key,p_season:ep.season,p_episode:ep.episode,p_sort:CR.sort});
+          if(!CR.open)return;
+          CR.items=Array.isArray(rows)?rows:[];
+        }catch(e){
+          CR.items=[];CR.error=(String(e&&e.message)===('SIGN_IN_REQUIRED'))?'Comments dekhne ke liye dobara sign in karo.':'Comments load nahi ho paaye. Connection check karke dobara try karo.';
+        }
+        CR.loading=false;crRender();crPaintCount();
+      }
+
+      function crPaintCount(){
+        var count=CR.items.length,badge=byId('crBadge'),head=byId('crHeaderCount');
+        if(head)head.textContent=count?'('+count+')':'';
+        if(badge&&CR.open){badge.textContent=count>99?'99+':String(count);setHidden(badge,count===0)}
+      }
+
+      async function crRefreshCount(){
+        var ep=crEpisode(),badge=byId('crBadge'),head=byId('crHeaderCount');
+        try{
+          var n=await crRpc('cr_comment_count',{p_show_key:ep.key,p_season:ep.season,p_episode:ep.episode});
+          var count=Number(n)||0;
+          if(badge){badge.textContent=count>99?'99+':String(count);setHidden(badge,count===0)}
+          if(head&&!CR.open)head.textContent=count?'('+count+')':'';
+        }catch(e){/* offline: badge purana hi rehne do, page block na ho */}
+      }
+
+      async function crVote(id,value){
+        if(!crUser()){showToast('Vote karne ke liye sign in karo');crOpenAuth('signin');return}
+        try{
+          var rows=await crRpc('cr_vote_comment',{p_comment_id:id,p_value:value});
+          var row=Array.isArray(rows)?rows[0]:rows;
+          for(var i=0;i<CR.items.length;i++){
+            if(String(CR.items[i].id)===String(id)&&row){
+              CR.items[i].like_count=Number(row.like_count)||0;
+              CR.items[i].dislike_count=Number(row.dislike_count)||0;
+              CR.items[i].my_vote=Number(row.my_vote)||0;
+            }
+          }
+          crRender();
+        }catch(e){
+          if(String(e&&e.message)==='SIGN_IN_REQUIRED'){crClearSession();crOpenAuth('signin');return}
+          showToast('Vote save nahi hua');
+        }
+      }
+
+      async function crDelete(id){
+        if(!crUser())return;
+        var ok=true;
+        try{ok=window.confirm('Apna comment delete karna hai?')}catch(e){ok=true}
+        if(!ok)return;
+        try{
+          await crHttp('/rest/v1/cr_comments?id=eq.'+encodeURIComponent(id),{method:'DELETE'});
+          CR.items=CR.items.filter(function(c){return String(c.id)!==String(id)&&String(c.parent_id||'')!==String(id)});
+          crRender();crPaintCount();crRefreshCount();showToast('Comment delete ho gaya');
+        }catch(e){showToast('Delete nahi hua')}
+      }
+
+      async function crSubmit(){
+        if(CR.busy)return;
+        if(!crUser()){crOpenAuth('signin');return}
+        var input=byId('crInput'),post=byId('crPost');
+        var body=String(input?input.value:'').trim();
+        if(body.length<2){showToast('Comment bahut chhota hai');return}
+        if(body.length>1200){showToast('Comment 1200 characters se lamba hai');return}
+        var ep=crEpisode();
+        CR.busy=true;crSyncPostState();
+        if(post)post.textContent='Posting…';
+        try{
+          await crRpc('cr_add_comment',{p_show_key:ep.key,p_season:ep.season,p_episode:ep.episode,p_body:body,p_parent:CR.reply?CR.reply.id:null});
+          if(input)input.value='';
+          CR.reply=null;crPaintReply();
+          await crLoad();await crRefreshCount();
+          showToast('Comment post ho gaya');
+        }catch(e){
+          var msg=String(e&&e.message||e);
+          if(msg==='SIGN_IN_REQUIRED'){crClearSession();showToast('Session expire ho gaya — dobara sign in karo');crOpenAuth('signin')}
+          else showToast(msg||'Comment save nahi hua');
+        }
+        CR.busy=false;crSyncPostState();
+        if(post)post.textContent='Post';
+      }
+
+      /* ---------- auth ---------- */
+      function crPaintAuthMode(){
+        var modal=byId('crAuthModal');
+        if(!modal)return;
+        var signedIn=!!crUser();
+        var form=byId('crAuthForm'),acc=byId('crAuthAccount'),tabs=byId('crAuthTabs');
+        setHidden(form,signedIn);setHidden(acc,!signedIn);setHidden(tabs,signedIn);
+        setHidden(byId('crNameField'),signedIn||CR_AUTH_MODE!=='signup');
+        var title=byId('crAuthTitle'),sub=byId('crAuthSub'),submit=byId('crAuthSubmit'),err=byId('crAuthError');
+        if(title)title.textContent=signedIn?'Your account':(CR_AUTH_MODE==='signup'?'Create your account':'Welcome back');
+        if(sub)sub.textContent=signedIn?'Yahin se sign out kar sakte ho. Tumhare comments Supabase me safe hain.':(CR_AUTH_MODE==='signup'?'Naya account banao — display name comment par dikhega.':'Wahi email/password daalo jo account banate waqt use kiya tha.');
+        if(submit)submit.textContent=CR_AUTH_MODE==='signup'?'Create account':'Sign in';
+        if(err)err.textContent='';
+        var accName=byId('crAccountName');if(accName)accName.textContent=(crUser()&&(crUser().email||crName()))||'';
+        var modeBtns=all('[data-cr-auth-mode]');
+        each(modeBtns,function(btn){var on=btn.getAttribute('data-cr-auth-mode')===CR_AUTH_MODE;setClass(btn,'active',on);btn.setAttribute('aria-selected',on?'true':'false')});
+      }
+
+      function crOpenAuth(mode){
+        var modal=byId('crAuthModal');
+        if(!modal)return;
+        CR_AUTH_MODE=mode||(crUser()?'account':'signin');
+        setHidden(modal,false);crPaintAuthMode();
+        var first=crUser()?byId('crSignOut'):byId('crEmail');
+        if(first)try{first.focus()}catch(e){}
+      }
+      function crCloseAuth(){var modal=byId('crAuthModal');if(modal)setHidden(modal,true)}
+
+      async function crSubmitAuth(ev){
+        if(ev&&ev.preventDefault)ev.preventDefault();
+        if(crUser())return;
+        var email=String((byId('crEmail')||{}).value||'').trim();
+        var password=String((byId('crPassword')||{}).value||'');
+        var name=String((byId('crDisplayName')||{}).value||'').trim();
+        var err=byId('crAuthError'),submit=byId('crAuthSubmit');
+        if(err)err.textContent='';
+        if(!email||email.indexOf('@')<1){if(err)err.textContent='Sahi email daalo.';return}
+        if(password.length<6){if(err)err.textContent='Password kam se kam 6 characters ka hona chahiye.';return}
+        if(submit){submit.disabled=true;submit.textContent=CR_AUTH_MODE==='signup'?'Banaya ja raha hai…':'Sign in ho raha hai…'}
+        try{
+          var data;
+          if(CR_AUTH_MODE==='signup'){
+            data=await crAuthCall('/auth/v1/signup',{email:email,password:password,data:{display_name:name||email.split('@')[0]}});
+            if(!data||!data.access_token)throw new Error('Email confirm karna padega — mail box check karo.');
+          }else{
+            data=await crAuthCall('/auth/v1/token?grant_type=password',{email:email,password:password});
+          }
+          crStoreSession(data);
+          crCloseAuth();
+          showToast('Signed in as '+crName());
+          crRefreshCount();
+          if(CR.open)await crLoad();
+        }catch(e){
+          var text=String(e&&e.message||e);
+          if(/Invalid login credentials/i.test(text))text='Email ya password galat hai.';
+          else if(/already registered/i.test(text))text='Ye email pehle se registered hai — Sign in tab use karo.';
+          if(err)err.textContent=text;
+        }
+        if(submit){submit.disabled=false;submit.textContent=CR_AUTH_MODE==='signup'?'Create account':'Sign in'}
+      }
+
+      async function crSignOut(){
+        var token=crSession&&crSession.access_token;
+        crClearSession();crCloseAuth();
+        if(token)try{await fetch(CR_SB.url+'/auth/v1/logout',{method:'POST',headers:{apikey:CR_SB.key,Authorization:'Bearer '+token}})}catch(e){}
+        showToast('Sign out ho gaya');
+        CR.items=[];crRender();
+        if(CR.open)crLoad();
+        crRefreshCount();
+      }
+
+      /* ---------- wiring ---------- */
+      (function crWire(){
+        var btn=byId('watchCommentsBtn');
+        if(btn)btn.addEventListener('click',crTogglePanel,false);
+        var close=byId('crClose');if(close)close.addEventListener('click',crClosePanel,false);
+        var guest=byId('crGuestSignIn');if(guest)guest.addEventListener('click',function(){crOpenAuth('signin')},false);
+        var composer=byId('crComposer');
+        if(composer)composer.addEventListener('submit',function(ev){ev.preventDefault();crSubmit()},false);
+        var input=byId('crInput');
+        if(input){
+          input.addEventListener('input',crSyncPostState,false);
+          input.addEventListener('keydown',function(ev){if(ev.key==='Enter'&&(ev.ctrlKey||ev.metaKey)){ev.preventDefault();crSubmit()}},false);
+        }
+        var replyCancel=byId('crReplyCancel');
+        if(replyCancel)replyCancel.addEventListener('click',function(){CR.reply=null;crPaintReply()},false);
+        var sortBtns=all('[data-cr-sort]');
+        each(sortBtns,function(b){b.addEventListener('click',function(){
+          CR.sort=b.getAttribute('data-cr-sort')||'top';
+          each(sortBtns,function(x){var on=x===b;setClass(x,'active',on);x.setAttribute('aria-selected',on?'true':'false')});
+          crLoad();
+        },false)});
+        var list=byId('crList');
+        if(list)list.addEventListener('click',function(ev){
+          var vote=closest(ev.target,'[data-cr-vote]');
+          if(vote){var item=closest(vote,'[data-cr-id]');crVote(item?item.getAttribute('data-cr-id'):'',Number(vote.getAttribute('data-cr-vote')));return}
+          var reply=closest(ev.target,'[data-cr-reply]');
+          if(reply){CR.reply={id:reply.getAttribute('data-cr-reply'),author:reply.getAttribute('data-cr-author')||'comment'};crPaintReply();var inp=byId('crInput');if(inp)try{inp.focus()}catch(e){}return}
+          var del=closest(ev.target,'[data-cr-del]');
+          if(del){crDelete(del.getAttribute('data-cr-del'));return}
+        },false);
+        var authBtn=byId('authButton');
+        if(authBtn)authBtn.addEventListener('click',function(){crOpenAuth(crUser()?'account':'signin')},false);
+        var authClose=byId('crAuthClose');if(authClose)authClose.addEventListener('click',crCloseAuth,false);
+        var authModal=byId('crAuthModal');
+        if(authModal)authModal.addEventListener('click',function(ev){if(ev.target===authModal)crCloseAuth()},false);
+        var authForm=byId('crAuthForm');if(authForm)authForm.addEventListener('submit',crSubmitAuth,false);
+        var signOut=byId('crSignOut');if(signOut)signOut.addEventListener('click',crSignOut,false);
+        var modeBtns=all('[data-cr-auth-mode]');
+        each(modeBtns,function(b){b.addEventListener('click',function(){CR_AUTH_MODE=b.getAttribute('data-cr-auth-mode')||'signin';crPaintAuthMode()},false)});
+        document.addEventListener('keydown',function(ev){
+          if(ev.key!=='Escape')return;
+          if(byId('crAuthModal')&&!byId('crAuthModal').hidden)crCloseAuth();
+          else if(CR.open)crClosePanel();
+        },false);
+      })();
+
+      /* Episode/title badalne par purane comments nahi dikhne chahiye: base
+         renderWatchMeta ke baad badge refresh + panel reload. Function
+         declaration ko hi wrap karte hain taaki player ka flow waisa hi rahe. */
+      var crSyncHeadingBase=syncPlayerHeading;
+      syncPlayerHeading=function(){
+        crSyncHeadingBase();
+        try{
+          CR.reply=null;crPaintReply();crPaintAuth();crSyncPostState();
+          crRefreshCount();
+          if(CR.open)crLoad();
+        }catch(e){}
+      };
+      var crClosePlayerBase=closePlayer;
+      closePlayer=function(){try{crClosePanel()}catch(e){}crClosePlayerBase()};
+
+      crPaintAuth();crPaintAuthMode();crSyncPostState();
+
     })();
   </script>
 </body>
