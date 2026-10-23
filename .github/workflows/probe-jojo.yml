@@ -26,12 +26,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Probe the JoJo series pages
+      - name: Probe the JoJo season pages (raw episode links)
         run: |
           node --input-type=module -e "
             import { writeFileSync } from 'node:fs';
-            import { parseToonSeasons, parseSeasonEpisodes, parseSeasonCards } from './scripts/lib/seasons.mjs';
-            import { _internal } from './api/toonstream.mjs';
             const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
             const BASE = 'https://toonstream.us';
             const get = async (url) => {
@@ -42,75 +40,36 @@ jobs:
                 return { status: 0, url, text: '', error: String(error?.message || error) };
               }
             };
-            const title = (html) => {
-              const m = /<title>([^<]*)<\/title>/i.exec(html || '');
-              return (m ? m[1] : '').trim();
-            };
-            const out = { ranAt: new Date().toISOString() };
-            const slugs = [
-              \"jojo's-bizarre-adventure\",
-              'jojos-bizarre-adventure',
-              'jojo-bizarre-adventure',
-              \"jojo's-bizarre-adventure-hindi-dub\",
-              \"jojo's-bizarre-adventure-dub\",
-            ];
-            out.series = {};
-            for (const slug of slugs) {
-              const page = await get(BASE + '/series/' + encodeURIComponent(slug) + '/');
-              const row = { status: page.status, finalUrl: page.url, docTitle: title(page.text), bytes: (page.text || '').length };
-              if (page.status === 200) {
-                const buttons = parseToonSeasons(page.text);
-                row.buttons = buttons;
-                const inline = parseSeasonEpisodes(page.text);
-                row.inline = { count: inline.count, first: inline.first, last: inline.last, missing: inline.missing.slice(0, 8) };
-                row.seasons = [];
-                for (const button of buttons) {
-                  const url = button.url.startsWith('http') ? button.url : BASE + button.url;
-                  const seasonPage = await get(url.endsWith('/') ? url : url + '/');
-                  const info = parseSeasonEpisodes(seasonPage.text || '');
-                  const cards = parseSeasonCards(seasonPage.text || '');
-                  row.seasons.push({
-                    n: button.n,
-                    status: seasonPage.status,
-                    count: info.count,
-                    first: info.first,
-                    last: info.last,
-                    missing: info.missing.slice(0, 8),
-                    cards: cards.size,
-                    sampleTitles: [...String(seasonPage.text || '').matchAll(/class=\"entry-title\"[^>]*>([^<]{2,80})</g)].slice(0, 3).map((m) => m[1].trim()),
-                  });
-                  if (page.text && row.seasons.length > 40) break;
-                }
-              }
-              if (page.error) row.error = page.error;
-              out.series[slug] = row;
-            }
-            const ep = await get(BASE + \"/episode/jojo's-bizarre-adventure-6x5/\");
-            out.episodePage = {
-              status: ep.status,
-              finalUrl: ep.url,
-              docTitle: title(ep.text),
-              seriesLinks: _internal.extractSeriesLinks(ep.text || '').slice(0, 8),
-            };
-            const search = await get(BASE + '/s?q=jojo');
-            out.search = {
-              status: search.status,
-              links: _internal.extractSeriesLinks(search.text || '').slice(0, 15),
-            };
-            out.nxsha = {};
+            const out = { ranAt: new Date().toISOString(), seasons: {} };
             for (const n of [1, 2, 3, 4, 5, 6]) {
-              const res = await get('https://nxsha.space/api/tv/45790/season/' + n);
-              let episodes = 0;
-              let sample = [];
-              try {
-                const body = JSON.parse(res.text);
-                episodes = Array.isArray(body.episodes) ? body.episodes.length : 0;
-                sample = (body.episodes || []).slice(0, 2).map((e) => e.name);
-              } catch {}
-              out.nxsha[n] = { status: res.status, episodes, sample };
+              const url = BASE + '/series/jojos-bizarre-adventure/season/' + n + '/';
+              const page = await get(url);
+              const text = page.text || '';
+              const hrefs = [...new Set([...text.matchAll(/href=\"(\/episode\/[^\"]+)\"/g)].map((m) => m[1]))];
+              const cardLinks = [...new Set([...text.matchAll(/\/episode\/[^\"'#]+?-(\d+)x(\d+)\/?/g)].map((m) => m[1] + 'x' + m[2]))];
+              out.seasons[n] = {
+                status: page.status,
+                bytes: text.length,
+                hrefCount: hrefs.length,
+                hrefs: hrefs.slice(0, 6),
+                hrefTail: hrefs.slice(-4),
+                cardLinks: cardLinks.length,
+                cardSample: cardLinks.slice(0, 5),
+                cardTail: cardLinks.slice(-5),
+                hasPlayButton: /data-url|watch|episode-btn/i.test(text),
+                snippet: (text.match(/<article[\s\S]{0,400}/) || [''])[0].replace(/\s+/g, ' ').slice(0, 400),
+              };
             }
+            const extra = await get(BASE + '/series/jojos-bizarre-adventure/season/6');
+            out.season6NoSlash = { status: extra.status, hrefs: [...new Set([...(String(extra.text || '').matchAll(/href=\"(\/episode\/[^\"]+)\"/g)].map((m) => m[1]))].slice(0, 6) };
+            const search = await get(BASE + '/s?q=jojo+stone+ocean');
+            out.stoneOcean = {
+              status: search.status,
+              hrefs: [...new Set([...String(search.text || '').matchAll(/href=\"(\/(?:series|episode)\/[^\"]+)\"/g)].map((m) => m[1]))].slice(0, 12),
+            };
             writeFileSync('data/jojo-probe.json', JSON.stringify(out, null, 2) + '\n');
           "
+
       - name: Commit the probe result
         run: |
           git config user.name "netflix-catalog-bot"
