@@ -115,10 +115,10 @@ row (~1200px) bharta tha, yaani player jitna bada. Ab:
 .continue-card{flex:0 0 calc(20% - 13px); width:calc(20% - 13px); min-width:0}
 ```
 
-- Ek row me 5 card (gap 16px × 4 nikal kar), aur zyada items hon to rail
-  horizontal scroll karti hai (Crunchyroll ke home rails jaisa).
-- Mobile (≤700px) par ek card ~68% width ka (agla card peek karta hai) —
-  purana `.continue-main img{height:110px}` leftover bhi hata diya.
+- Ek row me 5 card (gap 16px × 4 nikal kar); 6th item agli row me chala jata
+  hai (normal grid jaisa) — koi bhi card stretch nahi karta.
+- Mobile (≤700px) par ek card poori row (100%) — purana
+  `.continue-main img{height:110px}` leftover bhi hata diya.
 - Poster/overlay/copy thoda chhota: play button 44px, title 13.5px, meta 11px.
 
 ## My List ka fake data
