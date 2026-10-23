@@ -11,6 +11,7 @@ on:
       - arena/4756fb25-netflix-ui
     paths:
       - '.github/workflows/probe-jojo.yml'
+      - 'scripts/probe-jojo.mjs'
 
 permissions:
   contents: write
