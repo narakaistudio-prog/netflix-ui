@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-23T08:46:58.004Z",
+  "ranAt": "2026-10-23T08:48:15.116Z",
   "targets": {
     "rezemovie": {
       "title": "Chainsaw Man – The Movie: Reze Arc",
@@ -9,6 +9,7 @@
           "kind": "movie",
           "searchName": "Chainsaw Man - The Movie: Reze Arc",
           "year": "2025",
+          "rating": "4.3",
           "pageTitle": "Chainsaw Man - The Movie: Reze Arc",
           "titleMatches": true,
           "runtime": "1h 40m",
@@ -50,7 +51,7 @@
           {
             "step": "movie-guess",
             "status": 200,
-            "ms": 831
+            "ms": 395
           }
         ]
       }
@@ -63,6 +64,7 @@
           "kind": "movie",
           "searchName": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
           "year": "2025",
+          "rating": "4.4",
           "pageTitle": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
           "titleMatches": true,
           "runtime": "2h 36m",
@@ -97,7 +99,7 @@
           {
             "step": "movie-guess",
             "status": 200,
-            "ms": 460
+            "ms": 610
           }
         ]
       }
