@@ -67,6 +67,16 @@ function tokenFrom(xUser, cookies) {
     return match ? match[1] : '';
 }
 
+/** Browser ke liye decisive: ye headers hi batate hain ki `fetch` chalega ya nahi. */
+function cors(label, res) {
+    log(
+        `    CORS ${label}:`,
+        'ACAO', res.headers.get('access-control-allow-origin') || '(none)',
+        '| expose', res.headers.get('access-control-expose-headers') || '(none)',
+        '| creds', res.headers.get('access-control-allow-credentials') || '(none)',
+    );
+}
+
 const j = (value) => {
     try {
         return JSON.parse(value);
@@ -95,9 +105,14 @@ function mediaUrls(node, out = [], depth = 0) {
 
 async function main() {
     log('[1] guest token…');
-    const home = await fetch(`${H5}/home?host=${encodeURIComponent(HOST)}`, { headers: headers() });
+    // Browser se call hone par Origin hamara app hota hai — wahi bhej kar dekhte hain.
+    const BROWSER_ORIGIN = 'https://net-ki15.vercel.app';
+    const home = await fetch(`${H5}/home?host=${encodeURIComponent(HOST)}`, {
+        headers: headers(HOST, { Origin: BROWSER_ORIGIN }),
+    });
     let token = tokenFrom(home.headers.get('x-user'), home.headers.get('set-cookie'));
     log('    /home', home.status, 'token:', token ? 'yes' : 'no');
+    cors('/home', home);
     const auth = token ? { Authorization: `Bearer ${token}` } : {};
 
     log('[2] player domain…');
@@ -121,6 +136,7 @@ async function main() {
     const foundText = await found.text();
     const items = j(foundText)?.data?.items || [];
     log('    status', found.status, 'items', items.length);
+    cors('/subject/search', found);
     if (!items.length) log('    search body:', foundText.slice(0, 300));
     const item = items[0] || {};
     const subjectId = String(item.subjectId || '');
@@ -153,6 +169,7 @@ async function main() {
             '| hasResource', json?.data?.hasResource,
             '| maxRes', json?.data?.playConfig?.maxResolution,
         );
+        cors(`play/${label}`, res);
         log('    body:', body.slice(0, 350));
     }
 
