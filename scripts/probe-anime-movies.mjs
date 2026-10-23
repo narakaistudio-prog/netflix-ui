@@ -93,6 +93,9 @@ async function probeNxsha(target, report) {
             kind: 'movie',
             searchName: best.name,
             year: info.year || best.year || '',
+            // Nxsha search card ka rating TMDB ka /10 hota hai; page 5-star
+            // scale par dikhata hai, isliye /2 (wahi rule import script me hai).
+            rating: best.rating && Number(best.rating) > 0 ? String((Number(best.rating) / 2).toFixed(1)) : '',
             pageTitle: info.title || '',
             titleMatches: !!info.title && normTitle(info.title) === normTitle(best.name),
             runtime: info.duration || '',
