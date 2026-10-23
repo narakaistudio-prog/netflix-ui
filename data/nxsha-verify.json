@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T16:34:49.725Z",
+  "generatedAt": "2026-10-23T04:49:19.711Z",
   "titles": [
     {
       "key": "aot",
@@ -16229,7 +16229,7 @@
         "https://web.nxsha.app/browse/tv-shows"
       ],
       "ordinals": [],
-      "snippet": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> <url> <loc>https://web.nxsha.app</loc> <lastmod>2026-10-21T15:53:54.960Z</lastmod> <changefreq>daily</changefreq> <priority>1</priority> </url> <url> <loc>https://web.nxsha.app/movies</loc> <lastmod>2"
+      "snippet": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> <url> <loc>https://web.nxsha.app</loc> <lastmod>2026-10-22T17:20:37.018Z</lastmod> <changefreq>daily</changefreq> <priority>1</priority> </url> <url> <loc>https://web.nxsha.app/movies</loc> <lastmod>2"
     },
     {
       "label": "sitemap-index",
@@ -16245,7 +16245,7 @@
       "label": "sitemap-movies",
       "url": "https://nxsha.space/movie/sitemap.xml",
       "status": 404,
-      "bytes": 13552,
+      "bytes": 13638,
       "docTitle": "Nxsha - Watch Movies, TV Shows &amp; Anime Free",
       "sample": [],
       "ordinals": [],

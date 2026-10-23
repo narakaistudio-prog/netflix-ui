@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T16:34:49.601Z",
+  "generatedAt": "2026-10-23T04:49:19.632Z",
   "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
   "excludedKeys": [],
   "summary": {
@@ -8,7 +8,7 @@
     "failed": [],
     "episodes": 8157,
     "stills": 8091,
-    "overviews": 8074
+    "overviews": 8075
   },
   "titles": [
     {
@@ -1309,7 +1309,7 @@
       },
       "episodes": 24,
       "stills": 15,
-      "overviews": 14,
+      "overviews": 15,
       "ok": true
     },
     {

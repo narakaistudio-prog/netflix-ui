@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T16:34:49.601Z",
+    "generatedAt": "2026-10-23T04:49:19.632Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -62609,13 +62609,15 @@
           "season": 2,
           "episode": 3,
           "title": "The Boy Who Is the World's Strongest Sorcerer Keeps Winning With His Team",
+          "overview": "Ray's team makes it to the finals of Magicks War, where they have to face Evi, Albert, and Lucas.",
           "image": "https://image.tmdb.org/t/p/w780/ggmwwOPvC9YrRfy3D1hM2uCnnHf.jpg",
-          "airDate": "2026-10-23"
+          "airDate": "2026-10-23",
+          "runtime": 25
         },
         {
           "season": 2,
           "episode": 4,
-          "title": "Episode 4",
+          "title": "The Boy Who Is the World's Strongest Sorcerer and His Friends Converse With Their Fists",
           "airDate": "2026-10-30"
         },
         {
