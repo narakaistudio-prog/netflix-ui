@@ -624,11 +624,11 @@ export function EmbedPlayer({
             {timedOut ? (
                 <View style={styles.timeoutOverlay}>
                     <Ionicons name="alert-circle-outline" size={36} color="#fff" />
-                    <Text style={styles.timeoutTitle}>{directVideo ? 'Preview video load nahi hua' : 'Player abhi load nahi hua'}</Text>
+                    <Text style={styles.timeoutTitle}>{directVideo ? 'Preview video did not load' : 'Player has not loaded yet'}</Text>
                     <Text style={styles.timeoutText}>
                         {directVideo
-                            ? 'Preview URL browser se load nahi ho saka. Naya tab me khol ke dekho.'
-                            : 'Ad-block ya popup blocker ne embed roka hoga. Naya tab me khol ke dekho, ya dusra player try karo.'}
+                            ? 'The preview URL could not load in this browser. Try opening it in a new tab.'
+                            : 'An ad-blocker or popup blocker probably stopped the embed. Open it in a new tab, or try another player.'}
                     </Text>
                     {fallbackUrl ? (
                         <Pressable style={styles.openButton} onPress={openOfficialTitle}>

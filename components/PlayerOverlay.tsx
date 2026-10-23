@@ -254,7 +254,7 @@ export function PlayerOverlay(props: PlayerOverlayProps) {
                     />
                 ) : (
                     <View style={styles.errBox}>
-                        <Text style={styles.errTitle}>Embed URL ban nahi saka</Text>
+                        <Text style={styles.errTitle}>Could not build the embed URL</Text>
                         <Text style={styles.errText}>
                             Is title ke liye TMDB ya IMDb ID set nahi hai.
                         </Text>

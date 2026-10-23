@@ -156,7 +156,8 @@ test('share button asli deep link copy karta hai, asset URL nahi', async () => {
     expect(copied[0]).toBe('https://app.local/crunchyroll?show=aot&s=1&e=1');
     // Purana bug: iframe ka asset URL copy hota tha.
     expect(copied[0]).not.toContain('/assets/crunchyroll/');
-    expect(doc.querySelector('.toast')?.textContent).toContain('Link copy ho gaya');
+    // UI copy English hai (owner: "hinglish ko english mae karo").
+    expect(doc.querySelector('.toast')?.textContent).toContain('Link copied —');
     win.close();
 });
 
@@ -206,7 +207,7 @@ test('G7 fake profile aur uske fake stats hata diye gaye hain', () => {
 test('Continue Watching card image-3 jaisa hai aur bina real timing ke clock nahi dikhata', async () => {
     const now = Date.now();
     const { win, doc } = boot({
-        resume: [{ key: 'aot', season: '1', ep: 3, at: now, sec: 768, dur: 1440 }],
+        resume: [{ key: 'aot', season: '1', ep: 3, at: now, sec: 768, dur: 1440, durReal: 1 }],
     });
     await wait(500);
 

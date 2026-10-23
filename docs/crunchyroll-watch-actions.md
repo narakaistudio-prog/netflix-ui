@@ -155,3 +155,66 @@ context sahi hai.
 
 Tests: `tests-arena/crunchyroll-my-list.test.ts` (5) + `notifications.test.ts`
 ka naya guard (bell me koi `ts-` item nahi).
+
+---
+
+# Follow-up #3 — player size, English copy, exact timing only
+
+> “video player ka size sahi karoo bahut jyda bada hai niche tak jata hai usse
+> sahi karoo aur jaha jaha hinglish website mae likha raha hai usse english mae
+> karoo aur agar ho sake to contiue watching ka exact timming lagaoo nhi agar
+> exact nhi mila to timing mat likho”
+
+## 1. Player ka size (ab screen me fit)
+
+- Pehle `.video-stage` ki height sirf width se banti thi
+  (`padding-bottom:56.25%`), isliye 1400px wide desktop par stage ~790px tall
+  ho jata tha — top bar ke saath page scroll karta tha.
+- Ab (desktop, ≥701px):
+
+  ```css
+  .player-shell .video-stage{
+      width:min(100%, calc((100vh - 124px) * 1.77778)); /* 124 = top bar + padding */
+      aspect-ratio:16/9; height:auto; padding-bottom:0;
+      margin-inline:auto;
+  }
+  ```
+
+  Yaani pehle height tay hoti hai (screen ki bachi hui height), phir 16:9 se
+  width nikalti hai → video poora ek hi screen me, center me. `100dvh` support
+  hone par wahi formula dvh se (mobile browser ke address bar ke liye).
+- Phone (≤700px) par purana full-width 16:9 hi rehta hai.
+
+## 2. Hinglish copy → English
+
+Poori site ki **user-facing** copy English kar di (code ke `why` comments
+Hinglish hi hain — owner ka standing rule). Examples:
+
+| Pehle | Ab |
+| --- | --- |
+| “Vote karne ke liye sign in karo” | “Sign in to vote” |
+| “Comment bahut chhota hai.” | “Comment is too short.” |
+| “Link copy ho gaya — …” | “Link copied — …” |
+| “ToonStream par nahi mila, Nxsha server 2 chalu” | “Not on ToonStream — switching to Nxsha (server 2)” |
+| “Comments Supabase me save hote hain…” | “Comments are saved in Supabase. Reading is free for everyone — sign in to post.” |
+| “Email confirm karna padega — mail box check karo.” | “Please confirm your email first — check your inbox.” |
+| “Movie hai — agla episode nahi” | “Movies have no next episode” |
+
+React app ki copy bhi (EmbedPlayer, Moviebox panels, TV remote helper, player
+overlay, admin, `lib/embeds.ts` errors) English kar di.
+
+## 3. Continue Watching ki timing — sirf exact
+
+- Pehle clock `e.dur` par chalta tha, jo kai baar `guessDur()` ka **andaza** hota
+  tha (episode runtime 24m maan liya jata tha) — wo timing jhoothi thi.
+- Ab har resume entry me `durReal` flag hai. Ye **sirf** tab 1 hota hai jab
+  player ne khud duration bheji ho (`setPlayheadFromEvent` ka `dur`); guess kiya
+  hua duration `durReal:0` rehta hai.
+- Renderer: clock (`12:48 / 24:00`) aur progress bar dono sirf
+  `durReal && sec >= 10 && dur > sec` par. Warna dono gayab — “timing mat likho”
+  wala rule.
+- Purani entries (jinke paas flag nahi) bhi chup rehti hain — koi andaza nahi.
+
+Tests: `tests-arena/crunchyroll-player-layout.test.ts` (6) — stage fit formula,
+guessed-duration par koi clock nahi, real duration par exact clock, 10s se kam
+par clock nahi, aur visible strings me Hinglish na ho.

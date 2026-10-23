@@ -230,7 +230,8 @@ test('sign in ke baad hi comment post hota hai aur Supabase RPC me sahi episode 
     // Post ke baad list refresh + naya comment sabse upar.
     expect(doc.querySelector('#crList .cr-body')?.textContent).toBe('Bhai episode ekdum mast tha!');
     expect(doc.querySelectorAll('#crList .cr-item')).toHaveLength(2);
-    expect(doc.querySelector('.toast')?.textContent).toContain('Comment post ho gaya');
+    // Copy English hai (owner: "hinglish website mae na ho").
+    expect(doc.querySelector('.toast')?.textContent).toContain('Comment posted');
 
     win.close();
 });

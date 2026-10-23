@@ -130,20 +130,20 @@ export function validateCustomTemplate(
     try {
         url = new URL(template.replace(/\{(?:id|tmdb|s|e)\}/g, '1'));
     } catch {
-        return { ok: false, error: 'Valid URL nahi hai (http/https chahiye)' };
+        return { ok: false, error: 'Not a valid URL (http/https required)' };
     }
     if (url.protocol !== 'https:' && url.protocol !== 'http:') {
-        return { ok: false, error: 'Sirf http/https URLs allowed hain' };
+        return { ok: false, error: 'Only http/https URLs are allowed' };
     }
     if (!template.includes('{id}')) {
-        return { ok: false, error: 'Template me {id} placeholder hona zaroori hai' };
+        return { ok: false, error: 'Template must contain the {id} placeholder' };
     }
     if (type === 'tv') {
         if (!template.includes('{s}')) {
-            return { ok: false, error: 'TV template me {s} (season) placeholder hona zaroori hai' };
+            return { ok: false, error: 'TV template must contain the {s} (season) placeholder' };
         }
         if (!template.includes('{e}')) {
-            return { ok: false, error: 'TV template me {e} (episode) placeholder hona zaroori hai' };
+            return { ok: false, error: 'TV template must contain the {e} (episode) placeholder' };
         }
     }
     return { ok: true };
@@ -199,13 +199,13 @@ export function buildEmbedUrl(
     const tmdbId = params.tmdbId != null ? String(params.tmdbId) : '';
     const id = imdbId || tmdbId;
     if (!id) {
-        throw new Error('Embed URL banane ke liye ya to tmdbId ya imdbId chahiye');
+        throw new Error('An embed URL needs either a tmdbId or an imdbId');
     }
 
     const s = params.season ?? 1;
     const e = params.episode ?? 1;
     if (type === 'tv' && (!Number.isInteger(s) || s < 1 || !Number.isInteger(e) || e < 1)) {
-        throw new Error('Season/Episode 1-based positive integer hona chahiye');
+        throw new Error('Season/episode must be a 1-based positive integer');
     }
 
     let url = template

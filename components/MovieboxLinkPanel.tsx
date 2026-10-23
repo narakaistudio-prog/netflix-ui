@@ -63,11 +63,11 @@ export function MovieboxLinkPanel({
     const submit = () => {
         const raw = value.trim();
         if (!raw) {
-            setError('Pehle m2box link paste karo.');
+            setError('Paste an m2box link first.');
             return;
         }
         if (!isMovieboxUrl(raw)) {
-            setError('Ye m2box/moviebox ka watch-page link nahi lagta. m2box.org par title kholo aur address bar ka poora link copy karo.');
+            setError('This does not look like an m2box/moviebox watch-page link. Open the title on m2box.org and copy the full link from the address bar.');
             return;
         }
         setError(null);
@@ -100,7 +100,7 @@ export function MovieboxLinkPanel({
                 </View>
 
                 <Text style={styles.heading}>
-                    {title ? `${title} ke liye M2Box link chahiye` : 'M2Box link paste karo'}
+                    {title ? `M2Box link needed for ${title}` : 'Paste an M2Box link'}
                 </Text>
                 {notice ? (
                     <Text style={styles.notice} testID="moviebox-link-notice">
@@ -116,7 +116,7 @@ export function MovieboxLinkPanel({
 
                 <Pressable style={styles.linkRow} onPress={openSite} accessibilityLabel="Open m2box.org">
                     <Ionicons name="open-outline" size={14} color="#9ab4ff" />
-                    <Text style={styles.linkRowText}>{MOVIEBOX_SITE} par title kholo → link copy karo</Text>
+                    <Text style={styles.linkRowText}>Open the title on {MOVIEBOX_SITE} → copy the link</Text>
                 </Pressable>
 
                 <TextInput
