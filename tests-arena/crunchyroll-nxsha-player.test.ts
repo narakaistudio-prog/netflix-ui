@@ -143,7 +143,7 @@ test('Nxsha is the sole player and the default for the Crunchyroll section', asy
     dom.window.close();
 });
 
-test('all 83 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping', async () => {
+test('all 85 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping', async () => {
     const dom = boot();
     await wait(200);
 
@@ -154,8 +154,9 @@ test('all 83 Crunchyroll titles (catalog + Ghibli rail) have one Nxsha mapping',
     const ghibliKeys = Array.from(
         dom.window.document.querySelectorAll('#ghibliTrack [data-open]'),
     ).map((card) => card.getAttribute('data-open') || '');
-    // 64 purane playable titles + IMDb import (Task 7) ke imported titles.
-    expect(new Set(catalogKeys).size).toBe(64 + IMPORTED_KEYS.length);
+    // 66 purane playable titles + IMDb import (Task 7) ke imported titles.
+    // 64 se 66: Reze Arc + Demon Slayer Infinity Castle movies (owner ka ask).
+    expect(new Set(catalogKeys).size).toBe(66 + IMPORTED_KEYS.length);
     expect(new Set(ghibliKeys).size).toBe(22);
     expect(Object.keys(nxData).sort()).toEqual(
         [...new Set([...catalogKeys, ...ghibliKeys])].sort(),

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T14:58:03.386Z",
+  "updated": "2026-10-23T08:49:48.493Z",
   "movies": {
     "yourname": {
       "slug": "your-name",
@@ -60,6 +60,16 @@
       "slug": "from-up-on-poppy-hill",
       "pageTitle": "From Up on Poppy Hill",
       "servers": 1
+    },
+    "rezemovie": {
+      "slug": "chainsaw-man-the-movie-reze-arc",
+      "pageTitle": "Chainsaw Man - The Movie: Reze Arc",
+      "servers": 2
+    },
+    "infinitycastle": {
+      "slug": "demon-slayer-kimetsu-no-yaiba-infinity-castle",
+      "pageTitle": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+      "servers": 2
     }
   },
   "missed": [
