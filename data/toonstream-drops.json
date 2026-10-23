@@ -1,19 +1,374 @@
 {
-  "updated": "2026-10-19",
+  "updated": "2026-10-23",
   "source": "https://toonstream.us/home",
   "items": {
-    "naruto-shippuden-hindi-dub": {
-      "title": "Naruto Shippūden",
-      "slug": "naruto-shippuden-hindi-dub",
-      "img": "https://image.tmdb.org/t/p/w780/wi73sU6BjJAgUI8C5qIXgb3S6Nz.jpg",
-      "season": 16,
-      "episode": 361,
-      "episodeUrl": "https://toonstream.us/episode/naruto-shippuden-hindi-dub-16x361/",
+    "jojo's-bizarre-adventure": {
+      "title": "JoJo's Bizarre Adventure",
+      "slug": "jojo's-bizarre-adventure",
+      "img": "https://image.tmdb.org/t/p/w780/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
+      "season": 6,
+      "episode": 5,
+      "episodeUrl": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
       "firstSeen": "2026-10-19",
-      "nxId": "31910",
-      "tsSlug": "naruto-shippuden-hindi-dub",
+      "onSite": true,
+      "nxId": "45790"
+    },
+    "the-exiled-heavy-knight-knows-how-to-game-the-system": {
+      "title": "The Exiled Heavy Knight Knows How to Game the System",
+      "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system",
+      "img": "https://image.tmdb.org/t/p/w780/bADzMfofNWYdxLnlqNuMkO6du34.jpg",
+      "season": 1,
+      "episode": 14,
+      "episodeUrl": "https://toonstream.us/episode/the-exiled-heavy-knight-knows-how-to-game-the-system-1x14/",
+      "firstSeen": "2026-10-19",
+      "nxId": "270603",
       "guide": {
         "1": {
+          "1": {
+            "title": "I'm Elymas the Heavy Knight",
+            "overview": "Elymas Edvaughn is disowned by his father for becoming a Heavy Knight.",
+            "image": "https://image.tmdb.org/t/p/w300/t3UzqD6baWwEkcDw7rz8HML4k1W.jpg",
+            "airDate": "2026-07-03",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Menacing Foul Eight-Legged Beast",
+            "overview": "Elymas uses his wits and game knowledge to defeat a much more powerful monster.",
+            "image": "https://image.tmdb.org/t/p/w300/mibYdWH4QAmdGn17hOChtOE7GsI.jpg",
+            "airDate": "2026-07-10",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Raid Quest",
+            "overview": "Elymas finds himself surrounded by fearful newbies and an arrogant veteran on his first Raid Quest.",
+            "image": "https://image.tmdb.org/t/p/w300/2y0dlWJPTGXWAb3lazoiRqeflku.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Existence Evolution",
+            "overview": "With Gowtan paralyzed, Elymas must survive against the Mad Headder until he can get back in the fight.",
+            "image": "https://image.tmdb.org/t/p/w300/2BupnkZATb4FeEIDpSK5AFWUaMR.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Fang of Smoldering Insanity",
+            "overview": "Elymas goes shopping for a skillbook only to discover they're prohibitively expensive.",
+            "image": "https://image.tmdb.org/t/p/w300/zwqiGXuZZEMpEtJNYJKQIyw0tAw.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Ruche the Pierrot",
+            "overview": "Elymas begs Ruche to join his party so he can use her skills to find the item he needs.",
+            "image": "https://image.tmdb.org/t/p/w300/95NZXAYb2pDKrZmWMTsyVBeOXXK.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Golden Raana Farming",
+            "overview": "Elymas uses his game knowledge to exploit the weaknesses of the elusive Golden Raana.",
+            "image": "https://image.tmdb.org/t/p/w300/9kviyiXte0KkL7WNFaGqRY7GjLX.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Wandering",
+            "overview": "Elymas and Ruche's celebration is interrupted by a wandering dungeon boss.",
+            "image": "https://image.tmdb.org/t/p/w300/gKqQE0ww8K1Y9lmSefjKRgCpGDX.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Dreamlord",
+            "overview": "Ruche returns to save Elymas from a desperate situation, and they make one last gamble to beat the Dreamlord.",
+            "image": "https://image.tmdb.org/t/p/w300/qq2cc5cOhWBMGdUcbJgE8D2BX0o.jpg",
+            "airDate": "2026-08-28",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Negotiation",
+            "overview": "Elymas and Ruche celebrate their payout and promotion and return to the shady shop for a Skill Book.",
+            "image": "https://image.tmdb.org/t/p/w300/eMDDVMpIb5MhNG2bbfqoxOZkMgG.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Inescapable Past",
+            "overview": "Elymas' father hears about his success and visits the guild with Malice, who has a twisted attachment to him.",
+            "image": "https://image.tmdb.org/t/p/w300/8SApfPGTBto5Isiaxv2bEbHqLOZ.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Malice the Master Swordsman",
+            "overview": "Elymas activates the true power of the Heavy Knight to make a comeback against Malice.",
+            "image": "https://image.tmdb.org/t/p/w300/r7wrLFD3GMtc3UYYGbaPyrNGNLG.jpg",
+            "airDate": "2026-09-18",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Lacoryna, City of Adventurers",
+            "overview": "After defeating Malice and saying goodbye to his father, Elymas visits Lacoryna, the holy land of adventurers.",
+            "image": "https://image.tmdb.org/t/p/w300/7JMkQTaoAD0Z5vRRxQp6cFvJ0J9.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Mythril Giant",
+            "overview": "Elymas and Ruche take on an overpowering foe in hopes of acquiring powerful materials.",
+            "image": "https://image.tmdb.org/t/p/w300/kbFu6Nn7j7e5L3dCRYt0PxQErGv.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 14
+      },
+      "tsSlug": "the-exiled-heavy-knight-knows-how-to-game-the-system",
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "the-ramparts-of-ice": {
+      "title": "The Ramparts of Ice",
+      "slug": "the-ramparts-of-ice",
+      "img": "https://image.tmdb.org/t/p/w780/eEspAI6TAhvWphW6Hrt8ObLlfNQ.jpg",
+      "season": 2,
+      "episode": 4,
+      "episodeUrl": "https://toonstream.us/episode/the-ramparts-of-ice-2x4/",
+      "firstSeen": "2026-10-23",
+      "nxId": "283428",
+      "tsSlug": "the-ramparts-of-ice",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "Lines and Walls",
+            "overview": "After her classmates run off in fear, Koyuki makes faces in a mirror to figure out why everyone finds her scary. Suddenly, a boy sneaks up behind her.",
+            "image": "https://image.tmdb.org/t/p/w300/xAUiRr8Q4NQKSqX0SMNMkwVbvcb.jpg",
+            "airDate": "2026-04-02",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Locksmith",
+            "overview": "To Koyuki's relief, Yota comes to her rescue. After their initial study session, they grow more comfortable with each other — which unsettles Minato.",
+            "image": "https://image.tmdb.org/t/p/w300/cJWxtODFHxCUKsnCXy2Kp86dzHw.jpg",
+            "airDate": "2026-04-09",
+            "runtime": 24
+          },
+          "3": {
+            "title": "3+(←)1",
+            "overview": "Bothered that Koyuki still has her guard up around him, Minato tries to make small talk. As Miki grows suspicious of his intentions, she confronts him.",
+            "image": "https://image.tmdb.org/t/p/w300/qYKosyOOSbxA0Gxsg6ZGzZqs4Lm.jpg",
+            "airDate": "2026-04-16",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Impenetrable",
+            "overview": "At Miki's prodding, Minato clarifies his interest in her best friend. An unexpected visitor triggers Koyuki's bad memories, leading to a harsh outburst.",
+            "image": "https://image.tmdb.org/t/p/w300/90ZEbUGOQPuGV5zbSfpnJHohAQq.jpg",
+            "airDate": "2026-04-23",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Change",
+            "overview": "Koyuki mulls over the tense exchange in the infirmary. After Yota clears the air, she tries to have an honest conversation with Minato for the first time.",
+            "image": "https://image.tmdb.org/t/p/w300/p8DGb1cjIhakmWORa61PFRSsWDo.jpg",
+            "airDate": "2026-04-30",
+            "runtime": 24
+          },
+          "6": {
+            "title": "New Semester",
+            "overview": "As winter break ends, the usually calm Minato begins to realize his feelings are changing. Miki notices how close Yota and Koyuki have become.",
+            "image": "https://image.tmdb.org/t/p/w300/9vbKmuW6ZuMOmYnmI3mluYaFrq3.jpg",
+            "airDate": "2026-05-07",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Loneliness and Solitude",
+            "overview": "After reflecting on her own loneliness and worrying that Yota is bottling everything up, Koyuki reaches out and asks about his true feelings.",
+            "image": "https://image.tmdb.org/t/p/w300/l9gsJ2Hv6xYHCXNnFgexMhYkJvy.jpg",
+            "airDate": "2026-05-14",
+            "runtime": 24
+          },
+          "8": {
+            "title": "On Equal Footing",
+            "overview": "Determined not to mess up high school, Miki has faked her persona since day one. But not being herself around her classmates starts to wear her down.",
+            "image": "https://image.tmdb.org/t/p/w300/qmViLcAXGu4A93Gl5ksdPS37Sfh.jpg",
+            "airDate": "2026-05-21",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Self-Awareness",
+            "overview": "Minato realizes how Koyuki is always on his mind. Later, while hanging out at the new mall, the misunderstanding between the four friends deepens.",
+            "image": "https://image.tmdb.org/t/p/w300/y2MWjNqzDyEIHqmcXCJfE1SLZKC.jpg",
+            "airDate": "2026-05-28",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Spring",
+            "overview": "A spring break trip to the amusement park brings the four friends closer. Back at school, Koyuki's surprised by a familiar face — and Minato takes notice.",
+            "image": "https://image.tmdb.org/t/p/w300/qPjRp98ypN9nYrFarNZUuVWcWnL.jpg",
+            "airDate": "2026-06-04",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Inversion",
+            "overview": "Koyuki broods over her complicated past with Akine's sister, Manatsu, and what the first year might know. Meanwhile, Momoka sets her sights on Minato.",
+            "image": "https://image.tmdb.org/t/p/w300/sl4gBzIE0u2Qvvr6PdJPciI6gdx.jpg",
+            "airDate": "2026-06-11",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Thunder",
+            "overview": "As Koyuki slowly notices her new, surprising feelings towards Minato, first-year Momoka suddenly tries to cozy up to her — for reasons she can't grasp.",
+            "image": "https://image.tmdb.org/t/p/w300/Atp4qBiDI9DolgHDDdBEYX7wrUP.jpg",
+            "airDate": "2026-06-18",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Perception",
+            "overview": "With Akine's words ringing in her head, Koyuki's feelings become complicated. Later, an accident causes something to shift between Miki and Yota.",
+            "image": "https://image.tmdb.org/t/p/w300/dBOB7kV5DmjOYG64pNq6JUt690v.jpg",
+            "airDate": "2026-06-25",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Bombshell",
+            "overview": "Unsure of how to move forward, Miki avoids Yota and confides in her colleagues. A bold Momoka confronts Koyuki about Minato and lights a fuse.",
+            "image": "https://image.tmdb.org/t/p/w300/78VF56LrrQmzJ7nT2BYRS1zgSHC.jpg",
+            "airDate": "2026-07-02",
+            "runtime": 24
+          }
+        },
+        "2": {
+          "1": {
+            "title": "Clouds and Rain",
+            "overview": "Gray skies mirror the group's uneasy mood. Momoka senses a chance to get closer to Minato, while Miki can barely face Yota after turning him down.",
+            "image": "https://image.tmdb.org/t/p/w300/8wdW0AV65gRnvTPNFV6UUSKoNaF.jpg",
+            "airDate": "2026-10-01",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Stop and Go",
+            "overview": "Cultural festival prep begins and Miki and Yota ease back to normal. But as Minato grapples with his desire to stay close to Koyuki, Momoka makes a move.",
+            "image": "https://image.tmdb.org/t/p/w300/hVgHna4dQ2drYdvnxAZN6XlEezG.jpg",
+            "airDate": "2026-10-08",
+            "runtime": 24
+          },
+          "3": {
+            "title": "True Feelings",
+            "overview": "Reeling from the news that Minato and Momoka are dating, Koyuki fights to keep her composure. Miki, meanwhile, confronts Minato about his true intentions.",
+            "image": "https://image.tmdb.org/t/p/w300/xLrBDefoJRnfEIIDbNIwB64Z2iS.jpg",
+            "airDate": "2026-10-15",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Relief",
+            "overview": "In agony over Minato, Koyuki confides in Tsukiko — who sees what Koyuki refuses to. Then a run-in with Igarashi forces her to reflect on her own walls.",
+            "image": "https://image.tmdb.org/t/p/w300/zqjhLXg0oMo78I8lgrVgD1QzWqv.jpg",
+            "airDate": "2026-10-22",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 14,
+        "2": 4
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 14
+        }
+      }
+    },
+    "the-frontier-lord-begins-with-zero-subjects": {
+      "title": "The Frontier Lord Begins with Zero Subjects",
+      "slug": "the-frontier-lord-begins-with-zero-subjects",
+      "img": "https://image.tmdb.org/t/p/w780/vHTHQZy3JhgoVMkbXlOot5gOUzZ.jpg",
+      "season": 1,
+      "episode": 6,
+      "episodeUrl": "https://toonstream.us/episode/the-frontier-lord-begins-with-zero-subjects-1x6/",
+      "firstSeen": "2026-10-19",
+      "nxId": "296437",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "The Frontier Lord and the Girl with the Blue Horn",
+            "overview": "Dias is awarded a domain for his wartime service, but there's one small problem. Does anyone even live there?",
+            "image": "https://image.tmdb.org/t/p/w300/4RhF8RB8IwTOmjj1mS50FyrKPqm.jpg",
+            "airDate": "2026-07-10",
+            "runtime": 26
+          },
+          "2": {
+            "title": "The Frontier Lord and His First Visitor",
+            "overview": "Dias settles into daily life with Alna, and little by little, people begin to come calling.",
+            "image": "https://image.tmdb.org/t/p/w300/utkG0hiuK1IHJFpANhByetXpprR.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Frontier Lord and the Strange Merchant",
+            "overview": "The population of Nezrose slowly grows, including a few surprises courtesy of an unusual visitor.",
+            "image": "https://image.tmdb.org/t/p/w300/70PxngQl8oYBYE8wbU2WGQgJApR.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Frontier Lord and the Neighboring Lord",
+            "overview": "Dias meets the new lord of the neighboring domain, and he learns there are many rumors about them both.",
+            "image": "https://image.tmdb.org/t/p/w300/aEjVPOk7V2awTZcVUxRNegNVfZ7.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Frontier Lord and the Assailants from the Desert",
+            "overview": "Dias tries his hand at farming, and Eldan sends a caravan of gifts to help him establish his domain.",
+            "image": "https://image.tmdb.org/t/p/w300/vjalBTqGcRiJzWp63n9E5ZvJyn7.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Frontier Lord and the Twins' Prayer",
+            "overview": "Senai and Ayhan want to secretly help Dias cultivate his field. Can a new arrival offer them a solution?",
+            "image": "https://image.tmdb.org/t/p/w300/2gZMQmnvB6R6w3PGXSkNpIL4baZ.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 6
+      },
+      "tsSlug": "the-frontier-lord-begins-with-zero-subjects",
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "naruto-shippūden": {
+      "title": "Naruto Shippūden",
+      "slug": "naruto-shippūden",
+      "img": "https://image.tmdb.org/t/p/w780//A4VoEGcENojYNu6RjG0mN8zqPxr.jpg",
+      "season": 17,
+      "episode": 368,
+      "episodeUrl": "https://toonstream.us/episode/naruto-shippūden-17x368/",
+      "firstSeen": "2026-10-23",
+      "nxId": "31910",
+      "guide": {
+        "17": {
           "1": {
             "title": "Homecoming",
             "overview": "A figure passes through the gates. It's an older Naruto, who has returned from a long training journey with Jiraiya. Naruto Uzumaki is back!",
@@ -238,1213 +593,1214 @@
             "airDate": "2007-10-25",
             "runtime": 23
           }
-        },
-        "2": {
+        }
+      },
+      "seasons": {
+        "17": 368
+      },
+      "nxMap": {
+        "17": {
+          "seg": [
+            [
+              1,
+              1,
+              32
+            ],
+            [
+              2,
+              1,
+              21
+            ],
+            [
+              3,
+              1,
+              18
+            ],
+            [
+              4,
+              1,
+              17
+            ],
+            [
+              5,
+              1,
+              24
+            ],
+            [
+              6,
+              1,
+              31
+            ],
+            [
+              7,
+              1,
+              8
+            ],
+            [
+              8,
+              1,
+              24
+            ],
+            [
+              9,
+              1,
+              21
+            ],
+            [
+              10,
+              1,
+              25
+            ],
+            [
+              11,
+              1,
+              21
+            ],
+            [
+              12,
+              1,
+              33
+            ],
+            [
+              13,
+              1,
+              20
+            ],
+            [
+              14,
+              1,
+              25
+            ]
+          ]
+        }
+      }
+    },
+    "tomb-raider-king": {
+      "title": "Tomb Raider King",
+      "slug": "tomb-raider-king",
+      "img": "https://image.tmdb.org/t/p/w780/xDW6cor12UD0b2IqboQWnrIn0UO.jpg",
+      "season": 1,
+      "episode": 12,
+      "episodeUrl": "https://toonstream.us/episode/tomb-raider-king-1x12/",
+      "firstSeen": "2026-10-23",
+      "nxId": "297826",
+      "tsSlug": "tomb-raider-king",
+      "guide": {
+        "1": {
           "1": {
-            "title": "The New Target",
-            "overview": "Teams Kakashi and Guy return home to Konoha. As Kakashi rests in the infirmary, Sakura tells Tsunade about the information Sasori gave her as a reward for defeating him. Sasori had a meeting scheduled",
-            "image": "https://image.tmdb.org/t/p/w300/97O9irZPuV08ZLPQIPea434UG6R.jpg",
-            "airDate": "2007-11-08",
-            "runtime": 23
+            "title": "Once Again from the End",
+            "overview": "When Jooheon Suh is mortally wounded in battle, a mysterious talking crow gives him another chance.",
+            "image": "https://image.tmdb.org/t/p/w300/tQLJ7h3XxIPwloSEhVUGHTVn4aE.jpg",
+            "airDate": "2026-07-09",
+            "runtime": 24
           },
           "2": {
-            "title": "Formation! New Team Kakashi",
-            "overview": "Naruto, Choji and Shikamaru attempt to capture and interrogate Sai, but Sai withdraws after insulting Naruto. Shortly afterward, Ino appears. Concerned that the demon fox could fall into Akatsuki hand",
-            "image": "https://image.tmdb.org/t/p/w300/pfno022tcGELshUKfakUYfpUXHj.jpg",
-            "airDate": "2007-11-15",
-            "runtime": 23
+            "title": "Those Who Seek to Own Relics",
+            "overview": "Jooheon returns home only to find that a tomb has opened where his apartment used to be.",
+            "image": "https://image.tmdb.org/t/p/w300/6GCVImS5QXTqE1HXEP03QnvkLM0.jpg",
+            "airDate": "2026-07-16",
+            "runtime": 24
           },
           "3": {
-            "title": "An Unneeded Addition",
-            "overview": "Yamato takes temporary leadership of Team Kakashi while Sai insults both Naruto and Sakura. While preparing to set off, Sai receives an envelope from a Root shinobi containing secret orders from Danzo",
-            "image": "https://image.tmdb.org/t/p/w300/97O9irZPuV08ZLPQIPea434UG6R.jpg",
-            "airDate": "2007-11-22",
+            "title": "One Suited for Domination",
+            "overview": "When the tomb housing the Masamune relic appears, Jooheon races to claim it before a foreigner can.",
+            "image": "https://image.tmdb.org/t/p/w300/nnX6lJXEL1et4KAYjD8544o08Ny.jpg",
+            "airDate": "2026-07-23",
             "runtime": 23
           },
           "4": {
-            "title": "The Fake Smile",
-            "overview": "The new team Kakashi heads out for the Heaven and Earth bridge. Sai, Sakura, and Naruto come to blows after just 5 minutes on the same team due to Sai making fun of Sasuke. Therefore, Yamato decides t",
-            "image": "https://image.tmdb.org/t/p/w300/qk3fmPQgaaIxiPLMWVHpWPiG7tB.jpg",
-            "airDate": "2007-11-29",
+            "title": "The One Who Stole the Future",
+            "overview": "The Future Guide hints at a powerful relic that will be up for auction in Las Vegas.",
+            "image": "https://image.tmdb.org/t/p/w300/sG7HGNdQLG7g0CRMIErfPuhkFHV.jpg",
+            "airDate": "2026-07-30",
             "runtime": 23
           },
           "5": {
-            "title": "Untitled",
-            "overview": "Sakura sees Sai drawing by the river and finds out that Sai has artistic talent but has never given titles to anything he ever drew. Naruto and Sakura begin to realize the reason behind Sai's repulsiv",
-            "image": "https://image.tmdb.org/t/p/w300/aN2VYpRtSD2rG82saKMBb6WyCNO.jpg",
-            "airDate": "2007-11-29",
+            "title": "The Owner of the Tree of Life",
+            "overview": "Jooheon wins several relics at the Midas auction house, but Chairman Taejoon Kwon wastes no time tracking him down.",
+            "image": "https://image.tmdb.org/t/p/w300/wmvw6aM5c2k7mBC1hvGiTLrxkxC.jpg",
+            "airDate": "2026-08-06",
             "runtime": 23
           },
           "6": {
-            "title": "Simulation",
-            "overview": "Naruto is paired with Sai for the Buddy team of two, over his and Sakura's objections, while Sakura is assigned to support Yamato. Yamato conducts a simulation of the spy meeting with himself as the s",
-            "image": "https://image.tmdb.org/t/p/w300/8GIHNqP7ti5Mr7zNuYAqtW3PQiG.jpg",
-            "airDate": "2007-12-06",
+            "title": "The Great Tombification",
+            "overview": "When Kwon tries to use his relic to force Jooheon into submission, its power awakens another set of relics.",
+            "image": "https://image.tmdb.org/t/p/w300/8V7SRioQA2KvQSzF3PL4emIJfxf.jpg",
+            "airDate": "2026-08-13",
             "runtime": 23
           },
           "7": {
-            "title": "The Tenchi Bridge",
-            "overview": "Yamato disguises himself as Sasori after creating a wood replica of Hiruko, and goes to meet the spy. The spy turns out to be Orochimaru's right-hand man, Kabuto Yakushi, who reveals the location of O",
-            "image": "https://image.tmdb.org/t/p/w300/owaf7A2h80Z4wpO5uk7FyGI0aJC.jpg",
-            "airDate": "2007-12-13",
+            "title": "Restoration of Relics",
+            "overview": "Jooheon seeks out the aid of a certain individual to restore the relics that broke in his fight against Kwon.",
+            "image": "https://image.tmdb.org/t/p/w300/6YIa7k5B6Dyucn29QeKy75zvpwG.jpg",
+            "airDate": "2026-08-20",
             "runtime": 23
           },
           "8": {
-            "title": "The Nine-Tails Unleashed!!",
-            "overview": "Immediately after Yamato signals Naruto and the others out to the bridge where Orochimaru and Kabuto are waiting, Naruto's chakra begins to boil with the chakra of the Nine-Tailed Fox. Slowly, Naruto ",
-            "image": "https://image.tmdb.org/t/p/w300/zrLTiKHKCLpL6wIYktHeuqzReLd.jpg",
-            "airDate": "2007-12-20",
-            "runtime": 23
+            "title": "The Secret of the Crow",
+            "overview": "Jooheon is offered a job finding a relic for the \"Queen of War,\" an American military general.",
+            "image": "https://image.tmdb.org/t/p/w300/4jP8YpKfXPmpGCUUFeEyUKPZVUk.jpg",
+            "airDate": "2026-08-27",
+            "runtime": 24
           },
           "9": {
-            "title": "The Top-Secret Mission Begins",
-            "overview": "Naruto continues to get even more enraged and easily counters Kabuto's attack, flinging him away. Naruto's counter throws Kabuto into Sakura, knocking her unconscious. Orochimaru continues to watch Na",
-            "image": "https://image.tmdb.org/t/p/w300/iV0P2IAXXwT4Xi7u6mPaVdj6uiG.jpg",
-            "airDate": "2007-12-20",
+            "title": "The Ruler of Relics",
+            "overview": "Jooheon pockets the map relic he fetched for General Kiera and makes a plan to destroy her other map relics.",
+            "image": "https://image.tmdb.org/t/p/w300/9Dh5qL3279BVWHhrSBVgqO8jCm8.jpg",
+            "airDate": "2026-09-03",
             "runtime": 23
           },
           "10": {
-            "title": "Orochimaru vs. Jinchuriki",
-            "overview": "Naruto, in the four-tailed state, begins attacking Orochimaru with incredible force, devastating the surrounding landscape and preventing Sai and Yamato's wood clone from approaching him. The majority",
-            "image": "https://image.tmdb.org/t/p/w300/mbK86gFlL1LpnKOc1vqEHz0kzz9.jpg",
-            "airDate": "2008-01-10",
+            "title": "The Curse of Relics",
+            "overview": "An international organization called Pandora is founded to keep relics out of the hands of citizens.",
+            "image": "https://image.tmdb.org/t/p/w300/3vEqqvr8LKrA2mWgZFz7nachHbM.jpg",
+            "airDate": "2026-09-10",
             "runtime": 23
           },
           "11": {
-            "title": "Sakura's Tears",
-            "overview": "Kabuto comments that Naruto's state is a consequence of his desperation to bring back Sasuke. Sakura begins to cry and approaches Naruto but is injured when his attention turns to her. Yamato uses the",
-            "image": "https://image.tmdb.org/t/p/w300/aInrN4C4JZ20frxCABnr20Hzowg.jpg",
-            "airDate": "2008-01-17",
+            "title": "Tian Fu's Relic",
+            "overview": "While searching for Tian Fu's Relic, Jooheon finds an underground tea field being worked by children.",
+            "image": "https://image.tmdb.org/t/p/w300/yO8W8j7zhwDeDFKThdDai7XeHhz.jpg",
+            "airDate": "2026-09-17",
             "runtime": 23
           },
           "12": {
-            "title": "The Secret of the Battle!",
-            "overview": "Yamato uses the first Hokage's chakra to suppress the demon fox's chakra and Naruto returns to normal, but with severe injuries. Sakura begins to heal him, but notes that medical ninjutsu has little e",
-            "image": "https://image.tmdb.org/t/p/w300/wInPhXCXXuS39jeUi01zyRVmVff.jpg",
-            "airDate": "2008-01-24",
-            "runtime": 23
-          },
-          "13": {
-            "title": "The Consequences of Betrayal",
-            "overview": "Kabuto creates a fake corpse that resembles Sai, containing hidden traps to slow down Yamato's clone after sensing it. Naruto hasn't completely recovered from using the Demon Fox's chakra, and Yamato ",
-            "image": "https://image.tmdb.org/t/p/w300/a6WHDJiuS0Wa6fpinFKlCwEySlt.jpg",
-            "airDate": "2008-01-31",
-            "runtime": 23
-          },
-          "14": {
-            "title": "The Unfinished Page",
-            "overview": "Naruto finally makes sense of the destruction he witnessed around him earlier. Yamato tells Naruto not to rely on the demon because Naruto is strong enough to withstand the demon's terrible chakra. Sa",
-            "image": "https://image.tmdb.org/t/p/w300/zCStDEj5HJ9dLHuYrD98VaF0x7a.jpg",
-            "airDate": "2008-02-07",
-            "runtime": 23
-          },
-          "15": {
-            "title": "Infiltration: The Den of the Snake!",
-            "overview": "Sai receives a chilling glare from Sasuke's Sharingan that frightens him. Sai gives Orochimaru a bundle with information about Konoha's ANBU. Yamato gives Sakura and Naruto seeds with his chakra that ",
-            "image": "https://image.tmdb.org/t/p/w300/ok86X8HZtq6f9dmJhm936WzoBz1.jpg",
-            "airDate": "2008-02-14",
-            "runtime": 23
-          },
-          "16": {
-            "title": "Bonds",
-            "overview": "Yamato and the team enter Sai's room and confront him while Kabuto makes his way there as well. Sai tells Team Kakashi that not only was he to help with Konoha's destruction but also act as a spy agai",
-            "image": "https://image.tmdb.org/t/p/w300/gNgVDS4Iz7mMvKJm3zZErsdfXrK.jpg",
-            "airDate": "2008-02-28",
-            "runtime": 23
-          },
-          "17": {
-            "title": "Something Important...",
-            "overview": "Kabuto fights Team Kakashi and frees Sai. However, Sai, who intends to learn more about his bond with his brother through Naruto's bond with Sasuke, betrays him. Captured, Kabuto gives a vague descrip",
-            "image": "https://image.tmdb.org/t/p/w300/notIng3dglR8oDxpn2eqqcbAlQ.jpg",
-            "airDate": "2008-03-06",
-            "runtime": 23
-          },
-          "18": {
-            "title": "The Picture Book's Story",
-            "overview": "As Team Kakashi continues their search for Sasuke, Naruto suddenly collapses due to his previous fight with Orochimaru. As Naruto wakes up, Sai begins to reveal more about his brother, but Orochimaru ",
-            "image": "https://image.tmdb.org/t/p/w300/pkVMxjubxaU2Wh7ebmHHFXKxgag.jpg",
-            "airDate": "2008-03-13",
-            "runtime": 23
-          },
-          "19": {
-            "title": "Reunion",
-            "overview": "As Team Kakashi continues their search for Sasuke, Sai approaches Sasuke's room and awakens him. Shaken by the image of Sasuke's Sharingan from earlier, Sai attempts to restrain him. A large explosion",
-            "image": "https://image.tmdb.org/t/p/w300/r2O3hE9gmqEIrknIvyD51OW8iqQ.jpg",
-            "airDate": "2008-03-20",
-            "runtime": 23
-          },
-          "20": {
-            "title": "The Power of Uchiha",
-            "overview": "Sasuke begins to attack Naruto, but Sai restrains him only for them both to be blown away by Sasuke's Chidori Nagashi. Sakura charges at Sasuke, but Yamato intervenes and winds up being stabbed by Sas",
-            "image": "https://image.tmdb.org/t/p/w300/vsodOg2ZFsduzmDjF91XfpajD4B.jpg",
-            "airDate": "2008-03-20",
-            "runtime": 23
-          },
-          "21": {
-            "title": "The Leaves Sprout!",
-            "overview": "Orochimaru and Kabuto convince Sasuke to withdraw with them, and Naruto weeps over his failure to return Sasuke to the village, but Sakura reassures him that they will bring Sasuke back together. Naru",
-            "image": "https://image.tmdb.org/t/p/w300/fs8m5qm6wLtDDPAId9DYSeBM9vr.jpg",
-            "airDate": "2008-04-03",
-            "runtime": 23
-          }
-        },
-        "3": {
-          "1": {
-            "title": "Nightmare",
-            "overview": "Naruto's been having nightmares about the release of the Nine-Tail's power. Afterward, Kakashi informs Naruto that he has special training for him that will make him strong quickly. They are cut off b",
-            "image": "https://image.tmdb.org/t/p/w300/idGgNw7PluhW3ZVwAYTBNwAoNrv.jpg",
-            "airDate": "2008-04-03",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Wind",
-            "overview": "Kakashi is released from the hospital and begins Naruto's training program. Naruto learns that he has Wind-style chakra. Yamato helps by setting up the training field with his special jutsu. Naruto al",
-            "image": "https://image.tmdb.org/t/p/w300/ggFFr4J0BqbFC4gAJFYQdFul7P3.jpg",
-            "airDate": "2008-04-17",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Writhe",
-            "overview": "Naruto and his clones continue to work on chakra nature manipulation by slicing leaves. After some struggling, Naruto approaches Asuma, who is also a wind type, for advice, after which Asuma gives Nar",
-            "image": "https://image.tmdb.org/t/p/w300/1vX2ZCv9aENT1HCOeBR4QTBLyOp.jpg",
-            "airDate": "2008-04-24",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Deprived of Eternal Sleep",
-            "overview": "Naruto, Sakura, Sai and Yamato head out for a new mission near the Fire Temple. When the other party fails to show up at the rendezvous point, the team gets separated and Naruto stumbles upon one of t",
-            "image": "https://image.tmdb.org/t/p/w300/wMLSD4XehwOnGmATBCr3p6YsSf7.jpg",
-            "airDate": "2008-05-08",
-            "runtime": 23
-          },
-          "5": {
-            "title": "Loneliness",
-            "overview": "The temple monks explain that the tombs hold the loyal bodyguards of Fire Country's feudal lord. Naruto observes Sora sparring with other monks and becomes offended upon realizing he is holding back. ",
-            "image": "https://image.tmdb.org/t/p/w300/9SDMawGryb29Q5GClwsCklcJbcU.jpg",
-            "airDate": "2008-05-08",
-            "runtime": 23
-          },
-          "6": {
-            "title": "A New Enemy",
-            "overview": "Tsunade suspects that Danzou is plotting something and orders an investigation of him. Team Kakashi, Chiriku and Sora notice the coffins moving on their own, but fail to intercept them. The coffins em",
-            "image": "https://image.tmdb.org/t/p/w300/9QUftXbQ6rFN5vJB3QhWAmB9hxk.jpg",
-            "airDate": "2008-05-15",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Impermanence",
-            "overview": "Team Kakashi begins facing off against the enemy shinobi. Yamato eludes his opponent, Fudo, by faking his death. Sora, unwilling to look for Naruto, goes off on his own. Back in Konoha, Danzo reveals ",
-            "image": "https://image.tmdb.org/t/p/w300/x8X5Dz9lV7dcwmdR4fkPc885kue.jpg",
-            "airDate": "2008-05-22",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Contact",
-            "overview": "Furido taunts Sora until Sora unleashes his true powers, before informing Sora that he is planning to use the four corpses to save the Land of Fire. Naruto continues his fight with F?ka and learns tha",
-            "image": "https://image.tmdb.org/t/p/w300/kNN8SAElsBrEdzxm0I1cVLAXhLR.jpg",
-            "airDate": "2008-05-29",
-            "runtime": 23
-          },
-          "9": {
-            "title": "Teammate",
-            "overview": "Asuma's team returns from its mission. Team Kakashi returns to Konoha as well, with Sora replacing Sai on the team. Naruto tries to show Sora around Konoha but Sora goes his own way. Sora's insults pr",
-            "image": "https://image.tmdb.org/t/p/w300/k3Rm34fGhISm0QtrUugH44bpdJ3.jpg",
-            "airDate": "2008-06-05",
-            "runtime": 23
-          },
-          "10": {
-            "title": "The Two Kings",
-            "overview": "Asuma supervises Naruto and Sora's wind chakra training, and notices that Sora, like Naruto, has very powerful chakra. Tsunade and Yamato learn from Chiriku that Sora was inadvertently responsible for",
-            "image": "https://image.tmdb.org/t/p/w300/zTJzNYTbBQ0dkL3rlFWfoJbDiaI.jpg",
-            "airDate": "2008-06-19",
-            "runtime": 23
-          },
-          "11": {
-            "title": "Jet-Black Signal Fire",
-            "overview": "Danzou is brought in for questioning after being caught meeting with a young Rain ninja. Sora confronts Asuma, and Asuma admits to having killed Kazuma. He attacks Asuma, his arm once again assuming a",
-            "image": "https://image.tmdb.org/t/p/w300/l7PFUKej6eqjCbIObmJtuaQOvQM.jpg",
-            "airDate": "2008-07-03",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Lockdown of Darkness",
-            "overview": "With Konoha in complete darkness, the village struggles to defend against the four attackers who have sealed the entire village behind a barrier. The entire village is in a state of emergency. Asuma, ",
-            "image": "https://image.tmdb.org/t/p/w300/A3lMXjjsHP36t3qcsbM29LuZlnf.jpg",
-            "airDate": "2008-07-03",
-            "runtime": 23
-          },
-          "13": {
-            "title": "Revived Souls",
-            "overview": "Konoha's ninja fight off the revived zombie members of the Kohaku clan. The four Guardian Ninjas, Seito, Tōu, Nauma and Kitane, are also revived. Asuma realizes that they are planning to use Limelight",
-            "image": "https://image.tmdb.org/t/p/w300/m6eyufJWMwtPVKM9LV36PIhmuBD.jpg",
-            "airDate": "2008-07-10",
-            "runtime": 23
-          },
-          "14": {
-            "title": "Everyone's Struggle to the Death",
-            "overview": "Sora refuses to let Furido destroy the village despite his grudge against Asuma and the Hokage. He is beaten up by Furido, who claims that his father had a similar flaw. Asuma gets trapped by Kitane i",
-            "image": "https://image.tmdb.org/t/p/w300/arcifmnDuI79PXQI19xxaZ80dkX.jpg",
-            "airDate": "2008-07-24",
-            "runtime": 23
-          },
-          "15": {
-            "title": "Moment of Awakening",
-            "overview": "Naruto deduces that Fuuka's secret consists of switching bodies to use each corresponding element and that her hair preserves her youth and body. Naruto damages her hair and it takes a life of its own",
-            "image": "https://image.tmdb.org/t/p/w300/agHzRnWo0EGYhg64MUxbd2xFIIU.jpg",
-            "airDate": "2008-07-31",
-            "runtime": 23
-          },
-          "16": {
-            "title": "Despair",
-            "overview": "Furido releases Sora's seal, and tells him the truth: Sora is a pseudo-Jinchuuriki. The chakra that had leaked from the Nine Tailed Fox when it attacked Konoha 15 and a half years ago was harvested an",
-            "image": "https://image.tmdb.org/t/p/w300/wRKivVGHvPHHb1fzHYNGPbJA6jA.jpg",
-            "airDate": "2008-07-31",
-            "runtime": 23
-          },
-          "17": {
-            "title": "Resonance",
-            "overview": "The chakra of the Nine-tails rages out of control within Sora, preventing Naruto and the others from subduing him. Asuma and Kazuma resume their old battle, while Kazuma justifies his actions with his",
-            "image": "https://image.tmdb.org/t/p/w300/xqr5XULcg8mcYjmBHjiEM1FacBa.jpg",
-            "airDate": "2008-08-07",
-            "runtime": 23
-          },
-          "18": {
-            "title": "My Friend",
-            "overview": "The struggle between Naruto and Sora continues. Asuma and Kazuma fight. Sai arrives, having snuck out of hospital, and binds Kazuma with an ink snake. Kazuma breaks out of Sai's jutsu and charges Asum",
-            "image": "https://image.tmdb.org/t/p/w300/q7IYMg3nF7e6yZrmVcq5mVhyJKO.jpg",
-            "airDate": "2008-08-14",
-            "runtime": 23
-          }
-        },
-        "4": {
-          "1": {
-            "title": "The Quietly Approaching Threat",
-            "overview": "Asuma apologizes at the grave of the Third Hokage for not understanding his advice concerning what the \"king\" of the Fire Country is. At the hospital, Naruto and Sai recover, despite Naruto's desire t",
-            "image": "https://image.tmdb.org/t/p/w300/uCsjd8M7e5k3hCBCzI7EBGxz2R3.jpg",
-            "airDate": "2008-08-21",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Akatsuki's Invasion",
-            "overview": "Naruto proceeds to the next step of his training, the cutting of a waterfall. Hidan and Kakuzu reach the Fire Temple and fight Chiriku, so as to obtain the bounty on his head. After defeating him, the",
-            "image": "https://image.tmdb.org/t/p/w300/xPmo2frDG1k54QClZAlVqEYFsue.jpg",
-            "airDate": "2008-08-28",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Under the Starry Sky",
-            "overview": "The second stage of Naruto's training continues, while Tsunade sends out twenty teams composed of four ninja each to deal with the Akatsuki members in the Fire Country. Shikamaru leaves with Asuma, Iz",
-            "image": "https://image.tmdb.org/t/p/w300/q7IYMg3nF7e6yZrmVcq5mVhyJKO.jpg",
-            "airDate": "2008-09-04",
-            "runtime": 23
-          },
-          "4": {
-            "title": "The Old Monk's Prayer",
-            "overview": "Asuma mourns Chiriku's death, and realizes that Hidan and Kakuzu are trying to claim the bounty on his head. Meanwhile, Hidan and Kakuzu take Chiriku in for their payment. Meanwhile, Kakashi shows Nar",
-            "image": "https://image.tmdb.org/t/p/w300/uVGZLTQu5GW219pO5qzA8Poruij.jpg",
-            "airDate": "2008-09-11",
-            "runtime": 23
-          },
-          "5": {
-            "title": "The Next Step",
-            "overview": "Kakashi reveals that while he knows how to perform Rasengan, he cannot combine his own lightning-based chakra. He adds that even the Fourth Hokage, who created the move, could not combine his elementa",
-            "image": "https://image.tmdb.org/t/p/w300/xPmo2frDG1k54QClZAlVqEYFsue.jpg",
-            "airDate": "2008-09-25",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Climbing Silver",
-            "overview": "Asuma’s team reaches the bounty station and ambushes Hidan. Izumo and Kotetsu attack Hidan, but are unable to kill him despite stabbing his vital organs. Asuma tells his teammates that if they retreat",
-            "image": "https://image.tmdb.org/t/p/w300/mtNQH2Ek3V0YwBZFpp51oZYSTtf.jpg",
-            "airDate": "2008-09-25",
-            "runtime": 23
-          },
-          "7": {
-            "title": "The Judgment",
-            "overview": "Asuma’s fire jutsu strikes Hidan, but much to the team's surprise, Asuma is also burned. Hidan reveals his ability: By ingesting an opponent’s blood and standing in a ritual circle drawn with blood, t",
-            "image": "https://image.tmdb.org/t/p/w300/agSol2UnGeGiqaZ3oPpOlBS4vPO.jpg",
-            "airDate": "2008-10-02",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Unfulfilled Scream",
-            "overview": "Team Asuma continues their battle with Akatsuki's Hiden and Kakuzu.",
-            "image": "https://image.tmdb.org/t/p/w300/kcOZ3ofIPGn74TA2J8zZw5A8kbT.jpg",
-            "airDate": "2008-10-02",
-            "runtime": 23
-          },
-          "9": {
-            "title": "Last Words",
-            "overview": "A call from the Akatsuki leader forces Hidan and Kakuzu to fall back, but in the wake of the aftermath, not everyone makes it back to Konoha alive.",
-            "image": "https://image.tmdb.org/t/p/w300/6aATUasY99UqEDRf1nOVS8CDdLU.jpg",
-            "airDate": "2008-10-16",
-            "runtime": 23
-          },
-          "10": {
-            "title": "The Sad News",
-            "overview": "While Akatsuki discusses the true goals of their organization, Naruto continues his training. Meanwhile, Tsunade receives the tragic news.",
-            "image": "https://image.tmdb.org/t/p/w300/glnI8hv8M4vysdYxeHiNMNnJYQS.jpg",
-            "airDate": "2008-10-23",
-            "runtime": 23
-          },
-          "11": {
-            "title": "Team Ten",
-            "overview": "All of Konoha mourns the tragic loss of Asuma Sarutobi. Knowing that Hidan and Kakuzu are bound to return, Shikamaru, Choji, and Ino prepare to head off to take revenge upon the duo while Kakashi take",
-            "image": "https://image.tmdb.org/t/p/w300/weWJZ8Bl9sOkLQwK5EOtiG3mnHL.jpg",
-            "airDate": "2008-10-30",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Target: Locked On",
-            "overview": "With careful planning, the group manages to find and trap Hidan and Kakuzu. However, things seem to be going a bit too smoothly.",
-            "image": "https://image.tmdb.org/t/p/w300/lxJJSKmdsAVlCuuNlE52NlQH4fB.jpg",
-            "airDate": "2008-11-06",
-            "runtime": 23
-          },
-          "13": {
-            "title": "Kakuzu's Abilities",
-            "overview": "When Kakashi strikes Kakuzu through the heart, the battle seems to be over. However, when Kakuzu not only survives the attack, but also manages to escape from Shikamaru's trap, it soon becomes clear t",
-            "image": "https://image.tmdb.org/t/p/w300/l59wRzVo7cs9UVGyRm1ATomMzNw.jpg",
-            "airDate": "2008-11-13",
-            "runtime": 23
-          },
-          "14": {
-            "title": "The Terrifying Secret",
-            "overview": "As Kakashi and the others continue to struggle against the Akatsuki duo, Kakuzu reveals that he has not one, but five hearts! In order to kill him, one must take out all five of his hearts. Meanwhile,",
-            "image": "https://image.tmdb.org/t/p/w300/wfx6exN2JzyKFzP39QKeruT3wZv.jpg",
-            "airDate": "2008-11-20",
-            "runtime": 23
-          },
-          "15": {
-            "title": "Shikamaru's Genius",
-            "overview": "Shikamaru continues his fight with Hidan. Hidan manages to injure Shikamaru and curses him the same way he did Asuma, but when Shikamaru survives Hidan's attack, Hidan realizes something isn't quite r",
-            "image": "https://image.tmdb.org/t/p/w300/dykuoBHD5lkmGz4NFT0Q8wA5I8E.jpg",
-            "airDate": "2008-12-04",
-            "runtime": 23
-          },
-          "16": {
-            "title": "When You Curse Someone, You Dig Your Own Grave",
-            "overview": "Hidan falls into Shikamaru's trap, but now that he has Hidan cornered, can he find a way to defeat Hidan's immortality? Elsewhere, things are looking grim for Kakashi, Choji, and Ino as they continue ",
-            "image": "https://image.tmdb.org/t/p/w300/y2LneBwhQp55tYnjGgHCQrhOsbW.jpg",
-            "airDate": "2008-12-04",
-            "runtime": 23
-          },
-          "17": {
-            "title": "Wind Style: Rasen Shuriken!",
-            "overview": "Naruto challenges Kakuzu with his new technique, the Rasen Shuriken, but can he defeat Kakuzu when his technique isn't even complete yet?",
-            "image": "https://image.tmdb.org/t/p/w300/yhdYMSvmsZ6QR21W7YvwkheWsC4.jpg",
-            "airDate": "2008-12-11",
-            "runtime": 23
-          }
-        },
-        "5": {
-          "1": {
-            "title": "The Price of Power",
-            "overview": "In the aftermath of the battle, Teams 7 and 10 return to Konoha. After examining Naruto, Tsunade officially classifies Naruto's new technique as a Forbidden Jutsu and warns Kakashi never to let him us",
-            "image": "https://image.tmdb.org/t/p/w300/9oKWHve7gEkfd7SAS5fsMTT6j7Z.jpg",
-            "airDate": "2008-12-18",
-            "runtime": 23
-          },
-          "2": {
-            "title": "A Shinobi's Determination",
-            "overview": "As Naruto recovers from his injury, Kakashi prepares to tell him the grim news about his new technique. Meanwhile, Sasuke secretly trains and has an encounter with a strange young girl.",
-            "image": "https://image.tmdb.org/t/p/w300/iqje2y5P22OVOBN8yUsd5IcMSgG.jpg",
-            "airDate": "2008-12-25",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Orochimaru's Hideout Discovered",
-            "overview": "Kakashi leads Kiba, Hinata, and Shino on a mission to infiltrate Orochimaru's lair. What horrors and traps await them?",
-            "image": "https://image.tmdb.org/t/p/w300/dPBafKIG8uGhoyCH2EERbZELA0S.jpg",
-            "airDate": "2009-01-08",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Encounter",
-            "overview": "Kabuto and Yūkimaru travel to a lake, where Kabuto attempts to draw out a mysterious creature. Guren branches off from her men to find Orochimaru, who has Sasuke fight an army of Sound Ninja as traini",
-            "image": "https://image.tmdb.org/t/p/w300/jikqUvtf9ehZSpOA5KDq4gMlBEo.jpg",
-            "airDate": "2009-01-15",
-            "runtime": 23
-          },
-          "5": {
-            "title": "Connecting Hearts",
-            "overview": "Naruto runs into unexpected difficulties as he trains with Gamakichi and Gamatatsu. While Kakashi's group searches for Guren and her gang, Yukimaru seems to develop interest in Naruto.",
-            "image": "https://image.tmdb.org/t/p/w300/qszwr0V4XNdGwmgl4v1g9RH6Cvm.jpg",
-            "airDate": "2009-01-22",
-            "runtime": 23
-          },
-          "6": {
-            "title": "A Night of Rain",
-            "overview": "Kabuto assigns Guren to look after Yukimaru. Guren isn't all too happy about the assignment, and things only become worse when Yukimaru falls ill on a rainy night. Elsewhere, Kiba discovers the myster",
-            "image": "https://image.tmdb.org/t/p/w300/e7WOKR7OMiz4jMGAlsrOlgAljki.jpg",
-            "airDate": "2009-01-29",
-            "runtime": 23
-          },
-          "7": {
-            "title": "The Two Charms",
-            "overview": "While Naruto continues his training with Gamakichi and Gamatatsu, Yamato, Sakura, and Sai prepare to leave and back-up Kakashi's group. As Guren and her gang prepares to intercept Kakashi's group, Yuk",
-            "image": "https://image.tmdb.org/t/p/w300/s8LzvuVykG9nl1hj24yMZzp5Mxt.jpg",
-            "airDate": "2009-02-05",
-            "runtime": 23
-          },
-          "8": {
-            "title": "The Unseeing Enemy",
-            "overview": "While Naruto continues practicing a combo attack with Gamatatsu, Kakashi, Kiba, Hinata, and Shino have a run-in with Guren's gang. Will Kakashi and Team 8 be able to defeat these strange foes?",
-            "image": "https://image.tmdb.org/t/p/w300/j3ZzeJww0pVWWjOo4UGqqvUgKAD.jpg",
-            "airDate": "2009-02-12",
-            "runtime": 23
-          },
-          "9": {
-            "title": "The Labyrinth of Distorted Reflection",
-            "overview": "In Konoha, Tsunade discovers they have an enemy using Crystal Style. While on his mission with Team Kakashi, Naruto meets Yūkimaru once again and talks to him. Guren puts a gigantic Crystal Prison ove",
-            "image": "https://image.tmdb.org/t/p/w300/jv61JF7zcyyZveusgFnrtZqc57p.jpg",
-            "airDate": "2009-02-19",
-            "runtime": 23
-          },
-          "10": {
-            "title": "The Target Appears",
-            "overview": "Naruto successfully breaks down the crystal labyrinth with his new jutsu and he and the rest of Team Kakashi come to Kakashi, Kiba and Shino's aide, and rescue Hinata as well. Meanwhile, Kabuto, Guren",
-            "image": "https://image.tmdb.org/t/p/w300/kTIeFqVRR8U78XG433ZkGVjohO3.jpg",
-            "airDate": "2009-02-26",
-            "runtime": 23
-          },
-          "11": {
-            "title": "The Rampaging Tailed Beast",
-            "overview": "Yūkimaru summons the Three-Tailed and immobilizes it while Guren tries to capture it. It manages to break free and attack. Kakashi tells Naruto to investigate the lake, while they find Rinji and the o",
-            "image": "https://image.tmdb.org/t/p/w300/9kV4GLBi4LNnj3XgpcVUsS2JHZD.jpg",
-            "airDate": "2009-03-05",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Inside the Mist",
-            "overview": "Guren is rendered unconscious and relives her past as Naruto is caught in an illusion about Sasuke. After Kakashi finds him, Teams Kakashi and Kurenai conclude the mist around them causes Genjutsu cou",
-            "image": "https://image.tmdb.org/t/p/w300/6N9nyj9tRByDYyuLrxtiglZ7SmC.jpg",
-            "airDate": "2009-03-12",
-            "runtime": 23
-          },
-          "13": {
-            "title": "Everyone's Feelings",
-            "overview": "Naruto runs into Guren while trying to find Yūkimaru. Yamato and Kakashi find Naruto and bring him back to the group. Kabuto tells Guren that Yūkimaru is only a tool to control the Three-Tails, which ",
-            "image": "https://image.tmdb.org/t/p/w300/fqCAShbd8A5DVwYO09494gj8VmF.jpg",
-            "airDate": "2009-03-26",
-            "runtime": 23
-          },
-          "14": {
-            "title": "Regroup!",
-            "overview": "Shizune, Ino, Lee and Tenten arrive and Kakashi, Shizune and Yamato discuss about a strategy to seal the Sanbi and rescue Yukimaru. Meanwhile, Kabuto and Rinji notice Guren's care for Yukimaru and bec",
-            "image": "https://image.tmdb.org/t/p/w300/k6pCmpuHLwAaCiELxJ5EhbEijTY.jpg",
-            "airDate": "2009-03-26",
-            "runtime": 23
-          },
-          "15": {
-            "title": "The Four-Corner Sealing Barrier",
-            "overview": "The sealing unit prepares the sealing barrier and the other two teams go into battle with Guren and her henchmen. Kakashi, Naruto and Sai stall Guren and Gozu while Shino prepares to go against Guren'",
-            "image": "https://image.tmdb.org/t/p/w300/p6rl5bZlX2dZwTeOsYP3dmof7z8.jpg",
-            "airDate": "2009-04-09",
-            "runtime": 23
-          },
-          "16": {
-            "title": "Breaking the Crystal Style",
-            "overview": "After Shino finishes preparing his insects, he goes against Guren's crystal style. Elsewhere, while Shizune, Sakura, Ino and Hinata are bringing the sealing barrier to the Sanbi, they are being watche",
-            "image": "https://image.tmdb.org/t/p/w300/36tRxqpxzMaWKj8OT8dHQdltOZw.jpg",
-            "airDate": "2009-04-09",
-            "runtime": 23
-          },
-          "17": {
-            "title": "The Battle Over the Barrier",
-            "overview": "Kabuto plans on breaking Leaf’s The Four-Corner Sealing Barrier from the inside by using Yukimaru’s power and have the Three-Tailed Beast go on a rampage.",
-            "image": "https://image.tmdb.org/t/p/w300/kck31inOoyv59IN37HI9E89xRWB.jpg",
-            "airDate": "2009-04-16",
-            "runtime": 23
-          },
-          "18": {
-            "title": "Red Camellia",
-            "overview": "Yūkimaru falters and the Three-Tails injures Guren. Rinji tells Yūkimaru to suppress the beast to save her, but he is unable to do so. Guren leaves her position and protects Yūkimaru with a Crystal St",
-            "image": "https://image.tmdb.org/t/p/w300/shWT6Wo5EfGtARL2cLts9QxPgkb.jpg",
-            "airDate": "2009-04-23",
-            "runtime": 23
-          },
-          "19": {
-            "title": "Strange Bedfellows",
-            "overview": "Guren tries to attack Naruto within the Three-Tails, but, in her weakened state, is unable to do so and passes out. Meanwhile, Kakashi tells Sakura and Ino to heal Yūkimaru while he, Shizune, Kiba, Sa",
-            "image": "https://image.tmdb.org/t/p/w300/2UcI5ioWsfrS47psxCGHxDCamUe.jpg",
-            "airDate": "2009-04-30",
-            "runtime": 23
-          },
-          "20": {
-            "title": "Guidepost of the Camellia",
-            "overview": "Yukimaru informs Kakashi and the others to Naruto and Guren's whereabouts and they attempt to free them with Yukimaru's help. Kiba, Tenten and Lee once again battle Kihou, Kigiri and Nurari after gain",
-            "image": "https://image.tmdb.org/t/p/w300/qfNQpBK9mtw8RDhedGsuy8qiV7N.jpg",
-            "airDate": "2009-05-07",
-            "runtime": 23
-          },
-          "21": {
-            "title": "Counterattack of the Curse Mark",
-            "overview": "The Sealing Team prepared to start sealing the Three-Tails and tell Sai to take Yūkimaru somewhere safe, but he gets attacked by Kabuto's men. Kabuto meanwhile prepares his plans while Lee, Tenten, an",
-            "image": "https://image.tmdb.org/t/p/w300/aS7T5zj18PcZOvHuiYdRzC8Mith.jpg",
-            "airDate": "2009-05-14",
-            "runtime": 23
-          },
-          "22": {
-            "title": "Memory of Guilt",
-            "overview": "Katsuyu arrives to help the sealing team with the sealing barrier. Naruto and Guren arrive to save Yukimaru from Rinji, but after Guren and Yukimaru have a brief discussion, Rinji reveals the truth ab",
-            "image": "https://image.tmdb.org/t/p/w300/fKzB0HrC8ZXYn0ziOgXqObVSVYm.jpg",
-            "airDate": "2009-05-21",
-            "runtime": 23
-          },
-          "23": {
-            "title": "Shattered Promise",
-            "overview": "The sealing team continue their efforts to seal the Sanbi while Kakashi and the others face against a monster fused together by Kigiri, Nurari and Kihou. Kabuto reveals Orochimaru's plans involving th",
-            "image": "https://image.tmdb.org/t/p/w300/sV1vhtlycIDikpkQyskRSwuQR93.jpg",
-            "airDate": "2009-05-28",
-            "runtime": 23
-          },
-          "24": {
-            "title": "The Place to Return To",
-            "overview": "The battle for the Sanbi comes to an end as neither the Konoha ninja nor Orochimaru are successful at obtaining it. Tsunade classifies the mission of catching the Sanbi as a failure, for it is too dan",
-            "image": "https://image.tmdb.org/t/p/w300/8nksz2F3y5lGP2wZM40DiBWK9cR.jpg",
-            "airDate": "2009-06-04",
-            "runtime": 23
-          }
-        },
-        "6": {
-          "1": {
-            "title": "The Serpent's Pupil",
-            "overview": "Orochimaru's body has reached its limit and the time for the ritual has come. Sasuke has other plans, however, and seeks to target a bedridden Orochimaru.",
-            "image": "https://image.tmdb.org/t/p/w300/3DEJomeV3bGlGJxFO7ZGwa3U8bW.jpg",
-            "airDate": "2009-06-11",
-            "runtime": 23
-          },
-          "2": {
-            "title": "The Eye of the Hawk",
-            "overview": "Orochimaru reveals the true, hideous form his body has taken from years of experimenting on his body. Can Sasuke defeat this menacing form, or does Orochimaru still have a few tricks up his sleeves?",
-            "image": "https://image.tmdb.org/t/p/w300/1jMpTzzmH8hS1UBcSHGAiWJ8yh2.jpg",
-            "airDate": "2009-06-18",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Zabuza's Blade",
-            "overview": "After Sasuke reverses Orochimaru's body-switch with his Sharingan, he releases one of Orochimaru's test subjects, Suigetsu. Determined to put together a team to achieve his goals, he decides to reques",
-            "image": "https://image.tmdb.org/t/p/w300/rnjUd6FcZMTnefCS4LaDOvfQiUR.jpg",
-            "airDate": "2009-06-25",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Guardian of the Iron Wall",
-            "overview": "The second member of Sasuke's team is revealed to be a woman named Karin. After Sasuke and Suigetsu arrive at the Southern Hideout, Sasuke requests that Karin comes with them. Despite her hesitations ",
-            "image": "https://image.tmdb.org/t/p/w300/c6jONdyk02upLc8FL3kpCFaEXyQ.jpg",
-            "airDate": "2009-07-02",
-            "runtime": 23
-          },
-          "5": {
-            "title": "Jugo of the Northern Hideout",
-            "overview": "Having successfully recruited Karin, Sasuke seeks out the final member for his platoon, Jugo. Karin warns Sasuke and Suigetsu of Jugo's uncontrollable murderous instincts, but as they arrive at the no",
-            "image": "https://image.tmdb.org/t/p/w300/vIwhyAGmiE2fMme4gbRj58G0FOj.jpg",
-            "airDate": "2009-07-09",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Formation!",
-            "overview": "After successfully convincing Jugo to join his team, Sasuke finally has everyone he needs for his platoon. He names his platoon Team Hebi, and explains the true reason as to why he gathered them all t",
-            "image": "https://image.tmdb.org/t/p/w300/GCCjrOuUU0HcVgYZqgipKoC86q.jpg",
-            "airDate": "2009-07-23",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Kakashi Chronicles ~ Boys' Life on the Battlefield ~ Part 1",
-            "overview": "Over ten years ago, the Five Great Nations’ were in the midst of the Third Great Ninja War. Future Fourth Hokage Minato Namikaze assigns young Kakashi, Obito of the Uchiha clan, and Rin, on a mission ",
-            "image": "https://image.tmdb.org/t/p/w300/fWvmjtinPjPkTHRtrcDnR7GtCqw.jpg",
-            "airDate": "2009-07-30",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Kakashi Chronicles ~ Boys' Life on the Battlefield ~ Part 2",
-            "overview": "Obito ignores Kakashi’s order to continue with the mission and leaves to save Rin, who was kidnapped by the Rock ninja. But the enemies detect Obito’s arrival and defeat him. Kakashi arrives at the la",
-            "image": "https://image.tmdb.org/t/p/w300/eAoDOAqlHrrn9nbuKGeJwwiHEsF.jpg",
-            "airDate": "2009-07-30",
-            "runtime": 23
-          },
-          "9": {
-            "title": "Assemble",
-            "overview": "As Akatsuki seals yet another tailed beast, Itachi and Kisame are warned that Sasuke and his group are after them. Both Konoha and Team Hebi prepare to move out for their quests to find Itachi, but Sa",
-            "image": "https://image.tmdb.org/t/p/w300/AsNKbZuK85L57owwDPu5BPmTEF7.jpg",
-            "airDate": "2009-08-06",
-            "runtime": 23
-          },
-          "10": {
-            "title": "The Hunt",
-            "overview": "Kakashi splits the two teams into five separate groups, each aided by a couple of his ninja dogs, in order to locate clues about Itachi and Sasuke's whereabouts. Unbeknownst to everyone, familiar foes",
-            "image": "https://image.tmdb.org/t/p/w300/wDBuyfEHLvFdELrp6C5L87WQPP7.jpg",
-            "airDate": "2009-08-13",
-            "runtime": 23
-          },
-          "11": {
-            "title": "Clash!",
-            "overview": "Upon encountering one another, Sasuke and Deidara engage in battle. After exchanging a few blows to test Sasuke’s strength, Deidara conjures up his specialty clay dragon and wages long-range attacks a",
-            "image": "https://image.tmdb.org/t/p/w300/aCGBVD4ojyerrmWbEgMUcTzoZfz.jpg",
-            "airDate": "2009-08-20",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Art",
-            "overview": "Sasuke's Sharingan proves to be superior against Deidara's explosives. Deidara creates one of his finest works, the C4 Karura, in order to take him down. What will Sasuke do now?",
-            "image": "https://image.tmdb.org/t/p/w300/q82Th2fRyYx9mjJIW8shmp95X7M.jpg",
-            "airDate": "2009-08-27",
-            "runtime": 23
-          },
-          "13": {
-            "title": "Disappearance",
-            "overview": "By using himself as an explosive, Deidara creates an explosion ten kilometers in diameter, something not even Sasuke will be able to escape from. Is this the end of Sasuke? Elsewhere, someone approach",
-            "image": "https://image.tmdb.org/t/p/w300/kfR7oaPZGavG7A8UD6zXRRLtqQb.jpg",
-            "airDate": "2009-09-03",
-            "runtime": 23
-          },
-          "14": {
-            "title": "Twilight",
-            "overview": "As Sasuke rests from his battle with Deidara, the Leaf ninja pick up on his trail. Noticing that they're being followed, Karin tries to send them in the wrong direction while the members of Team Hebi ",
-            "image": "https://image.tmdb.org/t/p/w300/uAl5S4c0WAyKVRsyKfTuHahrwiF.jpg",
-            "airDate": "2009-09-10",
-            "runtime": 23
-          },
-          "15": {
-            "title": "Tales of a Gutsy Ninja ~Jiraiya Ninja Scroll ~ Part 1",
-            "overview": "Having become genin, Jiraiya, Tsunade, and Orochimaru are assigned to the future Third Hokage's platoon. Watching Sarutobi's space/time ninjutsu, Jiraiya becomes absorbed into learning it. One day, Ji",
-            "image": "https://image.tmdb.org/t/p/w300/rFvWHw5UdanChiaitDUhRa8eoTY.jpg",
-            "airDate": "2009-09-24",
-            "runtime": 23
-          },
-          "16": {
-            "title": "Tales of a Gutsy Ninja  ~ Jiraiya Ninja Scroll ~ Part 2",
-            "overview": "In the Rain Country, Jiraiya decides to take care of three young orphans for a while. Yahiko, a spunky young boy, wants Jiraiya to train him, Konan, and Nagato to be shinobi, but it's not until he see",
-            "image": "https://image.tmdb.org/t/p/w300/e0V4LOXJiWWpzpaJxOHJzySzdRP.jpg",
-            "airDate": "2009-09-24",
-            "runtime": 23
-          },
-          "17": {
-            "title": "Infiltrate! The Village Hidden in the Rain",
-            "overview": "While the members of Team Hebi head towards Itachi's location, Jiraiya infiltrates the Hidden Rain Village in hopes of gathering information on the Akatsuki leader. Jiraiya captures two Rain ninja and",
-            "image": "https://image.tmdb.org/t/p/w300/se2hngfJqzBSh4sG6jNVdzpo6uQ.jpg",
-            "airDate": "2009-10-08",
-            "runtime": 23
-          },
-          "18": {
-            "title": "The Man Who Became God",
-            "overview": "Having suspicions about the Nine-Tails' attack on the Hidden Leaf Village years ago, Jiraiya tells one of his frogs that the time may come when Naruto will need to access the fox's full power. His int",
-            "image": "https://image.tmdb.org/t/p/w300/6HmKEyGAUHbJ6KaPaLRBrmxWbM9.jpg",
-            "airDate": "2009-10-08",
-            "runtime": 23
-          },
-          "19": {
-            "title": "Honored Sage Mode!",
-            "overview": "Having no other choice against Pain's powerful and strange summonings, Jiraiya undergoes a powerful transformation to go up against Pain with the help of the Toad Sages. Will this Sage Mode be enough ",
-            "image": "https://image.tmdb.org/t/p/w300/dI7XeFo03BNWAELOQ4jcbYa4eXv.jpg",
-            "airDate": "2009-10-15",
-            "runtime": 23
-          },
-          "20": {
-            "title": "In Attendance, the Six Paths of Pain",
-            "overview": "Jiraiya is now confronted by two new Pains who both possess different abilities than the one he was fighting. Just who is Pain and how many Pains are there?",
-            "image": "https://image.tmdb.org/t/p/w300/aQkXQhJ5OMJtHvYGhcNsNWWpjwF.jpg",
-            "airDate": "2009-10-22",
-            "runtime": 23
-          },
-          "21": {
-            "title": "The Tale of Jiraiya the Gallant",
-            "overview": "Jiraiya realizes that the six Pains are all ninja he's met before. Putting various pieces of information together, Jiraiya figures out Pain's true identity, but Pain doesn't intend to allow Jiraiya to",
-            "image": "https://image.tmdb.org/t/p/w300/tRezdSyTC0N4oDbREiJaczrSy4P.jpg",
-            "airDate": "2009-10-29",
-            "runtime": 23
-          },
-          "22": {
-            "title": "Banquet Invitation",
-            "overview": "Sasuke's long awaited battle with Itachi begins with the Uchiha brothers throwing genjutsu after genjutsu at each other. Sasuke seems to have Itachi cornered and asks him a few questions of the Uchiha",
-            "image": "https://image.tmdb.org/t/p/w300/hDx47H3s58FrgRqMQ4Zy99eoadA.jpg",
-            "airDate": "2009-11-05",
-            "runtime": 23
-          },
-          "23": {
-            "title": "The Longest Moment",
-            "overview": "Sasuke's long awaited battle with Itachi begins with the Uchiha brothers throwing genjutsu after genjutsu at each other. Sasuke seems to have Itachi cornered and asks him a few questions of the Uchiha",
-            "image": "https://image.tmdb.org/t/p/w300/pPqLXzdKeksvY2kptss2w115bvU.jpg",
-            "airDate": "2009-11-19",
-            "runtime": 23
-          },
-          "24": {
-            "title": "The Light & Dark of the Mangekyo Sharingan",
-            "overview": "Itachi reveals to Sasuke that Madara is the second culprit behind the Uchiha massacre, as well as the history of the Mangekyo Sharingan and the first two Uchiha to obtain it: Madara and his brother. O",
-            "image": "https://image.tmdb.org/t/p/w300/nwYfltiJHeeCphxhANk77lGIbUm.jpg",
-            "airDate": "2009-11-19",
-            "runtime": 23
-          },
-          "25": {
-            "title": "Amaterasu!",
-            "overview": "After successfully breaking out of Itachi's Tsukiyomi, Sasuke gains the upper hand on his weakened brother. With no other alternative, Itachi activates his second Mangekyo ability, Amaterasu, a black ",
-            "image": "https://image.tmdb.org/t/p/w300/9vmWWgkau3lnpAqpEJ6c1Ah3Lbe.jpg",
-            "airDate": "2009-11-26",
-            "runtime": 23
-          },
-          "26": {
-            "title": "The End",
-            "overview": "Sasuke thinks that he's finally killed Itachi with the help of his most powerful technique, Kirin, but Itachi still has one final trick up his sleeve. Having used both Tsukiyomi and Amaterasu, Itachi ",
-            "image": "https://image.tmdb.org/t/p/w300/4nFSYt7uU0170f7cj8AL9auE46c.jpg",
-            "airDate": "2009-12-03",
-            "runtime": 23
-          },
-          "27": {
-            "title": "The Mystery of Tobi",
-            "overview": "As Sasuke has finally fulfilled his goal in killing Itachi and avenging his clan, he collapses from exhaustion. The news of his victory reaches the Leaf ninja and Tobi, who both race towards Sasuke's ",
-            "image": "https://image.tmdb.org/t/p/w300/kWCDmeEsRzy0ZzSVgpGWTCIQlqd.jpg",
-            "airDate": "2009-12-10",
-            "runtime": 23
-          },
-          "28": {
-            "title": "Fate",
-            "overview": "Seeking to gain Sasuke's trust, Madara reveals to him the origins of Konoha. Madara and the future First Hokage founded the village long ago, but a rivalry between them would one day stem a chain of e",
-            "image": "https://image.tmdb.org/t/p/w300/c1E7IhpaVqr0UqlLuxBCqHbYm8h.jpg",
-            "airDate": "2009-12-17",
-            "runtime": 23
-          },
-          "29": {
-            "title": "Truth",
-            "overview": "After Madara finishes telling Sasuke about his past, he reveals the unfathomable truth about Itachi's massacre of the Uchiha Clan. What really happened on that night? Why did Itachi join Akatsuki? And",
-            "image": "https://image.tmdb.org/t/p/w300/eK8TWfMKatvQcZ7caY2pQCFoyoZ.jpg",
-            "airDate": "2009-12-24",
-            "runtime": 23
-          },
-          "30": {
-            "title": "Battle of Unraikyo",
-            "overview": "The Konoha teams decide to head back home as Sasuke remembers that he saw Itachi crying after the massacre. He then states that he cannot rebuild the Uchiha clan in the same way that Itachi had envisi",
-            "image": "https://image.tmdb.org/t/p/w300/xIcceUEn1F089EMWbvQ72ncgVMe.jpg",
-            "airDate": "2010-01-07",
-            "runtime": 23
-          },
-          "31": {
-            "title": "The Eight-Tails vs. Sasuke",
-            "overview": "Sasuke fights Killer Bee and is injured by his swords. Karin heals him, and Sasuke, Suigetsu, and Jugo then begin a combined assault on Bee until he decides to use the Eight-Tails' power. Sasuke is in",
-            "image": "https://image.tmdb.org/t/p/w300/ui5yD2HDArZ4htRS4AJ0NcgDu4x.jpg",
-            "airDate": "2010-01-14",
-            "runtime": 23
-          }
-        },
-        "7": {
-          "1": {
-            "title": "The Wanderer",
-            "overview": "After failing to bring back Sasuke, the Leaf ninja start heading back to the Hidden Leaf Village. Tsunade, however, sends Katsuyu to inform them that the barrier of Mount Katsunagi of the Tsuchigumo C",
-            "image": "https://image.tmdb.org/t/p/w300/9CVAFqU80BQaX5sS4iUOmdmN7Gj.jpg",
-            "airDate": "2010-01-21",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Successor of the Forbidden Jutsu",
-            "overview": "Naruto, Sai, and Yamato escort Hotaru to the hidden village of the Tsuchigumo Clan. Upon arriving, however, the villagers don't seem so happy to see Hotaru. Elsewhere, after Utakata reflects upon the ",
-            "image": "https://image.tmdb.org/t/p/w300/2I7iAuYg00Vwb2Dya5xihWVB9Gy.jpg",
-            "airDate": "2010-01-28",
-            "runtime": 23
-          },
-          "3": {
-            "title": "The Successor's Wish",
-            "overview": "As Naruto heads back to the Tsuchigumo Clan village, Akaboshi and his group find Hotaru with the help of Hotaru's uncle. Hotaru manages to escape but the ninja bandits surround her in the forest. Utak",
-            "image": "https://image.tmdb.org/t/p/w300/n1MrjdOqi1OauhiJwdzVZGZsMAo.jpg",
-            "airDate": "2010-02-04",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Rogue Ninja's Past",
-            "overview": "Naruto, Sai, and Yamato arrive to save Hotaru and Utakata from the attacking ninja who they discover are Anbu from the Hidden Mist Village. Yamato attempts to negotiate alone with the head of the Mist",
-            "image": "https://image.tmdb.org/t/p/w300/pyX4o0NzT5NHMjkBaloPLYmuj9P.jpg",
-            "airDate": "2010-02-11",
-            "runtime": 23
-          },
-          "5": {
-            "title": "The Heir to Darkness",
-            "overview": "Naruto and his team, along with Hotaru and Utakata, return to Mount Katsuragi to plan their next move. Tonbei reveals a way to remove the forbidden jutsu from Hotaru's body which would result in the j",
-            "image": "https://image.tmdb.org/t/p/w300/eQhM3Q2zd57nieLF3SolVYIpO66.jpg",
-            "airDate": "2010-02-18",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Parting",
-            "overview": "Naruto manages to find Shiranami's location but he discovers that the Shiranami he found was actually the ninja bandits disguised as him. Hotaru finds the real Shiranami where the latter convinces Hot",
-            "image": "https://image.tmdb.org/t/p/w300/f70RcT4jl9lSchZurHxsTEChnjX.jpg",
-            "airDate": "2010-02-25",
-            "runtime": 23
-          },
-          "7": {
-            "title": "The Forbidden Jutsu Released",
-            "overview": "While the rest of Team Kakashi holds back the possessed villagers and the ninja bandits, Naruto and Utakata go to save Hotaru. When they find her, they discover that Shiranami has activated the jutsu ",
-            "image": "https://image.tmdb.org/t/p/w300/4DgxcdSYA5WRjMMHF5UTmvwgOJL.jpg",
-            "airDate": "2010-03-04",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Master and Student",
-            "overview": "After the peformance of the forbidden jutsu, Hotaru is horrified to see the damage the jutsu has done. Shiranami then notices the forbidden jutsu overflowing with chakra and the fact that it would des",
-            "image": "https://image.tmdb.org/t/p/w300/qTypCsMzxQh0fc1ya4vmpyXfNbt.jpg",
-            "airDate": "2010-03-11",
-            "runtime": 23
-          }
-        },
-        "8": {
-          "1": {
-            "title": "Somber News",
-            "overview": "Team Kakashi returns to the Hidden Leaf Village after completing their mission. As Naruto thinks back to the talk he had with Itachi, he's summoned by Tsunade, where he discovers shocking news regardi",
-            "image": "https://image.tmdb.org/t/p/w300/fQy5LVIYzMO2LWAn82YHcRLGUpz.jpg",
-            "airDate": "2010-03-25",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Following the Master's Shadow",
-            "overview": "Shikamaru tries to decipher the dying message Jiraiya left before his death but cannot figure out what it says. Shikamaru asks for Naruto's help, thinking he might know the code. Can the saddened Naru",
-            "image": "https://image.tmdb.org/t/p/w300/vp1IKTYeeIgo08NMvGLfbvCfHV1.jpg",
-            "airDate": "2010-03-25",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Decryption",
-            "overview": "The code Jiraiya left behind is finally deciphered, but what exactly does it mean? Meanwhile, Naruto continues his training.",
-            "image": "https://image.tmdb.org/t/p/w300/zrbQiHfZR7MAlTNmtYqP0WXlp6F.jpg",
-            "airDate": "2010-04-08",
-            "runtime": 23
-          },
-          "4": {
-            "title": "The First Challenge",
-            "overview": "After reading Jiraiya's first book, Naruto becomes more determined than ever to complete his training. Elsewhere, the angered Raikage plans to call all of the kage together for a meeting.",
-            "image": "https://image.tmdb.org/t/p/w300/8pAl5NYIOJdVPyFIidrTO5ukW5F.jpg",
-            "airDate": "2010-04-08",
-            "runtime": 23
-          },
-          "5": {
-            "title": "Surpassing the Master",
-            "overview": "Naruto succeeds in mastering his Sage Mode, taking it farther than even Jiraiya could. Things aren't looking so great for Konoha, however, as Pain prepares to make his move.",
-            "image": "https://image.tmdb.org/t/p/w300/nBH9IJAHHFemLIB0S4PNrQqka1q.jpg",
-            "airDate": "2010-04-15",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Assault on the Leaf Village!",
-            "overview": "The Akatsuki Leader, Pain, begins his invasion of the Hidden Leaf Village. The Leaf ninja assemble to protect Naruto's whereabouts, but when Pain targets Iruka, Kakashi must face off against him.",
-            "image": "https://image.tmdb.org/t/p/w300/5G4612ixdbw3FeXX4oesk9yDNgu.jpg",
-            "airDate": "2010-04-22",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Power to Believe",
-            "overview": "Tsunade issues an order to call Naruto back to the village, but the elders do not trust her judgment on this issue. While Tsunade tries to convince them and prepares to join the battle herself, Kakash",
-            "image": "https://image.tmdb.org/t/p/w300/qTcG2VUOlu4D0QSy8p0tFQvUzJZ.jpg",
-            "airDate": "2010-04-29",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Pain vs. Kakashi",
-            "overview": "Kakashi continues to fight against Pain. With the arrival of Chouji and Chouza, things start looking up, but Pain's not out of tricks just yet.",
-            "image": "https://image.tmdb.org/t/p/w300/xaM20oKDdYp5GASAmR2XbdlJCcF.jpg",
-            "airDate": "2010-05-06",
-            "runtime": 23
-          },
-          "9": {
-            "title": "Mystery of Pain",
-            "overview": "When Kakashi falls against Pain, the situation only grows worse for Konoha. Shizune and Inoichi are close to unraveling the mystery of Pain, but when the Animal and Human paths of Pain appear before t",
-            "image": "https://image.tmdb.org/t/p/w300/5fzNjcc77xQ6C0wjRJ5e950uK0z.jpg",
-            "airDate": "2010-05-13",
-            "runtime": 23
-          },
-          "10": {
-            "title": "Surname Is Sarutobi. Given Name, Konohamaru!",
-            "overview": "Ebisu protects Konohamaru from Pain and refuses to divulge any information about Naruto. Ebisu is willing to give up his life in order to protect both Naruto and Konohamaru. Konohamaru isn't about to ",
-            "image": "https://image.tmdb.org/t/p/w300/AdNOvP39wJcDa6tkaPcrT76YCjE.jpg",
-            "airDate": "2010-05-20",
-            "runtime": 23
-          },
-          "11": {
-            "title": "Pain to the World",
-            "overview": "Pain confronts Tsunade and questions her about Naruto's whereabouts. Tsunade argues with Pain about his motives, but Pain soon gets the info he needs from another source. Before preparing to depart, P",
-            "image": "https://image.tmdb.org/t/p/w300/vywLiwhCwV3CSyinKzwmljL5L1A.jpg",
-            "airDate": "2010-05-27",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Explode! Sage Mode",
-            "overview": "Naruto returns and discovers that the village has been devastated by Pain's Shinra Tensei attack. Naruto requests that everyone stays back as he prepares to take on all six paths of Pain at once.",
-            "image": "https://image.tmdb.org/t/p/w300/sLMENh6CdYhWv99r7fkkM9g6Kvi.jpg",
-            "airDate": "2010-06-03",
-            "runtime": 23
-          },
-          "13": {
-            "title": "Danger! Sage Mode Limit Reached",
-            "overview": "Naruto successfully begins taking out Pain's bodies one after another, but when his Sage Mode reaches its limit, Pain attempts to take control of the battle. Is the moment of Pain's victory at hand, o",
-            "image": "https://image.tmdb.org/t/p/w300/zJx4HNhRHuezCGIVFDn3uwW0nXb.jpg",
-            "airDate": "2010-06-10",
-            "runtime": 23
-          },
-          "14": {
-            "title": "Nine-Tails, Captured!",
-            "overview": "Pain's God Realm finally enters the battle. As Naruto's toad allies fall one by one, the situation begins to look grim. Can Naruto defeat Pain?",
-            "image": "https://image.tmdb.org/t/p/w300/ejnSRdNTLAkzaUTROSYQvinrG33.jpg",
-            "airDate": "2010-06-17",
-            "runtime": 23
-          },
-          "15": {
-            "title": "Confessions",
-            "overview": "As Pain tells Naruto about why he does what he does, Hinata appears on the scene and confesses her feelings to Naruto. In order to save him, she attacks Pain... Things are about to get messy and Narut",
-            "image": "https://image.tmdb.org/t/p/w300/hfq7gnNl6qdiStHA4Yh4g3j96Bd.jpg",
-            "airDate": "2010-06-24",
-            "runtime": 23
-          },
-          "16": {
-            "title": "Planetary Devastation",
-            "overview": "Naruto's rage pushes him to unleash six of the Kyubi's tails against Pain. In order to combat this menace, Pain is forced to rely upon his most powerful technique to stop Naruto. Will Pain succeed in ",
-            "image": "https://image.tmdb.org/t/p/w300/enKVEjxnAlan27u5NU97tRDOSl6.jpg",
-            "airDate": "2010-07-01",
-            "runtime": 23
-          },
-          "17": {
-            "title": "The Fourth Hokage",
-            "overview": "The Fourth Hokage appears in Naruto's mind and prevents him from foolishly setting the Kyubi free. Will this confrontation between father and son give Naruto the confidence he needs to stop Pain once ",
-            "image": "https://image.tmdb.org/t/p/w300/hIB0A0TkpwXKcZy0xLmmS9lUlGe.jpg",
-            "airDate": "2010-07-15",
-            "runtime": 23
-          },
-          "18": {
-            "title": "The Two Students",
-            "overview": "Naruto confronts Nagato and tells him that he'll give him the answer to the question Pain asked him earlier after he hears about what made Nagato turn to his evil ways. What is Naruto's answer, and wh",
-            "image": "https://image.tmdb.org/t/p/w300/pnMtDhkrrvEjYhIYvnpu1V0uZox.jpg",
-            "airDate": "2010-07-22",
-            "runtime": 23
-          },
-          "19": {
-            "title": "Big Adventure! The Quest for the Fourth Hokage's Legacy ~ Part 1",
-            "overview": "The Fourth Hokage, Minato Namikaze, left behind his legacy before he passed away. Naruto, Sakura, and Sasuke attempt to find Minato's legacy before the other shinobi teams can get to it.",
-            "image": "https://image.tmdb.org/t/p/w300/iNVrPCWmID2h4xjzO1HDtvZteac.jpg",
-            "airDate": "2010-07-29",
-            "runtime": 23
-          },
-          "20": {
-            "title": "Big Adventure! The Quest for the Fourth Hokage's Legacy ~ Part 2",
-            "overview": "Naruto, Sakura, Shikamaru, Ino, and Choji continue to search for the Fourth Hokage's Legacy while chasing off some unexpected visitors.",
-            "image": "https://image.tmdb.org/t/p/w300/p4SooI9J93ZU1Nzfo9xJYzzZNub.jpg",
-            "airDate": "2010-07-29",
-            "runtime": 23
-          },
-          "21": {
-            "title": "Meeting",
-            "overview": "Nagato tells Naruto about how he met Yahiko and Konan and later came to be Jiraiya's disciple.",
-            "image": "https://image.tmdb.org/t/p/w300/5pXbIc9hVXrFYToaxK8Rx7UqLcD.jpg",
-            "airDate": "2010-08-05",
-            "runtime": 23
-          },
-          "22": {
-            "title": "Origin of Pain",
-            "overview": "Nagato reveals the truth about what happened to Yahiko and what made him disregard Jiraiya's ideals. With his story done, he demands to hear Naruto's answers. Will Naruto's answer be enough to convinc",
-            "image": "https://image.tmdb.org/t/p/w300/aVBUUj70LejeLOpJHIvgLfx03An.jpg",
-            "airDate": "2010-08-12",
-            "runtime": 23
-          },
-          "23": {
-            "title": "The Tale of Naruto Uzumaki",
-            "overview": "With Nagato's story done, Naruto tells him his answer, declaring that he won't abandon the legacy of his master, and he'll keep striving for peace no matter what pain he's put through. Nagato reflects",
-            "image": "https://image.tmdb.org/t/p/w300/joyTrrO0LNTDi3QLxHTkiwRqrtN.jpg",
-            "airDate": "2010-08-19",
-            "runtime": 23
-          },
-          "24": {
-            "title": "The Hero of the Hidden Leaf",
-            "overview": "Deciding to believe in Naruto, Nagato uses the Gedo Art: Rinne Rebirth jutsu, expending the last of his chakra, and thus giving his life, to revive every person in the village who died in the attack, ",
-            "image": "https://image.tmdb.org/t/p/w300/dZyOizROq6WZ9dP0y5vTCyI6Ht1.jpg",
-            "airDate": "2010-08-26",
-            "runtime": 23
-          }
-        },
-        "9": {
-          "1": {
-            "title": "Rookie Instructor Iruka",
-            "overview": "In the aftermath of the destruction of the Leaf Village, Iruka thinks back to the time when the Third Hokage first gave him the task of being Naruto's homeroom teacher at the Academy, since no one els",
-            "image": "https://image.tmdb.org/t/p/w300/cBwmVioMYZrInqO6sBQcXgRKvxS.jpg",
-            "airDate": "2010-09-02",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Iruka's Ordeal",
-            "overview": "Iruka struggles to deal with his hate for the Nine-Tailed Fox inside Naruto as he tries to connect with Naruto after seeing him shunned by his peers.",
-            "image": "https://image.tmdb.org/t/p/w300/of9SJDTmKwoyBGhhbJWQqo1QtKV.jpg",
-            "airDate": "2010-09-09",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Iruka's Decision",
-            "overview": "After discovering a kunai knife with a secret message on it, Naruto winds up being pursued by three kunoichi from the Hidden Waterfall Village. Iruka mangaes to find him, but when the situation grows ",
-            "image": "https://image.tmdb.org/t/p/w300/ssHJtHoARbrtFPg4xl2Jy91EADa.jpg",
-            "airDate": "2010-09-16",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Kakashi Hatake, The Jonin in Charge",
-            "overview": "Kakashi has a flashback back when he was assigned to be the sensei of Team 7. In a bid to know his students, Naruto, Sasuke & Sakura, better, Kakashi spies on them and to see how they would all get al",
-            "image": "https://image.tmdb.org/t/p/w300/bApipaJPCXQIGUubRhIACTvzgcb.jpg",
-            "airDate": "2010-09-30",
-            "runtime": 23
-          },
-          "5": {
-            "title": "Inari's Courage Put to the Test",
-            "overview": "As the ninja of the Hidden Leaf Village work on repairing their village in the aftermath of Pain's invasion, Naruto and Sakura come across a familiar face among the carpenters: Inari and Tazuna have a",
-            "image": "https://image.tmdb.org/t/p/w300/lUFFqhc11a1GJWbSIDGSbmt59kc.jpg",
-            "airDate": "2010-10-07",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Naruto's School of Revenge",
-            "overview": "In a flashback of Naruto and Sakura's, Team 7 is on a mission to take an ostrich called Mr. Ostrich to his home. They arrive at a village where they see a swordsman named Tsukado who has a vendetta to",
-            "image": "https://image.tmdb.org/t/p/w300/5RlcKufD2o0rDJk2HFP652ZuDUD.jpg",
-            "airDate": "2010-10-14",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Gaara's Bond",
-            "overview": "After hearing the news about Akatsuki's attack on the Hidden Leaf Village, Gaara worries about Naruto's well-being. He remembers a time in the past where Team 7 was assigned to help him out with a pro",
-            "image": "https://image.tmdb.org/t/p/w300/ruElGoLebZy2DTKKqnMCkULBE2r.jpg",
-            "airDate": "2010-10-21",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Naruto: Outbreak",
-            "overview": "Sakura reflects upon a time when she was infected with a strange disease by Naruto. In order to find a cure, an order was issued for Naruto to be quarantined at all costs before he could infect anybod",
-            "image": "https://image.tmdb.org/t/p/w300/o7EVLp3Jn7fOQekGx1N5NY7EgUt.jpg",
-            "airDate": "2010-10-28",
-            "runtime": 23
-          },
-          "9": {
-            "title": "Deploy! Team Tenten",
-            "overview": "While she and Neji prepare to visit an old man who makes ninja weapons, Tenten remembers the first time she visited him alongside Naruto and Neji. Utilizing a strange new weapon she had never seen bef",
-            "image": "https://image.tmdb.org/t/p/w300/tc8DZn1G4gsDuPIKxKrOKLuyhT3.jpg",
-            "airDate": "2010-11-04",
-            "runtime": 23
-          },
-          "10": {
-            "title": "Animal District",
-            "overview": "An ostrich tells a story of when Naruto, Rock Lee, and Shino, all led by Kotetsu, entered the Leaf Village's animal district in an effort to find and subdue him. However, he and the other animals prov",
-            "image": "https://image.tmdb.org/t/p/w300/mZWqqQVCZfK6RNuGxjbVBeVvYjH.jpg",
-            "airDate": "2010-11-11",
-            "runtime": 23
-          },
-          "11": {
-            "title": "Ah, the Medicine of Youth",
-            "overview": "Back before Rock Lee had his surgery, Naruto, after donning the suit given to him by Guy, set out on a mission with Sakura and Ino to obtain a special flower which was a necessary ingredient for Lee's",
-            "image": "https://image.tmdb.org/t/p/w300/u5vGLLcnvHZOOM8IoEPuJT5p7Mt.jpg",
-            "airDate": "2010-11-18",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Gutsy Master and Student: The Training",
-            "overview": "During the two-and-a-half-year time period in which Naruto was training under Jiraiya, the latter decided that it was time for Naruto to learn how to repel genjutsu. During this training session, the ",
-            "image": "https://image.tmdb.org/t/p/w300/zbOlAN0TdIsGZwZoYfir333VNHD.jpg",
-            "airDate": "2010-11-25",
-            "runtime": 23
-          },
-          "13": {
-            "title": "Record of the Ninja Gutsy Master and Student",
-            "overview": "After having discovered that the village was under the control of rebels from the Hidden Rain Village, led by Hanzo, Naruto and Jiraiya decided to take action to help save the women and children taken",
-            "image": "https://image.tmdb.org/t/p/w300/tWfDVXbfvXk0JQnDCSh4cLExH1H.jpg",
-            "airDate": "2010-11-25",
-            "runtime": 23
-          },
-          "14": {
-            "title": "Sasuke's Paw Encyclopedia",
-            "overview": "In the past, Naruto and Sakura joined Sasuke on a mission to collect the paw print of Nekomata, a large and powerful two-tailed ninja cat that ruled over all of the ninja cats.",
-            "image": "https://image.tmdb.org/t/p/w300/qlBD3X7EngeJOVE9dWcMvu6jZSe.jpg",
-            "airDate": "2010-12-02",
-            "runtime": 23
-          },
-          "15": {
-            "title": "Naruto and the Old Soldier",
-            "overview": "Naruto, two jonin and an elder known as \"the Eternal Genin\" set off to a mission to patrol the border of the Land of Fire following Orochimaru's attack. After some days with no incidents, a group of e",
-            "image": "https://image.tmdb.org/t/p/w300/tfKkfq3lgLZxsCv8SrbwwlSlWGu.jpg",
-            "airDate": "2010-12-09",
-            "runtime": 23
-          },
-          "16": {
-            "title": "Kakashi Love Song",
-            "overview": "A female spy, Hanare, from the Hidden Lock Village (Land of Key) is caught by ANBU pretending to be a musician. She is interrogated. However, the interrogation proves unsuccessful. Slowly, her past is",
-            "image": "https://image.tmdb.org/t/p/w300/5G4rnpNZdDgJKhZfBMzulu5Rq5N.jpg",
-            "airDate": "2010-12-16",
-            "runtime": 23
-          },
-          "17": {
-            "title": "Neji Chronicles",
-            "overview": "Konohamaru's team asks Neji to talk about Naruto's heroism. Instead, Neji tells them about an incident during the Chunin exams three years prior. While Orochimaru attacked Konoha, two rogue ninja take",
-            "image": "https://image.tmdb.org/t/p/w300/y47cuXkBEdhmGnZQMZA0uYNyvya.jpg",
-            "airDate": "2010-12-23",
-            "runtime": 23
-          },
-          "18": {
-            "title": "The Man Who Died Twice",
-            "overview": "Naruto thinks back to the time when he encountered the soul of a man named Kisuke. Kisuke didn't recall anything about who he was, but a visit to the Leaf Village's hospital revealed something startli",
-            "image": "https://image.tmdb.org/t/p/w300/xkfbOQifbExZPMRdVu1IkDeGy5K.jpg",
-            "airDate": "2011-01-06",
-            "runtime": 23
-          },
-          "19": {
-            "title": "The Worst Three-Legged Race",
-            "overview": "Naruto thinks back to the time when Team 7 was on a mission to capture a group of thieves who stole a golden statue. When making a move on the thieves, Naruto and Sasuke had managed to take back the s",
-            "image": "https://image.tmdb.org/t/p/w300/oEzLPaKvKhxsVVK3sfxdPwEuWTQ.jpg",
-            "airDate": "2011-01-13",
-            "runtime": 23
-          },
-          "20": {
-            "title": "Team 10's Teamwork",
-            "overview": "Shikamaru remembers the time when Teams 7 and 10 joined together to flush out a band of bandits who were terrorizing a nearby village and had kidnapped the headman's granddaughter. With no assistance ",
-            "image": "https://image.tmdb.org/t/p/w300/xHbJW7Kbg8C5TF8Ke6TL8goLFPe.jpg",
-            "airDate": "2011-01-20",
-            "runtime": 23
-          },
-          "21": {
-            "title": "Drive Towards Darkness",
-            "overview": "Sasuke has a flashback while traveling to Konoha with his team, Taka. He once saved a girl named Naho not knowing that she's a relative of the Feudal Lord. Meanwhile, Naruto and Sakura are sent on a m",
-            "image": "https://image.tmdb.org/t/p/w300/yNzm9KtOMiYMKyeStzmDpG4wF66.jpg",
-            "airDate": "2011-01-27",
-            "runtime": 23
-          }
-        },
-        "10": {
-          "1": {
-            "title": "The Sixth Hokage Danzo",
-            "overview": "Naruto and Sakura learn that Danzo has been made Hokage and that his first order is to eliminate Sasuke. The two go to Sai and inquire about Danzo, but Sai reveals that a curse mark given to all membe",
-            "image": "https://image.tmdb.org/t/p/w300/pwvA39RanKWk0NyiRZFraUYgKzH.jpg",
-            "airDate": "2011-02-10",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Five Kage Summit's Eve",
-            "overview": "Karui decides to get information about Sasuke from Naruto by any means necessary. When Naruto refuses to sell Sasuke out, Karui takes out her frustration upon the former. Meanwhile, Danzo prepares for",
-            "image": "https://image.tmdb.org/t/p/w300/gVMCEToEShzeX1uvWSAMeJjhuJY.jpg",
-            "airDate": "2011-02-10",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Enter the Five Kage!",
-            "overview": "The time has come for each Kage to leave for the Kage Summit in the Land of Iron. On his way to the meeting, Danzo gets attacked by shinobi from the Wood Country who want to take his head. Meanwhile, ",
-            "image": "https://image.tmdb.org/t/p/w300/upMuTdqBfrHzqTkScZBw3Td8B0U.jpg",
-            "airDate": "2011-02-17",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Naruto's Plea",
-            "overview": "Naruto stands before the Raikage and begs him to forgive Sasuke. Will the Raikage listen to what he has to say? Later, the Five Kage Summit gets underway. Mifune suggests that the Five Great Nations s",
-            "image": "https://image.tmdb.org/t/p/w300/oj3Q6NlkpjzGDwaFgM7CiUyKsvl.jpg",
-            "airDate": "2011-02-24",
+            "title": "Tomb Raider King",
+            "overview": "Jooheon and Irene return to the Holton home to heal her parents... only to find that it's been attacked.",
+            "image": "https://image.tmdb.org/t/p/w300/yzWCytDsX3I3MEuF78DWHGJmjpb.jpg",
+            "airDate": "2026-10-01",
             "runtime": 23
           }
         }
       },
       "seasons": {
-        "1": 32,
-        "2": 21,
-        "3": 18,
-        "4": 17,
-        "5": 24,
-        "6": 31,
-        "7": 8,
-        "8": 24,
-        "9": 21,
-        "10": 25
+        "1": 12
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "rezero-starting-life-in-another-world": {
+      "title": "Re:ZERO -Starting Life in Another World-",
+      "slug": "rezero-starting-life-in-another-world",
+      "img": "https://image.tmdb.org/t/p/original/oHqYrPAsIiTD5m4DuxumV4er8BU.jpg",
+      "season": 4,
+      "episode": 14,
+      "episodeUrl": "https://toonstream.us/episode/rezero-starting-life-in-another-world-4x14/",
+      "firstSeen": "2026-10-23",
+      "nxId": "65942",
+      "tsSlug": "rezero-starting-life-in-another-world",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "The End of the Beginning and the Beginning of the End",
+            "overview": "Natsuki Subaru is summoned to a parallel world on his way home from the convenience store. He's entranced at first by the fantasy world suddenly stretching before his eyes, but the cute girl he believ",
+            "image": "https://image.tmdb.org/t/p/w300/4t07rKWcAEjV08nHRUXFnkP7PER.jpg",
+            "airDate": "2016-04-04",
+            "runtime": 50
+          },
+          "2": {
+            "title": "Reunion with the Witch",
+            "overview": "After being attacked by someone the first time, sliced open by Elsa the second time, and stabbed in the back by punks the third time, Subaru should have been dead, but found himself back where he star",
+            "image": "https://image.tmdb.org/t/p/w300/eKjIqy6j64xvejgQVlrg8kLjRFb.jpg",
+            "airDate": "2016-04-11",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Starting Life from Zero in Another World",
+            "overview": "Subaru attempts to buy the insignia from Felt and return it to Satella before Elsa arrives at the loot house…but Satella arrives before the negotiations are complete, and Elsa still attacks them.",
+            "image": "https://image.tmdb.org/t/p/w300/tz13dPFVYnHxdAyq7P4PvS3mDkw.jpg",
+            "airDate": "2016-04-18",
+            "runtime": 25
+          },
+          "4": {
+            "title": "The Happy Roswaal Mansion Family",
+            "overview": "After being badly wounded by Elsa, Subaru somehow survived and awoke in the mansion of Margrave Mathers, in the Kingdom of Lugunica.",
+            "image": "https://image.tmdb.org/t/p/w300/727cwDQrkzpx2XoFTBsTSRMAEnr.jpg",
+            "airDate": "2016-04-25",
+            "runtime": 25
+          },
+          "5": {
+            "title": "The Morning of Our Promise Is Still Distant",
+            "overview": "Subaru now lives and works in Roswaal’s mansion, working with Ram and Rem, and finally getting Emilia to agree to a date with him. But the day of their promised date never comes as Subaru keeps going ",
+            "image": "https://image.tmdb.org/t/p/w300/wqJfmVhZl2VqRgO1WdpDQAZl3Dm.jpg",
+            "airDate": "2016-05-02",
+            "runtime": 25
+          },
+          "6": {
+            "title": "The Sound of Chains",
+            "overview": "Subaru’s first day at the Roswaal mansion begins for the third time. The first time, he grew weak and died of unknown reasons in his sleep, and the second time, he was killed by an attacker. The sound",
+            "image": "https://image.tmdb.org/t/p/w300/49DCnWuWFORqtF6hlHxIY2g5F5d.jpg",
+            "airDate": "2016-05-09",
+            "runtime": 25
+          },
+          "7": {
+            "title": "Natsuki Subaru’s Restart",
+            "overview": "Standing before Subaru is someone he never expected. The truth of the attacker’s identity leaves him bewildered, and he feels everything crumbling around him as he dies yet again. Then, for the fourth",
+            "image": "https://image.tmdb.org/t/p/w300/aRUgKEZRquSVAbWHOqU2tXSb3rt.jpg",
+            "airDate": "2016-05-16",
+            "runtime": 24
+          },
+          "8": {
+            "title": "I Cried, Cried My Lungs Out, and Stopped Crying",
+            "overview": "Subaru’s first day in Roswaal’s mansion begins for the fifth time. Determined to save everyone this time, he makes it a point to keep his best smile on his face in order to earn the trust of the mansi",
+            "image": "https://image.tmdb.org/t/p/w300/gRCrAAwQlos9NqMDiDvdC5ksCBG.jpg",
+            "airDate": "2016-05-23",
+            "runtime": 25
+          },
+          "9": {
+            "title": "The Meaning of Courage",
+            "overview": "The scattered pieces of the puzzle finally come together, and Subaru realizes for certain that the shaman who cursed him is in the village at the foot of the mountains. He heads there with Ram and Rem",
+            "image": "https://image.tmdb.org/t/p/w300/A0gHByqZRinOa6zgg9fHdZlUBH0.jpg",
+            "airDate": "2016-05-30",
+            "runtime": 25
+          },
+          "10": {
+            "title": "Demonically Inspired Methods",
+            "overview": "Subaru risked his life to save the children from a pack of Ulgarm, but he was so powerfully cursed that there could be no saving him. Even Beatrice is unable to undo the complex web of curses on him, ",
+            "image": "https://image.tmdb.org/t/p/w300/9YYo9E2wTBTDfYGzativNWZrMve.jpg",
+            "airDate": "2016-06-06",
+            "runtime": 25
+          },
+          "11": {
+            "title": "Rem",
+            "overview": "Knocked unconscious by Subaru’s attack, Rem dreams of an event in her past that she and Ram would rather forget…a sin for which Rem feels she can never be forgiven. After waking up, she tells Subaru t",
+            "image": "https://image.tmdb.org/t/p/w300/vAQVrknjhd7ciPXlaaOLAgw3mZ4.jpg",
+            "airDate": "2016-06-13",
+            "runtime": 25
+          },
+          "12": {
+            "title": "Return to the Capital",
+            "overview": "At the order of the council of elders that manages Lugunica in the king’s absence, Wilhelm and Felix visit Roswaal’s mansion as emissaries. Emilia is required in the imperial capital right away, so Su",
+            "image": "https://image.tmdb.org/t/p/w300/hWfNLTRet0fr72vRAtAkWWW77Z8.jpg",
+            "airDate": "2016-06-20",
+            "runtime": 25
+          },
+          "13": {
+            "title": "Self-Proclaimed Knight Natsuki Subaru",
+            "overview": "As Emilia joins Priscilla, Crusch, and Anastasia in a meeting of the royal selection participants, Reinhard enters the hall with Felt. According to a new prophecy seen on the Dragon Stone, there are f",
+            "image": "https://image.tmdb.org/t/p/w300/b6iP2oLw9erxCzIMCcZAjnBNd3D.jpg",
+            "airDate": "2016-06-27",
+            "runtime": 25
+          }
+        },
+        "2": {
+          "1": {
+            "title": "The Sickness Called Despair",
+            "overview": "“I just wanted to protect her. That feeling wasn’t a lie. Where did I go wrong?” Rejected by the one who meant more to him than anything, Subaru is still unable to recognize that he may have done some",
+            "image": "https://image.tmdb.org/t/p/w300/rPghbYigOqQX64czXT4UkxTWJuS.jpg",
+            "airDate": "2016-07-04",
+            "runtime": 26
+          },
+          "2": {
+            "title": "The Outside of Madness",
+            "overview": "Upon returning to Roswaal’s mansion, Subaru is greeted by an unbelievable sight and wails that this was not what he wanted to happen. Stricken with despair, everything before Subaru starts to go white",
+            "image": "https://image.tmdb.org/t/p/w300/mSfyLS953Ho3IXz5vCHAvPCUgeT.jpg",
+            "airDate": "2016-07-11",
+            "runtime": 25
+          },
+          "3": {
+            "title": "A Pig's Greed",
+            "overview": "Subaru wakes up in front of the appa shop once again. Feeling boxed in on all sides due to his own lack of power to change the situation, he seeks the help of others. First, he seeks the help of Crush",
+            "image": "https://image.tmdb.org/t/p/w300/jcDPfVhJcOISIhQcvXBSOFiOynP.jpg",
+            "airDate": "2016-07-18",
+            "runtime": 25
+          },
+          "4": {
+            "title": "Disgrace in the Extreme",
+            "overview": "A mysterious figure appears before Subaru and his traveling companions. As the looming beast attacks with a deafening bellow amidst the darkness and fog, Rem determines that it will be too difficult t",
+            "image": "https://image.tmdb.org/t/p/w300/7xaosHOjQyEwD40CR99iaKxK1ZY.jpg",
+            "airDate": "2016-07-25",
+            "runtime": 25
+          },
+          "5": {
+            "title": "From Zero",
+            "overview": "Subaru laments that he could not do anything or save anyone, and has no options left. Exhausted, he suddenly takes off running at full speed as if he’s made a decision…",
+            "image": "https://image.tmdb.org/t/p/w300/icNIVExt2VIfH7eyfZBn2hc3ENl.jpg",
+            "airDate": "2016-08-01",
+            "runtime": 26
+          },
+          "6": {
+            "title": "Battle Against the White Whale",
+            "overview": "To save Emilia, Subaru approaches Crusch to negotiate the formation of an alliance. His terms are a bit difficult for Crusch to believe, but she can see that Subaru isn’t lying.",
+            "image": "https://image.tmdb.org/t/p/w300/lHfDIHD0iAG6gtCt69DgS9FcxU3.jpg",
+            "airDate": "2016-08-08",
+            "runtime": 25
+          },
+          "7": {
+            "title": "Wilhelm van Astrea",
+            "overview": "Subaru has devoted everything he had, and done all he could do. His passion has captured Crusch’s heart, as well as Anastasia’s cooperation, and they all enter into the battle against the White Whale ",
+            "image": "https://image.tmdb.org/t/p/w300/ctSXTUu8BFvibyAryGG1u8mRKU3.jpg",
+            "airDate": "2016-08-15",
+            "runtime": 25
+          },
+          "8": {
+            "title": "A Wager That Defies Despair",
+            "overview": "Subaru and Rem are at a loss for words. The battle against the White Whale, which seemed to be going in their favor through attrition, suddenly took on completely different proportions. With their tac",
+            "image": "https://image.tmdb.org/t/p/w300/qhxPFjwP79qJPjr0EDylp0F5FSX.jpg",
+            "airDate": "2016-08-22",
+            "runtime": 25
+          },
+          "9": {
+            "title": "A Flash of Sloth",
+            "overview": "With the battle against the White Whale now over, the mercenary force setting up the blockade of the road comes back, Julius at the lead. His arrival gives rise to mixed feelings for Subaru, but after",
+            "image": "https://image.tmdb.org/t/p/w300/rmDx0TU1rHigZmxys5QP7aDFFRR.jpg",
+            "airDate": "2016-08-29",
+            "runtime": 25
+          },
+          "10": {
+            "title": "Nefarious Sloth",
+            "overview": "The group is making its way in the Mathers domain when suddenly everyone but Subaru disappears and a strange, suffocating atmosphere seeps through the forest. He quickly figures out it is nothing but ",
+            "image": "https://image.tmdb.org/t/p/w300/FDcSDUtd7ANv0fZmcO9CAqtt3C.jpg",
+            "airDate": "2016-09-05",
+            "runtime": 25
+          },
+          "11": {
+            "title": "The Self-Proclaimed Knight and the Greatest of Knights",
+            "overview": "Subaru devises a new plan to correct the mistake of the blank letter sent to the manor, encourage the evacuation of the villagers and move Emilia away from her current location. With these preparation",
+            "image": "https://image.tmdb.org/t/p/w300/zR7Emd8NKqMBFI1PHxLIXcNfHEj.jpg",
+            "airDate": "2016-09-12",
+            "runtime": 25
+          },
+          "12": {
+            "title": "That’s All This Story Is About",
+            "overview": "Emilia is hurriedly ushered to the capital along with the villagers under the orders of a mysterious benefactor while escorted by a rag-tag group of individuals from various and opposing factions. She",
+            "image": "https://image.tmdb.org/t/p/w300/ulXbUO0iHublPz5z7V1GE0zpo9K.jpg",
+            "airDate": "2016-09-19",
+            "runtime": 27
+          },
+          "13": {
+            "title": "Each One's Promise",
+            "overview": "Amid dying countless times, Subaru finally led the troops to victory against the White Whale and struck down the schemes of the Sin Archbishop of Sloth. After overcoming a painful ending to his these ",
+            "image": "https://image.tmdb.org/t/p/w300/4Ax0yW91pqQfppw86GVDgV81PZ7.jpg",
+            "airDate": "2020-07-08",
+            "runtime": 29
+          },
+          "14": {
+            "title": "The Next Location",
+            "overview": "After concluding their talks with Crusch, Subaru and Emilia return to the village of Arlam, intending to report to Roswaal and discuss what to do next. But they find Arlam deserted and learn that the ",
+            "image": "https://image.tmdb.org/t/p/w300/ywM01fnn8ULy15GHn8qiYV26MpE.jpg",
+            "airDate": "2020-07-15",
+            "runtime": 26
+          },
+          "15": {
+            "title": "The Long-Awaited Reunion",
+            "overview": "On the way to the Sanctuary, Subaru unwittingly finds himself invited to a witch’s tea party, where the hostess introduces herself as Echidna, the Witch of Greed. Subaru is alarmed, but Echidna encour",
+            "image": "https://image.tmdb.org/t/p/w300/chFfUkElUediuD9WlAUXz1yIJu7.jpg",
+            "airDate": "2020-07-22",
+            "runtime": 26
+          },
+          "16": {
+            "title": "Parent and Child",
+            "overview": "It’s supposed to be his own room, a place he’s supposed to be used to seeing, but Subaru can’t shake the feeling that something is off. He’s overcome by an indescribable sense of uneasiness, but being",
+            "image": "https://image.tmdb.org/t/p/w300/xaqd2xY12xg45sT75qTZ3oPgtDb.jpg",
+            "airDate": "2020-07-29",
+            "runtime": 30
+          },
+          "17": {
+            "title": "A Step Forward",
+            "overview": "Having reached a place he can’t return from, Subaru realizes just how much he has been given and how little he can do to repay any of it. After remembering what he must do, he says goodbye to Kenichi ",
+            "image": "https://image.tmdb.org/t/p/w300/qsGmBmSsc1ztWTDGZMSz6jtuGWf.jpg",
+            "airDate": "2020-08-05",
+            "runtime": 26
+          },
+          "18": {
+            "title": "The Maiden's Gospel",
+            "overview": "After dying to Elsa’s blade in Roswaal’s mansion, Subaru awakens back in the graveyard, in the moment immediately after he passed the trial that required him to face his past. Just like the first time",
+            "image": "https://image.tmdb.org/t/p/w300/zC0lAx1HQikGkrFCImsovKRI18k.jpg",
+            "airDate": "2020-08-12",
+            "runtime": 26
+          },
+          "19": {
+            "title": "Friend",
+            "overview": "Subaru had reached for the door, determined to save Rem from harm even if his current world would soon end. But instead of Rem, he found himself staring at Beatrice’s library. Beatrice had remained si",
+            "image": "https://image.tmdb.org/t/p/w300/4QBbtr4MHPq8L3qpd0PBjw9YpcO.jpg",
+            "airDate": "2020-08-19",
+            "runtime": 27
+          },
+          "20": {
+            "title": "The Value of Life",
+            "overview": "Subaru was caught and confined by Garfiel, but Otto shows up to rescue him. Garfiel can’t leave the graveyard while Emilia is undergoing the trial, so Otto says this is their chance to get outside the",
+            "image": "https://image.tmdb.org/t/p/w300/vlQMUlQ5Rj4KuUgMtfPplhfPb0v.jpg",
+            "airDate": "2020-08-26",
+            "runtime": 25
+          },
+          "21": {
+            "title": "Love Love Love Love Love Love You",
+            "overview": "After being eaten alive by a herd of unknown creatures resembling rabbits, Subaru awakens in a half-maddened state next to Emilia in the graveyard. As he pounds his head against the rocky ground over ",
+            "image": "https://image.tmdb.org/t/p/w300/FaP9If4Vv32UocdBmdBnPcPkzF.jpg",
+            "airDate": "2020-09-02",
+            "runtime": 25
+          },
+          "22": {
+            "title": "I Know Hell",
+            "overview": "Subaru exits the graveyard to find the surroundings engulfed in deep black shadows. With the sudden appearance of the Witch of Envy, everything is swallowed up by darkness. After Garfiel rushes in to ",
+            "image": "https://image.tmdb.org/t/p/w300/rxQud7LmBamIJYjdvhmGWfQ5aLX.jpg",
+            "airDate": "2020-09-09",
+            "runtime": 27
+          },
+          "23": {
+            "title": "The Taste of Death",
+            "overview": "Subaru heads to Roswaal’s mansion in hopes of finding out what’s going on there and how he can fix it. He has Frederica and Petra evacuate to Arlam Village to protect them from Elsa’s attack, then hea",
+            "image": "https://image.tmdb.org/t/p/w300/f1m0xpvsthkuliS3aF8WCCzMXk1.jpg",
+            "airDate": "2020-09-16",
+            "runtime": 26
+          },
+          "24": {
+            "title": "The Witches’ Tea Party",
+            "overview": "Subaru awakens in the graveyard with Emilia lying nearby. This time, he makes up his mind to save not only Emilia, but everyone in the Sanctuary and Roswaal’s mansion from the threats that hang over t",
+            "image": "https://image.tmdb.org/t/p/w300/pQ9hmjKukjT4xo1ZTmfaxOD0Ea.jpg",
+            "airDate": "2020-09-23",
+            "runtime": 27
+          },
+          "25": {
+            "title": "The Sounds That Make You Want to Cry",
+            "overview": "Subaru is shown several visions of events previously unknown to him during the second phase of the trial. When he feels as if he’s worn away to nearly nothing, the one to stir him is the one who loves",
+            "image": "https://image.tmdb.org/t/p/w300/iZDDGFSfq5eJeBdEHVNe92XFMO5.jpg",
+            "airDate": "2020-09-30",
+            "runtime": 27
+          }
+        },
+        "3": {
+          "1": {
+            "title": "Straight Bet",
+            "overview": "Tragedy strikes the Sanctuary, and Elsa takes aim at both Roswaal’s mansion and the village of Arlam. After being told that all these threats are cruel traps, Subaru can’t help but give in to despair.",
+            "image": "https://image.tmdb.org/t/p/w300/aQmKX6tajLjHln7nBwrmgnD8Cwn.jpg",
+            "airDate": "2021-01-06",
+            "runtime": 28
+          },
+          "2": {
+            "title": "Otto Suwen / A Reason to Believe",
+            "overview": "Having been born with the “soul of language” divine protection that allows him to converse with non-human creatures, Otto Suwen’s life has truly had its ups and downs. After being run out of his homet",
+            "image": "https://image.tmdb.org/t/p/w300/vzwWjJQnFeAPBroRIxAFGDVAi.jpg",
+            "airDate": "2021-01-13",
+            "runtime": 28
+          },
+          "3": {
+            "title": "Nobody Can Lift a Quain Stone Alone",
+            "overview": "The missing Emilia was in the graveyard all along, her lost memories beginning to return due to Puck’s disappearance. Confused and losing heart over the realization that she’s forgotten such important",
+            "image": "https://image.tmdb.org/t/p/w300/9VLUCMXozL9yjcRzE60Kkr5j3XZ.jpg",
+            "airDate": "2021-01-20",
+            "runtime": 30
+          },
+          "4": {
+            "title": "A Journey Through Memories",
+            "overview": "As she attempts the first trial, Emilia finds herself in Elior Forest, where she lived when she was younger. Echidna snidely remarks on her audacity to set foot here after so thoroughly disgracing her",
+            "image": "https://image.tmdb.org/t/p/w300/htFZzxh2FSxCO4IPCZuGNk2R9Bf.jpg",
+            "airDate": "2021-01-27",
+            "runtime": 30
+          },
+          "5": {
+            "title": "The Day Betelgeuse Laughed",
+            "overview": "Despite a few inconveniences, like being unable to go outside when she wanted, young Emilia lived a happy life in a settlement of elves with Fortuna, whom she lovingly called “Mother.” However, their ",
+            "image": "https://image.tmdb.org/t/p/w300/uCX8GhqRafTIjkQgswc5khWIGTK.jpg",
+            "airDate": "2021-02-03",
+            "runtime": 30
+          },
+          "6": {
+            "title": "The Permafrost of Elior Forest",
+            "overview": "Pandora, the Witch of Vanity, stands before Geuse and Fortuna. They both face her with all the strength they have. Meanwhile, young Emilia runs toward the place where the seal is, believing that every",
+            "image": "https://image.tmdb.org/t/p/w300/pFoEwUqaVVdrW555Hb8THNM16vs.jpg",
+            "airDate": "2021-02-10",
+            "runtime": 30
+          },
+          "7": {
+            "title": "The Beginning of the Sanctuary and the Beginning of the End",
+            "overview": "When Roswaal happily tells the story of how his romance with Echidna began 400 years ago, Beatrice rebukes him for casually calling it a “romance.” Ryuzu interrupts to comment that Echidna saved her, ",
+            "image": "https://image.tmdb.org/t/p/w300/lydrQyG86OYm3Flh8CCHZvAFoFi.jpg",
+            "airDate": "2021-02-17",
+            "runtime": 30
+          },
+          "8": {
+            "title": "Reunion of Roars",
+            "overview": "Subaru tries to prevent the attack on the mansion by talking to Roswaal, but Roswaal refuses to let go of the wish he has clung to for 400 long years. Subaru takes Garfiel and Otto along as he hitches",
+            "image": "https://image.tmdb.org/t/p/w300/cboSoG4x6Mimu93UDPzvW39sMtY.jpg",
+            "airDate": "2021-02-24",
+            "runtime": 30
+          },
+          "9": {
+            "title": "Happiness Reflected on the Water's Surface",
+            "overview": "Frederica is gradually backed into a corner by Elsa’s attacks. Then Garfiel rushes to the scene with a silver shield on each arm. The siblings’ reunion after so many years is cut short when Elsa’s kni",
+            "image": "https://image.tmdb.org/t/p/w300/87r2f4RrOkuOsLSqGHwqngOG0hr.jpg",
+            "airDate": "2021-03-03",
+            "runtime": 29
+          },
+          "10": {
+            "title": "Love Me Down to My Blood and Guts",
+            "overview": "After witnessing an unrealized present, Emilia completes the second trial and begins the third and final one. Ram and Puck are fighting their hardest to stop Roswaal. Each of them is doing it all for ",
+            "image": "https://image.tmdb.org/t/p/w300/oOCgSWoRmWTN0SJhnO9ae9sqNih.jpg",
+            "airDate": "2021-03-10",
+            "runtime": 30
+          },
+          "11": {
+            "title": "Choose Me",
+            "overview": "After completing the final trial, Emilia emerges from the graveyard into a blizzard heavy enough to block her vision. The people of the Sanctuary and the villagers of Arlam huddle together behind a gi",
+            "image": "https://image.tmdb.org/t/p/w300/afmO6HEWV0Yf1rm9YxTETCaUMzx.jpg",
+            "airDate": "2021-03-17",
+            "runtime": 30
+          },
+          "12": {
+            "title": "Offbeat Steps Under the Moonlight",
+            "overview": "The magic Roswaal is using to control the weather generates enough mana to attract the Great Rabbit, which draws closer to the Sanctuary in a massive horde. Emilia takes Roswaal and Ram to shelter in ",
+            "image": "https://image.tmdb.org/t/p/w300/qVefGvdd7apaf9chk17eirjFOU0.jpg",
+            "airDate": "2021-03-24",
+            "runtime": 30
+          },
+          "13": {
+            "title": "Theatrical Malice",
+            "overview": "A year has passed since the battle at the Sanctuary, and Subaru has been spending fulfilling days united with Emilia's camp. However, his peaceful everyday life ends with the arrival of a single lette",
+            "image": "https://image.tmdb.org/t/p/w300/ScuJZgqCOnLmDw9nzbZZ23XUgT.jpg",
+            "airDate": "2024-10-02",
+            "runtime": 91
+          },
+          "14": {
+            "title": "A Showdown of Fire and Ice",
+            "overview": "Subaru desperately tries to fend off the attack from Sin Archbishop Sirius. But then, other Archbishops appear...",
+            "image": "https://image.tmdb.org/t/p/w300/bGjCn49AxhCmXW3YBAcXMZuavi2.jpg",
+            "airDate": "2024-10-09",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Gorgeous Tiger",
+            "overview": "After the incident in the main square, Priestella has fallen into chaos and Emilia has been kidnapped. Now it's up to Subaru and the others to rescue Emilia and the city.",
+            "image": "https://image.tmdb.org/t/p/w300/puSuu3z1wTzxwAAmislwDRlMoVJ.jpg",
+            "airDate": "2024-10-16",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Operation: Take Back the Government Office",
+            "overview": "Subaru and his comrades find themselves in a dire situation after the city was taken over by the Sin Archbishops. Now, they are devising a plan to first reclaim the city hall...",
+            "image": "https://image.tmdb.org/t/p/w300/ixVOwGVemj5KqfGeo3gpHnm510y.jpg",
+            "airDate": "2024-10-23",
+            "runtime": 24
+          }
+        },
+        "4": {
+          "1": {
+            "title": "A Dark Torrent",
+            "overview": "The attack on the city hall enters its second phase. Subaru and Crusch breach the interior, but there they are awaited by Capella, who has some sneaky tricks up her sleeve...",
+            "image": "https://image.tmdb.org/t/p/w300/6MGvrGcPlJGwuaDp1jlaRCc70o3.jpg",
+            "airDate": "2024-10-30",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Conditions of the Knight",
+            "overview": "Bishop Regulus of the Seven Deadly Sins wants to force Emilia to marry him, even though he already has hundreds of wives. While he is having the wedding hall prepared, Subaru and the others are planni",
+            "image": "https://image.tmdb.org/t/p/w300/cP3VxXQx6yjdMWP8FPFPoHj2ToI.jpg",
+            "airDate": "2024-11-06",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Newest of Heroes and the Most Ancient of Heroes",
+            "overview": "Through a Witch's Cultist's conference mirror, Emilia tells Al where the Sin Archbishops are and asks him to protect Beatrice. Al relays Emilia's message to Subaru, and the gang begins to devise a str",
+            "image": "https://image.tmdb.org/t/p/w300/4J98QEMJ0iQHoJCchrWXFdvtCTM.jpg",
+            "airDate": "2024-11-13",
+            "runtime": 30
+          },
+          "4": {
+            "title": "The One I'll Love Someday",
+            "overview": "Subaru and the others hold a meeting in the city hall to develop a strategy against the four Sin Archbishops. However, Emilia is slowly running out of time...",
+            "image": "https://image.tmdb.org/t/p/w300/gP8AMtc8PWY2puuDGqTWCS2CPy8.jpg",
+            "airDate": "2024-11-20",
+            "runtime": 24
+          },
+          "5": {
+            "title": "City Scramble",
+            "overview": "While the others deal with the other Archbishops, Subaru puts his plan to stop Regulus into action.",
+            "image": "https://image.tmdb.org/t/p/w300/3e86UP5eIYM7GY3z0ps7zyWCIE8.jpg",
+            "airDate": "2025-02-05",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Plan to Conquer Greed",
+            "overview": "Subaru thinks long and hard about how Regulus's Authority should work...",
+            "image": "https://image.tmdb.org/t/p/w300/fsPUdtrt3GPae4lVbhf01tEykTM.jpg",
+            "airDate": "2025-02-12",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Liliana Masquerade",
+            "overview": "Liliana gives the performance of her lifetime to help Priscilla defeat the Sin Archbishop of Wrath.",
+            "image": "https://image.tmdb.org/t/p/w300/49o7asNke3SDdHU7utO4mILhzP.jpg",
+            "airDate": "2025-02-19",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Regulus Corneas",
+            "overview": "Emilia seeks the aid of Regulus's wives in dethroning the little king once and for all.",
+            "image": "https://image.tmdb.org/t/p/w300/A4T95l9S5yofsRH0dVlAQq23K3r.jpg",
+            "airDate": "2025-02-26",
+            "runtime": 28
+          },
+          "9": {
+            "title": "The Warrior's Commendation",
+            "overview": "Capella uses Al's admiration for Priscilla against him, and Garfiel fights the legendary \"Eight-Arms\" Kurgan.",
+            "image": "https://image.tmdb.org/t/p/w300/5s2iJRIfff5ZHhdF8mpF7AqI61x.jpg",
+            "airDate": "2025-03-05",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Theresia van Astrea",
+            "overview": "Wilhelm finds himself face to face with his beloved wife who died years ago.",
+            "image": "https://image.tmdb.org/t/p/w300/AmNeCTnphoQNRnJzQVNqFucZbzR.jpg",
+            "airDate": "2025-03-12",
+            "runtime": 24
+          },
+          "11": {
+            "title": "A Hideous Dinner Party",
+            "overview": "While battling Lye Batenkaitos, Otto discovers the secret to the Sin Archbishop's power.",
+            "image": "https://image.tmdb.org/t/p/w300/A34Wlvc2VMnFvczpgXTXvlLVFfQ.jpg",
+            "airDate": "2025-03-19",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Result of the Battle for Priestella",
+            "overview": "Otto and Beatrice battle Gluttony, the last of the Sin Archbishops terrorizing Priestella.",
+            "image": "https://image.tmdb.org/t/p/w300/4g5uIaStnOUugwpOtjeZAP57aJe.jpg",
+            "airDate": "2025-03-26",
+            "runtime": 24
+          },
+          "13": {
+            "title": "The Reason I'm Taking You with Me / Gorgeous Tiger Reloaded",
+            "overview": "Subaru sets out for the Pleiades Watchtower in hopes of saving his friends and the people of Priestella.",
+            "image": "https://image.tmdb.org/t/p/w300/6BZt6rt5m8PEI8lenqL1b89MwpE.jpg",
+            "airDate": "2026-04-08",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Overcome Sand Time",
+            "overview": "Subaru and company struggle to cross the Auguria Dunes on the way to the Pleiades Watchtower.",
+            "image": "https://image.tmdb.org/t/p/w300/iEOCa6QVfsohqRepChWmDM8IbDk.jpg",
+            "airDate": "2026-04-15",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 13,
+        "2": 25,
+        "3": 16,
+        "4": 14
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        },
+        "2": {
+          "season": 1,
+          "base": 13
+        },
+        "3": {
+          "season": 1,
+          "base": 38
+        },
+        "4": {
+          "season": 1,
+          "base": 54
+        }
+      }
+    },
+    "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life": {
+      "title": "The Laid-Off Cheat-Granting Mage Enjoys a Second Lease on Life",
+      "slug": "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life",
+      "img": "https://image.tmdb.org/t/p/w780//jFGqk1PzNzDarkoMDkKYJUtJY0f.jpg",
+      "season": 1,
+      "episode": 3,
+      "episodeUrl": "https://toonstream.us/episode/the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life-1x3/",
+      "firstSeen": "2026-10-23",
+      "nxId": "313346",
+      "tsSlug": "the-laid-off-cheat-granting-mage-enjoys-a-second-lease-on-life",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "Everyone Knows What It's Like When Nothing Goes Right, but What Do I Do When That Happens? Why, It's Obvious! I Run and Scream My Head Off!",
+            "overview": "Rein is unceremoniously kicked out of the Beast's Fangs, so he decides to become an adventurer.",
+            "image": "https://image.tmdb.org/t/p/w300/2gfGd9W8C9f2Uuf2KK2T4Ave6pa.jpg",
+            "airDate": "2026-10-07",
+            "runtime": 24
+          },
+          "2": {
+            "title": "The Enhanced Clothes I Was Wearing Were Destroyed by a Devastating Blow, and a Traumatized Girl in Casual Clothes Hit Me With All Her Might.",
+            "overview": "With help from legendary adventurer Lily Flambert, Rein defeats a mid-level dragon.",
+            "image": "https://image.tmdb.org/t/p/w300/9nd5vh6Lome9Vkyki9L5Swsrft7.jpg",
+            "airDate": "2026-10-14",
+            "runtime": 24
+          },
+          "3": {
+            "title": "When I Went to Apologize With a Friend Who Was a Shut-In for Two Years, We Were Unexpectedly Served Apple Bunnies, so I Think She’s Been Forgiven.",
+            "overview": "When Rein and Lily return to town, they meet Margaret, whose sister once adventured with Lily.",
+            "image": "https://image.tmdb.org/t/p/w300/wvo2oDC48Xg9rdGPOfVnZ9gJa8S.jpg",
+            "airDate": "2026-10-21",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 3
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "liar-game": {
+      "title": "LIAR GAME",
+      "slug": "liar-game",
+      "img": "https://image.tmdb.org/t/p/w780/9npgB8fyf7qN8F4ngkuY2eHczxD.jpg",
+      "season": 1,
+      "episode": 26,
+      "episodeUrl": "https://toonstream.us/episode/liar-game-1x26/",
+      "firstSeen": "2026-10-23",
+      "nxId": "300126",
+      "tsSlug": "liar-game",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "The Legendary Con Artist",
+            "overview": "A naive young woman named Nao is dragged into the Liar Game and seeks the assistance of a notorious conman.",
+            "image": "https://image.tmdb.org/t/p/w300/wKxpKYNfyLav9bIjKfi83j8Pfgx.jpg",
+            "airDate": "2026-04-07",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Shockwave",
+            "overview": "Nao and Akiyama crank up the pressure to try to retrieve Nao's millions.",
+            "image": "https://image.tmdb.org/t/p/w300/r8S10waloXHQsDazJdtHfDwkzYk.jpg",
+            "airDate": "2026-04-14",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Resolution",
+            "overview": "The first round of the Liar Game reaches its end and a new round begins.",
+            "image": "https://image.tmdb.org/t/p/w300/slWsGx3fbMiiw98mFDtyKqxqj4.jpg",
+            "airDate": "2026-04-21",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Minority Rule",
+            "overview": "Nao frets over her chance of survival as the rules of the Minority Rule game are explained.",
+            "image": "https://image.tmdb.org/t/p/w300/tevAHIaNSN0q8HHsimuWddYWSun.jpg",
+            "airDate": "2026-04-28",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Alliance",
+            "overview": "Akiyama and Nao proceed further into the Minority Rule game with their alliance strategy.",
+            "image": "https://image.tmdb.org/t/p/w300/7Etta1358Gl5FSxicjUt57Dr8Rk.jpg",
+            "airDate": "2026-05-05",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Initiative",
+            "overview": "With the player known as X revealed, the Minority Rule game enters a terrifying new stage.",
+            "image": "https://image.tmdb.org/t/p/w300/egcH44fuz3m0109fc8lcXtutmTL.jpg",
+            "airDate": "2026-05-12",
+            "runtime": 24
+          },
+          "7": {
+            "title": "The Losers' Revival",
+            "overview": "The Minority Rule comes to its shocking conclusion, and Nao seeks a way to get back into the game.",
+            "image": "https://image.tmdb.org/t/p/w300/8REUrMQb9evtasmVNTahmqFAOrr.jpg",
+            "airDate": "2026-05-19",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Downsizing Game",
+            "overview": "Leronira explains what this game will entail, and the players begin making their first plans.",
+            "image": "https://image.tmdb.org/t/p/w300/4H0uGhi3qMWabu8j2DtZUnGZEo9.jpg",
+            "airDate": "2026-05-26",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Light and Darkness",
+            "overview": "Nao makes a desperate ploy to climb out from the depths of despair.",
+            "image": "https://image.tmdb.org/t/p/w300/8FmaHYlPV3m44Vn1Eupx8f3o0HI.jpg",
+            "airDate": "2026-06-02",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Salvation",
+            "overview": "The other Revival Round players scramble for the votes to save themselves.",
+            "image": "https://image.tmdb.org/t/p/w300/hXCSXhr4MH9GeNsONjItX3kjCzX.jpg",
+            "airDate": "2026-06-09",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Contraband Game",
+            "overview": "Leronira introduces the surviving players to the complex rules of the Contraband Game.",
+            "image": "https://image.tmdb.org/t/p/w300/kUVy6Nid3xP5cZ8cdeEWPq3cZnw.jpg",
+            "airDate": "2026-06-16",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Yokoya",
+            "overview": "The game begins, and both teams lay out the strategies they will follow in the opening rounds.",
+            "image": "https://image.tmdb.org/t/p/w300/puDzWeYWBZk19n4ufWbxECTMCXo.jpg",
+            "airDate": "2026-06-23",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Fissures",
+            "overview": "Kikuzawa tests his surefire method for detecting contraband, while Akiyama and Nao try to figure out Yokoya.",
+            "image": "https://image.tmdb.org/t/p/w300/h1bp7ALZKPlX3SoRId68uLi0Dq0.jpg",
+            "airDate": "2026-06-30",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Dictatorship",
+            "overview": "The Country of Day team corners Kikuzawa to make him reveal how he knew Yokoya before entering the game.",
+            "image": "https://image.tmdb.org/t/p/w300/p1MQBOrA7gBfYu02BYvIwPQJU9Q.jpg",
+            "airDate": "2026-07-07",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Secret Plan",
+            "overview": "Akiyama comes up with a plan to compensate for the Country of Day's weaknesses, but Yokoya also makes a move.",
+            "image": "https://image.tmdb.org/t/p/w300/iTGmvDmRxtq75emdss7unsxAxRw.jpg",
+            "airDate": "2026-07-14",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Turbulence",
+            "overview": "Akiyama concocts a new plan to pull his team out of a hopeless situation.",
+            "image": "https://image.tmdb.org/t/p/w300/bXTWELyIBNcyTBVUDPUc0mujqwP.jpg",
+            "airDate": "2026-07-21",
+            "runtime": 24
+          },
+          "17": {
+            "title": "Tip-off",
+            "overview": "The curtain is pulled back on the Country of Night and the system of control used by Yokoya.",
+            "image": "https://image.tmdb.org/t/p/w300/u52tne8UX7rtFy103O6r50XDVzu.jpg",
+            "airDate": "2026-07-28",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Caution",
+            "overview": "Yokoya learns of Akiyama's plot and begins his counter-strategy.",
+            "image": "https://image.tmdb.org/t/p/w300/eJrqP9j6NwmQswUkabecSNX4wvV.jpg",
+            "airDate": "2026-08-04",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Solidarity",
+            "overview": "The Contraband Game reaches its climax and the final standings are revealed.",
+            "image": "https://image.tmdb.org/t/p/w300/9UIu5k9x8ZO1rxYQN7ZGQRRoc9Y.jpg",
+            "airDate": "2026-08-11",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Provocation",
+            "overview": "After the smuggling game ends, it is time to see how much money each player has earned.",
+            "image": "https://image.tmdb.org/t/p/w300/9W5E1RT5qr8Qcfm7FyGox8OJuB2.jpg",
+            "airDate": "2026-08-18",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Spearhead Match",
+            "overview": "The rules for the Spearhead Match are explained and Fukunaga comes strong out of the gate.",
+            "image": "https://image.tmdb.org/t/p/w300/tzRD27FhklyF8KO0ZoWeRS057qk.jpg",
+            "airDate": "2026-08-25",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Trap",
+            "overview": "Nao notices a contradiction in the Spearhead Match incentives.",
+            "image": "https://image.tmdb.org/t/p/w300/lwGc2dJ03KURG2lvc2uD8oZZfxd.jpg",
+            "airDate": "2026-09-01",
+            "runtime": 24
+          },
+          "23": {
+            "title": "Core Match",
+            "overview": "The rules of Seventeen Poker are explained and appear to give Akiyama's opponent an advantage.",
+            "image": "https://image.tmdb.org/t/p/w300/r6btvr8emtdEHfyocoF4UVuoq52.jpg",
+            "airDate": "2026-09-08",
+            "runtime": 24
+          },
+          "24": {
+            "title": "Counterattack",
+            "overview": "Kikuchi uses his natural advantage to get the upper hand on Akiyama.",
+            "image": "https://image.tmdb.org/t/p/w300/jSmTxUAb2iqjj2NECaPK4UF3WZn.jpg",
+            "airDate": "2026-09-15",
+            "runtime": 24
+          },
+          "25": {
+            "title": "General Match",
+            "overview": "The result of the Core Match is revealed, and the final game's rules are explained.",
+            "image": "https://image.tmdb.org/t/p/w300/A4ImB7VdoiyAH4elZG4TUh1bc9V.jpg",
+            "airDate": "2026-09-22",
+            "runtime": 24
+          },
+          "26": {
+            "title": "Determination",
+            "overview": "The two generals deploy their tricks to outmaneuver the opposing army and win the game.",
+            "image": "https://image.tmdb.org/t/p/w300/oopbmzSB526ebre5qF1kYcllcsh.jpg",
+            "airDate": "2026-09-29",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 26
+      },
+      "nxMap": {
+        "1": {
+          "season": 1,
+          "base": 0
+        }
+      }
+    },
+    "grand-blue-dreaming": {
+      "title": "Grand Blue Dreaming",
+      "slug": "grand-blue-dreaming",
+      "img": "https://image.tmdb.org/t/p/w780/1eZ3m7ByxNHoCEuF9sB2TVb7wDf.jpg",
+      "season": 3,
+      "episode": 8,
+      "episodeUrl": "https://toonstream.us/episode/grand-blue-dreaming-3x8/",
+      "firstSeen": "2026-10-23",
+      "nxId": "79166",
+      "tsSlug": "grand-blue-dreaming",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "Deep Blue",
+            "overview": "When Iori Kitahara heads off to college, he decides to live at his uncle's dive shop in Izu. Iori is looking forward to experiencing college life, but ends up running into a group of tough guys playin",
+            "image": "https://image.tmdb.org/t/p/w300/81SzeqvZXXQDfHgQ6i0efTz5WAS.jpg",
+            "airDate": "2018-07-14",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Underwater",
+            "overview": "After a cutthroat battle with Kohei Imamura, a handsome otaku from school, Iori ends up joining the Peek-a-Boo diving club. Iori arrives home worn out from the day, but perks up when he hears about a ",
+            "image": "https://image.tmdb.org/t/p/w300/yrtB0wJtn0QnfrPwAVAweQ0awtY.jpg",
+            "airDate": "2018-07-21",
+            "runtime": 24
+          },
+          "3": {
+            "title": "A New World",
+            "overview": "Iori and Kohei don wetsuits and head to the sea! Although Iori used to be afraid of the water, he starts becoming more interested. But diving equipment is expensive! Tokita and Kotobuki decide to hold",
+            "image": "https://image.tmdb.org/t/p/w300/pNNumHnuCMJJYQUevbmJw91RqUM.jpg",
+            "airDate": "2018-07-28",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Male Beauty Pageant",
+            "overview": "The Izu Spring Festival has begun! The members of Peek-a-Boo run an okonomiyaki stall with Iori, Kohei, Chisa, and Azusa helping out. Iori finds himself in a complicated situation when a misunderstand",
+            "image": "https://image.tmdb.org/t/p/w300/cy5ROSMuzSLeJwKTGU0IcMSsaPc.jpg",
+            "airDate": "2018-08-04",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Too Late",
+            "overview": "Iori and Kohei attend class in their underwear like normal, but everyone glares at them with a bloodthirsty look in their eyes! It's because they heard that Iori and Chisa are dating! Sensing their li",
+            "image": "https://image.tmdb.org/t/p/w300/nOofvmLOK8gS3VTG6fZ2Wcz7xIk.jpg",
+            "airDate": "2018-08-11",
+            "runtime": 24
+          },
+          "6": {
+            "title": "First Buddy",
+            "overview": "Inori and Kohei get through their exams by cheating. Meanwhile, PaB throws a welcome party for Aina, their new member. Aina was looking forward to getting a new start to college life, but discovers th",
+            "image": "https://image.tmdb.org/t/p/w300/Ub6O5cBXvTc7C1UZGZX09UGKQv.jpg",
+            "airDate": "2018-08-18",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Doubles",
+            "overview": "Iori and the others dream about going diving at a beautiful location after seeing an article on Miyakojima in a magazine. However, Tokita and Kotobuki decide the club is going to join a tennis doubles",
+            "image": "https://image.tmdb.org/t/p/w300/28rRmY0NPjI9qbbo1FDdqIkLwfV.jpg",
+            "airDate": "2018-08-25",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Men's Cocktails",
+            "overview": "The members of the diving team start working part-time jobs to pay for their trip to Okinawa. However, Iori and Kohei end up spending all their earnings on drinking. Meanwhile, Kotobuki is working har",
+            "image": "https://image.tmdb.org/t/p/w300/7wNezZSOGpaA3NK4zsu8WSl01Zn.jpg",
+            "airDate": "2018-09-01",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Truth or Dare",
+            "overview": "Iori tries to setup another mixer for his friends, and wants to ask Chisa to introduce her friends so they can all play truth or dare. Nanaka and Azusa also get involved, and they all begin a vicious ",
+            "image": "https://image.tmdb.org/t/p/w300/3jgpqlgMoRDh21TUr8o9K25s2pc.jpg",
+            "airDate": "2018-09-08",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Arrival in Okinawa",
+            "overview": "The Peek-a-Boo members arrive in Okinawa! After checking out their gorgeous vacation home, the group decides to head to the beach. In order to make sure the guys don't try to get naked, they decide to",
+            "image": "https://image.tmdb.org/t/p/w300/43nh3FpggkCBgCdXl9B2rAn2rch.jpg",
+            "airDate": "2018-09-15",
+            "runtime": 24
+          },
+          "11": {
+            "title": "You Have the Wrong Idea",
+            "overview": "\"You might be the only one who can't pass the license test,\" Nanaka says to Iori, pointing out what he's bad at. To avoid being made fun of by Kohei and Nanaka, he practices secretly. Yet, while pract",
+            "image": "https://image.tmdb.org/t/p/w300/ks5HyVUeWDcNtx9HnQkW4zbSQIB.jpg",
+            "airDate": "2018-09-22",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Otori",
+            "overview": "For the last half of their trip, the Peek-A-Boo members arrive in Miyakojima. Everyone goes for a serious dive into the majestic sea with the exception of Iori, who couldn't obtain his license. Everyt",
+            "image": "https://image.tmdb.org/t/p/w300/c4atc5ffDNCZzyas2vYe3d54KQm.jpg",
+            "airDate": "2018-09-29",
+            "runtime": 24
+          }
+        },
+        "2": {
+          "1": {
+            "title": "Sister",
+            "overview": "Iori receives a letter from his little sister back home. Note: This is still a diving anime.",
+            "image": "https://image.tmdb.org/t/p/w300/1RdR5KOTpeFWdfFc3tpgeviu4zM.jpg",
+            "airDate": "2025-07-08",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Brother",
+            "overview": "Shiori's here and on a mission! How will Iori handle this situation?",
+            "image": "https://image.tmdb.org/t/p/w300/3adfScAR3nRgz3sHwaorVtPlLlW.jpg",
+            "airDate": "2025-07-15",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Association",
+            "overview": "Aina is out of control! But why?",
+            "image": "https://image.tmdb.org/t/p/w300/uHAMOpVoZRBR4KPZtNfZ3gq7QKG.jpg",
+            "airDate": "2025-07-22",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Ticket Scramble",
+            "overview": "Aina has a spare ticket for the Oumi Women's University Festival, and it causes all sorts of chaos.",
+            "image": "https://image.tmdb.org/t/p/w300/h9ho3GYhxLLzjMYi1hjKhxeUaEH.jpg",
+            "airDate": "2025-07-29",
+            "runtime": 24
+          },
+          "5": {
+            "title": "First Time at a Women's University",
+            "overview": "Iori and Kohei attend the All-Girls College Festiva, but the girls ask them to help out at the cafe.",
+            "image": "https://image.tmdb.org/t/p/w300/jw3OPKcPRuU4Q24F21wH8nXmrwX.jpg",
+            "airDate": "2025-08-05",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Back to the All-Girls College",
+            "overview": "After being expelled from college, the boys devise various plans to get back into it.",
+            "image": "https://image.tmdb.org/t/p/w300/weLgBXq1a6tniDkvGAq6mwaK2Au.jpg",
+            "airDate": "2025-08-12",
+            "runtime": 24
+          },
+          "7": {
+            "title": "The Charpy Impact Test",
+            "overview": "Iori and his class need to cooperate and do a very dangerous experiment together.",
+            "image": "https://image.tmdb.org/t/p/w300/tLBWBvaZp705CqkLKOaM5u5mydL.jpg",
+            "airDate": "2025-08-19",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Coworkers",
+            "overview": "Iori runs into a familiar face at his new part-time job, and this is going to complicate matters!",
+            "image": "https://image.tmdb.org/t/p/w300/2u8rrshyNrHFh9Dadh49DUMBpmu.jpg",
+            "airDate": "2025-08-26",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Are You In Love?",
+            "overview": "All sorts of misunderstandings ensue as attraction comes into the equation.",
+            "image": "https://image.tmdb.org/t/p/w300/nObOhpbT4U45sg8zxC085bqlMcZ.jpg",
+            "airDate": "2025-09-02",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Movie Date",
+            "overview": "Iori is asked out on a movie date, and he hears some news that complicates things.",
+            "image": "https://image.tmdb.org/t/p/w300/oLoEqe2HOP3nb4ZZ5G25hHLG9w1.jpg",
+            "airDate": "2025-09-09",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Let's Go to an Uninhabited Island!",
+            "overview": "The gang heads out to a camping site on an uninhabited island, only to run into some unexpected faces.",
+            "image": "https://image.tmdb.org/t/p/w300/uMfj0rEIFJ173G2hDGNI4s107Nl.jpg",
+            "airDate": "2025-09-16",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Now We're Even",
+            "overview": "Iori learns that a lot will soon change for the club.",
+            "image": "https://image.tmdb.org/t/p/w300/6Rau4zjq8FomhIVLpSff2fSm6Nn.jpg",
+            "airDate": "2025-09-23",
+            "runtime": 24
+          }
+        },
+        "3": {
+          "1": {
+            "title": "Unfinished Business",
+            "overview": "Summer is coming to an end, and the older kids at the club want to do the things they still have left to do.",
+            "image": "https://image.tmdb.org/t/p/w300/gvv6xQ7yZUwwuJfePDNKAG8ORhb.jpg",
+            "airDate": "2026-07-07",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Homecoming",
+            "overview": "Iori and the gang head to his family home to grab his passport for the upcoming trip.",
+            "image": "https://image.tmdb.org/t/p/w300/gA14c0SGmpPx8covIQAeNsgULal.jpg",
+            "airDate": "2026-07-14",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Saving Private Passport",
+            "overview": "Iori must navigate Shiori, the tourists, and the stalker on the loose to get his hands on his passport.",
+            "image": "https://image.tmdb.org/t/p/w300/rVTpUqFxJYBRfSgzM8M5WVVRO7Y.jpg",
+            "airDate": "2026-07-21",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Oceans of Palau",
+            "overview": "The group eagerly arrives in Palau, where someone they know well is waiting for them.",
+            "image": "https://image.tmdb.org/t/p/w300/6STt4f7pCSMSiUPndBjPQowxiD9.jpg",
+            "airDate": "2026-07-28",
+            "runtime": 24
+          },
+          "5": {
+            "title": "TV Special",
+            "overview": "A TV crew has arrived to film a special at Dolphin, and the gang gets roped into it!",
+            "image": "https://image.tmdb.org/t/p/w300/x79wNGc845v7aNqsDTKoHoAk4vM.jpg",
+            "airDate": "2026-08-04",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Assist",
+            "overview": "Kohei has figured out that Aina is into Iori and decides to help her in a way only he can.",
+            "image": "https://image.tmdb.org/t/p/w300/oxd8NMs67eRxABMcPbamYQDMXd0.jpg",
+            "airDate": "2026-08-11",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Mother",
+            "overview": "Tensions between Chisa and her mom come to a head as they clash over her life goals.",
+            "image": "https://image.tmdb.org/t/p/w300/gDTDzXVsPJldeSZMcgXgyKeVTnm.jpg",
+            "airDate": "2026-08-18",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Mixer, Round 2",
+            "overview": "Back home, Iori gets caught up in the scumbros' shenanigans again, and ends up having to set up a mixer.",
+            "image": "https://image.tmdb.org/t/p/w300/dpa9v6fmfiHuowESmWdJqrz8zUa.jpg",
+            "airDate": "2026-08-25",
+            "runtime": 24
+          }
+        }
+      },
+      "seasons": {
+        "1": 12,
+        "2": 12,
+        "3": 8
       },
       "nxMap": {
         "1": {
@@ -1453,57 +1809,12 @@
         },
         "2": {
           "season": 2,
-          "base": 32
+          "base": 0
         },
         "3": {
           "season": 3,
-          "base": 53
-        },
-        "4": {
-          "season": 4,
-          "base": 71
-        },
-        "5": {
-          "season": 5,
-          "base": 88
-        },
-        "6": {
-          "season": 6,
-          "base": 112
-        },
-        "7": {
-          "season": 7,
-          "base": 143
-        },
-        "8": {
-          "season": 8,
-          "base": 151
-        },
-        "9": {
-          "season": 9,
-          "base": 175
-        },
-        "10": {
-          "season": 10,
-          "base": 196
+          "base": 0
         }
-      },
-      "epStart": {
-        "2": 33,
-        "3": 54,
-        "4": 72,
-        "5": 89,
-        "6": 113,
-        "7": 144,
-        "8": 152,
-        "9": 176,
-        "10": 197,
-        "11": 222,
-        "12": 243,
-        "13": 276,
-        "14": 296,
-        "15": 321,
-        "16": 349
       }
     },
     "as-a-reincarnated-aristocrat": {
@@ -1732,17 +2043,6 @@
           "base": 24
         }
       }
-    },
-    "jojo's-bizarre-adventure": {
-      "title": "JoJo's Bizarre Adventure",
-      "slug": "jojo's-bizarre-adventure",
-      "img": "https://image.tmdb.org/t/p/w780/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
-      "season": 6,
-      "episode": 5,
-      "episodeUrl": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
-      "firstSeen": "2026-10-19",
-      "onSite": true,
-      "nxId": "45790"
     },
     "mushoku-tensei:-jobless-reincarnation": {
       "title": "Mushoku Tensei: Jobless Reincarnation",
@@ -2501,704 +2801,6 @@
         "1": 3
       },
       "tsSlug": "the-seven-knights-of-the-marronnier-kingdom",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "bleach-dub": {
-      "title": "Bleach Dub",
-      "slug": "bleach-dub",
-      "img": "https://image.tmdb.org/t/p/w780/xAiiPhRm1zOyPwBLjcA2RsFtG8G.jpgfV.jpg",
-      "season": 2,
-      "episode": 47,
-      "episodeUrl": "https://toonstream.us/episode/bleach-dub-2x47/",
-      "firstSeen": "2026-10-19",
-      "onSite": true,
-      "nxId": "30984"
-    },
-    "a-wild-last-boss-appeared": {
-      "title": "A Wild Last Boss Appeared!",
-      "slug": "a-wild-last-boss-appeared",
-      "img": "https://image.tmdb.org/t/p/w780/n9VMW16dgTPP0UHiSHrY07DZCLh.jpg",
-      "season": 2,
-      "episode": 1,
-      "episodeUrl": "https://toonstream.us/episode/a-wild-last-boss-appeared-2x1/",
-      "firstSeen": "2026-10-19",
-      "nxId": "280042",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "A Wild Last Boss Appears!",
-            "overview": "After finishing the greatest battle in Exgate Online history, the player gets incarnated as his character.",
-            "image": "https://image.tmdb.org/t/p/w300/uDTLOqtaE1H4axibZzOnPX4kHtA.jpg",
-            "airDate": "2025-10-04",
-            "runtime": 24
-          },
-          "2": {
-            "title": "We Came to Svel!",
-            "overview": "Lufas journeys to Svel and learns about what happened to the world in her 200 year absence.",
-            "image": "https://image.tmdb.org/t/p/w300/AndiDmVhP0muuAHRrzVPjsESkka.jpg",
-            "airDate": "2025-10-11",
-            "runtime": 24
-          },
-          "3": {
-            "title": "Aries Has Attacked!",
-            "overview": "Aries attacks Svel, fighting Megrez and Levia.",
-            "image": "https://image.tmdb.org/t/p/w300/9OOeOSXfqtxf6X7faz5vyGEojj1.jpg",
-            "airDate": "2025-10-18",
-            "runtime": 24
-          },
-          "4": {
-            "title": "They Were Pulling Strings Behind the Scenes!",
-            "overview": "After beating sense into Aries, Lufas punishes the devilfolk that manipulated him and catches up with Megrez.",
-            "image": "https://image.tmdb.org/t/p/w300/mvQFaxwrfnQgtfvnwySGAUFKdlo.jpg",
-            "airDate": "2025-10-25",
-            "runtime": 24
-          },
-          "5": {
-            "title": "A Wild Hot Spring Appeared!",
-            "overview": "Lufas creates an RV golem and enjoys a hot spring with Dina. Then they brave Lufas' grave.",
-            "image": "https://image.tmdb.org/t/p/w300/bt0XJC7RAx0jOxpwRNZwy0NUu3b.jpg",
-            "airDate": "2025-11-01",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Libra of the Scales Appeared!",
-            "overview": "Lufas recovers Libra, leaving Jean's party believing they conquered the Grave of the Black-Winged King.",
-            "image": "https://image.tmdb.org/t/p/w300/7Kgs5XIkDCnojzQSn7o4aZUzkmo.jpg",
-            "airDate": "2025-11-08",
-            "runtime": 24
-          },
-          "7": {
-            "title": "I was... a Savior!",
-            "overview": "Lufas takes a pit-stop at the new home of her people and memories resurface. Libra & Aries each uncover a foe.",
-            "image": "https://image.tmdb.org/t/p/w300/tdHzZwRficaoDuKmy6IVOgiSg7Y.jpg",
-            "airDate": "2025-11-15",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Hey! 5%?! Seriously?!",
-            "overview": "Tensions in Gjallarhorn are verging on civil war as Lufas debates what to do. Libra grows suspicious of Dina.",
-            "image": "https://image.tmdb.org/t/p/w300/v3paPl8HYUxM0TZSzH7tWiDbSTX.jpg",
-            "airDate": "2025-11-22",
-            "runtime": 24
-          },
-          "9": {
-            "title": "The Masses Have Rioted!",
-            "overview": "Libra captures Jupiter, Lufas stops Aigokeros, and Dina calms the populace. Afterward, Merak get a pep-talk.",
-            "image": "https://image.tmdb.org/t/p/w300/h3lpDTbZjlSWuOsocGGsPNpxG3x.jpg",
-            "airDate": "2025-11-29",
-            "runtime": 24
-          },
-          "10": {
-            "title": "Who Are You?",
-            "overview": "The truth about Dina comes to light and she comes to blows with Lufas. Is she really telling the truth though?",
-            "image": "https://image.tmdb.org/t/p/w300/ersEJLiKDluMwMtAZE3DbKKqBlj.jpg",
-            "airDate": "2025-12-06",
-            "runtime": 24
-          },
-          "11": {
-            "title": "A Wild Lufas Maphaal And a Wild Devil King Have Appeared at the Same Time!!!",
-            "overview": "The true Hero is summoned to defeat the Devil King! Yet his journey starts with encountering both Last Bosses!",
-            "image": "https://image.tmdb.org/t/p/w300/lvwEIHZoCevCh7qRJMPzxfMVUrD.jpg",
-            "airDate": "2025-12-13",
-            "runtime": 24
-          },
-          "12": {
-            "title": "There Was Something Incredible in My Homeland!",
-            "overview": "At her homeland Lufas uncovers the reason for Parthenos' actions and hints to the real Lufas' true goals.",
-            "image": "https://image.tmdb.org/t/p/w300/AnRfkHBnaFIPjuLTAMwKNctBQO4.jpg",
-            "airDate": "2025-12-20",
-            "runtime": 24
-          }
-        },
-        "2": {
-          "1": {
-            "title": "Mobile Capital Blutgang Has Appeared!",
-            "overview": "Lufas visits Blutgang to retrieve Karkinos the Crab and Scorpius the Scorpion.",
-            "image": "https://image.tmdb.org/t/p/w300/ttQXQKteMy9g82lnatjuBVwLA7R.jpg",
-            "airDate": "2026-10-03",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 12,
-        "2": 1
-      },
-      "tsSlug": "a-wild-last-boss-appeared",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 1,
-          "base": 12
-        }
-      }
-    },
-    "the-elusive-samurai": {
-      "title": "The Elusive Samurai",
-      "slug": "the-elusive-samurai",
-      "img": "https://image.tmdb.org/t/p/w780/p0s5ymGzfM4zGQCVaU9MJOSaAWu.jpg",
-      "season": 2,
-      "episode": 11,
-      "episodeUrl": "https://toonstream.us/episode/the-elusive-samurai-2x11/",
-      "firstSeen": "2026-10-19",
-      "nxId": "222623",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "May 22nd",
-            "overview": "The year is 1333, Kamakura. Tokiyuki Hojo, the rightful heir to the regent who rules the Kamakura shogunate, is a kind boy with a heart of gold who dislikes conflict – even though he’s the son of a wa",
-            "image": "https://image.tmdb.org/t/p/w300/ikmfWtuh5WNgU4hcgCi130lUTfw.jpg",
-            "airDate": "2024-07-06",
-            "runtime": 24
-          },
-          "2": {
-            "title": "The Gentle Uncle",
-            "overview": "Takauji Ashikaga, once considered the guardian of the Kamakura shogunate, stages a rebellion that led to its quick destruction. Tokiyuki’s older brother, Kunitoki, successfully evades the eyes of the ",
-            "image": "https://image.tmdb.org/t/p/w300/tjtW3JNQeP7rywJVUvuZdrkY31M.jpg",
-            "airDate": "2024-07-13",
-            "runtime": 24
-          },
-          "3": {
-            "title": "A Forest Inhabited by a God",
-            "overview": "Tokiyuki risks his life and wins a game of tag, defeating the enemy who betrayed his brother. As soon as he arrives in Suwa, Yorishige urges him to begin his lessons and training to take back Kamakura",
-            "image": "https://image.tmdb.org/t/p/w300/fbl8XaZoLO6VvsgwZxT8diaLPeI.jpg",
-            "airDate": "2024-07-20",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Sadamune Appears!",
-            "overview": "Tokiyuki spends his days undergoing strenuous training to perfect his sword techniques – something he’s told to do to take back Kamakura for himself. However, everyone was surprised by how weak his sw",
-            "image": "https://image.tmdb.org/t/p/w300/kFI0EACLdIFG3KB5yPOPwSNyBLE.jpg",
-            "airDate": "2024-07-27",
-            "runtime": 24
-          },
-          "5": {
-            "title": "Settling the Score! A Dog-Shooting Competition, and Then…",
-            "overview": "Tokiyuki faces off against Sadamune in a dog-shooting competition, even though his opponent excels with the bow and possesses an almost prodigy-like eye for detail. With a large lead in points, Tokiyu",
-            "image": "https://image.tmdb.org/t/p/w300/jUBXUbJFwVlSwWzvjpaCLm9e7AZ.jpg",
-            "airDate": "2024-08-03",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Steal the Imperial Command from Ogasawara's Residence at Night",
-            "overview": "Tokiyuki and Genba sneak into the Ogasawara's residence and successfully infiltrate the warehouse where the Emperor’s Imperial Command is kept. However, Sadamune’s subordinate, Sukefusa Ichikawa, catc",
-            "image": "https://image.tmdb.org/t/p/w300/lkZ4FKxCRMFiDmZvnqAKXAv4kOK.jpg",
-            "airDate": "2024-08-10",
-            "runtime": 24
-          },
-          "7": {
-            "title": "Children in Winter",
-            "overview": "Tokiyuki reigns in the new year for the first time in Suwa. As the chaos from the downfall lulls throughout the country, skirmishes still break out here and there, and another crisis knocks on Suwa’s ",
-            "image": "https://image.tmdb.org/t/p/w300/vOyG9kvTt7TFRHJTWGVGbAF3tBu.jpg",
-            "airDate": "2024-08-17",
-            "runtime": 24
-          },
-          "8": {
-            "title": "A War of Hide and Seek",
-            "overview": "The Elusive Warriors make their way to Nakayama Manor in the northern extremities of Suwa. There, Tokiyuki meets a young boy named Fubuki. In a village where Ogasawara and his forces killed all the gr",
-            "image": "https://image.tmdb.org/t/p/w300/ztsdIuMJ1mtkMXisXJpLqoOXM3s.jpg",
-            "airDate": "2024-08-24",
-            "runtime": 24
-          },
-          "9": {
-            "title": "My Buddha",
-            "overview": "The Elusive Warriors engage in a fierce battle with the Seigi Party, a group spearheaded by Shokan himself. Stuck in a small chamber and faced with opponents wearing armor, Tokiyuki uses the “escape” ",
-            "image": "https://image.tmdb.org/t/p/w300/xk0rHb0sc4HibVNlYBZIP6jgdz.jpg",
-            "airDate": "2024-08-31",
-            "runtime": 24
-          },
-          "10": {
-            "title": "A Perverted Kid and Disturbances of Holy Power",
-            "overview": "Yorishige tells Tokiyuki there are times when he cannot see the future; as some people have come to rely on Yorishige's reputation and power as a god, he cannot reveal this shortcoming to anyone.",
-            "image": "https://image.tmdb.org/t/p/w300/lGq4GO08AcgtO9ULwoaNPY290A4.jpg",
-            "airDate": "2024-09-14",
-            "runtime": 24
-          },
-          "11": {
-            "title": "Samurais Who Are Eager to Die & An Elusive Samurai",
-            "overview": "The imperial court assigns a new provincial official for Shinano: Shinanonokami Kiyohara. Kiyohara did not hesitate to wield his power over people. He was considered a corrupt provincial official who ",
-            "image": "https://image.tmdb.org/t/p/w300/h2RLt6Mmbgmulge4aRMCAyT1MCN.jpg",
-            "airDate": "2024-09-21",
-            "runtime": 24
-          },
-          "12": {
-            "title": "Hang in There, Tokiyuki, Until the Day You Retake Kamakura",
-            "overview": "Hoshina and his army decide to retreat from Kawanakajima after hearing what Tokiyuki and Saemontaro Shinomiya, a Suwa Sect warrior, had to say. But Kiyohara is evil and crafty – he won’t let this slid",
-            "image": "https://image.tmdb.org/t/p/w300/mV0AQzHD8USQXFc1SQkJj9976lY.jpg",
-            "airDate": "2024-09-28",
-            "runtime": 24
-          }
-        },
-        "2": {
-          "1": {
-            "title": "Longing for Sea Bream!",
-            "overview": "It is the first year of the Kenmu era (1334), in Suwa, Shinano province. Tokiyuki, now fully accustomed to life in Suwa, is reminded of meals from his days in Kamakura during a casual conversation. He",
-            "image": "https://image.tmdb.org/t/p/w300/zkIkqDDc738DmfT741hNKPlIJ2T.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "2": {
-            "title": "Ayako's Heart-Pounding Operation!",
-            "overview": "The Ashikaga forces keep a vigilant watch across the country, searching for remnants of the Hojo clan scattered throughout Japan. Sadamune, the governor of Shinano, has grown suspicious of “Chojumaru,",
-            "image": "https://image.tmdb.org/t/p/w300/zPBDbcy3eBwPguyy0hWlU0Yxv5X.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "3": {
-            "title": "Tokiyuki and Three Great Generals",
-            "overview": "Provincial official Kiyohara returns to Shinano after fleeing back to Kyo following the previous battle. Having grown even more ruthless, Kiyohara launches a large-scale invasion against pro-Hojo fact",
-            "image": "https://image.tmdb.org/t/p/w300/uqbzSPqBxUT0yDKXI2NaqFMeu7x.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "4": {
-            "title": "The Warrior of Love: Shinano Mask!",
-            "overview": "Tokiyuki and his companions race across the battlefield, sparing even the slightest moments of rest in order to relay information to their allies. However, when they arrive at the northern front where",
-            "image": "https://image.tmdb.org/t/p/w300/kFOSkyzTSrq4Gxr2ovio3BsNS4E.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          },
-          "5": {
-            "title": "The Unyielding",
-            "overview": "The central battlefield descends into total chaos. Just as victory seems within reach for the Hoshina–Shinomiya forces, a new obstacle suddenly appears before them: Kiyohara’s newly devised battle mik",
-            "image": "https://image.tmdb.org/t/p/w300/6O5uCSow8osBNBb6Kj4fd7gib4o.jpg",
-            "airDate": "2026-08-14",
-            "runtime": 24
-          },
-          "6": {
-            "title": "The Boy Who Became a God",
-            "overview": "The battle ends in defeat for the Suwa Sect. Although they manage to keep casualties to a minimum, the losses they suffer are significant. As they look toward the next great conflict, everyone in the ",
-            "image": "https://image.tmdb.org/t/p/w300/AoOSvb63DJkNBk4tRU0XNsnjdjN.jpg",
-            "airDate": "2026-08-21",
-            "runtime": 24
-          },
-          "7": {
-            "title": "My Uncle",
-            "overview": "Tokiyuki’s uncle, Yasuie Hojo, is still alive! Once a key figure at the heart of the Kamakura Shogunate, Yasuie survives the fall of Kamakura. Afterward, he travels throughout the Tohoku region, conti",
-            "image": "https://image.tmdb.org/t/p/w300/aKq8cxE3EgR5nwmWffKzCxHRNpg.jpg",
-            "airDate": "2026-08-28",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Irreplaceable",
-            "overview": "At the suggestion of Yorishige and Yasuie, Tokiyuki sets out for the capital, Kyo, together with the Elusive Warriors. Major Counselor Kinmune Saionji, an ally of Yasuie, awaits their arrival in Kyo. ",
-            "image": "https://image.tmdb.org/t/p/w300/cnudixNIlcnD230aJrTXeDDspK0.jpg",
-            "airDate": "2026-09-04",
-            "runtime": 24
-          },
-          "9": {
-            "title": "The Man Called Masashige Kusunoki",
-            "overview": "Having grown closer over a game of dice, Mima invites Tokiyuki and his companions on a tour of Kyo. Even though they know she is the daughter of their enemy, the Elusive Warriors accept her kindness a",
-            "image": "https://image.tmdb.org/t/p/w300/xRcKG1ifQN02KxfD4sIId9gKMRI.jpg",
-            "airDate": "2026-09-11",
-            "runtime": 24
-          },
-          "10": {
-            "title": "The Night of the Assassination",
-            "overview": "Through his dialogue with the warrior Masashige Kusunoki, known as a “god of war,” Tokiyuki is moved by Kusunoki's unwavering convictions and develops an even deeper sense of confidence in the possibi",
-            "image": "https://image.tmdb.org/t/p/w300/3f4vF5ASY6PDJJOwfbNdrFYs7cn.jpg",
-            "airDate": "2026-09-18",
-            "runtime": 24
-          },
-          "11": {
-            "title": "My Buddha, Part Two",
-            "overview": "Although the attempt to assassinate Takauji ends in failure, Tokiyuki has grown significantly as a warrior through his experiences in Kyo. Upon his return to Suwa, Yorishige tells him that the time ha",
-            "image": "https://image.tmdb.org/t/p/w300/kJVcoU30nlYtH07tODbObii3mw6.jpg",
-            "airDate": "2026-09-25",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 12,
-        "2": 11
-      },
-      "tsSlug": "the-elusive-samurai",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 2,
-          "base": 0
-        }
-      }
-    },
-    "that-time-i-got-reincarnated-as-a-slime": {
-      "title": "That Time I Got Reincarnated as a Slime",
-      "slug": "that-time-i-got-reincarnated-as-a-slime",
-      "img": "https://image.tmdb.org/t/p/w780/94MjsZUyxubodMPJdWOVkcJ0bdU.jpg",
-      "season": 4,
-      "episode": 21,
-      "episodeUrl": "https://toonstream.us/episode/that-time-i-got-reincarnated-as-a-slime-4x21/",
-      "firstSeen": "2026-10-19",
-      "onSite": true,
-      "nxId": "82684"
-    },
-    "black-torch": {
-      "title": "BLACK TORCH",
-      "slug": "black-torch",
-      "img": "https://image.tmdb.org/t/p/w780/fkZ19fifxAOAxbE2ZJvXGVvDDGs.jpg",
-      "season": 1,
-      "episode": 8,
-      "episodeUrl": "https://toonstream.us/episode/black-torch-1x8/",
-      "firstSeen": "2026-10-19",
-      "nxId": "285993",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "The Future Is in Our Hands",
-            "overview": "When high school animal whisperer and ninja Jiro finds an injured cat, the supernatural unleashes.",
-            "image": "https://image.tmdb.org/t/p/w300/mtlDuXNptLIb0oQdZtI0fqGHxiO.jpg",
-            "airDate": "2026-07-04",
-            "runtime": 24
-          },
-          "2": {
-            "title": "The Choice Is Yours",
-            "overview": "Jiro awakens in hospital only to learn he is now under the surveillance of the Bureau of Espionage.",
-            "image": "https://image.tmdb.org/t/p/w300/tozBPIkomDmttin0zxbhapeKjoI.jpg",
-            "airDate": "2026-07-11",
-            "runtime": 24
-          },
-          "3": {
-            "title": "WHAT'S MY NAME?",
-            "overview": "Jiro is cuffed in a van, and the tension could be cut with a katana thanks to Jiro’s escort, Ichika.",
-            "image": "https://image.tmdb.org/t/p/w300/noelV8o6ce1hD4D1B3j4pqjYYMk.jpg",
-            "airDate": "2026-07-18",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Two Is Not Enough",
-            "overview": "Jiro is pitted against the newest recruit, Reiji, and each challenger’s fist has a tale to tell.",
-            "image": "https://image.tmdb.org/t/p/w300/ib4rN6DP5AI2hXpnJAHnHwl3aO4.jpg",
-            "airDate": "2026-07-25",
-            "runtime": 24
-          },
-          "5": {
-            "title": "Young Gunz",
-            "overview": "In a subterranean hold, an imposing monolith towers over Jiro and Reiji-- Rago’s former prison.",
-            "image": "https://image.tmdb.org/t/p/w300/8N7CHwRGxu8KDmG3PSWCmSEmQjV.jpg",
-            "airDate": "2026-08-01",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Turn Up",
-            "overview": "Jiro, Ichika, and Reiji have been handed a new trial, this time from the “friendly” mononoke Fuyo.",
-            "image": "https://image.tmdb.org/t/p/w300/yVxqhICVEU4ztKNntVhZvJx7z1H.jpg",
-            "airDate": "2026-08-08",
-            "runtime": 24
-          },
-          "7": {
-            "title": "3 ON THREE",
-            "overview": "Mononoke have just committed mass murder, but it's more than just all-you-can-eat human meat.",
-            "image": "https://image.tmdb.org/t/p/w300/v5iYrBms75S6oYdKfPUTOoyArx7.jpg",
-            "airDate": "2026-08-15",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Underdog",
-            "overview": "The dueler who confronted Reiji is his own kin and Shinji’s inner turmoil is about to finally erupt.",
-            "image": "https://image.tmdb.org/t/p/w300/qBm8UkREhTjjU92yTWnSHKpp3AB.jpg",
-            "airDate": "2026-08-22",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 8
-      },
-      "tsSlug": "black-torch",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "the-frontier-lord-begins-with-zero-subjects": {
-      "title": "The Frontier Lord Begins with Zero Subjects",
-      "slug": "the-frontier-lord-begins-with-zero-subjects",
-      "img": "https://image.tmdb.org/t/p/w780/vHTHQZy3JhgoVMkbXlOot5gOUzZ.jpg",
-      "season": 1,
-      "episode": 5,
-      "episodeUrl": "https://toonstream.us/episode/the-frontier-lord-begins-with-zero-subjects-1x5/",
-      "firstSeen": "2026-10-19",
-      "nxId": "296437",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "The Frontier Lord and the Girl with the Blue Horn",
-            "overview": "Dias is awarded a domain for his wartime service, but there's one small problem. Does anyone even live there?",
-            "image": "https://image.tmdb.org/t/p/w300/4RhF8RB8IwTOmjj1mS50FyrKPqm.jpg",
-            "airDate": "2026-07-10",
-            "runtime": 26
-          },
-          "2": {
-            "title": "The Frontier Lord and His First Visitor",
-            "overview": "Dias settles into daily life with Alna, and little by little, people begin to come calling.",
-            "image": "https://image.tmdb.org/t/p/w300/utkG0hiuK1IHJFpANhByetXpprR.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "3": {
-            "title": "The Frontier Lord and the Strange Merchant",
-            "overview": "The population of Nezrose slowly grows, including a few surprises courtesy of an unusual visitor.",
-            "image": "https://image.tmdb.org/t/p/w300/70PxngQl8oYBYE8wbU2WGQgJApR.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "4": {
-            "title": "The Frontier Lord and the Neighboring Lord",
-            "overview": "Dias meets the new lord of the neighboring domain, and he learns there are many rumors about them both.",
-            "image": "https://image.tmdb.org/t/p/w300/aEjVPOk7V2awTZcVUxRNegNVfZ7.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "5": {
-            "title": "The Frontier Lord and the Assailants from the Desert",
-            "overview": "Dias tries his hand at farming, and Eldan sends a caravan of gifts to help him establish his domain.",
-            "image": "https://image.tmdb.org/t/p/w300/vjalBTqGcRiJzWp63n9E5ZvJyn7.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 5
-      },
-      "tsSlug": "the-frontier-lord-begins-with-zero-subjects",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "chainsmoker-cat": {
-      "title": "Chainsmoker Cat",
-      "slug": "chainsmoker-cat",
-      "img": "https://image.tmdb.org/t/p/w780/kqeKlSd7o9BCbTraZsDnksRSfxm.jpg",
-      "season": 1,
-      "episode": 12,
-      "episodeUrl": "https://toonstream.us/episode/chainsmoker-cat-1x12/",
-      "firstSeen": "2026-10-19",
-      "nxId": "312949",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "I'm Yani Neko, Nya",
-            "overview": "Catgirl Yani struggles to pay rent and spends what little she has on cigarettes — until an urgent text from her sister Imoko sparks a far greater crisis.",
-            "image": "https://image.tmdb.org/t/p/w300/iXAJZZOuY92eRsm1macyt1ruZ0P.jpg",
-            "airDate": "2026-07-03",
-            "runtime": 24
-          },
-          "2": {
-            "title": "Meet My Juniors, Nya",
-            "overview": "Yani wants to continue her carefree life, but she receives a job offer as financial pressure builds. Will she commit to this opportunity or her freedom?",
-            "image": "https://image.tmdb.org/t/p/w300/wlOsOfggPKLJsh5uvXotSaVO0ny.jpg",
-            "airDate": "2026-07-10",
-            "runtime": 24
-          },
-          "3": {
-            "title": "I'm More Straight Than Funny, Nya",
-            "overview": "After another clash with her landlord, Yani agrees to tend his garden to cover her rent. It seems like a perfect fix — until she faces his cabbage patch.",
-            "image": "https://image.tmdb.org/t/p/w300/qZIElrCqwp3l847xhMIS5IDrw3r.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Freaks All Around Me, Nya",
-            "overview": "Yani lands a job assisting Saori Tatsuro, a risque manga artist. After Yani mistakenly burns her manuscript, an unexpected police visit follows.",
-            "image": "https://image.tmdb.org/t/p/w300/77xW9AEuwwUsfzsJlipjtsaaWxC.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "5": {
-            "title": "We're Off to a Secret Place, Nya",
-            "overview": "Despite her sister's attempts to take away her cigarettes, Yani refuses to quit. At the same time, Imoko navigates a youthful romance.",
-            "image": "https://image.tmdb.org/t/p/w300/eQ49Gk4KYjMlxaQevI0TEnccSFu.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Summer Starts and Ends Here, Nya",
-            "overview": "Yani's fellow tenant Aruko disappears during a drinking party while three new assistants arrive at Tatsuro's workplace as her deadline looms closer.",
-            "image": "https://image.tmdb.org/t/p/w300/pEjvXzWVPiPJz6hl5FTnVTmEtpF.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          },
-          "7": {
-            "title": "I Was Born to Parents Too, Nya",
-            "overview": "Yani takes a cleaning job at a shady underground facility. Meanwhile, her landlord welcomes a new houseguest, quickly followed by an unexpected mishap.",
-            "image": "https://image.tmdb.org/t/p/w300/sBoV3yzrtuIcjykTqQHHb24bypS.jpg",
-            "airDate": "2026-08-14",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Even We Run Around in December, Nya",
-            "overview": "Yani expects a lonely birthday, unaware that Imoko is planning a surprise party for her. Elsewhere, Yani's landlord becomes trapped in a foul time loop.",
-            "image": "https://image.tmdb.org/t/p/w300/16Xayd5qJQ4eUGRBmIYMwijF7Cw.jpg",
-            "airDate": "2026-08-21",
-            "runtime": 24
-          },
-          "9": {
-            "title": "My Little Sis Is Popular, Nya",
-            "overview": "Yani's peculiar toilet habits spark chaos around her while Imoko receives a gift from a secret admirer who turns out to be anything but ordinary.",
-            "image": "https://image.tmdb.org/t/p/w300/zVaLQWkjC3uUzcas2oGXeEUCIGk.jpg",
-            "airDate": "2026-09-04",
-            "runtime": 24
-          },
-          "10": {
-            "title": "I'm Gonnya Enjoy the Outing Too, Nya",
-            "overview": "Yani's neighbors Yakuneko and Hameneko head to a mystical waterfall — but Hameneko's selfishness drives Yakuneko to hatch a wild revenge plan.",
-            "image": "https://image.tmdb.org/t/p/w300/gZvAXKbpRIsXsGH6ne5DwjSTH1Z.jpg",
-            "airDate": "2026-09-11",
-            "runtime": 24
-          },
-          "11": {
-            "title": "We're in Kyoto, Nya",
-            "overview": "Yani and her flatmates set off on a Kyoto and Nara getaway — but her antics lead to an encounter with the \"King of Deer,\" a creature of ancient wisdom.",
-            "image": "https://image.tmdb.org/t/p/w300/7awLpPqLdFbbEdVVGvIPNJ21ACE.jpg",
-            "airDate": "2026-09-18",
-            "runtime": 24
-          },
-          "12": {
-            "title": "I'm Gonnya Smoke Even in the Last Episode, Nya",
-            "overview": "As her issues push the other residents to the edge, a worn-out Yani lashes out at her landlord — triggering the biggest brawl in the building's history.",
-            "image": "https://image.tmdb.org/t/p/w300/y2bsRfKaHsehwlWA1iHx0PfIRwL.jpg",
-            "airDate": "2026-09-25",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 12
-      },
-      "tsSlug": "chainsmoker-cat",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "the-exiled-heavy-knight-knows-how-to-game-the-system": {
-      "title": "The Exiled Heavy Knight Knows How to Game the System",
-      "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system",
-      "img": "https://image.tmdb.org/t/p/w780/bADzMfofNWYdxLnlqNuMkO6du34.jpg",
-      "season": 1,
-      "episode": 13,
-      "episodeUrl": "https://toonstream.us/episode/the-exiled-heavy-knight-knows-how-to-game-the-system-1x13/",
-      "firstSeen": "2026-10-19",
-      "nxId": "270603",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "I'm Elymas the Heavy Knight",
-            "overview": "Elymas Edvaughn is disowned by his father for becoming a Heavy Knight.",
-            "image": "https://image.tmdb.org/t/p/w300/t3UzqD6baWwEkcDw7rz8HML4k1W.jpg",
-            "airDate": "2026-07-03",
-            "runtime": 24
-          },
-          "2": {
-            "title": "Menacing Foul Eight-Legged Beast",
-            "overview": "Elymas uses his wits and game knowledge to defeat a much more powerful monster.",
-            "image": "https://image.tmdb.org/t/p/w300/mibYdWH4QAmdGn17hOChtOE7GsI.jpg",
-            "airDate": "2026-07-10",
-            "runtime": 24
-          },
-          "3": {
-            "title": "The Raid Quest",
-            "overview": "Elymas finds himself surrounded by fearful newbies and an arrogant veteran on his first Raid Quest.",
-            "image": "https://image.tmdb.org/t/p/w300/2y0dlWJPTGXWAb3lazoiRqeflku.jpg",
-            "airDate": "2026-07-17",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Existence Evolution",
-            "overview": "With Gowtan paralyzed, Elymas must survive against the Mad Headder until he can get back in the fight.",
-            "image": "https://image.tmdb.org/t/p/w300/2BupnkZATb4FeEIDpSK5AFWUaMR.jpg",
-            "airDate": "2026-07-24",
-            "runtime": 24
-          },
-          "5": {
-            "title": "Fang of Smoldering Insanity",
-            "overview": "Elymas goes shopping for a skillbook only to discover they're prohibitively expensive.",
-            "image": "https://image.tmdb.org/t/p/w300/zwqiGXuZZEMpEtJNYJKQIyw0tAw.jpg",
-            "airDate": "2026-07-31",
-            "runtime": 24
-          },
-          "6": {
-            "title": "Ruche the Pierrot",
-            "overview": "Elymas begs Ruche to join his party so he can use her skills to find the item he needs.",
-            "image": "https://image.tmdb.org/t/p/w300/95NZXAYb2pDKrZmWMTsyVBeOXXK.jpg",
-            "airDate": "2026-08-07",
-            "runtime": 24
-          },
-          "7": {
-            "title": "Golden Raana Farming",
-            "overview": "Elymas uses his game knowledge to exploit the weaknesses of the elusive Golden Raana.",
-            "image": "https://image.tmdb.org/t/p/w300/9kviyiXte0KkL7WNFaGqRY7GjLX.jpg",
-            "airDate": "2026-08-14",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Wandering",
-            "overview": "Elymas and Ruche's celebration is interrupted by a wandering dungeon boss.",
-            "image": "https://image.tmdb.org/t/p/w300/gKqQE0ww8K1Y9lmSefjKRgCpGDX.jpg",
-            "airDate": "2026-08-21",
-            "runtime": 24
-          },
-          "9": {
-            "title": "Dreamlord",
-            "overview": "Ruche returns to save Elymas from a desperate situation, and they make one last gamble to beat the Dreamlord.",
-            "image": "https://image.tmdb.org/t/p/w300/qq2cc5cOhWBMGdUcbJgE8D2BX0o.jpg",
-            "airDate": "2026-08-28",
-            "runtime": 24
-          },
-          "10": {
-            "title": "Negotiation",
-            "overview": "Elymas and Ruche celebrate their payout and promotion and return to the shady shop for a Skill Book.",
-            "image": "https://image.tmdb.org/t/p/w300/eMDDVMpIb5MhNG2bbfqoxOZkMgG.jpg",
-            "airDate": "2026-09-04",
-            "runtime": 24
-          },
-          "11": {
-            "title": "Inescapable Past",
-            "overview": "Elymas' father hears about his success and visits the guild with Malice, who has a twisted attachment to him.",
-            "image": "https://image.tmdb.org/t/p/w300/8SApfPGTBto5Isiaxv2bEbHqLOZ.jpg",
-            "airDate": "2026-09-11",
-            "runtime": 24
-          },
-          "12": {
-            "title": "Malice the Master Swordsman",
-            "overview": "Elymas activates the true power of the Heavy Knight to make a comeback against Malice.",
-            "image": "https://image.tmdb.org/t/p/w300/r7wrLFD3GMtc3UYYGbaPyrNGNLG.jpg",
-            "airDate": "2026-09-18",
-            "runtime": 24
-          },
-          "13": {
-            "title": "Lacoryna, City of Adventurers",
-            "overview": "After defeating Malice and saying goodbye to his father, Elymas visits Lacoryna, the holy land of adventurers.",
-            "image": "https://image.tmdb.org/t/p/w300/7JMkQTaoAD0Z5vRRxQp6cFvJ0J9.jpg",
-            "airDate": "2026-09-25",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 13
-      },
-      "tsSlug": "the-exiled-heavy-knight-knows-how-to-game-the-system",
       "nxMap": {
         "1": {
           "season": 1,
