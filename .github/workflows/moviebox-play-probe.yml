@@ -30,6 +30,9 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 6
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,8 +40,24 @@ jobs:
           node-version: '20'
       - name: Probe MovieBox play API + CDN headers
         run: |
+          set -o pipefail
           node scripts/probe-moviebox-play.mjs \
-            "${{ inputs.subject_id }}" \
-            "${{ inputs.detail_path }}" \
-            "${{ inputs.se }}" \
-            "${{ inputs.ep }}"
+            "${{ inputs.subject_id || '4151920426815471968' }}" \
+            "${{ inputs.detail_path || 'mandaadi-hindi-qxUx1r3QHW4' }}" \
+            "${{ inputs.se || '0' }}" \
+            "${{ inputs.ep || '0' }}" 2>&1 | tee probe.log
+      # Runner ke logs alag host par hote hain; result PR comment me daal dete
+      # hain, taaki `gh api` se hi padha ja sake.
+      - name: Post result as PR comment
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          {
+            echo '### MovieBox play probe'
+            echo '```'
+            tail -c 5000 probe.log || true
+            echo '```'
+          } > body.md
+          gh pr comment "$PR" --body-file body.md || cat body.md
