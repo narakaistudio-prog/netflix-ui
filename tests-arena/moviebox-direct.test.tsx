@@ -16,10 +16,14 @@ jest.mock('@expo/vector-icons', () => {
     return { Ionicons: icon, MaterialCommunityIcons: icon };
 });
 
+import { createHash } from 'node:crypto';
+
 import {
     MOVIEBOX_H5,
+    clientToken,
     getGuestToken,
     pickStreams,
+    playAttempts,
     resolveDirectStreams,
 } from '../lib/movieboxDirect';
 import { MovieboxDirectPlayer, pickPlayableStream } from '../components/MovieboxDirectPlayer';
@@ -278,5 +282,75 @@ describe('MovieboxDirectPlayer (jsdom)', () => {
                 .dispatchEvent(new Event('error'));
         });
         expect(onUnavailable).toHaveBeenCalledWith('media-error');
+    });
+});
+
+describe('X-Client-Token (site ka formula, browser me)', () => {
+    it('md5(reverse(sec)) — site ke formula se bilkul match', () => {
+        for (const now of [1792784187927, 1792780000000, 1700000000123]) {
+            const sec = String(Math.floor(now / 1000));
+            const expected = `${sec},${createHash('md5').update(sec.split('').reverse().join('')).digest('hex')}`;
+            expect(clientToken(now)).toBe(expected);
+        }
+    });
+});
+
+describe('playAttempts (movie bhi se=1/ep=1 — 0/0 par API hasResource:false deti hai)', () => {
+    it('pehla attempt wahi jo maanga, phir 1/1 aur 0/0 — dono bases par', () => {
+        const attempts = playAttempts(['https://player/wefeed-h5api-bff', 'https://h5/wefeed-h5api-bff'], {
+            subjectId: '123',
+            detailPath: 'demo-AbC',
+            se: 0,
+            ep: 0,
+        });
+        const queries = attempts.map((a) => a.query);
+        expect(queries[0]).toContain('se=0&ep=0');
+        expect(queries.some((q) => q.includes('se=1&ep=1'))).toBe(true);
+        expect(attempts.filter((a) => a.base.includes('player')).length).toBeGreaterThan(0);
+        expect(attempts.filter((a) => a.base.includes('h5')).length).toBeGreaterThan(0);
+        // streamSignType wale pehle
+        expect(queries[0]).toContain('streamSignType=1');
+    });
+
+    it('series ke asli se/ep 1/1 dobara try nahi hote (duplicate nahi)', () => {
+        const attempts = playAttempts(['https://p'], { subjectId: '9', se: 2, ep: 5 });
+        const coords = attempts.map((a) => a.query.match(/se=\d+&ep=\d+/)[0]);
+        expect(new Set(coords)).toEqual(new Set(['se=2&ep=5', 'se=0&ep=0']));
+    });
+});
+
+describe('resolveDirectStreams ke extra raste', () => {
+    it('0/0 par khaali, 1/1 par streams — movie bhi chal jaye', async () => {
+        const seen: string[] = [];
+        const fetchImpl = async (url: string) => {
+            seen.push(String(url));
+            if (String(url).includes('/home?')) return res({}, { 'x-user': '{"token":"t"}' });
+            if (String(url).includes('get-domain')) return res({ data: 'mzfi.me' });
+            // Sirf se=1&ep=1 par asli jawab (jaise site ka watch page bhejta hai)
+            if (/se=1&ep=1/.test(String(url))) return res(PLAY_BODY);
+            return res({ code: 0, data: { streams: [], hls: [], hasResource: false } });
+        };
+        const trace: string[] = [];
+        const result = await resolveDirectStreams(
+            { subjectId: '555', se: 0, ep: 0 },
+            { fetchImpl, store: store(), trace },
+        );
+        expect(result.ok).toBe(true);
+        expect(result.streams.length).toBe(3);
+        expect(seen.some((u) => u.includes('se=1&ep=1'))).toBe(true);
+        expect(trace.some((line) => line.includes('streams'))).toBe(true);
+    });
+
+    it('sab attempts fail → no-streams + trace me reason', async () => {
+        const fetchImpl = async (url: string) => {
+            if (String(url).includes('/home?')) return res({}, { 'x-user': '{"token":"t"}' });
+            if (String(url).includes('get-domain')) return res({ data: 'mzfi.me' });
+            return res({ code: 0, data: { streams: [], hls: [], hasResource: false, limitedCode: '' } });
+        };
+        const trace: string[] = [];
+        const result = await resolveDirectStreams({ subjectId: '7' }, { fetchImpl, store: store(), trace });
+        expect(result.reason).toBe('no-streams');
+        expect(trace.length).toBeGreaterThan(3);
+        expect(trace.join(' | ')).toContain('hasResource false');
     });
 });

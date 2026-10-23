@@ -138,9 +138,88 @@ function headers(referer: string, extra: Record<string, string> = {}): Record<st
         'Accept-Language': 'en-US,en;q=0.9',
         'X-Client-Info': '{"timezone":"Asia/Kolkata"}',
         'X-Request-Lang': 'en',
+        /** Site har call par ye bhejti hai (`<sec>,md5(reverse(sec))`). */
+        'X-Client-Token': clientToken(),
         Referer: referer,
         ...extra,
     };
+}
+
+/**
+ * MovieBox ka guest token formula — `"<unix-sec>,<md5(reverse(sec))>"`.
+ * Browser me `crypto.subtle` async hai, isliye chhota MD5 yahan hi (RFC 1321):
+ * sirf 3-4 chhote strings ke liye, performance ka masla nahi.
+ */
+export function clientToken(nowMs: number = Date.now()): string {
+    const sec = String(Math.floor(nowMs / 1000));
+    return `${sec},${md5(sec.split('').reverse().join(''))}`;
+}
+
+/** Minimal MD5 (hex). Sirf `X-Client-Token` ke liye. */
+function md5(input: string): string {
+    const bytes = new TextEncoder().encode(input);
+    const len = bytes.length;
+    const paddedLength = (((len + 8) >> 6) + 1) << 6;
+    const buffer = new Uint8Array(paddedLength);
+    buffer.set(bytes);
+    buffer[len] = 0x80;
+    const bitLen = len * 8;
+    const view = new DataView(buffer.buffer);
+    view.setUint32(paddedLength - 8, bitLen >>> 0, true);
+    view.setUint32(paddedLength - 4, Math.floor(bitLen / 0x100000000), true);
+
+    const s = [
+        7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+        5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
+        4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+        6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
+    ];
+    const K = new Uint32Array(64);
+    for (let i = 0; i < 64; i += 1) K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 0x100000000) >>> 0;
+
+    let a0 = 0x67452301;
+    let b0 = 0xefcdab89;
+    let c0 = 0x98badcfe;
+    let d0 = 0x10325476;
+
+    for (let offset = 0; offset < paddedLength; offset += 64) {
+        const M = new Uint32Array(16);
+        for (let i = 0; i < 16; i += 1) M[i] = view.getUint32(offset + i * 4, true);
+        let A = a0;
+        let B = b0;
+        let C = c0;
+        let D = d0;
+        for (let i = 0; i < 64; i += 1) {
+            let F = 0;
+            let g = 0;
+            if (i < 16) {
+                F = (B & C) | (~B & D);
+                g = i;
+            } else if (i < 32) {
+                F = (D & B) | (~D & C);
+                g = (5 * i + 1) % 16;
+            } else if (i < 48) {
+                F = B ^ C ^ D;
+                g = (3 * i + 5) % 16;
+            } else {
+                F = C ^ (B | ~D);
+                g = (7 * i) % 16;
+            }
+            F = (F + A + K[i] + M[g]) >>> 0;
+            A = D;
+            D = C;
+            C = B;
+            B = (B + ((F << s[i]) | (F >>> (32 - s[i])))) >>> 0;
+        }
+        a0 = (a0 + A) >>> 0;
+        b0 = (b0 + B) >>> 0;
+        c0 = (c0 + C) >>> 0;
+        d0 = (d0 + D) >>> 0;
+    }
+
+    return [a0, b0, c0, d0]
+        .map((word) => [0, 8, 16, 24].map((shift) => ((word >>> shift) & 0xff).toString(16).padStart(2, '0')).join(''))
+        .join('');
 }
 
 function timeoutSignal(ms: number): AbortSignal | undefined {
@@ -162,22 +241,56 @@ export async function getGuestToken(
     const cached = readJson<{ token: string; at: number }>(store, TOKEN_KEY);
     if (cached?.token && Date.now() - cached.at < TOKEN_TTL_MS) return cached.token;
 
-    try {
-        const res = await fetchImpl(`${MOVIEBOX_H5}/home?host=${encodeURIComponent(MOVIEBOX_HOST)}`, {
-            headers: headers(`https://${MOVIEBOX_HOST}/`),
-            signal: timeoutSignal(12000),
-        });
-        const raw = res.headers.get('x-user');
+    /**
+     * Token ke liye **simple** request (sirf safelisted headers) — warna browser
+     * pehle OPTIONS preflight bhejta hai aur koi bhi header allow na hone par
+     * poora rasta band ho jata hai.
+     */
+    const readToken = (res: Response) => {
         let token = '';
         try {
+            const raw = res.headers.get('x-user');
             token = raw ? String(JSON.parse(raw)?.token || '') : '';
         } catch {
             token = '';
         }
         if (!token) {
-            const cookie = res.headers.get('set-cookie') || '';
-            token = cookie.match(/token=([^;]+)/)?.[1] || '';
+            try {
+                token = (res.headers.get('set-cookie') || '').match(/token=([^;]+)/)?.[1] || '';
+            } catch {
+                token = '';
+            }
         }
+        return token;
+    };
+
+    for (const url of [
+        `${MOVIEBOX_H5}/home?host=${encodeURIComponent(MOVIEBOX_HOST)}`,
+        `${MOVIEBOX_H5}/country-code`,
+    ]) {
+        try {
+            const res = await fetchImpl(url, {
+                headers: { Accept: 'application/json' },
+                signal: timeoutSignal(12000),
+            });
+            const token = readToken(res);
+            if (token) {
+                writeJson(store, TOKEN_KEY, { token, at: Date.now() });
+                return token;
+            }
+        } catch {
+            // agla rasta
+        }
+    }
+    try {
+        // Aakhri rasta: suggest — custom headers ke bina (wahi wajah).
+        const res = await fetchImpl(`${MOVIEBOX_H5}/subject/search-suggest`, {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'text/plain;charset=UTF-8' },
+            body: JSON.stringify({ keyword: 'a', perPage: 10 }),
+            signal: timeoutSignal(12000),
+        });
+        const token = readToken(res);
         if (token) writeJson(store, TOKEN_KEY, { token, at: Date.now() });
         return token || null;
     } catch {
@@ -202,6 +315,51 @@ export async function getPlayerBase(fetchImpl: typeof fetch, token: string): Pro
     return MOVIEBOX_PLAYER_FALLBACK;
 }
 
+/**
+ * Ek attempt ka poora URL set.
+ *
+ * MovieBox par `se`/`ep` **1-based** hote hain (movie bhi `se=1&ep=1`), site ka
+ * watch page `detailSe=`/`detailEp=` khaali chhodta hai — isliye 0/0 par API
+ * `hasResource:false` lautati hai. Isliye jab season/episode pata na ho to
+ * 1/1 bhi try hota hai (aur 0/0 bhi), dono bases par, `streamSignType` ke saath
+ * aur bina, `X-Play-Mode` ke saath aur bina.
+ */
+export function playAttempts(
+    bases: string[],
+    params: { subjectId: string; detailPath?: string; se: number; ep: number },
+): Array<{ base: string; query: string; playMode: boolean }> {
+    const { subjectId, detailPath, se, ep } = params;
+    const seen = new Set<string>();
+    const coords: Array<[number, number]> = [];
+    const addCoords = (a: number, b: number) => {
+        const key = `${a}:${b}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        coords.push([a, b]);
+    };
+    addCoords(se, ep);
+    if (!se || !ep) addCoords(1, 1);
+    addCoords(0, 0);
+
+    const out: Array<{ base: string; query: string; playMode: boolean }> = [];
+    for (const base of bases) {
+        for (const [a, b] of coords) {
+            for (const sign of [true, false]) {
+                // Pehle bina `X-Play-Mode` — kam custom headers, kam preflight risk.
+                for (const playMode of [false, true]) {
+                    const query =
+                        `subjectId=${encodeURIComponent(subjectId)}` +
+                        `&se=${a}&ep=${b}` +
+                        (detailPath ? `&detailPath=${encodeURIComponent(detailPath)}` : '') +
+                        (sign ? '&streamSignType=1' : '');
+                    out.push({ base, query, playMode });
+                }
+            }
+        }
+    }
+    return out;
+}
+
 /** Link (ya movie/episode props) se stream list. */
 export async function resolveDirectStreams(
     params: {
@@ -216,10 +374,13 @@ export async function resolveDirectStreams(
         store?: StorageLike;
         /** Cache bypass (retry button). */
         fresh?: boolean;
+        /** Debug: har attempt ka status (kaunsa rasta kyun fail hua). */
+        trace?: string[];
     } = {},
 ): Promise<DirectResult> {
     const fetchImpl = options.fetchImpl || (typeof fetch === 'function' ? fetch : null);
     if (!fetchImpl) return { ok: false, streams: [], reason: 'network' };
+    const trace = options.trace;
 
     const parsed: MovieboxRef | null =
         params.subjectId || params.detailPath ? null : parseMovieboxInput(params.link || '');
@@ -227,7 +388,10 @@ export async function resolveDirectStreams(
     const detailPath = params.detailPath || parsed?.detailPath || '';
     const se = params.se ?? parsed?.se ?? 0;
     const ep = params.ep ?? parsed?.ep ?? 0;
-    if (!subjectId) return { ok: false, streams: [], reason: 'no-ref' };
+    if (!subjectId) {
+        trace?.push('no-ref: subjectId nahi mila');
+        return { ok: false, streams: [], reason: 'no-ref' };
+    }
 
     const store = options.store ?? defaultStorage();
     const cacheKey = `${subjectId}:${se}:${ep}`;
@@ -238,42 +402,57 @@ export async function resolveDirectStreams(
         );
         const hit = cache?.[cacheKey];
         if (hit && Date.now() - hit.at < STREAM_TTL_MS && hit.streams.length) {
+            trace?.push(`cache hit (${hit.streams.length} streams)`);
             return { ok: true, streams: hit.streams, playerHost: hit.playerHost };
         }
     }
 
     const token = await getGuestToken(fetchImpl, store);
-    if (!token) return { ok: false, streams: [], reason: 'no-token' };
+    if (!token) {
+        trace?.push('token nahi mila (/home ka x-user header khaali)');
+        return { ok: false, streams: [], reason: 'no-token' };
+    }
+    trace?.push(`token ok (${token.slice(0, 6)}…)`);
 
     const playerBase = await getPlayerBase(fetchImpl, token);
-    const query =
-        `subjectId=${encodeURIComponent(subjectId)}` +
-        `&se=${encodeURIComponent(se)}&ep=${encodeURIComponent(ep)}` +
-        (detailPath ? `&detailPath=${encodeURIComponent(detailPath)}` : '') +
-        '&streamSignType=1';
-
     const playerHost = playerBase.replace(/^https:\/\//, '').split('/')[0];
-    for (const base of [playerBase, MOVIEBOX_H5]) {
+    trace?.push(`player: ${playerHost}`);
+
+    const bases = playerBase === MOVIEBOX_H5 ? [playerBase] : [playerBase, MOVIEBOX_H5];
+    for (const attempt of playAttempts(bases, { subjectId, detailPath, se, ep })) {
         try {
-            const res = await fetchImpl(`${base}/subject/play?${query}`, {
-                headers: headers(`https://${playerHost}/`, {
-                    Authorization: `Bearer ${token}`,
-                    'X-Play-Mode': '2',
-                }),
-                signal: timeoutSignal(15000),
+            const extra: Record<string, string> = { Authorization: `Bearer ${token}` };
+            if (attempt.playMode) extra['X-Play-Mode'] = '2';
+            const res = await fetchImpl(`${attempt.base}/subject/play?${attempt.query}`, {
+                headers: headers(`https://${playerHost}/`, extra),
+                signal: timeoutSignal(12000),
             });
-            const json = await res.json();
+            const text = await res.text();
+            let json: unknown = null;
+            try {
+                json = JSON.parse(text);
+            } catch {
+                json = null;
+            }
             const streams = pickStreams(json);
+            const data = (json as { data?: Record<string, unknown> } | null)?.data;
+            trace?.push(
+                `${attempt.base === playerBase ? 'player' : 'h5'} [${attempt.query.split('&').slice(1, 3).join('&')}${
+                    attempt.playMode ? ' +playmode' : ''
+                }] → ${res.status} · ${streams.length} streams · hasResource ${String(data?.hasResource)}`,
+            );
             if (streams.length) {
                 const cache = readJson<Record<string, unknown>>(store, STREAM_KEY) || {};
                 cache[cacheKey] = { at: Date.now(), streams, playerHost };
                 writeJson(store, STREAM_KEY, cache);
                 return { ok: true, streams, playerHost };
             }
-            const limited = String((json as any)?.data?.limitedCode || '');
-            if (/region/i.test(limited)) return { ok: false, streams: [], reason: 'region', playerHost };
-        } catch {
-            // agla base try karo
+            if (/region/i.test(String(data?.limitedCode || ''))) {
+                trace?.push('region block (limitedCode)');
+                return { ok: false, streams: [], reason: 'region', playerHost };
+            }
+        } catch (error) {
+            trace?.push(`attempt error: ${String((error as Error)?.message || error).slice(0, 80)}`);
         }
     }
     return { ok: false, streams: [], reason: 'no-streams', playerHost };

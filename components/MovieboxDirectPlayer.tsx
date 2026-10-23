@@ -60,17 +60,28 @@ export function pickPlayableStream(
     streams: DirectStream[],
     canPlay: (type: string) => string,
 ): DirectStream | null {
+    return playableStreams(streams, canPlay)[0] ?? null;
+}
+
+/** Jo variants is browser me chal sakte hain — order me (MP4 pehle). */
+export function playableStreams(
+    streams: DirectStream[],
+    canPlay: (type: string) => string,
+): DirectStream[] {
     const hlsNative = Boolean(canPlay('application/vnd.apple.mpegurl'));
-    for (const stream of streams) {
-        if (stream.kind === 'mp4') return stream;
-        if (stream.kind === 'hls' && hlsNative) return stream;
-    }
-    return null;
+    return streams.filter(
+        (stream) => stream.kind === 'mp4' || (stream.kind === 'hls' && hlsNative),
+    );
 }
 
 export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress }: MovieboxDirectPlayerProps) {
     const hostRef = useRef<View | null>(null);
     const [toast, setToast] = useState<{ text: string; side: 'left' | 'right' | 'center' } | null>(null);
+    /**
+     * Kaunsa stream try ho raha hai. Ek CDN variant kharab ho (403/error) to
+     * agla quality try hota hai — pehle hi iframe par nahi girte.
+     */
+    const [attempt, setAttempt] = useState(0);
     const onUnavailableRef = useRef(onUnavailable);
     onUnavailableRef.current = onUnavailable;
     const onProgressRef = useRef(onProgress);
@@ -99,15 +110,23 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
             display: 'block',
         } as Partial<CSSStyleDeclaration>);
 
-        const chosen = pickPlayableStream(streams, (type) => video.canPlayType(type));
-        if (!chosen) {
+        const candidates = playableStreams(streams, (type) => video.canPlayType(type));
+        if (!candidates.length) {
             onUnavailableRef.current('unsupported-format');
             return;
         }
-        video.src = chosen.url;
+        if (attempt >= candidates.length) {
+            // Sab variants fail — ab iframe hi bacha hai.
+            onUnavailableRef.current('media-error');
+            return;
+        }
+        video.src = candidates[attempt].url;
         host.appendChild(video);
 
-        const fail = (reason: string) => onUnavailableRef.current(reason);
+        const fail = (reason: string) => {
+            if (attempt + 1 < candidates.length) setAttempt((value) => value + 1);
+            else onUnavailableRef.current(reason);
+        };
         video.addEventListener('error', () => fail('media-error'));
 
         // Autoplay block ho jaye (phone par data-saver / muted requirement) to
@@ -237,7 +256,7 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
             }
             host.innerHTML = '';
         };
-    }, [streams]);
+    }, [streams, attempt]);
 
     if (!IS_WEB) {
         return (

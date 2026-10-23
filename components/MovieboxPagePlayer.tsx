@@ -150,6 +150,34 @@ export function MovieboxPagePlayer({
      * purana cropped iframe hi chalta hai (koi regression nahi).
      */
     const [directStreams, setDirectStreams] = useState<DirectStream[] | null>(null);
+    /**
+     * `?m2boxdebug=1` par chhoti debug line (reporting ke liye).
+     * Warna sirf tab dikhti hai jab direct rasta fail hua ho — 10s ke liye —
+     * taaki owner ko bata sake ki kyun fail hua (koi button nahi, sirf 10px text).
+     */
+    const [directNote, setDirectNote] = useState('');
+    const [noteVisible, setNoteVisible] = useState(false);
+    useEffect(() => {
+        if (!directNote || directNote === 'resolving…') {
+            setNoteVisible(false);
+            return;
+        }
+        setNoteVisible(true);
+        // Fail: 12s (reason padhne ke liye). Ok: 5s — bas itna ki pata chale
+        // gestures wala rasta chalu hai.
+        const timer = setTimeout(() => setNoteVisible(false), directNote.startsWith('fallback') ? 12000 : 5000);
+        return () => clearTimeout(timer);
+    }, [directNote]);
+    const debugDirect =
+        Platform.OS === 'web' &&
+        typeof window !== 'undefined' &&
+        typeof window.location !== 'undefined' &&
+        /[?&]m2boxdebug=1/.test(String(window.location.search || ''));
+    /** Touch device — UA galat ho to bhi gestures ka rasta chale. */
+    const isTouch =
+        Platform.OS === 'web' &&
+        typeof navigator !== 'undefined' &&
+        (Number((navigator as Navigator).maxTouchPoints || 0) > 0);
     /** Player ka apna naap — overlays ko video ke dabbe par align karne ke liye. */
     const [rootSize, setRootSize] = useState({ width: 0, height: 0 });
     /** Site ke controls jaisa: idle par gayab. */
@@ -280,30 +308,44 @@ export function MovieboxPagePlayer({
      * karne wale raste par bhi chalta hai. Fail hone par chup-chaap iframe.
      */
     useEffect(() => {
-        if (!isPhone || !pageUrl || isSearchFrame) {
+        if (!(isPhone || isTouch) || !pageUrl || isSearchFrame) {
             setDirectStreams(null);
             return;
         }
         let cancelled = false;
         setDirectStreams(null);
-        resolveDirectStreams({
-            link: pageUrl,
-            se: season,
-            ep: activeEpisode ?? undefined,
-        })
+        const trace: string[] = [];
+        setDirectNote('resolving…');
+        resolveDirectStreams(
+            {
+                link: pageUrl,
+                se: season,
+                ep: activeEpisode ?? undefined,
+            },
+            { trace },
+        )
             .then((result) => {
                 if (cancelled) return;
-                if (result.ok && result.streams.length) setDirectStreams(result.streams);
-                // Debug: kaunsa rasta chuna gaya (console me hi, UI me kuch nahi).
-                else console.info('[m2box-direct] fallback:', result.reason || 'no-streams');
+                if (result.ok && result.streams.length) {
+                    setDirectStreams(result.streams);
+                    setDirectNote(`direct ok · ${result.streams.length} stream(s) · ${result.streams[0].kind}`);
+                    console.info('[m2box-direct] ok:', result.streams.length, result.playerHost, trace);
+                } else {
+                    // Debug: kaunsa rasta chuna gaya (console me hi, UI me kuch nahi).
+                    const note = `fallback: ${result.reason || 'no-streams'}`;
+                    setDirectNote(note);
+                    console.info('[m2box-direct] fallback:', result.reason, trace);
+                }
             })
-            .catch(() => {
-                // iframe hi chalega
+            .catch((error) => {
+                if (cancelled) return;
+                setDirectNote(`fallback: error ${String(error?.message || error).slice(0, 40)}`);
+                console.info('[m2box-direct] fallback: error', error);
             });
         return () => {
             cancelled = true;
         };
-    }, [activeEpisode, isPhone, isSearchFrame, pageUrl, season]);
+    }, [activeEpisode, isPhone, isTouch, isSearchFrame, pageUrl, season]);
 
     /**
      * Video ka asli dabba screen par kahan hai.
@@ -575,6 +617,7 @@ export function MovieboxPagePlayer({
                         // Stream nahi chala (format/CDN/region) — turant purana
                         // cropped iframe, warna phone par kaala dabba reh jata.
                         console.info('[m2box-direct] fallback:', reason);
+                        setDirectNote(`fallback: ${reason}`);
                         setDirectStreams(null);
                         setLoading(true);
                         setTimedOut(false);
@@ -617,6 +660,13 @@ export function MovieboxPagePlayer({
                     backLabel={switchLabel || 'Server 1'}
                 />
             )}
+
+            {/* `?m2boxdebug=1` par hi dikhta hai — normal users ko kuch nahi. */}
+            {(debugDirect || noteVisible) && directNote ? (
+                <View style={styles.debugLine} pointerEvents="none">
+                    <Text style={styles.debugText}>{directNote}</Text>
+                </View>
+            ) : null}
 
             {/* Kaala parda: page load hone tak + site ka shell (header/footer)
                 player ban jaye tab tak. Isse server lagate hi seedha player
@@ -1050,6 +1100,17 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     proxyBadgeText: { color: '#d0d0d0', fontSize: 9, letterSpacing: 0.8, fontWeight: '700' },
+    debugLine: {
+        position: 'absolute',
+        left: 6,
+        bottom: 6,
+        zIndex: 60,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 4,
+        backgroundColor: 'rgba(0,0,0,0.72)',
+    },
+    debugText: { color: '#7CFFB2', fontSize: 10, fontWeight: '700' },
 });
 
 export default MovieboxPagePlayer;
