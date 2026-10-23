@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T14:27:52.310Z",
+  "generatedAt": "2026-10-23T14:41:02.828Z",
   "titles": [
     {
       "key": "aot",
@@ -5434,7 +5434,7 @@
       "key": "toiletboundhanakokun",
       "kind": "tv",
       "id": "95269",
-      "ok": false,
+      "ok": true,
       "checks": [
         {
           "season": 1,
@@ -5473,7 +5473,12 @@
           "season": 2,
           "episode": 24,
           "url": "https://nxsha.space/embed/tv/95269/2/24?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "error": "fetch failed"
+          "status": 200,
+          "embedTitle": "Watch Toilet-Bound Hanako-kun - S2:E24",
+          "ok": true,
+          "foundName": "Toilet-Bound Hanako-kun",
+          "foundSeason": 2,
+          "foundEpisode": 24
         }
       ],
       "seasonList": {
@@ -7032,7 +7037,7 @@
       "key": "loghorizon",
       "kind": "tv",
       "id": "60846",
-      "ok": false,
+      "ok": true,
       "checks": [
         {
           "season": 1,
@@ -7071,7 +7076,12 @@
           "season": 2,
           "episode": 25,
           "url": "https://nxsha.space/embed/tv/60846/2/25?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "error": "This operation was aborted"
+          "status": 200,
+          "embedTitle": "Watch Log Horizon - S2:E25",
+          "ok": true,
+          "foundName": "Log Horizon",
+          "foundSeason": 2,
+          "foundEpisode": 25
         },
         {
           "season": 3,
@@ -14692,18 +14702,13 @@
       "key": "youandiarepolaropposites2",
       "kind": "tv",
       "id": "278043",
-      "ok": true,
+      "ok": false,
       "checks": [
         {
           "season": 1,
           "episode": 1,
           "url": "https://nxsha.space/embed/tv/278043/1/1?server=GbruHindi&lang=hi&sub=hi&color=netflix&disable_app_ad=true&disable_dl_button=true",
-          "status": 200,
-          "embedTitle": "Watch You and I Are Polar Opposites - S1:E1",
-          "ok": true,
-          "foundName": "You and I Are Polar Opposites",
-          "foundSeason": 1,
-          "foundEpisode": 1
+          "error": "fetch failed"
         },
         {
           "season": 1,
@@ -14717,15 +14722,7 @@
           "foundEpisode": 25
         }
       ],
-      "seasonList": {
-        "seasonNumbers": [
-          1
-        ],
-        "epPairs": [
-          "1:1"
-        ],
-        "totalEpisodes": null
-      }
+      "seasonList": {}
     },
     {
       "key": "hanakimi2",
@@ -16349,12 +16346,11 @@
   ],
   "summary": {
     "titles": 326,
-    "ok": 322,
+    "ok": 323,
     "bad": [
       "arrietty",
       "nausicaa",
-      "toiletboundhanakokun",
-      "loghorizon"
+      "youandiarepolaropposites2"
     ],
     "saoMovieMatch": [
       "413594"
