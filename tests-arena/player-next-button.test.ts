@@ -123,6 +123,10 @@ test('Nxsha server par next button nahi aata', async () => {
     await wait(350);
     const doc = dom.window.document;
     await play(dom.window, 'aot');
+    // Server order: ToonStream = 1 (default), Nxsha = 2. Play ab ToonStream par
+    // shuru hota hai, isliye Nxsha par switch karke hi ye rule check hoga.
+    click(dom.window, doc.getElementById('nxServerBtn'));
+    await wait(120);
 
     const btn = doc.getElementById('nextFloat') as HTMLElement;
     expect(btn.hidden).toBe(true);
