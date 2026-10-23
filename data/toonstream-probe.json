@@ -1,0 +1,53 @@
+{
+  "ranAt": "2026-10-23T04:42:31.508Z",
+  "https://toonstream.us/home": {
+    "status": 200,
+    "finalUrl": "https://toonstream.us/home",
+    "bytes": 232519,
+    "articles": 127,
+    "hasFreshDropText": true,
+    "docTitle": "ToonStream - Home",
+    "head": "<!doctype html>\r\n<html lang=\"en-US\" prefix=\"og: https://ogp.me/ns#\">\r\n   <head>      \r\n<title>ToonStream - Home</title>\r\n<!--meta-->\r\n<meta charset=\"UTF-8\">\r\n<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1,initial-scale=1\">\r\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n<meta name=\"theme-color\" content=\"#D5E0EB\">\r\n<meta name=\"msapplication-TileColor\" content=\"#D5E0EB\">\r\n<style>img:is([sizes=\"auto\" i], [sizes^=\"auto,\" i]) { contain-intrinsic-size: 3000px 1500px }</style>    \r\n<link rel=\"canonical\" href=\"/home\" />\r\n<meta property=\"og:url\" content=\"/home\" />\r\n<meta name",
+    "parsed": 18,
+    "sample": [
+      {
+        "title": "JoJo's Bizarre Adventure",
+        "slug": "jojo's-bizarre-adventure",
+        "img": "https://image.tmdb.org/t/p/w780/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
+        "url": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
+        "episode": "https://toonstream.us/episode/jojo's-bizarre-adventure-6x5/",
+        "season": 6,
+        "ep": 5
+      },
+      {
+        "title": "The Exiled Heavy Knight Knows How to Game the System",
+        "slug": "the-exiled-heavy-knight-knows-how-to-game-the-system",
+        "img": "https://image.tmdb.org/t/p/w780/bADzMfofNWYdxLnlqNuMkO6du34.jpg",
+        "url": "https://toonstream.us/episode/the-exiled-heavy-knight-knows-how-to-game-the-system-1x14/",
+        "episode": "https://toonstream.us/episode/the-exiled-heavy-knight-knows-how-to-game-the-system-1x14/",
+        "season": 1,
+        "ep": 14
+      },
+      {
+        "title": "The Ramparts of Ice",
+        "slug": "the-ramparts-of-ice",
+        "img": "https://image.tmdb.org/t/p/w780/eEspAI6TAhvWphW6Hrt8ObLlfNQ.jpg",
+        "url": "https://toonstream.us/episode/the-ramparts-of-ice-2x4/",
+        "episode": "https://toonstream.us/episode/the-ramparts-of-ice-2x4/",
+        "season": 2,
+        "ep": 4
+      }
+    ]
+  },
+  "https://toonstream.us/": {
+    "status": 200,
+    "finalUrl": "https://toonstream.us/",
+    "bytes": 32461,
+    "articles": 0,
+    "hasFreshDropText": false,
+    "docTitle": "ToonStream - Watch Anime Online Free",
+    "head": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n   <head>\r\n   <meta property=\"og:type\" content=\"website\">\r\n   <meta property=\"og:url\" content=\"http://localhost:3000\">\r\n   <meta property=\"og:title\" content=\"ToonStream - Watch Anime Online Free\">\r\n   <meta property=\"og:description\" content=\"Watch Free Anime Online with SUB and DUB\">\r\n   <meta property=\"og:image\" content=\"http://localhost:3000/public/img/preview.png\">\r\n    <link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"/public/img/favicon/apple-icon-57x57.png\">\r\n    <link rel=\"apple-touch-icon\" sizes=\"60x60\" href=\"/public/img/favicon/apple-icon-60x60.png\">\r",
+    "parsed": 0,
+    "sample": []
+  }
+}
