@@ -77,7 +77,20 @@ export function buildSeasonMap(tsSeasons, nxSeasons) {
         // within an episode or two, trust the season number instead of the
         // running total: Trigun's ToonStream S1 carries one extra card, and a
         // cumulative mapping would shift all 12 episodes of S2 by one.
-        const anchor = same && !consumed.has(number) && Math.abs(same.length - count) <= 2;
+        // Do case anchor hote hain:
+        //   1. counts lagbhag same (Trigun ka ek extra card),
+        //   2. site ke paas us season ke kam episode hain (JoJo: ToonStream par
+        //      S6 me 5 episode, Nxsha S6 me 12 — poori series abhi upload nahi
+        //      hui). Aise waqt bhi season number par bharosa karo, warna
+        //      cumulative mapping S6 ko Nxsha S4 (Golden Wind) me daal deta hai
+        //      aur guide me galat episode naam dikhte hain.
+        // `start` wali seasons (One Piece S1 absolute 6 se) anchor nahi hoti —
+        // unka offset hi unki pehchaan hai.
+        const startsAtOne = (Number(ts?.start) || 0) <= 1;
+        const anchor =
+            same &&
+            !consumed.has(number) &&
+            (Math.abs(same.length - count) <= 2 || (startsAtOne && count <= same.length));
         let startIndex;
         let budget;
         if (anchor) {
@@ -170,7 +183,13 @@ export function parseSeasonCards(html) {
 /** Episode numbers a season page links to: count + any gaps. */
 export function parseSeasonEpisodes(html) {
     const nums = new Set();
-    for (const m of String(html || '').matchAll(/\/episode\/[^"'#]*?-(\d+)x(\d+)\/?(?=["'#])/g)) {
+    // Slug me HTML entity aa sakta hai: ToonStream JoJo ke season 3/4/6 par
+    // `/episode/jojo&#39;s-bizarre-adventure-3x1/` likhta hai. Pehle regex `#`
+    // ko bhi block karta tha, isliye un seasons ka count 0 aata tha aur JoJo ka
+    // poora layout (S3 39, S4 12, S6 5) gayab ho jata tha. Ab `#`, `&` aur
+    // semicolon slug ke andar allowed hain — link phir bhi `-NxM/` par hi match
+    // hota hai, isliye fragment wali links galti se nahi ginti.
+    for (const m of String(html || '').matchAll(/\/episode\/[^"'\s<>]*?-(\d+)x(\d+)\/?(?=["'#\s<>]|$)/g)) {
         nums.add(Number(m[2]));
     }
     const sorted = [...nums].filter((n) => n > 0).sort((a, b) => a - b);

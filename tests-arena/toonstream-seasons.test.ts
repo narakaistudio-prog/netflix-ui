@@ -86,6 +86,27 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           [{ n: 1, count: 12 }, { n: 2, count: 12 }],
           [{ season: { season_number: 1 }, count: 11 }, { season: { season_number: 2 }, count: 12 }],
         );
+        // ToonStream's JoJo season pages link episodes with an HTML-encoded
+        // apostrophe (jojo&#39;s-bizarre-adventure-3x1). Those 39 episodes used to
+        // parse as 0 and JoJo's whole layout (S3/S4/S6) vanished.
+        const entityEncoded = parseSeasonEpisodes(
+          Array.from({ length: 39 }, (_, i) => '<a href="/episode/jojo&#39;s-bizarre-adventure-3x' + (i + 1) + '/">x</a>').join(''),
+        );
+        // JoJo: ToonStream carries fewer episodes than Nxsha for the same season
+        // (S6: 5 vs 12 — the rest is not uploaded yet). Same season number must
+        // still win, otherwise S6 lands in Nxsha's Golden Wind (S4) and the
+        // guide shows the wrong episode names.
+        const jojo = buildSeasonMap(
+          [{ n: 1, count: 26 }, { n: 2, count: 32 }, { n: 3, count: 39 }, { n: 4, count: 12 }, { n: 6, count: 5 }],
+          [
+            { season: { season_number: 1 }, count: 26 },
+            { season: { season_number: 2 }, count: 48 },
+            { season: { season_number: 3 }, count: 39 },
+            { season: { season_number: 4 }, count: 39 },
+            { season: { season_number: 5 }, count: 38 },
+            { season: { season_number: 6 }, count: 12 },
+          ],
+        );
         // A Hindi-dub season numbers episodes absolutely: S2 starts at 33.
         const absolute = parseSeasonEpisodes(
           Array.from({ length: 21 }, (_, i) => '<a href="/episode/naruto-shippuden-hindi-dub-2x' + (33 + i) + '/">x</a>').join(''),
@@ -97,6 +118,8 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
           offset: offset.map,
           anchored: anchored.map,
           absolute,
+          entityEncoded,
+          jojo: Object.fromEntries(Object.entries(jojo.map).map(([season, plan]) => [season, compactPlan(plan)])),
         }));
     `;
     const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
@@ -117,6 +140,14 @@ test('Nxsha is mapped by cumulative position, not by season number', () => {
     expect(parsed.anchored['2']).toMatchObject({ season: 2, base: 0, start: 11, count: 12 });
     // Absolute numbering: 21 episodes starting at 33, not 53.
     expect(parsed.absolute).toEqual({ count: 21, first: 33, last: 53, missing: [] });
+    // Entity-encoded episode links parse like plain ones.
+    expect(parsed.entityEncoded).toEqual({ count: 39, first: 1, last: 39, missing: [] });
+    // JoJo: every ToonStream season maps to the Nxsha season of the same number,
+    // even when the site has fewer episodes uploaded (S6 = 5 of Nxsha's 12).
+    expect(parsed.jojo['1']).toMatchObject({ season: 1, base: 0 });
+    expect(parsed.jojo['3']).toMatchObject({ season: 3, base: 0 });
+    expect(parsed.jojo['4']).toMatchObject({ season: 4, base: 0 });
+    expect(parsed.jojo['6']).toMatchObject({ season: 6, base: 0 });
 });
 
 test('the bake writes epStart and the Nxsha map for every found show', () => {

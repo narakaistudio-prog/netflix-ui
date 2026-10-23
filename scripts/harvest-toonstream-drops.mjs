@@ -236,7 +236,10 @@ async function fetchToonSeasons(seriesSlug, report) {
     // series page 500 deta hai. Isliye plain-ASCII variant bhi try karte hain —
     // jo pehle 200 de, wahi slug bake hota hai.
     const plain = seriesSlug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    const candidates = [...new Set([seriesSlug, plain])].filter(Boolean);
+    // Episode slugs apostrophe rakhte hain (jojo's-bizarre-adventure-6x5) par
+    // series page usi ke bina khulta hai (jojos-bizarre-adventure). Dono try.
+    const noApos = seriesSlug.replace(/['\u2019]/g, '');
+    const candidates = [...new Set([seriesSlug, plain, noApos, noApos.normalize('NFD').replace(/[\u0300-\u036f]/g, '')])].filter(Boolean);
     let series = null;
     let usedSlug = seriesSlug;
     for (const slug of candidates) {
