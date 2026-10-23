@@ -1,18 +1,18 @@
 {
  "$comment": "MovieBox harvest report: matched / review / miss + per-title notes. Sirf debugging ke liye — app ise nahi padhta.",
- "generatedAt": "2026-10-22T08:01:26.780Z",
+ "generatedAt": "2026-10-23T08:00:51.087Z",
  "stats": {
   "catalog": 792,
   "linked": 687,
   "hindi": 33,
   "hindiAudio": 385,
-  "review": 28,
-  "miss": 78,
+  "review": 27,
+  "miss": 79,
   "errors": 0,
-  "matchedThisRun": 1,
+  "matchedThisRun": 0,
   "pinned": 1,
   "queriesUsed": {
-   "primary": 107,
+   "primary": 106,
    "hindi": 106,
    "year": 106,
    "ampersand": 6,
@@ -72,7 +72,7 @@
     "subjectType": 1,
     "year": 2026,
     "score": 0.705,
-    "query": "Blue Lock 2026"
+    "query": "Blue"
    },
    "candidates": [
     {
@@ -81,13 +81,13 @@
      "year": 2026,
      "detailPath": "blue-AYv3V4LW8F8",
      "score": 0.705,
-     "query": "Blue Lock 2026"
+     "query": "Blue"
     },
     {
-     "title": "heart and lock",
+     "title": "The Spirit Lock",
      "subjectType": 1,
      "year": 2026,
-     "detailPath": "heart-and-lock-YWKLEtJcHQ1",
+     "detailPath": "the-spirit-lock-04UZDCYVFK3",
      "score": 0.516,
      "query": "Blue Lock Hindi"
     },
@@ -284,7 +284,7 @@
      "year": 2009,
      "detailPath": "naruto-shippuden-the-movie-SD6GQNN0qe5",
      "score": 0.625,
-     "query": "Naruto Shippuden the Movie: The Lost Tower 2010"
+     "query": "Naruto Shippuden the Movie: The Lost Tower Hindi"
     },
     {
      "title": "Naruto Shippuden: The Movie - Bonds",
@@ -318,18 +318,18 @@
      "query": "Babanba Banban Vampire"
     },
     {
-     "title": "THE ANGRY VAMPIRE",
-     "subjectType": 1,
-     "year": 2026,
-     "detailPath": "the-angry-vampire-UOjLDqrWAn4",
-     "score": 0.438,
-     "query": "Babanba Banban Vampire Hindi"
-    },
-    {
      "title": "vampire film",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "vampire-film-gQQwTEkHWl6",
+     "score": 0.438,
+     "query": "Babanba Banban Vampire 2025"
+    },
+    {
+     "title": "Vampire Lake",
+     "subjectType": 1,
+     "year": 2024,
+     "detailPath": "vampire-lake-8Ygplg2Bz83",
      "score": 0.438,
      "query": "Babanba Banban Vampire 2025"
     }
@@ -557,7 +557,7 @@
      "year": 2026,
      "detailPath": "main-aur-tu-video-dhurandhar-the-revenge-ranveer-singh-shashwat-s-jasmine-s-reble-aditya-d-QiopyIkNKV1",
      "score": 0.41,
-     "query": "Dhurandhar"
+     "query": "Dhurandhar: The Revenge Hindi"
     },
     {
      "title": "Jaan Se Guzarte Hain (Audio): Dhurandhar The Revenge | Shashwat S | Nusrat Fateh Ali,Khan S,Irshad K",
@@ -696,7 +696,7 @@
     "subjectType": 1,
     "year": 2017,
     "score": 0.623,
-    "query": "Tiger Zinda Hai Hindi"
+    "query": "Tiger Zinda Hai 2017"
    },
    "candidates": [
     {
@@ -747,20 +747,20 @@
      "query": "Salaar Part"
     },
     {
-     "title": "Viduthalai: Part 1",
-     "subjectType": 1,
-     "year": 2023,
-     "detailPath": "viduthalai-part-1-OhKPU7bBcp7",
-     "score": 0.518,
-     "query": "Salaar: Part 1 - Ceasefire 2023"
-    },
-    {
      "title": "Sooraj Hi Chhaon Banke(Hindi)Salaar |Prabhas |Prithviraj |Prashanth Neel |Ravi Basrur |Hombale Films",
      "subjectType": 6,
      "year": 2023,
      "detailPath": "sooraj-hi-chhaon-banke-hindi-salaar-prabhas-prithviraj-prashanth-neel-ravi-basrur-hombale-films-Y2EuGXcmFG8",
      "score": 0.189,
      "query": "Salaar"
+    },
+    {
+     "title": "Sound of Salaar | Music By Ravi Basrur | Hombale Films",
+     "subjectType": 6,
+     "year": 2023,
+     "detailPath": "sound-of-salaar-music-by-ravi-basrur-hombale-films-OlGu5B5pfm8",
+     "score": 0.15,
+     "query": "Salaar: Part 1 - Ceasefire Hindi"
     }
    ]
   },
@@ -786,12 +786,12 @@
      "query": "HIT: The Third Case"
     },
     {
-     "title": "The Inverted Case",
+     "title": "THIRD EYE",
      "subjectType": 1,
      "year": 2025,
-     "detailPath": "the-inverted-case-KzgylcwbpP7",
+     "detailPath": "third-eye-sq0Leqx07a",
      "score": 0.518,
-     "query": "HIT: The Third Case 2025"
+     "query": "Third"
     },
     {
      "title": "THIRD EYE",
@@ -843,64 +843,33 @@
    ]
   },
   {
-   "key": "tmdb:249068",
-   "title": "Chhota Bheem aur Gadadhari Bheem",
-   "year": 2024,
-   "mediaType": "tv",
-   "best": {
-    "title": "Mighty Bheem's Playtime [Hindi]",
-    "subjectType": 2,
-    "year": 2024,
-    "score": 0.636,
-    "query": "Chhota Bheem aur Gadadhari Bheem"
-   },
-   "candidates": [
-    {
-     "title": "Mighty Bheem's Playtime [Hindi]",
-     "subjectType": 2,
-     "year": 2024,
-     "detailPath": "mighty-bheems-playtime-hindi-kCYJDfNnro4",
-     "score": 0.636,
-     "query": "Chhota Bheem aur Gadadhari Bheem"
-    },
-    {
-     "title": "Mighty Little Bheem S1-S3",
-     "subjectType": 2,
-     "year": 2019,
-     "detailPath": "mighty-little-bheem-ksD1I1xi6k3",
-     "score": 0.486,
-     "query": "Chhota Bheem aur Gadadhari Bheem"
-    },
-    {
-     "title": "Latest Movie Premieres of Chhota Bheem",
-     "subjectType": 5,
-     "year": 2025,
-     "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
-     "score": 0.471,
-     "query": "Chhota Bheem"
-    }
-   ]
-  },
-  {
    "key": "tmdb:1531117",
    "title": "Wild Dog",
    "year": 2025,
    "mediaType": "movie",
    "best": {
-    "title": "Dog",
+    "title": "Wild",
     "subjectType": 1,
-    "year": 2024,
-    "score": 0.625,
-    "query": "Wild Dog Hindi"
+    "year": 2025,
+    "score": 0.705,
+    "query": "Wild Dog"
    },
    "candidates": [
+    {
+     "title": "Wild",
+     "subjectType": 1,
+     "year": 2025,
+     "detailPath": "wild-WL9b3Ij6NY4",
+     "score": 0.705,
+     "query": "Wild Dog"
+    },
     {
      "title": "Dog",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "dog-KxZvFfbXUG4",
      "score": 0.625,
-     "query": "Wild Dog Hindi"
+     "query": "Wild Dog"
     },
     {
      "title": "Wild Dog [Hindi]",
@@ -909,14 +878,6 @@
      "detailPath": "wild-dog-hindi-OzPcnL6LmF3",
      "score": 0.55,
      "query": "Wild Dog Hindi"
-    },
-    {
-     "title": "Wild Dog",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "wild-dog-oSzbXU1a88",
-     "score": 0.5,
-     "query": "Wild Dog"
     }
    ]
   },
@@ -942,20 +903,20 @@
      "query": "The King's Affection"
     },
     {
+     "title": "The Kings",
+     "subjectType": 2,
+     "year": 2021,
+     "detailPath": "the-kings-QkHgXFuYkn",
+     "score": 0.705,
+     "query": "The King"
+    },
+    {
      "title": "Affection",
      "subjectType": 6,
      "year": 2018,
      "detailPath": "affection-uFnBMmg4W4a",
      "score": 0.455,
      "query": "Affection"
-    },
-    {
-     "title": "The Kings of Napa",
-     "subjectType": 2,
-     "year": 2022,
-     "detailPath": "the-kings-of-napa-SPKFIt6vgh2",
-     "score": 0.436,
-     "query": "The King"
     }
    ]
   },
@@ -1028,12 +989,12 @@
      "query": "Misaeng: Incomplete Life 2014"
     },
     {
-     "title": "Life",
+     "title": "After Life S1-S3",
      "subjectType": 2,
-     "year": 2010,
-     "detailPath": "life-GXx35WtIUn1",
-     "score": 0.523,
-     "query": "Misaeng: Incomplete Life Hindi"
+     "year": 2019,
+     "detailPath": "after-life-SxTqNeNtFI5",
+     "score": 0.418,
+     "query": "Misaeng: Incomplete Life 2014"
     }
    ]
   },
@@ -1103,7 +1064,7 @@
      "year": 2022,
      "detailPath": "alchemy-of-souls-wsMhupZ18n1",
      "score": 0.438,
-     "query": "Bulgasal: Immortal Souls"
+     "query": "Bulgasal: Immortal Souls 2021"
     },
     {
      "title": "Immortal Samsara",
@@ -1162,21 +1123,13 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "EVIL POT",
+    "title": "Resident Evil",
     "subjectType": 1,
     "year": 2026,
     "score": 0.518,
-    "query": "Evil"
+    "query": "Evil Dead Burn"
    },
    "candidates": [
-    {
-     "title": "EVIL POT",
-     "subjectType": 1,
-     "year": 2026,
-     "detailPath": "evil-pot-MqvvXYrgYra",
-     "score": 0.518,
-     "query": "Evil"
-    },
     {
      "title": "Resident Evil",
      "subjectType": 1,
@@ -1186,12 +1139,20 @@
      "query": "Evil Dead"
     },
     {
-     "title": "EVIL DESIRES",
+     "title": "EVIL POT",
      "subjectType": 1,
-     "year": 2025,
-     "detailPath": "evil-desires-AMtT84SUV19",
-     "score": 0.438,
+     "year": 2026,
+     "detailPath": "evil-pot-MqvvXYrgYra",
+     "score": 0.518,
      "query": "Evil"
+    },
+    {
+     "title": "Evil Dead",
+     "subjectType": 1,
+     "year": 2013,
+     "detailPath": "evil-dead-2xoSm7mved2",
+     "score": 0.287,
+     "query": "Evil Dead Burn"
     }
    ]
   },
@@ -1318,21 +1279,13 @@
    "year": 2021,
    "mediaType": "movie",
    "best": {
-    "title": "Death Trip",
+    "title": "Death Note",
     "subjectType": 1,
-    "year": 2021,
-    "score": 0.516,
-    "query": "Death"
+    "year": 2017,
+    "score": 0.5,
+    "query": "Death Note"
    },
    "candidates": [
-    {
-     "title": "Death Trip",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "death-trip-wOjgWwi6M76",
-     "score": 0.516,
-     "query": "Death"
-    },
     {
      "title": "Death Note",
      "subjectType": 1,
@@ -1346,6 +1299,14 @@
      "subjectType": 1,
      "year": 2022,
      "detailPath": "death-camp-6FHgXI4IyV5",
+     "score": 0.436,
+     "query": "Death"
+    },
+    {
+     "title": "Death Hunt",
+     "subjectType": 1,
+     "year": 2022,
+     "detailPath": "death-hunt-IsZSOl7hs83",
      "score": 0.436,
      "query": "Death"
     }
@@ -1396,34 +1357,34 @@
    "year": 2025,
    "mediaType": "tv",
    "best": {
-    "title": "Kishin dôji Zenki gaiden: Anki kitan [English]",
-    "subjectType": 1,
-    "year": 1997,
+    "title": "A Time to Screw, Toki Neiro",
+    "subjectType": 2,
+    "year": 2004,
     "score": 0,
     "query": "Tougen Anki"
    },
    "candidates": [
     {
-     "title": "Kishin dôji Zenki gaiden: Anki kitan [English]",
-     "subjectType": 1,
-     "year": 1997,
-     "detailPath": "kishin-doji-zenki-gaiden-anki-kitan-english-oyDHgqmM0G5",
+     "title": "A Time to Screw, Toki Neiro",
+     "subjectType": 2,
+     "year": 2004,
+     "detailPath": "a-time-to-screw-toki-neiro-mdJd22HyWs",
      "score": 0,
      "query": "Tougen Anki"
     },
     {
-     "title": "Stockholm East",
-     "subjectType": 1,
-     "year": 2011,
-     "detailPath": "stockholm-east-Aew8ZBBld23",
+     "title": "Black Clover S1-S2",
+     "subjectType": 2,
+     "year": 2017,
+     "detailPath": "black-clover-cE1aW4X3H14",
      "score": 0,
      "query": "Tougen Anki"
     },
     {
-     "title": "The Home",
-     "subjectType": 1,
-     "year": 2025,
-     "detailPath": "the-home-mPeicClxIK8",
+     "title": "Bleach: Thousand-Year Blood War [English] S1-S4",
+     "subjectType": 2,
+     "year": 2022,
+     "detailPath": "bleach-thousand-year-blood-war-english-IKoyJ28zSi8",
      "score": 0,
      "query": "Tougen Anki"
     }
@@ -1456,7 +1417,7 @@
      "year": 2010,
      "detailPath": "high-school-suuvNXlZpX9",
      "score": 0.406,
-     "query": "Ouran High School Host Club"
+     "query": "Ouran High School Host Club 2012"
     },
     {
      "title": "Our School",
@@ -1517,7 +1478,7 @@
     "subjectType": 1,
     "year": 2026,
     "score": 0.455,
-    "query": "Blue Period Hindi"
+    "query": "Blue Period"
    },
    "candidates": [
     {
@@ -1526,7 +1487,7 @@
      "year": 2026,
      "detailPath": "blue-AYv3V4LW8F8",
      "score": 0.455,
-     "query": "Blue Period Hindi"
+     "query": "Blue Period"
     },
     {
      "title": "Trial Period",
@@ -1593,7 +1554,7 @@
    "best": {
     "title": "Leviathan",
     "subjectType": 1,
-    "year": 2015,
+    "year": 1989,
     "score": 0.5,
     "query": "Leviathan"
    },
@@ -1601,16 +1562,16 @@
     {
      "title": "Leviathan",
      "subjectType": 1,
-     "year": 2015,
-     "detailPath": "leviathan-KxxwoD6lqia",
+     "year": 1989,
+     "detailPath": "leviathan-uPUiHuPBue9",
      "score": 0.5,
      "query": "Leviathan"
     },
     {
      "title": "Leviathan",
      "subjectType": 1,
-     "year": 1989,
-     "detailPath": "leviathan-uPUiHuPBue9",
+     "year": 2015,
+     "detailPath": "leviathan-KxxwoD6lqia",
      "score": 0.5,
      "query": "Leviathan"
     },
@@ -1729,7 +1690,7 @@
      "year": 2025,
      "detailPath": "the-children-of-october-7-cw1tr52O7u6",
      "score": 0.317,
-     "query": "Children Of The Whales Hindi"
+     "query": "Children Of The Whales 2026"
     },
     {
      "title": "The Whale",
@@ -1763,19 +1724,19 @@
      "query": "Detective Conan: Fallen Angel of the Highway"
     },
     {
+     "title": "Detective Conan: One-Eyed Flashback [English]",
+     "subjectType": 1,
+     "year": 2025,
+     "detailPath": "detective-conan-one-eyed-flashback-english-gWRPCEPyXh7",
+     "score": 0.366,
+     "query": "Detective Conan: Fallen Angel of the Highway"
+    },
+    {
      "title": "Detective Conan: The Million-Dollar Pentagram",
      "subjectType": 1,
      "year": 2024,
      "detailPath": "detective-conan-the-million-dollar-pentagram-Em1nrtILAm9",
      "score": 0.196,
-     "query": "Detective Conan: Fallen Angel of the Highway"
-    },
-    {
-     "title": "Detective Conan: Highway No Datenshi[CAM]",
-     "subjectType": 1,
-     "year": 2026,
-     "detailPath": "detective-conan-highway-no-datenshi-cam-IwX1GdGqWb7",
-     "score": 0.178,
      "query": "Detective Conan: Fallen Angel of the Highway"
     }
    ]
@@ -1946,7 +1907,7 @@
     "subjectType": 1,
     "year": 2019,
     "score": 0.543,
-    "query": "Aggretsuko: We Wish You a Metal Christmas Hindi"
+    "query": "Aggretsuko: We Wish You a Metal Christmas"
    },
    "candidates": [
     {
@@ -1961,7 +1922,7 @@
      "title": "A Cinderella Story: Christmas Wish",
      "subjectType": 1,
      "year": 2019,
-     "detailPath": "a-cinderella-story-christmas-wish-iLDFL59L6aa",
+     "detailPath": "a-cinderella-story-christmas-wish-SfoX4YRwxW3",
      "score": 0.396,
      "query": "Aggretsuko: We Wish You a Metal Christmas 2018"
     },
@@ -1969,7 +1930,7 @@
      "title": "A Cinderella Story: Christmas Wish",
      "subjectType": 1,
      "year": 2019,
-     "detailPath": "a-cinderella-story-christmas-wish-SfoX4YRwxW3",
+     "detailPath": "a-cinderella-story-christmas-wish-iLDFL59L6aa",
      "score": 0.396,
      "query": "Aggretsuko: We Wish You a Metal Christmas 2018"
     }
@@ -2007,8 +1968,8 @@
     {
      "title": "Hope",
      "subjectType": 1,
-     "year": 2017,
-     "detailPath": "hope-ObV2KofeIna",
+     "year": 2023,
+     "detailPath": "hope-EAQQKnxhIMa",
      "score": 0.058,
      "query": "Anpanman: Apple Boy and Everyone's Hope Hindi"
     }
@@ -2044,11 +2005,11 @@
      "query": "Anpanman: Nanda and Runda from Star of Toys"
     },
     {
-     "title": "Lord of the Toys",
-     "subjectType": 1,
-     "year": 2018,
-     "detailPath": "lord-of-the-toys-Q4t6MtcHS96",
-     "score": 0.187,
+     "title": "Disney's Zootopia Toys!",
+     "subjectType": 5,
+     "year": 2016,
+     "detailPath": "disneys-zootopia-toys-6xpi3CRhps5",
+     "score": 0.21,
      "query": "Anpanman: Nanda and Runda from Star of Toys Hindi"
     }
    ]
@@ -2098,13 +2059,21 @@
    "year": 2005,
    "mediaType": "movie",
    "best": {
-    "title": "Digimon Adventure 02: Revenge of Diaboromon [English]",
+    "title": "The Poseidon Adventure",
     "subjectType": 1,
     "year": 2005,
-    "score": 0.329,
-    "query": "Anpanman: Adventure of Happie"
+    "score": 0.518,
+    "query": "Anpanman Adventure"
    },
    "candidates": [
+    {
+     "title": "The Poseidon Adventure",
+     "subjectType": 1,
+     "year": 2005,
+     "detailPath": "the-poseidon-adventure-GlsLBrU8op5",
+     "score": 0.518,
+     "query": "Anpanman Adventure"
+    },
     {
      "title": "Digimon Adventure 02: Revenge of Diaboromon [English]",
      "subjectType": 1,
@@ -2120,14 +2089,6 @@
      "detailPath": "anpanman-star-spirited-dollie-english-E0GsUi3JrO3",
      "score": 0.302,
      "query": "Anpanman: Adventure of Happie"
-    },
-    {
-     "title": "THE ADVENTURE",
-     "subjectType": 1,
-     "year": 2024,
-     "detailPath": "the-adventure-MEoHMvbKcv2",
-     "score": 0.123,
-     "query": "Anpanman Adventure"
     }
    ]
   },
@@ -2153,18 +2114,18 @@
      "query": "Blacknose"
     },
     {
+     "title": "Black Magic",
+     "subjectType": 1,
+     "year": 2023,
+     "detailPath": "black-magic-uVPuJNaAX9",
+     "score": 0.156,
+     "query": "Blacknose"
+    },
+    {
      "title": "Ano Ba Talaga Tayo - The Juans (Official Lyric Video)",
      "subjectType": 6,
      "year": 2025,
      "detailPath": "ano-ba-talaga-tayo-the-juans-official-lyric-video-MwwxhNMOrK3",
-     "score": 0,
-     "query": "Anpanman: The Blacknose with Magical Song"
-    },
-    {
-     "title": "Anpanman: Apple Boy and Everyone's Hope [English]",
-     "subjectType": 1,
-     "year": 2021,
-     "detailPath": "anpanman-apple-boy-and-everyones-hope-english-YMRPiErdRX3",
      "score": 0,
      "query": "Anpanman: The Blacknose with Magical Song"
     }
@@ -2384,7 +2345,7 @@
      "year": 1998,
      "detailPath": "revival-of-evangelion-S5Xzux8VIu7",
      "score": 0.518,
-     "query": "EVANGELION: DEATH (TRUE)² 1998"
+     "query": "EVANGELION DEATH"
     },
     {
      "title": "Neon Genesis Evangelion: Death & Rebirth",
@@ -2392,7 +2353,7 @@
      "year": 1997,
      "detailPath": "neon-genesis-evangelion-death-and-rebirth-0GRMa0R7kj3",
      "score": 0.497,
-     "query": "EVANGELION: DEATH (TRUE)² Hindi"
+     "query": "EVANGELION: DEATH (TRUE)²"
     },
     {
      "title": "Neon Genesis Evangelion: Death & Rebirth [English]",
@@ -2593,7 +2554,7 @@
      "title": "Dog",
      "subjectType": 1,
      "year": 2022,
-     "detailPath": "dog-86hZwAoAzm",
+     "detailPath": "dog-wW9NcU8xGaa",
      "score": 0.123,
      "query": "Ohh My Dog 2026"
     }
@@ -2668,10 +2629,10 @@
      "query": "Korean Kanakaraju"
     },
     {
-     "title": "My Korean Jagiya",
-     "subjectType": 2,
-     "year": 2017,
-     "detailPath": "my-korean-jagiya-QqOF3zCQR15",
+     "title": "Korean R&B / krnb - chill playlist",
+     "subjectType": 6,
+     "year": 2023,
+     "detailPath": "korean-randb-krnb-chill-playlist-C76hPYD7BD9",
      "score": 0,
      "query": "Korean Kanakaraju"
     }
@@ -2683,18 +2644,18 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "Blast",
+    "title": "Ika-sampu",
     "subjectType": 1,
-    "year": 2026,
+    "year": 2010,
     "score": 0,
     "query": "Ikka"
    },
    "candidates": [
     {
-     "title": "Blast",
+     "title": "Ika-sampu",
      "subjectType": 1,
-     "year": 2026,
-     "detailPath": "blast-mFhuBhMIbu1",
+     "year": 2010,
+     "detailPath": "ika-sampu-0AsF3mylLT4",
      "score": 0,
      "query": "Ikka"
     },
@@ -2707,10 +2668,10 @@
      "query": "Ikka"
     },
     {
-     "title": "IKKA  ANGRY ON BOHEMIA INSTAGRAM LIVE EXOOSED BOHEMIA|  IKKA BOHEMIA CONTROVERSY JHIND EXPOSED KDM",
+     "title": "DILBAR | Satyameva Jayate | John Abraham Nora Fatehi | Tanishk B Neha Kakkar Ikka Dhvani | T-Series",
      "subjectType": 6,
-     "year": 2020,
-     "detailPath": "ikka-angry-on-bohemia-instagram-live-exoosed-bohemia-ikka-bohemia-controversy-jhind-exposed-kdm-KDmsh0aC2i5",
+     "year": 2018,
+     "detailPath": "dilbar-satyameva-jayate-john-abraham-nora-fatehi-tanishk-b-neha-kakkar-ikka-dhvani-t-series-61jiIWsYkn",
      "score": 0,
      "query": "Ikka"
     }
@@ -2746,12 +2707,12 @@
      "query": "Main Vaapas Aaunga"
     },
     {
-     "title": "Main Ladega",
+     "title": "WWE Sunday Night's Main Event",
      "subjectType": 1,
-     "year": 2024,
-     "detailPath": "main-ladega-yZ0WXfdv647",
-     "score": 0.268,
-     "query": "Main Vaapas"
+     "year": 2026,
+     "detailPath": "wwe-sunday-nights-main-event-YWwzkULSpv1",
+     "score": 0.329,
+     "query": "Main Vaapas Aaunga Hindi"
     }
    ]
   },
@@ -2782,13 +2743,13 @@
      "year": 2024,
      "detailPath": "the-double-Ug8BBqpb4f6",
      "score": 0.523,
-     "query": "Double"
+     "query": "Dhee Double"
     },
     {
-     "title": "Seeing Double",
+     "title": "Double Helix",
      "subjectType": 2,
      "year": 2026,
-     "detailPath": "seeing-double-QqiyZenwA47",
+     "detailPath": "double-helix-2TlVdUQgua2",
      "score": 0.518,
      "query": "Dhee Double"
     }
@@ -2902,12 +2863,12 @@
      "query": "Newton's 3rd Law"
     },
     {
-     "title": "Criminal Law",
+     "title": "Yakuza Law",
      "subjectType": 1,
-     "year": 1989,
-     "detailPath": "criminal-law-s871fi07gf2",
+     "year": 1969,
+     "detailPath": "yakuza-law-GBm3jEr6t15",
      "score": 0.018,
-     "query": "Newton's 3rd Law Hindi"
+     "query": "Newton's 3rd Law 2026"
     }
    ]
   },
@@ -2917,18 +2878,18 @@
    "year": 2022,
    "mediaType": "movie",
    "best": {
-    "title": "SACRED BOND",
+    "title": "Sacred Scars",
     "subjectType": 1,
-    "year": 2021,
+    "year": 2023,
     "score": 0.436,
     "query": "Sacred"
    },
    "candidates": [
     {
-     "title": "SACRED BOND",
+     "title": "Sacred Scars",
      "subjectType": 1,
-     "year": 2021,
-     "detailPath": "sacred-bond-idOl37yJYY3",
+     "year": 2023,
+     "detailPath": "sacred-scars-0mFvWW1pJa6",
      "score": 0.436,
      "query": "Sacred"
     },
@@ -2980,10 +2941,10 @@
      "query": "Con City"
     },
     {
-     "title": "Con Air",
+     "title": "Ex-Con",
      "subjectType": 1,
-     "year": 1997,
-     "detailPath": "con-air-IAte94dn165",
+     "year": 2000,
+     "detailPath": "ex-con-GLVoTjqjIq",
      "score": 0.016,
      "query": "Con City"
     }
@@ -3077,7 +3038,7 @@
     "subjectType": 1,
     "year": 2026,
     "score": 0.441,
-    "query": "Daadi Ki Shaadi"
+    "query": "Daadi Ki Shaadi 2026"
    },
    "candidates": [
     {
@@ -3086,7 +3047,7 @@
      "year": 2026,
      "detailPath": "dadi-ki-shadi-4EfjtFjmzk",
      "score": 0.441,
-     "query": "Daadi Ki Shaadi 2026"
+     "query": "Daadi Ki"
     },
     {
      "title": "Jai Kanhaiyalall Ki",
@@ -3097,12 +3058,12 @@
      "query": "Daadi Ki"
     },
     {
-     "title": "Chameli Ki Shaadi",
+     "title": "Aankhon ki Gustaakhiyan",
      "subjectType": 1,
-     "year": 1986,
-     "detailPath": "chameli-ki-shaadi-uf681PakXy4",
-     "score": 0.217,
-     "query": "Daadi Ki Shaadi Hindi"
+     "year": 2025,
+     "detailPath": "aankhon-ki-gustaakhiyan-8Oto5z4R3T1",
+     "score": 0.361,
+     "query": "Daadi Ki"
     }
    ]
   },
@@ -3170,7 +3131,7 @@
      "title": "Hustle",
      "subjectType": 6,
      "year": 2021,
-     "detailPath": "hustle-GdI42nKIDU8",
+     "detailPath": "hustle-ISECXKLwca2",
      "score": 0.332,
      "query": "Hustle 5"
     },
@@ -3178,7 +3139,7 @@
      "title": "Hustle",
      "subjectType": 6,
      "year": 2021,
-     "detailPath": "hustle-ISECXKLwca2",
+     "detailPath": "hustle-GdI42nKIDU8",
      "score": 0.332,
      "query": "Hustle 5"
     }
@@ -3194,7 +3155,7 @@
     "subjectType": 1,
     "year": 2022,
     "score": 0.476,
-    "query": "Ranveer vs Wild with Bear Grylls Hindi"
+    "query": "Ranveer vs Wild with Bear Grylls"
    },
    "candidates": [
     {
@@ -3206,12 +3167,12 @@
      "query": "Ranveer vs Wild with Bear Grylls 2022"
     },
     {
-     "title": "Bear Witness",
+     "title": "Pig vs. Shark",
      "subjectType": 1,
      "year": 2022,
-     "detailPath": "bear-witness-o6PmytCLXm8",
-     "score": 0.437,
-     "query": "Ranveer vs Wild with Bear Grylls Hindi"
+     "detailPath": "pig-vs-shark-wubRLgAxvu6",
+     "score": 0.36,
+     "query": "Ranveer vs"
     },
     {
      "title": "Bear Man",
@@ -3229,34 +3190,34 @@
    "year": 2024,
    "mediaType": "tv",
    "best": {
-    "title": "Britain's Got Talent S1-S18",
+    "title": "We Got Time Today",
     "subjectType": 2,
-    "year": 2007,
-    "score": 0,
-    "query": "India's Got Latent"
+    "year": 2024,
+    "score": 0.382,
+    "query": "India's Got Latent 2024"
    },
    "candidates": [
+    {
+     "title": "We Got Time Today",
+     "subjectType": 2,
+     "year": 2024,
+     "detailPath": "we-got-time-today-ezGeIqBsdH2",
+     "score": 0.382,
+     "query": "India's Got Latent 2024"
+    },
+    {
+     "title": "Got to Get Out",
+     "subjectType": 2,
+     "year": 2025,
+     "detailPath": "got-to-get-out-GZ0ELyGS5g",
+     "score": 0.302,
+     "query": "India's Got Latent 2024"
+    },
     {
      "title": "Britain's Got Talent S1-S18",
      "subjectType": 2,
      "year": 2007,
      "detailPath": "britains-got-talent-u1zwPloTYY4",
-     "score": 0,
-     "query": "India's Got Latent"
-    },
-    {
-     "title": "India Pakistan",
-     "subjectType": 1,
-     "year": 2015,
-     "detailPath": "india-pakistan-4MhtFUF24H1",
-     "score": 0,
-     "query": "India's Got Latent"
-    },
-    {
-     "title": "India's Most Wanted",
-     "subjectType": 1,
-     "year": 2019,
-     "detailPath": "indias-most-wanted-y9ibp2XMB12",
      "score": 0,
      "query": "India's Got Latent"
     }
@@ -3284,19 +3245,19 @@
      "query": "Best of The Great Indian Kapil Show"
     },
     {
+     "title": "Best of Fizzy Show",
+     "subjectType": 2,
+     "year": 2021,
+     "detailPath": "best-of-fizzy-show-QYrht5WpEIa",
+     "score": 0.486,
+     "query": "Best of"
+    },
+    {
      "title": "The Great American Baking Show S1-S4",
      "subjectType": 2,
      "year": 2023,
      "detailPath": "the-great-american-baking-show-g6vuGBzTu93",
      "score": 0.429,
-     "query": "Best of The Great Indian Kapil Show"
-    },
-    {
-     "title": "Shankar Mahadevan क्यों है नकली Garam Ji के इतने बड़े Fan | The Kapil Sharma Show 2 | Best Moments",
-     "subjectType": 6,
-     "year": 2023,
-     "detailPath": "shankar-mahadevan-kyon-hai-nklii-garam-ji-ke-itne-bdddhe-fan-the-kapil-sharma-show-2-best-moments-4A7NhJvus33",
-     "score": 0.231,
      "query": "Best of The Great Indian Kapil Show Hindi"
     }
    ]
@@ -3370,12 +3331,12 @@
      "query": "What the"
     },
     {
-     "title": "What is Love",
-     "subjectType": 6,
-     "year": 2018,
-     "detailPath": "what-is-love-QyabajF9RF4",
-     "score": 0.336,
-     "query": "What the Love! with Karan Johar Hindi"
+     "title": "What We Lose to Love",
+     "subjectType": 2,
+     "year": 2022,
+     "detailPath": "what-we-lose-to-love-QYfvf9RKL24",
+     "score": 0.346,
+     "query": "What the Love! with Karan Johar 2020"
     }
    ]
   },
@@ -3385,21 +3346,13 @@
    "year": 2026,
    "mediaType": "movie",
    "best": {
-    "title": "The Raja Saab",
+    "title": "Shivam Bhaje [Telugu]",
     "subjectType": 1,
-    "year": 2026,
-    "score": 0.516,
-    "query": "Raja Shivaji"
+    "year": 2024,
+    "score": 0.266,
+    "query": "Shivaji"
    },
    "candidates": [
-    {
-     "title": "The Raja Saab",
-     "subjectType": 1,
-     "year": 2026,
-     "detailPath": "the-raja-saab-MORxmesfDC6",
-     "score": 0.516,
-     "query": "Raja Shivaji"
-    },
     {
      "title": "Shivam Bhaje [Telugu]",
      "subjectType": 1,
@@ -3413,6 +3366,14 @@
      "subjectType": 1,
      "year": 1996,
      "detailPath": "raja-hindustani-Q6yd5DRNhU2",
+     "score": 0.016,
+     "query": "Raja Shivaji"
+    },
+    {
+     "title": "Raja Vikramarka",
+     "subjectType": 1,
+     "year": 2021,
+     "detailPath": "raja-vikramarka-8K7FjZHr7w2",
      "score": 0.016,
      "query": "Raja Shivaji"
     }
@@ -3635,20 +3596,20 @@
      "query": "Dinosaur"
     },
     {
-     "title": "Chhota Bheem and the Curse of Damyaan",
-     "subjectType": 1,
-     "year": 2024,
-     "detailPath": "chhota-bheem-and-the-curse-of-damyaan-QuGgZ4MtX32",
-     "score": 0.478,
-     "query": "Chhota Bheem: Dinosaur World"
-    },
-    {
      "title": "Latest Movie Premieres of Chhota Bheem",
      "subjectType": 5,
      "year": 2025,
      "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
      "score": 0.408,
      "query": "Chhota Bheem"
+    },
+    {
+     "title": "Dinosaur Hunt",
+     "subjectType": 1,
+     "year": 2026,
+     "detailPath": "dinosaur-hunt-QwV6vy04G4a",
+     "score": 0.397,
+     "query": "Dinosaur"
     }
    ]
   },
@@ -3658,29 +3619,13 @@
    "year": 2023,
    "mediaType": "tv",
    "best": {
-    "title": "Mighty Bheem's Playtime [Hindi]",
-    "subjectType": 2,
-    "year": 2024,
-    "score": 0.411,
-    "query": "Chhota Bheem Kirmada Hindi"
+    "title": "Latest Movie Premieres of Chhota Bheem",
+    "subjectType": 5,
+    "year": 2025,
+    "score": 0.39,
+    "query": "Chhota Bheem Kirmada"
    },
    "candidates": [
-    {
-     "title": "Mighty Bheem's Playtime [Hindi]",
-     "subjectType": 2,
-     "year": 2024,
-     "detailPath": "mighty-bheems-playtime-hindi-kCYJDfNnro4",
-     "score": 0.411,
-     "query": "Chhota Bheem Kirmada 2023"
-    },
-    {
-     "title": "Chhota Bheem Videos in Tamil",
-     "subjectType": 5,
-     "year": 2024,
-     "detailPath": "chhota-bheem-videos-in-tamil-cmWzxWDx6c5",
-     "score": 0.41,
-     "query": "Chhota Bheem Kirmada Hindi"
-    },
     {
      "title": "Latest Movie Premieres of Chhota Bheem",
      "subjectType": 5,
@@ -3688,6 +3633,22 @@
      "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
      "score": 0.39,
      "query": "Chhota Bheem Kirmada"
+    },
+    {
+     "title": "Old Episodes of Chhota Bheem",
+     "subjectType": 5,
+     "year": 2025,
+     "detailPath": "old-episodes-of-chhota-bheem-Ozz35NXO759",
+     "score": 0.39,
+     "query": "Chhota Bheem Kirmada Hindi"
+    },
+    {
+     "title": "Chhota Bheem Kung Fu Dhamaka 3D Movie",
+     "subjectType": 5,
+     "year": 2020,
+     "detailPath": "chhota-bheem-kung-fu-dhamaka-3d-movie-cquStnvHb31",
+     "score": 0.271,
+     "query": "Chhota Bheem Kirmada Hindi"
     }
    ]
   },
@@ -3727,6 +3688,45 @@
      "detailPath": "mighty-med-GVAvO9DCpA8",
      "score": 0.416,
      "query": "Mighty Raju Hindi"
+    }
+   ]
+  },
+  {
+   "key": "tmdb:249068",
+   "title": "Chhota Bheem aur Gadadhari Bheem",
+   "year": 2024,
+   "mediaType": "tv",
+   "best": {
+    "title": "Latest Movie Premieres of Chhota Bheem",
+    "subjectType": 5,
+    "year": 2025,
+    "score": 0.471,
+    "query": "Chhota Bheem aur Gadadhari Bheem"
+   },
+   "candidates": [
+    {
+     "title": "Latest Movie Premieres of Chhota Bheem",
+     "subjectType": 5,
+     "year": 2025,
+     "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
+     "score": 0.471,
+     "query": "Chhota Bheem"
+    },
+    {
+     "title": "Mighty Little Bheem: Festival of Colors",
+     "subjectType": 2,
+     "year": 2020,
+     "detailPath": "mighty-little-bheem-festival-of-colors-WTFyLc7syt9",
+     "score": 0.346,
+     "query": "Chhota Bheem aur Gadadhari Bheem"
+    },
+    {
+     "title": "Chhota Bheem Kung Fu Dhamaka 3D Movie",
+     "subjectType": 5,
+     "year": 2020,
+     "detailPath": "chhota-bheem-kung-fu-dhamaka-3d-movie-cquStnvHb31",
+     "score": 0.315,
+     "query": "Chhota Bheem aur Gadadhari Bheem"
     }
    ]
   },
@@ -3791,20 +3791,20 @@
      "query": "Mighty Little Bheem: I Love Taj Mahal"
     },
     {
-     "title": "Mighty Little Bheem: I Love Taj Mahal | Netflix Jr",
-     "subjectType": 5,
-     "year": 2024,
-     "detailPath": "mighty-little-bheem-i-love-taj-mahal-netflix-jr-OHZubAjA2I2",
-     "score": 0.461,
-     "query": "Mighty Little Bheem"
-    },
-    {
      "title": "THE MIGHTY QUEEN",
      "subjectType": 1,
      "year": 2022,
      "detailPath": "the-mighty-queen-46i0vrO69d7",
      "score": 0.425,
      "query": "Mighty Little"
+    },
+    {
+     "title": "Sasaki and Miyano: A Little Story Before I Realized I Was in Love [English]",
+     "subjectType": 1,
+     "year": 2022,
+     "detailPath": "sasaki-and-miyano-a-little-story-before-i-realized-i-was-in-love-english-inXMcTMoGMa",
+     "score": 0.377,
+     "query": "Mighty Little Bheem: I Love Taj Mahal 2022"
     }
    ]
   },
@@ -3814,21 +3814,13 @@
    "year": 2024,
    "mediaType": "tv",
    "best": {
-    "title": "Mighty Bheem's Playtime [Hindi]",
-    "subjectType": 2,
-    "year": 2024,
-    "score": 0.426,
-    "query": "Chhota Bheem: Magic Block Buster Hindi"
+    "title": "Latest Movie Premieres of Chhota Bheem",
+    "subjectType": 5,
+    "year": 2025,
+    "score": 0.279,
+    "query": "Chhota Bheem: Magic Block Buster"
    },
    "candidates": [
-    {
-     "title": "Mighty Bheem's Playtime [Hindi]",
-     "subjectType": 2,
-     "year": 2024,
-     "detailPath": "mighty-bheems-playtime-hindi-kCYJDfNnro4",
-     "score": 0.426,
-     "query": "Chhota Bheem: Magic Block Buster Hindi"
-    },
     {
      "title": "Latest Movie Premieres of Chhota Bheem",
      "subjectType": 5,
@@ -3844,6 +3836,14 @@
      "detailPath": "old-episodes-of-chhota-bheem-Ozz35NXO759",
      "score": 0.279,
      "query": "Chhota Bheem: Magic Block Buster"
+    },
+    {
+     "title": "Super Bheem",
+     "subjectType": 5,
+     "year": 2026,
+     "detailPath": "super-bheem-iNG6BQniec6",
+     "score": 0.203,
+     "query": "Chhota Bheem: Magic Block Buster"
     }
    ]
   },
@@ -3853,35 +3853,35 @@
    "year": 2023,
    "mediaType": "tv",
    "best": {
-    "title": "Mighty Bheem's Playtime [Hindi]",
-    "subjectType": 2,
-    "year": 2024,
-    "score": 0.411,
+    "title": "Latest Movie Premieres of Chhota Bheem",
+    "subjectType": 5,
+    "year": 2025,
+    "score": 0.39,
     "query": "Chhota Bheem Rangda Hindi"
    },
    "candidates": [
     {
-     "title": "Mighty Bheem's Playtime [Hindi]",
-     "subjectType": 2,
-     "year": 2024,
-     "detailPath": "mighty-bheems-playtime-hindi-kCYJDfNnro4",
-     "score": 0.411,
-     "query": "Chhota Bheem Rangda 2023"
-    },
-    {
-     "title": "Chhota Bheem & Krishna's Adventures",
+     "title": "Latest Movie Premieres of Chhota Bheem",
      "subjectType": 5,
-     "year": 2026,
-     "detailPath": "chhota-bheem-and-krishnas-adventures-6PUIHQPuAO9",
+     "year": 2025,
+     "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
      "score": 0.39,
      "query": "Chhota Bheem Rangda Hindi"
     },
     {
-     "title": "Chhota Bheem Fun Games",
+     "title": "Old Episodes of Chhota Bheem",
      "subjectType": 5,
-     "year": 2021,
-     "detailPath": "chhota-bheem-fun-games-QItFinhHGg7",
+     "year": 2025,
+     "detailPath": "old-episodes-of-chhota-bheem-Ozz35NXO759",
      "score": 0.39,
+     "query": "Chhota Bheem Rangda Hindi"
+    },
+    {
+     "title": "Chhota Bheem Kung Fu Dhamaka 3D Movie",
+     "subjectType": 5,
+     "year": 2020,
+     "detailPath": "chhota-bheem-kung-fu-dhamaka-3d-movie-cquStnvHb31",
+     "score": 0.271,
      "query": "Chhota Bheem Rangda Hindi"
     }
    ]
@@ -3892,35 +3892,35 @@
    "year": 2023,
    "mediaType": "tv",
    "best": {
-    "title": "Mighty Bheem's Playtime [Hindi]",
-    "subjectType": 2,
-    "year": 2024,
-    "score": 0.411,
+    "title": "Latest Movie Premieres of Chhota Bheem",
+    "subjectType": 5,
+    "year": 2025,
+    "score": 0.39,
     "query": "Chhota Bheem Damyan Hindi"
    },
    "candidates": [
     {
-     "title": "Mighty Bheem's Playtime [Hindi]",
-     "subjectType": 2,
-     "year": 2024,
-     "detailPath": "mighty-bheems-playtime-hindi-kCYJDfNnro4",
-     "score": 0.411,
-     "query": "Chhota Bheem Damyan 2023"
-    },
-    {
-     "title": "Chhota Bheem Videos in Tamil",
+     "title": "Latest Movie Premieres of Chhota Bheem",
      "subjectType": 5,
-     "year": 2024,
-     "detailPath": "chhota-bheem-videos-in-tamil-cmWzxWDx6c5",
-     "score": 0.41,
+     "year": 2025,
+     "detailPath": "latest-movie-premieres-of-chhota-bheem-eLQukWzgqf3",
+     "score": 0.39,
      "query": "Chhota Bheem Damyan Hindi"
     },
     {
-     "title": "Chhota Bheem & Krishna's Adventures",
+     "title": "Old Episodes of Chhota Bheem",
      "subjectType": 5,
-     "year": 2026,
-     "detailPath": "chhota-bheem-and-krishnas-adventures-6PUIHQPuAO9",
+     "year": 2025,
+     "detailPath": "old-episodes-of-chhota-bheem-Ozz35NXO759",
      "score": 0.39,
+     "query": "Chhota Bheem Damyan Hindi"
+    },
+    {
+     "title": "Chhota Bheem Kung Fu Dhamaka 3D Movie",
+     "subjectType": 5,
+     "year": 2020,
+     "detailPath": "chhota-bheem-kung-fu-dhamaka-3d-movie-cquStnvHb31",
+     "score": 0.271,
      "query": "Chhota Bheem Damyan Hindi"
     }
    ]
@@ -4064,20 +4064,20 @@
      "query": "Agent Kim Reactivated"
     },
     {
-     "title": "Agent Carter S1-S2",
-     "subjectType": 2,
-     "year": 2015,
-     "detailPath": "agent-carter-E0wh7w9LtR4",
-     "score": 0.018,
-     "query": "Agent Kim Reactivated"
-    },
-    {
      "title": "Agent Aika [English]",
      "subjectType": 2,
      "year": 1997,
      "detailPath": "agent-aika-english-I8TgsnyE9Ia",
      "score": 0.018,
      "query": "Agent Kim"
+    },
+    {
+     "title": "A Bona Fide Killer",
+     "subjectType": 2,
+     "year": 2026,
+     "detailPath": "a-bona-fide-killer-yzvVpvmbTK4",
+     "score": 0,
+     "query": "Agent Kim Reactivated"
     }
    ]
   },
