@@ -152,4 +152,48 @@ describe('Continue Watching card size + My List real data', () => {
         expect(items[0].textContent).not.toMatch(/Continue episode/);
         dom.window.close();
     });
+    test('phone par card chhote (do per row) aur cross hamesha visible', async () => {
+        const dom = boot([resumeItem('aot', '1', 3, 768), resumeItem('jjk', '2', 5, 0)]);
+        await wait(1200);
+        const { document } = dom.window;
+        const html = readFileSync(HTML_PATH, 'utf8');
+
+        // Owner: "continue watching ab phone mae bada aarha hai" — pehle 100% width
+        // (ek card poori row). Ab 2 per row: 50% - gap/2, aur copy/play chhote.
+        // Media block kai lines me hai, isliye start se thoda aage ka slice lete hain.
+        const phoneStart = html.indexOf('@media(max-width:700px){');
+        expect(phoneStart).toBeGreaterThan(-1);
+        const phone = [html.slice(phoneStart, phoneStart + 6000)];
+        expect(phone[0]).toMatch(/\.continue-card\{-webkit-flex:0 0 calc\(50% - 5px\);flex:0 0 calc\(50% - 5px\);width:calc\(50% - 5px\)\}/);
+        expect(phone[0]).toContain('.continue-copy strong{font-size:12.5px}');
+        expect(phone[0]).toContain('.continue-play{width:36px;height:36px}');
+        // 100% width wala purana rule gaya.
+        expect(phone[0]).not.toContain('flex:0 0 100%');
+
+        // Cross: hover-only nahi, hamesha dikhta hai (phone par hover hota hi nahi).
+        const dismiss = html.match(/\.dismiss\{[^}]*\}/)![0];
+        expect(dismiss).toContain('opacity:.92');
+        expect(dismiss).not.toMatch(/opacity:0(;|})/);
+        expect(dismiss).toMatch(/width:30px;height:30px/);
+        expect(html).toMatch(/@media\(max-width:700px\)\{[\s\S]*\.dismiss\{width:26px;height:26px/);
+
+        // Har card par upar-right me asli remove button.
+        const cards = Array.from(document.querySelectorAll('#continueGrid .continue-card'));
+        expect(cards.length).toBe(2);
+        cards.forEach((card) => {
+            const btn = card.querySelector('.dismiss')!;
+            expect(btn.getAttribute('data-dismiss-continue')).not.toBeNull();
+            expect(btn.getAttribute('aria-label')).toMatch(/^Remove .+ from Continue Watching$/);
+            expect(btn.textContent).toBe('×');
+        });
+
+        // Click par card hat jata hai aur list localStorage me bhi update hoti hai.
+        const first = cards[0].querySelector('.dismiss') as HTMLElement;
+        first.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }));
+        await wait(150);
+        expect(document.querySelectorAll('#continueGrid .continue-card').length).toBe(1);
+        const stored = JSON.parse(dom.window.localStorage.getItem('cr-resume-v1')!);
+        expect(stored.map((e: any) => e.key)).toEqual(['jjk']);
+        dom.window.close();
+    });
 });

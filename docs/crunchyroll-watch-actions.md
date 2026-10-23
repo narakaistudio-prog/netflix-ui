@@ -218,3 +218,44 @@ overlay, admin, `lib/embeds.ts` errors) English kar di.
 Tests: `tests-arena/crunchyroll-player-layout.test.ts` (6) — stage fit formula,
 guessed-duration par koi clock nahi, real duration par exact clock, 10s se kam
 par clock nahi, aur visible strings me Hinglish na ho.
+
+---
+
+# Follow-up #4 — phone par Continue Watching chhota + remove (×)
+
+> “continue watching ab phone mae bada aarha hai aur cross mark bhi dena upar taki
+> usse hta sake”
+
+## Phone ka size
+
+Phone par pehle card `flex:0 0 100%` tha — ek card poori row, 16:9 poster ke saath,
+isliye ek hi item screen ka aadha hissa le leta tha. Ab (≤700px):
+
+```css
+.continue-grid{gap:10px;row-gap:12px}
+.continue-card{flex:0 0 calc(50% - 5px);width:calc(50% - 5px)}
+.continue-copy strong{font-size:12.5px}
+.continue-sub{flex-direction:column;align-items:flex-start} /* title/meta stack */
+.continue-play{width:36px;height:36px}
+```
+
+Do card ek row me, gap ke saath exactly 100% — desktop ka 5-per-row layout waisa
+hi rehta hai.
+
+Thumb ki height ab `aspect-ratio:16/9` se aati hai (purane browsers ke liye
+`padding-bottom` fallback `@supports not` me). Isse artwork load na hone par bhi
+card ka shape toota nahi (pehle ek entry text-only jaisi patli dikh rahi thi).
+
+## Remove (×) button
+
+- Pehle `.dismiss` `opacity:0` tha aur sirf hover/focus par dikhta tha — **phone
+  par hover hota hi nahi**, isliye item hatane ka koi rasta nahi tha.
+- Ab: 30px (phone par 26px) gol button, dark background + halka white border,
+  hamesha visible, card ke upar-right corner me. Hover/focus par poora orange.
+- Click par `resumeStore()` se entry hat jati hai, `localStorage['cr-resume-v1']`
+  update hota hai, card turant gayab + toast.
+- Aria-label: “Remove <title> from Continue Watching” (keyboard/screen-reader).
+
+Test: `tests-arena/crunchyroll-my-list.test.ts` ka naya case — phone media query
+me 2-per-row, `.dismiss` par opacity 0 nahi, har card par remove button aur click
+par card + storage dono se gayab.
