@@ -987,38 +987,78 @@
           "base": 0
         },
         "2": {
-          "season": 2,
-          "base": 0
+          "seg": [
+            [
+              1,
+              27,
+              13
+            ],
+            [
+              2,
+              1,
+              13
+            ]
+          ]
         },
         "3": {
-          "season": 3,
-          "base": 0
+          "seg": [
+            [
+              2,
+              14,
+              22
+            ],
+            [
+              3,
+              1,
+              3
+            ]
+          ]
         },
         "4": {
-          "season": 4,
-          "base": 0
+          "season": 3,
+          "base": 3
         },
         "5": {
           "seg": [
             [
-              4,
-              21,
-              12
+              3,
+              24,
+              10
             ],
             [
-              5,
+              4,
               1,
-              23
+              25
             ]
           ]
         },
         "6": {
-          "season": 6,
-          "base": 0
+          "seg": [
+            [
+              4,
+              26,
+              7
+            ],
+            [
+              5,
+              1,
+              19
+            ]
+          ]
         },
         "7": {
-          "season": 7,
-          "base": 0
+          "seg": [
+            [
+              5,
+              20,
+              7
+            ],
+            [
+              6,
+              1,
+              2
+            ]
+          ]
         }
       }
     },
@@ -1166,47 +1206,55 @@
           "base": 0
         },
         "5": {
-          "season": 5,
-          "base": 0
+          "season": 3,
+          "base": 28
         },
         "6": {
-          "season": 6,
-          "base": 0
+          "seg": [
+            [
+              3,
+              54,
+              1
+            ],
+            [
+              4,
+              1,
+              24
+            ]
+          ]
         },
         "7": {
           "seg": [
             [
+              4,
+              25,
+              1
+            ],
+            [
+              5,
+              1,
+              51
+            ],
+            [
               6,
-              26,
-              14
+              1,
+              38
+            ]
+          ]
+        },
+        "8": {
+          "seg": [
+            [
+              6,
+              39,
+              1
             ],
             [
               7,
               1,
-              12
-            ],
-            [
-              8,
-              1,
-              51
+              11
             ]
           ]
-        }
-      },
-      "images": {
-        "8": {
-          "1": "https://image.tmdb.org/t/p/w780/yeIAkcDTxMuMZimpYnjRtpYqgGC.jpg",
-          "2": "https://image.tmdb.org/t/p/w780/ymTAEFSwndy8KzEtRv3Y3QF165a.jpg",
-          "3": "https://image.tmdb.org/t/p/w780/7TRXiDi0KyjW46rSN9aCBxDsxjc.jpg",
-          "4": "https://image.tmdb.org/t/p/w780/asNN9toG0eHSAcdnayP7eEJdGOm.jpg",
-          "5": "https://image.tmdb.org/t/p/w780/fXqHBAIj0NdHsqgSrVgPznqswbX.jpg",
-          "6": "https://image.tmdb.org/t/p/w780/7eY8ME3EDUxg8xIklaw5hftwbLn.jpg",
-          "7": "https://image.tmdb.org/t/p/w780/xUvvW5KnFbjpAiUD67yVQiataFN.jpg",
-          "8": "https://image.tmdb.org/t/p/w780/vwHRN3alJDTaYiczrSUOlxIl4Cj.jpg",
-          "9": "https://image.tmdb.org/t/p/w780/9FTsmCjJx2UPBzXK6Bxjr4zyCvn.jpg",
-          "10": "https://image.tmdb.org/t/p/w780/ecnphYUBz7ShfCsleAkZeiGVEIM.jpg",
-          "11": "https://image.tmdb.org/t/p/w780/rlmVcPN2UoTiZrB9qidDArQRUxH.jpg",
-          "12": "https://image.tmdb.org/t/p/w780/6q8oiofNmlSYfksHYE7R9lWXW7m.jpg"
         }
       }
     },
