@@ -27,48 +27,7 @@ jobs:
         with:
           node-version: 20
       - name: Probe the JoJo season pages (raw episode links)
-        run: |
-          node --input-type=module -e "
-            import { writeFileSync } from 'node:fs';
-            const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
-            const BASE = 'https://toonstream.us';
-            const get = async (url) => {
-              try {
-                const res = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(30000) });
-                return { status: res.status, url: res.url, text: await res.text() };
-              } catch (error) {
-                return { status: 0, url, text: '', error: String(error?.message || error) };
-              }
-            };
-            const out = { ranAt: new Date().toISOString(), seasons: {} };
-            for (const n of [1, 2, 3, 4, 5, 6]) {
-              const url = BASE + '/series/jojos-bizarre-adventure/season/' + n + '/';
-              const page = await get(url);
-              const text = page.text || '';
-              const hrefs = [...new Set([...text.matchAll(/href=\"(\/episode\/[^\"]+)\"/g)].map((m) => m[1]))];
-              const cardLinks = [...new Set([...text.matchAll(/\/episode\/[^\"'#]+?-(\d+)x(\d+)\/?/g)].map((m) => m[1] + 'x' + m[2]))];
-              out.seasons[n] = {
-                status: page.status,
-                bytes: text.length,
-                hrefCount: hrefs.length,
-                hrefs: hrefs.slice(0, 6),
-                hrefTail: hrefs.slice(-4),
-                cardLinks: cardLinks.length,
-                cardSample: cardLinks.slice(0, 5),
-                cardTail: cardLinks.slice(-5),
-                hasPlayButton: /data-url|watch|episode-btn/i.test(text),
-                snippet: (text.match(/<article[\s\S]{0,400}/) || [''])[0].replace(/\s+/g, ' ').slice(0, 400),
-              };
-            }
-            const extra = await get(BASE + '/series/jojos-bizarre-adventure/season/6');
-            out.season6NoSlash = { status: extra.status, hrefs: [...new Set([...(String(extra.text || '').matchAll(/href=\"(\/episode\/[^\"]+)\"/g)].map((m) => m[1]))].slice(0, 6) };
-            const search = await get(BASE + '/s?q=jojo+stone+ocean');
-            out.stoneOcean = {
-              status: search.status,
-              hrefs: [...new Set([...String(search.text || '').matchAll(/href=\"(\/(?:series|episode)\/[^\"]+)\"/g)].map((m) => m[1]))].slice(0, 12),
-            };
-            writeFileSync('data/jojo-probe.json', JSON.stringify(out, null, 2) + '\n');
-          "
+        run: node scripts/probe-jojo.mjs
 
       - name: Commit the probe result
         run: |
