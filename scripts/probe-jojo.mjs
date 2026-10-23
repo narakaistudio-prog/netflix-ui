@@ -23,38 +23,41 @@ async function get(url) {
 const unique = (list) => [...new Set(list)];
 
 const out = { ranAt: new Date().toISOString(), seasons: {} };
-for (const n of [1, 2, 3, 4, 5, 6]) {
+
+const titlesOf = (text) =>
+    [...text.matchAll(/class="entry-title"[^>]*>\s*(?:<a[^>]*>)?\s*([^<]{1,120})</g)].map((m) => m[1].trim());
+
+for (const n of [1, 2, 3, 4, 6]) {
     const page = await get(`${BASE}/series/jojos-bizarre-adventure/season/${n}/`);
     const text = page.text || '';
-    const hrefs = unique([...text.matchAll(/href="(\/episode\/[^"]+)"/g)].map((m) => m[1]));
-    const anyLinks = unique([...text.matchAll(/\/episode\/[^"'#\s<>]+/g)].map((m) => m[0]));
-    const numbered = unique([...text.matchAll(/-(?:\d+)x(\d+)\//g)].map((m) => Number(m[1])));
     out.seasons[n] = {
         status: page.status,
-        bytes: text.length,
-        hrefs: hrefs.slice(0, 8),
-        hrefCount: hrefs.length,
-        anyLinks: anyLinks.slice(0, 8),
-        anyLinkCount: anyLinks.length,
-        numbered: numbered.slice(0, 8),
-        numberedCount: numbered.length,
-        article: (text.match(/<article[\s\S]{0,500}/) || [''])[0].replace(/\s+/g, ' ').slice(0, 500),
-        seasonButtons: unique([...text.matchAll(/data-url="([^"]*\/season\/(\d+))"/g)].map((m) => m[1])),
+        titles: titlesOf(text).slice(0, 40),
+        titleCount: titlesOf(text).length,
+        articles: (text.match(/<article/gi) || []).length,
+        rawArticle: (text.match(/<article[\s\S]{0,900}/) || [''])[0].replace(/\s+/g, ' ').slice(0, 900),
     };
     await new Promise((done) => setTimeout(done, 150));
 }
 
-const s6 = await get(`${BASE}/series/jojos-bizarre-adventure/season/6`);
-out.season6NoSlash = {
-    status: s6.status,
-    hrefs: unique([...String(s6.text || '').matchAll(/href="(\/episode\/[^"]+)"/g)].map((m) => m[1])).slice(0, 10),
-};
-
-const stone = await get(`${BASE}/s?q=jojo`);
-out.search = {
-    status: stone.status,
-    links: unique([...String(stone.text || '').matchAll(/href="(\/(?:series|episode)\/[^"]+)"/g)].map((m) => m[1])).slice(0, 20),
-};
+const episodePages = [
+    '/episode/jojo&#39;s-bizarre-adventure-6x5/',
+    '/episode/jojos-bizarre-adventure-6x1/',
+    '/episode/jojo&#39;s-bizarre-adventure-3x1/',
+];
+out.episodes = {};
+for (const path of episodePages) {
+    const page = await get(BASE + path);
+    const text = page.text || '';
+    out.episodes[path] = {
+        status: page.status,
+        docTitle: (text.match(/<title>([^<]*)<\/title>/i) || [])[1] || '',
+        titles: titlesOf(text).slice(0, 6),
+        h1: (text.match(/<h1[^>]*>\s*([^<]{1,120})</) || [])[1] || '',
+        breadcrumbs: [...text.matchAll(/itemprop="name"[^>]*>\s*([^<]{1,60})</g)].map((m) => m[1].trim()).slice(0, 6),
+    };
+    await new Promise((done) => setTimeout(done, 150));
+}
 
 writeFileSync('data/jojo-probe.json', `${JSON.stringify(out, null, 2)}\n`);
 console.log('probe written');
