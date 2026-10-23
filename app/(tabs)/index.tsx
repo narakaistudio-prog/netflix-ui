@@ -51,7 +51,7 @@ export default function HomeScreen() {
   const { tiltX, tiltY } = useDeviceMotion(!IS_WEB);
   const { isVisionOS } = useVisionOS();
   const router = useRouter();
-  const { selectedProfile } = useUser();
+  const { account } = useUser();
   /** Hero Play opens the title in the modal (player inside it), not the detail page. */
   const [heroMovie, setHeroMovie] = useState<any>(null);
 
@@ -146,7 +146,7 @@ export default function HomeScreen() {
         {!IS_WEB && (
           <AnimatedHeader
             headerAnimatedProps={headerAnimatedProps}
-            title={`For ${selectedProfile?.name ?? 'You'}`}
+            title={account?.name ? `For ${account.name}` : 'For You'}
             scrollDirection={scrollDirection}
           />
         )}

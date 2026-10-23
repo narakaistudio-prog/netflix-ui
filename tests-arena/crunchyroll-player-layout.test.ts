@@ -102,7 +102,9 @@ describe('UI copy English hai', () => {
         expect(HTML).toContain("'Sign in to vote'");
         expect(HTML).toContain("'Comment is too short.'");
         expect(HTML).toContain("'Link copied — '");
-        expect(HTML).toContain('Comments are saved in Supabase. Reading is free for everyone — sign in to post.');
+        // Owner: "comment box mae supabase wala kya likha hai, hta do" — guest box
+        // me sirf heading + Sign in button rehta hai (netflix-account.test.tsx dekho).
+        expect(HTML).toContain('<strong>Sign in to comment</strong>');
         // Purani Hinglish strings gayi.
         expect(HTML).not.toContain('Vote karne ke liye sign in karo');
         expect(HTML).not.toContain('Link copy ho gaya');

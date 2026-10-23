@@ -1,437 +1,228 @@
-import React, { useRef, useCallback } from 'react';
-import { Platform, View, StyleSheet, TouchableOpacity, ScrollView, Text, Image, FlatList } from 'react-native';
+import React from 'react';
+import { Platform, View, StyleSheet, TouchableOpacity, Text, Pressable, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '@/contexts/UserContext';
 import { usePathname, useRouter } from 'expo-router';
 import { TAB_SCREENS } from '@/app/(tabs)/_layout';
 import { TabScreenWrapper } from '@/components/TabScreenWrapper';
-import { useScrollToTop } from '@react-navigation/native';
-import { BlurView } from 'expo-blur';
-import Animated, {
-    useAnimatedScrollHandler,
-    useAnimatedProps,
-    interpolate,
-    useSharedValue,
-} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SafeImage } from '@/components/SafeImage';
-import { ProfileBadge } from '@/components/ProfileBadge';
 import { WEB_NAV_HEIGHT } from '@/components/WebNavBar';
 
-const exampleLikedShowsAndMovies = [
-    { id: 2, imageUrl: 'https://occ-0-2348-2568.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABU2Tv7ElpWoaZskSjugnCfgUyxx0k8zFkrSLnw8OByra6I4Pu0hvpNMKPqHKk0_VIq_pP47WE4eiU6bLjH30mOAHixRdrQeMX5296hvGq7hFvPhm-1kaKYp2MLO5H3oxUV1q8UEmz3NwsmrYXnnzvNJ2aXgp7drGClF671VG2U62G9s3qaes9qXaz6ChmJpD31wnaRJjsoqvybX0wzGk0Ij_wU1zH2yqI5b7fNA3D4-AsawmmgN6jCiScTDHpH-252lKjP9LJsbjwVGMht06gnyOeADlJQ.jpg' },
-    { id: 3, imageUrl: 'https://i.pinimg.com/736x/71/0f/f2/710ff2d98ca34e0f4a27eb7a2d5c0598.jpg' },
-    { id: 4, imageUrl: 'https://www.commonsensemedia.org/sites/default/files/styles/ratio_2_3_medium/public/product-images/csm-movie/ex-machina-poster.jpg' },
-];
-const exampleMyList = [
-    { id: 1, imageUrl: 'https://i.redd.it/q53e4iwud0971.jpg' },
-    { id: 2, imageUrl: 'https://images.filmibeat.com/img/popcorn/movie_posters/dopatti-20241014150658-22665.jpg' },
-];
-
-const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
-
+/**
+ * My Netflix page.
+ *
+ * Pehle yahan sab **fake** tha: `data/users.json` ke profiles (Saúl / Primeagen /
+ * Theo / Kids), "Who is watching?" switcher, example liked posters, example My
+ * List, "New Arrival · The Perfect Couple" ka notice, aur ek **Admin Panel**
+ * entry. Owner: "netflix mae admin panel hta do aur fake sara profile hta do
+ * netflix mae bhi red ka sign wala exact jo crunchyroll mae system hai wo kardo".
+ *
+ * Ab ye page sirf asli account dikhata hai (lib/account.ts — Crunchyroll ke saath
+ * shared Supabase session): signed out par red "Sign In" button, signed in par
+ * naam + email + Sign out. Koi nakli list/poster nahi.
+ */
 export default function ProfileScreen() {
-    const { selectedProfile } = useUser();
+    const { account, signedIn, signOut, openSignIn } = useUser();
     const pathname = usePathname();
     const isActive = pathname === '/profile';
     const router = useRouter();
-    const scrollViewRef = useRef(null);
-    useScrollToTop(scrollViewRef);
     const insets = useSafeAreaInsets();
 
-    const currentTabIndex = TAB_SCREENS.findIndex(screen =>
-        screen.name === 'profile'
+    const currentTabIndex = TAB_SCREENS.findIndex((screen) => screen.name === 'profile');
+    const activeTabIndex = TAB_SCREENS.findIndex(
+        (screen) => pathname === `/${screen.name}` || (screen.name === 'index' && pathname === '/')
     );
-    const activeTabIndex = TAB_SCREENS.findIndex(screen =>
-        pathname === `/${screen.name}` || (screen.name === 'index' && pathname === '/')
-    );
-
     const slideDirection = activeTabIndex > currentTabIndex ? 'right' : 'left';
-
-    const scrollY = useSharedValue(0);
-
-    const scrollHandler = useAnimatedScrollHandler({
-        onScroll: (event) => {
-            scrollY.value = event.contentOffset.y;
-        },
-    });
-
-    const headerAnimatedProps = useAnimatedProps(() => {
-        return {
-            intensity: interpolate(
-                scrollY.value,
-                [0, 90],
-                [0, 85],
-                'clamp'
-            )
-        };
-    });
-
-    const renderLikedContent = () => (
-        <View style={styles.likedContent}>
-            <FlatList
-                horizontal
-                data={exampleLikedShowsAndMovies}
-                keyExtractor={item => item.id.toString()}
-                renderItem={useCallback(({ item }: { item: { id: number; imageUrl: string } }) => (
-                    <View style={styles.likedItemContainer}>
-                        <SafeImage
-                            source={{ uri: item.imageUrl }}
-                            style={styles.likedShowImage}
-                            transition={200}
-                        />
-                    </View>
-                ), [])}
-                showsHorizontalScrollIndicator={false}
-                maxToRenderPerBatch={5}
-                windowSize={3}
-                removeClippedSubviews={true}
-            />
-        </View>
-    );
-
-    const renderMyList = () => (
-        <FlatList
-            horizontal
-            data={exampleMyList}
-            keyExtractor={item => item.id.toString()}
-            renderItem={useCallback(({ item }: { item: { id: number; imageUrl: string } }) => (
-                <SafeImage
-                    style={styles.myListImage}
-                    source={{ uri: item.imageUrl }}
-                    transition={200}
-                />
-            ), [])}
-            showsHorizontalScrollIndicator={false}
-            style={styles.myList}
-            maxToRenderPerBatch={5}
-            windowSize={3}
-            removeClippedSubviews={true}
-        />
-    );
+    const initial = (account?.name || account?.email || '?').trim().charAt(0).toUpperCase();
 
     return (
         <TabScreenWrapper isActive={isActive} slideDirection={slideDirection}>
             <View style={styles.container}>
-                {Platform.OS !== 'web' && (<AnimatedBlurView
-                    tint="dark"
-                    style={[styles.headerBlur]}
-                    animatedProps={headerAnimatedProps}
-                >
-                    <View style={styles.header}>
-                        <Text style={styles.title}>My Netflix</Text>
-                        <View style={styles.headerRight}>
-                            <TouchableOpacity style={styles.searchButton} onPress={() => router.push('/search')}>
-                                <Ionicons name="search" size={28} color="white" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.menuButton}>
-                                <Ionicons name="menu" size={28} color="white" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </AnimatedBlurView>)}
-                <Animated.ScrollView
-                    ref={scrollViewRef}
+                <ScrollView
                     style={styles.scrollView}
-                    onScroll={scrollHandler}
-                    scrollEventThrottle={16}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
-                        paddingTop: Platform.OS === 'web' ? WEB_NAV_HEIGHT + 24 : insets.top + 50,
+                        paddingTop: Platform.OS === 'web' ? WEB_NAV_HEIGHT + 28 : insets.top + 56,
                         paddingBottom: 100,
-                        ...(Platform.OS === 'web' ? { maxWidth: 760, width: '100%', alignSelf: 'center' as const } : null),
+                        ...(Platform.OS === 'web'
+                            ? { maxWidth: 720, width: '100%', alignSelf: 'center' as const }
+                            : null),
                     }}
                 >
+                    <Text style={styles.title}>My Netflix</Text>
 
-                    <TouchableOpacity style={styles.profileSection} onPress={() => router.push('/switch-profile')}>
-                        <ProfileBadge
-                            name={selectedProfile?.name ?? '?'}
-                            id={selectedProfile?.id}
-                            size={60}
-                            borderRadius={4}
-                            style={styles.profileImage}
-                        />
-                        <View style={styles.profileNameContainer}>
-                            <Text style={styles.profileName}>{selectedProfile?.name}</Text>
-                            <Ionicons name="chevron-down" size={16} color="white" />
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.menuItem}>
-                        <View style={styles.menuIconContainer}>
-                            <View style={[styles.notificationIconContainer, { backgroundColor: '#E51013' }]}>
-                                <Ionicons name="notifications" size={24} color="#fff" />
+                    {signedIn ? (
+                        <View style={styles.accountCard}>
+                            <View style={styles.accountAvatar}>
+                                <Text style={styles.accountAvatarText}>{initial}</Text>
+                            </View>
+                            <View style={{ flex: 1, minWidth: 0 }}>
+                                <Text style={styles.accountName} numberOfLines={1}>
+                                    {account?.name || 'Account'}
+                                </Text>
+                                {!!account?.email && (
+                                    <Text style={styles.accountEmail} numberOfLines={1}>
+                                        {account.email}
+                                    </Text>
+                                )}
                             </View>
                         </View>
-                        <View style={styles.menuContent}>
-                            <Text style={styles.menuText}>Notifications</Text>
-                            <Ionicons name="chevron-forward" size={20} color="#fff" />
-                        </View>
-                    </TouchableOpacity>
-
-                    <View style={styles.notificationPreview}>
-                        <View style={styles.notificationDot} />
-                        <SafeImage
-                            source={{ uri: 'https://dnm.nflximg.net/api/v6/dGKhUGb9YF21yyDjKrWwmGN1H8o/AAAABdl3F7BjF71fC6gaLl7xCpGIak8CxmdDgY3FK8dEQhlfx5n5O-z9hhOTtzYyr1nr4Ajn5sAyHjAGGBIiFO0tCnDG5AevRDi10_WuPvvEFYTUQfZAEpUBPwrFbAKyalsQREodRB1mKPylnjU.jpg?r=c90' }}
-                            style={styles.notificationImage}
-                            transition={200}
-                            fallbackLabel="The Perfect Couple"
-                        />
-                        <View style={styles.notificationText}>
-                            <Text style={styles.notificationTitle}>New Arrival</Text>
-                            <Text style={styles.notificationSubtitle}>The Perfect Couple</Text>
-                            <Text style={styles.notificationDate}>Nov 05</Text>
-                        </View>
-                    </View>
-
-                    <TouchableOpacity
-                        style={styles.menuItem}
-                        onPress={() => router.push('/downloads')}
-                    >
-                        <View style={styles.menuIconContainer}>
-                            <View style={[styles.downloadIconContainer, { backgroundColor: '#0071EB' }]}>
-                                <Image
-                                    source={require('../../../assets/images/replace-these/download-netflix-transparent.png')}
-                                    style={{ width: 24, height: 24 }}
-                                />
+                    ) : (
+                        <View style={styles.accountCard}>
+                            <View style={[styles.accountAvatar, styles.guestAvatar]}>
+                                <Ionicons name="person" size={26} color="#fff" />
+                            </View>
+                            <View style={{ flex: 1, minWidth: 0 }}>
+                                <Text style={styles.accountName}>You are browsing as a guest</Text>
+                                <Text style={styles.accountEmail}>
+                                    Sign in to keep your account in one place across Netflix and Crunchyroll.
+                                </Text>
                             </View>
                         </View>
-                        <View style={styles.menuContent}>
-                            <Text style={styles.menuText}>Downloads</Text>
-                            <Ionicons name="chevron-forward" size={20} color="#fff" />
-                        </View>
-                    </TouchableOpacity>
+                    )}
 
-                    <TouchableOpacity
-                        style={styles.menuItem}
-                        onPress={() => router.push('/admin')}
-                    >
-                        <View style={styles.menuIconContainer}>
-                            <View style={[styles.downloadIconContainer, { backgroundColor: '#E50914' }]}>
-                                <Ionicons name="settings-outline" size={24} color="#fff" />
-                            </View>
-                        </View>
-                        <View style={styles.menuContent}>
-                            <Text style={styles.menuText}>Admin Panel</Text>
-                            <Ionicons name="chevron-forward" size={20} color="#fff" />
-                        </View>
-                    </TouchableOpacity>
+                    {!signedIn && (
+                        <Pressable
+                            style={({ hovered }: any) => [styles.signInBtn, hovered && { backgroundColor: '#f6121d' }]}
+                            onPress={openSignIn}
+                            accessibilityRole="button"
+                            accessibilityLabel="Sign in"
+                        >
+                            <Text style={styles.signInBtnText}>Sign In</Text>
+                        </Pressable>
+                    )}
 
                     <View style={styles.section}>
-                        <Text style={styles.sectionHeader}>TV Shows & Movies You've Liked</Text>
-                        {renderLikedContent()}
+                        <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/downloads')}>
+                            <View style={styles.menuIconContainer}>
+                                <View style={[styles.menuIcon, { backgroundColor: '#0071EB' }]}>
+                                    <Ionicons name="download-outline" size={20} color="#fff" />
+                                </View>
+                            </View>
+                            <View style={styles.menuContent}>
+                                <Text style={styles.menuText}>Downloads</Text>
+                                <Ionicons name="chevron-forward" size={20} color="#fff" />
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.menuItem}
+                            onPress={() => router.push('/crunchyroll')}
+                        >
+                            <View style={styles.menuIconContainer}>
+                                <View style={[styles.menuIcon, { backgroundColor: '#F47521' }]}>
+                                    <Ionicons name="play" size={20} color="#fff" />
+                                </View>
+                            </View>
+                            <View style={styles.menuContent}>
+                                <Text style={styles.menuText}>Crunchyroll</Text>
+                                <Ionicons name="chevron-forward" size={20} color="#fff" />
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.section}>
-                        <View style={styles.sectionHeaderContainer}>
-                            <Text style={styles.sectionHeader}>My List</Text>
-                            <TouchableOpacity>
-                                <Text style={styles.seeAll}>See All</Text>
-                            </TouchableOpacity>
-                        </View>
-                        {renderMyList()}
-                    </View>
+                    {signedIn && (
+                        <Pressable
+                            style={({ hovered }: any) => [styles.signOutBtn, hovered && { borderColor: '#fff' }]}
+                            onPress={signOut}
+                            accessibilityRole="button"
+                            accessibilityLabel="Sign out of Netflix"
+                        >
+                            <Text style={styles.signOutText}>Sign out of Netflix</Text>
+                        </Pressable>
+                    )}
 
-
-
-                </Animated.ScrollView>
+                    <Text style={styles.note}>
+                        Sign-in is shared with Crunchyroll: one account for comments and for this profile.
+                    </Text>
+                </ScrollView>
             </View>
         </TabScreenWrapper>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingTop: 60,
-        paddingBottom: 16,
-    },
+    container: { flex: 1, backgroundColor: '#000' },
+    scrollView: { flex: 1 },
     title: {
-        fontSize: 24,
-        fontWeight: '700',
         color: '#fff',
-    },
-    searchButton: {
-        padding: 8,
-    },
-    profileSection: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        gap: 8,
-    },
-    profileImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 4,
-    },
-    profileName: {
-        fontSize: 22,
+        fontSize: 28,
         fontWeight: '800',
-        color: '#fff',
+        marginBottom: 18,
+        paddingHorizontal: 20,
     },
-    menuItem: {
-        paddingHorizontal: 16,
+    accountCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 14,
+        marginHorizontal: 20,
+        padding: 16,
+        borderRadius: 8,
+        backgroundColor: '#141414',
+        borderWidth: 1,
+        borderColor: '#2a2a2a',
+    },
+    accountAvatar: {
+        width: 54,
+        height: 54,
+        borderRadius: 6,
+        backgroundColor: '#E50914',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    guestAvatar: { backgroundColor: '#3a3a3a' },
+    accountAvatarText: { color: '#fff', fontSize: 24, fontWeight: '800' },
+    accountName: { color: '#fff', fontSize: 17, fontWeight: '700' },
+    accountEmail: { color: '#9a9a9a', fontSize: 13, marginTop: 4, lineHeight: 18 },
+    signInBtn: {
+        marginHorizontal: 20,
+        marginTop: 14,
+        backgroundColor: '#E50914',
+        borderRadius: 4,
         paddingVertical: 12,
+        alignItems: 'center',
+    },
+    signInBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+    section: { marginTop: 26, borderTopWidth: 1, borderTopColor: '#222' },
+    menuItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 12,
+        paddingVertical: 16,
+        paddingHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#1d1d1d',
+        gap: 14,
     },
-    menuIconContainer: {
-        // marginBottom: 8,
-    },
-    profileNameContainer: {
-        flexDirection: 'row',
+    menuIconContainer: { width: 40, alignItems: 'center' },
+    menuIcon: {
+        width: 38,
+        height: 38,
+        borderRadius: 19,
         alignItems: 'center',
-        gap: 4,
-    },
-    notificationIconContainer: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#222',
         justifyContent: 'center',
-        alignItems: 'center',
-    },
-    downloadIconContainer: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#222',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     menuContent: {
+        flex: 1,
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        flex: 1,
     },
-    menuText: {
-        fontSize: 18,
-        fontWeight: '500',
-        color: '#fff',
-    },
-    notificationPreview: {
-        flexDirection: 'row',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        alignItems: 'center',
-        gap: 12,
-        marginBottom: 12,
-    },
-    notificationDot: {
-        width: 10,
-        height: 10,
-        borderRadius: 10,
-        backgroundColor: '#E51013',
-        position: 'absolute',
-        left: 8,
-        top: 40,
-    },
-    notificationImage: {
-        width: 120,
-        height: 70,
+    menuText: { color: '#fff', fontSize: 16 },
+    signOutBtn: {
+        marginHorizontal: 20,
+        marginTop: 24,
+        borderWidth: 1,
+        borderColor: '#555',
         borderRadius: 4,
-        marginLeft: 12,
-    },
-    notificationText: {
-        flex: 1,
-        gap: 4,
-    },
-    notificationTitle: {
-        fontSize: 14,
-        color: '#fff',
-        fontWeight: '500',
-    },
-    notificationSubtitle: {
-        fontSize: 14,
-        color: '#999',
-    },
-    notificationDate: {
-        fontSize: 14,
-        color: '#666',
-    },
-    section: {
-        paddingHorizontal: 16,
         paddingVertical: 12,
-        borderTopWidth: 1,
-        borderTopColor: '#222',
-    },
-    sectionHeader: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: '#fff',
-    },
-    headerRight: {
-        flexDirection: 'row',
-        gap: 16,
-    },
-    menuButton: {
-        padding: 8,
-    },
-    likedContent: {
-        marginTop: 12,
-    },
-    likedItemContainer: {
-        marginRight: 10,
-        width: 110,
-        backgroundColor: '#161616',
-        alignItems: 'center',
-        borderRadius: 8,
-    },
-    likedShowImage: {
-        width: 110,
-        height: 150,
-        borderRadius: 8,
-        // borderBottomLeftRadius: 0,
-        // borderBottomRightRadius: 0,
-    },
-    shareButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        paddingVertical: 8,
-    },
-    shareText: {
-        color: 'white',
-        fontSize: 13,
-    },
-    sectionHeaderContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
-    seeAll: {
-        color: 'white',
-        fontSize: 14,
+    signOutText: { color: '#fff', fontSize: 15, fontWeight: '600' },
+    note: {
+        color: '#6f6f6f',
+        fontSize: 12,
+        lineHeight: 18,
+        marginTop: 18,
+        paddingHorizontal: 20,
     },
-    myList: {
-        marginTop: 12,
-    },
-    myListImage: {
-        width: 120,
-        height: 180,
-        borderRadius: 4,
-        marginRight: 8,
-    },
-    headerBlur: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 120,
-        zIndex: 1,
-    },
-    scrollView: {
-        flex: 1,
-    },
-}); 
+});

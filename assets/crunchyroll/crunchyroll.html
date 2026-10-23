@@ -602,51 +602,52 @@
        Drawer `transform` se slide hota hai (display:none se transition nahi
        chalti) aur band hone par visibility:hidden — warna hidden panel ke
        buttons keyboard focus le lete hain. */
-    .watch-comment{position:relative;display:-webkit-flex;display:flex;align-items:center;gap:8px;border:1px solid rgba(139,92,246,.55);border-radius:999px;background:linear-gradient(180deg,rgba(111,76,255,.26),rgba(76,52,190,.13));color:#ded4ff;font-size:13px;font-weight:800;padding:9px 15px;cursor:pointer;box-shadow:0 0 0 1px rgba(139,92,246,.1),0 10px 24px rgba(76,52,190,.22);transition:border-color .18s,color .18s,background .18s}
-    .watch-comment:hover,.watch-comment[aria-expanded="true"]{border-color:#b49bff;color:#fff;background:linear-gradient(180deg,rgba(139,92,246,.42),rgba(76,52,190,.22))}
+    .watch-comment{position:relative;display:-webkit-flex;display:flex;align-items:center;gap:8px;border:1px solid rgba(244,117,33,.55);border-radius:999px;background:linear-gradient(180deg,rgba(244,117,33,.22),rgba(190,88,20,.12));color:#ffd9be;font-size:13px;font-weight:800;padding:9px 15px;cursor:pointer;box-shadow:0 0 0 1px rgba(244,117,33,.1),0 10px 24px rgba(190,88,20,.22);transition:border-color .18s,color .18s,background .18s}
+    .watch-comment:hover,.watch-comment[aria-expanded="true"]{border-color:#ffb07a;color:#fff;background:linear-gradient(180deg,rgba(244,117,33,.38),rgba(190,88,20,.2))}
     .watch-comment svg.cr-ico{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2}
-    .watch-comment svg.cr-spark{position:absolute;top:-8px;right:-7px;width:16px;height:16px;fill:currentColor;stroke:none;color:#c9b6ff;opacity:.9}
-    .watch-comment b.cr-count{min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#7c5cff;color:#fff;font-size:11.5px;font-weight:900;display:-webkit-flex;display:flex;align-items:center;justify-content:center}
+    .watch-comment svg.cr-spark{position:absolute;top:-8px;right:-7px;width:16px;height:16px;fill:currentColor;stroke:none;color:#ffb07a;opacity:.9}
+    .watch-comment b.cr-count{min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#f47521;color:#160e08;font-size:11.5px;font-weight:900;display:-webkit-flex;display:flex;align-items:center;justify-content:center}
     .watch-comment b.cr-count[hidden]{display:none}
     .auth-btn{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#f2f2f7;font-size:12px;font-weight:900;border-radius:999px;padding:8px 15px;cursor:pointer;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .auth-btn:hover,.auth-btn[data-cr-auth="in"]{border-color:#a78bfa;color:#fff}
+    .auth-btn:hover,.auth-btn[data-cr-auth="in"]{border-color:#f47521;color:#fff}
 
-    .comments-drawer{position:fixed;top:0;right:0;bottom:0;z-index:145;width:min(430px,100%);display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;background:#0b0d17;border-left:1px solid rgba(139,92,246,.3);box-shadow:-40px 0 90px rgba(0,0,0,.65);transform:translateX(102%);visibility:hidden;transition:transform .26s ease,visibility .26s}
+    .comments-drawer{position:fixed;top:0;right:0;bottom:0;z-index:145;width:min(430px,100%);display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;background:#0b0d17;border-left:1px solid rgba(244,117,33,.28);box-shadow:-40px 0 90px rgba(0,0,0,.65);transform:translateX(102%);visibility:hidden;transition:transform .26s ease,visibility .26s}
     .comments-drawer.open{transform:none;visibility:visible}
     .comments-head{display:-webkit-flex;display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.07);flex:0 0 auto}
     .comments-head h2{margin:0;font-size:17px;font-weight:900;display:-webkit-flex;display:flex;align-items:center;gap:9px}
-    .comments-head h2 svg{width:20px;height:20px;fill:none;stroke:#a78bfa;stroke-width:2}
+    .comments-head h2 svg{width:20px;height:20px;fill:none;stroke:#f47521;stroke-width:2}
     .comments-head #crHeaderCount{color:#8f93a3;font-weight:700;font-size:14px}
     .comments-close{margin-left:auto;width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#9aa0ae;font-size:22px;line-height:1;cursor:pointer}
     .comments-close:hover{background:rgba(255,255,255,.08);color:#fff}
 
     .cr-tabs{display:-webkit-flex;display:flex;gap:8px;padding:14px 16px 2px;flex:0 0 auto}
     .cr-tab{border:1px solid rgba(255,255,255,.1);background:transparent;color:#9aa0ae;font-size:11.5px;font-weight:800;padding:6px 13px;border-radius:999px;cursor:pointer}
-    .cr-tab.active{background:#7c5cff;border-color:#7c5cff;color:#fff}
+    .cr-tab.active{background:#f47521;border-color:#f47521;color:#160e08}
 
     .cr-composer{display:-webkit-flex;display:flex;gap:10px;padding:14px 16px 10px;flex:0 0 auto}
     .cr-composer[hidden]{display:none}
-    .cr-avatar{width:36px;height:36px;border-radius:50%;flex:0 0 auto;display:-webkit-flex;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;background:#7c5cff;overflow:hidden}
-    .cr-me{background:linear-gradient(135deg,#8b5cf6,#4c34be);box-shadow:0 0 0 2px rgba(139,92,246,.25)}
+    .cr-avatar{width:36px;height:36px;border-radius:50%;flex:0 0 auto;display:-webkit-flex;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#160e08;background:#f47521;overflow:hidden}
+    .cr-me{background:linear-gradient(135deg,#ff9a4d,#d3560d);box-shadow:0 0 0 2px rgba(244,117,33,.25);color:#160e08}
     .cr-compose-main{flex:1 1 auto;min-width:0}
     .cr-input-wrap{position:relative}
     .cr-input{width:100%;resize:none;min-height:44px;max-height:140px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#12141f;color:#f2f2f7;font-size:13px;line-height:1.5;padding:12px 38px 12px 12px;outline:0;font-family:inherit;box-sizing:border-box}
-    .cr-input:focus{border-color:#8b5cf6}
+    .cr-input:focus{border-color:#f47521}
     .cr-input::placeholder{color:#7f8496}
     .cr-emoji{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:#8b90a0;font-size:16px;pointer-events:none}
     .cr-compose-foot{display:-webkit-flex;display:flex;align-items:center;gap:10px;margin-top:8px}
     .cr-hint{font-size:11.5px;color:#ff8b8b;flex:1 1 auto;min-width:0}
-    .cr-post{margin-left:auto;border:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#6d4bff);color:#fff;font-weight:900;font-size:12.5px;padding:9px 22px;cursor:pointer}
+    .cr-post{margin-left:auto;border:0;border-radius:999px;background:#f47521;color:#160e08;font-weight:900;font-size:12.5px;padding:9px 22px;cursor:pointer}
     .cr-post:disabled{opacity:.45;cursor:default}
     .cr-reply-chip{display:-webkit-flex;display:flex;align-items:center;gap:8px;font-size:11.5px;color:#b9a8ff;margin-bottom:7px}
     .cr-reply-chip[hidden]{display:none}
     .cr-reply-chip b{color:#fff}
     .cr-reply-chip button{border:0;background:transparent;color:#8b90a0;cursor:pointer;font-size:15px;line-height:1;padding:0 2px}
 
-    .cr-guest{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:9px;padding:16px;margin:12px 16px 6px;border:1px dashed rgba(139,92,246,.4);border-radius:14px;background:rgba(139,92,246,.07);font-size:12.5px;line-height:1.55;color:#a9adba}
+    .cr-guest{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:11px;padding:16px;margin:12px 16px 6px;border:1px dashed rgba(244,117,33,.42);border-radius:14px;background:rgba(244,117,33,.07);font-size:12.5px;line-height:1.55;color:#a9adba}
     .cr-guest[hidden]{display:none}
-    .cr-guest strong{color:#fff;font-size:13.5px}
-    .cr-signin-btn{align-self:flex-start;border:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#6d4bff);color:#fff;font-weight:900;font-size:12.5px;padding:10px 18px;cursor:pointer}
+    .cr-guest strong{color:#f47521;font-size:14px;font-weight:900;letter-spacing:.01em}
+    .cr-signin-btn{align-self:flex-start;border:0;border-radius:999px;background:#f47521;color:#160e08;font-weight:900;font-size:12.5px;padding:10px 18px;cursor:pointer;transition:background .16s ease}
+    .cr-signin-btn:hover{background:#ff8a3d}
 
     .cr-list{flex:1 1 auto;overflow-y:auto;padding:6px 16px 26px;scrollbar-width:thin}
     .cr-item{display:-webkit-flex;display:flex;gap:11px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.055)}
@@ -660,16 +661,16 @@
     .cr-act{display:-webkit-flex;display:flex;align-items:center;gap:5px;border:0;background:transparent;color:#8b90a0;font-size:12px;font-weight:700;padding:2px 0;cursor:pointer}
     .cr-act svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
     .cr-act:hover{color:#c9b6ff}
-    .cr-act.on{color:#a78bfa}
+    .cr-act.on{color:#f47521}
     .cr-del:hover{color:#ff8b8b}
-    .cr-reply{margin-left:34px;border-left:2px solid rgba(139,92,246,.28);padding-left:11px}
+    .cr-reply{margin-left:34px;border-left:2px solid rgba(244,117,33,.28);padding-left:11px}
     .cr-empty{padding:34px 10px;text-align:center;color:#8b90a0;font-size:13px;line-height:1.6}
-    .cr-spin{display:inline-block;width:15px;height:15px;margin-right:7px;border:2px solid rgba(255,255,255,.25);border-top-color:#a78bfa;border-radius:50%;vertical-align:-3px;animation:crSpin .8s linear infinite}
+    .cr-spin{display:inline-block;width:15px;height:15px;margin-right:7px;border:2px solid rgba(255,255,255,.25);border-top-color:#f47521;border-radius:50%;vertical-align:-3px;animation:crSpin .8s linear infinite}
     @keyframes crSpin{to{transform:rotate(360deg)}}
 
     .cr-auth{position:fixed;inset:0;z-index:160;background:rgba(4,5,10,.8);display:-webkit-flex;display:flex;align-items:center;justify-content:center;padding:20px}
     .cr-auth[hidden]{display:none}
-    .cr-auth-box{position:relative;width:min(420px,100%);max-height:92vh;overflow-y:auto;background:#101223;border:1px solid rgba(139,92,246,.35);border-radius:18px;padding:26px 24px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
+    .cr-auth-box{position:relative;width:min(420px,100%);max-height:92vh;overflow-y:auto;background:#171310;border:1px solid rgba(244,117,33,.32);border-radius:18px;padding:26px 24px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
     .cr-auth-box h2{margin:0 0 6px;font-size:21px}
     .cr-auth-sub{margin:0 0 16px;color:#9aa0ae;font-size:12.5px;line-height:1.6}
     .cr-auth-close{position:absolute;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#9aa0ae;font-size:22px;line-height:1;cursor:pointer}
@@ -677,12 +678,13 @@
     .cr-auth-tabs{display:-webkit-flex;display:flex;gap:6px;background:#0a0c17;border-radius:10px;padding:4px;margin-bottom:16px}
     .cr-auth-tabs[hidden]{display:none}
     .cr-auth-tabs button{flex:1 1 0;border:0;border-radius:8px;background:transparent;color:#9aa0ae;font-weight:800;font-size:12.5px;padding:9px 0;cursor:pointer}
-    .cr-auth-tabs button.active{background:#7c5cff;color:#fff}
+    .cr-auth-tabs button.active{background:#f47521;color:#160e08}
     .cr-field{display:block;margin-bottom:11px;font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:#a9adba}
     .cr-field[hidden]{display:none}
     .cr-field input{display:block;width:100%;margin-top:6px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#0a0c17;color:#fff;padding:11px 12px;font-size:13px;outline:0;font-family:inherit;text-transform:none;letter-spacing:0;box-sizing:border-box}
-    .cr-field input:focus{border-color:#8b5cf6}
-    .cr-auth-submit{width:100%;margin-top:6px;border:0;border-radius:10px;background:linear-gradient(90deg,#8b5cf6,#6d4bff);color:#fff;font-weight:900;font-size:13.5px;padding:12px;cursor:pointer}
+    .cr-field input:focus{border-color:#f47521}
+    .cr-auth-submit{width:100%;margin-top:6px;border:0;border-radius:10px;background:#f47521;color:#160e08;font-weight:900;font-size:13.5px;padding:12px;cursor:pointer;transition:background .16s ease}
+    .cr-auth-submit:hover{background:#ff8a3d}
     .cr-auth-submit:disabled{opacity:.6;cursor:default}
     .cr-auth-error{margin:10px 0 0;color:#ff8b8b;font-size:12px;min-height:16px}
     .cr-auth-account{margin:0 0 14px;font-size:13px;color:#dfe1ea;line-height:1.6}
@@ -922,7 +924,6 @@
     </form>
     <div class="cr-guest" id="crGuestBox">
       <strong>Sign in to comment</strong>
-      <span>Comments are saved in Supabase. Reading is free for everyone — sign in to post.</span>
       <button type="button" class="cr-signin-btn" id="crGuestSignIn">Sign in</button>
     </div>
     <div class="cr-list" id="crList" aria-live="polite"></div>
@@ -932,7 +933,7 @@
     <div class="cr-auth-box" role="dialog" aria-modal="true" aria-labelledby="crAuthTitle">
       <button type="button" class="cr-auth-close" id="crAuthClose" aria-label="Close sign in">×</button>
       <h2 id="crAuthTitle">Join the conversation</h2>
-      <p class="cr-auth-sub" id="crAuthSub">Sign in to comment — your name and comment are saved in Supabase.</p>
+      <p class="cr-auth-sub" id="crAuthSub">Sign in to comment — your name shows next to what you post.</p>
       <div class="cr-auth-tabs" id="crAuthTabs" role="tablist">
         <button type="button" class="active" data-cr-auth-mode="signin" role="tab" aria-selected="true">Sign in</button>
         <button type="button" data-cr-auth-mode="signup" role="tab" aria-selected="false">Create account</button>
@@ -1946,6 +1947,15 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         try{return crStoreSession(await crAuthCall('/auth/v1/token?grant_type=refresh_token',{refresh_token:crSession.refresh_token}))}catch(e){crClearSession();return false}
       }
       function crClearSession(){crSession=null;crSaveSession();crPaintAuth()}
+      /* Netflix app (parent frame) me sign in/out hone par yahan turant update ho —
+         dono ek hi Supabase session share karte hain (lib/account.ts). Storage
+         event sirf doosre documents me aata hai, isliye iframe ko yahi chahiye. */
+      window.addEventListener('storage',function(ev){
+        if(ev&&ev.key&&ev.key!==CR_STORE)return;
+        try{crSession=JSON.parse(window.localStorage.getItem(CR_STORE)||'null')}catch(e){crSession=null}
+        if(crSession&&!crSession.access_token)crSession=null;
+        try{crPaintAuth()}catch(e){}
+      },false);
 
       function crPaintAuth(){
         var u=crUser(),name=crName(),btn=byId('authButton');
@@ -2126,7 +2136,7 @@ var TS_DROPS=[{"title":"Grand Blue Dreaming","slug":"grand-blue-dreaming","img":
         setHidden(byId('crNameField'),signedIn||CR_AUTH_MODE!=='signup');
         var title=byId('crAuthTitle'),sub=byId('crAuthSub'),submit=byId('crAuthSubmit'),err=byId('crAuthError');
         if(title)title.textContent=signedIn?'Your account':(CR_AUTH_MODE==='signup'?'Create your account':'Welcome back');
-        if(sub)sub.textContent=signedIn?'You can sign out here. Your comments are saved in Supabase.':(CR_AUTH_MODE==='signup'?'Create an account — your display name appears on your comments.':'Use the email and password you signed up with.');
+        if(sub)sub.textContent=signedIn?'You can sign out here. Your comments stay saved.':(CR_AUTH_MODE==='signup'?'Create an account — your display name appears on your comments.':'Use the email and password you signed up with.');
         if(submit)submit.textContent=CR_AUTH_MODE==='signup'?'Create account':'Sign in';
         if(err)err.textContent='';
         var accName=byId('crAccountName');if(accName)accName.textContent=(crUser()&&(crUser().email||crName()))||'';
