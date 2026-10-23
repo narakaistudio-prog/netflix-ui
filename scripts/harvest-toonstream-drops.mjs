@@ -55,7 +55,10 @@ const NX_BASE = 'https://nxsha.space';
 const UA = 'Mozilla/5.0 (compatible; netflix-ui-toonstream-drops/1.0)';
 const START = '/*TS_DROPS_START*/';
 const END = '/*TS_DROPS_END*/';
-const MAX_ITEMS = 40;
+// Owner: "toonstream mae abhi jitna anime fresh drop row mae hai wo sara apne
+// fresh drop row mae dikhna chiyea" — isliye row ke items cap nahi hote. Sirf
+// ek safety ceiling, taaki kharab markup se hazaaron records na ban jayein.
+const MAX_ITEMS = 200;
 const REQUEST_TIMEOUT_MS = 30_000;
 
 const DRY_RUN = process.argv.includes('--dry-run');

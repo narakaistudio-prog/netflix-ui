@@ -1049,7 +1049,7 @@
       function tsdKey(item,index){return 'tsd-'+String((item&&(item.slug||item.title))||('t'+index)).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
       function dropInfo(key){var drops=window.CR_NX_DROPS||{};return drops[key]||null}
       function dropDate(key){var drop=dropInfo(key);if(!drop)return '';return shortDropDate(drop.added)||'just now'}
-      function railCard(key){var a=shows[key],drop=dropInfo(key),dropAdded=drop?dropDate(key):'',dropEpisode=(drop&&drop.season)?('S'+drop.season+' · E'+drop.episode+' · '):'',dropType=a.type==='Movie'?'Movie':'Series',dropArt=drop?(a.img||dropPlaceholderImage(a.title)):a.img;return '<article class="rail-card" data-open="'+key+'" tabindex="0" role="button"><div class="rail-poster">'+(drop&&drop.fresh?'<span class="fresh-flag">New</span>':'')+posterImage(dropArt,a.title+' anime poster',true,drop?dropPlaceholderImage(a.title):'')+'<div class="quick-info"><h3>'+a.title+'</h3>'+(drop?'<div class="quick-meta">'+(drop.verb||'Added')+' '+dropAdded+'<br>'+dropEpisode+dropType+' · '+(drop.src==='deadtoons'?'via DeadToons':(drop.src==='toonstream'?'via ToonStream':'fresh drop'))+'</div>':'<div class="quick-meta"><span class="rating">★ '+a.rating+'</span> · '+a.year+'<br>'+genreText(a)+'</div>')+'<div class="quick-actions"><button data-quick-play="'+key+'">▶ Play</button><button class="quick-save" data-save-key="'+key+'">＋ My List</button></div></div></div><div class="rail-copy"><h3>'+a.title+'</h3><p>'+(drop?dropEpisode+(drop.verb||'Added')+' '+dropAdded+(drop.fresh?' · New':'')+' · '+dropType:'★ '+a.rating+' · '+genreText(a))+'</p></div></article>'}
+      function railCard(key){var a=shows[key],drop=dropInfo(key),dropAdded=drop?dropDate(key):'',dropEpisode=(drop&&drop.season)?('S'+drop.season+' · E'+drop.episode+' · '):'',dropType=a.type==='Movie'?'Movie':'Series',dropArt=drop?(a.img||dropPlaceholderImage(a.title)):a.img;return '<article class="rail-card" data-open="'+key+'" tabindex="0" role="button"><div class="rail-poster">'+(drop&&drop.fresh?'<span class="fresh-flag">New</span>':'')+posterImage(dropArt,a.title+' anime poster',true,drop?dropPlaceholderImage(a.title):'')+'<div class="quick-info"><h3>'+a.title+'</h3>'+(drop?'<div class="quick-meta">'+(drop.verb||'Added')+' '+dropAdded+'<br>'+dropEpisode+dropType+' · '+(drop.src==='deadtoons'?'via DeadToons':(drop.src==='toonstream'?'via ToonStream':'fresh drop'))+'</div>':'<div class="quick-meta"><span class="rating">★ '+a.rating+'</span> · '+a.year+'<br>'+genreText(a)+'</div>')+'<div class="quick-actions"><button data-quick-play="'+key+'">▶ Play</button><button class="quick-save" data-save-key="'+key+'">＋ My List</button></div></div></div><div class="rail-copy"><h3>'+a.title+'</h3><p>'+(drop?dropEpisode+(drop.epTitle?'“'+drop.epTitle+'” · ':'')+(drop.verb||'Added')+' '+dropAdded+(drop.fresh?' · New':'')+' · '+dropType:'★ '+a.rating+' · '+genreText(a))+'</p></div></article>'}
       function renderHomeRows(){var html='';each(rows,function(row,i){var cards='';each(row.keys,function(key,n){var card=railCard(key);cards+=row.ranked?'<div class="rank-card"><span class="rank-number">'+(n+1)+'</span>'+card+'</div>':card});html+='<section class="anime-rail'+(row.fresh?' fresh-rail':'')+'" aria-labelledby="rail-title-'+i+'"><div class="rail-head"><div class="rail-titles"><h2 id="rail-title-'+i+'"><span class="orange-line"></span>'+row.title+'</h2>'+(row.subtitle?'<p class="rail-sub">'+row.subtitle+'</p>':'')+'</div><div class="rail-controls"><button class="rail-arrow" data-rail-prev aria-label="Scroll '+row.title+' left">‹</button><button class="rail-arrow" data-rail-next aria-label="Scroll '+row.title+' right">›</button></div></div><div class="rail-track'+(row.ranked?' ranked-track':'')+'">'+cards+'</div></section>'});byId('homeRows').innerHTML=html}
       /* Studio Ghibli collection: 22 feature films from the IMDb list, shown as
          their own rail inside Movies. Poster art comes from TMDB; if a poster
@@ -1091,11 +1091,17 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
       /* Fresh Drop Toon: toonstream.us's own Fresh Drop rail, baked daily by
          scripts/harvest-toonstream-drops.mjs with an Nxsha episode guide
          (stills, synopsis, runtime) for the dropped season. Playback stays on
-         ToonStream. One anime appears once: a title the page already carries
-         keeps its existing card and only remembers the site's own slug, so the
-         ToonStream server opens the exact drop. Only genuinely new anime get a
-         card here. When the bake is empty (first deploy), the live home API
-         fills the row without guides. */
+         ToonStream. Owner: "toonstream mae abhi jitna anime fresh drop row mae
+         hai wo sara apne fresh drop row mae dikhna chiyea sath mae ye bhi ki
+         konsa episode aaya hai new" — isliye ab row me site ka har drop aata
+         hai:
+           - jo anime page par pehle se hai, uska **wahi purana card** row me
+             aata hai (naya poster/twin card nahi) aur usi card par "S6 · E5"
+             + drop date + New badge dikhte hain,
+           - jo anime page par nahi hai uske liye naya card banta hai.
+         Ek anime ek hi baar dikhta hai; dedupe title ke normalised form se
+         hota hai (Mizuki + Mizuki S2 = ek card, sabse naya episode).
+         Jab bake khaali ho (pehla deploy) to live home API row bhar deti hai. */
       window.CR_NX_DROPS=window.CR_NX_DROPS||{};
       window.TS_SLUGS={};
       (function(){var all=(typeof TS_SEASONS!=='undefined'&&TS_SEASONS)||{};for(var tk in all){if(all.hasOwnProperty(tk)&&all[tk]&&all[tk].slug)window.TS_SLUGS[tk]=all[tk].slug}})();
@@ -1109,31 +1115,79 @@ var TS_DROPS=[{"title":"A Wild Last Boss Appeared!","slug":"a-wild-last-boss-app
         }
         function paint(items){
           if(!items||!items.length)return 0;
-          var keys=[],used={},i,it,key,existing,rec;
+          var keys=[],used={},pushed={},seenKey={},i,it,key,existing,rec,siteSlug;
           each(rows,function(row){each(row.keys||[],function(k){used[k]=1})});
+          /* "New" sirf tab jab episode pichhle 14 din me pehli baar dikha ho.
+             Warna state me hazaron purane drops pada rehte hain aur har card
+             hamesha New dikhata rehta hai. */
+          function freshEnough(added){
+            if(!added)return true;
+            var t=Date.parse(String(added)+'T00:00:00Z');
+            if(isNaN(t))return true;
+            return (Date.now()-t)<=14*864e5;
+          }
+          /* "Kaunsa episode aaya" ka naam: bake ke guide se. Guide usi season /
+             episode ka hota hai jo toonstream par chada hai. */
+          function epTitleOf(obj){
+            var g=obj&&obj.guide,se=g&&g[String(obj.season)],row=se&&se[String(epOf(obj))];
+            return (row&&row.title)||'';
+          }
+          /* Har drop ka season/episode — API me `ep`, bake me `episode`. */
+          function epOf(obj){
+            if(!obj)return null;
+            if(typeof obj.episode==='number')return obj.episode;
+            if(typeof obj.ep==='number')return obj.ep;
+            return null;
+          }
           for(i=0;i<items.length;i++){
             it=items[i];
             if(!it||!it.title)continue;
             existing=siteKeyForTitle(it.title);
             if(existing){
-              /* Same anime, already on the page: no twin card. Keep its poster
-                 and episode guide, just point ToonStream at the site's slug. */
-              var siteSlug=it.tsSlug||it.slug;
-              /* The drop's slug comes from the site's own URL list; it keeps
-                 punctuation (jojo's-bizarre-adventure) the search slug drops. */
+              /* Same anime, page par pehle se hai: naya card nahi banate.
+                 Purana card hi Fresh Drop row me jaata hai, aur uspar ToonStream
+                 ka naya episode note ho jata hai — isliye row me "S6 · E5",
+                 drop date aur New badge dikhte hain aur Play seedha wahi
+                 episode kholta hai (baaki rows ka card bhi wahi info dikhata
+                 hai, jaise DeadToons drops par pehle se hota hai). */
+              siteSlug=it.tsSlug||it.slug;
+              /* Drop ka slug site ke apne URL se aata hai; isme punctuation
+                 bacha rehta hai (jojo's-bizarre-adventure), search slug nahi. */
               if(siteSlug)window.TS_SLUGS[existing]=siteSlug;
               rec=window.CR_NX_DROPS[existing];
-              if(rec&&it.guide&&rec.guide&&!rec.guide[String(it.season)]&&it.guide[String(it.season)]){
-                rec.guide[String(it.season)]=it.guide[String(it.season)];
+              if(!rec){
+                /* seasons/nxMap/guide jaan-boojh kar nahi dete: catalog title ka
+                   layout pehle se TS_SEASONS me sahi hai aur episode naam
+                   NX_EPISODE_DATA me — unhe ToonStream ke numbering se
+                   override karna galat episode kholta. Sirf drop ki khabar. */
+                rec=window.CR_NX_DROPS[existing]={kind:'tv',added:it.firstSeen||'',
+                  season:it.season||null,episode:epOf(it),verb:'Fresh',src:'toonstream',
+                  tsSlug:siteSlug||'',fresh:freshEnough(it.firstSeen),epTitle:epTitleOf(it)};
+              }else if(rec.added&&it.firstSeen&&String(it.firstSeen)<String(rec.added)){
+                /* Card kisi aur (naye) drop se pehle se decorate hai — purana
+                   label usse dhak na de. Bas slug yaad rakhte hain. */
+                if(!rec.tsSlug)rec.tsSlug=siteSlug||'';
+              }else{
+                /* Wahi anime rail me do baar (Mizuki, Mizuki-season-2): ek hi
+                   card, sabse naya episode. */
+                if(it.season)rec.season=it.season;
+                if(epOf(it)!==null)rec.episode=epOf(it);
+                if(it.firstSeen)rec.added=it.firstSeen;
+                if(siteSlug)rec.tsSlug=siteSlug;
+                rec.verb='Fresh';rec.src='toonstream';
+                if(epTitleOf(it))rec.epTitle=epTitleOf(it);
+                rec.fresh=freshEnough(rec.added||it.firstSeen);
               }
+              if(!pushed[existing]){pushed[existing]=1;keys.push(existing)}
               continue;
             }
             key='tsd-'+String(it.slug||it.title||('t'+i)).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
             if(key==='tsd-'||seenKey[key]||used[key]||shows[key])continue;
             seenKey[key]=1;
             shows[key]={title:it.title,year:'',rating:'-',genres:['anime'],audio:'Sub & Dub',img:it.img||'',type:'TV',drop:true};
-            window.CR_NX_DROPS[key]={id:it.nxId||null,kind:'tv',seasons:it.seasons||{},epStart:it.epStart||null,added:it.firstSeen||'',fresh:true,src:'toonstream',verb:'Fresh',season:it.season||null,episode:(typeof it.episode==='number'?it.episode:null),nxMap:it.nxMap||null,guide:it.guide||null,tsSlug:it.tsSlug||it.slug||''};
+            window.CR_NX_DROPS[key]={id:it.nxId||null,kind:'tv',seasons:it.seasons||{},epStart:it.epStart||null,added:it.firstSeen||'',fresh:freshEnough(it.firstSeen),src:'toonstream',verb:'Fresh',season:it.season||null,episode:epOf(it),nxMap:it.nxMap||null,guide:it.guide||null,tsSlug:it.tsSlug||it.slug||'',epTitle:epTitleOf(it)};
             if(it.tsSlug||it.slug)window.TS_SLUGS[key]=it.tsSlug||it.slug;
+            pushed[key]=1;
             keys.push(key);
           }
           if(!keys.length)return 0;

@@ -24,7 +24,10 @@ on:
     - cron: '0 4 * * *'
   push:
     branches:
-      - arena/167ea7f6-netflix-ui
+      # Har kaam wali branch par bhi ek run — taaki bake usi branch me chade
+      # jahan page ka code badla. Purani branch list stale thi, isliye naye
+      # pushes par row refresh nahi hoti thi.
+      - arena/bc5f6d17-netflix-ui
       - main
     paths:
       - '.github/workflows/crunchyroll-daily-drops.yml'
