@@ -146,6 +146,37 @@ Provider apni **subtitle** bhashayein bhi `dubs[]` me bhejta hai (`Arabic sub`)
 — wo hata di jaati hain (audio nahi hain), aur ek hi bhasha ek hi baar
 (`Original` jeetta hai).
 
+### NetMirror par audio switch (chautha round)
+
+Owner: *"netmirror par bas option aata hai par koi audio milta hi nahi … sab me
+likhta hai audio nahi mila"*.
+
+Wajah: list `api/moviebox-audio` se aa jaati thi (har bhasha ka apna subject),
+par bhasha chunne par streams **browser se seedha** maangi jaati thi
+(`h5-api.aoneroom.com` / player-domain). Us raste par browser CORS/preflight par
+atak jata hai. MovieBox par audio badalta dikhta tha kyunki wahan desktop par
+iframe (watch page) chalta hai; NetMirror par sirf apna `<video>` hai.
+
+Ab:
+
+```
+bhasha chuni
+  → GET /api/moviebox-play?subjectId=…&detailPath=…&se=…&ep=…   (server, same-origin)
+      → guest token (/home ka x-user) → get-domain → {player}/subject/play
+      → { ok:true, streams:[{url, quality, kind}] }
+  → fail ho to purana browser rasta (lib/movieboxDirect) — India IP par kabhi chalta hai
+  → dono fail → "‹language› audio nahi mila" (jhootha switch nahi)
+```
+
+- Video ke **bytes proxy nahi** hote — sirf chhota JSON (URLs), `api/netmirror`
+  ki tarah. Playback CDN se seedha.
+- Function `bom1` (Mumbai) me chalta hai: MovieBox play guest ko **US** se khaali
+  deta hai (`hasResource:false`), India se stream deta hai.
+- Debug: `/api/moviebox-play?…&probe=1` → `{ ok, count, playerHost, token, trace }`
+  (URLs ke bina).
+- Test: `tests-arena/dub-streams.test.ts` (9) — server-first, client fallback,
+  dono fail, helper filters, handler `no-token`.
+
 ## Rules jo nahi badle
 
 - NetMirror **kabhi default nahi** — MovieBox (Hindi) hi pehla server.

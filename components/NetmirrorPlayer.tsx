@@ -10,7 +10,8 @@ import {
     type NetmirrorResult,
     type NetmirrorSubtitle,
 } from '@/lib/netmirror';
-import { resolveDirectStreams, type DirectStream } from '@/lib/movieboxDirect';
+import type { DirectStream } from '@/lib/movieboxDirect';
+import { resolveDubStreams } from '@/lib/dubStreams';
 import { fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
 
 /**
@@ -24,7 +25,10 @@ import { fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
  *
  * Multi-language dub: provider par har dub apna subject hota hai, isliye list
  * `api/moviebox-audio` se aati hai aur chunne par us dub ke naye streams lagte
- * hain (`resolveDirectStreams`). Original wahi rehta hai jo chal raha tha.
+ * hain. Streams `/api/moviebox-play` (server) se aate hain — browser se seedha
+ * maangne par CORS/preflight par rasta band ho jata tha, isliye pehle NetMirror
+ * par har bhasha "audio nahi mila" dikhta tha. Original wahi rehta hai jo chal
+ * raha tha.
  *
  * Teen halat:
  *   1. `loading` — streams aa rahe hain (chhota spinner).
@@ -162,12 +166,13 @@ export function NetmirrorPlayer({
     /** Audio (dub) chuno — us language ke subject se naye streams. */
     const selectAudio = useCallback(
         async (track: AudioTrack) => {
-            const answer = await resolveDirectStreams({
+            const answer = await resolveDubStreams({
                 subjectId: track.subjectId,
                 detailPath: track.detailPath,
                 se: mediaType === 'tv' ? (season ?? 1) : 1,
                 ep: mediaType === 'tv' ? (episode ?? 1) : 1,
             });
+            console.info('[dub]', track.name, answer.ok ? `ok (${answer.via}, ${answer.streams.length})` : `fail (${answer.via})`, answer.trace || '');
             if (!answer.ok || !answer.streams.length) return false;
             setStartAt(currentTimeRef.current);
             setStreams(answer.streams);

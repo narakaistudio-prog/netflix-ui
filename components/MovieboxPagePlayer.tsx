@@ -14,6 +14,7 @@ import {
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
 import { resolveDirectStreams, type DirectStream } from '@/lib/movieboxDirect';
+import { resolveDubStreams } from '@/lib/dubStreams';
 import { buildDubWatchLink, fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import { resolveMovieboxLive } from '@/lib/movieboxResolve';
@@ -399,7 +400,9 @@ export function MovieboxPagePlayer({
             setAudioNotice(null);
             try {
                 if (directStreams && directStreams.length) {
-                    const answer = await resolveDirectStreams({
+                    // Server pehle (`/api/moviebox-play`) — browser ka seedha
+                    // rasta kai jagah CORS par atak jata hai.
+                    const answer = await resolveDubStreams({
                         subjectId: track.subjectId,
                         detailPath: track.detailPath,
                         se: season ?? 1,
