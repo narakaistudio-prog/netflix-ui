@@ -701,12 +701,19 @@ export function MovieboxDirectPlayer({
 
             {chromeVisible || !playback.playing || menu ? (
                 <View style={styles.chrome} pointerEvents="box-none">
-                    {/* ---------------------- Top scrim + bar ---------------------- */}
+                    {/* Dono scrims pehle — baaki sab unke upar (menu dim na ho). */}
                     <LinearGradient
                         colors={['rgba(0,0,0,0.78)', 'rgba(0,0,0,0.35)', 'rgba(0,0,0,0)']}
                         style={styles.topScrim}
                         pointerEvents="none"
                     />
+                    <LinearGradient
+                        colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)', 'rgba(0,0,0,0.88)']}
+                        style={styles.bottomScrim}
+                        pointerEvents="none"
+                    />
+
+                    {/* ---------------------------- Top bar ---------------------------- */}
                     <View style={styles.topBar} pointerEvents="box-none">
                         <View style={styles.topLeft}>
                             {onBack ? (
@@ -902,12 +909,7 @@ export function MovieboxDirectPlayer({
                         </View>
                     ) : null}
 
-                    {/* ------------------- Bottom scrim + bar ------------------- */}
-                    <LinearGradient
-                        colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)', 'rgba(0,0,0,0.88)']}
-                        style={styles.bottomScrim}
-                        pointerEvents="none"
-                    />
+                    {/* ---------------------------- Bottom bar ---------------------------- */}
                     <View style={styles.bottomBar} pointerEvents="auto">
                         <View style={styles.seekRow}>
                             <View
