@@ -56,12 +56,6 @@ export interface EmbedPlayerProps {
     serverName?: string;
     /** Agla server (switcher pill ka label), jab switch available ho. */
     nextServerName?: string;
-    /**
-     * Sirf Server 3 ke liye: abhi ka third-party source (Videasy / VidFast …)
-     * aur ek tap me agla source. Ek hi pill — teen button nahi.
-     */
-    sourceName?: string;
-    onCycleSource?: () => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -84,8 +78,6 @@ export function EmbedPlayer({
     onEnded,
     serverName,
     nextServerName,
-    sourceName,
-    onCycleSource,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
@@ -703,24 +695,6 @@ export function EmbedPlayer({
                     </Pressable>
                 ) : null}
 
-                {/**
-                 * Server 3 ka source switch — ek pill, tap par agla provider.
-                 * Owner ka pattern: naya source pehle optional, aur agar wo
-                 * ruk ruk kar chale to user ko atkna na pade.
-                 */}
-                {sourceName && onCycleSource ? (
-                    <Pressable
-                        style={styles.sourcePill}
-                        onPress={onCycleSource}
-                        accessibilityRole="button"
-                        accessibilityLabel={`Change source, now ${sourceName}`}
-                        testID="embed-source-cycle"
-                    >
-                        <Text style={styles.sourcePillText}>{sourceName} ⟳</Text>
-                    </Pressable>
-                ) : null}
-
-
                 {canAutoFullscreen ? (
                     <Pressable
                         style={styles.iconButton}
@@ -764,19 +738,6 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     serverPillText: { color: '#fff', fontSize: 11, fontWeight: '600' },
-    /** Server 3 ka source switch (ek pill). */
-    sourcePill: {
-        height: 32,
-        marginLeft: 8,
-        paddingHorizontal: 10,
-        borderRadius: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(229,9,20,0.75)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.3)',
-    },
-    sourcePillText: { color: '#fff', fontSize: 11, fontWeight: '700' },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',
