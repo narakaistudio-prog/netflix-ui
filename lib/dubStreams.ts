@@ -30,6 +30,16 @@ export interface DubStreamsResult extends DirectResult {
     trace?: string[];
 }
 
+/**
+ * Server route kitni der try kare.
+ *
+ * MovieBox ka app route (visitor-login + play-info/v2) Vercel ke server IP se
+ * hamesha `440` deta hai (24 Oct, sab variants — key30/key31/app-headers
+ * sabhi). Us par 20 s kharch karke user ko intezaar karana bekaar hai:
+ * thodi der me hi `timeout` maan kar MovieBox player wala rasta khul jata hai.
+ */
+const DEFAULT_TIMEOUT_MS = 4000;
+
 type FetchLike = typeof fetch;
 
 function kindOf(url: string): DirectStream['kind'] {
@@ -67,7 +77,19 @@ export function normalizeDubPayload(payload: unknown): { ok: boolean; streams: D
  */
 export async function resolveDubStreams(
     params: { subjectId?: string; detailPath?: string; se?: number; ep?: number },
-    options: { fetchImpl?: FetchLike; clientFetch?: FetchLike; client?: typeof resolveDirectStreams } = {},
+    options: {
+        fetchImpl?: FetchLike;
+        clientFetch?: FetchLike;
+        client?: typeof resolveDirectStreams;
+        /** Server route ka budget (ms). Default 4 s. */
+        timeoutMs?: number;
+        /**
+         * Browser wala purana rasta chhodo (NetMirror player isko use karta
+         * hai). Wo rasta har attempt par 12 s baith sakta hai aur guest ko
+         * khaali hi deta hai — player me 30 s ka intezaar bekaar hai.
+         */
+        skipClient?: boolean;
+    } = {},
 ): Promise<DubStreamsResult> {
     const subjectId = String(params.subjectId || '').trim();
     if (!/^\d+$/.test(subjectId)) {
@@ -77,21 +99,38 @@ export async function resolveDubStreams(
     const doFetch = options.fetchImpl ?? (typeof fetch === 'function' ? fetch : null);
     let trace: string[] | undefined;
 
+    const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+
     if (doFetch) {
         const query = new URLSearchParams({ subjectId });
         if (params.detailPath) query.set('detailPath', params.detailPath);
         if (params.se !== undefined) query.set('se', String(params.se));
         if (params.ep !== undefined) query.set('ep', String(params.ep));
+        let timer: ReturnType<typeof setTimeout> | null = null;
         try {
-            const res = await doFetch(`${DUB_PLAY_PATH}?${query.toString()}`, {
+            const request = doFetch(`${DUB_PLAY_PATH}?${query.toString()}`, {
                 headers: { Accept: 'application/json' },
+            }).then((res) => res.json());
+            const budget = new Promise<'timeout'>((done) => {
+                timer = setTimeout(() => done('timeout'), timeoutMs);
             });
-            const answer = normalizeDubPayload(await res.json());
-            if (answer.ok) return { ok: true, streams: answer.streams, via: 'server' };
-            trace = [`server: ${answer.reason || 'no-streams'}`];
+            const raced = await Promise.race([request, budget]);
+            if (raced === 'timeout') {
+                trace = [`server: ${timeoutMs} ms me jawab nahi aaya`];
+            } else {
+                const answer = normalizeDubPayload(raced);
+                if (answer.ok) return { ok: true, streams: answer.streams, via: 'server' };
+                trace = [`server: ${answer.reason || 'no-streams'}`];
+            }
         } catch (error) {
             trace = [`server: ${String((error as any)?.message || error)}`];
+        } finally {
+            if (timer) clearTimeout(timer);
         }
+    }
+
+    if (options.skipClient) {
+        return { ok: false, streams: [], reason: 'no-streams', via: 'client', trace };
     }
 
     const client = options.client ?? resolveDirectStreams;

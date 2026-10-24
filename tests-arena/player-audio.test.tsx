@@ -182,11 +182,29 @@ jest.mock('@expo/vector-icons', () => {
 jest.mock('../components/MovieboxDirectPlayer', () => {
     const ReactLocal = require('react');
     return {
-        MovieboxDirectPlayer: ({ audioTracks }: any) =>
+        MovieboxDirectPlayer: ({ audioTracks, onAudioSelect }: any) =>
+            ReactLocal.createElement(
+                'div',
+                {
+                    'data-testid': 'direct-video',
+                    'data-audio-count': String((audioTracks || []).length),
+                    'data-audio': (audioTracks || []).map((track: any) => track.name).join(','),
+                },
+                ReactLocal.createElement('button', {
+                    'data-testid': 'pick-second-audio',
+                    onClick: () => onAudioSelect?.((audioTracks || [])[1]),
+                }),
+            ),
+    };
+});
+
+jest.mock('../components/MovieboxPagePlayer', () => {
+    const ReactLocal = require('react');
+    return {
+        MovieboxPagePlayer: ({ initialLink }: any) =>
             ReactLocal.createElement('div', {
-                'data-testid': 'direct-video',
-                'data-audio-count': String((audioTracks || []).length),
-                'data-audio': (audioTracks || []).map((track: any) => track.name).join(','),
+                'data-testid': 'moviebox-page-player',
+                'data-link': String(initialLink || ''),
             }),
     };
 });
@@ -247,6 +265,51 @@ describe('NetMirror par audio list', () => {
         const audioCall = calls.find((url) => url.startsWith('/api/moviebox-audio'));
         expect(audioCall).toContain('subjectId=2237794012843369344');
         expect(document.querySelector('[data-testid="direct-video"]')?.getAttribute('data-audio-count')).toBe('2');
+
+        act(() => root.unmount());
+        container.remove();
+    });
+});
+
+describe('NetMirror — dub streams na mile to MovieBox page (NetMirror ke andar)', () => {
+    it('audio switch fail → us bhasha ka MovieBox page khulta hai', async () => {
+        window.localStorage.clear();
+        (globalThis as any).fetch = async (url: string) => {
+            const target = String(url);
+            if (target.startsWith('/api/netmirror')) {
+                return { json: async () => nmPayload(true) } as any;
+            }
+            if (target.startsWith('/api/moviebox-audio')) {
+                return {
+                    json: async () => ({
+                        ok: true,
+                        languages: [
+                            { lang: 'ta', name: 'Original', subjectId: '2237794012843369344', detailPath: 'a', original: true },
+                            { lang: 'hi', name: 'Hindi', subjectId: '4151920426815471968', detailPath: 'b', original: false },
+                        ],
+                    }),
+                } as any;
+            }
+            // dub streams: server aur browser — dono khaali
+            return { json: async () => ({ ok: false, reason: 'no-streams', streams: [] }) } as any;
+        };
+
+        const container = document.createElement('div');
+        document.body.appendChild(container);
+        const root = createRoot(container);
+        await act(async () => {
+            root.render(<NetmirrorPlayer tmdbId={1465943} mediaType="movie" title="Mandaadi" year={2026} />);
+        });
+
+        const pick = document.querySelector('[data-testid="pick-second-audio"]') as HTMLElement;
+        expect(pick).toBeTruthy();
+        await act(async () => {
+            pick.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        });
+
+        const frame = document.querySelector('[data-testid="moviebox-page-player"]');
+        expect(frame).toBeTruthy();
+        expect(frame?.getAttribute('data-link')).toContain('4151920426815471968');
 
         act(() => root.unmount());
         container.remove();

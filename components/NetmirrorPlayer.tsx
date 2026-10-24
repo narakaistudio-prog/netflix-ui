@@ -12,7 +12,8 @@ import {
 } from '@/lib/netmirror';
 import type { DirectStream } from '@/lib/movieboxDirect';
 import { resolveDubStreams } from '@/lib/dubStreams';
-import { fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
+import { buildDubWatchLink, fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
+import { MovieboxPagePlayer } from './MovieboxPagePlayer';
 
 /**
  * "NetMirror" server ka player — apna `<video>`, koi iframe nahi.
@@ -88,6 +89,17 @@ export function NetmirrorPlayer({
     const [startAt, setStartAt] = useState(0);
     const currentTimeRef = useRef(0);
     const [error, setError] = useState<string>('');
+    /**
+     * Aakhri fallback: API se us dub ke streams na mile to **usi bhasha ka
+     * MovieBox watch page** NetMirror ke andar hi khol dete hain (owner: "agar
+     * audio na badle to moviebox wala laga do uske player me"). Wahan audio
+     * sach me badalta hai, kyunki page hi us dub ka hota hai.
+     */
+    const [dubFrame, setDubFrame] = useState<{ link: string; name: string } | null>(null);
+    /** Ek baar app-API fail hui to aage seedha MovieBox player (20s wait nahi). */
+    const serverDubBroken = useRef(false);
+    /** Chhota notice — "Audio: Hindi · MovieBox player" (3 s). */
+    const [dubNotice, setDubNotice] = useState<string | null>(null);
 
     useEffect(() => {
         if (!hasId) {
@@ -166,14 +178,34 @@ export function NetmirrorPlayer({
     /** Audio (dub) chuno — us language ke subject se naye streams. */
     const selectAudio = useCallback(
         async (track: AudioTrack) => {
-            const answer = await resolveDubStreams({
-                subjectId: track.subjectId,
-                detailPath: track.detailPath,
-                se: mediaType === 'tv' ? (season ?? 1) : 1,
-                ep: mediaType === 'tv' ? (episode ?? 1) : 1,
-            });
+            // App-API pehle hi fail ho chuki ho to seedha MovieBox player —
+            // har switch par 4 s intezaar theek nahi.
+            const answer = serverDubBroken.current
+                ? ({ ok: false, streams: [], via: 'server', trace: ['server: pehle fail ho chuka'] } as Awaited<
+                      ReturnType<typeof resolveDubStreams>
+                  >)
+                : await resolveDubStreams(
+                      {
+                          subjectId: track.subjectId,
+                          detailPath: track.detailPath,
+                          se: mediaType === 'tv' ? (season ?? 1) : 1,
+                          ep: mediaType === 'tv' ? (episode ?? 1) : 1,
+                      },
+                      { timeoutMs: 1500, skipClient: true },
+                  );
             console.info('[dub]', track.name, answer.ok ? `ok (${answer.via}, ${answer.streams.length})` : `fail (${answer.via})`, answer.trace || '');
-            if (!answer.ok || !answer.streams.length) return false;
+            if (!answer.ok || !answer.streams.length) {
+                serverDubBroken.current = true;
+                setDubNotice(`Audio: ${track.name} · MovieBox player`);
+                // Streams nahi mile — MovieBox ka wahi dub page NetMirror ke
+                // andar khol do (audio wahan asli me badalta hai).
+                const link = buildDubWatchLink(track);
+                if (!link) return false;
+                setDubFrame({ link, name: track.name });
+                setActiveAudio(track.subjectId);
+                return true;
+            }
+            serverDubBroken.current = false;
             setStartAt(currentTimeRef.current);
             setStreams(answer.streams);
             setActiveAudio(track.subjectId);
@@ -182,13 +214,36 @@ export function NetmirrorPlayer({
         [mediaType, season, episode],
     );
 
+    /** Notice 3 s me gayab. */
+    useEffect(() => {
+        if (!dubNotice) return;
+        const timer = setTimeout(() => setDubNotice(null), 3000);
+        return () => clearTimeout(timer);
+    }, [dubNotice]);
+
     const fallback = useCallback(() => {
         onUnavailable?.(error || 'not-added');
     }, [onUnavailable, error]);
 
     return (
         <View style={styles.root} testID="netmirror-player">
-            {state === 'ready' ? (
+            {state === 'ready' && dubFrame ? (
+                <MovieboxPagePlayer
+                    linkKey={dubFrame.link}
+                    initialLink={dubFrame.link}
+                    title={title}
+                    year={year}
+                    mediaType={mediaType}
+                    season={season}
+                    episode={episode}
+                    autoResolve={false}
+                    onClose={() => setDubFrame(null)}
+                    onSwitchServer={onSwitchServer}
+                    switchLabel={nextServerName}
+                />
+            ) : null}
+
+            {state === 'ready' && !dubFrame ? (
                 <MovieboxDirectPlayer
                     streams={streams}
                     title={title}
@@ -210,6 +265,12 @@ export function NetmirrorPlayer({
                         setState('empty');
                     }}
                 />
+            ) : null}
+
+            {dubNotice ? (
+                <View style={styles.notice} pointerEvents="none" testID="netmirror-dub-notice">
+                    <Text style={styles.noticeText}>{dubNotice}</Text>
+                </View>
             ) : null}
 
             {state === 'loading' ? (
@@ -251,6 +312,16 @@ const styles = StyleSheet.create({
         padding: 24,
     },
     hint: { color: '#c7c7c7', fontSize: 14, textAlign: 'center' },
+    notice: {
+        position: 'absolute',
+        top: 84,
+        alignSelf: 'center',
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 18,
+        backgroundColor: 'rgba(0,0,0,0.78)',
+    },
+    noticeText: { color: '#fff', fontSize: 13, fontWeight: '700' },
     switchButton: {
         marginTop: 6,
         paddingHorizontal: 18,

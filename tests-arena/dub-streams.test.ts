@@ -12,7 +12,8 @@
  */
 import { normalizeDubPayload, resolveDubStreams } from '../lib/dubStreams';
 import handler, {
-    canonicalQuery,
+    canonicalString,
+    canonicalUrl,
     clientToken,
     collectMediaUrls,
     pickPlayStreams,
@@ -102,6 +103,38 @@ describe('resolveDubStreams (server pehle)', () => {
         expect(answer.trace?.[0]).toContain('offline');
     });
 
+    it('server route dheema ho to `timeout` — user 20 s nahi rukta', async () => {
+        const answer = await resolveDubStreams(
+            { subjectId: '4151920426815471968', se: 1, ep: 1 },
+            {
+                // kabhi resolve nahi hota (440 ke baad server chup-chaap latak jaye)
+                fetchImpl: (() => new Promise(() => {})) as any,
+                timeoutMs: 30,
+                client: (async () => ({ ok: false, streams: [] })) as any,
+            },
+        );
+        expect(answer.ok).toBe(false);
+        expect(answer.via).toBe('client');
+        expect(answer.trace?.[0]).toContain('ms me jawab nahi aaya');
+    });
+
+    it('`skipClient` — browser wala dheema rasta chhua bhi nahi jaata', async () => {
+        let clientCalled = 0;
+        const answer = await resolveDubStreams(
+            { subjectId: '4151920426815471968', se: 1, ep: 1 },
+            {
+                fetchImpl: (async () => ({ json: async () => ({ ok: false, reason: 'no-streams' }) })) as any,
+                skipClient: true,
+                client: (async () => {
+                    clientCalled += 1;
+                    return { ok: true, streams: SERVER_STREAMS };
+                }) as any,
+            },
+        );
+        expect(answer.ok).toBe(false);
+        expect(clientCalled).toBe(0);
+    });
+
     it('subjectId na ho to koi call nahi', async () => {
         let called = 0;
         const answer = await resolveDubStreams(
@@ -120,21 +153,63 @@ describe('resolveDubStreams (server pehle)', () => {
 });
 
 describe('api/moviebox-play — app signature aur signCookie', () => {
-    it('canonicalQuery keys sorted, value bina encode', () => {
-        expect(canonicalQuery({ subjectId: '42', host: 'apig.inmoviebox.com', se: 1 })).toBe(
-            'host=apig.inmoviebox.com&se=1&subjectId=42',
+    it('canonicalUrl — path + sorted query', () => {
+        expect(canonicalUrl('https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/play-info/v2?se=1&subjectId=42')).toBe(
+            '/wefeed-mobile-bff/subject-api/play-info/v2?se=1&subjectId=42',
         );
+        expect(canonicalUrl('https://api6.aoneroom.com/x')).toBe('/x');
     });
 
-    it('trSignature format `ts|2|base64` aur deterministic', () => {
-        const args = { method: 'GET', path: '/x/y', query: 'a=1&b=2', timestamp: 1700000000000 };
+    it('canonicalString — app ka format (content-type bina charset)', () => {
+        const canonical = canonicalString({
+            method: 'post',
+            url: 'https://api6.aoneroom.com/wefeed-mobile-bff/user-api/visitor-login',
+            body: '{}',
+            timestampMs: 1700000000000,
+        });
+        expect(canonical.split('\n')).toEqual([
+            'POST',
+            'application/json',
+            'application/json',
+            '2',
+            '1700000000000',
+            require('node:crypto').createHash('md5').update('{}').digest('hex'),
+            '/wefeed-mobile-bff/user-api/visitor-login',
+        ]);
+    });
+
+    it('trSignature format `ts|2|base64` aur deterministic (body par badalta)', () => {
+        const args = {
+            method: 'GET',
+            url: 'https://api6.aoneroom.com/x?a=1&b=2',
+            timestampMs: 1700000000000,
+        };
         const one = trSignature(args);
-        const two = trSignature(args);
-        expect(one).toBe(two);
+        expect(trSignature(args)).toBe(one);
         expect(one.startsWith('1700000000000|2|')).toBe(true);
         expect(one.split('|')).toHaveLength(3);
-        // body badle to signature badle
         expect(trSignature({ ...args, body: '{}' })).not.toBe(one);
+    });
+
+    it('HMAC key 30-byte base64 secret se banti hai (extra byte se nahi)', () => {
+        // Asli app key: base64 `76iRl07…` decode = 30 byte. Ek extra byte
+        // (`0x12`) jodne par gateway 440 deta tha — isliye ye guard.
+        const secret = Buffer.from('76iRl07s0xSN9jqmEWAt79EBJZulIQIsV64FZr2O', 'base64');
+        expect(secret).toHaveLength(30);
+        const args = {
+            method: 'POST',
+            url: 'https://api6.aoneroom.com/wefeed-mobile-bff/user-api/visitor-login',
+            body: '{}',
+            timestampMs: 1700000000000,
+        };
+        const expected =
+            '1700000000000|2|' +
+            require('node:crypto')
+                .createHmac('md5', secret)
+                .update(canonicalString(args))
+                .digest('base64');
+        expect(trSignature(args)).toBe(expected);
+        expect(trSignature({ ...args, secret: Buffer.concat([secret, Buffer.from([0x12])]) })).not.toBe(expected);
     });
 
     it('clientToken `<ms>,md5(reverse(ms))`', () => {
