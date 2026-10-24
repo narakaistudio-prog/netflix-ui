@@ -1,18 +1,13 @@
 /**
- * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box,
- * Server 3 = third-party embed — `lib/server3.ts`)
+ * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box)
  * ======================================================================
  * Rules:
  *   - Jis title ka MovieBox link nahi hai, us par **M2Box ka button nahi**
  *     dikhta (owner ka rule) — warna user ek aisa button dabata hai jiske peeche
  *     kuch nahi hota.
- *   - Server 3 kisi bhi third-party embed par chalta hai jo **TMDB numeric id**
- *     leta ho (`lib/server3.ts` ka registry). Wo MovieBox par depend nahi
- *     karta, isliye apne dum par cycle me aata hai — M2Box na ho to bhi
- *     [Server 1 → Server 3] ban sakta hai.
- *   - Server 3 kabhi default nahi banta: Server 1 (Nxsha) hi pehla server rehta
- *     hai, Server 3 pill se switch hota hai (agar wo player kisi title par kuch
- *     na dikhaye to ek tap me wapas).
+ *   - Third-party embed servers hata diye gaye: owner ne kaha *"koi sahi se
+ *     nhi chalta … jo pop up na deta ho"*. Sirf wahi servers jo sach me chalte
+ *     hain — Nxsha / NHD / custom / MovieBox. Cycle me koi dead slot nahi.
  *
  * `defaultProvider` khud 'moviebox' ho (settings me) par link na ho to Nxsha par
  * gir jate hain.
@@ -20,7 +15,7 @@
 
 import type { ProviderId } from './embeds';
 
-export type PlaybackServerId = ProviderId | 'moviebox' | 'server3';
+export type PlaybackServerId = ProviderId | 'moviebox';
 
 export const BUILTIN_SERVERS: readonly ProviderId[] = ['nxsha', 'nhd'];
 
@@ -33,8 +28,6 @@ export interface ServerCycleInput {
     rowIsMoviebox?: boolean;
     /** Row ka apna (m2box ke alawa) embed URL. */
     customAvailable?: boolean;
-    /** Title ka TMDB numeric id mila — Server 3 ka embed ban sakta hai. */
-    server3Available?: boolean;
     /** Override (tests ke liye). */
     providers?: readonly ProviderId[];
 }
@@ -45,7 +38,6 @@ export function buildServerCycle({
     movieboxAvailable,
     rowIsMoviebox = false,
     customAvailable = false,
-    server3Available = false,
     providers = BUILTIN_SERVERS,
 }: ServerCycleInput): PlaybackServerId[] {
     const wanted: PlaybackServerId =
@@ -55,10 +47,8 @@ export function buildServerCycle({
     if (rowIsMoviebox && movieboxAvailable) list.push('moviebox');
     list.push(wanted);
 
-    // M2Box na ho to bas Server 1 (+ Server 3, agar chalta hai) — koi aur switch
-    // option nahi. Ye purana rule hi hai, sirf Server 3 ka rasta khula hai.
+    // M2Box na ho to bas Server 1 — koi switch option nahi.
     if (!movieboxAvailable) {
-        if (server3Available) list.push('server3');
         return Array.from(new Set(list));
     }
 
@@ -67,8 +57,6 @@ export function buildServerCycle({
     }
     if (customAvailable) list.push('custom');
     list.push('moviebox');
-    // Server 3 sabse aakhir me — Server 1/2 ke baad hi try hota hai.
-    if (server3Available) list.push('server3');
     return Array.from(new Set(list));
 }
 

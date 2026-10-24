@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { detectProviderFromUrl } from '@/lib/embeds';
-import { isServer3Url } from '@/lib/server3';
 import { useTvBackHandler } from '@/hooks/useTvNavigation';
 import { enterPlayerFullscreen } from '@/lib/playerFullscreen';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
@@ -27,9 +26,6 @@ import {
  * EMBED SAFETY:
  *   - The iframe sandbox blocks ad popups and top-level redirects while keeping
  *     the capabilities a video provider needs to play in-frame.
- *   - EXCEPTION (owner's call): Server 3 players (videasy/vidfast/vidlink/
- *     mycineby/vaplayer) get NO sandbox attribute at all — see
- *     `lib/server3.ts` → `isServer3Url`.
  *   - NO contentWindow/document access (cross-origin → SecurityError).
  *   - Player MUST open after a user click — never auto-open.
  *
@@ -60,20 +56,6 @@ export interface EmbedPlayerProps {
     serverName?: string;
     /** Agla server (switcher pill ka label), jab switch available ho. */
     nextServerName?: string;
-    /**
-     * Sirf Server 3 ke liye: abhi ka third-party source (Videasy / VidFast …)
-     * aur ek tap me agla source. Ek hi pill — teen button nahi.
-     */
-    sourceName?: string;
-    onCycleSource?: () => void;
-    /**
-     * Embed frame par `sandbox` attribute lagana hai ya nahi.
-     *
-     * Default: Server 3 (videasy/vidfast/vidlink/mycineby/vaplayer) par **off**,
-     * baaki sab par on. Owner ka faisla — Server 3 ke players sandbox wale
-     * frame me playback gate par ruk jaate the.
-     */
-    sandboxed?: boolean;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -96,17 +78,11 @@ export function EmbedPlayer({
     onEnded,
     serverName,
     nextServerName,
-    sourceName,
-    onCycleSource,
-    sandboxed,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
     const [scanCovered, setScanCovered] = useState(false);
     const directVideo = isDirectVideoSource(src);
-    // Server 3 ko chhod kar baaki har embed sandboxed rehta hai (ads/top-redirect
-    // se bachne ke liye). Server 3 par attribute lagta hi nahi — owner ka order.
-    const useSandbox = sandboxed ?? !isServer3Url(src);
     const nxshaEmbed = !directVideo && detectProviderFromUrl(src) === 'nxsha';
     const hostRef = useRef<View | HTMLDivElement | null>(null);
     const containerRef = useRef<View | HTMLDivElement | null>(null);
@@ -273,16 +249,7 @@ export function EmbedPlayer({
         iframe.setAttribute('allowfullscreen', 'true');
         // Do not grant `allow-popups` or top navigation: provider ads cannot
         // open tabs/windows or replace the Netflix app while the video plays.
-        //
-        // Server 3 apwaad: owner ne kaha "server 3 ke liyea sandbox bas disable
-        // karoo". Wahan attribute dikhaya hi nahi jata (rakh kar hataana bhi
-        // bekaar hota), baaki servers par ye line jaisi thi waisi chalti hai.
-        if (useSandbox) {
-            iframe.setAttribute(
-                'sandbox',
-                'allow-scripts allow-same-origin allow-forms allow-presentation',
-            );
-        }
+        iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
         iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
         iframe.style.position = 'absolute';
         iframe.style.top = '0';
@@ -307,7 +274,7 @@ export function EmbedPlayer({
             killIframe();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [src, title, directVideo, useSandbox]);
+    }, [src, title, directVideo]);
 
     // A new source is a new media: start from a clean playhead, seeded with
     // the position the viewer wants to continue from.
@@ -728,24 +695,6 @@ export function EmbedPlayer({
                     </Pressable>
                 ) : null}
 
-                {/**
-                 * Server 3 ka source switch — ek pill, tap par agla provider.
-                 * Owner ka pattern: naya source pehle optional, aur agar wo
-                 * ruk ruk kar chale to user ko atkna na pade.
-                 */}
-                {sourceName && onCycleSource ? (
-                    <Pressable
-                        style={styles.sourcePill}
-                        onPress={onCycleSource}
-                        accessibilityRole="button"
-                        accessibilityLabel={`Change source, now ${sourceName}`}
-                        testID="embed-source-cycle"
-                    >
-                        <Text style={styles.sourcePillText}>{sourceName} ⟳</Text>
-                    </Pressable>
-                ) : null}
-
-
                 {canAutoFullscreen ? (
                     <Pressable
                         style={styles.iconButton}
@@ -789,19 +738,6 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     serverPillText: { color: '#fff', fontSize: 11, fontWeight: '600' },
-    /** Server 3 ka source switch (ek pill). */
-    sourcePill: {
-        height: 32,
-        marginLeft: 8,
-        paddingHorizontal: 10,
-        borderRadius: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(229,9,20,0.75)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.3)',
-    },
-    sourcePillText: { color: '#fff', fontSize: 11, fontWeight: '700' },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',
