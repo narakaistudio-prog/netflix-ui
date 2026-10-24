@@ -92,3 +92,22 @@ export async function fetchAudioLanguages(
         };
     }
 }
+
+/**
+ * Dub ke liye MovieBox watch page ka link.
+ *
+ * Provider par har bhasha ka **apna subject** hota hai, isliye doosri bhasha
+ * chunna = us subject ka page kholna. Yahan wahi URL banate hain (jaisa site
+ * khud use karti hai) — iframe wale raste par bas page badalne se audio badal
+ * jaata hai, koi naya backend nahi.
+ */
+export function buildDubWatchLink(track: AudioTrack | null | undefined): string | null {
+    const subjectId = String(track?.subjectId || '').trim();
+    if (!/^\d+$/.test(subjectId)) return null;
+    const detailPath = String(track?.detailPath || '').trim();
+    if (!detailPath) return `https://m2box.org/movies/?id=${subjectId}`;
+    return (
+        `https://m2box.org/movies/${encodeURIComponent(detailPath)}` +
+        `?id=${encodeURIComponent(subjectId)}&type=/movie/detail&detailSe=&detailEp=&lang=en`
+    );
+}

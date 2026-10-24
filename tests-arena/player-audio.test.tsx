@@ -12,7 +12,7 @@
  *   3. Handler — subjectId na ho to `not-found`, aur detail se list.
  */
 import handler, { normalizeDubs, audioLabel } from '../api/moviebox-audio.mjs';
-import { fetchAudioLanguages, normalizeAudioPayload } from '../lib/movieboxAudio';
+import { buildDubWatchLink, fetchAudioLanguages, normalizeAudioPayload } from '../lib/movieboxAudio';
 
 const DUBS = [
     { subjectId: '2237794012843369344', detailPath: 'a', lanName: 'Original Audio', lanCode: 'ta', original: true },
@@ -133,5 +133,22 @@ describe('api/moviebox-audio handler', () => {
         } finally {
             globalThis.fetch = originalFetch;
         }
+    });
+});
+
+describe('dub ka watch page (iframe wala rasta)', () => {
+    it('subject ke hisaab se MovieBox page — site ke wahi query params', () => {
+        const link = buildDubWatchLink({
+            lang: 'hi',
+            name: 'Hindi',
+            subjectId: '4151920426815471968',
+            detailPath: 'mandaadi-hindi-qxUx1r3QHW4',
+            original: false,
+        });
+        expect(link).toContain('https://m2box.org/movies/mandaadi-hindi-qxUx1r3QHW4');
+        expect(link).toContain('id=4151920426815471968');
+        expect(link).toContain('type=/movie/detail');
+        expect(buildDubWatchLink(null)).toBeNull();
+        expect(buildDubWatchLink({ lang: 'x', name: 'X', subjectId: '', detailPath: 'a', original: false })).toBeNull();
     });
 });

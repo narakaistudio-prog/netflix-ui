@@ -9,10 +9,12 @@ import {
     buildMovieboxPageUrl,
     buildMovieboxSearchUrl,
     getMovieboxCrop,
+    parseMovieboxInput,
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { describeMovieboxLink, getMovieboxLink, saveMovieboxLink } from '@/lib/movieboxLinks';
 import { resolveDirectStreams, type DirectStream } from '@/lib/movieboxDirect';
+import { buildDubWatchLink, fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import { resolveMovieboxLive } from '@/lib/movieboxResolve';
 
@@ -150,6 +152,18 @@ export function MovieboxPagePlayer({
      * purana cropped iframe hi chalta hai (koi regression nahi).
      */
     const [directStreams, setDirectStreams] = useState<DirectStream[] | null>(null);
+    /**
+     * Audio (dub) — provider par har bhasha ka **apna subject** hota hai.
+     * Owner (24 Oct): *"kisi par bhi audio dusra nahi aa raha"* — MovieBox
+     * wale raste par ye list pehle bilkul nahi thi (sirf NetMirror par).
+     */
+    const [audioTracks, setAudioTracks] = useState<AudioTrack[]>([]);
+    const [audioMenu, setAudioMenu] = useState(false);
+    const [audioBusy, setAudioBusy] = useState<string | null>(null);
+    const [audioNotice, setAudioNotice] = useState<string | null>(null);
+    /** Audio badalne ke baad isi second se chale. */
+    const [audioStartAt, setAudioStartAt] = useState(0);
+    const playheadRef = useRef(0);
     /**
      * Player ke upar **koi** text nahi — na `fallback: …`, na `?m2boxdebug=1`
      * wali line. Owner (24 Oct): "ye jo fallback no stream likhta ye sab bhi
@@ -333,6 +347,93 @@ export function MovieboxPagePlayer({
      * math deti hai. Isliye overlay (Next Episode) ko root ke kinare par nahi,
      * dabbe ke andar - uske bottom-right - rakha ja sakta hai.
      */
+    /* ------------------------- Audio (dub) list ------------------------- */
+
+    /** Chalu watch page ka subject — dubs isi par milte hain. */
+    const currentRef = useMemo(() => (pageUrl ? parseMovieboxInput(pageUrl) : null), [pageUrl]);
+    const activeAudio = useMemo(() => {
+        const subjectId = String(currentRef?.subjectId || '');
+        if (!subjectId) return null;
+        return audioTracks.find((track) => track.subjectId === subjectId)?.subjectId ?? null;
+    }, [audioTracks, currentRef]);
+
+    useEffect(() => {
+        const subjectId = String(currentRef?.subjectId || '');
+        if (!subjectId || isSearchFrame) {
+            setAudioTracks([]);
+            return;
+        }
+        let cancelled = false;
+        fetchAudioLanguages({ subjectId, detailPath: currentRef?.detailPath })
+            .then((answer) => {
+                if (cancelled) return;
+                setAudioTracks(answer.languages);
+            })
+            .catch(() => {
+                if (!cancelled) setAudioTracks([]);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [currentRef, isSearchFrame]);
+
+    useEffect(() => {
+        if (!audioNotice) return;
+        const timer = setTimeout(() => setAudioNotice(null), 2200);
+        return () => clearTimeout(timer);
+    }, [audioNotice]);
+
+    /**
+     * Doosri bhasha chuno.
+     *
+     *  - Phone/touch par jab hamara `<video>` chal raha hai → us dub ke subject
+     *    se naye streams (seedha browser se, koi proxy nahi), wahi second.
+     *  - Warna (desktop/iframe) → us dub ka watch page hi khol do; MovieBox
+     *    khud usi bhasha me chalata hai. Dono surat me **asli** switch hota
+     *    hai — jhootha toast nahi.
+     */
+    const chooseAudio = useCallback(
+        async (track: AudioTrack): Promise<boolean> => {
+            if (audioBusy) return false;
+            setAudioBusy(track.subjectId);
+            setAudioNotice(null);
+            try {
+                if (directStreams && directStreams.length) {
+                    const answer = await resolveDirectStreams({
+                        subjectId: track.subjectId,
+                        detailPath: track.detailPath,
+                        se: season ?? 1,
+                        ep: activeEpisode ?? 1,
+                    });
+                    if (answer.ok && answer.streams.length) {
+                        setAudioStartAt(playheadRef.current);
+                        setDirectStreams(answer.streams);
+                        setAudioMenu(false);
+                        return true;
+                    }
+                }
+                const dubLink = buildDubWatchLink(track);
+                if (!dubLink) {
+                    setAudioNotice(`${track.name} audio nahi mila`);
+                    return false;
+                }
+                // iframe wala rasta: us dub ka page kholo (page hi audio badal deta hai).
+                setLink(dubLink);
+                setDirectStreams(null);
+                setAudioStartAt(playheadRef.current);
+                setAudioMenu(false);
+                setAudioNotice(`Audio: ${track.name}`);
+                return true;
+            } catch {
+                setAudioNotice(`${track.name} audio nahi mila`);
+                return false;
+            } finally {
+                setAudioBusy(null);
+            }
+        },
+        [activeEpisode, audioBusy, directStreams, season],
+    );
+
     const overlayBox = useMemo(() => {
         if (!rootSize.width || !rootSize.height) return null;
         const crop = getMovieboxCrop(rootSize.width, rootSize.height, { resources: isSearchFrame });
@@ -591,6 +692,14 @@ export function MovieboxPagePlayer({
                 <MovieboxDirectPlayer
                     streams={directStreams}
                     title={title}
+                    year={year}
+                    audioTracks={audioTracks}
+                    activeAudio={activeAudio}
+                    onAudioSelect={chooseAudio}
+                    startAt={audioStartAt}
+                    onProgress={(info) => {
+                        playheadRef.current = info.currentTime;
+                    }}
                     onUnavailable={(reason) => {
                         // Stream nahi chala (format/CDN/region) — turant purana
                         // cropped iframe, warna phone par kaala dabba reh jata.
@@ -783,6 +892,53 @@ export function MovieboxPagePlayer({
                 </View>
             ) : null}
 
+            {/* Audio menu — chhoti list, video ke upar daayein. */}
+            {audioMenu && audioTracks.length > 1 ? (
+                <View style={styles.audioMenuWrap} testID="moviebox-audio-menu">
+                    <View style={styles.audioMenuPanel}>
+                        <Text style={styles.audioMenuTitle}>Audio</Text>
+                        {audioTracks.map((track) => {
+                            const active = track.subjectId === activeAudio;
+                            return (
+                                <Pressable
+                                    key={`audio-${track.subjectId}`}
+                                    style={styles.audioMenuRow}
+                                    onPress={() => {
+                                        if (active) {
+                                            setAudioMenu(false);
+                                            return;
+                                        }
+                                        void chooseAudio(track);
+                                    }}
+                                    accessibilityRole="button"
+                                    accessibilityState={{ selected: active }}
+                                    testID={`moviebox-audio-${track.lang}`}
+                                >
+                                    <Text style={[styles.audioMenuText, active && styles.audioMenuTextActive]}>
+                                        {track.name}
+                                    </Text>
+                                    {audioBusy === track.subjectId ? (
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    ) : active ? (
+                                        <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                                    ) : (
+                                        <Text style={styles.audioMenuHint}>{(track.lang || '').toUpperCase()}</Text>
+                                    )}
+                                </Pressable>
+                            );
+                        })}
+                    </View>
+                </View>
+            ) : null}
+
+            {/* Badal gaya — video ke beech chhota sa confirm (jhootha nahi:
+                sirf tab jab switch asli me hua). */}
+            {audioNotice ? (
+                <View style={styles.audioNotice} pointerEvents="none" testID="moviebox-audio-notice">
+                    <Text style={styles.audioNoticeText}>{audioNotice}</Text>
+                </View>
+            ) : null}
+
             {/* Top bar. Fullscreen me kuch bhi nahi — owner: "fullscreen hone
                 ke baad upar X ka nishan nahi aana chahiye". Fullscreen se
                 nikalne ke liye corner ka fullscreen-exit button ya Esc. */}
@@ -808,6 +964,22 @@ export function MovieboxPagePlayer({
                     >
                         <Ionicons name="swap-horizontal" size={14} color="#fff" />
                         <Text style={styles.serverPillText}>{switchLabel || 'Server 1'}</Text>
+                    </Pressable>
+                ) : null}
+
+                {/* Audio (dub) — provider par har bhasha alag subject hai. */}
+                {audioTracks.length > 1 && !isSearchFrame && !ownFullscreen ? (
+                    <Pressable
+                        style={[styles.serverPill, styles.audioPill]}
+                        onPress={() => setAudioMenu((value) => !value)}
+                        accessibilityRole="button"
+                        accessibilityLabel="Audio language"
+                        testID="moviebox-audio"
+                    >
+                        <MaterialCommunityIcons name="translate" size={14} color="#fff" />
+                        <Text style={styles.serverPillText}>
+                            {audioTracks.find((track) => track.subjectId === activeAudio)?.name || 'Audio'}
+                        </Text>
                     </Pressable>
                 ) : null}
 
@@ -1010,6 +1182,49 @@ const styles = StyleSheet.create({
         opacity: 0.75,
     },
     serverPillText: { color: '#fff', fontSize: 12, fontWeight: '600' },
+    audioPill: { opacity: 0.9 },
+    audioMenuWrap: {
+        position: 'absolute',
+        top: 58,
+        right: 14,
+        zIndex: 40,
+    },
+    audioMenuPanel: {
+        minWidth: 190,
+        paddingVertical: 8,
+        borderRadius: 8,
+        backgroundColor: 'rgba(20,20,20,0.96)',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'rgba(255,255,255,0.2)',
+    },
+    audioMenuTitle: {
+        color: '#9a9a9a',
+        fontSize: 11,
+        fontWeight: '700',
+        paddingHorizontal: 14,
+        paddingBottom: 4,
+        letterSpacing: 0.6,
+    },
+    audioMenuRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        paddingHorizontal: 14,
+        paddingVertical: 9,
+    },
+    audioMenuText: { flex: 1, color: '#e6e6e6', fontSize: 14 },
+    audioMenuTextActive: { color: '#fff', fontWeight: '700' },
+    audioMenuHint: { color: '#8f8f8f', fontSize: 11 },
+    audioNotice: {
+        position: 'absolute',
+        top: '48%',
+        alignSelf: 'center',
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 8,
+        backgroundColor: 'rgba(0,0,0,0.7)',
+    },
+    audioNoticeText: { color: '#fff', fontSize: 13, fontWeight: '700' },
     searchBar: {
         position: 'absolute',
         left: 12,

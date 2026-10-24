@@ -86,18 +86,17 @@ export function NetmirrorPlayer({
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
-        if (initialStreams && initialStreams.length) {
-            setStreams(initialStreams);
-            setState('ready');
-            return;
-        }
         if (!hasId) {
             setError('TMDB id nahi mila');
             setState('empty');
             return;
         }
         let cancelled = false;
-        setState('loading');
+        // Parent ne streams de diye ho to wahi turant dikhao, par metadata
+        // (subtitles + audio list) phir bhi laao — warna CC/dub gayab rehte hain.
+        if (!(initialStreams && initialStreams.length)) {
+            setState('loading');
+        }
         setError('');
         fetchNetmirrorStreams({ tmdbId, mediaType, season, episode }).then((result: NetmirrorResult) => {
             if (cancelled) return;

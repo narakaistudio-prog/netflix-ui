@@ -30,7 +30,12 @@ export const NETMIRROR_API_PATH = '/api/netmirror';
 const STREAM_TTL_MS = 12 * 60 * 1000;
 /** "Nahi mila" ko itni der yaad rakho — har baar network call na ho. */
 const MISS_TTL_MS = 30 * 60 * 1000;
-const CACHE_KEY = 'netflix-netmirror-v1';
+/**
+ * v2 — purane cache me `subjectId` nahi tha, isliye **audio (dub) list** kabhi
+ * maangi hi nahi jaati thi (owner: "audio dusra nahi aa raha"). Key badalne se
+ * purana cache apne aap invalid ho jata hai.
+ */
+const CACHE_KEY = 'netflix-netmirror-v2';
 /** Subtitle SRT → VTT bridge (same-origin). */
 export const NETMIRROR_SUBTITLE_PATH = '/api/netmirror-subtitle';
 /** Upstream caption URL aksar relative hota hai — isi host par resolve. */
@@ -212,7 +217,10 @@ export async function fetchNetmirrorStreams(
     const hit = cache[key];
     if (hit) {
         const ttl = hit.ok ? STREAM_TTL_MS : MISS_TTL_MS;
-        if (now - hit.at < ttl) {
+        // Purani entry me `subjectId` na ho to audio list ban hi nahi sakti —
+        // usse hit maankar audio chhupana galat hoga, isliye dobara fetch.
+        const usable = !hit.ok || Boolean(hit.subjectId);
+        if (usable && now - hit.at < ttl) {
             return {
                 ok: hit.ok,
                 streams: hit.streams,
