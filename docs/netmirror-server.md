@@ -53,7 +53,7 @@ hamare function tak, video Cloudflare ke CDN se seedha screen tak.
 | File | Kaam |
 | --- | --- |
 | `api/netmirror.mjs` | Vercel function: mirrors `net27.cc → net79.cc → net77.cc`, `probe=1`, 10-min cache, `not-added` par saaf jawab |
-| `lib/netmirror.ts` | id parsing (IMDb reject), query builder, normalize (1080 pehle), 12-min client cache |
+| `lib/netmirror.ts` | id parsing (IMDb reject), query builder, normalize (1080 pehle), 12-min client cache (`fresh: true` se skip) |
 | `hooks/useNetmirrorAvailable.ts` | halka probe (URLs ke bina) — chip sirf tab jab title mile |
 | `components/NetmirrorPlayer.tsx` | apna `<video>` (wahi ±10s/seek/progress player), na chale to **"Play on Nxsha"** |
 | `lib/playbackServers.ts` | naya server `netmirror` — MovieBox se pehle; MovieBox na ho to `[Server 1 → NetMirror]` |
@@ -129,7 +129,19 @@ Ab:
 | MovieBox · phone (`<video>`) | wahi tarika (`resolveDirectStreams`) |
 | MovieBox · desktop (iframe) | us dub ka watch page khulta hai — MovieBox khud usi bhasha me chalata hai |
 
-Cache key `netflix-netmirror-v2` kar di, taaki purana cache apne aap mar jaye.
+Cache key `netflix-netmirror-v3` hai, taaki purana cache apne aap mar jaye.
+
+Owner (24 Oct, teesra round): *"multiaudio sirf MovieBox me aa raha hai,
+NetMirror me nahi"*. Do wajah thi, dono theek ho gayi:
+
+1. **Audio pill sirf MovieBox players me thi.** Jo bhi server
+   `MovieboxDirectPlayer` chalata hai (NetMirror bhi) usme audio list sirf CC
+   menu ke andar chhupi thi. Ab top bar me alag **audio pill** hai
+   (`direct-audio-pill`) — 2+ audio hone par hi, aur usme `Audio` menu
+   (`direct-audio-<lang>`).
+2. **Cache me `subjectId` missing** → audio list maangi hi nahi jaati thi. Ab
+   `subjectId` na ho to `fetchNetmirrorStreams(..., { fresh: true })` se ek
+   fresh call hoti hai, aur audio list khaali aaye to ek retry (700 ms).
 Provider apni **subtitle** bhashayein bhi `dubs[]` me bhejta hai (`Arabic sub`)
 — wo hata di jaati hain (audio nahi hain), aur ek hi bhasha ek hi baar
 (`Original` jeetta hai).
