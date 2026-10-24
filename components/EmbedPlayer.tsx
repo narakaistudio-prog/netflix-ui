@@ -56,17 +56,6 @@ export interface EmbedPlayerProps {
     serverName?: string;
     /** Agla server (switcher pill ka label), jab switch available ho. */
     nextServerName?: string;
-    /**
-     * VidSync (Server 3) ke **upstream lines** (1/2/3). Ek line ruk ruk kar
-     * chalti ho to doosri ek tap me — provider ke gear menu me jaane ki zarurat
-     * nahi. Baaki servers par ye props nahi diye jate, isliye koi extra button
-     * nahi dikhta.
-     */
-    lineOptions?: readonly number[];
-    /** Abhi chuni hui line. */
-    lineValue?: number;
-    /** Line badalna — naya URL banake iframe reload hota hai. */
-    onPickLine?: (line: number) => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -89,9 +78,6 @@ export function EmbedPlayer({
     onEnded,
     serverName,
     nextServerName,
-    lineOptions,
-    lineValue,
-    onPickLine,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
@@ -709,35 +695,6 @@ export function EmbedPlayer({
                     </Pressable>
                 ) : null}
 
-                {/**
-                 * 1 / 2 / 3 — VidSync ke apne upstream provider. Owner (laptop):
-                 * "bahut ruk ruk kar chalta hai" — ek line slow ho to doosri
-                 * turant. Sirf tab dikhta hai jab caller `lineOptions` de
-                 * (matlab Server 3 chal raha hai).
-                 */}
-                {onPickLine && lineOptions && lineOptions.length > 1 ? (
-                    <View style={styles.linePills} testID="embed-line-pills">
-                        <Text style={styles.linePillsLabel}>Line</Text>
-                        {lineOptions.map((option) => {
-                            const active = option === lineValue;
-                            return (
-                                <Pressable
-                                    key={option}
-                                    style={[styles.linePill, active && styles.linePillActive]}
-                                    onPress={() => onPickLine(option)}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={`Use upstream line ${option}`}
-                                    accessibilityState={{ selected: active }}
-                                    testID={`embed-line-${option}`}
-                                >
-                                    <Text style={[styles.linePillText, active && styles.linePillTextActive]}>
-                                        {option}
-                                    </Text>
-                                </Pressable>
-                            );
-                        })}
-                    </View>
-                ) : null}
 
                 {canAutoFullscreen ? (
                     <Pressable
@@ -782,30 +739,6 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     serverPillText: { color: '#fff', fontSize: 11, fontWeight: '600' },
-    /** VidSync upstream line pills (1/2/3) — server pill ke bagal. */
-    linePills: {
-        height: 32,
-        marginLeft: 8,
-        paddingHorizontal: 8,
-        borderRadius: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-        backgroundColor: 'rgba(0,0,0,0.55)',
-    },
-    linePillsLabel: { color: '#bdbdbd', fontSize: 10, fontWeight: '700', marginRight: 2 },
-    linePill: {
-        minWidth: 22,
-        height: 22,
-        paddingHorizontal: 5,
-        borderRadius: 11,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(255,255,255,0.12)',
-    },
-    linePillActive: { backgroundColor: '#E50914' },
-    linePillText: { color: '#e6e6e6', fontSize: 11, fontWeight: '700' },
-    linePillTextActive: { color: '#fff' },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',
