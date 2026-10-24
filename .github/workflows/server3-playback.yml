@@ -1,0 +1,32 @@
+name: server3-playback
+
+# Temporary: Server 3 candidates ko asli Chromium me chala kar dekho —
+# pehla frame kitni der me, aur 8 second me kitni baar ruka (rebuffer).
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/f7df9bfb-netflix-ui]
+    paths:
+      - '.github/workflows/server3-playback.yml'
+      - 'scripts/probe-server3-playback.mjs'
+
+permissions:
+  contents: write
+
+jobs:
+  playback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright chromium
+        run: |
+          npm i --no-save --no-audit --no-fund playwright@1.49.1
+          npx playwright install --with-deps chromium
+      - name: Probe playback
+        run: node scripts/probe-server3-playback.mjs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
