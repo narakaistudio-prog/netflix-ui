@@ -121,3 +121,59 @@ Mandaadi                                      ← owner ke marks
 - Bridge ka matlab: buttons `MovieDetailModal` me hain, video
   `MovieboxDirectPlayer` ke andar — ek module-level register/subscribe pul dono
   ko jodta hai (player unmount par unregister, identity check ke saath).
+
+---
+
+# 24 Oct: Owner ka follow-up — "button kaha hai hi nahi laga", aur API ka sach
+
+> Owner: "button kaha hai hai hi nhi laga hua ye jo fallback no stream likhta ye
+> sab bhi hta do or second image mae jaha mark hai wah sahi mae button do working
+> samjha phone ke liyea uske baad pr bnakar sab sahi se merge kar"
+
+## 1. Fallback/debug text hata diya
+
+`MovieboxPagePlayer` me jo 10px wali line (`direct ok · …` / `fallback: …`,
+`?m2boxdebug=1` par hamesha) dikhti thi, wo **poori tarah hata di**. Ab player ke
+upar sirf player hai — reason sirf console me (`[m2box-direct] fallback: …`).
+
+## 2. Buttons ab hamesha dikhte hain (gate hata)
+
+Pehle wo `seekReady` par gate the — jab MovieBox ki API stream nahi deti to
+player unki site ke iframe par chala jata hai, `seekReady` false reh jata hai,
+aur button **gayab**. Isi liye owner ko "laga hi nahi" dikha.
+
+Ab:
+
+| Haalat | Button | Tap par |
+| --- | --- | --- |
+| Video hamare `<video>` me (direct stream mila) | poora chamakta hua | sach me ±10s (clamp + toast) |
+| Video cross-origin iframe me (site ka player) | wahi jagah, halka dhundhla (`opacity 0.45`) | toast: "10s skip works in the built-in player only" |
+
+Cross-origin iframe ke andar `currentTime` chhuna browser allow hi nahi karta
+(same-origin policy) — isliye wahan "ho gaya" ka jhooth nahi bolte.
+
+## 3. Sach: MovieBox ki play API guest ko stream deti hi nahi (24 Oct 2026)
+
+`scripts/probe-moviebox-browser.mjs` (browser ke nazariye se — OPTIONS preflight
++ safelisted GET + CDN) aur `scripts/probe-moviebox-play.mjs` se, GitHub runner
+se:
+
+| Test | Nateeja |
+| --- | --- |
+| OPTIONS preflight (`authorization`, `x-client-token`, `x-play-mode`) | **200**, `ACAH` me saare headers allowed |
+| `GET /subject/play` (hamare asli headers) | **200 · streams 0 · hls 0 · dash 0 · hasResource false** |
+| `GET /subject/play` (bina kisi custom header ke) | wahi — **0 streams** |
+| `m2box.org`, `moviebox.ph`, `h5-api`, `mzfi.me` — chaaron hosts | sab par `hasResource:false`, `maxResolution:480` |
+| Mandaadi, Avatar, Wednesday, Inception, Stranger Things | **sab par 0** |
+| `/detail` ka `resourceDetectors` | 0, aur ek purana sample mp4 |
+| mobile BFF `play-info` | 403 — "Service not available in current region" (runner US me) |
+| CDN (`macdn.aoneroom.com`) | 206, no ACAO — media element chalta hai *agar* URL mile |
+
+Matlab: aaj koi bhi title direct `<video>` me nahi aata — player hamesha unki
+site ke player par jata hai (jo chalta hai, par uska `currentTime` hamare haath
+me nahi). Isliye ±10s sirf us waqt kaam karta hai jab MovieBox dobara streams
+dene lage; tab kuch aur badalna nahi padega — buttons pehle se jude hue hain.
+
+Rasta aage khulne par: `/subject/play` ka jawab streams ke saath aate hi
+`MovieboxDirectPlayer` mount ho jata hai aur buttons apne aap "chalu" ho jate
+hain (hook bridge se).

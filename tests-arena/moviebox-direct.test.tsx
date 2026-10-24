@@ -435,12 +435,17 @@ describe('phone screen ke buttons (source)', () => {
 
     it('title ke bagal me −10s / +10s buttons hain, aur seek bridge se jude hain', () => {
         const modal = read('components/MovieList/MovieDetailModal.tsx');
-        expect(modal).toContain('testID="phone-skip-back"');
-        expect(modal).toContain('testID="phone-skip-forward"');
-        expect(modal).toContain('seekMovieboxBy(-MOVIEBOX_SKIP_SECONDS)');
-        expect(modal).toContain('seekMovieboxBy(MOVIEBOX_SKIP_SECONDS)');
-        // Dead button nahi: sirf tab dikhte hain jab seedha player chalu ho.
-        expect(modal).toContain('seekReady ?');
+        expect(modal).toContain("test: 'phone-skip-back'");
+        expect(modal).toContain("test: 'phone-skip-forward'");
+        expect(modal).toContain('testID={test}');
+        expect(modal).toContain('seekMovieboxBy(delta)');
+        expect(modal).toContain('delta: -MOVIEBOX_SKIP_SECONDS');
+        expect(modal).toContain('delta: MOVIEBOX_SKIP_SECONDS');
+        // Buttons hamesha dikhte hain (owner: "button kaha hai hi nahi laga") —
+        // pehle `seekReady` par gate the, isliye iframe wale player me gayab
+        // ho jate the. Ab sirf opacity badalti hai.
+        expect(modal).toContain('phoneSkipIdle');
+        expect(modal).not.toContain('{seekReady ? (');
         expect(modal).toContain('useMovieboxSeekReady()');
         // Title ke saath ek hi row me.
         expect(modal).toContain('phoneTitleRow');

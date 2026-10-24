@@ -50,6 +50,13 @@ type Props = {
 
 /** Official Netflix title page, used when no player source can be built. */
 /** "2024-01-07" → "Jan 7, 2024" (Crunchyroll-style released line). */
+/**
+ * Jab video cross-origin iframe me ho (Server 2 ki site ka player) to ±10s
+ * technically possible hi nahi — us waqt tap par yahi saaf baat (English, site
+ * ka visible text English rehta hai). Fake "ho gaya" toast nahi.
+ */
+const NEED_OWN_PLAYER = '10s skip works in the built-in player only';
+
 const AIR_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function formatAirDate(iso?: string): string {
     if (!iso) return '';
@@ -722,10 +729,20 @@ export function MovieDetailModal({
                                      * Owner (screenshot me title ke bagal do jagah
                                      * mark karke): "waha par 10 sec piche aur
                                      * right mae 10 sec aage ka button de do".
-                                     * Sirf tab dikhte hain jab seedha player
-                                     * (hamara <video>) chal raha ho — iframe
-                                     * wale fallback me seek ho hi nahi sakta,
-                                     * isliye dead button nahi dikhate.
+                                     *
+                                     * Buttons **hamesha** yahan rehte hain (owner
+                                     * 24 Oct: "button kaha hai hi nahi laga") —
+                                     * pehle `seekReady` par gate the, aur jab
+                                     * MovieBox ki API stream nahi deti (aaj har
+                                     * title par `hasResource:false` — probe se
+                                     * verify) to player unki site ke iframe par
+                                     * chala jata hai aur button gayab ho jate
+                                     * the. Ab dikhte hain, aur jab video hamare
+                                     * apne `<video>` me chal raha ho tab ±10s
+                                     * sach me karte hain. Jab video cross-origin
+                                     * iframe me ho to seek possible hi nahi —
+                                     * us waqt button dhundhla rehta hai aur tap
+                                     * par saaf batata hai (fake nahi karte).
                                      */}
                                     <View style={styles.phoneTitleRow}>
                                         <Text style={styles.phoneEpisodeTitle}>
@@ -733,34 +750,28 @@ export function MovieDetailModal({
                                                 ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
                                                 : movie.title}
                                         </Text>
-                                        {seekReady ? (
-                                            <View style={styles.phoneSkipRow}>
+                                        <View style={styles.phoneSkipRow}>
+                                            {[
+                                                { delta: -MOVIEBOX_SKIP_SECONDS, icon: 'play-back', test: 'phone-skip-back' },
+                                                { delta: MOVIEBOX_SKIP_SECONDS, icon: 'play-forward', test: 'phone-skip-forward' },
+                                            ].map(({ delta, icon, test }) => (
                                                 <Pressable
-                                                    style={styles.phoneSkip}
-                                                    onPress={() => seekMovieboxBy(-MOVIEBOX_SKIP_SECONDS)}
+                                                    key={test}
+                                                    style={[styles.phoneSkip, !seekReady && styles.phoneSkipIdle]}
+                                                    onPress={() => (seekMovieboxBy(delta) ? undefined : announce(NEED_OWN_PLAYER))}
                                                     accessibilityRole="button"
-                                                    accessibilityLabel={`Rewind ${MOVIEBOX_SKIP_SECONDS} seconds`}
-                                                    testID="phone-skip-back"
+                                                    accessibilityLabel={`${
+                                                        delta < 0 ? 'Rewind' : 'Forward'
+                                                    } ${MOVIEBOX_SKIP_SECONDS} seconds`}
+                                                    testID={test}
                                                 >
-                                                    <Ionicons name="play-back" size={20} color="#fff" />
+                                                    <Ionicons name={icon as any} size={20} color="#fff" />
                                                     <Text style={styles.phoneSkipText}>
                                                         {MOVIEBOX_SKIP_SECONDS}s
                                                     </Text>
                                                 </Pressable>
-                                                <Pressable
-                                                    style={styles.phoneSkip}
-                                                    onPress={() => seekMovieboxBy(MOVIEBOX_SKIP_SECONDS)}
-                                                    accessibilityRole="button"
-                                                    accessibilityLabel={`Forward ${MOVIEBOX_SKIP_SECONDS} seconds`}
-                                                    testID="phone-skip-forward"
-                                                >
-                                                    <Ionicons name="play-forward" size={20} color="#fff" />
-                                                    <Text style={styles.phoneSkipText}>
-                                                        {MOVIEBOX_SKIP_SECONDS}s
-                                                    </Text>
-                                                </Pressable>
-                                            </View>
-                                        ) : null}
+                                            ))}
+                                        </View>
                                     </View>
                                     {metaLine ? (
                                         <Text style={styles.phoneMeta}>{metaLine}</Text>
@@ -931,6 +942,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 1,
     },
+    /** Video cross-origin iframe me hai — button dikhta hai par seek nahi hota. */
+    phoneSkipIdle: { opacity: 0.45 },
     phoneSkipText: { color: '#fff', fontSize: 9, fontWeight: '800', letterSpacing: 0.2 },
     phoneMeta: { color: '#b0b0b0', fontSize: 15, marginTop: 10 },
     phoneOverview: { color: '#c9c9c9', fontSize: 15, lineHeight: 22, marginTop: 12 },
