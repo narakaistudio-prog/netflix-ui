@@ -1,18 +1,24 @@
 name: MovieBox play probe
 
-# Diagnostic only — manual dispatch. Answers: kya MovieBox ke stream URL seedha
-# browser me chal sakte hain (bina proxy), ya nahi. Kuch deploy nahi karta.
+# Diagnostic only — kuch deploy nahi karta. Do sawaal:
+#
+#   1. `probe-moviebox-play.mjs`  — MovieBox ke stream URL **kya** hain
+#      (search → /subject/play → /detail → CDN headers). Node se, CORS ke
+#      bina — yaani "server se to milta hai".
+#   2. `probe-moviebox-browser.mjs` — wahi URL **browser ke nazariye se**:
+#      OPTIONS preflight (authorization/x-client-token allowed?), safelisted
+#      headers wala GET, `x-user` expose, CDN. Bas ye batata hai ki phone par
+#      hamara apna `<video>` (aur ±10s buttons) chalega ya player chup-chaap
+#      purane iframe par girega.
+#
+# workflow_dispatch sirf default branch ki file par chalta hai, isliye branch
+# par test karne ka rasta draft PR ka `pull_request` event hai — result PR
+# comment me post hota hai (`gh pr view --comments`).
 on:
-  # GitHub `workflow_dispatch` sirf default branch ki file par chalta hai, isliye
-  # branch par test karne ka rasta: draft PR + pull_request event.
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
-      title:
-        description: 'Search title (stream wala test)'
-        required: false
-        default: 'Avatar'
       subject_id:
         description: 'MovieBox subjectId'
         required: false
@@ -29,11 +35,15 @@ on:
         description: 'Episode (0 = movie)'
         required: false
         default: '0'
+      title:
+        description: 'Search title (purana probe — kya search se stream milta hai)'
+        required: false
+        default: 'Mandaadi'
 
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 8
     permissions:
       contents: read
       pull-requests: write
@@ -42,13 +52,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Probe MovieBox play API + CDN headers
+      - name: Browser-view probe (preflight + streams + CDN)
         env:
-          PROBE_TITLE: ${{ inputs.title || 'Avatar' }}
+          SUBJECT_ID: ${{ inputs.subject_id || '4151920426815471968' }}
+          DETAIL_PATH: ${{ inputs.detail_path || 'mandaadi-hindi-qxUx1r3QHW4' }}
+          SE: ${{ inputs.se || '0' }}
+          EP: ${{ inputs.ep || '0' }}
+          PROBE_ORIGIN: 'https://net-ki15.vercel.app'
         run: |
           set -o pipefail
-          # --title par pehle search hoti hai (jo title asli me stream deta hai).
-          node scripts/probe-moviebox-play.mjs --title "${PROBE_TITLE:-Avatar}" 2>&1 | tee probe.log
+          node scripts/probe-moviebox-browser.mjs \
+            --subject-id "$SUBJECT_ID" --detail-path "$DETAIL_PATH" \
+            --se "$SE" --ep "$EP" 2>&1 | tee browser-probe.log
+      - name: Search probe (title → streams)
+        env:
+          PROBE_TITLE: ${{ inputs.title || 'Mandaadi' }}
+        run: |
+          set -o pipefail
+          node scripts/probe-moviebox-play.mjs --title "$PROBE_TITLE" 2>&1 | tee play-probe.log
       # Runner ke logs alag host par hote hain; result PR comment me daal dete
       # hain, taaki `gh api` se hi padha ja sake.
       - name: Post result as PR comment
@@ -58,9 +79,13 @@ jobs:
           PR: ${{ github.event.pull_request.number }}
         run: |
           {
-            echo '### MovieBox play probe'
+            echo '### MovieBox probe — browser ke nazariye se'
             echo '```'
-            tail -c 5000 probe.log || true
+            tail -c 6000 browser-probe.log || true
+            echo '```'
+            echo '### MovieBox probe — search route'
+            echo '```'
+            tail -c 3000 play-probe.log || true
             echo '```'
           } > body.md
           gh pr comment "$PR" --body-file body.md || cat body.md
