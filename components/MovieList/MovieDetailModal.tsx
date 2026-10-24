@@ -6,7 +6,7 @@ import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
 import { TitleComments } from '@/components/TitleComments';
-import { useUser } from '@/contexts/UserContext';
+import { useOptionalUser } from '@/contexts/UserContext';
 import { scopeFor } from '@/lib/titleSocial';
 
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
@@ -24,6 +24,7 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
+import { buildVidSyncUrl, VIDSYNC_SERVER_LABEL } from '@/lib/vidsync';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import type { Movie } from '@/types/movie';
@@ -107,7 +108,7 @@ export function MovieDetailModal({
      */
     const [socialNotice, setSocialNotice] = useState<string | null>(null);
     const socialTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const { openSignIn } = useUser();
+    const { openSignIn } = useOptionalUser();
     const showSocialNotice = useCallback((message: string | null) => {
         setSocialNotice(message);
         if (socialTimer.current) clearTimeout(socialTimer.current);
@@ -132,8 +133,9 @@ export function MovieDetailModal({
     /**
      * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
      * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
+     * Server 3 (VidSync) sirf pill se chuna jata hai — kabhi default nahi.
      */
-    const [server, setServer] = useState<'primary' | 'moviebox'>('moviebox');
+    const [server, setServer] = useState<'primary' | 'moviebox' | 'vidsync'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
 
@@ -284,6 +286,22 @@ export function MovieDetailModal({
         }
     }, [movie, episodeRef, primaryEmbedUrl, rowIsMoviebox]);
 
+    /**
+     * Server 3 — VidSync ka embed. Route sirf **TMDB numeric id** leta hai
+     * (`/embed/movie/<id>`, `/embed/tv/<id>/<s>/<e>`), isliye id na mile to
+     * `null` aur pill dikhta hi nahi. Series par chalu episode hi khulta hai
+     * (Crunchyroll jaisa per-episode behaviour).
+     */
+    const vidsyncSrc = useMemo(() => {
+        if (!movie) return null;
+        return buildVidSyncUrl({
+            tmdbId: movie.tmdb_id,
+            mediaType: movie.mediaType === 'tv' ? 'tv' : 'movie',
+            season: episodeRef?.season ?? season,
+            episode: episodeRef?.episode ?? 1,
+        });
+    }, [movie, episodeRef, season]);
+
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
     const fiveUp = panelWidth > 880;
@@ -299,8 +317,18 @@ export function MovieDetailModal({
     const cast = (movie.cast || []).filter((name) => name && name !== 'Cast not available');
     const genres = movie.genres || [];
 
-    /** MovieBox available na ho to server hamesha Server 1 (Nxsha). */
-    const activeServer: 'primary' | 'moviebox' = movieboxAvailable ? server : 'primary';
+    /**
+     * Kaunsa server sach me chalega. Chunna hua server available na ho to
+     * Server 1 (Nxsha) — dead player kabhi nahi khulta.
+     */
+    const activeServer: 'primary' | 'moviebox' | 'vidsync' =
+        server === 'vidsync' && vidsyncSrc
+            ? 'vidsync'
+            : server === 'moviebox' && movieboxAvailable
+              ? 'moviebox'
+              : 'primary';
+    /** Player ka asli src — Server 3 (VidSync) ka apna embed. */
+    const playerSrc = activeServer === 'vidsync' ? vidsyncSrc ?? '' : src;
 
     /** Phone player screen (Crunchyroll jaisa) ka episode data. */
     const isTv = movie.mediaType === 'tv';
@@ -328,7 +356,8 @@ export function MovieDetailModal({
         .join('  •  ');
 
     const handlePlay = (episode?: { season: number; episode: number }) => {
-        if (src) {
+        // Server 3 chuna hua ho to bhi play chale (VidSync ka apna src hai).
+        if (playerSrc) {
             const isSeries = movie.mediaType === 'tv';
             const ep = episode ?? episodeRef ?? { season: 1, episode: 1 };
             if (episode) setEpisodeRef(episode);
@@ -424,12 +453,12 @@ export function MovieDetailModal({
             />
         ) : (
             <EmbedPlayer
-                src={src}
+                src={playerSrc}
                 title={episodeRef && movie.mediaType === 'tv' ? `${movie.title} · S${episodeRef.season} E${episodeRef.episode}` : movie.title}
                 onClose={() => setPlaying(false)}
                 fallbackUrl={officialUrlFor(movie)}
                 resumeAt={resumeSec}
-                serverName="Nxsha"
+                serverName={activeServer === 'vidsync' ? `Server 3 · ${VIDSYNC_SERVER_LABEL}` : 'Nxsha'}
                 onProgress={(info) => {
                     if (!activeEntry) return;
                     updateWatchPosition(activeEntry.id, info.seconds, info.duration);
@@ -527,12 +556,14 @@ export function MovieDetailModal({
                         </View>
 
                         {/* Server chunna — owner ke naap par description ke
-                            neeche, "Episodes" ke upar. **Hindi = MovieBox**,
-                            **Multi = Nxsha**. MovieBox link na ho to ye option
-                            dikhta hi nahi (Nxsha hi chalta hai). */}
-                        {movieboxAvailable ? (
+                            neeche, "Episodes" ke upar. **Hindi = MovieBox**
+                            (Server 2), **Multi = Nxsha** (Server 1),
+                            **VidSync = Server 3**. Koi bhi available na ho to
+                            row dikhta hi nahi (Nxsha hi chalta hai). */}
+                        {movieboxAvailable || vidsyncSrc ? (
                             <View style={[styles.serverRow, wide && styles.serverRowWide]}>
                                 <Text style={styles.serverRowLabel}>Server</Text>
+                                {movieboxAvailable ? (
                                 <Pressable
                                     onPress={() => setServer('moviebox')}
                                     style={[
@@ -554,6 +585,7 @@ export function MovieDetailModal({
                                         Hindi
                                     </Text>
                                 </Pressable>
+                                ) : null}
                                 <Pressable
                                     onPress={() => setServer('primary')}
                                     style={[
@@ -575,6 +607,29 @@ export function MovieDetailModal({
                                         Multi
                                     </Text>
                                 </Pressable>
+                                {vidsyncSrc ? (
+                                    <Pressable
+                                        onPress={() => setServer('vidsync')}
+                                        style={[
+                                            styles.serverChip,
+                                            activeServer === 'vidsync' && styles.serverChipActive,
+                                        ]}
+                                        accessibilityLabel="Server 3 (VidSync)"
+                                        accessibilityRole="button"
+                                        accessibilityState={{ selected: activeServer === 'vidsync' }}
+                                        {...({ dataSet: { selected: activeServer === 'vidsync' ? '1' : '0' } } as any)}
+                                        testID="server-vidsync"
+                                    >
+                                        <Text
+                                            style={[
+                                                styles.serverChipText,
+                                                activeServer === 'vidsync' && styles.serverChipTextActive,
+                                            ]}
+                                        >
+                                            VidSync
+                                        </Text>
+                                    </Pressable>
+                                ) : null}
                             </View>
                         ) : null}
 
@@ -677,7 +732,7 @@ export function MovieDetailModal({
                     </ScrollView>
                 </View>
 
-                {playing && (src || activeServer === 'moviebox') ? (
+                {playing && (playerSrc || activeServer === 'moviebox') ? (
                     <View style={styles.playerLayer}>
                         {isPhoneWeb ? (
                             /**

@@ -11,7 +11,7 @@ import {
     View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useUser } from '@/contexts/UserContext';
+import { useOptionalUser } from '@/contexts/UserContext';
 import {
     addComment,
     commentCount,
@@ -66,7 +66,7 @@ interface TitleCommentsProps {
 }
 
 export function TitleComments({ scope, onRequireSignIn, onNotice }: TitleCommentsProps) {
-    const { signedIn } = useUser();
+    const { signedIn } = useOptionalUser();
     const [counts, setCounts] = useState({ likeCount: 0, dislikeCount: 0, myVote: 0 });
     const [total, setTotal] = useState(0);
     const [open, setOpen] = useState(false);

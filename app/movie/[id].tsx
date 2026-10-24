@@ -28,6 +28,7 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
+import { buildVidSyncUrl, vidsyncTmdbNumber, VIDSYNC_SERVER_LABEL } from '@/lib/vidsync';
 import { getTvSeasons } from '@/lib/tvEpisodes';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
@@ -47,11 +48,13 @@ const SCALE_FACTOR = 0.83;
  * Playback "servers": the regular embed providers (Nxsha / NHD / custom) plus
  * M2Box — MovieBox ka koi embed nahi hota, isliye uska poora watch page frame
  * me khol kar sirf player wala hissa dikhaya jata hai (MovieboxPagePlayer).
+ * Server 3 = VidSync (vidsync.pro) — TMDB id wala seedha embed iframe.
  */
-type PlaybackServerId = ProviderId | 'moviebox';
+type PlaybackServerId = ProviderId | 'moviebox' | 'vidsync';
 
 function serverLabel(id: PlaybackServerId): string {
     if (id === 'moviebox') return MOVIEBOX_SERVER_LABEL;
+    if (id === 'vidsync') return VIDSYNC_SERVER_LABEL;
     if (id === 'nxsha') return 'Nxsha';
     if (id === 'nhd') return 'NHD';
     return 'Custom';
@@ -416,9 +419,15 @@ export default function MovieScreen() {
     });
     const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
 
+    /**
+     * Server 3 (VidSync) sirf tab chalta hai jab title ka **TMDB numeric id** ho
+     * — unka embed route `{tmdbId}` hi leta hai (imdb id se kaam nahi chalta).
+     */
+    const vidsyncAvailable = Boolean(vidsyncTmdbNumber(parsedTmdb));
+
     // Cycle: MovieBox mile to (row-m2box) → default → baaki providers → custom
-    // → M2Box (pill se switch). Na mile to **sirf Server 1** — koi switch option
-    // hi nahi (owner ka rule).
+    // → M2Box → VidSync (pill se switch). MovieBox na mile to Server 1 (+
+    // VidSync, kyunki wo M2Box par depend nahi karta) — koi aur switch nahi.
     const settings = loadSettings();
     const cycle: PlaybackServerId[] = useMemo(
         () =>
@@ -427,9 +436,10 @@ export default function MovieScreen() {
                 movieboxAvailable,
                 rowIsMoviebox,
                 customAvailable: Boolean(primaryEmbedUrl),
+                vidsyncAvailable,
                 providers: PROVIDERS.map(p => p.id),
             }),
-        [movie.embed_provider, movieboxAvailable, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider],
+        [movie.embed_provider, movieboxAvailable, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider, vidsyncAvailable],
     );
 
     // Cycle chhota ho jaye (MovieBox nahi mila) to index phir bhi valid rehna chahiye.
@@ -454,6 +464,17 @@ export default function MovieScreen() {
         // M2Box ka apna player hai (MovieboxPagePlayer) — yahan URL nahi banta.
         if (currentProvider === 'moviebox') return '';
         if (directFallback) return directPreviewUrl || '';
+        // Server 3 — VidSync ka designed embed (TMDB id + chalu episode).
+        if (currentProvider === 'vidsync') {
+            return (
+                buildVidSyncUrl({
+                    tmdbId: parsedTmdb,
+                    mediaType,
+                    season: mediaType === 'tv' ? season : undefined,
+                    episode: mediaType === 'tv' ? episode : undefined,
+                }) || ''
+            );
+        }
         try {
             return buildEmbedUrl(
                 currentProvider,

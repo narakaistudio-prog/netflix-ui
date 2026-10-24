@@ -23,8 +23,10 @@ jest.mock('@expo/vector-icons', () => {
     return { Ionicons: icon, MaterialCommunityIcons: icon };
 });
 
-jest.mock('@/contexts/UserContext', () => ({
-    useUser: () => ({
+jest.mock('@/contexts/UserContext', () => {
+    // TitleComments provider ke bahar bhi render hota hai (tests) — wahi guest
+    // context dono hooks se milta hai.
+    const guest = () => ({
         signedIn: mockSignedIn,
         account: null,
         signInOpen: false,
@@ -34,8 +36,9 @@ jest.mock('@/contexts/UserContext', () => ({
         signUp: jest.fn(),
         signOut: jest.fn(),
         selectedProfile: null,
-    }),
-}));
+    });
+    return { useUser: guest, useOptionalUser: guest };
+});
 
 let mockSignedIn = false;
 
