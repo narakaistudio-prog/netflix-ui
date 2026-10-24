@@ -27,6 +27,7 @@ import {
     resolveDirectStreams,
 } from '../lib/movieboxDirect';
 import { MovieboxDirectPlayer, pickPlayableStream } from '../components/MovieboxDirectPlayer';
+import { MOVIEBOX_SKIP_SECONDS, seekMovieboxBy } from '../lib/movieboxSeekBridge';
 
 (global as any).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -352,5 +353,96 @@ describe('resolveDirectStreams ke extra raste', () => {
         expect(result.reason).toBe('no-streams');
         expect(trace.length).toBeGreaterThan(3);
         expect(trace.join(' | ')).toContain('hasResource false');
+    });
+});
+
+describe('−10s / +10s buttons (owner ke screenshot wali jagah)', () => {
+    let container: HTMLDivElement;
+    let root: Root;
+
+    function bootVideo() {
+        const video = document.querySelector('video[data-m2box="direct-video"]') as HTMLVideoElement;
+        let time = 100;
+        Object.defineProperty(video, 'currentTime', {
+            configurable: true,
+            get: () => time,
+            set: (value: number) => {
+                time = value;
+            },
+        });
+        Object.defineProperty(video, 'duration', { configurable: true, get: () => 3600 });
+        Object.defineProperty(video, 'paused', { configurable: true, get: () => false });
+        video.play = () => Promise.resolve();
+        return { video, time: () => time };
+    }
+
+    beforeEach(() => {
+        container = document.createElement('div');
+        document.body.appendChild(container);
+        root = createRoot(container);
+    });
+
+    afterEach(() => {
+        act(() => root.unmount());
+        container.remove();
+    });
+
+    it('player bridge register karta hai — buttons se ±10s hota hai', () => {
+        act(() => {
+            root.render(
+                <MovieboxDirectPlayer
+                    streams={[{ url: 'https://cdn.example.com/a/1080.mp4', quality: 1080, kind: 'mp4' }]}
+                    onUnavailable={() => {}}
+                />,
+            );
+        });
+        const { time } = bootVideo();
+
+        let back = false;
+        let forward = false;
+        act(() => {
+            back = seekMovieboxBy(-MOVIEBOX_SKIP_SECONDS);
+        });
+        expect(back).toBe(true);
+        expect(time()).toBe(90);
+        act(() => {
+            forward = seekMovieboxBy(MOVIEBOX_SKIP_SECONDS);
+        });
+        expect(forward).toBe(true);
+        expect(time()).toBe(100);
+        // Wahi toast jo double-tap par aata hai — button par bhi feedback.
+        expect(document.body.textContent).toContain('+10s');
+    });
+
+    it('unmount ke baad button kuch nahi karta (dead button nahi)', () => {
+        act(() => {
+            root.render(
+                <MovieboxDirectPlayer
+                    streams={[{ url: 'https://cdn.example.com/a/1080.mp4', quality: 1080, kind: 'mp4' }]}
+                    onUnavailable={() => {}}
+                />,
+            );
+        });
+        act(() => root.unmount());
+        expect(seekMovieboxBy(-10)).toBe(false);
+        // Dobara mount karne ke liye naya root
+        root = createRoot(container);
+    });
+});
+
+describe('phone screen ke buttons (source)', () => {
+    const read = (path: string) => require('node:fs').readFileSync(require('node:path').join(process.cwd(), path), 'utf8');
+
+    it('title ke bagal me −10s / +10s buttons hain, aur seek bridge se jude hain', () => {
+        const modal = read('components/MovieList/MovieDetailModal.tsx');
+        expect(modal).toContain('testID="phone-skip-back"');
+        expect(modal).toContain('testID="phone-skip-forward"');
+        expect(modal).toContain('seekMovieboxBy(-MOVIEBOX_SKIP_SECONDS)');
+        expect(modal).toContain('seekMovieboxBy(MOVIEBOX_SKIP_SECONDS)');
+        // Dead button nahi: sirf tab dikhte hain jab seedha player chalu ho.
+        expect(modal).toContain('seekReady ?');
+        expect(modal).toContain('useMovieboxSeekReady()');
+        // Title ke saath ek hi row me.
+        expect(modal).toContain('phoneTitleRow');
     });
 });

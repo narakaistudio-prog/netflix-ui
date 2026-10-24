@@ -5,6 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
+import {
+    MOVIEBOX_SKIP_SECONDS,
+    seekMovieboxBy,
+    useMovieboxSeekReady,
+} from '@/lib/movieboxSeekBridge';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import {
     getRecentlyWatched,
@@ -79,6 +84,8 @@ export function MovieDetailModal({
      * Phone par player poora screen leta hai (landscape) — panel ki 92% height
      * aur 1000px max-width uske raste me nahi aate.
      */
+    /** ±10s buttons sirf tab jab seedha player (hamara video) chal raha ho. */
+    const seekReady = useMovieboxSeekReady();
     const isPhoneWeb =
         Platform.OS === 'web' &&
         typeof navigator !== 'undefined' &&
@@ -711,11 +718,50 @@ export function MovieDetailModal({
                                     showsVerticalScrollIndicator={false}
                                 >
                                     <Text style={styles.phoneSeries}>{movie.title}</Text>
-                                    <Text style={styles.phoneEpisodeTitle}>
-                                        {isTv
-                                            ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
-                                            : movie.title}
-                                    </Text>
+                                    {/**
+                                     * Owner (screenshot me title ke bagal do jagah
+                                     * mark karke): "waha par 10 sec piche aur
+                                     * right mae 10 sec aage ka button de do".
+                                     * Sirf tab dikhte hain jab seedha player
+                                     * (hamara <video>) chal raha ho — iframe
+                                     * wale fallback me seek ho hi nahi sakta,
+                                     * isliye dead button nahi dikhate.
+                                     */}
+                                    <View style={styles.phoneTitleRow}>
+                                        <Text style={styles.phoneEpisodeTitle}>
+                                            {isTv
+                                                ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
+                                                : movie.title}
+                                        </Text>
+                                        {seekReady ? (
+                                            <View style={styles.phoneSkipRow}>
+                                                <Pressable
+                                                    style={styles.phoneSkip}
+                                                    onPress={() => seekMovieboxBy(-MOVIEBOX_SKIP_SECONDS)}
+                                                    accessibilityRole="button"
+                                                    accessibilityLabel={`Rewind ${MOVIEBOX_SKIP_SECONDS} seconds`}
+                                                    testID="phone-skip-back"
+                                                >
+                                                    <Ionicons name="play-back" size={20} color="#fff" />
+                                                    <Text style={styles.phoneSkipText}>
+                                                        {MOVIEBOX_SKIP_SECONDS}s
+                                                    </Text>
+                                                </Pressable>
+                                                <Pressable
+                                                    style={styles.phoneSkip}
+                                                    onPress={() => seekMovieboxBy(MOVIEBOX_SKIP_SECONDS)}
+                                                    accessibilityRole="button"
+                                                    accessibilityLabel={`Forward ${MOVIEBOX_SKIP_SECONDS} seconds`}
+                                                    testID="phone-skip-forward"
+                                                >
+                                                    <Ionicons name="play-forward" size={20} color="#fff" />
+                                                    <Text style={styles.phoneSkipText}>
+                                                        {MOVIEBOX_SKIP_SECONDS}s
+                                                    </Text>
+                                                </Pressable>
+                                            </View>
+                                        ) : null}
+                                    </View>
                                     {metaLine ? (
                                         <Text style={styles.phoneMeta}>{metaLine}</Text>
                                     ) : null}
@@ -859,13 +905,33 @@ const styles = StyleSheet.create({
     phoneDetails: { flex: 1 },
     phoneDetailsContent: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 },
     phoneSeries: { color: '#E50914', fontSize: 15, fontWeight: '800' },
+    /** Title + uske bagal ±10s buttons (owner ke screenshot ki jagah). */
+    phoneTitleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        marginTop: 6,
+    },
     phoneEpisodeTitle: {
         color: '#fff',
         fontSize: 28,
         fontWeight: '800',
-        marginTop: 6,
         lineHeight: 34,
+        flexShrink: 1,
     },
+    phoneSkipRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginLeft: 'auto' },
+    phoneSkip: {
+        width: 46,
+        height: 46,
+        borderRadius: 23,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.35)',
+        backgroundColor: 'rgba(255,255,255,0.08)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 1,
+    },
+    phoneSkipText: { color: '#fff', fontSize: 9, fontWeight: '800', letterSpacing: 0.2 },
     phoneMeta: { color: '#b0b0b0', fontSize: 15, marginTop: 10 },
     phoneOverview: { color: '#c9c9c9', fontSize: 15, lineHeight: 22, marginTop: 12 },
     phoneShowMore: {

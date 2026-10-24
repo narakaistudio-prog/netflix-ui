@@ -259,3 +259,43 @@ card ka shape toota nahi (pehle ek entry text-only jaisi patli dikh rahi thi).
 Test: `tests-arena/crunchyroll-my-list.test.ts` ka naya case — phone media query
 me 2-per-row, `.dismiss` par opacity 0 nahi, har card par remove button aur click
 par card + storage dono se gayab.
+
+
+---
+
+# Daily Fresh Drop — **do baar roz** (05:00 aur 22:30 IST) + naya episode
+
+> Owner: "crunchyroll par toonstream se new episode fetch nhi kiya hai. do time
+> bna ek subah 5 baje fetch hoga aur dusra raat 10:30 mae aisa bna jisse new
+> episode sahi mae fetch ho aur fresh drop daily ye pattern chale sahi mae."
+
+## Schedule (`/.github/workflows/crunchyroll-daily-drops.yml`)
+
+GitHub cron UTC me hota hai, India = UTC+5:30:
+
+| IST | UTC cron | Kaam |
+| --- | --- | --- |
+| 05:00 | `30 23 * * *` | subah ka full harvest |
+| 22:30 | `0 17 * * *` | raat ka full harvest |
+
+Dono run wahi job chalate hain: ToonStream season layout + Fresh Drop rail +
+Nxsha episode guide, phir `crunchyroll.html` me `TS_SEASONS`/`TS_DROPS` bake
+hoke commit.
+
+## "Naya episode sahi me fetch ho" — asli fix
+
+ToonStream ka **home rail** din me ek hi baar banta hai; usme episode purana pada
+rehta hai. **Series page** hamesha latest list karta hai. Isliye
+`scripts/harvest-toonstream-drops.mjs` ab dono padhta hai:
+
+- `newestEpisode(seasons)` — series page ki sabse badi season + uska aakhri
+  episode.
+- `isNewerEpisode(next, current)` — agar series page home rail se aage hai to
+  card par **wahi** episode jaata hai, `episodeUrl` bhi usi se banti hai.
+- Naya episode milne par `firstSeen = aaj` (aur `episodeSeen` bhi) — page ka
+  "New" flag isi date par chalta hai, isliye naya episode row me **New** dikhta
+  hai, purana nahi.
+
+Test (`tests-arena/toonstream-drops.test.ts`): home rail S2E4 par pada hai,
+series page S2 me E6 tak — harvest E6 bake karta hai, `episodeSeen` aaj ka,
+`episodeUrl` `…-2x6/`, aur block me bhi E6.

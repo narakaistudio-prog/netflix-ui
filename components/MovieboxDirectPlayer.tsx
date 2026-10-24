@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import type { DirectStream } from '@/lib/movieboxDirect';
+import { MOVIEBOX_SKIP_SECONDS, registerMovieboxSeek } from '@/lib/movieboxSeekBridge';
 
 /**
  * MovieBox ka apna player — hamare paas ka `<video>`, isliye phone par
@@ -24,7 +25,7 @@ import type { DirectStream } from '@/lib/movieboxDirect';
  */
 
 const IS_WEB = Platform.OS === 'web';
-const STEP_SECONDS = 10;
+const STEP_SECONDS = MOVIEBOX_SKIP_SECONDS;
 const TAP_MS = 340;
 const ZONE = 0.34;
 const TOAST_MS = 900;
@@ -242,7 +243,18 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
 
         host.addEventListener('pointerdown', onPointerDown, true);
 
+        /**
+         * Dikhne wale −10s / +10s buttons (`MovieDetailModal`) isi handler se
+         * chute hain — dono jagah ek hi clamp/toast logic rehta hai.
+         */
+        const unregisterSeek = registerMovieboxSeek((delta) => {
+            if (video.error) return false;
+            seekBy(delta < 0 ? 'left' : 'right');
+            return true;
+        });
+
         return () => {
+            unregisterSeek();
             unmounted = true;
             clearTimeout(watchdog);
             if (toastTimer) clearTimeout(toastTimer);

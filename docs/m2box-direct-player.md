@@ -95,3 +95,29 @@ Console me reason dikhta hai: `[m2box-direct] fallback: <reason>`.
 2. Stream URLs signed/rotate hote hain — 20 min cache, phir dobara resolve.
 3. `/subject/play` par rate limit (~1 successful call / 2-3 min per IP) hai;
    cache isi liye hai.
+
+---
+
+# Follow-up: −10s / +10s ke **dikhne wale buttons** (phone)
+
+> Owner (phone screenshot, title ke bagal do jagah mark karke): "jaha par mark
+> kiya hai waha par 10 sec piche aur right mae 10 sec aage ka button de do".
+
+Invisible double-tap waisa hi hai; uske upar ab **do visible buttons** hain:
+
+```
+Mandaadi                       (  ‹‹ 10s )  ( 10s ›› )
+Mandaadi                                      ← owner ke marks
+2h 33m
+```
+
+- Jagah: bade title (`phoneEpisodeTitle`) ke saath **ek hi row**
+  (`phoneTitleRow`), `marginLeft: 'auto'` se daayein — bilkul screenshot ke marks
+  par. 46px gol buttons, halka white border, icon + `10s`.
+- Press par `seekMovieboxBy(±10)` (`lib/movieboxSeekBridge.ts`) → wahi clamp aur
+  wahi toast jo double-tap deta hai. Koi alag seek logic nahi.
+- **Sirf tab dikhte hain jab seedha player chalu ho** (`useMovieboxSeekReady()`).
+  Iframe wale fallback me seek ho hi nahi sakta, isliye dead button nahi dikhata.
+- Bridge ka matlab: buttons `MovieDetailModal` me hain, video
+  `MovieboxDirectPlayer` ke andar — ek module-level register/subscribe pul dono
+  ko jodta hai (player unmount par unregister, identity check ke saath).
