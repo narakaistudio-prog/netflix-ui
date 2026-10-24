@@ -153,7 +153,7 @@ export function MovieboxDirectPlayer({
     const [chromeVisible, setChromeVisible] = useState(true);
     const [activity, setActivity] = useState(0);
     const lastBump = useRef(0);
-    const [menu, setMenu] = useState<null | 'subtitles' | 'settings'>(null);
+    const [menu, setMenu] = useState<null | 'audio' | 'subtitles' | 'settings'>(null);
     const [speed, setSpeed] = useState(1);
     /** `null` = Auto (best available). */
     const [quality, setQuality] = useState<string | null>(null);
@@ -767,6 +767,24 @@ export function MovieboxDirectPlayer({
                                     <Text style={styles.serverPillText}>{nextServerName} →</Text>
                                 </Pressable>
                             ) : null}
+                            {audioOptions.length > 1 ? (
+                                <Pressable
+                                    style={styles.audioPill}
+                                    onPress={() => {
+                                        setMenu(menu === 'audio' ? null : 'audio');
+                                        bump();
+                                    }}
+                                    accessibilityRole="button"
+                                    accessibilityLabel="Audio language"
+                                    testID="direct-audio-pill"
+                                >
+                                    <MaterialCommunityIcons name="translate" size={16} color="#fff" />
+                                    <Text style={styles.audioPillText} numberOfLines={1}>
+                                        {audioOptions.find((track) => track.subjectId === activeAudio)?.name ||
+                                            'Audio'}
+                                    </Text>
+                                </Pressable>
+                            ) : null}
                             <Pressable
                                 style={styles.topIcon}
                                 onPress={() => {
@@ -820,10 +838,34 @@ export function MovieboxDirectPlayer({
                         <View style={styles.menuLayer} pointerEvents="box-none">
                             <View style={styles.menu} testID={`direct-menu-${menu}`}>
                                 <Text style={styles.menuTitle}>
-                                    {menu === 'subtitles' ? 'Audio & Subtitles' : 'Settings'}
+                                    {menu === 'subtitles' ? 'Audio & Subtitles' : menu === 'audio' ? 'Audio' : 'Settings'}
                                 </Text>
                                 <ScrollView style={styles.menuScroll} showsVerticalScrollIndicator={false}>
-                                    {menu === 'subtitles' ? (
+                                    {menu === 'audio' ? (
+                                        <>
+                                            {audioOptions.length === 0 ? (
+                                                <Text style={styles.menuEmpty}>
+                                                    Is title par sirf ek hi audio hai.
+                                                </Text>
+                                            ) : null}
+                                            {audioOptions.map((track) => (
+                                                <MenuRow
+                                                    key={`pill-audio-${track.subjectId}`}
+                                                    label={track.name}
+                                                    hint={
+                                                        audioBusy === track.subjectId
+                                                            ? '…'
+                                                            : (track.lang || '').toUpperCase()
+                                                    }
+                                                    active={activeAudio === track.subjectId}
+                                                    onPress={() => {
+                                                        void chooseAudio(track);
+                                                    }}
+                                                    testID={`audio-pill-${track.lang}`}
+                                                />
+                                            ))}
+                                        </>
+                                    ) : menu === 'subtitles' ? (
                                         <>
                                             {audioOptions.length ? (
                                                 <Text style={styles.menuSection}>Audio</Text>
@@ -1137,6 +1179,19 @@ const styles = StyleSheet.create({
         marginRight: 4,
     },
     serverPillText: { color: '#fff', fontSize: 12, fontWeight: '700' },
+    audioPill: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        height: 32,
+        maxWidth: 150,
+        paddingHorizontal: 12,
+        borderRadius: 16,
+        backgroundColor: 'rgba(255,255,255,0.14)',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'rgba(255,255,255,0.3)',
+    },
+    audioPillText: { color: '#fff', fontSize: 13, fontWeight: '600' },
     divider: { width: 1, height: 26, backgroundColor: 'rgba(255,255,255,0.45)', marginHorizontal: 2 },
 
     bigPlay: {

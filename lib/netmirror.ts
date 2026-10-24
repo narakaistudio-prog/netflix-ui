@@ -35,7 +35,7 @@ const MISS_TTL_MS = 30 * 60 * 1000;
  * maangi hi nahi jaati thi (owner: "audio dusra nahi aa raha"). Key badalne se
  * purana cache apne aap invalid ho jata hai.
  */
-const CACHE_KEY = 'netflix-netmirror-v2';
+const CACHE_KEY = 'netflix-netmirror-v3';
 /** Subtitle SRT → VTT bridge (same-origin). */
 export const NETMIRROR_SUBTITLE_PATH = '/api/netmirror-subtitle';
 /** Upstream caption URL aksar relative hota hai — isi host par resolve. */
@@ -206,7 +206,7 @@ function cacheKey(request: NetmirrorRequest): string | null {
  */
 export async function fetchNetmirrorStreams(
     request: NetmirrorRequest,
-    options: { fetchImpl?: typeof fetch; now?: number } = {},
+    options: { fetchImpl?: typeof fetch; now?: number; fresh?: boolean } = {},
 ): Promise<NetmirrorResult> {
     const key = cacheKey(request);
     if (!key) {
@@ -214,7 +214,7 @@ export async function fetchNetmirrorStreams(
     }
     const now = options.now ?? Date.now();
     const cache = readCache();
-    const hit = cache[key];
+    const hit = options.fresh ? undefined : cache[key];
     if (hit) {
         const ttl = hit.ok ? STREAM_TTL_MS : MISS_TTL_MS;
         if (now - hit.at < ttl) {

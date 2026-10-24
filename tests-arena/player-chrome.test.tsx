@@ -253,6 +253,36 @@ describe('Multi-language audio (dub)', () => {
     });
 });
 
+describe('Audio pill (top bar)', () => {
+    it('ek se zyada audio ho to top bar par pill (Netflix jaisa)', () => {
+        mount({ audioTracks: AUDIO, activeAudio: AUDIO[1].subjectId, onAudioSelect: async () => true });
+        const pill = q('direct-audio-pill');
+        expect(pill).toBeTruthy();
+        expect(pill?.textContent).toContain('Hindi');
+    });
+
+    it('pill dabane par sirf audio list khulti hai, chunne par switch', async () => {
+        const onAudioSelect = jest.fn(async () => true);
+        mockSubtitleFetch();
+        mount({ audioTracks: AUDIO, activeAudio: AUDIO[0].subjectId, onAudioSelect });
+        act(() => (q('direct-audio-pill') as HTMLElement).click());
+        expect(q('direct-menu-audio')).toBeTruthy();
+        expect(q('audio-pill-hi')).toBeTruthy();
+        expect(q('audio-pill-te')).toBeTruthy();
+        // Subtitles sirf CC menu me — audio menu me nahi.
+        expect(q('subtitle-off')).toBeNull();
+        await act(async () => {
+            (q('audio-pill-te') as HTMLElement).click();
+        });
+        expect(onAudioSelect).toHaveBeenCalledWith(AUDIO[2]);
+    });
+
+    it('ek hi audio ho to pill nahi (jhoothi choice nahi)', () => {
+        mount({ audioTracks: [AUDIO[0]], activeAudio: AUDIO[0].subjectId, onAudioSelect: async () => true });
+        expect(q('direct-audio-pill')).toBeNull();
+    });
+});
+
 describe('Settings — quality aur speed', () => {
     it('quality list streams se banti hai; chunne par src badal jata hai', () => {
         mount();
