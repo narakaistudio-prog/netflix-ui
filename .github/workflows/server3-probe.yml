@@ -33,8 +33,8 @@ jobs:
                -H 'Accept-Language: en-IN,en;q=0.9' \
                -H "Referer: $REF" -H "Origin: https://net-ki15.vercel.app" \
                -D /tmp/h -o /tmp/b -w '%{http_code} %{time_starttransfer} %{time_total} %{size_download}' "$url" 2>/dev/null || echo "000 0 0 0")
-            xfo=$(grep -i '^x-frame-options:' /tmp/h | tr -d '\r' | cut -d' ' -f2- | head -1)
-            csp=$(grep -i '^content-security-policy:' /tmp/h | tr -d '\r' | grep -o 'frame-ancestors[^;]*' | head -1)
+            xfo=$(grep -i '^x-frame-options:' /tmp/h | tr -d '\r' | cut -d' ' -f2- | head -1 || true)
+            csp=$(grep -i '^content-security-policy:' /tmp/h | tr -d '\r' | grep -o 'frame-ancestors[^;]*' | head -1 || true)
             note=""
             if grep -qi 'player_event\|postMessage' /tmp/b 2>/dev/null; then note="${note}msg-api "; fi
             if grep -qi 'hls' /tmp/b 2>/dev/null; then note="${note}hls "; fi
