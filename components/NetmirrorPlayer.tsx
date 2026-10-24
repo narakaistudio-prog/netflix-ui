@@ -6,7 +6,9 @@ import {
     fetchNetmirrorStreams,
     NETMIRROR_LABEL,
     netmirrorTmdbNumber,
+    toSubtitleTracks,
     type NetmirrorResult,
+    type NetmirrorSubtitle,
 } from '@/lib/netmirror';
 import type { DirectStream } from '@/lib/movieboxDirect';
 
@@ -34,6 +36,8 @@ interface NetmirrorPlayerProps {
     season?: number;
     episode?: number;
     title?: string;
+    /** Title bar (Netflix jaisa): "You're Watching / Title (Year)". */
+    year?: string | number;
     onClose?: () => void;
     onProgress?: (info: { currentTime: number; duration: number }) => void;
     /** Yahan se parent wapas Server 1 (Nxsha) par le jata hai. */
@@ -53,6 +57,7 @@ export function NetmirrorPlayer({
     season,
     episode,
     title,
+    year,
     onClose,
     onProgress,
     onUnavailable,
@@ -65,6 +70,8 @@ export function NetmirrorPlayer({
         initialStreams && initialStreams.length ? 'ready' : 'loading',
     );
     const [streams, setStreams] = useState<DirectStream[]>(initialStreams ?? []);
+    /** Multi-language subtitles (NetMirror ke `captions[]` se). */
+    const [subtitles, setSubtitles] = useState<NetmirrorSubtitle[]>([]);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
@@ -83,6 +90,7 @@ export function NetmirrorPlayer({
         setError('');
         fetchNetmirrorStreams({ tmdbId, mediaType, season, episode }).then((result: NetmirrorResult) => {
             if (cancelled) return;
+            setSubtitles(toSubtitleTracks(result.captions));
             if (result.ok && result.streams.length) {
                 setStreams(result.streams);
                 setState('ready');
@@ -106,14 +114,17 @@ export function NetmirrorPlayer({
         onUnavailable?.(error || 'not-added');
     }, [onUnavailable, error]);
 
-    const quality = streams.length ? String(streams[0].quality) : '';
-
     return (
         <View style={styles.root} testID="netmirror-player">
             {state === 'ready' ? (
                 <MovieboxDirectPlayer
                     streams={streams}
                     title={title}
+                    year={year}
+                    onBack={onClose}
+                    captions={subtitles}
+                    nextServerName={nextServerName}
+                    onSwitchServer={onSwitchServer}
                     onProgress={onProgress}
                     onUnavailable={() => {
                         setError('Stream did not play');
@@ -147,42 +158,6 @@ export function NetmirrorPlayer({
                 </View>
             ) : null}
 
-            {/* Top-left chrome: band karna + kaunsa server chal raha hai. */}
-            {IS_WEB || true ? (
-                <View style={styles.topBar} pointerEvents="box-none">
-                    {onClose ? (
-                        <Pressable
-                            onPress={onClose}
-                            style={styles.iconButton}
-                            accessibilityRole="button"
-                            accessibilityLabel="Close player"
-                        >
-                            <Ionicons name="close" size={22} color="#fff" />
-                        </Pressable>
-                    ) : (
-                        <View />
-                    )}
-                    <View style={styles.rightBar}>
-                        <View style={styles.badge}>
-                            <Text style={styles.badgeText}>
-                                {NETMIRROR_LABEL}
-                                {state === 'ready' && quality ? ` · ${quality}p` : ''}
-                            </Text>
-                        </View>
-                        {nextServerName && onSwitchServer ? (
-                            <Pressable
-                                onPress={onSwitchServer}
-                                style={styles.switchPill}
-                                accessibilityRole="button"
-                                accessibilityLabel={`Switch to ${nextServerName}`}
-                                testID="netmirror-switch-server"
-                            >
-                                <Text style={styles.badgeText}>{nextServerName} →</Text>
-                            </Pressable>
-                        ) : null}
-                    </View>
-                </View>
-            ) : null}
         </View>
     );
 }
@@ -205,43 +180,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#E50914',
     },
     switchText: { color: '#fff', fontSize: 14, fontWeight: '700' },
-    topBar: {
-        position: 'absolute',
-        top: 12,
-        left: 12,
-        right: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    iconButton: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.55)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.25)',
-    },
-    badge: {
-        height: 28,
-        paddingHorizontal: 10,
-        borderRadius: 14,
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.55)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.25)',
-    },
-    badgeText: { color: '#fff', fontSize: 11, fontWeight: '700' },
-    rightBar: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    switchPill: {
-        height: 28,
-        paddingHorizontal: 10,
-        borderRadius: 14,
-        justifyContent: 'center',
-        backgroundColor: 'rgba(229,9,20,0.75)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.3)',
-    },
 });

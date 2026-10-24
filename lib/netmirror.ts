@@ -31,6 +31,10 @@ const STREAM_TTL_MS = 12 * 60 * 1000;
 /** "Nahi mila" ko itni der yaad rakho — har baar network call na ho. */
 const MISS_TTL_MS = 30 * 60 * 1000;
 const CACHE_KEY = 'netflix-netmirror-v1';
+/** Subtitle SRT → VTT bridge (same-origin). */
+export const NETMIRROR_SUBTITLE_PATH = '/api/netmirror-subtitle';
+/** Upstream caption URL aksar relative hota hai — isi host par resolve. */
+const SUBTITLE_BASE = 'https://net27.cc';
 const TIMEOUT_MS = 20000;
 
 export type NetmirrorMediaType = 'movie' | 'tv';
@@ -245,6 +249,53 @@ export async function fetchNetmirrorStreams(
     };
     writeCache(cache);
     return result;
+}
+
+/**
+ * Provider ka caption URL → hamara `<track>` URL.
+ *
+ * Browser ko VTT chahiye, upstream SRT deta hai, aur us host par CORS nahi
+ * hota — isliye `api/netmirror-subtitle` (same origin) se guzarte hain. Ye
+ * sirf subtitle file ka chhota rasta hai, video ka proxy nahi.
+ */
+export function buildSubtitleUrl(captionUrl: string): string | null {
+    if (!captionUrl) return null;
+    let absolute: string;
+    try {
+        absolute = new URL(captionUrl, SUBTITLE_BASE).toString();
+    } catch {
+        return null;
+    }
+    if (!/^https:\/\//i.test(absolute)) return null;
+    return `${NETMIRROR_SUBTITLE_PATH}?url=${encodeURIComponent(absolute)}`;
+}
+
+export interface NetmirrorSubtitle {
+    lang: string;
+    name: string;
+    url: string;
+}
+
+/**
+ * `captions[]` → `<track>` list (multi-language), duplicate bhasha ek hi baar.
+ * URL resolve na ho to us entry ko chhod dete hain — jhoota option nahi.
+ */
+export function toSubtitleTracks(
+    captions: Array<{ lang?: string; name?: string; url?: string }> | undefined,
+): NetmirrorSubtitle[] {
+    const seen = new Set<string>();
+    const tracks: NetmirrorSubtitle[] = [];
+    for (const item of captions || []) {
+        const lang = String(item?.lang || '').trim().toLowerCase();
+        if (!lang || seen.has(lang)) continue;
+        const url = buildSubtitleUrl(String(item?.url || ''));
+        if (!url) continue;
+        seen.add(lang);
+        tracks.push({ lang, name: String(item?.name || lang).trim() || lang, url });
+    }
+    // English pehle, phir Hindi, phir baaki — jo sabse zyada kaam aate hain.
+    const rank = (lang: string) => (lang === 'en' ? 0 : lang === 'hi' ? 1 : 2);
+    return tracks.sort((a, b) => rank(a.lang) - rank(b.lang));
 }
 
 /** Title is waqt NetMirror par hai ya nahi (halka probe — URLs nahi aate). */

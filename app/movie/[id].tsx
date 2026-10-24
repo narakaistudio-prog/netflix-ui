@@ -713,6 +713,7 @@ export default function MovieScreen() {
                     season={mediaType === 'tv' ? season : undefined}
                     episode={mediaType === 'tv' ? episode : undefined}
                     title={movie.title}
+                    year={movie.year}
                     onClose={handleCloseInline}
                     nextServerName={nextServer ? serverLabel(nextServer) : undefined}
                     onSwitchServer={handleSwitchProvider}

@@ -421,6 +421,7 @@ export function MovieDetailModal({
             season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
             episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
             title={movie.title}
+            year={movie.year}
             onClose={() => setPlaying(false)}
             onUnavailable={() => setServer('primary')}
             onProgress={(info) => {
