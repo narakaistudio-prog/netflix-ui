@@ -1,0 +1,82 @@
+name: server3-probe
+
+# Temporary probe: Server 3 ke naye candidate (VidSync ke baad).
+# Runner ke paas internet hai; sandbox ke paas nahi. Logs runner host par hote
+# hain (yahan se download nahi hote), isliye result commit comment me post hota
+# hai — wahi padha jaata hai.
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/f7df9bfb-netflix-ui]
+    paths:
+      - '.github/workflows/server3-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe candidates (headers + TTFB)
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+          REF="https://net-ki15.vercel.app/"
+          OUT=/tmp/out.md
+          : > $OUT
+          echo '| provider | url | code | ttfb_ms | total_ms | bytes | XFO | CSP-frame | note |' >> $OUT
+          echo '| --- | --- | --- | --- | --- | --- | --- | --- | --- |' >> $OUT
+          probe() {
+            label="$1"; url="$2"
+            read code ttfb total size < <(curl -sS -m 25 -A "$UA" \
+               -H 'Accept: text/html,application/xhtml+xml' \
+               -H 'Accept-Language: en-IN,en;q=0.9' \
+               -H "Referer: $REF" -H "Origin: https://net-ki15.vercel.app" \
+               -D /tmp/h -o /tmp/b -w '%{http_code} %{time_starttransfer} %{time_total} %{size_download}' "$url" 2>/dev/null || echo "000 0 0 0")
+            xfo=$(grep -i '^x-frame-options:' /tmp/h | tr -d '\r' | cut -d' ' -f2- | head -1)
+            csp=$(grep -i '^content-security-policy:' /tmp/h | tr -d '\r' | grep -o 'frame-ancestors[^;]*' | head -1)
+            note=""
+            if grep -qi 'player_event\|postMessage' /tmp/b 2>/dev/null; then note="${note}msg-api "; fi
+            if grep -qi 'hls' /tmp/b 2>/dev/null; then note="${note}hls "; fi
+            if grep -qi 'cloudflare\|just a moment\|challenge' /tmp/b 2>/dev/null; then note="${note}cf-challenge "; fi
+            if grep -qi 'sandbox' /tmp/b 2>/dev/null; then note="${note}sandbox-ref "; fi
+            echo "| $label | $url | $code | $(awk "BEGIN{printf \"%.0f\", $ttfb*1000}") | $(awk "BEGIN{printf \"%.0f\", $total*1000}") | $size | ${xfo:-–} | ${csp:-none} | ${note:-–} |" >> $OUT
+            echo "=== $label $url -> $code (${size}B)" >> /tmp/dbg.txt
+          }
+          for path in "movie/1441228" "tv/66732/1/1"; do
+            echo "" >> $OUT
+            echo "### $path" >> $OUT
+            echo '| provider | url | code | ttfb_ms | total_ms | bytes | XFO | CSP-frame | note |' >> $OUT
+            echo '| --- | --- | --- | --- | --- | --- | --- | --- | --- |' >> $OUT
+            probe "vidfast.pro"     "https://vidfast.pro/$path"
+            probe "vidfast.vc"      "https://vidfast.vc/$path"
+            probe "vixsrc.to"       "https://vixsrc.to/$path"
+            probe "vidlink.pro"     "https://vidlink.pro/$path"
+            probe "vidcore.org"     "https://vidcore.org/embed/$path"
+            probe "embedwave.cc"    "https://embedwave.cc/embed/$path"
+            probe "2embed.cc"       "https://www.2embed.cc/embed/$path"
+            probe "vidsrc.pro"      "https://vidsrc.pro/embed/$path"
+            probe "moviesapi.club"  "https://moviesapi.club/$path"
+            probe "videasy"         "https://player.videasy.net/$path"
+            probe "vidora.su"       "https://vidora.su/embed/$path"
+            probe "mycineby.cc"     "https://mycineby.cc/embed/$path"
+            probe "vidnest.pro"     "https://vidnest.pro/$path"
+            probe "vaplayer.ru"     "https://vaplayer.ru/embed/$path"
+          done
+          echo ""
+          echo "--- debug (code + bytes) ---"
+          cat /tmp/dbg.txt || true
+          cat $OUT
+          python3 - "$OUT" <<'PY'
+          import json,sys,urllib.request,os
+          body=open(sys.argv[1]).read()
+          sha=os.environ['GITHUB_SHA']; repo=os.environ['GITHUB_REPOSITORY']; tok=os.environ['GH_TOKEN']
+          req=urllib.request.Request(
+              f"https://api.github.com/repos/{repo}/commits/{sha}/comments",
+              data=json.dumps({"body":"## Server 3 candidate probe\n\n"+body}).encode(),
+              headers={"Authorization":f"Bearer {tok}","Accept":"application/vnd.github+json","Content-Type":"application/json"},
+              method="POST")
+          print("comment:", urllib.request.urlopen(req).status)
+          PY
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
