@@ -1,14 +1,1243 @@
 {
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "source": "https://toonstream.us/home",
   "items": {
+    "the-apothecary-diaries": {
+      "title": "The Apothecary Diaries",
+      "slug": "the-apothecary-diaries",
+      "img": "https://image.tmdb.org/t/p/w780/sJZcy8QsOPuRPiCfoCWVB3r9Ohg.jpg",
+      "season": 3,
+      "episode": 1,
+      "episodeUrl": "https://toonstream.us/episode/the-apothecary-diaries-3x1/",
+      "firstSeen": "2026-10-24",
+      "onSite": true,
+      "nxId": "220542",
+      "tsSlug": "the-apothecary-diaries",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "Maomao",
+            "overview": "After being kidnapped and forced to work as a servant in the rear palace, former apothecary Maomao inadvertently draws the attention of the higher ranks when she investigates what's causing the empero",
+            "image": "https://image.tmdb.org/t/p/w300/ggj0UKd4j5uwYPEuuS9KmO76Lcn.jpg",
+            "airDate": "2023-10-22",
+            "runtime": 23
+          },
+          "2": {
+            "title": "Chilly Apothecary",
+            "overview": "Maomao tries to settle into her promotion to lady-in-waiting and food taster, but struggles to fend off both boredom and the overly-familiar Jinshi. That is, until she gets an assignment of her dreams",
+            "image": "https://image.tmdb.org/t/p/w300/pYC0kEvnKtVm50uD2rBmtrZZnix.jpg",
+            "airDate": "2023-10-22",
+            "runtime": 23
+          },
+          "3": {
+            "title": "The Unsettling Matter of the Spirit",
+            "overview": "Tasked with investigating a ghostly woman dancing nightly on the palace walls, Maomao finds a sleepwalking Concubine Fuyou. But with no medicinal cure for sleepwalking, she's forced to dig deeper to f",
+            "image": "https://image.tmdb.org/t/p/w300/nfrCtoX4yRh7WyF9unECvML4dyG.jpg",
+            "airDate": "2023-10-22",
+            "runtime": 23
+          },
+          "4": {
+            "title": "The Threat",
+            "overview": "Under direct orders from the emperor himself, Maomao tries to care for an ailing Concubine Lihua, but finds her work impeded by Lihua's own ladies-in-waiting.",
+            "image": "https://image.tmdb.org/t/p/w300/56uZXOtpTuUvyuYGEpSLNJtJOBO.jpg",
+            "airDate": "2023-10-29",
+            "runtime": 23
+          },
+          "5": {
+            "title": "Covert Operations",
+            "overview": "A eunuch stricken by a curse comes begging for aid. Meanwhile, the rear palace buzzes with excitement as everyone prepares for the upcoming garden party, and Gyokuyou's ladies-in-waiting aren't about ",
+            "image": "https://image.tmdb.org/t/p/w300/45h60UAouIJHiKRCI8zx6Vb38Nh.jpg",
+            "airDate": "2023-11-05",
+            "runtime": 23
+          },
+          "6": {
+            "title": "The Garden Party",
+            "overview": "Maomao does her best to navigate the complex social situations at the garden party, including meeting the other Upper First rank concubines. But once she settles down to do her work as a food-taster, ",
+            "image": "https://image.tmdb.org/t/p/w300/lk1dC3AFErQwPjaKlHHc6f7g7rz.jpg",
+            "airDate": "2023-11-12",
+            "runtime": 23
+          },
+          "7": {
+            "title": "Homecoming",
+            "overview": "Gaoshun goes to Maomao to get her help in resolving the events of the garden party. Later, Xiaolan explains the purpose of the hairpins Maomao was gifted, and Maomao makes a deal with Lihaku in order ",
+            "image": "https://image.tmdb.org/t/p/w300/5wBAUmOAlu9z2chOoqke2wwI6G9.jpg",
+            "airDate": "2023-11-19",
+            "runtime": 23
+          },
+          "8": {
+            "title": "Wheat Stalks",
+            "overview": "Maomao's peaceful morning at home is interrupted when she's called in to investigate an apparent double suicide at one of the local brothels.",
+            "image": "https://image.tmdb.org/t/p/w300/j9m1E9HOJVl4pjnJRhjH445EYmx.jpg",
+            "airDate": "2023-11-26",
+            "runtime": 23
+          },
+          "9": {
+            "title": "Suicide or Murder?",
+            "overview": "An older acquaintance of Jinshi's dies while drinking at a party. A servant's body turns up in a moat. Both deaths are written off as self-inflicted, but Maomao's keen observations tell her that there",
+            "image": "https://image.tmdb.org/t/p/w300/u9rreY8RcnIsmx8kvCDhEy1BvXz.jpg",
+            "airDate": "2023-12-03",
+            "runtime": 23
+          },
+          "10": {
+            "title": "Honey",
+            "overview": "A tea party hosted by Lady Gyokuyou puts the politics of the rear palace at the forefront, and Maomao learns something new about Lady Lishu. His true intentions unclear, Jinshi sends Maomao to work fo",
+            "image": "https://image.tmdb.org/t/p/w300/brTsGje2MKuCHQuj8UVF1VjTSUv.jpg",
+            "airDate": "2023-12-10",
+            "runtime": 23
+          },
+          "11": {
+            "title": "Reducing Two to One",
+            "overview": "Maomao confronts Fengming about the dark secret she's been hiding from her noble Lady Ah-Duo.",
+            "image": "https://image.tmdb.org/t/p/w300/9K1ZNqTYK8ty1Olj2jGJAZ3l4y3.jpg",
+            "airDate": "2023-12-17",
+            "runtime": 23
+          },
+          "12": {
+            "title": "The Eunuch and the Courtesan",
+            "overview": "Discovering that Maomao's kidnappers were connected to Fengming's family, Jinshi is faced with a choice between keeping Maomao in the rear palace where he can be near her or releasing her from her ser",
+            "image": "https://image.tmdb.org/t/p/w300/xa9CovqvQIgYENhpHdqun3JTn4A.jpg",
+            "airDate": "2023-12-24",
+            "runtime": 23
+          },
+          "13": {
+            "title": "Serving in the Outer Court",
+            "overview": "To Maomao's surprise, Jinshi brings her directly to his house instead of taking her back to the rear palace, and tells her she's to work in the outer court. Not only is there much to learn, it seems t",
+            "image": "https://image.tmdb.org/t/p/w300/wIIuz0ZkiKKdBSUyZfAIH25uPNF.jpg",
+            "airDate": "2024-01-07",
+            "runtime": 23
+          },
+          "14": {
+            "title": "The New Pure Consort",
+            "overview": "Ah-Duo's replacement has arrived in the rear palace, and Maomao is assigned to give a certain lecture to all four high concubines. Later, Maomao helps Lihaku investigate a warehouse explosion.",
+            "image": "https://image.tmdb.org/t/p/w300/l3lUDpsjugdQFEn5X44CrLgisx.jpg",
+            "airDate": "2024-01-14",
+            "runtime": 23
+          },
+          "15": {
+            "title": "Raw Fish",
+            "overview": "Gaoshun requests Maomao's help in solving an apparent poisoning case. Meanwhile, Jinshi deals with an unwelcome visitor who's taken to lingering in his office.",
+            "image": "https://image.tmdb.org/t/p/w300/ghhWjMzXRuJ8q4sUFydIzLI1QkH.jpg",
+            "airDate": "2024-01-21",
+            "runtime": 23
+          },
+          "16": {
+            "title": "Lead",
+            "overview": "A shack, a chest of drawers, and a fishbowl are all that a talented metalworker leaves to his three sons upon his death. Maomao is assigned to investigate how these strange inheritances all fit togeth",
+            "image": "https://image.tmdb.org/t/p/w300/hpzqYrNAhG9sLiAp1pm0oSWDGxf.jpg",
+            "airDate": "2024-01-28",
+            "runtime": 23
+          },
+          "17": {
+            "title": "A Jaunt Around Town",
+            "overview": "Covering up Jinshi's otherworldly beauty is no easy task, but after Maomao takes the challenge head-on, she's surprised when she's also asked to don the disguise of a noblewoman and escort \"Jinka\" out",
+            "image": "https://image.tmdb.org/t/p/w300/wahEWKAq9HFzMLVxBCexHFWLlWd.jpg",
+            "airDate": "2024-02-04",
+            "runtime": 23
+          },
+          "18": {
+            "title": "Lakan",
+            "overview": "Back at home, Maomao visits an annex building at the Verdigris House that hides one of the brothel's secrets. Lakan continues to antagonize Jinshi as his connection to Maomao becomes clear.",
+            "image": "https://image.tmdb.org/t/p/w300/3nVPYisofFOJuLJHf4zx3RvMdMf.jpg",
+            "airDate": "2024-02-11",
+            "runtime": 23
+          },
+          "19": {
+            "title": "Chance or Something More",
+            "overview": "A discussion with Lihaku about recent events leads Maomao to realize that the mysteries she's helped to solve are connected. As the final piece of the puzzle falls into place, she rushes to stop impen",
+            "image": "https://image.tmdb.org/t/p/w300/5Y1BHMhhCHwWwxAqNoQYGyZvMWk.jpg",
+            "airDate": "2024-02-18",
+            "runtime": 23
+          },
+          "20": {
+            "title": "Thornapple",
+            "overview": "Maomao was able to stop the assassination attempt, but was heavily injured in the process. However, the injuries aren't enough to stop her curiosity, driving her to confront the culprit behind the inc",
+            "image": "https://image.tmdb.org/t/p/w300/kFOrOTXNY7jhLRpe9PzX7bdPtxA.jpg",
+            "airDate": "2024-02-25",
+            "runtime": 23
+          },
+          "21": {
+            "title": "How to Buy Out a Contract",
+            "overview": "Back to work at the rear palace, Maomao listens to Guen talk about his family's business. Meanwhile, Lihaku hears a rumor that whips him into action.",
+            "image": "https://image.tmdb.org/t/p/w300/u1C8TsL5XhXNdZOJrat2q7coqvX.jpg",
+            "airDate": "2024-03-03",
+            "runtime": 23
+          },
+          "22": {
+            "title": "Blue Roses",
+            "overview": "Lakan challenges Jinshi to produce blue roses to present at the upcoming garden party, forcing Jinshi to turn once again to Maomao for her help.",
+            "image": "https://image.tmdb.org/t/p/w300/2g0c1GFAnj6MJkOpnRgcfh5emAP.jpg",
+            "airDate": "2024-03-10",
+            "runtime": 23
+          },
+          "23": {
+            "title": "Balsam and Woodsorrel",
+            "overview": "No longer willing to keep running away from Lakan, Maomao decides to face off against him. She challenges him on his own turf, in a chess match.",
+            "image": "https://image.tmdb.org/t/p/w300/gPYAVIMNiBLLfNlF1VVVi9SiECT.jpg",
+            "airDate": "2024-03-17",
+            "runtime": 23
+          },
+          "24": {
+            "title": "Jinshi and Maomao",
+            "overview": "Lakan must now choose a courtesan to buy out. As a high-ranking military official, he can afford to freely choose, even from one of the Three Princesses. Who will he choose? Who does Maomao really wan",
+            "image": "https://image.tmdb.org/t/p/w300/7eVCn6wFG1RFqxj0IMpaJFtelKr.jpg",
+            "airDate": "2024-03-24",
+            "runtime": 23
+          }
+        },
+        "2": {
+          "1": {
+            "title": "Maomao and Maomao",
+            "overview": "The spring garden party concludes without incident. Maomao returns to her regular life as Concubine Gyokuyou’s taster. Meanwhile, novels become popular in the rear palace. Maomao wonders how this came",
+            "image": "https://image.tmdb.org/t/p/w300/h4tYrFlKXhemuE0YF0ar0EUvroO.jpg",
+            "airDate": "2025-01-10",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Caravan",
+            "overview": "The caravan stirs up excitement in the inner palace. The merchants bring all kinds of goods. However, something gives Maomao a bad feeling.",
+            "image": "https://image.tmdb.org/t/p/w300/nCapHwoHz6V8VrWCEGiHssz49h0.jpg",
+            "airDate": "2025-01-17",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Corpse Fungus",
+            "overview": "A concubine passes away, and a woman goes missing. Jinshi sends Maomao to investigate - not these incidents, but mushrooms growing in the rear palace.",
+            "image": "https://image.tmdb.org/t/p/w300/tFPBXCR1Jo9A7ZoUwvPF6HAmCaZ.jpg",
+            "airDate": "2025-01-24",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Mirror",
+            "overview": "The special envoy from a foreign land gifts mirrors - a rarity in this country - to the high concubines. However, they bring mysteries as well.",
+            "image": "https://image.tmdb.org/t/p/w300/z2OTLkElbiOhfsE6IsPMoi00v51.jpg",
+            "airDate": "2025-01-31",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Moon Fairy",
+            "overview": "In order to realize the seemingly impossible request from the foreign envoy, Maomao speaks to the “Moon Fairy” herself.",
+            "image": "https://image.tmdb.org/t/p/w300/143mDiJ8ULLPhoxNUA0hzo1HLGC.jpg",
+            "airDate": "2025-02-07",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Crystal Pavilion, for the Third Time",
+            "overview": "The woman from the clinic finds out that Maomao knows a thing or two about medicine, and asks for her help.",
+            "image": "https://image.tmdb.org/t/p/w300/whLAWqw9p1j00Kg1SPpkoLBS84N.jpg",
+            "airDate": "2025-02-14",
+            "runtime": 24
+          },
+          "7": {
+            "title": "The Shrine of Choosing",
+            "overview": "Maomao directs her curiosity towards an old, oddly-shaped building.",
+            "image": "https://image.tmdb.org/t/p/w300/7TM4gXLGfSsOcwGI9jNFJou9OpO.jpg",
+            "airDate": "2025-02-21",
+            "runtime": 24
+          },
+          "8": {
+            "title": "The Empress Dowager",
+            "overview": "Maomao's reputation for resolving conflicts reaches the empress dowager, who will ask for her help to unravel a mystery that won't leave her mind.",
+            "image": "https://image.tmdb.org/t/p/w300/jaqu3IEYCdb7a81Ds8alAZzbdci.jpg",
+            "airDate": "2025-02-28",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The Late Emperor",
+            "overview": "Maomao's investigation of the \"curse\" reveals more about the late emperor than anticipated.",
+            "image": "https://image.tmdb.org/t/p/w300/9ktpNrO00JSCCnJKsQVwJRg3JDA.jpg",
+            "airDate": "2025-03-07",
+            "runtime": 24
+          },
+          "10": {
+            "title": "A Ghost Story",
+            "overview": "Maomao joins some women exchanging scary stories on a hot summer night to provide chills.",
+            "image": "https://image.tmdb.org/t/p/w300/UcVVBCuaDYl0wYvqc4zpDQGsPt.jpg",
+            "airDate": "2025-03-14",
+            "runtime": 24
+          },
+          "11": {
+            "title": "The Hunt",
+            "overview": "Jinshi goes on a hunting trip, and brings Maomao along. He seems ready to share his secret with her.",
+            "image": "https://image.tmdb.org/t/p/w300/t4GzrtK8d5gnYZSDbL6KyWge5UM.jpg",
+            "airDate": "2025-03-21",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Ka Zuigetsu",
+            "overview": "Maomao discovers Jinshi's secret. She wants nothing to do with whatever the politics behind it is.",
+            "image": "https://image.tmdb.org/t/p/w300/zgjUkqozVrok2N2Psx1mnImB293.jpg",
+            "airDate": "2025-03-28",
+            "runtime": 24
+          },
+          "13": {
+            "title": "The Baths",
+            "overview": "Xiaolan's term of service is almost up, so she must find a new job. Maomao and Shisui decide to help.",
+            "image": "https://image.tmdb.org/t/p/w300/kI2zOM5V6GCIIIogL18813FVFws.jpg",
+            "airDate": "2025-04-04",
+            "runtime": 24
+          },
+          "14": {
+            "title": "The Dancing Ghost",
+            "overview": "Concubine Lishu reports sightings of a ghost in the baths in her pavilion. Maomao goes to investigate.",
+            "image": "https://image.tmdb.org/t/p/w300/bHOorPq5DchhLMjazBlCh2z6JEM.jpg",
+            "airDate": "2025-04-11",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Ice",
+            "overview": "Xiaolan accidentally ruins an expensive block of ice. Maomao comes up with a delicious backup plan.",
+            "image": "https://image.tmdb.org/t/p/w300/1Lj3paEEJfyj7p5px9bRYFQ5w8q.jpg",
+            "airDate": "2025-04-18",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Festering Resentment",
+            "overview": "Luomen returns to the rear palace. His observations trigger Maomao's curiosity.",
+            "image": "https://image.tmdb.org/t/p/w300/vdCTCYwTYjp0kwXnvKuW9AFD2rw.jpg",
+            "airDate": "2025-04-25",
+            "runtime": 24
+          },
+          "17": {
+            "title": "The Fox Village",
+            "overview": "Suirei smuggles Maomao and Shisui out of the rear palace. Jinshi begins to search for Maomao.",
+            "image": "https://image.tmdb.org/t/p/w300/8xfyqGYZZYYRuWELOXRG6iRKxvH.jpg",
+            "airDate": "2025-05-02",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Lantern Plant",
+            "overview": "Maomao has been missing for ten days now. Jinshi's investigations lead him to a forgotten graveyard.",
+            "image": "https://image.tmdb.org/t/p/w300/zqMohdhn3Gktsb3iJuHAFmVFife.jpg",
+            "airDate": "2025-05-09",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Festival",
+            "overview": "The village holds a festival. Maomao attends, and Shisui introduces some of the village's history to her.",
+            "image": "https://image.tmdb.org/t/p/w300/wzS7Z2pCm8pb7FRB1RmDRwAM3P9.jpg",
+            "airDate": "2025-05-23",
+            "runtime": 24
+          },
+          "20": {
+            "title": "The Stronghold",
+            "overview": "Maomao is taken to a mountain stronghold, where many of the secrets of the Shi clan are revealed to her.",
+            "image": "https://image.tmdb.org/t/p/w300/d5AryVUWdepadXAWQ9HsgxxDI6c.jpg",
+            "airDate": "2025-05-30",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Taibon",
+            "overview": "Maomao is accused of attempting to escape, and is tossed into an ancient method of torture and execution.",
+            "image": "https://image.tmdb.org/t/p/w300/oZRwFAUC4l1LkCm8iuiynYiRSqH.jpg",
+            "airDate": "2025-06-06",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Royal Guard",
+            "overview": "The royal guard, led by Jinshi, arrives, sealing the Shi clan's fate. Maomao wants to save her friend, Shisui.",
+            "image": "https://image.tmdb.org/t/p/w300/pR4p2bbc2IX5MIJfHIdmVDTZuxI.jpg",
+            "airDate": "2025-06-13",
+            "runtime": 24
+          },
+          "23": {
+            "title": "The Shi Clan",
+            "overview": "Jinshi and his forces infiltrate the stronghold, cornering the remaining Shi clan members.",
+            "image": "https://image.tmdb.org/t/p/w300/d6bh5ReV4bruLInJZlGoUXy1Qcp.jpg",
+            "airDate": "2025-06-27",
+            "runtime": 24
+          },
+          "24": {
+            "title": "The Beginning",
+            "overview": "After the war, Jinshi's work piles up and Maomao returns to the pleasure district.",
+            "image": "https://image.tmdb.org/t/p/w300/5QU9GNW9UlLGJUFWGRc1DJXa2KU.jpg",
+            "airDate": "2025-07-04",
+            "runtime": 24
+          }
+        },
+        "3": {
+          "1": {
+            "title": "Locusts",
+            "overview": "A locust plague is looming, and mysteriously, a book on insects belonging to the Shi clan appears.",
+            "image": "https://image.tmdb.org/t/p/w300/v2k4Nj11mnVwyUhqktOmYr3E4yV.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 24
+          }
+        }
+      }
+    },
+    "the-elusive-samurai": {
+      "title": "The Elusive Samurai",
+      "slug": "the-elusive-samurai",
+      "img": "https://image.tmdb.org/t/p/w780/p0s5ymGzfM4zGQCVaU9MJOSaAWu.jpg",
+      "season": 2,
+      "episode": 12,
+      "episodeUrl": "https://toonstream.us/episode/the-elusive-samurai-2x12/",
+      "firstSeen": "2026-10-24",
+      "onSite": true,
+      "nxId": "222623",
+      "tsSlug": "the-elusive-samurai",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "May 22nd",
+            "overview": "The year is 1333, Kamakura. Tokiyuki Hojo, the rightful heir to the regent who rules the Kamakura shogunate, is a kind boy with a heart of gold who dislikes conflict – even though he’s the son of a wa",
+            "image": "https://image.tmdb.org/t/p/w300/ikmfWtuh5WNgU4hcgCi130lUTfw.jpg",
+            "airDate": "2024-07-06",
+            "runtime": 24
+          },
+          "2": {
+            "title": "The Gentle Uncle",
+            "overview": "Takauji Ashikaga, once considered the guardian of the Kamakura shogunate, stages a rebellion that led to its quick destruction. Tokiyuki’s older brother, Kunitoki, successfully evades the eyes of the ",
+            "image": "https://image.tmdb.org/t/p/w300/tjtW3JNQeP7rywJVUvuZdrkY31M.jpg",
+            "airDate": "2024-07-13",
+            "runtime": 24
+          },
+          "3": {
+            "title": "A Forest Inhabited by a God",
+            "overview": "Tokiyuki risks his life and wins a game of tag, defeating the enemy who betrayed his brother. As soon as he arrives in Suwa, Yorishige urges him to begin his lessons and training to take back Kamakura",
+            "image": "https://image.tmdb.org/t/p/w300/fbl8XaZoLO6VvsgwZxT8diaLPeI.jpg",
+            "airDate": "2024-07-20",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Sadamune Appears!",
+            "overview": "Tokiyuki spends his days undergoing strenuous training to perfect his sword techniques – something he’s told to do to take back Kamakura for himself. However, everyone was surprised by how weak his sw",
+            "image": "https://image.tmdb.org/t/p/w300/kFI0EACLdIFG3KB5yPOPwSNyBLE.jpg",
+            "airDate": "2024-07-27",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Settling the Score! A Dog-Shooting Competition, and Then…",
+            "overview": "Tokiyuki faces off against Sadamune in a dog-shooting competition, even though his opponent excels with the bow and possesses an almost prodigy-like eye for detail. With a large lead in points, Tokiyu",
+            "image": "https://image.tmdb.org/t/p/w300/jUBXUbJFwVlSwWzvjpaCLm9e7AZ.jpg",
+            "airDate": "2024-08-03",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Steal the Imperial Command from Ogasawara's Residence at Night",
+            "overview": "Tokiyuki and Genba sneak into the Ogasawara's residence and successfully infiltrate the warehouse where the Emperor’s Imperial Command is kept. However, Sadamune’s subordinate, Sukefusa Ichikawa, catc",
+            "image": "https://image.tmdb.org/t/p/w300/lkZ4FKxCRMFiDmZvnqAKXAv4kOK.jpg",
+            "airDate": "2024-08-10",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Children in Winter",
+            "overview": "Tokiyuki reigns in the new year for the first time in Suwa. As the chaos from the downfall lulls throughout the country, skirmishes still break out here and there, and another crisis knocks on Suwa’s ",
+            "image": "https://image.tmdb.org/t/p/w300/vOyG9kvTt7TFRHJTWGVGbAF3tBu.jpg",
+            "airDate": "2024-08-17",
+            "runtime": 24
+          },
+          "8": {
+            "title": "A War of Hide and Seek",
+            "overview": "The Elusive Warriors make their way to Nakayama Manor in the northern extremities of Suwa. There, Tokiyuki meets a young boy named Fubuki. In a village where Ogasawara and his forces killed all the gr",
+            "image": "https://image.tmdb.org/t/p/w300/ztsdIuMJ1mtkMXisXJpLqoOXM3s.jpg",
+            "airDate": "2024-08-24",
+            "runtime": 24
+          },
+          "9": {
+            "title": "My Buddha",
+            "overview": "The Elusive Warriors engage in a fierce battle with the Seigi Party, a group spearheaded by Shokan himself. Stuck in a small chamber and faced with opponents wearing armor, Tokiyuki uses the “escape” ",
+            "image": "https://image.tmdb.org/t/p/w300/xk0rHb0sc4HibVNlYBZIP6jgdz.jpg",
+            "airDate": "2024-08-31",
+            "runtime": 24
+          },
+          "10": {
+            "title": "A Perverted Kid and Disturbances of Holy Power",
+            "overview": "Yorishige tells Tokiyuki there are times when he cannot see the future; as some people have come to rely on Yorishige's reputation and power as a god, he cannot reveal this shortcoming to anyone.",
+            "image": "https://image.tmdb.org/t/p/w300/lGq4GO08AcgtO9ULwoaNPY290A4.jpg",
+            "airDate": "2024-09-14",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Samurais Who Are Eager to Die & An Elusive Samurai",
+            "overview": "The imperial court assigns a new provincial official for Shinano: Shinanonokami Kiyohara. Kiyohara did not hesitate to wield his power over people. He was considered a corrupt provincial official who ",
+            "image": "https://image.tmdb.org/t/p/w300/h2RLt6Mmbgmulge4aRMCAyT1MCN.jpg",
+            "airDate": "2024-09-21",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Hang in There, Tokiyuki, Until the Day You Retake Kamakura",
+            "overview": "Hoshina and his army decide to retreat from Kawanakajima after hearing what Tokiyuki and Saemontaro Shinomiya, a Suwa Sect warrior, had to say. But Kiyohara is evil and crafty – he won’t let this slid",
+            "image": "https://image.tmdb.org/t/p/w300/mV0AQzHD8USQXFc1SQkJj9976lY.jpg",
+            "airDate": "2024-09-28",
+            "runtime": 24
+          }
+        },
+        "2": {
+          "1": {
+            "title": "Longing for Sea Bream!",
+            "overview": "It is the first year of the Kenmu era (1334), in Suwa, Shinano province. Tokiyuki, now fully accustomed to life in Suwa, is reminded of meals from his days in Kamakura during a casual conversation. He",
+            "image": "https://image.tmdb.org/t/p/w300/zkIkqDDc738DmfT741hNKPlIJ2T.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Ayako's Heart-Pounding Operation!",
+            "overview": "The Ashikaga forces keep a vigilant watch across the country, searching for remnants of the Hojo clan scattered throughout Japan. Sadamune, the governor of Shinano, has grown suspicious of “Chojumaru,",
+            "image": "https://image.tmdb.org/t/p/w300/zPBDbcy3eBwPguyy0hWlU0Yxv5X.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Tokiyuki and Three Great Generals",
+            "overview": "Provincial official Kiyohara returns to Shinano after fleeing back to Kyo following the previous battle. Having grown even more ruthless, Kiyohara launches a large-scale invasion against pro-Hojo fact",
+            "image": "https://image.tmdb.org/t/p/w300/uqbzSPqBxUT0yDKXI2NaqFMeu7x.jpg",
+            "airDate": "2026-07-31",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Warrior of Love: Shinano Mask!",
+            "overview": "Tokiyuki and his companions race across the battlefield, sparing even the slightest moments of rest in order to relay information to their allies. However, when they arrive at the northern front where",
+            "image": "https://image.tmdb.org/t/p/w300/kFOSkyzTSrq4Gxr2ovio3BsNS4E.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The Unyielding",
+            "overview": "The central battlefield descends into total chaos. Just as victory seems within reach for the Hoshina–Shinomiya forces, a new obstacle suddenly appears before them: Kiyohara’s newly devised battle mik",
+            "image": "https://image.tmdb.org/t/p/w300/6O5uCSow8osBNBb6Kj4fd7gib4o.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Boy Who Became a God",
+            "overview": "The battle ends in defeat for the Suwa Sect. Although they manage to keep casualties to a minimum, the losses they suffer are significant. As they look toward the next great conflict, everyone in the ",
+            "image": "https://image.tmdb.org/t/p/w300/AoOSvb63DJkNBk4tRU0XNsnjdjN.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "7": {
+            "title": "My Uncle",
+            "overview": "Tokiyuki’s uncle, Yasuie Hojo, is still alive! Once a key figure at the heart of the Kamakura Shogunate, Yasuie survives the fall of Kamakura. Afterward, he travels throughout the Tohoku region, conti",
+            "image": "https://image.tmdb.org/t/p/w300/aKq8cxE3EgR5nwmWffKzCxHRNpg.jpg",
+            "airDate": "2026-08-28",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Irreplaceable",
+            "overview": "At the suggestion of Yorishige and Yasuie, Tokiyuki sets out for the capital, Kyo, together with the Elusive Warriors. Major Counselor Kinmune Saionji, an ally of Yasuie, awaits their arrival in Kyo. ",
+            "image": "https://image.tmdb.org/t/p/w300/cnudixNIlcnD230aJrTXeDDspK0.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The Man Called Masashige Kusunoki",
+            "overview": "Having grown closer over a game of dice, Mima invites Tokiyuki and his companions on a tour of Kyo. Even though they know she is the daughter of their enemy, the Elusive Warriors accept her kindness a",
+            "image": "https://image.tmdb.org/t/p/w300/xRcKG1ifQN02KxfD4sIId9gKMRI.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          },
+          "10": {
+            "title": "The Night of the Assassination",
+            "overview": "Through his dialogue with the warrior Masashige Kusunoki, known as a “god of war,” Tokiyuki is moved by Kusunoki's unwavering convictions and develops an even deeper sense of confidence in the possibi",
+            "image": "https://image.tmdb.org/t/p/w300/3f4vF5ASY6PDJJOwfbNdrFYs7cn.jpg",
+            "airDate": "2026-09-18",
+            "runtime": 24
+          },
+          "11": {
+            "title": "My Buddha, Part Two",
+            "overview": "Although the attempt to assassinate Takauji ends in failure, Tokiyuki has grown significantly as a warrior through his experiences in Kyo. Upon his return to Suwa, Yorishige tells him that the time ha",
+            "image": "https://image.tmdb.org/t/p/w300/kJVcoU30nlYtH07tODbObii3mw6.jpg",
+            "airDate": "2026-09-25",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Age",
+            "overview": "With preparations for war complete, the Suwa forces are finally about to ignite the great conflict. Tokiyuki is appointed commander-in-chief, taking command of the “Kamakura Party,” a unit formed from",
+            "image": "https://image.tmdb.org/t/p/w300/A9pNtcCz4haWbeXvzcsudQPdjsl.jpg",
+            "airDate": "2026-10-02",
+            "runtime": 24
+          }
+        }
+      }
+    },
+    "that-time-i-got-reincarnated-as-a-slime": {
+      "title": "That Time I Got Reincarnated as a Slime",
+      "slug": "that-time-i-got-reincarnated-as-a-slime",
+      "img": "https://image.tmdb.org/t/p/w780/94MjsZUyxubodMPJdWOVkcJ0bdU.jpg",
+      "season": 4,
+      "episode": 22,
+      "episodeUrl": "https://toonstream.us/episode/that-time-i-got-reincarnated-as-a-slime-4x22/",
+      "firstSeen": "2026-10-24",
+      "onSite": true,
+      "nxId": "82684",
+      "tsSlug": "that-time-i-got-reincarnated-as-a-slime",
+      "guide": {
+        "1": {
+          "1": {
+            "title": "The Storm Dragon, Veldora",
+            "overview": "Mikami Satoru, a businessman, is stabbed by a criminal on the street and killed. When he regains consciousness in the darkness, he finds that he's been reincarnated as a slime! With nothing better to ",
+            "image": "https://image.tmdb.org/t/p/w300/kn2O2A6yxvPNjyxJ2gJmW6l8qzs.jpg",
+            "airDate": "2018-10-02",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Meeting the Goblins",
+            "overview": "The slime Mikami and the Storm Dragon Veldora decide to give each other names. Veldora gives the slime Mikami the name \"Rimuru,\" and Rimuru comes up with a family name for both of them: \"Tempest.\" The",
+            "image": "https://image.tmdb.org/t/p/w300/bl7NSSaMhVQFAUdVMyyzylfZ5Be.jpg",
+            "airDate": "2018-10-09",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Battle at the Goblin Village",
+            "overview": "After leaving the cave, Rimuru encounters a village of Goblins under attack by a clan of Direwolves. Caught in the heat of the moment, Rimuru agrees to help the Goblins in their battle. That night, th",
+            "image": "https://image.tmdb.org/t/p/w300/uB7iLDVu1DXXk8u4IOr3O4eWAY1.jpg",
+            "airDate": "2018-10-16",
+            "runtime": 24
+          },
+          "4": {
+            "title": "In the Kingdom of the Dwarves",
+            "overview": "Rimuru and his companions visit the Dwarven Kingdom, the Armed Nation of Dwargon, in search of some artisans to help the Goblins learn to supply their own food, shelter, and clothing. However, a skirm",
+            "image": "https://image.tmdb.org/t/p/w300/4kAo0igLqN4ql5IjOXFM1x2qE40.jpg",
+            "airDate": "2018-10-23",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Hero King, Gazel Dwargo",
+            "overview": "Thanks to Rimuru's skill, Kaijin was able to finish all the longswords and deliver them to the king, so the two of them celebrate by heading to a bar staffed by lots of elf girls. One of them reads Ri",
+            "image": "https://image.tmdb.org/t/p/w300/jZiQCe4EvUZMYUqdztgzmqgNYUH.jpg",
+            "airDate": "2018-10-30",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Shizu",
+            "overview": "One day, in the midst of the improvements on the Goblin Village with the help of Kaijin and the dwarves, Rimuru meets a trio of adventurers from the Guild who've been temporarily joined by a masked wo",
+            "image": "https://image.tmdb.org/t/p/w300/umRZpXoBQ6L1KbSm9g74ZSofJ9J.jpg",
+            "airDate": "2018-11-06",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Conqueror of Flames",
+            "overview": "The Demon Lord Leon Cromwell summoned Shizu out of Tokyo as it burned during in the air raids, then forced the high-ranked spirit Ifrit to possess her. After taking over Shizu's body, Ifrit begins to ",
+            "image": "https://image.tmdb.org/t/p/w300/eCFR8aqyILnl6sUS3QgFNFkMH6r.jpg",
+            "airDate": "2018-11-13",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Inherited Will",
+            "overview": "When Shizu was still with Demon Lord Leon, it was a Hero who rescued her. That Hero was Shizu's inspiration to help as many people as she could for many years. She even worked as a teacher for childre",
+            "image": "https://image.tmdb.org/t/p/w300/2rLu3nl83nHbvqE435xAlyV40yw.jpg",
+            "airDate": "2018-11-20",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Attack of the Ogres",
+            "overview": "Rimuru and the Goblins' village is developing nicely. The Dwarves are building all kinds of houses and furniture, and the local Goblin Lords have appointed Rigurd as the Goblin King. As Rimuru watches",
+            "image": "https://image.tmdb.org/t/p/w300/c3XhKRZlM7HLkhHpmzi2z2aeiZD.jpg",
+            "airDate": "2018-11-27",
+            "runtime": 24
+          },
+          "10": {
+            "title": "The Orc Lord",
+            "overview": "Six Ogres are all that remain of their clan after an attack by an Orc army. They say that the Orcs were traveling with a mysterious majin who wore plate mail and a clown mask. Rimuru proposes that the",
+            "image": "https://image.tmdb.org/t/p/w300/hMerUrDesUpiZyynGMsQjE5BgDq.jpg",
+            "airDate": "2018-12-04",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Gabiru is Here!",
+            "overview": "Rimuru's village has gained Benimaru and the other five Ogres as its newest allies. Soon after, the Lizardman Gabiru visits the village, having heard rumors about it. Gabiru has been visiting Goblin v",
+            "image": "https://image.tmdb.org/t/p/w300/8qmpYCQouyHFFC0iR77I6KBoF2u.jpg",
+            "airDate": "2018-12-11",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The Gears Spin Out of Control",
+            "overview": "The Orc army, led by the Orc Lord, continues its conquest throughout the Great Forest of Jura. The crisis has spurred Treyni of the Dryads, the caretakers of the forest, to take action. She has had he",
+            "image": "https://image.tmdb.org/t/p/w300/4sekRZzE4nat8VytAhTUVGEEpYK.jpg",
+            "airDate": "2018-12-18",
+            "runtime": 24
+          },
+          "13": {
+            "title": "The Great Clash",
+            "overview": "Rimuru and his Goblin riders set out for the marshlands to finalize their alliance with the Lizardmen. On the way, they save a Lizardman who'd been attacked by the Orcs. The victim turns out to be Gab",
+            "image": "https://image.tmdb.org/t/p/w300/9PcZM0qOxB5AnE6IPSGJFW9JG3V.jpg",
+            "airDate": "2018-12-25",
+            "runtime": 24
+          },
+          "14": {
+            "title": "The One Who Devours All",
+            "overview": "The majin Gelmud makes his appearance at last. His true goal was to evolve the Orc Lord into the Orc Disaster, a Demon Lord, and have him reign over the Forest of Jura. Upon learning this, the Orc Lor",
+            "image": "https://image.tmdb.org/t/p/w300/46oZhigxWtncWcTRtu60TWuXZiv.jpg",
+            "airDate": "2019-01-08",
+            "runtime": 24
+          },
+          "15": {
+            "title": "The Jura Forest Alliance",
+            "overview": "Post-war arrangements following the battle with the Orcs have begun. At the meeting, Rimuru reveals that he made a promise with the Orc Disaster, Geld, to take all of the Orcs' sins upon himself. When",
+            "image": "https://image.tmdb.org/t/p/w300/iFStfGwmHg8XtloFhPlIBB3XMFn.jpg",
+            "airDate": "2019-01-15",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Demon Lord Milim Attacks",
+            "overview": "The Jura Tempest Federation, with Rimuru as its leader, has formed an alliance with the Armed Nation of Dwargon. Just as Rimuru thinks there are only peaceful days ahead, he senses an enormous mass of",
+            "image": "https://image.tmdb.org/t/p/w300/j7IZf3gTyvS8j5K1AWv8J9EpytK.jpg",
+            "airDate": "2019-01-22",
+            "runtime": 24
+          },
+          "17": {
+            "title": "The Gathering",
+            "overview": "The Demon Lord Carrion has sent one of his Three Beastketeers, Phobio, on a raid of Rimuru's city. However, Phobio is quickly defeated when Milim meets his attack with her own. Rimuru and his subordin",
+            "image": "https://image.tmdb.org/t/p/w300/isClSj96Vwlv1FgYpRYoNXWbejg.jpg",
+            "airDate": "2019-01-29",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Evil Creeps Closer",
+            "overview": "Phobio can't restrain his anger toward Milim. He finds himself faced with Footman and Tear, two masked members of the Moderate Harlequin Alliance, who suggest that he become a Demon Lord to take reven",
+            "image": "https://image.tmdb.org/t/p/w300/7RVXfIQ1erRpRdWpaYOr5VbEuYz.jpg",
+            "airDate": "2019-02-05",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Charybdis",
+            "overview": "Its seal removed, the calamity-class monster Charybdis and its Medalodon minions advance on the capital city of Rimuru. The Jura Tempest Federation combines all its forces under Rimuru to intercept th",
+            "image": "https://image.tmdb.org/t/p/w300/ag2XMpv9gi3EFbjsUvHMKBRT7H8.jpg",
+            "airDate": "2019-02-12",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Yuuki Kagurazaka",
+            "overview": "The threat of Charybdis has gone. That night, Rimuru has a dream in which he sees Shizu teaching children at her school in the Kingdom of Ingrassia—a dream showing Shizu's lingering regret. To see her",
+            "image": "https://image.tmdb.org/t/p/w300/eddUGXrqpY99Y5RWpgNsy8TVorz.jpg",
+            "airDate": "2019-02-19",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Shizu-san's Students",
+            "overview": "Rimuru becomes the new teacher for Shizu's students. However, having been summoned into this world against their will and facing shortened lifespans as a result, the children's feelings are complicate",
+            "image": "https://image.tmdb.org/t/p/w300/waETiQ7NF5Dpcy7G853myOt9piH.jpg",
+            "airDate": "2019-02-26",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Conquering the Labyrinth",
+            "overview": "Rimuru tries to think of a way to save the children of Freedom Academy who are fated to die. The idea he comes up with is to have superior spirits inhabit each of them, as Shizu had, so their lives wo",
+            "image": "https://image.tmdb.org/t/p/w300/p5o1dVBXSiy3Sn6krkuHNAxVVjS.jpg",
+            "airDate": "2019-03-05",
+            "runtime": 24
+          },
+          "23": {
+            "title": "Saved Souls",
+            "overview": "Rimuru and the children reach the deepest level of the Dwelling of Spirits, where they stand on a pedestal bathed in light to summon superior spirits. Will their summoning be successful? Amidst the un",
+            "image": "https://image.tmdb.org/t/p/w300/53AyHp2PohkqITF2HMy49rMVpmP.jpg",
+            "airDate": "2019-03-12",
+            "runtime": 24
+          },
+          "24": {
+            "title": "Black and the Mask",
+            "overview": "This story takes place before Rimuru's reincarnation. Shizu, also known as the Conqueror of Flames, responds to an urgent request calling her to the Kingdom of Filtwood. When she reaches the castle, m",
+            "image": "https://image.tmdb.org/t/p/w300/1dfhbX75RXgO0hAR08PpUR2Z3nL.jpg",
+            "airDate": "2019-03-19",
+            "runtime": 24
+          }
+        },
+        "2": {
+          "1": {
+            "title": "Rimuru's Busy Life",
+            "overview": "Rimuru sends a delegation led by Benimaru to the Animal Kingdom of Eurazania, ruled by the Demon Lord Carrion, also known as the Beastmaster, to establish diplomatic relations after becoming indebted ",
+            "image": "https://image.tmdb.org/t/p/w300/3sD1UQsaRqmbQCKiNZAuyRV4s1h.jpg",
+            "airDate": "2021-01-12",
+            "runtime": 24
+          },
+          "2": {
+            "title": "Trade with the Animal Kingdom",
+            "overview": "Despite the initial conflict, Eurazania and Tempest have deemed each other to be worthy of establishing friendly relations, and diplomacy between them officially begins. Tempest agrees to share its in",
+            "image": "https://image.tmdb.org/t/p/w300/x5nhiCBBmI69PAEbttRN66nTL6d.jpg",
+            "airDate": "2021-01-19",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Paradise, Once More",
+            "overview": "Rimuru completes the two very important duties of a discussion with King Dwargon and a public speech announcing the two nations' friendship to the people. Now it's time to head out for a little fun at",
+            "image": "https://image.tmdb.org/t/p/w300/tDu3AlVFeqQYaW4cNe5VpdRHn7f.jpg",
+            "airDate": "2021-01-26",
+            "runtime": 24
+          },
+          "4": {
+            "title": "The Scheming Kingdom of Falmuth",
+            "overview": "Tempest is preparing a feast in celebration of Rimuru's return home. Then a newcomer, the majin Myulan, arrives to scope out Tempest on the Demon Lord Clayman's orders, having joined up with Youm's cr",
+            "image": "https://image.tmdb.org/t/p/w300/rDgVd7RALIs5AddXvPxhCX3epc8.jpg",
+            "airDate": "2021-02-02",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Prelude to the Disaster",
+            "overview": "Following Clayman's orders, Myulan ignores the words of Youm and Grucius, both of whom have fallen in love with her, and activates the Anti-Magic Area spell. At the same time, Reyheim also activates P",
+            "image": "https://image.tmdb.org/t/p/w300/gxIH2VyiJii33RI01YKuyWlC5OS.jpg",
+            "airDate": "2021-02-09",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Beauty Makes Her Move",
+            "overview": "At the same time as the attack on Tempest, Rimuru is also under attack. With one look, Rimuru realizes that his assailant is one of Shizu's former students, an Otherworlder, and the woman then introdu",
+            "image": "https://image.tmdb.org/t/p/w300/t0pVgAn54d8hEM8jlXKR6mo78d8.jpg",
+            "airDate": "2021-02-16",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Despair",
+            "overview": "Rimuru faced grave danger in his battle with Hinata, but he managed to escape in the nick of time by using a doppelganger to take the damage while he rushed back to Tempest. Upon arrival, he found the",
+            "image": "https://image.tmdb.org/t/p/w300/9USrLwMcUYAsEf23FsUhkA9MXuu.jpg",
+            "airDate": "2021-02-23",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Hope",
+            "overview": "Rimuru learns about Clayman and the schemes of the Kingdom of Falmuth, but no matter how hard he wishes for it, his fallen comrades and their peaceful lifestyle will never return. He's just about to g",
+            "image": "https://image.tmdb.org/t/p/w300/oevQGAJLWW1pSCnrWIzz1WQu3hw.jpg",
+            "airDate": "2021-03-02",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Putting Everything on the Line",
+            "overview": "In order to come to terms with his own negligence and revive Shion, Gobta, and his other fallen comrades, Rimuru reveals that he used to be a human. But his allies think nothing of it and accept him r",
+            "image": "https://image.tmdb.org/t/p/w300/oSSUuI7fI1GtHX9eBhIdNprsgsV.jpg",
+            "airDate": "2021-03-09",
+            "runtime": 24
+          },
+          "10": {
+            "title": "Megiddo",
+            "overview": "The battle for revenge has begun. Benimaru and his trusted companions carry out their respective missions, while Hakurou and his party face Shogo and Kyoya once again. And Rimuru's fury rains down upo",
+            "image": "https://image.tmdb.org/t/p/w300/llymxkqLyxv7G7SJUB8Kp3HQsw6.jpg",
+            "airDate": "2021-03-16",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Birth of a Demon Lord",
+            "overview": "Rimuru succeeds in collecting enough souls to carry out his plan to evolve, and the Harvest Festival begins. But he's suddenly overcome by intense sleepiness at the same time, so he summons a demon to",
+            "image": "https://image.tmdb.org/t/p/w300/mJJZ9fQ2kCZtEooOYaDteLBbVg6.jpg",
+            "airDate": "2021-03-23",
+            "runtime": 24
+          },
+          "12": {
+            "title": "The One Unleashed",
+            "overview": "Shion and the rest of the fallen are revived, Diablo has joined the team... It seems as if all is going smoothly, but Rimuru then receives a report that Milim has declared war and Eurazania has been d",
+            "image": "https://image.tmdb.org/t/p/w300/oJNmEBZbQbYJ23CKs4ez6F4X1NU.jpg",
+            "airDate": "2021-03-30",
+            "runtime": 24
+          },
+          "13": {
+            "title": "The Visitors",
+            "overview": "A feast is thrown to celebrate the revival of Tempest's fallen and the return of Veldora. After enjoying a brief, peaceful respite, Rimuru tells everyone his future plans: he's going to get the word o",
+            "image": "https://image.tmdb.org/t/p/w300/jBI5jxywljEpn2rRJ4Za638l94U.jpg",
+            "airDate": "2021-07-06",
+            "runtime": 24
+          },
+          "14": {
+            "title": "A Meeting of Humans and Monsters",
+            "overview": "As prominent figures from several nations assemble in Tempest for a meeting, Laplace and his companions formulate a plan centered around Clayman. Then someone familiar joins the discussion...",
+            "image": "https://image.tmdb.org/t/p/w300/2Bhta8n31W6N5BYyWZGioHwcf2r.jpg",
+            "airDate": "2021-07-13",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Ramiris's Warning",
+            "overview": "Rimuru announces his plan to back Youm as the new king of Falmuth. After hearing this, Gazel tests Youm to see if he has what it takes to be a ruler, and Youm answers with full sincerity. Erald also t",
+            "image": "https://image.tmdb.org/t/p/w300/rV0yfsBqoCbRZf93h1MbfEImGqW.jpg",
+            "airDate": "2021-07-20",
+            "runtime": 24
+          },
+          "16": {
+            "title": "The Congress Dances",
+            "overview": "A new force has suddenly risen to power in the Great Forest of Jura, and its leader, Clayman, proposes that the Demon Lords hold Walpurgis with the goal of sanctioning the slime who deceived him. Rimu",
+            "image": "https://image.tmdb.org/t/p/w300/zVYNjYBsrBVZZaVz8x3uO1TSx5Z.jpg",
+            "airDate": "2021-07-27",
+            "runtime": 24
+          },
+          "17": {
+            "title": "The Eve of Battle",
+            "overview": "To put a stop to Clayman's plans, Rimuru uses transport magic on a large scale to both move Tempest's army to Eurazania and evacuate the people of Eurazania to Tempest. Rimuru also decides to crash Wa",
+            "image": "https://image.tmdb.org/t/p/w300/5Q9Y5d5V8xSJ9hyhWEOkSviNPS8.jpg",
+            "airDate": "2021-08-03",
+            "runtime": 24
+          },
+          "18": {
+            "title": "The Demon Lords",
+            "overview": "Benimaru leads his army to Eurazania, and Youm heads to Falmuth to take it over along with his buddies and Diablo. Rimuru succeeds in outwitting Clayman by transporting all of Eurazania's refugees to ",
+            "image": "https://image.tmdb.org/t/p/w300/36fEVDsd90B2nmMOvjxgmMrooG8.jpg",
+            "airDate": "2021-08-10",
+            "runtime": 24
+          },
+          "19": {
+            "title": "The Signal to Begin the Banquet",
+            "overview": "Rimuru continues with preparations for Walpurgis, including making Treyni evolve into a Dryas Doll Dryad. Meanwhile, Benimaru and his forces have arrived in Eurazania via transport magic, and they pro",
+            "image": "https://image.tmdb.org/t/p/w300/myX4iY2MSXFqzQwDdZ9NY5WnEWu.jpg",
+            "airDate": "2021-08-17",
+            "runtime": 24
+          },
+          "20": {
+            "title": "On This Land Where It All Happened",
+            "overview": "Gabiru narrowly wins his battle against Hermes. Watching their outcome is Middray of the Dragon Faithful, whose skill was enough to overwhelm even Suphia. Though he looks like a human, he is actually ",
+            "image": "https://image.tmdb.org/t/p/w300/grvpiSfzWRVsjKm7T9g0eGjZDeJ.jpg",
+            "airDate": "2021-08-24",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Adalman, the Index Finger",
+            "overview": "With all the preparations complete, Rimuru heads out to attend Walpurgis with Shion and Ranga, while Ramiris takes Beretta and Treyni. In the meantime, Shuna, Hakuro, and Soei find both their vision a",
+            "image": "https://image.tmdb.org/t/p/w300/uOfZ4vpjzLmrxwQLD0xNtc752lQ.jpg",
+            "airDate": "2021-08-31",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Demon Lords' Banquet ~Walpurgis~",
+            "overview": "Clayman tries to convince the other Demon Lords that Rimuru should be purged, but Guy tells him that if he is truly a Demon Lord, he should defeat Rimuru himself. What should be a one-on-one battle be",
+            "image": "https://image.tmdb.org/t/p/w300/8qorHFrntCGKcb5VEMKTek9tAbW.jpg",
+            "airDate": "2021-09-07",
+            "runtime": 24
+          },
+          "23": {
+            "title": "Returning from the Brink",
+            "overview": "Clayman and his pawns stand no chance against Rimuru and his allies. At a loss, Clayman orders Milim to use Stampede to kill everyone present, but Milim reveals he was never controlling her from the s",
+            "image": "https://image.tmdb.org/t/p/w300/xagCdFgh27KPDG6myv3uG3BrZpD.jpg",
+            "airDate": "2021-09-14",
+            "runtime": 24
+          },
+          "24": {
+            "title": "Octagram",
+            "overview": "Rimuru backs Clayman into a corner trying to get him to reveal who he's working for, but even on death's door, Clayman's lips are sealed. Left with no other choice, Rimuru finishes Clayman off. With C",
+            "image": "https://image.tmdb.org/t/p/w300/zZmkBDXs1qgTgL9ajzcRTnEZM6p.jpg",
+            "airDate": "2021-09-21",
+            "runtime": 24
+          }
+        },
+        "3": {
+          "1": {
+            "title": "Demons and Strategies",
+            "overview": "Rimuru has returned to Jura after having attended Walpurgis. Diablo informs Rimuru of his mission to deal with the Kingdom of Falmuth. Having presented the kingdom with three options at a resolution, ",
+            "image": "https://image.tmdb.org/t/p/w300/qGdvJCuZLL3XTlaVcokjmjOYwVT.jpg",
+            "airDate": "2024-04-05",
+            "runtime": 24
+          },
+          "2": {
+            "title": "The Saint's Intentions",
+            "overview": "Yuuki is saddened by the death of Clayman, and Luminus is saddened by the death of Roy. Steeped in sadness, and having lost their friends, they seek their next move against Rimuru, who has grown in po",
+            "image": "https://image.tmdb.org/t/p/w300/gnkxMRfTMvM4MINia242eUwC2BC.jpg",
+            "airDate": "2024-04-12",
+            "runtime": 24
+          },
+          "3": {
+            "title": "Peaceful Days",
+            "overview": "Expecting visitors from all races to come calling after learning that Rimuru now controls the entire Great Forest of Jura, Rimuru decides to hold a festival to introduce himself and Tempest to the wor",
+            "image": "https://image.tmdb.org/t/p/w300/oX5lgWyfgFytnF4CMd54iiSZk4z.jpg",
+            "airDate": "2024-04-19",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Everyone Has a Part to Play",
+            "overview": "Responding to Rimuru's concerns about monsters in the forest harming humans, Vesta and Kaijin reveal a new invention they hope will keep the road to Tempest safe. Also, Rimuru assigns a new task to Ge",
+            "image": "https://image.tmdb.org/t/p/w300/jxataJe0pYR1TsO6XdmALL9ANxw.jpg",
+            "airDate": "2024-04-26",
+            "runtime": 24
+          },
+          "5": {
+            "title": "Meeting of Both Sides",
+            "overview": "A war council led by Hinata is held in the Holy Empire of Lubelius. Moments after Hinata declares her intent to meet Rimuru and talk to him, she receives a hostile message from Rimuru.",
+            "image": "https://image.tmdb.org/t/p/w300/kzmSrgouF94DQPtUDh4Kz5TKWD8.jpg",
+            "airDate": "2024-05-03",
+            "runtime": 24
+          },
+          "6": {
+            "title": "Those Approaching",
+            "overview": "The spread of false information causes the Temple Knights to assemble, endangering Diablo's plan to conquer Falmuth. Meanwhile, Rimuru learns that Hinata is on her way to Tempest.",
+            "image": "https://image.tmdb.org/t/p/w300/b8A5oHCMXL1jjuO2M03JscJdzuS.jpg",
+            "airDate": "2024-05-10",
+            "runtime": 24
+          },
+          "7": {
+            "title": "Saint and Demon Clash",
+            "overview": "As Hinata makes her way to Tempest, the ramen and well-built roads she sees along the way prove to her that Rimuru genuinely wants monsters and humans to coexist. But against her wishes, one of her me",
+            "image": "https://image.tmdb.org/t/p/w300/6mNV55ohN64U7aJwEmJjjp4hGKi.jpg",
+            "airDate": "2024-05-17",
+            "runtime": 24
+          },
+          "8": {
+            "title": "Misunderstanding",
+            "overview": "The Crusaders have reached Tempest, and the battle is on. Hinata lays everything she learned from her mentor, Shizu, on the line in a life-or-death showdown against Rimuru.",
+            "image": "https://image.tmdb.org/t/p/w300/c3Jj3Xb99fSvJJpvddxZnq3dy0c.jpg",
+            "airDate": "2024-05-24",
+            "runtime": 24
+          },
+          "9": {
+            "title": "The Scheming of the Seven Days",
+            "overview": "Diablo descends before the enemy, King Edward of Falmuth. Also present are Saare and Glenda, two of the three Battlesages who are regarded as the most brilliant among the Master Rooks.",
+            "image": "https://image.tmdb.org/t/p/w300/bGT0jO2TjNWLg3OiDkGdaSJP6g9.jpg",
+            "airDate": "2024-05-31",
+            "runtime": 24
+          },
+          "10": {
+            "title": "God and Demon Lord",
+            "overview": "Just after the end of Hinata and Rimuru's duel, Hinata's sword moves on its own and targets Rimuru. Hinata jumps in its way to protect him and is gravely injured. Then the masterminds behind the whole",
+            "image": "https://image.tmdb.org/t/p/w300/9jYxy649Hdhsq8h5TvuLHiAAv7B.jpg",
+            "airDate": "2024-06-07",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Reconciliation and Agreement",
+            "overview": "The Seven Days Clergy have been purged, and the battle is over. Rimuru and Hinata hold a meeting to discuss future relations between their two nations, and the masterminds behind the whole conflict, t",
+            "image": "https://image.tmdb.org/t/p/w300/wwHzXThhY1lXcMWSRbVStjdpLEw.jpg",
+            "airDate": "2024-06-14",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Festival Preparations",
+            "overview": "Everyone in Tempest is busy preparing for the festival to celebrate the country's opening. Rimuru visits Mjöllmile to share ideas on forms of entertainment that will keep people coming back for more.",
+            "image": "https://image.tmdb.org/t/p/w300/hPGZS4IGBxTQVZJmhgUwIIFXslH.jpg",
+            "airDate": "2024-06-21",
+            "runtime": 24
+          },
+          "13": {
+            "title": "Invitation for All Nations",
+            "overview": "Demon Lord Ramiris tries to argue her way into moving to Tempest, where there's great food, hot springs, and ample entertainment. Rimuru happens to walk into the argument and comes up with a way to ma",
+            "image": "https://image.tmdb.org/t/p/w300/3zBjNDMUpcRVjgFjZocBEGqAT9F.jpg",
+            "airDate": "2024-06-28",
+            "runtime": 24
+          },
+          "14": {
+            "title": "Labyrinth and Storm Dragon",
+            "overview": "Rimuru is building a dungeon in preparation for the upcoming festival. It will feature treasure chests containing weapons made by Kurobe, and Veldora will inhabit the deepest floor as the final boss. ",
+            "image": "https://image.tmdb.org/t/p/w300/r2etwUKAEWtBwpS1IxawnFGUXDL.jpg",
+            "airDate": "2024-07-05",
+            "runtime": 24
+          },
+          "15": {
+            "title": "Audience",
+            "overview": "Numerous representatives from across the Great Forest of Jura have assembled in Tempest to congratulate Rimuru on his appointment to Demon Lord. Shuna requests holding a three-day audience to meet wit",
+            "image": "https://image.tmdb.org/t/p/w300/3sNFkBcw2Voe9B7vNj2EZw9f5KM.jpg",
+            "airDate": "2024-07-19",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Benimaru's Ordeal",
+            "overview": "On the last day of the audience, Rimuru meets Momiji, the representative of the Tengu clan. Their meeting comes after Rimuru had sent Benimaru to the Tengu village to request their permission to build",
+            "image": "https://image.tmdb.org/t/p/w300/pimVG6E4gDUEpttY4OZCXDLZmbb.jpg",
+            "airDate": "2024-07-26",
+            "runtime": 24
+          },
+          "17": {
+            "title": "The Lightspeed Hero",
+            "overview": "After learning about an elf slave trade, Rimuru had Soei investigate, but it turns out the slave traders have already been shut down by Masayuki, the Lightspeed Hero. Word is now spreading that the He",
+            "image": "https://image.tmdb.org/t/p/w300/7xUiEXbNU4yWw4r8XWmBrrC6wsB.jpg",
+            "airDate": "2024-08-02",
+            "runtime": 24
+          },
+          "18": {
+            "title": "A Throng of Visitors",
+            "overview": "After meeting with the kings of various nations, Rimuru heads to Engrassia to invite his former students to the festival. The kids are thrilled to go back with him to Tempest, but then the hero Masayu",
+            "image": "https://image.tmdb.org/t/p/w300/er7j1Py01CRLM8ZOtzv5yBVREjX.jpg",
+            "airDate": "2024-08-16",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Festival Eve",
+            "overview": "The night before the Opening Festival, Rimuru throws a lavish banquet for all the nobles and royalty visiting Tempest. When the party is in full swing, Empress Elmesia of the Sorcerous Dynasty of Thal",
+            "image": "https://image.tmdb.org/t/p/w300/sDHYySPS447hY31ukvDRAar0ODo.jpg",
+            "airDate": "2024-08-23",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Nation's Opening Festival",
+            "overview": "It's day one of the festival, and Rimuru finally gets to see all of his friends' performances and presentations. As he's enjoying the festivities, he's summoned by Luminus...",
+            "image": "https://image.tmdb.org/t/p/w300/ibk5z7Byfgqi1J9Fv2iZ0iMqizh.jpg",
+            "airDate": "2024-08-30",
+            "runtime": 24
+          },
+          "21": {
+            "title": "The Martial Arts Tournament",
+            "overview": "A martial arts tournament is being held! The winner will be given the right to challenge Rimuru. The hero, Masayuki, will be participating in the tournament. Rimuru wants to uncover the hero's true st",
+            "image": "https://image.tmdb.org/t/p/w300/eeBoOXCFaClxOoZYkVjxQejtRVe.jpg",
+            "airDate": "2024-09-06",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Settling the Score with the Hero",
+            "overview": "Gazel and Elmesia pledge to assist Rimuru with Tempest's lack of funding. Elmesia then proposes an alliance, but she's concerned about the danger Diablo poses.",
+            "image": "https://image.tmdb.org/t/p/w300/cvHGEtq9GNlCw881vxQGdiMKVSh.jpg",
+            "airDate": "2024-09-13",
+            "runtime": 24
+          },
+          "23": {
+            "title": "The Labyrinth Is Opened",
+            "overview": "Rimuru's dungeon is finally revealed, and his new ally Masayuki is among its first challengers. Later, after the festival is over, Rimuru's biggest job still awaits.",
+            "image": "https://image.tmdb.org/t/p/w300/W2cb5PfYVUTZyxskYTnTWw93Ps.jpg",
+            "airDate": "2024-09-20",
+            "runtime": 24
+          },
+          "24": {
+            "title": "After the Festival",
+            "overview": "Rimuru pays the merchants with the gold coins he's procured. The merchants try to garner futher favor, but Rimuru ceases trading with them. Rimuru then gathers his allies and calls for action again th",
+            "image": "https://image.tmdb.org/t/p/w300/uP8ocjWcFCWazhPpP8wVpGfezYM.jpg",
+            "airDate": "2024-09-27",
+            "runtime": 24
+          }
+        },
+        "4": {
+          "1": {
+            "title": "New Days",
+            "overview": "Tempest is thriving after the success of its festival, but unexpected trouble has arisen with the new dungeon.",
+            "image": "https://image.tmdb.org/t/p/w300/gb4p6xHYwN3c4gYlnVzvpFtlOB8.jpg",
+            "airDate": "2026-04-03",
+            "runtime": 24
+          },
+          "2": {
+            "title": "The Dungeon Evolves",
+            "overview": "Rimuru and his trusted companions discuss ideas for improving the dungeon.",
+            "image": "https://image.tmdb.org/t/p/w300/nRLCpzRP359dz7u475PlzOuT9zW.jpg",
+            "airDate": "2026-04-10",
+            "runtime": 24
+          },
+          "3": {
+            "title": "The Avatar Team Is Formed",
+            "overview": "Rimuru, Ramiris, Veldora, and Milim work on perfecting their avatars before facing Team Green Fury.",
+            "image": "https://image.tmdb.org/t/p/w300/tm0pmQIOdzW5choXRITpHgYGGSC.jpg",
+            "airDate": "2026-04-17",
+            "runtime": 24
+          },
+          "4": {
+            "title": "Invitation",
+            "overview": "The Council of the West deliberates on whether to grant membership to Tempest.",
+            "image": "https://image.tmdb.org/t/p/w300/wzYc59SeMxQUIrb01D3BwIAj90c.jpg",
+            "airDate": "2026-04-24",
+            "runtime": 24
+          },
+          "5": {
+            "title": "The First Step",
+            "overview": "Rimuru attends the meeting that will determine Tempest's membership in the Council of the West.",
+            "image": "https://image.tmdb.org/t/p/w300/ztpuWTZbiM0aXFlUSGdhk1Q17zk.jpg",
+            "airDate": "2026-05-08",
+            "runtime": 24
+          },
+          "6": {
+            "title": "The Council of the West",
+            "overview": "A list of unreasonable demands from the Council makes Rimuru realize that a deeper plot is in motion.",
+            "image": "https://image.tmdb.org/t/p/w300/27GSNADh5MnmkTwHC8pmi3SOW7G.jpg",
+            "airDate": "2026-05-15",
+            "runtime": 24
+          },
+          "7": {
+            "title": "The Mastermind's Identity",
+            "overview": "An interrogation of Prince Elric's would-be shooter reveals who's pulling the strings behind the Council.",
+            "image": "https://image.tmdb.org/t/p/w300/edUKB10nnw9BBK0dyoJNiAlSR56.jpg",
+            "airDate": "2026-05-22",
+            "runtime": 24
+          },
+          "8": {
+            "title": "The Groundwork of Greed",
+            "overview": "Glenda reveals all she knows about the Council and the Rozzos, and Rimuru prepares to inspect ancient ruins.",
+            "image": "https://image.tmdb.org/t/p/w300/bs2vK9WUOQKvwj8KEC3Ra3WXDQV.jpg",
+            "airDate": "2026-05-29",
+            "runtime": 24
+          },
+          "9": {
+            "title": "Investigating the Ruins",
+            "overview": "The investigation of the ancient ruins of Amrita begins.",
+            "image": "https://image.tmdb.org/t/p/w300/1hrPaiyrBjC9jpB5n43VOzZ8SFA.jpg",
+            "airDate": "2026-06-05",
+            "runtime": 24
+          },
+          "10": {
+            "title": "The Master of Greed",
+            "overview": "Rimuru and Mirabel come face-to-face at last in the ancient ruins.",
+            "image": "https://image.tmdb.org/t/p/w300/zv5JGGOQl9Rii3NrVip295TyVyE.jpg",
+            "airDate": "2026-06-12",
+            "runtime": 24
+          },
+          "11": {
+            "title": "Milim's Friend",
+            "overview": "Rimuru helps Milim confront the Chaos Dragon, a corrupted form of the baby dragon that was once her friend.",
+            "image": "https://image.tmdb.org/t/p/w300/w5bBroiKoeCe69CHew0y6Q1edQ8.jpg",
+            "airDate": "2026-06-19",
+            "runtime": 24
+          },
+          "12": {
+            "title": "Tempest Evolves",
+            "overview": "Rimuru shares his plans for Tempest's future, including a new system of government and Council representation.",
+            "image": "https://image.tmdb.org/t/p/w300/xtucVEgiymwJ61iErgqom5WcYt.jpg",
+            "airDate": "2026-06-26",
+            "runtime": 24
+          },
+          "13": {
+            "title": "New Companions",
+            "overview": "Ramiris and Veldora are feeling overworked, so they ask Rimuru to find assistants for them.",
+            "image": "https://image.tmdb.org/t/p/w300/uLRfCUw0ql6HKOezGv5HmsUMooo.jpg",
+            "airDate": "2026-07-03",
+            "runtime": 24
+          },
+          "14": {
+            "title": "The Black Numbers",
+            "overview": "Diablo returns with new demon subordinates to add to Tempest's ranks.",
+            "image": "https://image.tmdb.org/t/p/w300/zDtZhnrOtUD1Ueglhn41sijiTFy.jpg",
+            "airDate": "2026-07-10",
+            "runtime": 24
+          },
+          "15": {
+            "title": "An Unsettling Feeling",
+            "overview": "As Tempest continues to grow and evolve, the Moderate Harlequin Alliance approaches Demon Lord Leon.",
+            "image": "https://image.tmdb.org/t/p/w300/noOoh43MXQ0qxvddcoHVj7EQmp6.jpg",
+            "airDate": "2026-07-17",
+            "runtime": 24
+          },
+          "16": {
+            "title": "Gran, the Hero of Dawn",
+            "overview": "Luminus meets with Rimuru to discuss Gran and future plans.",
+            "image": "https://image.tmdb.org/t/p/w300/3XrByRxQ9rbylMvIarBwTzoREWR.jpg",
+            "airDate": "2026-07-24",
+            "runtime": 24
+          },
+          "17": {
+            "title": "Lubelius, the Point of Convergence",
+            "overview": "While Leon seeks Elmesia's help in finding Chloe, Granville's forces invade Lubelius.",
+            "image": "https://image.tmdb.org/t/p/w300/eIZA3IG22NbzRvxgpnA4PlD4gZT.jpg",
+            "airDate": "2026-08-07",
+            "runtime": 24
+          },
+          "18": {
+            "title": "Turbulence in the West",
+            "overview": "An army of demons advances from the north, leaving the Western Nations in turmoil.",
+            "image": "https://image.tmdb.org/t/p/w300/fzxTUT8WY5wEmDR19FHIu2d5oXE.jpg",
+            "airDate": "2026-08-14",
+            "runtime": 24
+          },
+          "19": {
+            "title": "Death and Loss",
+            "overview": "Granville's true plan is revealed, but it may already be too late to stop it.",
+            "image": "https://image.tmdb.org/t/p/w300/xqCDprdbOHfH9CRS2Ane9yshg3A.jpg",
+            "airDate": "2026-08-21",
+            "runtime": 24
+          },
+          "20": {
+            "title": "Chronoa the Hero (1)",
+            "overview": "When Chloe's Time Traveler skill kicks in, Hinata's soul is sent to the past along with her.",
+            "image": "https://image.tmdb.org/t/p/w300/hn5HRmks2ou12NCRKNgJ3lC4HJB.jpg",
+            "airDate": "2026-08-28",
+            "runtime": 24
+          },
+          "21": {
+            "title": "Chronoa the Hero (2)",
+            "overview": "Chloe and Hinata meet Luminus and begin their journey as Chronoa.",
+            "image": "https://image.tmdb.org/t/p/w300/m6pzBUdcEfVzv0qS2SMm4QWNATV.jpg",
+            "airDate": "2026-09-04",
+            "runtime": 24
+          },
+          "22": {
+            "title": "Where the Soul Resides",
+            "overview": "Chronoa is freed from her seal—not as a Hero, but as an avatar of destruction.",
+            "image": "https://image.tmdb.org/t/p/w300/zolzvsVRHj2Y5toRZdWAOdLlCb5.jpg",
+            "airDate": "2026-09-11",
+            "runtime": 24
+          }
+        }
+      }
+    },
     "jojo's-bizarre-adventure": {
       "title": "JoJo's Bizarre Adventure",
       "slug": "jojos-bizarre-adventure",
       "img": "https://image.tmdb.org/t/p/w780/cMFg7X0gSJjWajuj9DNL4UaUmcP.jpg",
       "season": 6,
-      "episode": 5,
-      "episodeUrl": "https://toonstream.us/episode/jojos-bizarre-adventure-6x5/",
+      "episode": 6,
+      "episodeUrl": "https://toonstream.us/episode/jojos-bizarre-adventure-6x6/",
       "firstSeen": "2026-10-19",
       "onSite": true,
       "nxId": "45790",
@@ -782,6 +2011,13 @@
             "image": "https://image.tmdb.org/t/p/w300/rjnnRvZPCzQSIlFl8jsWSX0xEfH.jpg",
             "airDate": "2018-12-22",
             "runtime": 24
+          },
+          "13": {
+            "title": "Mirror Man and Purple Smoke",
+            "overview": "The person hiding in the mirror was Illuso from the Hitman Team. Fugo ends up being dragged into the mirror by Illuso's Stand, Man in the Mirror. Fugo then summons his own Stand, Purple Haze. Despite ",
+            "image": "https://image.tmdb.org/t/p/w300/c0NOQHXT0Y7qz32SWq8mRy7yNBe.jpg",
+            "airDate": "2018-12-29",
+            "runtime": 24
           }
         },
         "6": {
@@ -816,13 +2052,337 @@
           "5": {
             "title": "The Terrorist from a Faraway Country",
             "overview": "At a checkpoint, Oye — a man who knows Gyro's past — confronts the duo. His power to turn anything he touches into a bomb leaves them with nowhere to run.",
-            "image": "https://image.tmdb.org/t/p/w300/2c7ajDu8SXa4re1FfsCLA2IVZTq.jpg",
+            "image": "https://image.tmdb.org/t/p/w300/2RyXZdAgak77KuwwzERU1GEKnOU.jpg",
             "airDate": "2026-10-16",
+            "runtime": 25
+          },
+          "6": {
+            "title": "Gyro Zeppeli’s Destiny",
+            "overview": "Wounded and weary, the duo finds the Zombie Horse. As Gyro patches himself up, memories surface — revealing a family legacy steeped in duty and sacrifice.",
+            "image": "https://image.tmdb.org/t/p/w300/d6TCAa1j3gwGTonTujmR6VNdcP6.jpg",
+            "airDate": "2026-10-23",
             "runtime": 25
           }
         }
       },
       "tsSlug": "jojos-bizarre-adventure"
+    },
+    "naruto-shippūden": {
+      "title": "Naruto Shippūden",
+      "slug": "naruto-shippūden",
+      "img": "https://image.tmdb.org/t/p/w780//A4VoEGcENojYNu6RjG0mN8zqPxr.jpg",
+      "season": 17,
+      "episode": 370,
+      "episodeUrl": "https://toonstream.us/episode/naruto-shippūden-17x370/",
+      "firstSeen": "2026-10-23",
+      "nxId": "31910",
+      "guide": {
+        "17": {
+          "1": {
+            "title": "Homecoming",
+            "overview": "A figure passes through the gates. It's an older Naruto, who has returned from a long training journey with Jiraiya. Naruto Uzumaki is back!",
+            "image": "https://image.tmdb.org/t/p/w300/lFg0YnHI7sJkPSv38a8ctE96sqr.jpg",
+            "airDate": "2007-02-15",
+            "runtime": 23
+          },
+          "2": {
+            "title": "The Akatsuki Makes Its Move",
+            "overview": "Naruto and Sakura team up and challenge Kakashi to a survival challenge to show off their progress.",
+            "image": "https://image.tmdb.org/t/p/w300/A9cFPkHjWoipVwyvk1W8Oj601n0.jpg",
+            "airDate": "2007-02-15",
+            "runtime": 23
+          },
+          "3": {
+            "title": "The Results of Training",
+            "overview": "Naruto’s and Sakura’s combined skills force Kakashi to use his Sharingan right off the bat. Naruto masterfully unleashes his jutsu one after another.",
+            "image": "https://image.tmdb.org/t/p/w300/3ZhyOj5btCsLximupjKCBvNgNnd.jpg",
+            "airDate": "2007-02-22",
+            "runtime": 23
+          },
+          "4": {
+            "title": "The Jinchuriki of the Sand",
+            "overview": "Gaara is quick to detect Deidara’s presence, and an aerial battle ensues with Deidara on his giant bird and Gaara atop sand.",
+            "image": "https://image.tmdb.org/t/p/w300/qiYNA4LdqhBZbM0kBqBv5MASvVs.jpg",
+            "airDate": "2007-03-01",
+            "runtime": 23
+          },
+          "5": {
+            "title": "The Kazekage Stands Tall",
+            "overview": "Naruto and Sakura defeat Kakashi in the survival challenge. Tsunade assigns them to a three-man squad led by Kakashi, who tells them they are now his equals.",
+            "image": "https://image.tmdb.org/t/p/w300/vxaK3b4JLtz44ApG7xp7xrCtdoS.jpg",
+            "airDate": "2007-03-15",
+            "runtime": 23
+          },
+          "6": {
+            "title": "Mission Cleared",
+            "overview": "In order to protect his village from Deidara’s explosive clay, Gaara uses his chakra to create a giant sand shield.",
+            "image": "https://image.tmdb.org/t/p/w300/k5SJCke8KUXgN9LZ5OfyqMOXRsu.jpg",
+            "airDate": "2007-03-29",
+            "runtime": 23
+          },
+          "7": {
+            "title": "Run, Kankuro",
+            "overview": "Gaara, his strength completely exhausted, is whisked away by Deidara. Kankuro ignores Baki’s efforts to stop him and immediately sets out in pursuit with a platoon to rescue Gaara.",
+            "image": "https://image.tmdb.org/t/p/w300/lDRKaN01rj4SGlWJG5kSiBSVHKj.jpg",
+            "airDate": "2007-03-29",
+            "runtime": 23
+          },
+          "8": {
+            "title": "Team Kakashi, Deployed",
+            "overview": "An urgent message from the Sand Village detailing the Akatsuki’s kidnapping of the Kazekage reaches the Hidden Leaf Village. Tsunade wastes no time in ordering Team Kakashi to the Sand Village.",
+            "image": "https://image.tmdb.org/t/p/w300/uiDIPjTcLNj3ymGO1Z1YkXAtzhi.jpg",
+            "airDate": "2007-04-12",
+            "runtime": 23
+          },
+          "9": {
+            "title": "The Jinchuriki's Tears",
+            "overview": "On her way to the Sand Village, Temari encounters Kakashi and his team. Kakashi admonishes Naruto when he tries to rush ahead…",
+            "image": "https://image.tmdb.org/t/p/w300/6FUS8cyaBOW3FzKWF68mrgOH13T.jpg",
+            "airDate": "2007-04-12",
+            "runtime": 23
+          },
+          "10": {
+            "title": "Sealing Jutsu: Nine Phantom Dragons",
+            "overview": "The Sand ninja fight against time to treat Kankuro. Even the Sand’s poison expert, Granny Chiyo, is baffled. The only hope lies with the reinforcements sent by Tsunade.",
+            "image": "https://image.tmdb.org/t/p/w300/7FdrgAHug8AKSWrCZPPw4VLcJPq.jpg",
+            "airDate": "2007-04-19",
+            "runtime": 23
+          },
+          "11": {
+            "title": "The Medical Ninja's Student",
+            "overview": "Sakura treats a critically ill Kankuro. After extensive training she’s now a full-fledged Medic Ninja, and Sakura amazes everyone with her sure, steady hands.",
+            "image": "https://image.tmdb.org/t/p/w300/juL5lB6hKrWFUwjmoRZpzNOFIVK.jpg",
+            "airDate": "2007-04-26",
+            "runtime": 23
+          },
+          "12": {
+            "title": "The Retired Granny's Determination",
+            "overview": "Pakkun finds the hideout of the Akatsuki. Team Kakashi and Temari prepare to set out to get Gaara back, but Temari is ordered to stay behind and help guard the village.",
+            "image": "https://image.tmdb.org/t/p/w300/do3dNQ1BwaqZ0PwF9s0yCTvySV0.jpg",
+            "airDate": "2007-05-03",
+            "runtime": 23
+          },
+          "13": {
+            "title": "A Meeting With Destiny",
+            "overview": "Guy prepares to use a forbidden secret jutsu. Meanwhile, Naruto falls under Itachi’s genjutsu, and all the anti-genjutsu training he underwent with Jiraiya races through Naruto’s mind.",
+            "image": "https://image.tmdb.org/t/p/w300/m5C2sunvcKbJ1LqqSOJTuRXVjar.jpg",
+            "airDate": "2007-05-10",
+            "runtime": 23
+          },
+          "14": {
+            "title": "Naruto's Growth",
+            "overview": "Guy prepares to use a forbidden secret jutsu. Meanwhile, Naruto falls under Itachi’s genjutsu, and all the anti-genjutsu training he underwent with Jiraiya races through Naruto’s mind.",
+            "image": "https://image.tmdb.org/t/p/w300/cdXw2ys28tyoVaIlEge1XTp4WOM.jpg",
+            "airDate": "2007-05-17",
+            "runtime": 23
+          },
+          "15": {
+            "title": "The Secret Weapon is Called...",
+            "overview": "Granny Chiyo and Sakura rescue Naruto from Itachi’s genjutsu. Without a moment’s delay, Kakashi begins a counterattack.",
+            "image": "https://image.tmdb.org/t/p/w300/fRnBxk4pN5eSgYCJ5RAUuFd0DBw.jpg",
+            "airDate": "2007-05-24",
+            "runtime": 23
+          },
+          "16": {
+            "title": "The Secret of Jinchuriki",
+            "overview": "Chiyo and Kakashi realize that the attack was just a diversion, and that the Akatsuki have already begun the process of extracting the Tailed Beast from Gaara.",
+            "image": "https://image.tmdb.org/t/p/w300/9bsOtfEDl3dpNLzIJ85JmijavWI.jpg",
+            "airDate": "2007-05-31",
+            "runtime": 23
+          },
+          "17": {
+            "title": "The Death of Gaara!",
+            "overview": "Teams Kakashi and Guy take a short rest. Granny Chiyo watches Naruto dozing off and is reminded of Sasori as a child. The pursuit resumes, and when Chiyo wonders why Naruto puts such effort into...",
+            "image": "https://image.tmdb.org/t/p/w300/twrwa4aBaWFHyXruG22xSQ6NbRQ.jpg",
+            "airDate": "2007-06-07",
+            "runtime": 23
+          },
+          "18": {
+            "title": "Charge Tactic! Button Hook Entry!!",
+            "overview": "Teams Kakashi and Guy reach the Akatsuki hideout. They hurry to infiltrate but are thwarted by a five-seal barrier. The only way to break the barrier is to remove all five seals at once.",
+            "image": "https://image.tmdb.org/t/p/w300/2pPkQ45K4yuegU3Co4wrtlY5Pyq.jpg",
+            "airDate": "2007-06-21",
+            "runtime": 23
+          },
+          "19": {
+            "title": "Traps Activate! Team Guy's Enemy",
+            "overview": "Breaking the five-seal barrier set off a trap, which now has Team Guy battling amazingly accurate copies of themselves. Back at the Akatsuki hideout, Deidara and Sasori struggle to take the Nine-Tail ",
+            "image": "https://image.tmdb.org/t/p/w300/jaa9sZMu8p5fZxH6EbF1Bc7hwSX.jpg",
+            "airDate": "2007-07-05",
+            "runtime": 23
+          },
+          "20": {
+            "title": "Hiruko Vs. Two Kunoichi!",
+            "overview": "At last, the showdown between the old woman and her grandson begins. Sakura is confused by Sasori’s strange appearance, and Granny Chiyo explains that this is Hiruko…",
+            "image": "https://image.tmdb.org/t/p/w300/hJ8SR2uQLEONJdawQBbYFrZ3ay6.jpg",
+            "airDate": "2007-07-19",
+            "runtime": 23
+          },
+          "21": {
+            "title": "Sasori's Real Face",
+            "overview": "Granny Chiyo and Sakura manage to expose Sasori, who amazingly looks no older than he did twenty years earlier.",
+            "image": "https://image.tmdb.org/t/p/w300/naf00mOdEW1tAVKwXLdzO2Ioqbn.jpg",
+            "airDate": "2007-07-26",
+            "runtime": 23
+          },
+          "22": {
+            "title": "Chiyo's Secret Skills",
+            "overview": "Sakura is caught by Sasori’s tactic and surrounded by a poison cloud.",
+            "image": "https://image.tmdb.org/t/p/w300/jhQSqelyjjKuKtISyIUklFYMCb7.jpg",
+            "airDate": "2007-08-02",
+            "runtime": 23
+          },
+          "23": {
+            "title": "Father and Mother",
+            "overview": "Chiyo and Sakura take cover, and Sasori wastes no time unleashing a ruthless attack.",
+            "image": "https://image.tmdb.org/t/p/w300/xmapRLza2UjXxnrFfRD62iGADC9.jpg",
+            "airDate": "2007-08-02",
+            "runtime": 23
+          },
+          "24": {
+            "title": "The Third Kazekage",
+            "overview": "Sakura counters the Iron Sand attack of the Third Kazekage puppet with superhuman strength.",
+            "image": "https://image.tmdb.org/t/p/w300/6P2KJqTU7Zj8Y0hiJJwvg1CgnFF.jpg",
+            "airDate": "2007-08-09",
+            "runtime": 23
+          },
+          "25": {
+            "title": "Three Minutes Between Life and Death",
+            "overview": "Sakura destroys the Third Kazekage puppet thanks to a secret antidote she had taken.",
+            "image": "https://image.tmdb.org/t/p/w300/OT1f9segNUhJmLy2jHRa94l81w.jpg",
+            "airDate": "2007-08-16",
+            "runtime": 23
+          },
+          "26": {
+            "title": "Puppet Fight: 10 vs. 100!",
+            "overview": "Sakura and Granny Chiyo are engaged in a fierce battle with Sasori, who is able turn himself into a human puppet. They somehow bring Sasori down within the time limit, but he ends up reviving.",
+            "image": "https://image.tmdb.org/t/p/w300/me1B0bG1l2FPF2iteE4RIrqbS2P.jpg",
+            "airDate": "2007-08-23",
+            "runtime": 23
+          },
+          "27": {
+            "title": "Impossible Dream",
+            "overview": "Although stung with poison herself, Granny Chiyo uses the last of the antidote on Sakura. Mocking the tender scene between Granny Chiyo and Sakura, Sasori attempts to end Granny Chiyo's life.",
+            "image": "https://image.tmdb.org/t/p/w300/yVPoKYXuVqtIBvv7PfgCqBUPx7b.jpg",
+            "airDate": "2007-08-30",
+            "runtime": 23
+          },
+          "28": {
+            "title": "Revival of the Beasts",
+            "overview": "Team Guy senses the result of the Sakura and Granny Chiyo’s desperate struggle while still in battle with his deadly copy. Although Guy’s team members are showing fatigue, their copies remain strong!",
+            "image": "https://image.tmdb.org/t/p/w300/gpAeiA7Z3t10Np4CNKMf5OGt2CU.jpg",
+            "airDate": "2007-09-13",
+            "runtime": 23
+          },
+          "29": {
+            "title": "Kakashi's Enlightened!",
+            "overview": "Sakura hurries to get to Naruto with Granny Chiyo, who is suffering from the poison. The members of Team Guy rush to assist Team Kakashi. Meanwhile, with all preparations complete, Kakashi reveals his",
+            "image": "https://image.tmdb.org/t/p/w300/4fzTiGiM7DMQzAj1BIcCsBJGMB9.jpg",
+            "airDate": "2007-09-27",
+            "runtime": 23
+          },
+          "30": {
+            "title": "Aesthetics of an Instant",
+            "overview": "Naruto loses all reason to anger and is gradually taken over by the Nine-Tailed Fox Spirit. Having been forewarned by Jiraiya, Kakashi narrowly manages to suppress the Nine-Tailed Fox.",
+            "image": "https://image.tmdb.org/t/p/w300/fx5rfs67NxCBhjCdRhci0leqQaP.jpg",
+            "airDate": "2007-09-27",
+            "runtime": 23
+          },
+          "31": {
+            "title": "The Legacy",
+            "overview": "Relying on Naruto's power, Granny Chiyo performs the Transmigration Jutsu on Gaara.",
+            "image": "https://image.tmdb.org/t/p/w300/pvI7YBet2tpyj17HILb9DPInhJ7.jpg",
+            "airDate": "2007-10-18",
+            "runtime": 23
+          },
+          "32": {
+            "title": "Return of the Kazekage",
+            "overview": "Gaara and his rescuers make a triumphant return to the Hidden Sand Village.",
+            "image": "https://image.tmdb.org/t/p/w300/6WyyG7GElHndRw1EhPrqCB57vO9.jpg",
+            "airDate": "2007-10-25",
+            "runtime": 23
+          }
+        }
+      },
+      "seasons": {
+        "17": 370
+      },
+      "nxMap": {
+        "17": {
+          "seg": [
+            [
+              1,
+              1,
+              32
+            ],
+            [
+              2,
+              1,
+              21
+            ],
+            [
+              3,
+              1,
+              18
+            ],
+            [
+              4,
+              1,
+              17
+            ],
+            [
+              5,
+              1,
+              24
+            ],
+            [
+              6,
+              1,
+              31
+            ],
+            [
+              7,
+              1,
+              8
+            ],
+            [
+              8,
+              1,
+              24
+            ],
+            [
+              9,
+              1,
+              21
+            ],
+            [
+              10,
+              1,
+              25
+            ],
+            [
+              11,
+              1,
+              21
+            ],
+            [
+              12,
+              1,
+              33
+            ],
+            [
+              13,
+              1,
+              20
+            ],
+            [
+              14,
+              1,
+              25
+            ]
+          ]
+        }
+      }
     },
     "the-exiled-heavy-knight-knows-how-to-game-the-system": {
       "title": "The Exiled Heavy Knight Knows How to Game the System",
@@ -1166,323 +2726,6 @@
         "1": {
           "season": 1,
           "base": 0
-        }
-      }
-    },
-    "naruto-shippūden": {
-      "title": "Naruto Shippūden",
-      "slug": "naruto-shippūden",
-      "img": "https://image.tmdb.org/t/p/w780//A4VoEGcENojYNu6RjG0mN8zqPxr.jpg",
-      "season": 17,
-      "episode": 368,
-      "episodeUrl": "https://toonstream.us/episode/naruto-shippūden-17x368/",
-      "firstSeen": "2026-10-23",
-      "nxId": "31910",
-      "guide": {
-        "17": {
-          "1": {
-            "title": "Homecoming",
-            "overview": "A figure passes through the gates. It's an older Naruto, who has returned from a long training journey with Jiraiya. Naruto Uzumaki is back!",
-            "image": "https://image.tmdb.org/t/p/w300/lFg0YnHI7sJkPSv38a8ctE96sqr.jpg",
-            "airDate": "2007-02-15",
-            "runtime": 23
-          },
-          "2": {
-            "title": "The Akatsuki Makes Its Move",
-            "overview": "Naruto and Sakura team up and challenge Kakashi to a survival challenge to show off their progress.",
-            "image": "https://image.tmdb.org/t/p/w300/A9cFPkHjWoipVwyvk1W8Oj601n0.jpg",
-            "airDate": "2007-02-15",
-            "runtime": 23
-          },
-          "3": {
-            "title": "The Results of Training",
-            "overview": "Naruto’s and Sakura’s combined skills force Kakashi to use his Sharingan right off the bat. Naruto masterfully unleashes his jutsu one after another.",
-            "image": "https://image.tmdb.org/t/p/w300/3ZhyOj5btCsLximupjKCBvNgNnd.jpg",
-            "airDate": "2007-02-22",
-            "runtime": 23
-          },
-          "4": {
-            "title": "The Jinchuriki of the Sand",
-            "overview": "Gaara is quick to detect Deidara’s presence, and an aerial battle ensues with Deidara on his giant bird and Gaara atop sand.",
-            "image": "https://image.tmdb.org/t/p/w300/qiYNA4LdqhBZbM0kBqBv5MASvVs.jpg",
-            "airDate": "2007-03-01",
-            "runtime": 23
-          },
-          "5": {
-            "title": "The Kazekage Stands Tall",
-            "overview": "Naruto and Sakura defeat Kakashi in the survival challenge. Tsunade assigns them to a three-man squad led by Kakashi, who tells them they are now his equals.",
-            "image": "https://image.tmdb.org/t/p/w300/vxaK3b4JLtz44ApG7xp7xrCtdoS.jpg",
-            "airDate": "2007-03-15",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Mission Cleared",
-            "overview": "In order to protect his village from Deidara’s explosive clay, Gaara uses his chakra to create a giant sand shield.",
-            "image": "https://image.tmdb.org/t/p/w300/k5SJCke8KUXgN9LZ5OfyqMOXRsu.jpg",
-            "airDate": "2007-03-29",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Run, Kankuro",
-            "overview": "Gaara, his strength completely exhausted, is whisked away by Deidara. Kankuro ignores Baki’s efforts to stop him and immediately sets out in pursuit with a platoon to rescue Gaara.",
-            "image": "https://image.tmdb.org/t/p/w300/lDRKaN01rj4SGlWJG5kSiBSVHKj.jpg",
-            "airDate": "2007-03-29",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Team Kakashi, Deployed",
-            "overview": "An urgent message from the Sand Village detailing the Akatsuki’s kidnapping of the Kazekage reaches the Hidden Leaf Village. Tsunade wastes no time in ordering Team Kakashi to the Sand Village.",
-            "image": "https://image.tmdb.org/t/p/w300/uiDIPjTcLNj3ymGO1Z1YkXAtzhi.jpg",
-            "airDate": "2007-04-12",
-            "runtime": 23
-          },
-          "9": {
-            "title": "The Jinchuriki's Tears",
-            "overview": "On her way to the Sand Village, Temari encounters Kakashi and his team. Kakashi admonishes Naruto when he tries to rush ahead…",
-            "image": "https://image.tmdb.org/t/p/w300/6FUS8cyaBOW3FzKWF68mrgOH13T.jpg",
-            "airDate": "2007-04-12",
-            "runtime": 23
-          },
-          "10": {
-            "title": "Sealing Jutsu: Nine Phantom Dragons",
-            "overview": "The Sand ninja fight against time to treat Kankuro. Even the Sand’s poison expert, Granny Chiyo, is baffled. The only hope lies with the reinforcements sent by Tsunade.",
-            "image": "https://image.tmdb.org/t/p/w300/7FdrgAHug8AKSWrCZPPw4VLcJPq.jpg",
-            "airDate": "2007-04-19",
-            "runtime": 23
-          },
-          "11": {
-            "title": "The Medical Ninja's Student",
-            "overview": "Sakura treats a critically ill Kankuro. After extensive training she’s now a full-fledged Medic Ninja, and Sakura amazes everyone with her sure, steady hands.",
-            "image": "https://image.tmdb.org/t/p/w300/juL5lB6hKrWFUwjmoRZpzNOFIVK.jpg",
-            "airDate": "2007-04-26",
-            "runtime": 23
-          },
-          "12": {
-            "title": "The Retired Granny's Determination",
-            "overview": "Pakkun finds the hideout of the Akatsuki. Team Kakashi and Temari prepare to set out to get Gaara back, but Temari is ordered to stay behind and help guard the village.",
-            "image": "https://image.tmdb.org/t/p/w300/do3dNQ1BwaqZ0PwF9s0yCTvySV0.jpg",
-            "airDate": "2007-05-03",
-            "runtime": 23
-          },
-          "13": {
-            "title": "A Meeting With Destiny",
-            "overview": "Guy prepares to use a forbidden secret jutsu. Meanwhile, Naruto falls under Itachi’s genjutsu, and all the anti-genjutsu training he underwent with Jiraiya races through Naruto’s mind.",
-            "image": "https://image.tmdb.org/t/p/w300/m5C2sunvcKbJ1LqqSOJTuRXVjar.jpg",
-            "airDate": "2007-05-10",
-            "runtime": 23
-          },
-          "14": {
-            "title": "Naruto's Growth",
-            "overview": "Guy prepares to use a forbidden secret jutsu. Meanwhile, Naruto falls under Itachi’s genjutsu, and all the anti-genjutsu training he underwent with Jiraiya races through Naruto’s mind.",
-            "image": "https://image.tmdb.org/t/p/w300/cdXw2ys28tyoVaIlEge1XTp4WOM.jpg",
-            "airDate": "2007-05-17",
-            "runtime": 23
-          },
-          "15": {
-            "title": "The Secret Weapon is Called...",
-            "overview": "Granny Chiyo and Sakura rescue Naruto from Itachi’s genjutsu. Without a moment’s delay, Kakashi begins a counterattack.",
-            "image": "https://image.tmdb.org/t/p/w300/fRnBxk4pN5eSgYCJ5RAUuFd0DBw.jpg",
-            "airDate": "2007-05-24",
-            "runtime": 23
-          },
-          "16": {
-            "title": "The Secret of Jinchuriki",
-            "overview": "Chiyo and Kakashi realize that the attack was just a diversion, and that the Akatsuki have already begun the process of extracting the Tailed Beast from Gaara.",
-            "image": "https://image.tmdb.org/t/p/w300/9bsOtfEDl3dpNLzIJ85JmijavWI.jpg",
-            "airDate": "2007-05-31",
-            "runtime": 23
-          },
-          "17": {
-            "title": "The Death of Gaara!",
-            "overview": "Teams Kakashi and Guy take a short rest. Granny Chiyo watches Naruto dozing off and is reminded of Sasori as a child. The pursuit resumes, and when Chiyo wonders why Naruto puts such effort into...",
-            "image": "https://image.tmdb.org/t/p/w300/twrwa4aBaWFHyXruG22xSQ6NbRQ.jpg",
-            "airDate": "2007-06-07",
-            "runtime": 23
-          },
-          "18": {
-            "title": "Charge Tactic! Button Hook Entry!!",
-            "overview": "Teams Kakashi and Guy reach the Akatsuki hideout. They hurry to infiltrate but are thwarted by a five-seal barrier. The only way to break the barrier is to remove all five seals at once.",
-            "image": "https://image.tmdb.org/t/p/w300/2pPkQ45K4yuegU3Co4wrtlY5Pyq.jpg",
-            "airDate": "2007-06-21",
-            "runtime": 23
-          },
-          "19": {
-            "title": "Traps Activate! Team Guy's Enemy",
-            "overview": "Breaking the five-seal barrier set off a trap, which now has Team Guy battling amazingly accurate copies of themselves. Back at the Akatsuki hideout, Deidara and Sasori struggle to take the Nine-Tail ",
-            "image": "https://image.tmdb.org/t/p/w300/jaa9sZMu8p5fZxH6EbF1Bc7hwSX.jpg",
-            "airDate": "2007-07-05",
-            "runtime": 23
-          },
-          "20": {
-            "title": "Hiruko Vs. Two Kunoichi!",
-            "overview": "At last, the showdown between the old woman and her grandson begins. Sakura is confused by Sasori’s strange appearance, and Granny Chiyo explains that this is Hiruko…",
-            "image": "https://image.tmdb.org/t/p/w300/hJ8SR2uQLEONJdawQBbYFrZ3ay6.jpg",
-            "airDate": "2007-07-19",
-            "runtime": 23
-          },
-          "21": {
-            "title": "Sasori's Real Face",
-            "overview": "Granny Chiyo and Sakura manage to expose Sasori, who amazingly looks no older than he did twenty years earlier.",
-            "image": "https://image.tmdb.org/t/p/w300/naf00mOdEW1tAVKwXLdzO2Ioqbn.jpg",
-            "airDate": "2007-07-26",
-            "runtime": 23
-          },
-          "22": {
-            "title": "Chiyo's Secret Skills",
-            "overview": "Sakura is caught by Sasori’s tactic and surrounded by a poison cloud.",
-            "image": "https://image.tmdb.org/t/p/w300/jhQSqelyjjKuKtISyIUklFYMCb7.jpg",
-            "airDate": "2007-08-02",
-            "runtime": 23
-          },
-          "23": {
-            "title": "Father and Mother",
-            "overview": "Chiyo and Sakura take cover, and Sasori wastes no time unleashing a ruthless attack.",
-            "image": "https://image.tmdb.org/t/p/w300/xmapRLza2UjXxnrFfRD62iGADC9.jpg",
-            "airDate": "2007-08-02",
-            "runtime": 23
-          },
-          "24": {
-            "title": "The Third Kazekage",
-            "overview": "Sakura counters the Iron Sand attack of the Third Kazekage puppet with superhuman strength.",
-            "image": "https://image.tmdb.org/t/p/w300/6P2KJqTU7Zj8Y0hiJJwvg1CgnFF.jpg",
-            "airDate": "2007-08-09",
-            "runtime": 23
-          },
-          "25": {
-            "title": "Three Minutes Between Life and Death",
-            "overview": "Sakura destroys the Third Kazekage puppet thanks to a secret antidote she had taken.",
-            "image": "https://image.tmdb.org/t/p/w300/OT1f9segNUhJmLy2jHRa94l81w.jpg",
-            "airDate": "2007-08-16",
-            "runtime": 23
-          },
-          "26": {
-            "title": "Puppet Fight: 10 vs. 100!",
-            "overview": "Sakura and Granny Chiyo are engaged in a fierce battle with Sasori, who is able turn himself into a human puppet. They somehow bring Sasori down within the time limit, but he ends up reviving.",
-            "image": "https://image.tmdb.org/t/p/w300/me1B0bG1l2FPF2iteE4RIrqbS2P.jpg",
-            "airDate": "2007-08-23",
-            "runtime": 23
-          },
-          "27": {
-            "title": "Impossible Dream",
-            "overview": "Although stung with poison herself, Granny Chiyo uses the last of the antidote on Sakura. Mocking the tender scene between Granny Chiyo and Sakura, Sasori attempts to end Granny Chiyo's life.",
-            "image": "https://image.tmdb.org/t/p/w300/yVPoKYXuVqtIBvv7PfgCqBUPx7b.jpg",
-            "airDate": "2007-08-30",
-            "runtime": 23
-          },
-          "28": {
-            "title": "Revival of the Beasts",
-            "overview": "Team Guy senses the result of the Sakura and Granny Chiyo’s desperate struggle while still in battle with his deadly copy. Although Guy’s team members are showing fatigue, their copies remain strong!",
-            "image": "https://image.tmdb.org/t/p/w300/gpAeiA7Z3t10Np4CNKMf5OGt2CU.jpg",
-            "airDate": "2007-09-13",
-            "runtime": 23
-          },
-          "29": {
-            "title": "Kakashi's Enlightened!",
-            "overview": "Sakura hurries to get to Naruto with Granny Chiyo, who is suffering from the poison. The members of Team Guy rush to assist Team Kakashi. Meanwhile, with all preparations complete, Kakashi reveals his",
-            "image": "https://image.tmdb.org/t/p/w300/4fzTiGiM7DMQzAj1BIcCsBJGMB9.jpg",
-            "airDate": "2007-09-27",
-            "runtime": 23
-          },
-          "30": {
-            "title": "Aesthetics of an Instant",
-            "overview": "Naruto loses all reason to anger and is gradually taken over by the Nine-Tailed Fox Spirit. Having been forewarned by Jiraiya, Kakashi narrowly manages to suppress the Nine-Tailed Fox.",
-            "image": "https://image.tmdb.org/t/p/w300/fx5rfs67NxCBhjCdRhci0leqQaP.jpg",
-            "airDate": "2007-09-27",
-            "runtime": 23
-          },
-          "31": {
-            "title": "The Legacy",
-            "overview": "Relying on Naruto's power, Granny Chiyo performs the Transmigration Jutsu on Gaara.",
-            "image": "https://image.tmdb.org/t/p/w300/pvI7YBet2tpyj17HILb9DPInhJ7.jpg",
-            "airDate": "2007-10-18",
-            "runtime": 23
-          },
-          "32": {
-            "title": "Return of the Kazekage",
-            "overview": "Gaara and his rescuers make a triumphant return to the Hidden Sand Village.",
-            "image": "https://image.tmdb.org/t/p/w300/6WyyG7GElHndRw1EhPrqCB57vO9.jpg",
-            "airDate": "2007-10-25",
-            "runtime": 23
-          }
-        }
-      },
-      "seasons": {
-        "17": 368
-      },
-      "nxMap": {
-        "17": {
-          "seg": [
-            [
-              1,
-              1,
-              32
-            ],
-            [
-              2,
-              1,
-              21
-            ],
-            [
-              3,
-              1,
-              18
-            ],
-            [
-              4,
-              1,
-              17
-            ],
-            [
-              5,
-              1,
-              24
-            ],
-            [
-              6,
-              1,
-              31
-            ],
-            [
-              7,
-              1,
-              8
-            ],
-            [
-              8,
-              1,
-              24
-            ],
-            [
-              9,
-              1,
-              21
-            ],
-            [
-              10,
-              1,
-              25
-            ],
-            [
-              11,
-              1,
-              21
-            ],
-            [
-              12,
-              1,
-              33
-            ],
-            [
-              13,
-              1,
-              20
-            ],
-            [
-              14,
-              1,
-              25
-            ]
-          ]
         }
       }
     },
@@ -3306,372 +4549,6 @@
         "1": 12
       },
       "tsSlug": "hanaori-san-still-wants-to-fight-in-the-next-life",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "ranma1-2": {
-      "title": "Ranma1/2",
-      "slug": "ranma1-2",
-      "img": "https://image.tmdb.org/t/p/w780/dh4un5SSA1i3yjMeJgH3xhT68hh.jpg",
-      "season": 3,
-      "episode": 3,
-      "episodeUrl": "https://toonstream.us/episode/ranma1-2-3x3/",
-      "firstSeen": "2026-10-19",
-      "nxId": "259140",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "Here's Ranma",
-            "overview": "Tendo Dojo master Soun eagerly awaits the arrival of his old friend Genma Saotome and Genma's son Ranma. Instead, a teen girl and a giant panda show up.",
-            "image": "https://image.tmdb.org/t/p/w300/q0rCSD5PDuSU8Bu5CGf6VQDiZfn.jpg",
-            "airDate": "2024-10-06",
-            "runtime": 23
-          },
-          "2": {
-            "title": "I Hate Men!",
-            "overview": "On Ranma's first day at Furinkan High School, a group of boys — including the sophomore Kuno — ambushes Akane at the school's entrance.",
-            "image": "https://image.tmdb.org/t/p/w300/aVuHTvRMnsmpaFkL0wmS8lBzzQ5.jpg",
-            "airDate": "2024-10-13",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Because There's Someone He Likes",
-            "overview": "To Ranma's horror, Kuno falls head-over-heels for Ranma's female form and starts a relentless pursuit. Meanwhile, Akane deals with unrequited feelings.",
-            "image": "https://image.tmdb.org/t/p/w300/2dKD7KiHiN64w45OGTQtQpV3gjQ.jpg",
-            "airDate": "2024-10-20",
-            "runtime": 23
-          },
-          "4": {
-            "title": "The Hunter",
-            "overview": "A mysterious martial artist arrives at Furinkan High looking to settle a score with Ranma. Later, the school becomes a battlefield.",
-            "image": "https://image.tmdb.org/t/p/w300/3dQNEW5RVMNqXkD3k4xdbZssKka.jpg",
-            "airDate": "2024-10-27",
-            "runtime": 23
-          },
-          "5": {
-            "title": "Who Says You're Cute",
-            "overview": "Akane gets caught up in Ryoga and Ranma's fight and ends up with a shocking new appearance. Ranma, worried, abandons the battle and goes after her.",
-            "image": "https://image.tmdb.org/t/p/w300/6lrSDwBFn8KX582PROIzNZVf1o3.jpg",
-            "airDate": "2024-11-03",
-            "runtime": 23
-          },
-          "6": {
-            "title": "Kodachi, The Black Rose",
-            "overview": "When the Furinkan High rhythmic gymnastics team is injured by a rival school's captain, its members beg Akane to take their place in an upcoming match.",
-            "image": "https://image.tmdb.org/t/p/w300/34V71qqTsYXyxIIFh23EB56YRJL.jpg",
-            "airDate": "2024-11-10",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Hot Competition",
-            "overview": "With Akane injured, Ranma takes her place and stays up all night practicing. The next day, the match begins with Kodachi's usual underhanded tricks.",
-            "image": "https://image.tmdb.org/t/p/w300/wDo3PGnEFiCoxvhqHychb65oLVL.jpg",
-            "airDate": "2024-11-17",
-            "runtime": 23
-          },
-          "8": {
-            "title": "Darling Charlotte",
-            "overview": "P-chan goes missing and shows up in the arms of a famous martial skater, who refuses to return him. Enraged, Akane challenges Azusa to a battle.",
-            "image": "https://image.tmdb.org/t/p/w300/4lPyXsWZtry0nJBEt8KCozLMNso.jpg",
-            "airDate": "2024-11-24",
-            "runtime": 23
-          },
-          "9": {
-            "title": "I'll Never Let Go",
-            "overview": "A fierce match between Ranma and Akane versus the golden couple Mikado and Azusa begins! Mikado is eager to steal a kiss from Akane, worrying Ranma.",
-            "image": "https://image.tmdb.org/t/p/w300/mutgxPB12QISNUDLeCFlLkBZm4t.jpg",
-            "airDate": "2024-12-01",
-            "runtime": 23
-          },
-          "10": {
-            "title": "Kiss of Death",
-            "overview": "Chaos ensues when the match continues with Ryoga and an injured female Ranma. Later, a Chinese Amazon appears, bent on killing Ranma's female form.",
-            "image": "https://image.tmdb.org/t/p/w300/wGzqIAlqTrh2mjabeesTrxvCV2U.jpg",
-            "airDate": "2024-12-08",
-            "runtime": 23
-          },
-          "11": {
-            "title": "You I Love",
-            "overview": "Ranma learns that defeating a Chinese Amazon has messy consequences. P-chan gets served up for dinner, triggering a fight between Shampoo and Akane.",
-            "image": "https://image.tmdb.org/t/p/w300/gxKi42AascHhgJhCZqNCtYueC3A.jpg",
-            "airDate": "2024-12-15",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Shampoo Cleans Up",
-            "overview": "Shampoo's shiatsu technique and magic hair wash have erased Akane's memory of Ranma. The Chinese Amazon offers a cure — but she has an impossible request.",
-            "image": "https://image.tmdb.org/t/p/w300/r91WIvWJHM0C1i8VhsiqXrEGP1D.jpg",
-            "airDate": "2024-12-22",
-            "runtime": 23
-          }
-        },
-        "2": {
-          "1": {
-            "title": "Ranma's Weakness",
-            "overview": "Another of Akane's suitors, the quiet Gosunkugi, begins stalking Ranma to find the martial artist's weakness. Will he unearth Ranma's secret?",
-            "image": "https://image.tmdb.org/t/p/w300/jjeGP6YXoxed8MRluXLPmV5Ct0D.jpg",
-            "airDate": "2025-10-05",
-            "runtime": 23
-          },
-          "2": {
-            "title": "Attack of the Wild Mousse",
-            "overview": "Ranma's problems continue as he deals with the aftermath of his trance, Shampoo's new secret, her meddlesome great-grandmother and a jealous rival.",
-            "image": "https://image.tmdb.org/t/p/w300/3hSLTGcqdTBcfXSI8nVm1OqBAiY.jpg",
-            "airDate": "2025-10-12",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Chestnuts Roasting on an Open Fire",
-            "overview": "After a heated battle with Mousse, Ranma remains stuck in his female form and must master a difficult technique to obtain the antidote for his condition.",
-            "image": "https://image.tmdb.org/t/p/w300/3YzFviFUkNsbppjUSn8BtXO6Fgc.jpg",
-            "airDate": "2025-10-19",
-            "runtime": 23
-          },
-          "4": {
-            "title": "Naval Engagement",
-            "overview": "Ranma follows the Cat Café to the beach, where a Martial Arts Watermelon Splitting Race stands in his way of finally retrieving the real Phoenix Pill.",
-            "image": "https://image.tmdb.org/t/p/w300/jCC11dbliMSeY46ZjBm6NRzZ3y9.jpg",
-            "airDate": "2025-10-26",
-            "runtime": 23
-          },
-          "5": {
-            "title": "It's Fast or It's Free",
-            "overview": "Cologne learns about the annual Martial Arts Delivery Race and signs Shampoo up to compete against Akane and Ranma. Who will reach the final goal first?",
-            "image": "https://image.tmdb.org/t/p/w300/3bn0DuZM4fuSgx46d9DIc4OBWsH.jpg",
-            "airDate": "2025-11-02",
-            "runtime": 23
-          },
-          "6": {
-            "title": "The Evil Wakes",
-            "overview": "When the lecherous Happosai escapes to Nerima, seeking the disciples who imprisoned him, Akane and Ranma team up to deal with his perverted antics.",
-            "image": "https://image.tmdb.org/t/p/w300/4JrXH5e2bBBnpdzLaYTg0sBAM9x.jpg",
-            "airDate": "2025-11-09",
-            "runtime": 23
-          },
-          "7": {
-            "title": "Instant Spring",
-            "overview": "Shampoo receives a mysterious package. Meanwhile, Soun and Genma's plan to bring Ranma and Akane closer backfires when the real dojo destroyer shows up.",
-            "image": "https://image.tmdb.org/t/p/w300/syUnqQVsYqY2k68uNN9hQ7gVvCz.jpg",
-            "airDate": "2025-11-16",
-            "runtime": 23
-          },
-          "8": {
-            "title": "\"Okonomiyaki\" Means \"I Love You\"",
-            "overview": "Ranma finds himself in a bind when he learns that the new transfer student is the person who attacked his father — and his long-lost childhood friend!",
-            "image": "https://image.tmdb.org/t/p/w300/LHqzcWGLKw5eqFQJkyUH2Uu2Ce.jpg",
-            "airDate": "2025-11-23",
-            "runtime": 23
-          },
-          "9": {
-            "title": "Love Letters in the Sauce",
-            "overview": "In order to be with Ranma, Ukyo hatches a scheme to help Ryoga get a date with Akane. Unfortunately, things don't go according to plan...",
-            "image": "https://image.tmdb.org/t/p/w300/y9DBu0zKztpYV04pqFztFrjjnby.jpg",
-            "airDate": "2025-11-30",
-            "runtime": 23
-          },
-          "10": {
-            "title": "Not Your Typical Juliet",
-            "overview": "After years cast in boyish roles, Akane finally gets to play her dream role: Juliet! But will the prospective Romeos' antics ruin her precious chance?",
-            "image": "https://image.tmdb.org/t/p/w300/jHVWjHYevkcDUp9Kkc1myWoBf5M.jpg",
-            "airDate": "2025-12-07",
-            "runtime": 23
-          },
-          "11": {
-            "title": "Abduction of ...Akane?",
-            "overview": "Determined to win Shampoo back, Mousse challenges Ranma. He attacks using Spring of Drowned Duck water and traps Akane in a water tank.",
-            "image": "https://image.tmdb.org/t/p/w300/fQUOtylnsSagyoQi3hI8YIumL3J.jpg",
-            "airDate": "2025-12-14",
-            "runtime": 23
-          },
-          "12": {
-            "title": "Fowl Play",
-            "overview": "Despite Ranma's efforts to protect the audience from the cursed spring water, Akane gets doused instead. What emerges is not his fiancée, but a duck.",
-            "image": "https://image.tmdb.org/t/p/w300/w0fsGJIVtjkIldZTxwgB3hxkQFV.jpg",
-            "airDate": "2025-12-21",
-            "runtime": 23
-          }
-        },
-        "3": {
-          "1": {
-            "title": "Training Meals",
-            "overview": "Ryoga challenges Ranma, but Ranma's battles with Cologne have made him far stronger. When Cologne appears before the vengeful Ryoga, what is her motive?",
-            "image": "https://image.tmdb.org/t/p/w300/mlbMnGnERZjHvM7h0BX2qXHB8m4.jpg",
-            "airDate": "2026-10-04",
-            "runtime": 23
-          },
-          "2": {
-            "title": "The Breaking Point",
-            "overview": "Akane tags along for Ranma's training, while Ryoga works to master the deadly \"The Breaking Point.\" How will their clash unfold when Akane gets involved?",
-            "image": "https://image.tmdb.org/t/p/w300/z6gJ0n9c9u40Y6VOK8i8F854YGm.jpg",
-            "airDate": "2026-10-11",
-            "runtime": 23
-          },
-          "3": {
-            "title": "Happosai Days Are Here Again",
-            "overview": "The Tendo family hits the beach. As Happosai runs wild, Ranma tries to set him up with Cologne — but it seems they share a past tied to an heirloom.",
-            "image": "https://image.tmdb.org/t/p/w300/dfEiAZgzCUcowomk2ZPfmR9pOG3.jpg",
-            "airDate": "2026-10-18",
-            "runtime": 23
-          }
-        }
-      },
-      "seasons": {
-        "1": 12,
-        "2": 12,
-        "3": 3
-      },
-      "tsSlug": "ranma1-2",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        },
-        "2": {
-          "season": 1,
-          "base": 12
-        },
-        "3": {
-          "season": 1,
-          "base": 24
-        }
-      }
-    },
-    "jaadugar:-a-witch-in-mongolia": {
-      "title": "Jaadugar: A Witch in Mongolia",
-      "slug": "jaadugar:-a-witch-in-mongolia",
-      "img": "https://image.tmdb.org/t/p/w780/723NT7KY9xBFLYNNBaEEREbLaPC.jpg",
-      "season": 1,
-      "episode": 10,
-      "episodeUrl": "https://toonstream.us/episode/jaadugar:-a-witch-in-mongolia-1x10/",
-      "firstSeen": "2026-10-19",
-      "nxId": "288971",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "All That Is in the Heavens and All That Is in the Earth",
-            "overview": "Sitara, a young slave girl, is sold to a family of scholars, where she begins her journey of knowledge.",
-            "image": "https://image.tmdb.org/t/p/w300/8ulVow8v7B8Lrw47y4hyGPRnrJf.jpg",
-            "airDate": "2026-07-04",
-            "runtime": 24
-          },
-          "2": {
-            "title": "The Roses That Bloom in Safar",
-            "overview": "As nomads sack the city of Tun, Fatima and Sitara hide in the basement and wait for the others to return.",
-            "image": "https://image.tmdb.org/t/p/w300/xeg43pMcMll2P4MkmtKyYtTvAGP.jpg",
-            "airDate": "2026-07-04",
-            "runtime": 24
-          },
-          "3": {
-            "title": "An Undying Flame",
-            "overview": "Sitara teams up with an unexpected ally in hopes of reclaiming Fatima's book that was stolen by the Mongols.",
-            "image": "https://image.tmdb.org/t/p/w300/1LcgSvjwvG60ptgLFy05Z2MDGGc.jpg",
-            "airDate": "2026-07-11",
-            "runtime": 24
-          },
-          "4": {
-            "title": "Otchigin",
-            "overview": "Sitara begins tutoring Sorghaghtani in Euclid's Elements, and learns more about Prince Tolui, the Otchigin.",
-            "image": "https://image.tmdb.org/t/p/w300/3T83I18Bh8BfjHLi3cXXyb1wCEv.jpg",
-            "airDate": "2026-07-18",
-            "runtime": 24
-          },
-          "5": {
-            "title": "A Snake Shows Its Colors, Man Hides His Colors",
-            "overview": "Sitara agrees to serve as Sorghaghtani's spy, but her plans to infiltrate Chagatai's court quickly go awry.",
-            "image": "https://image.tmdb.org/t/p/w300/jmE8ln9uCMqGsZBP0IeVYkTyEzQ.jpg",
-            "airDate": "2026-07-25",
-            "runtime": 24
-          },
-          "6": {
-            "title": "The Mergen People",
-            "overview": "Töregene tells the tale of her life among the Merkits, a confederation of tribes renowned for their archery.",
-            "image": "https://image.tmdb.org/t/p/w300/r2Fk2U0SrGuyA50ObrbJB10GTwp.jpg",
-            "airDate": "2026-08-01",
-            "runtime": 24
-          },
-          "7": {
-            "title": "Brothers",
-            "overview": "As the Mongol Empire prepares to wage war to the east, Sitara begins to plant the seeds of political intrigue.",
-            "image": "https://image.tmdb.org/t/p/w300/tLsnfuvD1DsWcJEGwSi0FpmFYWv.jpg",
-            "airDate": "2026-08-08",
-            "runtime": 24
-          },
-          "8": {
-            "title": "Great Khatun Boraqchin",
-            "overview": "After a misunderstanding, Sitara finds herself before the sickly Boraqchin, chief empress of the Mongols.",
-            "image": "https://image.tmdb.org/t/p/w300/9cRBNXOTzrEh9qqKMYdgM034HYK.jpg",
-            "airDate": "2026-08-15",
-            "runtime": 24
-          },
-          "9": {
-            "title": "Tengri",
-            "overview": "Ögedei and Tolui launch their offensive to take the Jin capital Kaifeng, but tragedy strikes soon after.",
-            "image": "https://image.tmdb.org/t/p/w300/cp0CzEFVxviDz19IK0gS7uJrYYJ.jpg",
-            "airDate": "2026-08-22",
-            "runtime": 24
-          },
-          "10": {
-            "title": "Wisdom",
-            "overview": "Tolui meets a shocking fate, and Sitara receives an unexpected item that shakes her to the core of her being.",
-            "image": "https://image.tmdb.org/t/p/w300/p7xkczXG7D98elP9eeTx1qTI9Ak.jpg",
-            "airDate": "2026-08-29",
-            "runtime": 24
-          }
-        }
-      },
-      "seasons": {
-        "1": 10
-      },
-      "tsSlug": "jaadugar:-a-witch-in-mongolia",
-      "nxMap": {
-        "1": {
-          "season": 1,
-          "base": 0
-        }
-      }
-    },
-    "the-seven-knights-of-the-marronnier-kingdom": {
-      "title": "The Seven Knights of the Marronnier Kingdom",
-      "slug": "the-seven-knights-of-the-marronnier-kingdom",
-      "img": "https://image.tmdb.org/t/p/w780/g3G9DHjjRBKdm8SbHVU2w3Cmp51.jpg",
-      "season": 1,
-      "episode": 3,
-      "episodeUrl": "https://toonstream.us/episode/the-seven-knights-of-the-marronnier-kingdom-1x3/",
-      "firstSeen": "2026-10-19",
-      "nxId": "324326",
-      "guide": {
-        "1": {
-          "1": {
-            "title": "The Seven Knights",
-            "overview": "At the heart of a continent of eight kingdoms lies the Marronnier Kingdom. Its general, Baribara, has seven sons, each with a unique gift and serving as a knight commander. Bound by a single noble cau",
-            "image": "https://image.tmdb.org/t/p/w300/lIl8sGoWBoiLdfDDeiFeIkJwgXe.jpg",
-            "airDate": "2026-10-03",
-            "runtime": 25
-          },
-          "2": {
-            "title": "Spring by the Lake",
-            "overview": "Chilly finds himself drawn to Bruno, unaware that it is Princess Brunhild disguised as a man. But after learning of a string of mysterious incidents surrounding her, he begins to suspect someone is wo",
-            "image": "https://image.tmdb.org/t/p/w300/4PFPfIkQKeaHeKLvtaYzXTr6rtO.jpg",
-            "airDate": "2026-10-10",
-            "runtime": 25
-          },
-          "3": {
-            "title": "Recklessness",
-            "overview": "Insomniac accepts his engagement to Ellie, the castellan's daughter, but conflicting motives begin to emerge behind the arrangement. During a sword tournament at the castle, Swordsman and Ellie advanc",
-            "image": "https://image.tmdb.org/t/p/w300/6cC7rpr5AcQHC89P4QkgOAo8D5c.jpg",
-            "airDate": "2026-10-17",
-            "runtime": 25
-          }
-        }
-      },
-      "seasons": {
-        "1": 3
-      },
-      "tsSlug": "the-seven-knights-of-the-marronnier-kingdom",
       "nxMap": {
         "1": {
           "season": 1,
