@@ -96,6 +96,10 @@ export function NetmirrorPlayer({
      * sach me badalta hai, kyunki page hi us dub ka hota hai.
      */
     const [dubFrame, setDubFrame] = useState<{ link: string; name: string } | null>(null);
+    /** Ek baar app-API fail hui to aage seedha MovieBox player (20s wait nahi). */
+    const serverDubBroken = useRef(false);
+    /** Chhota notice — "Audio: Hindi · MovieBox player" (3 s). */
+    const [dubNotice, setDubNotice] = useState<string | null>(null);
 
     useEffect(() => {
         if (!hasId) {
@@ -174,14 +178,25 @@ export function NetmirrorPlayer({
     /** Audio (dub) chuno — us language ke subject se naye streams. */
     const selectAudio = useCallback(
         async (track: AudioTrack) => {
-            const answer = await resolveDubStreams({
-                subjectId: track.subjectId,
-                detailPath: track.detailPath,
-                se: mediaType === 'tv' ? (season ?? 1) : 1,
-                ep: mediaType === 'tv' ? (episode ?? 1) : 1,
-            });
+            // App-API pehle hi fail ho chuki ho to seedha MovieBox player —
+            // har switch par 4 s intezaar theek nahi.
+            const answer = serverDubBroken.current
+                ? ({ ok: false, streams: [], via: 'server', trace: ['server: pehle fail ho chuka'] } as Awaited<
+                      ReturnType<typeof resolveDubStreams>
+                  >)
+                : await resolveDubStreams(
+                      {
+                          subjectId: track.subjectId,
+                          detailPath: track.detailPath,
+                          se: mediaType === 'tv' ? (season ?? 1) : 1,
+                          ep: mediaType === 'tv' ? (episode ?? 1) : 1,
+                      },
+                      { timeoutMs: 1500, skipClient: true },
+                  );
             console.info('[dub]', track.name, answer.ok ? `ok (${answer.via}, ${answer.streams.length})` : `fail (${answer.via})`, answer.trace || '');
             if (!answer.ok || !answer.streams.length) {
+                serverDubBroken.current = true;
+                setDubNotice(`Audio: ${track.name} · MovieBox player`);
                 // Streams nahi mile — MovieBox ka wahi dub page NetMirror ke
                 // andar khol do (audio wahan asli me badalta hai).
                 const link = buildDubWatchLink(track);
@@ -190,6 +205,7 @@ export function NetmirrorPlayer({
                 setActiveAudio(track.subjectId);
                 return true;
             }
+            serverDubBroken.current = false;
             setStartAt(currentTimeRef.current);
             setStreams(answer.streams);
             setActiveAudio(track.subjectId);
@@ -197,6 +213,13 @@ export function NetmirrorPlayer({
         },
         [mediaType, season, episode],
     );
+
+    /** Notice 3 s me gayab. */
+    useEffect(() => {
+        if (!dubNotice) return;
+        const timer = setTimeout(() => setDubNotice(null), 3000);
+        return () => clearTimeout(timer);
+    }, [dubNotice]);
 
     const fallback = useCallback(() => {
         onUnavailable?.(error || 'not-added');
@@ -214,7 +237,7 @@ export function NetmirrorPlayer({
                     season={season}
                     episode={episode}
                     autoResolve={false}
-                    onClose={onClose ?? (() => {})}
+                    onClose={() => setDubFrame(null)}
                     onSwitchServer={onSwitchServer}
                     switchLabel={nextServerName}
                 />
@@ -242,6 +265,12 @@ export function NetmirrorPlayer({
                         setState('empty');
                     }}
                 />
+            ) : null}
+
+            {dubNotice ? (
+                <View style={styles.notice} pointerEvents="none" testID="netmirror-dub-notice">
+                    <Text style={styles.noticeText}>{dubNotice}</Text>
+                </View>
             ) : null}
 
             {state === 'loading' ? (
@@ -283,6 +312,16 @@ const styles = StyleSheet.create({
         padding: 24,
     },
     hint: { color: '#c7c7c7', fontSize: 14, textAlign: 'center' },
+    notice: {
+        position: 'absolute',
+        top: 84,
+        alignSelf: 'center',
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 18,
+        backgroundColor: 'rgba(0,0,0,0.78)',
+    },
+    noticeText: { color: '#fff', fontSize: 13, fontWeight: '700' },
     switchButton: {
         marginTop: 6,
         paddingHorizontal: 18,

@@ -103,6 +103,38 @@ describe('resolveDubStreams (server pehle)', () => {
         expect(answer.trace?.[0]).toContain('offline');
     });
 
+    it('server route dheema ho to `timeout` — user 20 s nahi rukta', async () => {
+        const answer = await resolveDubStreams(
+            { subjectId: '4151920426815471968', se: 1, ep: 1 },
+            {
+                // kabhi resolve nahi hota (440 ke baad server chup-chaap latak jaye)
+                fetchImpl: (() => new Promise(() => {})) as any,
+                timeoutMs: 30,
+                client: (async () => ({ ok: false, streams: [] })) as any,
+            },
+        );
+        expect(answer.ok).toBe(false);
+        expect(answer.via).toBe('client');
+        expect(answer.trace?.[0]).toContain('ms me jawab nahi aaya');
+    });
+
+    it('`skipClient` — browser wala dheema rasta chhua bhi nahi jaata', async () => {
+        let clientCalled = 0;
+        const answer = await resolveDubStreams(
+            { subjectId: '4151920426815471968', se: 1, ep: 1 },
+            {
+                fetchImpl: (async () => ({ json: async () => ({ ok: false, reason: 'no-streams' }) })) as any,
+                skipClient: true,
+                client: (async () => {
+                    clientCalled += 1;
+                    return { ok: true, streams: SERVER_STREAMS };
+                }) as any,
+            },
+        );
+        expect(answer.ok).toBe(false);
+        expect(clientCalled).toBe(0);
+    });
+
     it('subjectId na ho to koi call nahi', async () => {
         let called = 0;
         const answer = await resolveDubStreams(
