@@ -76,6 +76,12 @@ export interface VidSyncUrlParams {
     dubLang?: string | null;
     /** Accent colour, `#` optional. Default Netflix laal. */
     accent?: string | null;
+    /**
+     * Unka **upstream line** (`server=1|2|3`). Ek line slow/stuttering ho to
+     * doosri line kaafi tez hoti hai — owner: "bahut ruk ruk kar chalta hai".
+     * `null`/undefined = unka default (1).
+     */
+    server?: number | null;
 }
 
 /** Positive integer, warna 1 (episode 0 nahi hota). */
@@ -96,6 +102,7 @@ export function buildVidSyncUrl({
     episode,
     dubLang = VIDSYNC_DUB_LANG,
     accent = VIDSYNC_NETFLIX_ACCENT,
+    server,
 }: VidSyncUrlParams): string | null {
     const id = vidsyncTmdbNumber(tmdbId);
     if (!id) return null;
@@ -110,9 +117,61 @@ export function buildVidSyncUrl({
     if (color) query.push(`primarycolor=${encodeURIComponent(color)}`);
     const dub = (dubLang ?? '').trim();
     if (dub) query.push(`dubLang=${encodeURIComponent(dub)}`);
+    const line = vidsyncServerNumber(server);
+    if (line) query.push(`server=${line}`);
 
     return `${VIDSYNC_BASE_URL}${path}${query.length ? `?${query.join('&')}` : ''}`;
 }
 
 /** Pill par dikhne wala naam. */
 export const VIDSYNC_SERVER_LABEL = 'VidSync';
+
+/* -------------------------------------------------------------------------- */
+/*  Upstream line (server=1|2|3) — "ruk ruk kar chalta hai" ka ilaaj          */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * VidSync ke apne provider index. Unke docs: `server=number · 1` — "Forces a
+ * specific upstream provider index on load".
+ *
+ * Kyun zaroori: unka player ek hi upstream se stream kholta hai, aur har
+ * upstream ki speed alag hoti hai. Owner ne laptop par dekha ki video ruk ruk
+ * kar chalta hai — us waqt doosri line ek tap me badalni chahiye, warna user
+ * apne aap gear menu dhoondta rehta hai (ya chhod deta hai).
+ */
+export const VIDSYNC_SERVERS = [1, 2, 3] as const;
+
+export type VidSyncServer = (typeof VIDSYNC_SERVERS)[number];
+
+/** 1/2/3 ke bahar kuch bhi ho to `null` (URL me kachra nahi). */
+export function vidsyncServerNumber(value?: number | string | null): number | null {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return null;
+    const whole = Math.trunc(n);
+    return (VIDSYNC_SERVERS as readonly number[]).includes(whole) ? whole : null;
+}
+
+/** Browser me chuni hui line yaad rehti hai (agli baar wahi khulti hai). */
+export const VIDSYNC_SERVER_STORAGE_KEY = 'vidsync_server_v1';
+
+export function loadVidSyncServer(): VidSyncServer {
+    try {
+        if (typeof window === 'undefined' || !window.localStorage) return 1;
+        const raw = window.localStorage.getItem(VIDSYNC_SERVER_STORAGE_KEY);
+        const parsed = vidsyncServerNumber(raw);
+        return (parsed ?? 1) as VidSyncServer;
+    } catch {
+        return 1;
+    }
+}
+
+export function saveVidSyncServer(server: number): void {
+    const line = vidsyncServerNumber(server);
+    if (!line) return;
+    try {
+        if (typeof window === 'undefined' || !window.localStorage) return;
+        window.localStorage.setItem(VIDSYNC_SERVER_STORAGE_KEY, String(line));
+    } catch {
+        // Private mode / storage band — chupchaap ignore, player phir bhi chalega.
+    }
+}

@@ -52,6 +52,30 @@ TMDB id nahi hai  : nxsha                    (VidSync ka pill dikhta hi nahi)
 - Agar unka player kisi title par kuch na dikhaye → ek tap me Server 1 wapas
   (zero regression).
 
+## "Bahut ruk ruk kar chalta hai" — upstream line switch
+
+Owner (laptop par Server 3): *"bhaii bahut ruk ruk kar chalta hai"*.
+
+Unke docs me ek hi asli lever hai:
+
+```
+server=number · 1   →  "Forces a specific upstream provider index on load"
+```
+
+Matlab VidSync ke paas **ek se zyada upstream** hain aur har line ki speed alag
+hai. Isliye:
+
+- Player ke top bar me **Line 1 · 2 · 3** pills (sirf Server 3 chalne par).
+  Ek tap = naya URL = us line se fresh stream. Provider ke gear menu me jaane ki
+  zarurat nahi (chhoti screen par wo dhoondhna mushkil hota hai).
+- Chuni hui line `localStorage` me yaad rehti hai (`vidsync_server_v1`) — agli
+  baar wahi khulti hai. Bekaar value (0/4/'abc') purani choice ko bigaadti nahi.
+- Line badalte waqt **playhead yaad** rakha jata hai aur `resumeAt` ke roop me
+  bheja jata hai; agar unka player postMessage seek na maane to video shuru se
+  chalega (wo unki taraf ki baat hai — hum jhoothe "resume" ka dawa nahi karte).
+- Quality (1080p/720p) unke player ke apne menu me hai — hum use hide nahi karte
+  (`hidequality` default false), isliye slow net par wahan 720p chun sakte hain.
+
 ## Files
 
 | File | Kaam |
@@ -61,7 +85,8 @@ TMDB id nahi hai  : nxsha                    (VidSync ka pill dikhta hi nahi)
 | `app/movie/[id].tsx` | movie page: cycle + `buildSrc()` ka VidSync branch |
 | `components/MovieList/MovieDetailModal.tsx` | phone detail: "VidSync" server chip + `playerSrc` |
 | `contexts/UserContext.tsx` | `useOptionalUser()` — provider ke bahar render par crash nahi |
-| `tests-arena/vidsync.test.tsx` | 14 tests: URL, id parsing, cycle, chip → play → iframe src |
+| `tests-arena/vidsync.test.tsx` | 18 tests: URL, id parsing, `server=` line, persistence, cycle, chip → play → iframe src |
+| `tests-arena/vidsync-lines.test.tsx` | 2 tests: asli EmbedPlayer me Line 1/2/3 pills + tap callback |
 
 ## Tests
 
