@@ -42,6 +42,14 @@ jobs:
             echo "===== $t"
             node scripts/probe-moviebox-play.mjs --title "$t" 2>&1 | grep -E "picked|status|hasResource|streams|body:" | head -8 || true
           done | tee popular-probe.log
+      - name: India-region probe (Vercel bom1 function)
+        run: |
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            body=$(curl -sS --max-time 25 "https://net-ki15.vercel.app/api/m2box-probe?subjectId=4151920426815471968&detailPath=mandaadi-hindi-qxUx1r3QHW4&se=0&ep=0" || true)
+            echo "try $i: $body"
+            echo "$body" | grep -q '"region"' && break
+            sleep 25
+          done | tee india-probe.log
       # Runner ka log host ephemeral hai (`gh run view --log` khaali aata hai),
       # isliye result PR comment me — wahan se `gh pr view --comments` padha ja
       # sakta hai.
@@ -58,6 +66,10 @@ jobs:
             echo '### MovieBox probe — watch page'
             echo '```'
             tail -c 4000 page-probe.log || true
+            echo '```'
+            echo '### India region (Vercel bom1)'
+            echo '```'
+            tail -c 3000 india-probe.log || true
             echo '```'
             echo '### Popular titles (geo vs global)'
             echo '```'
