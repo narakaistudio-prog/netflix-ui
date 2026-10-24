@@ -12,7 +12,8 @@
  */
 import { normalizeDubPayload, resolveDubStreams } from '../lib/dubStreams';
 import handler, {
-    canonicalQuery,
+    canonicalString,
+    canonicalUrl,
     clientToken,
     collectMediaUrls,
     pickPlayStreams,
@@ -120,20 +121,41 @@ describe('resolveDubStreams (server pehle)', () => {
 });
 
 describe('api/moviebox-play — app signature aur signCookie', () => {
-    it('canonicalQuery keys sorted, value bina encode', () => {
-        expect(canonicalQuery({ subjectId: '42', host: 'apig.inmoviebox.com', se: 1 })).toBe(
-            'host=apig.inmoviebox.com&se=1&subjectId=42',
+    it('canonicalUrl — path + sorted query', () => {
+        expect(canonicalUrl('https://api6.aoneroom.com/wefeed-mobile-bff/subject-api/play-info/v2?se=1&subjectId=42')).toBe(
+            '/wefeed-mobile-bff/subject-api/play-info/v2?se=1&subjectId=42',
         );
+        expect(canonicalUrl('https://api6.aoneroom.com/x')).toBe('/x');
     });
 
-    it('trSignature format `ts|2|base64` aur deterministic', () => {
-        const args = { method: 'GET', path: '/x/y', query: 'a=1&b=2', timestamp: 1700000000000 };
+    it('canonicalString — app ka format (content-type bina charset)', () => {
+        const canonical = canonicalString({
+            method: 'post',
+            url: 'https://api6.aoneroom.com/wefeed-mobile-bff/user-api/visitor-login',
+            body: '{}',
+            timestampMs: 1700000000000,
+        });
+        expect(canonical.split('\n')).toEqual([
+            'POST',
+            'application/json',
+            'application/json',
+            '2',
+            '1700000000000',
+            require('node:crypto').createHash('md5').update('{}').digest('hex'),
+            '/wefeed-mobile-bff/user-api/visitor-login',
+        ]);
+    });
+
+    it('trSignature format `ts|2|base64` aur deterministic (body par badalta)', () => {
+        const args = {
+            method: 'GET',
+            url: 'https://api6.aoneroom.com/x?a=1&b=2',
+            timestampMs: 1700000000000,
+        };
         const one = trSignature(args);
-        const two = trSignature(args);
-        expect(one).toBe(two);
+        expect(trSignature(args)).toBe(one);
         expect(one.startsWith('1700000000000|2|')).toBe(true);
         expect(one.split('|')).toHaveLength(3);
-        // body badle to signature badle
         expect(trSignature({ ...args, body: '{}' })).not.toBe(one);
     });
 
