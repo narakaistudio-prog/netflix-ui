@@ -48,11 +48,6 @@ interface MovieboxPagePlayerProps {
     mediaType?: 'movie' | 'tv';
     /** Band karo to live resolve nahi hoga (standalone /moviebox page). */
     autoResolve?: boolean;
-    /**
-     * Kaunsa MovieBox domain kholein (default `MOVIEBOX_SITE` = m2box.org).
-     * `MOVIEBOX_COPY_SITE` (m2box.co) = usi site/backend ka copy, alag domain.
-     */
-    site?: string;
     /** Series ke liye — page seedha usi episode se khulta hai. */
     season?: number;
     episode?: number;
@@ -113,7 +108,6 @@ export function MovieboxPagePlayer({
     year,
     mediaType,
     autoResolve = true,
-    site,
     season,
     episode,
     episodeCount,
@@ -248,8 +242,8 @@ export function MovieboxPagePlayer({
     const activeEpisode = episodeOverride ?? episode;
 
     const pageUrl = useMemo(
-        () => (link ? buildMovieboxPageUrl(link, { se: season, ep: activeEpisode, site }) : null),
-        [link, season, activeEpisode, site],
+        () => (link ? buildMovieboxPageUrl(link, { se: season, ep: activeEpisode }) : null),
+        [link, season, activeEpisode],
     );
 
     /**

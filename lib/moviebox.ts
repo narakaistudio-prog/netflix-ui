@@ -51,24 +51,6 @@ export const MOVIEBOX_HOSTS = [
 export const MOVIEBOX_SITE = 'https://m2box.org';
 
 /**
- * **M2Box ka copy** — same backend (h5-api.aoneroom.com BFF), same layout,
- * bas alag domain. Owner: *"koi aacha server moviebox ka copy dhundo"*.
- *
- * `m2box.co` chuna gaya kyunki 24 Oct ke runner-probe me ye zinda mila:
- * front `200` (1.2 MB page, wahi site shell) aur BFF `home?host=m2box.co` par
- * `x-user` token mila — yaani stream resolution wahi backend karta hai.
- * Layout m2box.org jaisa hi hai, isliye crop ke number (STAGE_WIDTH 1536,
- * CROP_TOP 117, CROP_LEFT 120) yahan bhi wahi lagte hain.
- *
- * Agar dono me se ek domain mar jaye, user ke paas doosra server maujood hai —
- * dead button nahi, sirf doosra rasta.
- */
-export const MOVIEBOX_COPY_SITE = 'https://m2box.co';
-
-/** Server chip / pill par is copy ka naam. */
-export const MOVIEBOX_COPY_LABEL = 'M2Box 2';
-
-/**
  * Desktop par iframe hamesha is FIXED chaudai par render hota hai ("stage").
  * 1536 isliye: is chaudai par site bilkul waisi khulti hai jaisi m2box.org
  * par dikhti hai — episode guide 5 column me chhote button ke saath. Kam

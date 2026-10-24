@@ -1,7 +1,6 @@
 /**
  * Playback server cycle (Server 1 = Nxsha/NHD/custom, NetMirror = `lib/netmirror.ts`
- * ka apna `<video>` wala server, Server 2 = M2Box, M2Box 2 = usi MovieBox
- * backend ka doosra domain — `MOVIEBOX_COPY_SITE`)
+ * ka apna `<video>` wala server, Server 2 = M2Box)
  * ======================================================================
  * Rules:
  *   - Jis title ka MovieBox link nahi hai, us par **M2Box ka button nahi**
@@ -17,7 +16,7 @@
 
 import type { ProviderId } from './embeds';
 
-export type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2' | 'netmirror';
+export type PlaybackServerId = ProviderId | 'moviebox' | 'netmirror';
 
 export const BUILTIN_SERVERS: readonly ProviderId[] = ['nxsha', 'nhd'];
 
@@ -52,7 +51,7 @@ export function buildServerCycle({
         defaultProvider === 'moviebox' && !movieboxAvailable ? 'nxsha' : defaultProvider;
     const list: PlaybackServerId[] = [];
 
-    if (rowIsMoviebox && movieboxAvailable) list.push('moviebox', 'moviebox2');
+    if (rowIsMoviebox && movieboxAvailable) list.push('moviebox');
     list.push(wanted);
 
     // M2Box na ho to bas Server 1 (+ NetMirror, agar us title par hai).
@@ -68,9 +67,6 @@ export function buildServerCycle({
     // NetMirror — apna `<video>`, seedha MP4 (1080p), koi iframe/ad nahi.
     if (netmirrorAvailable) list.push('netmirror');
     list.push('moviebox');
-    // M2Box ka copy — same backend, doosra domain. MovieBox ke turant baad,
-    // taaki ek na chale to ek tap me doosra (owner: "moviebox ka copy dhundo").
-    if (movieboxAvailable) list.push('moviebox2');
     return Array.from(new Set(list));
 }
 

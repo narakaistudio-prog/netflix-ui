@@ -21,8 +21,6 @@ import { formatClock } from '@/lib/continueWatching';
 import { formatRuntime, getTvSeasons } from '@/lib/tvEpisodes';
 import {
     getMovieboxPhoneBoxHeight,
-    MOVIEBOX_COPY_LABEL,
-    MOVIEBOX_COPY_SITE,
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
@@ -138,7 +136,7 @@ export function MovieDetailModal({
      * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
      * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
      */
-    const [server, setServer] = useState<'primary' | 'moviebox' | 'moviebox2' | 'netmirror'>('moviebox');
+    const [server, setServer] = useState<'primary' | 'moviebox' | 'netmirror'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
 
@@ -316,18 +314,16 @@ export function MovieDetailModal({
      * Kaunsa server sach me chalega. Chunna hua server available na ho to
      * Server 1 (Nxsha) — dead player kabhi nahi khulta.
      */
-    const activeServer: 'primary' | 'moviebox' | 'moviebox2' | 'netmirror' =
+    const activeServer: 'primary' | 'moviebox' | 'netmirror' =
         server === 'netmirror' && netmirrorAvailable
             ? 'netmirror'
             : !movieboxAvailable
               ? 'primary'
-              : server === 'moviebox2'
-                ? 'moviebox2'
-                : server === 'moviebox'
-                  ? 'moviebox'
-                  : 'primary';
+              : server === 'moviebox'
+                ? 'moviebox'
+                : 'primary';
     /** Dono M2Box servers eka hi cropped page player chalate hain. */
-    const isMovieboxServer = activeServer === 'moviebox' || activeServer === 'moviebox2';
+    const isMovieboxServer = activeServer === 'moviebox';
     const isNetmirrorServer = activeServer === 'netmirror';
 
     /** Phone player screen (Crunchyroll jaisa) ka episode data. */
@@ -435,7 +431,6 @@ export function MovieDetailModal({
     ) : isMovieboxServer ? (
             <MovieboxPagePlayer
                 linkKey={movieboxLinkKey}
-                site={activeServer === 'moviebox2' ? MOVIEBOX_COPY_SITE : undefined}
                 initialLink={movieboxEntry?.link ?? null}
                 title={movie.title}
                 year={movie.year}
@@ -570,9 +565,9 @@ export function MovieDetailModal({
 
                         {/* Server chunna — owner ke naap par description ke
                             neeche, "Episodes" ke upar. **Hindi = MovieBox**
-                            (Server 2), **Hindi 2 = usi MovieBox ka copy**
-                            (doosra domain), **Multi = Nxsha** (Server 1). Koi
-                            bhi available na ho to row dikhta hi nahi (Nxsha hi
+                            (Server 2), **Multi = Nxsha** (Server 1), aur
+                            **NetMirror** jab wo title wahan ho. Koi bhi
+                            available na ho to row dikhta hi nahi (Nxsha hi
                             chalta hai). */}
                         {movieboxAvailable || netmirrorAvailable ? (
                             <View style={[styles.serverRow, wide && styles.serverRowWide]}>
@@ -600,27 +595,6 @@ export function MovieDetailModal({
                                     </Text>
                                 </Pressable>
                                 ) : null}
-                                <Pressable
-                                    onPress={() => setServer('moviebox2')}
-                                    style={[
-                                        styles.serverChip,
-                                        activeServer === 'moviebox2' && styles.serverChipActive,
-                                    ]}
-                                    accessibilityLabel={`${MOVIEBOX_COPY_LABEL} server (MovieBox copy)`}
-                                    accessibilityRole="button"
-                                    accessibilityState={{ selected: activeServer === 'moviebox2' }}
-                                    {...({ dataSet: { selected: activeServer === 'moviebox2' ? '1' : '0' } } as any)}
-                                    testID="server-hindi-2"
-                                >
-                                    <Text
-                                        style={[
-                                            styles.serverChipText,
-                                            activeServer === 'moviebox2' && styles.serverChipTextActive,
-                                        ]}
-                                    >
-                                        Hindi 2
-                                    </Text>
-                                </Pressable>
                                 {netmirrorAvailable ? (
                                 <Pressable
                                     onPress={() => setServer('netmirror')}

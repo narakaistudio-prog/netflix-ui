@@ -32,8 +32,6 @@ import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { NETMIRROR_LABEL } from '@/lib/netmirror';
 import {
     isMovieboxUrl,
-    MOVIEBOX_COPY_LABEL,
-    MOVIEBOX_COPY_SITE,
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { getTvSeasons } from '@/lib/tvEpisodes';
@@ -56,11 +54,10 @@ const SCALE_FACTOR = 0.83;
  * M2Box — MovieBox ka koi embed nahi hota, isliye uska poora watch page frame
  * me khol kar sirf player wala hissa dikhaya jata hai (MovieboxPagePlayer).
  */
-type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2' | 'netmirror';
+type PlaybackServerId = ProviderId | 'moviebox' | 'netmirror';
 
 function serverLabel(id: PlaybackServerId): string {
     if (id === 'moviebox') return MOVIEBOX_SERVER_LABEL;
-    if (id === 'moviebox2') return MOVIEBOX_COPY_LABEL;
     if (id === 'netmirror') return NETMIRROR_LABEL;
     if (id === 'nxsha') return 'Nxsha';
     if (id === 'nhd') return 'NHD';
@@ -464,9 +461,8 @@ export default function MovieScreen() {
     const currentProvider: PlaybackServerId = cycle[providerIndex] ?? cycle[0] ?? 'nxsha';
     // Dono M2Box servers (asli + copy) wahi cropped page player chalate hain —
     // farq sirf domain ka hai.
-    const isMovieboxServer = currentProvider === 'moviebox' || currentProvider === 'moviebox2';
+    const isMovieboxServer = currentProvider === 'moviebox';
     const isNetmirrorServer = currentProvider === 'netmirror';
-    const movieboxSite = currentProvider === 'moviebox2' ? MOVIEBOX_COPY_SITE : undefined;
     const movieboxIndex = cycle.indexOf('moviebox');
     const directPreviewUrl = movie.videoUrl
         && !PLACEHOLDER_VIDEO_URL.test(movie.videoUrl)
@@ -737,7 +733,6 @@ export default function MovieScreen() {
             return (
                 <MovieboxPagePlayer
                     linkKey={movieboxLinkKey}
-                    site={movieboxSite}
                     initialLink={movieboxEntry?.link ?? null}
                     title={movie.title}
                     year={movie.year}

@@ -18,9 +18,7 @@ describe('buildServerCycle — MovieBox available', () => {
             customAvailable: true,
             providers: BUILTIN_SERVERS,
         });
-        // `moviebox2` = usi MovieBox backend ka doosra domain (owner: "moviebox
-        // ka copy dhundo") — MovieBox ke turant baad.
-        expect(cycle).toEqual(['nxsha', 'nhd', 'custom', 'moviebox', 'moviebox2']);
+        expect(cycle).toEqual(['nxsha', 'nhd', 'custom', 'moviebox']);
         expect(hasServerSwitcher(cycle)).toBe(true);
         expect(nextServerIn(cycle, 0)).toBe('nhd');
     });
