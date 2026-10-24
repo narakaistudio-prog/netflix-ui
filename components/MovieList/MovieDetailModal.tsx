@@ -5,11 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
-import {
-    MOVIEBOX_SKIP_SECONDS,
-    seekMovieboxBy,
-    useMovieboxSeekReady,
-} from '@/lib/movieboxSeekBridge';
+import { TitleComments } from '@/components/TitleComments';
+import { useUser } from '@/contexts/UserContext';
+import { scopeFor } from '@/lib/titleSocial';
+
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import {
     getRecentlyWatched,
@@ -50,13 +49,6 @@ type Props = {
 
 /** Official Netflix title page, used when no player source can be built. */
 /** "2024-01-07" → "Jan 7, 2024" (Crunchyroll-style released line). */
-/**
- * Jab video cross-origin iframe me ho (Server 2 ki site ka player) to ±10s
- * technically possible hi nahi — us waqt tap par yahi saaf baat (English, site
- * ka visible text English rehta hai). Fake "ho gaya" toast nahi.
- */
-const NEED_OWN_PLAYER = '10s skip works in the built-in player only';
-
 const AIR_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function formatAirDate(iso?: string): string {
     if (!iso) return '';
@@ -91,8 +83,6 @@ export function MovieDetailModal({
      * Phone par player poora screen leta hai (landscape) — panel ki 92% height
      * aur 1000px max-width uske raste me nahi aate.
      */
-    /** ±10s buttons sirf tab jab seedha player (hamara video) chal raha ho. */
-    const seekReady = useMovieboxSeekReady();
     const isPhoneWeb =
         Platform.OS === 'web' &&
         typeof navigator !== 'undefined' &&
@@ -110,6 +100,26 @@ export function MovieDetailModal({
     } | null>(null);
     /** Short message shown over the player ("Resuming S1 EP3 at 6:12"). */
     const [playerNotice, setPlayerNotice] = useState<string | null>(null);
+    /**
+     * Comments/like section ka chhota message ("Comment posted", "Comment is too
+     * short"). Player ke notice se alag isliye ki ye section player band hone
+     * par bhi dikhta hai.
+     */
+    const [socialNotice, setSocialNotice] = useState<string | null>(null);
+    const socialTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const { openSignIn } = useUser();
+    const showSocialNotice = useCallback((message: string | null) => {
+        setSocialNotice(message);
+        if (socialTimer.current) clearTimeout(socialTimer.current);
+        if (!message) return;
+        socialTimer.current = setTimeout(() => setSocialNotice(null), 2600);
+    }, []);
+    useEffect(
+        () => () => {
+            if (socialTimer.current) clearTimeout(socialTimer.current);
+        },
+        [],
+    );
     /** Phone player screen: description "SHOW MORE" khula hai ya nahi. */
     const [phoneExpanded, setPhoneExpanded] = useState(false);
     const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -726,23 +736,24 @@ export function MovieDetailModal({
                                 >
                                     <Text style={styles.phoneSeries}>{movie.title}</Text>
                                     {/**
-                                     * Owner (screenshot me title ke bagal do jagah
-                                     * mark karke): "waha par 10 sec piche aur
-                                     * right mae 10 sec aage ka button de do".
+                                     * Yahan pehle ±10s ke do gol button the (owner
+                                     * ke screenshot ke marks par). Owner ne 24 Oct
+                                     * ko saaf bola: "agar button chalta hi nhi
+                                     * hai usme to konsa kaam ka hta de usse".
                                      *
-                                     * Buttons **hamesha** yahan rehte hain (owner
-                                     * 24 Oct: "button kaha hai hi nahi laga") —
-                                     * pehle `seekReady` par gate the, aur jab
-                                     * MovieBox ki API stream nahi deti (aaj har
-                                     * title par `hasResource:false` — probe se
-                                     * verify) to player unki site ke iframe par
-                                     * chala jata hai aur button gayab ho jate
-                                     * the. Ab dikhte hain, aur jab video hamare
-                                     * apne `<video>` me chal raha ho tab ±10s
-                                     * sach me karte hain. Jab video cross-origin
-                                     * iframe me ho to seek possible hi nahi —
-                                     * us waqt button dhundhla rehta hai aur tap
-                                     * par saaf batata hai (fake nahi karte).
+                                     * Wo button sach me kabhi nahi chal sakte the:
+                                     * MovieBox ki play API guest ko stream deti
+                                     * hi nahi (`hasResource:false` — har title,
+                                     * har host; probe se verify, docs me table),
+                                     * aur jab video unki site ke cross-origin
+                                     * iframe me chalta hai to browser
+                                     * `currentTime` chhune hi nahi deta. Do
+                                     * dhundhle, kaam na karne wale button
+                                     * dikhane se behtar unhein hata dena.
+                                     *
+                                     * Invisible double-tap (jab direct player kabhi
+                                     * chale) `MovieboxDirectPlayer` me hai —
+                                     * wahan koi jhooth nahi, sirf asli seek.
                                      */}
                                     <View style={styles.phoneTitleRow}>
                                         <Text style={styles.phoneEpisodeTitle}>
@@ -750,28 +761,6 @@ export function MovieDetailModal({
                                                 ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
                                                 : movie.title}
                                         </Text>
-                                        <View style={styles.phoneSkipRow}>
-                                            {[
-                                                { delta: -MOVIEBOX_SKIP_SECONDS, icon: 'play-back', test: 'phone-skip-back' },
-                                                { delta: MOVIEBOX_SKIP_SECONDS, icon: 'play-forward', test: 'phone-skip-forward' },
-                                            ].map(({ delta, icon, test }) => (
-                                                <Pressable
-                                                    key={test}
-                                                    style={[styles.phoneSkip, !seekReady && styles.phoneSkipIdle]}
-                                                    onPress={() => (seekMovieboxBy(delta) ? undefined : announce(NEED_OWN_PLAYER))}
-                                                    accessibilityRole="button"
-                                                    accessibilityLabel={`${
-                                                        delta < 0 ? 'Rewind' : 'Forward'
-                                                    } ${MOVIEBOX_SKIP_SECONDS} seconds`}
-                                                    testID={test}
-                                                >
-                                                    <Ionicons name={icon as any} size={20} color="#fff" />
-                                                    <Text style={styles.phoneSkipText}>
-                                                        {MOVIEBOX_SKIP_SECONDS}s
-                                                    </Text>
-                                                </Pressable>
-                                            ))}
-                                        </View>
                                     </View>
                                     {metaLine ? (
                                         <Text style={styles.phoneMeta}>{metaLine}</Text>
@@ -843,6 +832,32 @@ export function MovieDetailModal({
                                                 SEE MORE EPISODES
                                             </Text>
                                         </Pressable>
+                                    ) : null}
+
+                                    {/**
+                                     * Like / Dislike + Comments — Crunchyroll page
+                                     * wala hi system (wahi Supabase tables/RPC),
+                                     * Netflix ke phone screen par. Owner: "crunchyroll
+                                     * mae jaise comment like ye sab ka system hai
+                                     * netflix ke phone ke liyea bhi ye kardo".
+                                     *
+                                     * Series me scope chalu episode ka hota hai
+                                     * (`scopeFor`), isliye har episode ka apna
+                                     * thread + apne like — Crunchyroll jaisa.
+                                     */}
+                                    <TitleComments
+                                        scope={scopeFor(
+                                            movie,
+                                            episodeRef?.season ?? season,
+                                            episodeRef?.episode ?? 1,
+                                        )}
+                                        onRequireSignIn={openSignIn}
+                                        onNotice={showSocialNotice}
+                                    />
+                                    {socialNotice ? (
+                                        <Text style={styles.socialNotice} testID="netflix-social-notice">
+                                            {socialNotice}
+                                        </Text>
                                     ) : null}
                                 </ScrollView>
                             </View>
@@ -916,7 +931,7 @@ const styles = StyleSheet.create({
     phoneDetails: { flex: 1 },
     phoneDetailsContent: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 },
     phoneSeries: { color: '#E50914', fontSize: 15, fontWeight: '800' },
-    /** Title + uske bagal ±10s buttons (owner ke screenshot ki jagah). */
+    /** Title wali row (pehle iske bagal ±10s buttons the — hata diye). */
     phoneTitleRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -930,21 +945,6 @@ const styles = StyleSheet.create({
         lineHeight: 34,
         flexShrink: 1,
     },
-    phoneSkipRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginLeft: 'auto' },
-    phoneSkip: {
-        width: 46,
-        height: 46,
-        borderRadius: 23,
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.35)',
-        backgroundColor: 'rgba(255,255,255,0.08)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 1,
-    },
-    /** Video cross-origin iframe me hai — button dikhta hai par seek nahi hota. */
-    phoneSkipIdle: { opacity: 0.45 },
-    phoneSkipText: { color: '#fff', fontSize: 9, fontWeight: '800', letterSpacing: 0.2 },
     phoneMeta: { color: '#b0b0b0', fontSize: 15, marginTop: 10 },
     phoneOverview: { color: '#c9c9c9', fontSize: 15, lineHeight: 22, marginTop: 12 },
     phoneShowMore: {
@@ -954,6 +954,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         letterSpacing: 0.4,
     },
+    /** Comments/like section ka chhota feedback ("Comment posted"). */
+    socialNotice: { color: '#d6d6d6', fontSize: 12, marginTop: 10 },
     phoneNextWrap: { marginTop: 28 },
     phoneNextLabel: {
         color: '#9a9a9a',
