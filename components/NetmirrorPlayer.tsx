@@ -12,7 +12,8 @@ import {
 } from '@/lib/netmirror';
 import type { DirectStream } from '@/lib/movieboxDirect';
 import { resolveDubStreams } from '@/lib/dubStreams';
-import { fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
+import { buildDubWatchLink, fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
+import { MovieboxPagePlayer } from './MovieboxPagePlayer';
 
 /**
  * "NetMirror" server ka player — apna `<video>`, koi iframe nahi.
@@ -88,6 +89,13 @@ export function NetmirrorPlayer({
     const [startAt, setStartAt] = useState(0);
     const currentTimeRef = useRef(0);
     const [error, setError] = useState<string>('');
+    /**
+     * Aakhri fallback: API se us dub ke streams na mile to **usi bhasha ka
+     * MovieBox watch page** NetMirror ke andar hi khol dete hain (owner: "agar
+     * audio na badle to moviebox wala laga do uske player me"). Wahan audio
+     * sach me badalta hai, kyunki page hi us dub ka hota hai.
+     */
+    const [dubFrame, setDubFrame] = useState<{ link: string; name: string } | null>(null);
 
     useEffect(() => {
         if (!hasId) {
@@ -173,7 +181,15 @@ export function NetmirrorPlayer({
                 ep: mediaType === 'tv' ? (episode ?? 1) : 1,
             });
             console.info('[dub]', track.name, answer.ok ? `ok (${answer.via}, ${answer.streams.length})` : `fail (${answer.via})`, answer.trace || '');
-            if (!answer.ok || !answer.streams.length) return false;
+            if (!answer.ok || !answer.streams.length) {
+                // Streams nahi mile — MovieBox ka wahi dub page NetMirror ke
+                // andar khol do (audio wahan asli me badalta hai).
+                const link = buildDubWatchLink(track);
+                if (!link) return false;
+                setDubFrame({ link, name: track.name });
+                setActiveAudio(track.subjectId);
+                return true;
+            }
             setStartAt(currentTimeRef.current);
             setStreams(answer.streams);
             setActiveAudio(track.subjectId);
@@ -188,7 +204,23 @@ export function NetmirrorPlayer({
 
     return (
         <View style={styles.root} testID="netmirror-player">
-            {state === 'ready' ? (
+            {state === 'ready' && dubFrame ? (
+                <MovieboxPagePlayer
+                    linkKey={dubFrame.link}
+                    initialLink={dubFrame.link}
+                    title={title}
+                    year={year}
+                    mediaType={mediaType}
+                    season={season}
+                    episode={episode}
+                    autoResolve={false}
+                    onClose={onClose ?? (() => {})}
+                    onSwitchServer={onSwitchServer}
+                    switchLabel={nextServerName}
+                />
+            ) : null}
+
+            {state === 'ready' && !dubFrame ? (
                 <MovieboxDirectPlayer
                     streams={streams}
                     title={title}
