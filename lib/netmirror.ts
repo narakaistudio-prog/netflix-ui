@@ -217,10 +217,7 @@ export async function fetchNetmirrorStreams(
     const hit = cache[key];
     if (hit) {
         const ttl = hit.ok ? STREAM_TTL_MS : MISS_TTL_MS;
-        // Purani entry me `subjectId` na ho to audio list ban hi nahi sakti —
-        // usse hit maankar audio chhupana galat hoga, isliye dobara fetch.
-        const usable = !hit.ok || Boolean(hit.subjectId);
-        if (usable && now - hit.at < ttl) {
+        if (now - hit.at < ttl) {
             return {
                 ok: hit.ok,
                 streams: hit.streams,

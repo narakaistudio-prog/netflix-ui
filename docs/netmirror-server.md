@@ -114,6 +114,26 @@ hai:
 3. jis title par provider streams nahi deta → `"‹language› audio nahi mila"`
    (jhootha switch nahi, list bhi nahi banti).
 
+## Audio (dub) — Server 2 (MovieBox) par bhi
+
+Owner (24 Oct, doosra round): *"kisi par bhi audio dusra nahi aa raha"*. Sach:
+dub sirf NetMirror par juda tha, aur **NetMirror ka client cache purani key
+(`v1`) me `subjectId` bina save tha** — isliye audio list kabhi maangi hi nahi
+jaati thi.
+
+Ab:
+
+| Rasta | Kaise switch hota hai |
+| --- | --- |
+| NetMirror (apna `<video>`) | us dub ke subject se naye streams (client se seedha), wahi second |
+| MovieBox · phone (`<video>`) | wahi tarika (`resolveDirectStreams`) |
+| MovieBox · desktop (iframe) | us dub ka watch page khulta hai — MovieBox khud usi bhasha me chalata hai |
+
+Cache key `netflix-netmirror-v2` kar di, taaki purana cache apne aap mar jaye.
+Provider apni **subtitle** bhashayein bhi `dubs[]` me bhejta hai (`Arabic sub`)
+— wo hata di jaati hain (audio nahi hain), aur ek hi bhasha ek hi baar
+(`Original` jeetta hai).
+
 ## Rules jo nahi badle
 
 - NetMirror **kabhi default nahi** — MovieBox (Hindi) hi pehla server.

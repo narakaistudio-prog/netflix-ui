@@ -40,6 +40,9 @@ function normalizeLangCode(value) {
     .replace(/[^a-z-]/g, '');
 }
 
+/** Sirf subtitle wali entry (`Arabic sub`, `Spanish subtitles`) — audio nahi. */
+const SUBTITLE_ONLY = /\b(sub|subs|subtitle|subtitles|srt)\b/i;
+
 /**
  * `lanName` ko saaf label banao: `Hindi dub` → `Hindi`, `Original Audio` →
  * `Original` (original ka apna code alag se aata hai).
@@ -51,16 +54,31 @@ export function audioLabel(dub) {
   return name.replace(/\s*(dub|audio)$/i, '').trim() || name;
 }
 
-/** Provider ka `dubs[]` → app ka shape (duplicate language ek hi baar). */
+/**
+ * Provider ka `dubs[]` → app ka shape.
+ *
+ * Provider apni **subtitle** bhashayein bhi isi list me bhejta hai
+ * (`Arabic sub`, `Spanish subtitles`) — wo audio nahi hain, isliye hata dete
+ * hain. Ek hi bhasha ke do option (jaise `Original` (ta) aur `Tamil dub` (ta))
+ * ho to original bacha rehta hai.
+ */
 export function normalizeDubs(dubs) {
   const list = Array.isArray(dubs) ? dubs : [];
-  const seen = new Set();
+  const seenSentence = new Set();
+  const seenLang = new Set();
   const out = [];
-  for (const dub of list) {
+  const sorted = [...list].sort(
+    (a, b) => Number(b?.original === true) - Number(a?.original === true),
+  );
+  for (const dub of sorted) {
     const subjectId = String(dub?.subjectId || '').trim();
-    if (!subjectId || seen.has(subjectId)) continue;
-    seen.add(subjectId);
+    const rawName = String(dub?.lanName || '');
+    if (SUBTITLE_ONLY.test(rawName)) continue;
+    if (!subjectId || seenSentence.has(subjectId)) continue;
     const lang = normalizeLangCode(dub?.lanCode) || subjectId;
+    if (seenLang.has(lang)) continue;
+    seenSentence.add(subjectId);
+    seenLang.add(lang);
     out.push({
       lang,
       name: audioLabel(dub),
@@ -69,8 +87,7 @@ export function normalizeDubs(dubs) {
       original: dub?.original === true,
     });
   }
-  // Original pehle, phir baaki (jaisa provider deta hai waise hi).
-  return out.sort((a, b) => Number(b.original) - Number(a.original));
+  return out;
 }
 
 const cache = new Map();

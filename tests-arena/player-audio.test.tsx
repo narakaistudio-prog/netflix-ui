@@ -30,6 +30,18 @@ describe('normalizeDubs (provider → app)', () => {
         expect(list[0].original).toBe(true);
     });
 
+    it('subtitle wali entries (`Arabic sub`) aur ek hi bhasha ek baar', () => {
+        const list = normalizeDubs([
+            { subjectId: '1', lanName: 'Original Audio', lanCode: 'en', original: true },
+            { subjectId: '2', lanName: 'Arabic sub', lanCode: 'ar', original: false },
+            { subjectId: '3', lanName: 'Hindi dub', lanCode: 'hi', original: false },
+            { subjectId: '4', lanName: 'Tamil dub', lanCode: 'ta', original: false },
+            { subjectId: '5', lanName: 'Tamil', lanCode: 'ta', original: false },
+        ]);
+        expect(list.map((item) => item.name)).toEqual(['Original', 'Hindi', 'Tamil']);
+        expect(list.map((item) => item.subjectId)).toEqual(['1', '3', '4']);
+    });
+
     it('khaali/kharaab entries ignore', () => {
         expect(normalizeDubs(null)).toEqual([]);
         expect(normalizeDubs([{ lanName: 'Hindi dub' }])).toEqual([]);
