@@ -380,6 +380,32 @@ async function resolveNxsha(title, indexHit, report) {
     return null;
 }
 
+/**
+ * Series page ka sabse naya episode: sabse badi season aur uska aakhri episode.
+ * `seasons` shape: `[{ n, count, first, last }]`.
+ */
+export function newestEpisode(seasons) {
+    if (!Array.isArray(seasons) || !seasons.length) return null;
+    const newest = seasons.reduce((best, entry) =>
+        Number(entry?.n) > Number(best?.n ?? -1) ? entry : best,
+    );
+    const n = Number(newest?.n);
+    if (!n) return null;
+    const first = Number(newest.first) || 1;
+    const last = Number(newest.last) || (first + (Number(newest.count) || 1) - 1);
+    if (!last) return null;
+    return { season: n, episode: last };
+}
+
+/** `next` episode, `current` se aage hai? (season pehle, phir episode.) */
+export function isNewerEpisode(next, current) {
+    if (!next || !next.season || !next.episode) return false;
+    const cs = Number(current?.season) || 0;
+    const ce = Number(current?.episode) || 0;
+    if (next.season !== cs) return next.season > cs;
+    return next.episode > ce;
+}
+
 /** Bake payload: one compact record per rail card. */
 function toBlockItem(record) {
     return {
@@ -396,6 +422,7 @@ function toBlockItem(record) {
         ...(record.nxMap && Object.keys(record.nxMap).length ? { nxMap: record.nxMap } : {}),
         ...(record.guide && Object.keys(record.guide).length ? { guide: record.guide } : {}),
         ...(record.firstSeen ? { firstSeen: record.firstSeen } : {}),
+        ...(record.episodeSeen ? { episodeSeen: record.episodeSeen } : {}),
         ...(record.onSite ? { onSite: true } : {}),
     };
 }
@@ -438,6 +465,9 @@ function mergeState(previous, incoming, updated) {
             ...old,
             ...record,
             firstSeen: old?.firstSeen || record.firstSeen,
+            ...(record.episodeSeen || old?.episodeSeen
+                ? { episodeSeen: record.episodeSeen || old?.episodeSeen }
+                : {}),
         };
         delete merged.mappedSeason; // from the old Nxsha-season layout
         items[slug] = merged;
@@ -525,13 +555,29 @@ async function harvest() {
             const toon = await fetchToonSeasons(seriesSlug, report);
             if (toon) {
                 record.tsSlug = toon.slug;
+                /**
+                 * Naya episode: home rail ka card din me ek hi baar banta hai,
+                 * series page hamesha latest list karta hai. Isliye dono me se
+                 * **jo aage hai** wahi card par jaata hai — warna "naya episode
+                 * aaya par row par purana hi dikha" (owner ki shikayat).
+                 */
+                const newest = newestEpisode(toon.seasons);
+                if (isNewerEpisode(newest, { season: record.season, episode: record.episode })) {
+                    record.season = newest.season;
+                    record.episode = newest.episode;
+                    // Naya episode = naya drop: card dobara "New" dikhe.
+                    record.episodeSeen = day;
+                    record.firstSeen = day;
+                }
                 // Fresh Drop card par jo slug hota hai wo hamesha series page ka
                 // hota hai nahi (JoJo ka `jojo's-…` 500 deta hai). Jis slug par
                 // series page khula wahi canonical hai — usi se playable episode
                 // URL banao, warna player 404 par land karta hai.
-                if (toon.slug !== record.slug && season && episode) {
+                if (toon.slug !== record.slug && record.season && record.episode) {
                     record.slug = toon.slug;
-                    record.episodeUrl = `${BASE}/episode/${toon.slug}-${season}x${episode}/`;
+                }
+                if (record.season && record.episode) {
+                    record.episodeUrl = `${BASE}/episode/${record.slug}-${record.season}x${record.episode}/`;
                 }
             }
             const tsSeasons = toon?.seasons?.length
@@ -579,11 +625,22 @@ async function harvest() {
     };
 }
 
+/**
+ * Fresh Drop row ka order. Pehle `onSite` wale (catalog me pehle se maujood
+ * anime) hamesha row ke **aakhir** me jaate the — matlab din ka naya episode
+ * 18-card row ki 16-18vi jagah par baithta tha aur owner ko row kholne par
+ * wahi purana lagta tha ("naya episode fetch nahi hua"). Ab pehla naap
+ * `firstSeen` hai: sabse naya drop sabse aage. `onSite` sirf usi din ke
+ * tie par faisla karta hai — us din ke naye *tiles* (jo catalog me nahi hain)
+ * catalog cards se pehle, taaki row ke shuru me hi kuch naya dikhe.
+ */
 function orderedItems(state) {
     return Object.values(state.items || {})
         .sort((a, b) => {
+            const byDay = String(b.firstSeen || '').localeCompare(String(a.firstSeen || ''));
+            if (byDay) return byDay;
             if (!!a.onSite !== !!b.onSite) return a.onSite ? 1 : -1;
-            return String(b.firstSeen || '').localeCompare(String(a.firstSeen || '')) || a.title.localeCompare(b.title);
+            return a.title.localeCompare(b.title);
         })
         .slice(0, MAX_ITEMS);
 }

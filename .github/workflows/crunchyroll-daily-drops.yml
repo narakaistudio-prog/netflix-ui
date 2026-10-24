@@ -1,6 +1,7 @@
 name: Crunchyroll daily Fresh Toon
 
-# Once a day this keeps the Crunchyroll page's anime rails current:
+# **Do baar roz** (owner: "do time bna ek subah 5 baje fetch hoga aur dusra raat
+# 10:30 mae") ye Crunchyroll page ke anime rails current rakhta hai:
 #
 #   1. ToonStream season layout -> the season numbers/counts every anime card
 #      shows (data/toonstream-seasons.json; scripts/harvest-toonstream-seasons.mjs)
@@ -20,8 +21,11 @@ name: Crunchyroll daily Fresh Toon
 # Commits made with GITHUB_TOKEN do not start other workflows.
 on:
   schedule:
-    # 04:00 UTC every day, which is 09:30 in India.
-    - cron: '0 4 * * *'
+    # GitHub cron **UTC** me hota hai, India (IST) = UTC+5:30.
+    #   23:30 UTC = 05:00 IST (subah ka fetch)
+    #   17:00 UTC = 22:30 IST (raat ka fetch)
+    - cron: '30 23 * * *'
+    - cron: '0 17 * * *'
   push:
     branches:
       # Har kaam wali branch par bhi ek run — taaki bake usi branch me chade
@@ -35,6 +39,7 @@ on:
       - 'scripts/harvest-toonstream-seasons.mjs'
       - 'scripts/harvest-toonstream-drops.mjs'
       - 'scripts/lib/seasons.mjs'
+      - 'scripts/harvest-nxsha-guide.mjs'
       - 'scripts/lib/text.mjs'
       - 'api/toonstream.mjs'
   workflow_dispatch:

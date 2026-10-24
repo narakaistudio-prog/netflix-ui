@@ -5,6 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeImage } from '@/components/SafeImage';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
+import {
+    MOVIEBOX_SKIP_SECONDS,
+    seekMovieboxBy,
+    useMovieboxSeekReady,
+} from '@/lib/movieboxSeekBridge';
 import { buildEmbedUrl, NETFLIX_NXSHA_MOVIE, NETFLIX_NXSHA_TV } from '@/lib/embeds';
 import {
     getRecentlyWatched,
@@ -45,6 +50,13 @@ type Props = {
 
 /** Official Netflix title page, used when no player source can be built. */
 /** "2024-01-07" → "Jan 7, 2024" (Crunchyroll-style released line). */
+/**
+ * Jab video cross-origin iframe me ho (Server 2 ki site ka player) to ±10s
+ * technically possible hi nahi — us waqt tap par yahi saaf baat (English, site
+ * ka visible text English rehta hai). Fake "ho gaya" toast nahi.
+ */
+const NEED_OWN_PLAYER = '10s skip works in the built-in player only';
+
 const AIR_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function formatAirDate(iso?: string): string {
     if (!iso) return '';
@@ -79,6 +91,8 @@ export function MovieDetailModal({
      * Phone par player poora screen leta hai (landscape) — panel ki 92% height
      * aur 1000px max-width uske raste me nahi aate.
      */
+    /** ±10s buttons sirf tab jab seedha player (hamara video) chal raha ho. */
+    const seekReady = useMovieboxSeekReady();
     const isPhoneWeb =
         Platform.OS === 'web' &&
         typeof navigator !== 'undefined' &&
@@ -711,11 +725,54 @@ export function MovieDetailModal({
                                     showsVerticalScrollIndicator={false}
                                 >
                                     <Text style={styles.phoneSeries}>{movie.title}</Text>
-                                    <Text style={styles.phoneEpisodeTitle}>
-                                        {isTv
-                                            ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
-                                            : movie.title}
-                                    </Text>
+                                    {/**
+                                     * Owner (screenshot me title ke bagal do jagah
+                                     * mark karke): "waha par 10 sec piche aur
+                                     * right mae 10 sec aage ka button de do".
+                                     *
+                                     * Buttons **hamesha** yahan rehte hain (owner
+                                     * 24 Oct: "button kaha hai hi nahi laga") —
+                                     * pehle `seekReady` par gate the, aur jab
+                                     * MovieBox ki API stream nahi deti (aaj har
+                                     * title par `hasResource:false` — probe se
+                                     * verify) to player unki site ke iframe par
+                                     * chala jata hai aur button gayab ho jate
+                                     * the. Ab dikhte hain, aur jab video hamare
+                                     * apne `<video>` me chal raha ho tab ±10s
+                                     * sach me karte hain. Jab video cross-origin
+                                     * iframe me ho to seek possible hi nahi —
+                                     * us waqt button dhundhla rehta hai aur tap
+                                     * par saaf batata hai (fake nahi karte).
+                                     */}
+                                    <View style={styles.phoneTitleRow}>
+                                        <Text style={styles.phoneEpisodeTitle}>
+                                            {isTv
+                                                ? `E${activeEpNum}${activeEp?.name ? ` – ${activeEp.name}` : ''}`
+                                                : movie.title}
+                                        </Text>
+                                        <View style={styles.phoneSkipRow}>
+                                            {[
+                                                { delta: -MOVIEBOX_SKIP_SECONDS, icon: 'play-back', test: 'phone-skip-back' },
+                                                { delta: MOVIEBOX_SKIP_SECONDS, icon: 'play-forward', test: 'phone-skip-forward' },
+                                            ].map(({ delta, icon, test }) => (
+                                                <Pressable
+                                                    key={test}
+                                                    style={[styles.phoneSkip, !seekReady && styles.phoneSkipIdle]}
+                                                    onPress={() => (seekMovieboxBy(delta) ? undefined : announce(NEED_OWN_PLAYER))}
+                                                    accessibilityRole="button"
+                                                    accessibilityLabel={`${
+                                                        delta < 0 ? 'Rewind' : 'Forward'
+                                                    } ${MOVIEBOX_SKIP_SECONDS} seconds`}
+                                                    testID={test}
+                                                >
+                                                    <Ionicons name={icon as any} size={20} color="#fff" />
+                                                    <Text style={styles.phoneSkipText}>
+                                                        {MOVIEBOX_SKIP_SECONDS}s
+                                                    </Text>
+                                                </Pressable>
+                                            ))}
+                                        </View>
+                                    </View>
                                     {metaLine ? (
                                         <Text style={styles.phoneMeta}>{metaLine}</Text>
                                     ) : null}
@@ -859,13 +916,35 @@ const styles = StyleSheet.create({
     phoneDetails: { flex: 1 },
     phoneDetailsContent: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 32 },
     phoneSeries: { color: '#E50914', fontSize: 15, fontWeight: '800' },
+    /** Title + uske bagal ±10s buttons (owner ke screenshot ki jagah). */
+    phoneTitleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        marginTop: 6,
+    },
     phoneEpisodeTitle: {
         color: '#fff',
         fontSize: 28,
         fontWeight: '800',
-        marginTop: 6,
         lineHeight: 34,
+        flexShrink: 1,
     },
+    phoneSkipRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginLeft: 'auto' },
+    phoneSkip: {
+        width: 46,
+        height: 46,
+        borderRadius: 23,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.35)',
+        backgroundColor: 'rgba(255,255,255,0.08)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 1,
+    },
+    /** Video cross-origin iframe me hai — button dikhta hai par seek nahi hota. */
+    phoneSkipIdle: { opacity: 0.45 },
+    phoneSkipText: { color: '#fff', fontSize: 9, fontWeight: '800', letterSpacing: 0.2 },
     phoneMeta: { color: '#b0b0b0', fontSize: 15, marginTop: 10 },
     phoneOverview: { color: '#c9c9c9', fontSize: 15, lineHeight: 22, marginTop: 12 },
     phoneShowMore: {

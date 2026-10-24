@@ -11,6 +11,7 @@ const ROOT = join(__dirname, '..');
 const SCRIPT = join(ROOT, 'scripts', 'harvest-toonstream-drops.mjs');
 const HTML_PATH = join(ROOT, 'assets', 'crunchyroll', 'crunchyroll.html');
 const OFFLINE_STUB = join(__dirname, 'fixtures', 'toonstream-offline.mjs');
+const NEW_EPISODE_STUB = join(__dirname, 'fixtures', 'toonstream-new-episode.mjs');
 
 function run(args: string[], env: Record<string, string> = {}) {
     return execFileSync(process.execPath, [SCRIPT, ...args], {
@@ -20,8 +21,8 @@ function run(args: string[], env: Record<string, string> = {}) {
 }
 
 /** The real harvest, with `fetch` replaced by the offline stub fixture. */
-function runOffline(args: string[], env: Record<string, string> = {}) {
-    return execFileSync(process.execPath, ['--import', OFFLINE_STUB, SCRIPT, ...args], {
+function runOffline(args: string[], env: Record<string, string> = {}, stub = OFFLINE_STUB) {
+    return execFileSync(process.execPath, ['--import', stub, SCRIPT, ...args], {
         encoding: 'utf8',
         env: { ...process.env, ...env },
     });
@@ -94,6 +95,42 @@ test('bake writes every card once, with its Nxsha guide', () => {
     // A second bake is stable, and --check agrees with it.
     run(['--from-state'], { TS_DROPS_STATE_FILE: file, TS_DROPS_HTML_FILE: html });
     expect(run(['--from-state', '--check'], { TS_DROPS_STATE_FILE: file, TS_DROPS_HTML_FILE: html })).toContain('in sync');
+});
+
+test('aaj ka naya episode Fresh Drop row ke shuru me aata hai', () => {
+    // Owner: row kholne par naya episode sabse aage dikhna chahiye. Pehle
+    // `onSite` (catalog me pehle se maujood anime) hamesha row ke aakhir me
+    // jaate the — isliye Apothecary/Slime ka aaj ka episode 16-18vi jagah par
+    // baithta tha. Ab din pehle, phir naye tile, phir catalog cards.
+    const { file, html } = stateFile({
+        'purana-catalog': {
+            title: 'Purana Catalog',
+            slug: 'purana-catalog',
+            season: 1,
+            episode: 2,
+            onSite: true,
+            firstSeen: '2026-10-19',
+        },
+        'purana-naya': {
+            title: 'Purana Naya',
+            slug: 'purana-naya',
+            season: 1,
+            episode: 3,
+            firstSeen: '2026-10-19',
+        },
+        'aaj-ka-episode': {
+            title: 'Aaj Ka Episode',
+            slug: 'aaj-ka-episode',
+            season: 4,
+            episode: 22,
+            onSite: true,
+            firstSeen: '2026-10-24',
+        },
+    });
+
+    run(['--from-state'], { TS_DROPS_STATE_FILE: file, TS_DROPS_HTML_FILE: html });
+    const items = bakedItems(readFileSync(html, 'utf8'));
+    expect(items.map((item: any) => item.title)).toEqual(['Aaj Ka Episode', 'Purana Naya', 'Purana Catalog']);
 });
 
 test('--check fails when the page block is stale', () => {
@@ -233,4 +270,64 @@ test('ToonStream decides the seasons; Nxsha only fills the metadata', () => {
     // When Nxsha carries the same seasons, the numbers map one-to-one.
     expect(parsed.split.nxMap['2']).toEqual({ season: 2, base: 0 });
     expect(parsed.split.guide['2']['11'].title).toBe('S2E11');
+});
+
+test('home rail purana ho to series page se naya episode card par chadhta hai', () => {
+    // Owner: "crunchyroll par toonstream se new episode fetch nhi kiya hai" —
+    // ToonStream ka home rail din me ek baar banta hai (wahan S2E4 pada tha),
+    // par series page S2 me E6 tak dikhata hai. Card par E6 hi jana chahiye,
+    // aur wo naya episode "New" bhi dikhna chahiye (firstSeen = aaj).
+    const dir = mkdtempSync(join(tmpdir(), 'ts-drops-new-ep-'));
+    const state = join(dir, 'toonstream-drops.json');
+    const html = join(dir, 'crunchyroll.html');
+    writeFileSync(html, readFileSync(HTML_PATH, 'utf8'));
+
+    const out = runOffline(
+        [],
+        {
+            TS_DROPS_STATE_FILE: state,
+            TS_DROPS_HTML_FILE: html,
+            TS_DROPS_DATE: '2026-10-24',
+        },
+        NEW_EPISODE_STUB,
+    );
+    expect(out).toContain('1 fresh drops');
+
+    const baked = JSON.parse(readFileSync(state, 'utf8'));
+    const item = baked.items['the-ramparts-of-ice'];
+    expect(item.season).toBe(2);
+    expect(item.episode).toBe(6);
+    expect(item.episodeUrl).toBe('https://toonstream.us/episode/the-ramparts-of-ice-2x6/');
+    expect(item.episodeSeen).toBe('2026-10-24');
+    // Naya episode = naya drop → row us din "New" dikhati hai.
+    expect(item.firstSeen).toBe('2026-10-24');
+
+    const items = bakedItems(readFileSync(html, 'utf8'));
+    expect(items[0].episode).toBe(6);
+    expect(items[0].episodeSeen).toBe('2026-10-24');
+});
+
+test('newestEpisode/isNewerEpisode — season pehle, phir episode', () => {
+    const code = `
+        const mod = await import(${JSON.stringify(new URL(`file://${join(ROOT, 'scripts', 'harvest-toonstream-drops.mjs')}`).href)});
+        const newest = (seasons) => mod.newestEpisode(seasons);
+        const newer = (a, b) => mod.isNewerEpisode(a, b);
+        console.log(JSON.stringify({
+            pick: newest([{ n: 1, count: 12 }, { n: 2, count: 6, first: 1, last: 6 }, { n: 3, count: 2 }]),
+            same: newer({ season: 2, episode: 6 }, { season: 2, episode: 6 }),
+            older: newer({ season: 2, episode: 5 }, { season: 2, episode: 6 }),
+            nextSeason: newer({ season: 3, episode: 1 }, { season: 2, episode: 12 }),
+            railAhead: newer({ season: 2, episode: 4 }, { season: 2, episode: 6 }),
+            empty: newest([]),
+            missingEpisode: newest([{ n: 4, count: 3 }]),
+        }));
+    `;
+    const parsed = JSON.parse(execFileSync(process.execPath, ['--input-type=module', '-e', code], { encoding: 'utf8' }));
+    expect(parsed.pick).toEqual({ season: 3, episode: 2 });
+    expect(parsed.same).toBe(false);
+    expect(parsed.older).toBe(false);
+    expect(parsed.nextSeason).toBe(true);
+    expect(parsed.railAhead).toBe(false);
+    expect(parsed.empty).toBeNull();
+    expect(parsed.missingEpisode).toEqual({ season: 4, episode: 3 });
 });
