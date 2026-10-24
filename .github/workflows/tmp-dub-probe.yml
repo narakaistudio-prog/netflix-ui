@@ -1,18 +1,14 @@
 name: tmp dub probe
 on:
+  pull_request:
   workflow_dispatch:
-    inputs:
-      base:
-        description: app base url
-        required: true
-        default: https://net-2gn8m6sx0-ki15.vercel.app
 jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
       - name: chain
         env:
-          BASE: ${{ inputs.base }}
+          BASE: https://net-git-arena-e1c5001d-netflix-ui-ki15.vercel.app
         run: |
           set -x
           echo "--- resolve"
