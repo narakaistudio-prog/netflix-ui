@@ -7,6 +7,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { ExpandedPlayer } from '@/components/BottomSheet/ExpandedPlayer';
 import { EmbedPlayer } from '@/components/EmbedPlayer';
 import { MovieboxPagePlayer } from '@/components/MovieboxPagePlayer';
+import { NetmirrorPlayer } from '@/components/NetmirrorPlayer';
+import { useNetmirrorAvailable } from '@/hooks/useNetmirrorAvailable';
 import { useRootScale } from '@/contexts/RootScaleContext';
 import Animated, {
     useSharedValue,
@@ -27,6 +29,7 @@ import {
     buildEmbedUrl,
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
+import { NETMIRROR_LABEL } from '@/lib/netmirror';
 import {
     isMovieboxUrl,
     MOVIEBOX_COPY_LABEL,
@@ -53,11 +56,12 @@ const SCALE_FACTOR = 0.83;
  * M2Box — MovieBox ka koi embed nahi hota, isliye uska poora watch page frame
  * me khol kar sirf player wala hissa dikhaya jata hai (MovieboxPagePlayer).
  */
-type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2';
+type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2' | 'netmirror';
 
 function serverLabel(id: PlaybackServerId): string {
     if (id === 'moviebox') return MOVIEBOX_SERVER_LABEL;
     if (id === 'moviebox2') return MOVIEBOX_COPY_LABEL;
+    if (id === 'netmirror') return NETMIRROR_LABEL;
     if (id === 'nxsha') return 'Nxsha';
     if (id === 'nhd') return 'NHD';
     return 'Custom';
@@ -423,6 +427,14 @@ export default function MovieScreen() {
 
     // Cycle: MovieBox mile to (row-m2box) → default → baaki providers → custom
     // → M2Box. MovieBox na mile to sirf Server 1 — koi aur switch nahi.
+    /** NetMirror par ye title hai? (chhota probe — sirf tab chip/cycle me aata hai) */
+    const netmirrorAvailability = useNetmirrorAvailable(
+        parsedTmdb,
+        mediaType,
+        mediaType === 'tv' ? season : undefined,
+        mediaType === 'tv' ? episode : undefined,
+    );
+
     const settings = loadSettings();
     const cycle: PlaybackServerId[] = useMemo(
         () =>
@@ -431,9 +443,17 @@ export default function MovieScreen() {
                 movieboxAvailable,
                 rowIsMoviebox,
                 customAvailable: Boolean(primaryEmbedUrl),
+                netmirrorAvailable: netmirrorAvailability.available,
                 providers: PROVIDERS.map(p => p.id),
             }),
-        [movie.embed_provider, movieboxAvailable, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider],
+        [
+            movie.embed_provider,
+            movieboxAvailable,
+            primaryEmbedUrl,
+            rowIsMoviebox,
+            settings.defaultProvider,
+            netmirrorAvailability.available,
+        ],
     );
 
     // Cycle chhota ho jaye (MovieBox nahi mila) to index phir bhi valid rehna chahiye.
@@ -445,6 +465,7 @@ export default function MovieScreen() {
     // Dono M2Box servers (asli + copy) wahi cropped page player chalate hain —
     // farq sirf domain ka hai.
     const isMovieboxServer = currentProvider === 'moviebox' || currentProvider === 'moviebox2';
+    const isNetmirrorServer = currentProvider === 'netmirror';
     const movieboxSite = currentProvider === 'moviebox2' ? MOVIEBOX_COPY_SITE : undefined;
     const movieboxIndex = cycle.indexOf('moviebox');
     const directPreviewUrl = movie.videoUrl
@@ -459,7 +480,7 @@ export default function MovieScreen() {
 
     const buildSrc = useCallback(() => {
         // M2Box ka apna player hai (MovieboxPagePlayer) — yahan URL nahi banta.
-        if (isMovieboxServer) return '';
+        if (isMovieboxServer || isNetmirrorServer) return '';
         if (directFallback) return directPreviewUrl || '';
         try {
             return buildEmbedUrl(
@@ -658,8 +679,9 @@ export default function MovieScreen() {
 
     // M2Box ka apna player hai — us waqt `src` khali rehta hai, par player
     // phir bhi khulna chahiye (link paste karne ke liye bhi).
-    const src = playerOpen && hasPlayablePlayback && !isMovieboxServer ? buildSrc() : '';
-    const playerVisible = playerOpen && (Boolean(src) || isMovieboxServer);
+    const src =
+        playerOpen && hasPlayablePlayback && !isMovieboxServer && !isNetmirrorServer ? buildSrc() : '';
+    const playerVisible = playerOpen && (Boolean(src) || isMovieboxServer || isNetmirrorServer);
     /** Server switcher labels: jo chal raha hai + jo agla hai. */
     const currentServerLabel = serverLabel(currentProvider);
     // MovieBox available na ho to cycle hi ek server ka hai — `nextServer` null
@@ -687,6 +709,28 @@ export default function MovieScreen() {
         movie.seasons?.find((item) => item.season_number === season)?.episode_count;
 
     const renderPlayer = () => {
+        if (isNetmirrorServer) {
+            return (
+                <NetmirrorPlayer
+                    tmdbId={parsedTmdb}
+                    mediaType={mediaType}
+                    season={mediaType === 'tv' ? season : undefined}
+                    episode={mediaType === 'tv' ? episode : undefined}
+                    title={movie.title}
+                    onClose={handleCloseInline}
+                    onUnavailable={() => {
+                        // NetMirror par nahi mila / stream fail — dead button nahi,
+                        // seedha Server 1 (Nxsha) par.
+                        const nxshaIndex = cycle.indexOf('nxsha');
+                        setProviderIndex(nxshaIndex >= 0 ? nxshaIndex : 0);
+                    }}
+                    onProgress={(info) => {
+                        if (!activeEntryId) return;
+                        updateWatchPosition(activeEntryId, info.currentTime, info.duration);
+                    }}
+                />
+            );
+        }
         if (isMovieboxServer) {
             return (
                 <MovieboxPagePlayer

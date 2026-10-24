@@ -27,6 +27,9 @@ import {
 } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
+import { useNetmirrorAvailable } from '@/hooks/useNetmirrorAvailable';
+import { NetmirrorPlayer } from '@/components/NetmirrorPlayer';
+import { NETMIRROR_LABEL } from '@/lib/netmirror';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import type { Movie } from '@/types/movie';
 
@@ -135,7 +138,7 @@ export function MovieDetailModal({
      * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
      * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
      */
-    const [server, setServer] = useState<'primary' | 'moviebox' | 'moviebox2'>('moviebox');
+    const [server, setServer] = useState<'primary' | 'moviebox' | 'moviebox2' | 'netmirror'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
 
@@ -162,6 +165,14 @@ export function MovieDetailModal({
         onResolved: () => setMovieboxRevision((n) => n + 1),
     });
     const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
+    /** NetMirror par ye title hai? Nahi hai to chip dikhta hi nahi. */
+    const netmirrorAvailability = useNetmirrorAvailable(
+        movie?.tmdb_id,
+        movie?.mediaType === 'tv' ? 'tv' : 'movie',
+        episodeRef?.season ?? 1,
+        episodeRef?.episode ?? 1,
+    );
+    const netmirrorAvailable = netmirrorAvailability.available;
 
     /** Play daba par MovieBox ka jawab pending tha — jawab aate hi wahi karo. */
     const pendingPlayRef = useRef<{ season: number; episode: number } | null>(null);
@@ -305,16 +316,19 @@ export function MovieDetailModal({
      * Kaunsa server sach me chalega. Chunna hua server available na ho to
      * Server 1 (Nxsha) — dead player kabhi nahi khulta.
      */
-    const activeServer: 'primary' | 'moviebox' | 'moviebox2' =
-        !movieboxAvailable
-            ? 'primary'
-            : server === 'moviebox2'
-              ? 'moviebox2'
-              : server === 'moviebox'
-                ? 'moviebox'
-                : 'primary';
+    const activeServer: 'primary' | 'moviebox' | 'moviebox2' | 'netmirror' =
+        server === 'netmirror' && netmirrorAvailable
+            ? 'netmirror'
+            : !movieboxAvailable
+              ? 'primary'
+              : server === 'moviebox2'
+                ? 'moviebox2'
+                : server === 'moviebox'
+                  ? 'moviebox'
+                  : 'primary';
     /** Dono M2Box servers eka hi cropped page player chalate hain. */
     const isMovieboxServer = activeServer === 'moviebox' || activeServer === 'moviebox2';
+    const isNetmirrorServer = activeServer === 'netmirror';
 
     /** Phone player screen (Crunchyroll jaisa) ka episode data. */
     const isTv = movie.mediaType === 'tv';
@@ -404,8 +418,21 @@ export function MovieDetailModal({
     };
 
     /** Jo bhi server chal raha hai uska player (phone screen ke box me bhi yahi). */
-    const playerNode =
-        isMovieboxServer ? (
+    const playerNode = isNetmirrorServer ? (
+        <NetmirrorPlayer
+            tmdbId={movie.tmdb_id}
+            mediaType={movie.mediaType === 'tv' ? 'tv' : 'movie'}
+            season={movie.mediaType === 'tv' ? episodeRef?.season : undefined}
+            episode={movie.mediaType === 'tv' ? episodeRef?.episode : undefined}
+            title={movie.title}
+            onClose={() => setPlaying(false)}
+            onUnavailable={() => setServer('primary')}
+            onProgress={(info) => {
+                if (!activeEntry) return;
+                updateWatchPosition(activeEntry.id, info.currentTime, info.duration);
+            }}
+        />
+    ) : isMovieboxServer ? (
             <MovieboxPagePlayer
                 linkKey={movieboxLinkKey}
                 site={activeServer === 'moviebox2' ? MOVIEBOX_COPY_SITE : undefined}
@@ -547,7 +574,7 @@ export function MovieDetailModal({
                             (doosra domain), **Multi = Nxsha** (Server 1). Koi
                             bhi available na ho to row dikhta hi nahi (Nxsha hi
                             chalta hai). */}
-                        {movieboxAvailable ? (
+                        {movieboxAvailable || netmirrorAvailable ? (
                             <View style={[styles.serverRow, wide && styles.serverRowWide]}>
                                 <Text style={styles.serverRowLabel}>Server</Text>
                                 {movieboxAvailable ? (
@@ -594,6 +621,29 @@ export function MovieDetailModal({
                                         Hindi 2
                                     </Text>
                                 </Pressable>
+                                {netmirrorAvailable ? (
+                                <Pressable
+                                    onPress={() => setServer('netmirror')}
+                                    style={[
+                                        styles.serverChip,
+                                        activeServer === 'netmirror' && styles.serverChipActive,
+                                    ]}
+                                    accessibilityLabel={`${NETMIRROR_LABEL} server`}
+                                    accessibilityRole="button"
+                                    accessibilityState={{ selected: activeServer === 'netmirror' }}
+                                    {...({ dataSet: { selected: activeServer === 'netmirror' ? '1' : '0' } } as any)}
+                                    testID="server-netmirror"
+                                >
+                                    <Text
+                                        style={[
+                                            styles.serverChipText,
+                                            activeServer === 'netmirror' && styles.serverChipTextActive,
+                                        ]}
+                                    >
+                                        {NETMIRROR_LABEL}
+                                    </Text>
+                                </Pressable>
+                                ) : null}
                                 <Pressable
                                     onPress={() => setServer('primary')}
                                     style={[
@@ -717,7 +767,7 @@ export function MovieDetailModal({
                     </ScrollView>
                 </View>
 
-                {playing && (src || isMovieboxServer) ? (
+                {playing && (src || isMovieboxServer || isNetmirrorServer) ? (
                     <View style={styles.playerLayer}>
                         {isPhoneWeb ? (
                             /**

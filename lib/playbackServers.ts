@@ -1,6 +1,7 @@
 /**
- * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box,
- * M2Box 2 = usi MovieBox backend ka doosra domain — `MOVIEBOX_COPY_SITE`)
+ * Playback server cycle (Server 1 = Nxsha/NHD/custom, NetMirror = `lib/netmirror.ts`
+ * ka apna `<video>` wala server, Server 2 = M2Box, M2Box 2 = usi MovieBox
+ * backend ka doosra domain — `MOVIEBOX_COPY_SITE`)
  * ======================================================================
  * Rules:
  *   - Jis title ka MovieBox link nahi hai, us par **M2Box ka button nahi**
@@ -16,7 +17,7 @@
 
 import type { ProviderId } from './embeds';
 
-export type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2';
+export type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2' | 'netmirror';
 
 export const BUILTIN_SERVERS: readonly ProviderId[] = ['nxsha', 'nhd'];
 
@@ -29,6 +30,11 @@ export interface ServerCycleInput {
     rowIsMoviebox?: boolean;
     /** Row ka apna (m2box ke alawa) embed URL. */
     customAvailable?: boolean;
+    /**
+     * NetMirror par ye title hai (chhota probe, `hooks/useNetmirrorAvailable`).
+     * Nahi hai to chip/cycle me dikhta hi nahi — dead button nahi.
+     */
+    netmirrorAvailable?: boolean;
     /** Override (tests ke liye). */
     providers?: readonly ProviderId[];
 }
@@ -39,6 +45,7 @@ export function buildServerCycle({
     movieboxAvailable,
     rowIsMoviebox = false,
     customAvailable = false,
+    netmirrorAvailable = false,
     providers = BUILTIN_SERVERS,
 }: ServerCycleInput): PlaybackServerId[] {
     const wanted: PlaybackServerId =
@@ -48,8 +55,9 @@ export function buildServerCycle({
     if (rowIsMoviebox && movieboxAvailable) list.push('moviebox', 'moviebox2');
     list.push(wanted);
 
-    // M2Box na ho to bas Server 1 — koi switch option nahi.
+    // M2Box na ho to bas Server 1 (+ NetMirror, agar us title par hai).
     if (!movieboxAvailable) {
+        if (netmirrorAvailable) list.push('netmirror');
         return Array.from(new Set(list));
     }
 
@@ -57,6 +65,8 @@ export function buildServerCycle({
         if (provider !== wanted) list.push(provider);
     }
     if (customAvailable) list.push('custom');
+    // NetMirror — apna `<video>`, seedha MP4 (1080p), koi iframe/ad nahi.
+    if (netmirrorAvailable) list.push('netmirror');
     list.push('moviebox');
     // M2Box ka copy — same backend, doosra domain. MovieBox ke turant baad,
     // taaki ek na chale to ek tap me doosra (owner: "moviebox ka copy dhundo").

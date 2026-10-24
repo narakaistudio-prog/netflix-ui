@@ -19,8 +19,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Probe NetMirror API
+      - name: Probe NetMirror API (raw upstream)
         run: node scripts/probe-netmirror-api.mjs 2>&1 | tee probe.log
+      - name: Probe api/netmirror.mjs (asli handler, asli upstream)
+        run: node scripts/probe-netmirror-handler.mjs 2>&1 | tee -a probe.log
       - name: Post result as PR comment
         if: always()
         env:
