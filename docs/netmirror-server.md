@@ -59,6 +59,60 @@ hamare function tak, video Cloudflare ke CDN se seedha screen tak.
 | `lib/playbackServers.ts` | naya server `netmirror` — MovieBox se pehle; MovieBox na ho to `[Server 1 → NetMirror]` |
 | `app/movie/[id].tsx` | cycle wiring + server switch pill |
 | `components/MovieList/MovieDetailModal.tsx` | phone detail par **NetMirror** chip (`testID="server-netmirror"`) |
+| `api/netmirror-subtitle.mjs` | subtitle bridge: proxy ke andar se CDN URL, SRT → VTT, host allowlist |
+| `lib/subtitles.ts` | WebVTT parser + `cueAt` (player apne overlay me dikhata hai) |
+| `api/moviebox-audio.mjs` | **dub list** — provider ke `dubs[]` se (har bhasha ka apna subject) |
+| `lib/movieboxAudio.ts` | client: `fetchAudioLanguages`, shape/de-dupe |
+
+## Subtitles (multi-language) — 24 Oct ka fix
+
+Owner: *"subtitle kam nahi kar raha"*. Wajah probe se mili: `captions[].url`
+hamare hi jaise proxy ka hota hai —
+
+```
+/api/proxy/video?url=https%3A%2F%2Fcacdn.hakunaymatata.com%2Fsubtitle%2F…srt%3FPolicy%3D…%26Signature%3D…
+```
+
+aur wo proxy route **429** (Cloudflare) deta hai — andar wali CDN file bilkul
+theek khulti hai (200, 192 KB SRT). Isliye bridge ab:
+
+1. `?url=` ke andar se **asli CDN URL** nikaalta hai (khula proxy nahi — host
+   allowlist lagti hai),
+2. file laa kar **SRT → VTT** karta hai,
+3. app us VTT ko `lib/subtitles.ts` se parse karke **apne overlay** me dikhata
+   hai (native `<track>` ka style control me nahi tha, aur cross-origin video
+   par wo chup-chaap fail bhi hota tha).
+
+Verify (runner, asli provider — run `40097181843`):
+
+| Title | Bhasha | Result |
+| --- | --- | --- |
+| Mandaadi (`1465943`) | en | 200 `text/vtt`, **2424 cues** |
+| Breaking Bad S1E1 (`1396`) | en / hi | 200 `text/vtt`, **587 cues** each |
+| `evil.example/a.srt` | — | 400 `host allowed nahi` |
+
+## Audio (dub) — har bhasha ka apna subject
+
+Provider par dub alag file nahi, **alag subject** hota hai:
+
+```json
+"dubs": [
+  { "subjectId": "2237794012843369344", "lanName": "Original Audio", "lanCode": "ta", "original": true },
+  { "subjectId": "4151920426815471968", "lanName": "Hindi dub",      "lanCode": "hi", "original": false },
+  { "subjectId": "5228019281622882336", "lanName": "Telugu dub",     "lanCode": "te", "original": false }
+]
+```
+
+NetMirror ka jawab wahi `subjectId`/`detailPath` deta hai (wo bhi isi backend ka
+front hai), isliye **NetMirror par chal rahe title ke liye bhi** dub list milti
+hai:
+
+1. `api/moviebox-audio` (30 min cache) → bhashaon ki list,
+2. chunne par `resolveDirectStreams` us dub ke subject se naye streams laata
+   hai (browser se seedha, **video ka proxy nahi**) aur wahi position se chalta
+   hai,
+3. jis title par provider streams nahi deta → `"‹language› audio nahi mila"`
+   (jhootha switch nahi, list bhi nahi banti).
 
 ## Rules jo nahi badle
 
@@ -69,14 +123,10 @@ hamare function tak, video Cloudflare ke CDN se seedha screen tak.
 ## Probe / test
 
 ```bash
-# asli upstream + asli handler (runner par, ya kisi bhi internet wale shell me)
-node scripts/probe-netmirror-api.mjs
-node scripts/probe-netmirror-handler.mjs
-
-# unit tests
 NODE_OPTIONS=--max-old-space-size=3072 ./node_modules/.bin/jest \
   --config jest.arena.config.js --runInBand \
-  tests-arena/netmirror.test.tsx tests-arena/netmirror-chip.test.tsx
+  tests-arena/netmirror.test.tsx tests-arena/netmirror-chip.test.tsx \
+  tests-arena/player-chrome.test.tsx tests-arena/player-audio.test.tsx
 ```
 
 Runner result (24 Oct): Mandaadi → 3 streams (1080 pehle), Breaking Bad S1E1 → 4
