@@ -79,6 +79,20 @@ TMDB id nahi : nxsha        (Server 3 ka pill dikhta hi nahi)
 Server 3 kabhi default nahi — Server 1 hi pehla (owner ka pattern), aur Series
 par chalu episode hi khulta hai.
 
+## Sandbox — Server 3 par band (owner ka order)
+
+Owner (24 Oct, follow-up): *"server 3 ke liyea sandbox bas disable karoo"*.
+
+- `components/EmbedPlayer.tsx` me iframe ka `sandbox` attribute **sirf tab**
+  lagta hai jab URL Server 3 ka na ho (`lib/server3.ts` → `isServer3Url`).
+  Server 3 par attribute set hi nahi hota (khaali string bhi nahi).
+- Server 1 (Nxsha), NHD aur MovieBox par sandbox pehle jaisa — popups /
+  top-navigation abhi bhi band.
+- Escape hatch: `<EmbedPlayer sandboxed />` se Server 3 par bhi sandbox on ho
+  sakta hai (kabhi wapas chahiye to).
+- Trade-off jo owner ko bataya gaya: sandbox hatne se us frame ke ad popups /
+  redirects bhi khul sakte hain — sirf Server 3 par, isliye scope chhota hai.
+
 ## Files
 
 | File | Kaam |
@@ -89,6 +103,7 @@ par chalu episode hi khulta hai.
 | `components/MovieList/MovieDetailModal.tsx` | phone detail: "Server 3 (<label>)" chip + pill |
 | `components/EmbedPlayer.tsx` | `sourceName` + `onCycleSource` → ek pill (`embed-source-cycle`) |
 | `tests-arena/server3.test.tsx` | 19 tests: id parsing, URL shape per provider, rotation, persistence, chip → play → src, VidSync ka safaya |
+| `tests-arena/server3-sandbox.test.tsx` | 7 tests: Server 3 par `sandbox` attribute nahi, Nxsha/NHD par maujood, `isServer3Url` ka host matching |
 | `scripts/probe-server3*.mjs` | probe scripts (dobara chalane ke liye) |
 
 ## Tests

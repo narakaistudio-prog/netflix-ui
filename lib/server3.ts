@@ -144,6 +144,35 @@ export function saveServer3Provider(provider: Server3ProviderId): void {
 /** Server switcher ke liye chhota naam. */
 export const SERVER3_SERVER_LABEL = SERVER3_PROVIDERS[SERVER3_DEFAULT_PROVIDER].label;
 
+/** Registry ke saare hosts (iframe sandbox chhodne ka faisla isi par hota hai). */
+export const SERVER3_HOSTS: readonly string[] = [
+    'player.videasy.net',
+    'videasy.net',
+    'vidfast.pro',
+    'vidfast.vc',
+    'vidlink.pro',
+    'mycineby.cc',
+    'vaplayer.ru',
+];
+
+/**
+ * URL Server 3 ka hai ya nahi.
+ *
+ * Owner (24 Oct, follow-up): *"server 3 ke liyea sandbox bas disable karoo"* —
+ * in players ko sandbox wale frame me playback/decoder gate par rukna padta
+ * hai, isliye EmbedPlayer sirf Server 3 par `sandbox` attribute nahi lagata.
+ * Server 1/NHD/MovieBox ka sandbox waisa hi rehta hai.
+ */
+export function isServer3Url(url?: string | null): boolean {
+    if (!url) return false;
+    try {
+        const host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+        return SERVER3_HOSTS.some((known) => host === known || host.endsWith(`.${known}`));
+    } catch {
+        return false;
+    }
+}
+
 export interface Server3Params {
     /** Catalog ka id — `tmdb:…`, plain number, ya `movie.tmdb_id`. */
     tmdbId?: string | number | null;
