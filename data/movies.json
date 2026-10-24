@@ -23440,18 +23440,34 @@
                 {
                     "id": "netflix-genre-81698397",
                     "title": "Fighter",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/3GEDq0V4ByMBZcmdkhvAwemZeDP.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/zqFuriKJ6pYDvf72kXNLONnuE8k.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "tmdb_id": "1399686",
+                    "tmdb_id": "784651",
                     "embed_provider": "nxsha",
                     "netflixId": "81698397",
                     "netflixUrl": "https://www.netflix.com/in/title/81698397",
                     "catalogCollection": "netflix-genre-100381",
-                    "year": "2025",
-                    "description": "GK, a 30-year-old MMA-fighter, who`s whole identity was built on his physicality, faces a life-altering moment after a split-second decision to dive headfirst into the ocean. When told to expect a life in a wheelchair he gives himself two years to get back on his feet - or else he doesn’t want to live. This leads him down a rabbit hole of alternative treatments that sells hope, while the fear of his already fragile relationship ending pushes him to figure out who he really is. He seeks answers in the deep- seated childhood traumas that had pushed him to extreme, self-destructive physical limits. Amidst the darkness, he embarks on an inspiring journey of transformation proving that life’s worth goes far beyond physical abilities.",
-                    "duration": "1h 23m",
-                    "backdropUrl": "https://image.tmdb.org/t/p/w500/3GEDq0V4ByMBZcmdkhvAwemZeDP.jpg"
+                    "year": "2024",
+                    "description": "As India faces a militant attack in Kashmir, the country’s best combat aviators join forces under a reckless yet brilliant squadron leader to form 'Air Dragons', faces mortal dangers and their inner demons.",
+                    "duration": "2h 46m",
+                    "cast": [
+                        "Hrithik Roshan",
+                        "Deepika Padukone",
+                        "Anil Kapoor",
+                        "Karan Singh Grover",
+                        "Sanjeeda Sheikh",
+                        "Akshay Oberoi",
+                        "Rishabh Sawhney",
+                        "Ashutosh Rana",
+                        "Sharib Hashmi",
+                        "Mahesh Shetty"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Drama"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/vcc6NDwsMwNrwHgVuI9lGdWJLB8.jpg"
                 },
                 {
                     "id": "netflix-genre-70224999",
@@ -24050,6 +24066,7 @@
                     "year": "2026",
                     "description": "An anthology series set in the elite world of London law following two rival firms, Cathcarts and Taylor & Byrne, as they face off in a different headline-making legal battle each season.",
                     "cast": [
+                        "JioHotstar",
                         "Dominic West",
                         "Sienna Miller",
                         "Phoebe Fox",
@@ -24058,8 +24075,7 @@
                         "Pip Torrens",
                         "Archie Renaux",
                         "Emma Laird",
-                        "Angel Coulby",
-                        "Patrick Fabian"
+                        "Angel Coulby"
                     ],
                     "backdropUrl": "https://image.tmdb.org/t/p/w1280/muPKymUvvBqjLCyGSacxKgjrhxN.jpg"
                 },
@@ -27352,18 +27368,34 @@
                 {
                     "id": "netflix-genre-81698397",
                     "title": "Fighter",
-                    "imageUrl": "https://image.tmdb.org/t/p/w500/3GEDq0V4ByMBZcmdkhvAwemZeDP.jpg",
+                    "imageUrl": "https://image.tmdb.org/t/p/w500/zqFuriKJ6pYDvf72kXNLONnuE8k.jpg",
                     "type": "FILM",
                     "mediaType": "movie",
-                    "tmdb_id": "1399686",
+                    "tmdb_id": "784651",
                     "embed_provider": "nxsha",
                     "netflixId": "81698397",
                     "netflixUrl": "https://www.netflix.com/in/title/81698397",
                     "catalogCollection": "netflix-genre-100381",
-                    "year": "2025",
-                    "description": "GK, a 30-year-old MMA-fighter, who`s whole identity was built on his physicality, faces a life-altering moment after a split-second decision to dive headfirst into the ocean. When told to expect a life in a wheelchair he gives himself two years to get back on his feet - or else he doesn’t want to live. This leads him down a rabbit hole of alternative treatments that sells hope, while the fear of his already fragile relationship ending pushes him to figure out who he really is. He seeks answers in the deep- seated childhood traumas that had pushed him to extreme, self-destructive physical limits. Amidst the darkness, he embarks on an inspiring journey of transformation proving that life’s worth goes far beyond physical abilities.",
-                    "duration": "1h 23m",
-                    "backdropUrl": "https://image.tmdb.org/t/p/w500/3GEDq0V4ByMBZcmdkhvAwemZeDP.jpg"
+                    "year": "2024",
+                    "description": "As India faces a militant attack in Kashmir, the country’s best combat aviators join forces under a reckless yet brilliant squadron leader to form 'Air Dragons', faces mortal dangers and their inner demons.",
+                    "duration": "2h 46m",
+                    "cast": [
+                        "Hrithik Roshan",
+                        "Deepika Padukone",
+                        "Anil Kapoor",
+                        "Karan Singh Grover",
+                        "Sanjeeda Sheikh",
+                        "Akshay Oberoi",
+                        "Rishabh Sawhney",
+                        "Ashutosh Rana",
+                        "Sharib Hashmi",
+                        "Mahesh Shetty"
+                    ],
+                    "genres": [
+                        "Action",
+                        "Drama"
+                    ],
+                    "backdropUrl": "https://image.tmdb.org/t/p/w1280/vcc6NDwsMwNrwHgVuI9lGdWJLB8.jpg"
                 },
                 {
                     "id": "netflix-genre-81956873",

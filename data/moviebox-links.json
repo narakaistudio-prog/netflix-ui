@@ -1,13 +1,13 @@
 {
  "$comment": "MovieBox (m2box.org) watch-pages for the Netflix catalog — Server 2. Baked by scripts/harvest-moviebox-links.mjs (GitHub Actions). Har entry ka `url` seedha MovieboxPagePlayer me jata hai; slug/subjectId dobara naapo mat, script hi update kare.",
- "generatedAt": "2026-10-22T08:01:26.776Z",
+ "generatedAt": "2026-10-24T07:40:22.545Z",
  "stats": {
   "catalog": 792,
-  "linked": 687,
+  "linked": 688,
   "hindi": 33,
-  "hindiAudio": 385,
-  "review": 28,
-  "miss": 78,
+  "hindiAudio": 386,
+  "review": 27,
+  "miss": 79,
   "errors": 0,
   "matchedThisRun": 1,
   "pinned": 1,
@@ -35,7 +35,7 @@
    "score": 1,
    "query": "pin",
    "pinned": true,
-   "harvestedAt": "2026-10-22T07:56:42.227Z"
+   "harvestedAt": "2026-10-24T07:35:36.938Z"
   },
   "tmdb:1389172": {
    "url": "https://m2box.org/movies/reporting-live-08MIGBdRGC1?id=1363066357566304784&type=/movie/detail&detailSe=&detailEp=&lang=en",
@@ -8954,6 +8954,19 @@
    "score": 1,
    "query": "Animals",
    "harvestedAt": "2026-10-22T07:56:46.916Z"
+  },
+  "tmdb:784651": {
+   "url": "https://m2box.org/movies/fighter-ulfpm7ZbMc9?id=7726661865757364968&type=/movie/detail&detailSe=&detailEp=&lang=en",
+   "subjectId": "7726661865757364968",
+   "detailPath": "fighter-ulfpm7ZbMc9",
+   "title": "Fighter",
+   "year": 2024,
+   "type": "movie",
+   "dub": "original",
+   "hindiAudio": true,
+   "score": 1,
+   "query": "Fighter",
+   "harvestedAt": "2026-10-24T07:39:02.057Z"
   }
  }
 }

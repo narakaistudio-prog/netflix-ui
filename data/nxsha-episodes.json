@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-23T17:03:29.588Z",
+    "generatedAt": "2026-10-24T04:36:13.825Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -30316,7 +30316,7 @@
         {
           "season": 2,
           "episode": 50,
-          "title": "Episode 50",
+          "title": "DEATH & STRAWBERRY",
           "airDate": "2026-10-27"
         }
       ]
@@ -41383,12 +41383,15 @@
           "season": 1,
           "episode": 52,
           "title": "The Last Volume",
-          "airDate": "2026-10-23"
+          "overview": "Trying to track down the missing final book, Maomao visits Suirei, who is now living with Ah-Duo.",
+          "image": "https://image.tmdb.org/t/p/w780/fOifoFNfJ36aN2nk4Kr5UBwF7GI.jpg",
+          "airDate": "2026-10-23",
+          "runtime": 24
         },
         {
           "season": 1,
           "episode": 53,
-          "title": "Episode 53",
+          "title": "The White-Snake Immortal",
           "airDate": "2026-10-30"
         },
         {

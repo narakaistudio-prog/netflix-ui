@@ -25786,14 +25786,16 @@
       "name": "The Terrorist from a Faraway Country",
       "overview": "At a checkpoint, Oye — a man who knows Gyro's past — confronts the duo. His power to turn anything he touches into a bomb leaves them with nowhere to run.",
       "runtime": 25,
-      "still": "https://image.tmdb.org/t/p/w500/2c7ajDu8SXa4re1FfsCLA2IVZTq.jpg",
+      "still": "https://image.tmdb.org/t/p/w500/2RyXZdAgak77KuwwzERU1GEKnOU.jpg",
       "air_date": "2026-10-16"
      },
      {
       "season": 6,
       "episode": 6,
       "name": "Gyro Zeppeli’s Destiny",
-      "overview": "",
+      "overview": "Wounded and weary, the duo finds the Zombie Horse. As Gyro patches himself up, memories surface — revealing a family legacy steeped in duty and sacrifice.",
+      "runtime": 25,
+      "still": "https://image.tmdb.org/t/p/w500/d6TCAa1j3gwGTonTujmR6VNdcP6.jpg",
       "air_date": "2026-10-23"
      },
      {
@@ -62249,7 +62251,7 @@
       "name": "Then Everyone Went Home",
       "overview": "A chilling transformation turns the city into a war zone, erupting in an explosive confrontation.",
       "runtime": 31,
-      "still": "https://image.tmdb.org/t/p/w500/lMYYI8BzJk90iKfem7MGvkXEO9T.jpg",
+      "still": "https://image.tmdb.org/t/p/w500/i34RlJMwkl3L3uJS3E5BZmfl2i0.jpg",
       "air_date": "2026-10-20"
      }
     ]
@@ -92042,13 +92044,15 @@
       "season": 1,
       "episode": 52,
       "name": "The Last Volume",
-      "overview": "",
+      "overview": "Trying to track down the missing final book, Maomao visits Suirei, who is now living with Ah-Duo.",
+      "runtime": 24,
+      "still": "https://image.tmdb.org/t/p/w500/fOifoFNfJ36aN2nk4Kr5UBwF7GI.jpg",
       "air_date": "2026-10-23"
      },
      {
       "season": 1,
       "episode": 53,
-      "name": "Episode 53",
+      "name": "The White-Snake Immortal",
       "overview": "",
       "air_date": "2026-10-30"
      },
@@ -99619,14 +99623,15 @@
       "season": 2,
       "episode": 4,
       "name": "Child of Kishin: Hayate Todoroki",
-      "overview": "",
+      "overview": "The Oni Brigade operates independently, fighting the Momotaro without answering to any organization. Its general, Hayate Todoroki, arrives at Rasetsu Academy to recruit Shiki, a Child of Kishin. Shiki rejects Todoroki's invitation to join his campaign to wipe…",
+      "runtime": 24,
       "still": "https://image.tmdb.org/t/p/w500/xoy8dMojQh1NfDi95IhNSvtLWQ9.jpg",
       "air_date": "2026-10-23"
      },
      {
       "season": 2,
       "episode": 5,
-      "name": "Episode 5",
+      "name": "New Blood",
       "overview": "",
       "air_date": "2026-10-30"
      },
@@ -100719,6 +100724,7 @@
       "episode": 28,
       "name": "Episode 28",
       "overview": "",
+      "runtime": 23,
       "still": "https://image.tmdb.org/t/p/w500/7pzc6NKXJPr1UuSbc8mdzYMRJbk.jpg",
       "air_date": "2026-10-25"
      },
@@ -106596,7 +106602,9 @@
       "season": 1,
       "episode": 5,
       "name": "Episode 5",
-      "overview": "",
+      "overview": "Su-jeong makes a disturbing discovery about Na Dae-il and a patient. As her colleagues debate their next move, she gets a chance to make him pay.",
+      "runtime": 64,
+      "still": "https://image.tmdb.org/t/p/w500/5G13IhiXd5Lc7R4h9PghV41q3oh.jpg",
       "air_date": "2026-10-23"
      },
      {
@@ -107163,6 +107171,8 @@
       "episode": 4,
       "name": "Sing",
       "overview": "Nick's insecurities resurface during a crucial arbitration session. Morgan begins to question Cathcarts' tactics.",
+      "runtime": 49,
+      "still": "https://image.tmdb.org/t/p/w500/lIKMYlxjVVj5qlfSaPzAMfeJGNv.jpg",
       "air_date": "2026-10-23"
      },
      {
