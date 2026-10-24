@@ -28,7 +28,14 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
-import { buildVidSyncUrl, vidsyncTmdbNumber, VIDSYNC_SERVER_LABEL } from '@/lib/vidsync';
+import {
+    buildVidSyncUrl,
+    loadVidSyncServer,
+    saveVidSyncServer,
+    vidsyncTmdbNumber,
+    VIDSYNC_SERVER_LABEL,
+    VIDSYNC_SERVERS,
+} from '@/lib/vidsync';
 import { getTvSeasons } from '@/lib/tvEpisodes';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
@@ -130,6 +137,14 @@ export default function MovieScreen() {
     /** Continue Watching: the entry being played and the position to resume. */
     const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
     const [resumeAt, setResumeAt] = useState(0);
+    /**
+     * Server 3 (VidSync) ki upstream line. Ek line ruk ruk kar chalti ho to
+     * doosri turant (owner, laptop: "bahut ruk ruk kar chalta hai"). Chuni hui
+     * line browser me yaad rehti hai — agli baar wahi khulti hai.
+     */
+    const [vidsyncServer, setVidsyncServer] = useState<number>(() => loadVidSyncServer());
+    /** Abhi chal raha playhead — line badalne par isi jagah se continue. */
+    const livePlayheadRef = useRef(0);
 
     useEffect(() => () => setPlayerChromeHidden(false), []);
 
@@ -472,6 +487,7 @@ export default function MovieScreen() {
                     mediaType,
                     season: mediaType === 'tv' ? season : undefined,
                     episode: mediaType === 'tv' ? episode : undefined,
+                    server: vidsyncServer,
                 }) || ''
             );
         }
@@ -492,7 +508,7 @@ export default function MovieScreen() {
         } catch {
             return '';
         }
-    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings, vidsyncServer]);
 
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
@@ -732,7 +748,24 @@ export default function MovieScreen() {
                 nextServerName={nextServer ? serverLabel(nextServer) : undefined}
                 fallbackUrl={officialNetflixUrl}
                 resumeAt={resumeAt}
+                /**
+                 * Server 3 ke upstream lines — sirf tab jab VidSync chal raha
+                 * ho. Line badalne par iframe reload hota hai, isliye playhead
+                 * yaad rakh kar wahi se resume karate hain.
+                 */
+                lineOptions={currentProvider === 'vidsync' ? VIDSYNC_SERVERS : undefined}
+                lineValue={vidsyncServer}
+                onPickLine={
+                    currentProvider === 'vidsync'
+                        ? (line: number) => {
+                              setResumeAt(Math.max(0, Math.floor(livePlayheadRef.current)));
+                              setVidsyncServer(line);
+                              saveVidSyncServer(line);
+                          }
+                        : undefined
+                }
                 onProgress={(info) => {
+                    livePlayheadRef.current = info.seconds;
                     if (!activeEntryId) return;
                     updateWatchPosition(activeEntryId, info.seconds, info.duration);
                 }}

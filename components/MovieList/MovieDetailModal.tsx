@@ -24,7 +24,13 @@ import {
     MOVIEBOX_SERVER_LABEL,
 } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
-import { buildVidSyncUrl, VIDSYNC_SERVER_LABEL } from '@/lib/vidsync';
+import {
+    buildVidSyncUrl,
+    loadVidSyncServer,
+    saveVidSyncServer,
+    VIDSYNC_SERVER_LABEL,
+    VIDSYNC_SERVERS,
+} from '@/lib/vidsync';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import type { Movie } from '@/types/movie';
@@ -126,6 +132,13 @@ export function MovieDetailModal({
     const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     /** Position the media continues from — 0 means "from the beginning". */
     const [resumeSec, setResumeSec] = useState(resumeAt);
+    /**
+     * Server 3 (VidSync) ki upstream line (1/2/3). Ek line ruk ruk kar chalti
+     * ho to doosri turant — chuni hui line yaad rehti hai.
+     */
+    const [vidsyncServer, setVidsyncServer] = useState<number>(() => loadVidSyncServer());
+    /** Abhi ka playhead — line badalne par isi jagah se continue. */
+    const livePlayheadRef = useRef(0);
     /**
      * Which playback server is on: the regular embed providers, or M2Box
      * (MovieBox ka poora watch page, sirf-player crop me).
@@ -299,8 +312,9 @@ export function MovieDetailModal({
             mediaType: movie.mediaType === 'tv' ? 'tv' : 'movie',
             season: episodeRef?.season ?? season,
             episode: episodeRef?.episode ?? 1,
+            server: vidsyncServer,
         });
-    }, [movie, episodeRef, season]);
+    }, [movie, episodeRef, season, vidsyncServer]);
 
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
@@ -459,7 +473,20 @@ export function MovieDetailModal({
                 fallbackUrl={officialUrlFor(movie)}
                 resumeAt={resumeSec}
                 serverName={activeServer === 'vidsync' ? `Server 3 · ${VIDSYNC_SERVER_LABEL}` : 'Nxsha'}
+                /** VidSync ki upstream lines — sirf Server 3 chalne par. */
+                lineOptions={activeServer === 'vidsync' ? VIDSYNC_SERVERS : undefined}
+                lineValue={vidsyncServer}
+                onPickLine={
+                    activeServer === 'vidsync'
+                        ? (line: number) => {
+                              setResumeSec(Math.max(0, Math.floor(livePlayheadRef.current)));
+                              setVidsyncServer(line);
+                              saveVidSyncServer(line);
+                          }
+                        : undefined
+                }
                 onProgress={(info) => {
+                    livePlayheadRef.current = info.seconds;
                     if (!activeEntry) return;
                     updateWatchPosition(activeEntry.id, info.seconds, info.duration);
                 }}

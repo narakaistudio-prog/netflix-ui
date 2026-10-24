@@ -39,17 +39,23 @@ jest.mock('@/components/MovieboxPagePlayer', () => {
 jest.mock('@/components/EmbedPlayer', () => {
     const ReactLocal = require('react');
     return {
-        EmbedPlayer: ({ src, serverName }: any) =>
+        EmbedPlayer: ({ src, serverName, lineOptions, lineValue, onPickLine }: any) =>
             ReactLocal.createElement('div', {
                 'data-testid': 'embed-player',
                 'data-src': src,
                 'data-server': serverName || '',
+                'data-line-options': lineOptions ? lineOptions.join(',') : '',
+                'data-line-value': lineValue === undefined ? '' : String(lineValue),
+                'data-has-line-picker': onPickLine ? '1' : '0',
             }),
     };
 });
 
 import {
     buildVidSyncUrl,
+    loadVidSyncServer,
+    saveVidSyncServer,
+    vidsyncServerNumber,
     vidsyncTmdbNumber,
     VIDSYNC_BASE_URL,
     VIDSYNC_NETFLIX_ACCENT,
@@ -104,9 +110,42 @@ describe('buildVidSyncUrl', () => {
         expect(url).toBe(`${VIDSYNC_BASE_URL}/embed/movie/155?primarycolor=E50914`);
     });
 
+    it('upstream line (`server=`) URL me jaati hai', () => {
+        const url = buildVidSyncUrl({ tmdbId: 155, mediaType: 'movie', server: 2 });
+        expect(url).toContain('server=2');
+        expect(buildVidSyncUrl({ tmdbId: 155, mediaType: 'movie', server: 3 })).toContain('server=3');
+    });
+
+    it('galat line number URL me kachra nahi daalta', () => {
+        expect(buildVidSyncUrl({ tmdbId: 155, mediaType: 'movie', server: 0 })).not.toContain('server=');
+        expect(buildVidSyncUrl({ tmdbId: 155, mediaType: 'movie', server: 9 })).not.toContain('server=');
+        expect(buildVidSyncUrl({ tmdbId: 155, mediaType: 'movie', server: null })).not.toContain('server=');
+    });
+
     it('TMDB id na ho to null — server dikhana hi galat hoga', () => {
         expect(buildVidSyncUrl({ tmdbId: 'imdb-only', mediaType: 'movie' })).toBeNull();
         expect(buildVidSyncUrl({ tmdbId: null, mediaType: 'tv', season: 1, episode: 1 })).toBeNull();
+    });
+});
+
+describe('upstream line (server) helpers', () => {
+    it('sirf 1/2/3 valid hain', () => {
+        expect(vidsyncServerNumber(1)).toBe(1);
+        expect(vidsyncServerNumber('3')).toBe(3);
+        expect(vidsyncServerNumber(0)).toBeNull();
+        expect(vidsyncServerNumber(4)).toBeNull();
+        expect(vidsyncServerNumber('abc')).toBeNull();
+        expect(vidsyncServerNumber(null)).toBeNull();
+    });
+
+    it('chuni hui line yaad rehti hai (agli baar wahi)', () => {
+        saveVidSyncServer(3);
+        expect(loadVidSyncServer()).toBe(3);
+        saveVidSyncServer(2);
+        expect(loadVidSyncServer()).toBe(2);
+        // Bekaar value purani choice ko bigaadti nahi.
+        saveVidSyncServer(99);
+        expect(loadVidSyncServer()).toBe(2);
     });
 });
 
@@ -163,6 +202,8 @@ describe('phone detail screen par VidSync chip', () => {
     };
 
     beforeEach(() => {
+        // Pichle test ki chuni hui line yaad na rahe — warna default badal jata hai.
+        window.localStorage.clear();
         container = document.createElement('div');
         document.body.appendChild(container);
         root = createRoot(container);
@@ -194,6 +235,10 @@ describe('phone detail screen par VidSync chip', () => {
         expect(embed.getAttribute('data-src')).toContain('vidsync.pro/embed/movie/1441228');
         expect(embed.getAttribute('data-src')).toContain('dubLang=hindi');
         expect(embed.getAttribute('data-server')).toContain('VidSync');
+        // Ruk-ruk kar chalne wala ilaaj: 1/2/3 lines player ko di jaati hain.
+        expect(embed.getAttribute('data-line-options')).toBe('1,2,3');
+        expect(embed.getAttribute('data-has-line-picker')).toBe('1');
+        expect(embed.getAttribute('data-src')).toContain('server=1');
     });
 
     it('tmdb id na ho to VidSync chip dikhta hi nahi', () => {
@@ -215,6 +260,8 @@ describe('source wiring', () => {
         expect(src).toContain("if (currentProvider === 'vidsync')");
         expect(src).toContain('buildVidSyncUrl({');
         expect(src).toContain('vidsyncAvailable');
+        expect(src).toContain('lineOptions={currentProvider === \'vidsync\' ? VIDSYNC_SERVERS : undefined}');
+        expect(src).toContain('saveVidSyncServer(');
     });
 
     it('detail screen bhi wahi helper use karta hai (do jagah do system nahi)', () => {
