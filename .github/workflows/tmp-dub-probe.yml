@@ -1,0 +1,33 @@
+name: tmp dub probe
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: app base url
+        required: true
+        default: https://net-2gn8m6sx0-ki15.vercel.app
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: chain
+        env:
+          BASE: ${{ inputs.base }}
+        run: |
+          set -x
+          echo "--- resolve"
+          RES=$(curl -sS -m 30 "$BASE/api/moviebox-resolve?title=Animal&year=2023&type=movie")
+          echo "$RES" | head -c 1200
+          SUB=$(echo "$RES" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).subjectId||'')}catch(e){console.log('')}})")
+          echo "SUB=$SUB"
+          echo "--- audio"
+          curl -sS -m 30 "$BASE/api/moviebox-audio?subjectId=$SUB" | head -c 1500
+          echo
+          echo "--- play probe"
+          curl -sS -m 60 "$BASE/api/moviebox-play?subjectId=$SUB&se=1&ep=1&probe=1" | head -c 3000
+          echo
+          echo "--- play probe 0/0"
+          curl -sS -m 60 "$BASE/api/moviebox-play?subjectId=$SUB&se=0&ep=0&probe=1" | head -c 2000
+          echo
+          echo "--- headers (any 401?)"
+          curl -sS -o /dev/null -D - -m 20 "$BASE/api/moviebox-play?subjectId=$SUB&probe=1" | head -20
