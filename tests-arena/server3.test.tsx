@@ -51,9 +51,13 @@ jest.mock('@/components/EmbedPlayer', () => {
 
 import {
     buildServer3Url,
+    loadServer3Provider,
+    nextServer3Provider,
+    saveServer3Provider,
     server3Label,
     server3TmdbNumber,
     SERVER3_DEFAULT_PROVIDER,
+    SERVER3_ORDER,
     SERVER3_PROVIDERS,
 } from '../lib/server3';
 import { buildServerCycle, hasServerSwitcher, nextServerIn } from '../lib/playbackServers';
@@ -114,6 +118,33 @@ describe('buildServer3Url', () => {
     });
 });
 
+describe('source switch (ek pill, agla provider)', () => {
+    it('order poora cycle karta hai aur wapas default par aata hai', () => {
+        let current = SERVER3_DEFAULT_PROVIDER;
+        const seen = [current];
+        for (let i = 0; i < SERVER3_ORDER.length - 1; i += 1) {
+            current = nextServer3Provider(current);
+            seen.push(current);
+        }
+        expect(seen).toEqual([...SERVER3_ORDER]);
+        expect(nextServer3Provider(current)).toBe(SERVER3_DEFAULT_PROVIDER);
+    });
+
+    it('chuna hua source yaad rehta hai, bekaar value purani choice nahi bigaadti', () => {
+        window.localStorage.clear();
+        expect(loadServer3Provider()).toBe(SERVER3_DEFAULT_PROVIDER);
+        saveServer3Provider('vidlink');
+        expect(loadServer3Provider()).toBe('vidlink');
+        saveServer3Provider('nonsense');
+        expect(loadServer3Provider()).toBe('vidlink');
+    });
+
+    it('har provider ka label unique hai (pill par confusion na ho)', () => {
+        const labels = SERVER3_ORDER.map((id) => server3Label(id));
+        expect(new Set(labels).size).toBe(labels.length);
+    });
+});
+
 describe('server cycle me Server 3', () => {
     it('MovieBox ke saath sabse aakhir me aata hai (default nahi)', () => {
         const cycle = buildServerCycle({
@@ -167,6 +198,8 @@ describe('phone detail screen par Server 3 chip', () => {
     };
 
     beforeEach(() => {
+        // Pichle test ka chuna hua source yaad na rahe.
+        window.localStorage.clear();
         container = document.createElement('div');
         document.body.appendChild(container);
         root = createRoot(container);

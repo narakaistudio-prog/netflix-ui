@@ -28,7 +28,14 @@ import {
 } from '@/lib/embeds';
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
-import { buildServer3Url, server3Label, server3TmdbNumber } from '@/lib/server3';
+import {
+    buildServer3Url,
+    loadServer3Provider,
+    nextServer3Provider,
+    saveServer3Provider,
+    server3Label,
+    server3TmdbNumber,
+} from '@/lib/server3';
 import { getTvSeasons } from '@/lib/tvEpisodes';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
@@ -130,6 +137,11 @@ export default function MovieScreen() {
     /** Continue Watching: the entry being played and the position to resume. */
     const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
     const [resumeAt, setResumeAt] = useState(0);
+    /**
+     * Server 3 ka source (Videasy / VidFast …). Ek provider ruk ruk kar chale
+     * to player ke pill se agla — chuni hui choice browser me yaad rehti hai.
+     */
+    const [server3Provider, setServer3Provider] = useState(() => loadServer3Provider());
 
     useEffect(() => () => setPlayerChromeHidden(false), []);
 
@@ -472,6 +484,7 @@ export default function MovieScreen() {
                     mediaType,
                     season: mediaType === 'tv' ? season : undefined,
                     episode: mediaType === 'tv' ? episode : undefined,
+                    provider: server3Provider,
                 }) || ''
             );
         }
@@ -492,7 +505,7 @@ export default function MovieScreen() {
         } catch {
             return '';
         }
-    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings, server3Provider]);
 
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
@@ -730,6 +743,16 @@ export default function MovieScreen() {
                 onSwitchProvider={!directFallback && hasServerSwitcher(cycle) ? handleSwitchProvider : undefined}
                 serverName={currentServerLabel}
                 nextServerName={nextServer ? serverLabel(nextServer) : undefined}
+                sourceName={currentProvider === 'server3' ? server3Label(server3Provider) : undefined}
+                onCycleSource={
+                    currentProvider === 'server3'
+                        ? () => {
+                              const nextProvider = nextServer3Provider(server3Provider);
+                              setServer3Provider(nextProvider);
+                              saveServer3Provider(nextProvider);
+                          }
+                        : undefined
+                }
                 fallbackUrl={officialNetflixUrl}
                 resumeAt={resumeAt}
                 onProgress={(info) => {

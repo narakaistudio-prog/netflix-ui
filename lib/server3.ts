@@ -83,8 +83,63 @@ export const SERVER3_PROVIDERS: Record<Server3ProviderId, ProviderSpec> = {
     },
 };
 
-/** Default provider — probe me jo sabse tez/stable nikla (docs/server3.md). */
+/**
+ * Default provider.
+ *
+ * Kyun Videasy: sabse zyada sites isi par chalti hain (uptime/reputation),
+ * TTFB sabse tez bucket me (205–514 ms), koi `X-Frame-Options`/CSP block nahi,
+ * aur player ke andar hi 10+ source + quality switch hota hai. Detail:
+ * `docs/server3.md` ka probe table.
+ *
+ * ⚠️ Sach: "video sach me chalta hai" main CI se prove nahi kar paya — runner
+ * ka IP datacenter hai aur ye players human/VPN check karte hain. Isliye ek
+ * provider par bet nahi lagaya: neeche `SERVER3_ORDER` se user ek tap me
+ * agla provider chun sakta hai (Videasy → VidFast → VidLink → MyCineBy).
+ */
 export const SERVER3_DEFAULT_PROVIDER: Server3ProviderId = 'videasy';
+
+/** Ek tap me agla source — order = preference. */
+export const SERVER3_ORDER: readonly Server3ProviderId[] = [
+    'videasy',
+    'vidfast',
+    'vidlink',
+    'mycineby',
+    'vaplayer',
+];
+
+/** Agla provider (pill ka label + tap). */
+export function nextServer3Provider(current: Server3ProviderId): Server3ProviderId {
+    const index = SERVER3_ORDER.indexOf(current);
+    if (index < 0) return SERVER3_DEFAULT_PROVIDER;
+    return SERVER3_ORDER[(index + 1) % SERVER3_ORDER.length];
+}
+
+/** Browser me chuna hua source yaad rehta hai (agli baar wahi khulta hai). */
+export const SERVER3_PROVIDER_STORAGE_KEY = 'server3_provider_v1';
+
+function isProviderId(value: unknown): value is Server3ProviderId {
+    return typeof value === 'string' && value in SERVER3_PROVIDERS;
+}
+
+export function loadServer3Provider(): Server3ProviderId {
+    try {
+        if (typeof window === 'undefined' || !window.localStorage) return SERVER3_DEFAULT_PROVIDER;
+        const raw = window.localStorage.getItem(SERVER3_PROVIDER_STORAGE_KEY);
+        return isProviderId(raw) ? raw : SERVER3_DEFAULT_PROVIDER;
+    } catch {
+        return SERVER3_DEFAULT_PROVIDER;
+    }
+}
+
+export function saveServer3Provider(provider: Server3ProviderId): void {
+    if (!isProviderId(provider)) return;
+    try {
+        if (typeof window === 'undefined' || !window.localStorage) return;
+        window.localStorage.setItem(SERVER3_PROVIDER_STORAGE_KEY, provider);
+    } catch {
+        // Private mode / storage band — chupchaap ignore.
+    }
+}
 
 /** Server switcher ke liye chhota naam. */
 export const SERVER3_SERVER_LABEL = SERVER3_PROVIDERS[SERVER3_DEFAULT_PROVIDER].label;
