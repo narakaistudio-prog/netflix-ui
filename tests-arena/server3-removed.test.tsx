@@ -64,7 +64,9 @@ describe('Server 3 poora gaya', () => {
             providers: BUILTIN_SERVERS,
         });
         expect(full.some((id) => String(id).includes('server3'))).toBe(false);
-        expect(full).toEqual(['nxsha', 'nhd', 'custom', 'moviebox']);
+        // M2Box copy (`moviebox2`) ab MovieBox ke turant baad aata hai — wo
+        // asli MovieBox backend ka doosra domain hai, dead slot nahi.
+        expect(full).toEqual(['nxsha', 'nhd', 'custom', 'moviebox', 'moviebox2']);
     });
 });
 

@@ -1,5 +1,6 @@
 /**
- * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box)
+ * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box,
+ * M2Box 2 = usi MovieBox backend ka doosra domain — `MOVIEBOX_COPY_SITE`)
  * ======================================================================
  * Rules:
  *   - Jis title ka MovieBox link nahi hai, us par **M2Box ka button nahi**
@@ -15,7 +16,7 @@
 
 import type { ProviderId } from './embeds';
 
-export type PlaybackServerId = ProviderId | 'moviebox';
+export type PlaybackServerId = ProviderId | 'moviebox' | 'moviebox2';
 
 export const BUILTIN_SERVERS: readonly ProviderId[] = ['nxsha', 'nhd'];
 
@@ -44,7 +45,7 @@ export function buildServerCycle({
         defaultProvider === 'moviebox' && !movieboxAvailable ? 'nxsha' : defaultProvider;
     const list: PlaybackServerId[] = [];
 
-    if (rowIsMoviebox && movieboxAvailable) list.push('moviebox');
+    if (rowIsMoviebox && movieboxAvailable) list.push('moviebox', 'moviebox2');
     list.push(wanted);
 
     // M2Box na ho to bas Server 1 — koi switch option nahi.
@@ -57,6 +58,9 @@ export function buildServerCycle({
     }
     if (customAvailable) list.push('custom');
     list.push('moviebox');
+    // M2Box ka copy — same backend, doosra domain. MovieBox ke turant baad,
+    // taaki ek na chale to ek tap me doosra (owner: "moviebox ka copy dhundo").
+    if (movieboxAvailable) list.push('moviebox2');
     return Array.from(new Set(list));
 }
 
