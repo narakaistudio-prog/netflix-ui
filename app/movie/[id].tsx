@@ -718,6 +718,8 @@ export default function MovieScreen() {
                     episode={mediaType === 'tv' ? episode : undefined}
                     title={movie.title}
                     onClose={handleCloseInline}
+                    nextServerName={nextServer ? serverLabel(nextServer) : undefined}
+                    onSwitchServer={handleSwitchProvider}
                     onUnavailable={() => {
                         // NetMirror par nahi mila / stream fail — dead button nahi,
                         // seedha Server 1 (Nxsha) par.

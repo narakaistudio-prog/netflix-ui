@@ -40,6 +40,9 @@ interface NetmirrorPlayerProps {
     onUnavailable?: (reason: string) => void;
     /** Pehle se laaye gaye streams (parent cache) — optional. */
     initialStreams?: DirectStream[];
+    /** Agla server (pill ka label) — movie page par cycle ke liye. */
+    nextServerName?: string;
+    onSwitchServer?: () => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -54,6 +57,8 @@ export function NetmirrorPlayer({
     onProgress,
     onUnavailable,
     initialStreams,
+    nextServerName,
+    onSwitchServer,
 }: NetmirrorPlayerProps) {
     const hasId = Boolean(netmirrorTmdbNumber(tmdbId));
     const [state, setState] = useState<'loading' | 'ready' | 'empty'>(
@@ -157,11 +162,24 @@ export function NetmirrorPlayer({
                     ) : (
                         <View />
                     )}
-                    <View style={styles.badge}>
-                        <Text style={styles.badgeText}>
-                            {NETMIRROR_LABEL}
-                            {state === 'ready' && quality ? ` · ${quality}p` : ''}
-                        </Text>
+                    <View style={styles.rightBar}>
+                        <View style={styles.badge}>
+                            <Text style={styles.badgeText}>
+                                {NETMIRROR_LABEL}
+                                {state === 'ready' && quality ? ` · ${quality}p` : ''}
+                            </Text>
+                        </View>
+                        {nextServerName && onSwitchServer ? (
+                            <Pressable
+                                onPress={onSwitchServer}
+                                style={styles.switchPill}
+                                accessibilityRole="button"
+                                accessibilityLabel={`Switch to ${nextServerName}`}
+                                testID="netmirror-switch-server"
+                            >
+                                <Text style={styles.badgeText}>{nextServerName} →</Text>
+                            </Pressable>
+                        ) : null}
                     </View>
                 </View>
             ) : null}
@@ -216,4 +234,14 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(255,255,255,0.25)',
     },
     badgeText: { color: '#fff', fontSize: 11, fontWeight: '700' },
+    rightBar: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    switchPill: {
+        height: 28,
+        paddingHorizontal: 10,
+        borderRadius: 14,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(229,9,20,0.75)',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'rgba(255,255,255,0.3)',
+    },
 });
