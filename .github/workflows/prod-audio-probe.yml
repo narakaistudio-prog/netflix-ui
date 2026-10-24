@@ -1,0 +1,27 @@
+name: Prod audio probe (temporary)
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Probe deployed endpoints
+        run: node scripts/probe-prod-netmirror-audio.mjs 2>&1 | tee prod-probe.log
+      - name: Post result
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo '### Prod audio probe'; echo '```'; cat prod-probe.log; echo '```'; } > body.md
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file body.md || true
+          gh issue comment 98 --body-file body.md || true
