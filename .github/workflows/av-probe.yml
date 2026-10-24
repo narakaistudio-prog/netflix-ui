@@ -1,0 +1,36 @@
+name: AV probe (temporary)
+
+# Diagnostic only — subtitles ke URL aur dub (audio language) ka sach.
+# Kuch deploy nahi karta. Result PR comment me post hota hai.
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Probe
+        run: node scripts/probe-av.mjs 2>&1 | tee av-probe.log
+      - name: Post result as PR comment
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          {
+            echo '### AV probe (subtitles + dub)'
+            echo '```'
+            tail -c 12000 av-probe.log || true
+            echo '```'
+          } > body.md
+          gh pr comment "$PR" --body-file body.md || cat body.md
