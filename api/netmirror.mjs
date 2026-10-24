@@ -132,7 +132,18 @@ export function normalizeNetmirror(json) {
         .slice(0, 12)
     : [];
 
-  return { ok: true, title: json.title, year: json.year, streams, captions };
+  // `subjectId`/`detailPath` MovieBox ke bhi wahi ids hote hain (NetMirror usi
+  // backend ka front hai) — inse **dub (audio language)** list mil jati hai,
+  // wo `api/moviebox-audio` se aati hai.
+  return {
+    ok: true,
+    title: json.title,
+    year: json.year,
+    subjectId: typeof json.subjectId === 'string' ? json.subjectId : undefined,
+    detailPath: typeof json.detailPath === 'string' ? json.detailPath : undefined,
+    streams,
+    captions,
+  };
 }
 
 const cache = new Map();

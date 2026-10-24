@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MovieboxDirectPlayer } from './MovieboxDirectPlayer';
@@ -10,7 +10,8 @@ import {
     type NetmirrorResult,
     type NetmirrorSubtitle,
 } from '@/lib/netmirror';
-import type { DirectStream } from '@/lib/movieboxDirect';
+import { resolveDirectStreams, type DirectStream } from '@/lib/movieboxDirect';
+import { fetchAudioLanguages, type AudioTrack } from '@/lib/movieboxAudio';
 
 /**
  * "NetMirror" server ka player — apna `<video>`, koi iframe nahi.
@@ -20,6 +21,10 @@ import type { DirectStream } from '@/lib/movieboxDirect';
  * NetMirror ka REST route seedhe MP4 links deta hai (1080p tak). Wo links
  * `api/netmirror` (hamara same-origin function) se aate hain, video CDN se
  * seedha browser tak jaata hai — isliye na ad, na popup, na iframe ka jhanjhat.
+ *
+ * Multi-language dub: provider par har dub apna subject hota hai, isliye list
+ * `api/moviebox-audio` se aati hai aur chunne par us dub ke naye streams lagte
+ * hain (`resolveDirectStreams`). Original wahi rehta hai jo chal raha tha.
  *
  * Teen halat:
  *   1. `loading` — streams aa rahe hain (chhota spinner).
@@ -72,6 +77,12 @@ export function NetmirrorPlayer({
     const [streams, setStreams] = useState<DirectStream[]>(initialStreams ?? []);
     /** Multi-language subtitles (NetMirror ke `captions[]` se). */
     const [subtitles, setSubtitles] = useState<NetmirrorSubtitle[]>([]);
+    /** Multi-language audio (dub) — provider jo deta hai, utni hi. */
+    const [audio, setAudio] = useState<AudioTrack[]>([]);
+    const [activeAudio, setActiveAudio] = useState<string | null>(null);
+    /** Audio badalne ke baad isi jagah se chale. */
+    const [startAt, setStartAt] = useState(0);
+    const currentTimeRef = useRef(0);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
@@ -94,6 +105,22 @@ export function NetmirrorPlayer({
             if (result.ok && result.streams.length) {
                 setStreams(result.streams);
                 setState('ready');
+                // Dub list (agar provider deta hai) — background me, fail ho to
+                // sirf subtitles rehte hain (koi jhootha option nahi).
+                if (result.subjectId) {
+                    fetchAudioLanguages({
+                        subjectId: result.subjectId,
+                        detailPath: result.detailPath,
+                    }).then((answer) => {
+                        if (cancelled) return;
+                        setAudio(answer.languages);
+                        const current =
+                            answer.languages.find((item) => item.subjectId === result.subjectId) ??
+                            answer.languages.find((item) => item.original) ??
+                            answer.languages[0];
+                        setActiveAudio(current ? current.subjectId : null);
+                    });
+                }
                 return;
             }
             setError(
@@ -110,6 +137,24 @@ export function NetmirrorPlayer({
         };
     }, [hasId, tmdbId, mediaType, season, episode, initialStreams]);
 
+    /** Audio (dub) chuno — us language ke subject se naye streams. */
+    const selectAudio = useCallback(
+        async (track: AudioTrack) => {
+            const answer = await resolveDirectStreams({
+                subjectId: track.subjectId,
+                detailPath: track.detailPath,
+                se: mediaType === 'tv' ? (season ?? 1) : 1,
+                ep: mediaType === 'tv' ? (episode ?? 1) : 1,
+            });
+            if (!answer.ok || !answer.streams.length) return false;
+            setStartAt(currentTimeRef.current);
+            setStreams(answer.streams);
+            setActiveAudio(track.subjectId);
+            return true;
+        },
+        [mediaType, season, episode],
+    );
+
     const fallback = useCallback(() => {
         onUnavailable?.(error || 'not-added');
     }, [onUnavailable, error]);
@@ -123,9 +168,16 @@ export function NetmirrorPlayer({
                     year={year}
                     onBack={onClose}
                     captions={subtitles}
+                    audioTracks={audio}
+                    activeAudio={activeAudio}
+                    onAudioSelect={selectAudio}
+                    startAt={startAt}
                     nextServerName={nextServerName}
                     onSwitchServer={onSwitchServer}
-                    onProgress={onProgress}
+                    onProgress={(info) => {
+                        currentTimeRef.current = info.currentTime;
+                        onProgress?.(info);
+                    }}
                     onUnavailable={() => {
                         setError('Stream did not play');
                         setState('empty');

@@ -53,6 +53,9 @@ export interface NetmirrorResult {
     title?: string;
     streams: DirectStream[];
     captions: Array<{ lang: string; name: string; url: string }>;
+    /** MovieBox ke ids (NetMirror usi backend ka front hai) — dub isse milta hai. */
+    subjectId?: string;
+    detailPath?: string;
     reason?: 'bad-id' | 'not-added' | 'network' | 'rate';
     error?: string;
 }
@@ -129,6 +132,8 @@ export function normalizeNetmirrorResult(payload: unknown): NetmirrorResult {
         streams,
         captions,
         title: typeof json.title === 'string' ? json.title : undefined,
+        subjectId: typeof json.subjectId === 'string' ? json.subjectId : undefined,
+        detailPath: typeof json.detailPath === 'string' ? json.detailPath : undefined,
         reason: streams.length ? undefined : 'not-added',
     };
 }
@@ -139,6 +144,8 @@ interface CacheEntry {
     streams: DirectStream[];
     captions: NetmirrorResult['captions'];
     title?: string;
+    subjectId?: string;
+    detailPath?: string;
     reason?: NetmirrorResult['reason'];
 }
 
@@ -211,6 +218,8 @@ export async function fetchNetmirrorStreams(
                 streams: hit.streams,
                 captions: hit.captions,
                 title: hit.title,
+                subjectId: hit.subjectId,
+                detailPath: hit.detailPath,
                 reason: hit.reason,
             };
         }
@@ -245,6 +254,8 @@ export async function fetchNetmirrorStreams(
         streams: result.streams,
         captions: result.captions,
         title: result.title,
+        subjectId: result.subjectId,
+        detailPath: result.detailPath,
         reason: result.reason,
     };
     writeCache(cache);

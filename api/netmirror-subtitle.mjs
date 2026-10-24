@@ -1,16 +1,21 @@
 /**
  * Subtitle bridge — provider ke SRT ko browser ke VTT me
  * ======================================================
- * Owner: *"multilanguage hai to wo bhi do"*.
+ * Owner: *"multilanguage hai to wo bhi do"* aur *"subtitle kam nahi kar raha"*.
  *
  * NetMirror ke jawab me `captions[]` hota hai (`{lang, name, url}`), par:
- *   1. URL aksar relative hota hai (`/api/proxy/video?url=…`) — aur
- *   2. file **SRT** hoti hai, jabki `<track>` ko **WebVTT** chahiye.
- *   3. `net27.cc` par CORS header nahi (probe se verify) — browser seedha
- *      `track src` nahi laga sakta.
+ *   1. URL aksar uske apne proxy ka hota hai —
+ *      `/api/proxy/video?url=https%3A%2F%2Fcacdn.hakunaymatata.com%2F…srt`,
+ *   2. wo proxy route **429** deta hai (Cloudflare rate limit — runner probe
+ *      se verify, 24 Oct), isi liye subtitle chalta nahi tha,
+ *   3. file **SRT** hoti hai, jabki `<track>`/parser ko **WebVTT** chahiye,
+ *   4. `cacdn…` par CORS header nahi — browser seedha fetch nahi kar sakta.
  *
- * Isliye ye chhota same-origin function: sirf subtitle file laata hai, SRT →
- * VTT badalta hai. **Video ka koi proxy nahi** — wahi seedha CDN se chalta hai.
+ * Isliye ye chhota same-origin function:
+ *   - proxy URL ke andar se **asli CDN URL** nikaalta hai,
+ *   - sirf provider ke CDN hosts se file laata hai (khula proxy nahi),
+ *   - SRT → VTT badal deta hai.
+ * **Video ka koi proxy nahi** — wahi seedha CDN se chalta hai.
  *
  * GET /api/netmirror-subtitle?url=<absolute subtitle url>
  *   -> 200 `text/vtt`  |  400 (galat host)  |  502 (upstream fail)
@@ -33,6 +38,31 @@ function timeoutSignal(ms) {
   return typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
     ? AbortSignal.timeout(ms)
     : undefined;
+}
+
+/** `/api/proxy/video?url=…` jaisa proxy URL kholo; warna jo hai wahi. */
+export function resolveSubtitleTarget(rawUrl) {
+  let url;
+  try {
+    url = new URL(String(rawUrl || ''));
+  } catch {
+    return null;
+  }
+  const inner = url.searchParams.get('url');
+  if (inner && /^https?:\/\//i.test(inner)) {
+    try {
+      return new URL(inner);
+    } catch {
+      return null;
+    }
+  }
+  return url;
+}
+
+/** Provider CDN host allowed hai? (www. hata kar, https lazmi.) */
+export function isAllowedSubtitleHost(url) {
+  if (!url || url.protocol !== 'https:') return false;
+  return ALLOWED_HOSTS.includes(url.hostname.replace(/^www\./, ''));
 }
 
 /** `±HH:MM:SS,mmm` / `MM:SS,mmm` → WebVTT timestamp (`00:01:02.500`). */
@@ -87,21 +117,25 @@ export function srtToVtt(input) {
 
 export default async function handler(req, res) {
   const raw = req.query?.url;
-  let target;
-  try {
-    target = new URL(String(Array.isArray(raw) ? raw[0] : raw || ''));
-  } catch {
+  const target = resolveSubtitleTarget(Array.isArray(raw) ? raw[0] : raw);
+  if (!target) {
     res.status(400).json({ ok: false, error: 'url chahiye' });
     return;
   }
-  if (target.protocol !== 'https:' || !ALLOWED_HOSTS.includes(target.hostname.replace(/^www\./, ''))) {
+  if (!isAllowedSubtitleHost(target)) {
     res.status(400).json({ ok: false, error: 'host allowed nahi' });
     return;
   }
 
   try {
     const upstream = await fetch(target.toString(), {
-      headers: { 'User-Agent': UA, Accept: 'text/plain,*/*' },
+      headers: {
+        'User-Agent': UA,
+        Accept: 'text/plain,*/*',
+        // Provider ke CDN par referer kabhi-kabhi chahiye hota hai (probe:
+        // dono surat me chalta hai — isliye bhej dete hain).
+        Referer: 'https://net27.cc/',
+      },
       signal: timeoutSignal(FETCH_TIMEOUT_MS),
       redirect: 'follow',
     });
@@ -110,9 +144,14 @@ export default async function handler(req, res) {
       return;
     }
     const body = await upstream.text();
+    const vtt = srtToVtt(body);
+    if (!/^WEBVTT/.test(vtt) || vtt.length < 16) {
+      res.status(502).json({ ok: false, error: 'subtitle parse nahi hua' });
+      return;
+    }
     res.setHeader('Content-Type', 'text/vtt; charset=utf-8');
     res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
-    res.status(200).send(srtToVtt(body));
+    res.status(200).send(vtt);
   } catch (error) {
     res.status(502).json({ ok: false, error: String(error?.message || error) });
   }

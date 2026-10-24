@@ -1,28 +1,34 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import type { DirectStream } from '@/lib/movieboxDirect';
 import { MOVIEBOX_SKIP_SECONDS, registerMovieboxSeek } from '@/lib/movieboxSeekBridge';
 import { enterPlayerFullscreen } from '@/lib/playerFullscreen';
+import { cueAt, parseVtt, type SubtitleCue } from '@/lib/subtitles';
+import type { AudioTrack } from '@/lib/movieboxAudio';
 
 /**
  * Direct player (MovieBox / NetMirror) — Netflix jaisa poora chrome
  * ==================================================================
- * Owner: *"player ke controls aisa bnao"* (Netflix screenshot) aur
- * *"multilanguage hai to wo bhi do"*.
+ * Owner: *"player ke control image 2 ko sahi se dekh kar bilkul waisa banao"*
+ * (Netflix ka screenshot) + *"multilanguage dub chahiye tha"*.
  *
  * Video hamare hi document ka element hai (`<video>`), isliye controls bhi
  * apne — koi iframe nahi:
  *
  *   TOP    back arrow · "You're Watching" · Title (Year) · audio/subtitles ·
- *          fullscreen
- *   BOTTOM seek bar + time, phir play/pause · −10 · +10 · volume | CC ·
- *          settings (quality / speed) · fullscreen
+ *          fullscreen                     (patla black gradient scrim, bar nahi)
+ *   BOTTOM seek bar + time, phir play/pause · ⟲10 · 10⟳ · volume |
+ *          CC/subtitles · settings (audio / quality / speed) · fullscreen
  *
- * MULTI-LANGUAGE: jahan provider audio/subtitle tracks deta hai (NetMirror ke
- * `captions[]`), CC menu me saari bhashayein aati hain — chunne par `<track>`
- * lag jata hai. Audio track tab hi dikhta hai jab provider de (jhoothi list
- * nahi banate).
+ * MULTI-LANGUAGE:
+ *   - **Audio (dub)** — provider par har dub apna subject hota hai, isliye
+ *     list `api/moviebox-audio` se aati hai aur chunne par naye streams lagte
+ *     hain (`onAudioSelect`). Jis title par nahi hai, wahan section hi nahi.
+ *   - **Subtitles** — `/api/netmirror-subtitle` (SRT→VTT) se file aati hai,
+ *     yahan parse hoti hai aur **apne overlay** me dikhti hai (native `<track>`
+ *     ka style control me nahi tha aur wahi chup-chaap fail hota tha).
  *
  * Gestures waise hi: baayein/daayein double-tap = ±10s, beech = play/pause.
  */
@@ -31,7 +37,7 @@ const IS_WEB = Platform.OS === 'web';
 const STEP_SECONDS = MOVIEBOX_SKIP_SECONDS;
 const TAP_MS = 340;
 const ZONE = 0.34;
-const TOAST_MS = 900;
+const TOAST_MS = 1200;
 const CHROME_HIDE_MS = 3500;
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
@@ -52,6 +58,14 @@ interface MovieboxDirectPlayerProps {
     onBack?: () => void;
     /** Provider ke subtitle tracks (multi-language). */
     captions?: SubtitleTrack[];
+    /** Provider ki audio languages (dub) — na ho to section hi nahi. */
+    audioTracks?: AudioTrack[];
+    /** Abhi kaunsi audio chalu hai (subjectId). */
+    activeAudio?: string | null;
+    /** Doosri bhasha chuno — parent naye streams laata hai. `false` = nahi mila. */
+    onAudioSelect?: (track: AudioTrack) => boolean | Promise<boolean>;
+    /** Audio badalne ke baad isi jagah se shuru (seconds). */
+    startAt?: number;
     /** Agla server (pill) — cycle ke liye; na ho to pill hi nahi. */
     nextServerName?: string;
     onSwitchServer?: () => void;
@@ -112,6 +126,10 @@ export function MovieboxDirectPlayer({
     year,
     onBack,
     captions,
+    audioTracks,
+    activeAudio,
+    onAudioSelect,
+    startAt = 0,
     nextServerName,
     onSwitchServer,
     onUnavailable,
@@ -140,6 +158,9 @@ export function MovieboxDirectPlayer({
     /** `null` = Auto (best available). */
     const [quality, setQuality] = useState<string | null>(null);
     const [activeSubtitle, setActiveSubtitle] = useState<string | null>(subtitleLang);
+    const [cues, setCues] = useState<SubtitleCue[]>([]);
+    const [subtitleState, setSubtitleState] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
+    const [audioBusy, setAudioBusy] = useState<string | null>(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const actionsRef = useRef<{
         toggle: () => void;
@@ -282,6 +303,23 @@ export function MovieboxDirectPlayer({
         ];
         syncEvents.forEach((name) => video.addEventListener(name, sync));
         video.playbackRate = speed;
+
+        // Audio (dub) badalne par stream naya hota hai — wahi jagah se chalao.
+        let seekApplied = false;
+        const applyStartAt = () => {
+            if (seekApplied) return;
+            seekApplied = true;
+            if (!startAt || startAt <= 0) return;
+            const duration = Number(video.duration);
+            if (Number.isFinite(duration) && duration > 0 && startAt >= duration - 1) return;
+            try {
+                video.currentTime = startAt;
+            } catch {
+                // property rok di gayi ho to chhod do
+            }
+            sync();
+        };
+        video.addEventListener('loadedmetadata', applyStartAt);
 
         // Autoplay block ho jaye (phone par data-saver / muted requirement) to
         // muted karke dobara — user ke pehle tap par awaaz wapas.
@@ -449,6 +487,7 @@ export function MovieboxDirectPlayer({
             clearTimeout(watchdog);
             if (toastTimer) clearTimeout(toastTimer);
             syncEvents.forEach((name) => video.removeEventListener(name, sync));
+            video.removeEventListener('loadedmetadata', applyStartAt);
             host.removeEventListener('pointerdown', onPointerDown, true);
             if (videoRef.current === video) videoRef.current = null;
             try {
@@ -460,34 +499,60 @@ export function MovieboxDirectPlayer({
             }
             host.innerHTML = '';
         };
-    }, [streams, attempt, quality, speed, bump]);
+    }, [streams, attempt, quality, speed, bump, startAt]);
 
     /* --------------------- Subtitles (multi-language) --------------------- */
 
+    /**
+     * Chuni hui bhasha ki file laao (bridge VTT deta hai) aur parse karo.
+     * Native `<track>` jaan-boojh kar use nahi karte: uska style app ke
+     * control me nahi tha aur cross-origin video par chup-chaap fail hota tha.
+     */
     useEffect(() => {
         if (!IS_WEB) return;
-        const video = videoRef.current;
-        if (!video) return;
-        // Purani tracks hatao, chuni hui wapas lagao.
-        Array.from(video.querySelectorAll('track')).forEach((node) => node.remove());
-        const chosen = (captions || []).find((track) => track.lang === activeSubtitle);
-        if (!chosen) return;
-        const element = document.createElement('track');
-        element.kind = 'subtitles';
-        element.label = chosen.name || chosen.lang;
-        element.srclang = chosen.lang || 'und';
-        element.src = chosen.url;
-        element.default = true;
-        video.appendChild(element);
-        try {
-            const textTrack = (video.textTracks || []).length
-                ? video.textTracks[video.textTracks.length - 1]
-                : null;
-            if (textTrack) textTrack.mode = 'showing';
-        } catch {
-            // kuch browsers par textTracks khaali hota hai — chhod do
+        if (!activeSubtitle) {
+            setCues([]);
+            setSubtitleState('idle');
+            return;
         }
-    }, [captions, activeSubtitle, streams, attempt, quality]);
+        const track = (captions || []).find((item) => item.lang === activeSubtitle);
+        if (!track?.url) {
+            setCues([]);
+            setSubtitleState('error');
+            return;
+        }
+        let cancelled = false;
+        const controller = typeof AbortController === 'function' ? new AbortController() : null;
+        setSubtitleState('loading');
+        fetch(track.url, { signal: controller?.signal })
+            .then((res) => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.text();
+            })
+            .then((text) => {
+                if (cancelled) return;
+                const parsed = parseVtt(text);
+                setCues(parsed);
+                if (parsed.length) {
+                    setSubtitleState('ready');
+                } else {
+                    setSubtitleState('error');
+                    setToast({ text: 'Subtitles khaali mile', side: 'center' });
+                }
+            })
+            .catch(() => {
+                if (cancelled) return;
+                setCues([]);
+                setSubtitleState('error');
+                setToast({ text: 'Subtitles load nahi hue', side: 'center' });
+            });
+        return () => {
+            cancelled = true;
+            controller?.abort();
+        };
+    }, [activeSubtitle, captions]);
+
+    const subtitleText = activeSubtitle ? cueAt(cues, playback.current) : null;
 
     /* ---------------------- Chrome: hide / keyboard / drag ---------------------- */
 
@@ -588,6 +653,7 @@ export function MovieboxDirectPlayer({
     const pct = duration > 0 ? Math.min(100, (playback.current / duration) * 100) : 0;
     const bufferedPct = duration > 0 ? Math.min(100, (playback.buffered / duration) * 100) : 0;
     const subtitleTracks = captions || [];
+    const audioOptions = audioTracks || [];
     const qualityOptions = playableStreams(streams, (type) => {
         const probe = typeof document !== 'undefined' ? document.createElement('video') : null;
         return probe?.canPlayType(type) ?? '';
@@ -599,13 +665,48 @@ export function MovieboxDirectPlayer({
         bump();
     };
 
+    const chooseAudio = async (track: AudioTrack) => {
+        if (!onAudioSelect || audioBusy) return;
+        setAudioBusy(track.subjectId);
+        let ok = false;
+        try {
+            ok = (await onAudioSelect(track)) !== false;
+        } catch {
+            ok = false;
+        }
+        setAudioBusy(null);
+        if (ok) {
+            setMenu(null);
+            setToast({ text: `Audio: ${track.name}`, side: 'center' });
+        } else {
+            setToast({ text: `${track.name} audio nahi mila`, side: 'center' });
+        }
+        bump();
+    };
+
     return (
         <View ref={rootRef as any} style={styles.root}>
             <View ref={hostRef as any} style={styles.videoHost} testID="moviebox-direct-video" collapsable={false} />
 
+            {/* Subtitles — apna overlay (native track jaisa chhota/invisible nahi). */}
+            {subtitleText ? (
+                <View
+                    pointerEvents="none"
+                    style={[styles.subtitleLayer, chromeVisible || menu ? styles.subtitleLayerRaised : null]}
+                    testID="direct-subtitle-overlay"
+                >
+                    <Text style={styles.subtitleText}>{subtitleText}</Text>
+                </View>
+            ) : null}
+
             {chromeVisible || !playback.playing || menu ? (
                 <View style={styles.chrome} pointerEvents="box-none">
-                    {/* ------------------------- Top bar ------------------------- */}
+                    {/* ---------------------- Top scrim + bar ---------------------- */}
+                    <LinearGradient
+                        colors={['rgba(0,0,0,0.78)', 'rgba(0,0,0,0.35)', 'rgba(0,0,0,0)']}
+                        style={styles.topScrim}
+                        pointerEvents="none"
+                    />
                     <View style={styles.topBar} pointerEvents="box-none">
                         <View style={styles.topLeft}>
                             {onBack ? (
@@ -619,7 +720,7 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel="Back"
                                     testID="direct-back"
                                 >
-                                    <Ionicons name="arrow-back" size={26} color="#fff" />
+                                    <MaterialCommunityIcons name="arrow-left" size={32} color="#fff" />
                                 </Pressable>
                             ) : null}
                             <View style={styles.titleBlock}>
@@ -646,7 +747,7 @@ export function MovieboxDirectPlayer({
                                 </Pressable>
                             ) : null}
                             <Pressable
-                                style={styles.iconButton}
+                                style={styles.topIcon}
                                 onPress={() => {
                                     setMenu(menu === 'subtitles' ? null : 'subtitles');
                                     bump();
@@ -655,11 +756,11 @@ export function MovieboxDirectPlayer({
                                 accessibilityLabel="Audio and subtitles"
                                 testID="direct-audio-subs"
                             >
-                                <Ionicons name="chatbox-ellipses-outline" size={22} color="#fff" />
+                                <MaterialCommunityIcons name="cast" size={26} color="#fff" />
                             </Pressable>
                             <View style={styles.divider} />
                             <Pressable
-                                style={styles.iconButton}
+                                style={styles.topIcon}
                                 onPress={() => {
                                     toggleFullscreen();
                                     bump();
@@ -668,7 +769,11 @@ export function MovieboxDirectPlayer({
                                 accessibilityLabel="Full screen"
                                 testID="direct-fullscreen-top"
                             >
-                                <Ionicons name={isFullscreen ? 'contract' : 'expand'} size={22} color="#fff" />
+                                <MaterialCommunityIcons
+                                    name={isFullscreen ? 'fullscreen-exit' : 'arrow-expand'}
+                                    size={26}
+                                    color="#fff"
+                                />
                             </Pressable>
                         </View>
                     </View>
@@ -685,20 +790,40 @@ export function MovieboxDirectPlayer({
                             accessibilityLabel="Play"
                             testID="direct-play"
                         >
-                            <Ionicons name="play" size={32} color="#fff" />
+                            <MaterialCommunityIcons name="play" size={38} color="#fff" />
                         </Pressable>
                     ) : null}
 
-                    {/* --------------------- Menus (CC / settings) --------------------- */}
+                    {/* ---------------- Menus (audio/subs + settings) ---------------- */}
                     {menu ? (
                         <View style={styles.menuLayer} pointerEvents="box-none">
                             <View style={styles.menu} testID={`direct-menu-${menu}`}>
                                 <Text style={styles.menuTitle}>
-                                    {menu === 'subtitles' ? 'Subtitles' : 'Settings'}
+                                    {menu === 'subtitles' ? 'Audio & Subtitles' : 'Settings'}
                                 </Text>
                                 <ScrollView style={styles.menuScroll} showsVerticalScrollIndicator={false}>
                                     {menu === 'subtitles' ? (
                                         <>
+                                            {audioOptions.length ? (
+                                                <Text style={styles.menuSection}>Audio</Text>
+                                            ) : null}
+                                            {audioOptions.map((track) => (
+                                                <MenuRow
+                                                    key={`audio-${track.subjectId}`}
+                                                    label={track.name}
+                                                    hint={
+                                                        audioBusy === track.subjectId
+                                                            ? '…'
+                                                            : (track.lang || '').toUpperCase()
+                                                    }
+                                                    active={activeAudio === track.subjectId}
+                                                    onPress={() => {
+                                                        void chooseAudio(track);
+                                                    }}
+                                                    testID={`audio-${track.lang}`}
+                                                />
+                                            ))}
+                                            <Text style={styles.menuSection}>Subtitles</Text>
                                             {subtitleTracks.length === 0 ? (
                                                 <Text style={styles.menuEmpty}>
                                                     Is title par subtitles nahi mile.
@@ -718,7 +843,11 @@ export function MovieboxDirectPlayer({
                                                 <MenuRow
                                                     key={`${track.lang}-${track.url}`}
                                                     label={track.name || track.lang}
-                                                    hint={(track.lang || '').toUpperCase()}
+                                                    hint={
+                                                        activeSubtitle === track.lang && subtitleState === 'loading'
+                                                            ? '…'
+                                                            : (track.lang || '').toUpperCase()
+                                                    }
                                                     active={activeSubtitle === track.lang}
                                                     onPress={() => {
                                                         setActiveSubtitle(track.lang);
@@ -728,6 +857,11 @@ export function MovieboxDirectPlayer({
                                                     testID={`subtitle-${track.lang}`}
                                                 />
                                             ))}
+                                            {activeSubtitle && subtitleState === 'error' ? (
+                                                <Text style={styles.menuEmpty}>
+                                                    Ye subtitle load nahi hua — doosri bhasha try karo.
+                                                </Text>
+                                            ) : null}
                                         </>
                                     ) : (
                                         <>
@@ -768,7 +902,12 @@ export function MovieboxDirectPlayer({
                         </View>
                     ) : null}
 
-                    {/* ------------------------ Bottom bar ------------------------ */}
+                    {/* ------------------- Bottom scrim + bar ------------------- */}
+                    <LinearGradient
+                        colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)', 'rgba(0,0,0,0.88)']}
+                        style={styles.bottomScrim}
+                        pointerEvents="none"
+                    />
                     <View style={styles.bottomBar} pointerEvents="auto">
                         <View style={styles.seekRow}>
                             <View
@@ -778,7 +917,10 @@ export function MovieboxDirectPlayer({
                                 collapsable={false}
                                 {...({ 'data-testid': 'direct-seek-track' } as any)}
                             >
-                                <View style={[styles.trackBufferFill, { width: `${bufferedPct}%` } as any]} />
+                                <View style={styles.trackRail} />
+                                <View
+                                    style={[styles.trackBufferFill, { width: `${bufferedPct}%` } as any]}
+                                />
                                 <View style={[styles.trackFill, { width: `${pct}%` } as any]} />
                                 <View style={[styles.knob, { left: `${pct}%` } as any]} />
                             </View>
@@ -799,10 +941,14 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel={playback.playing ? 'Pause' : 'Play'}
                                     testID="direct-play-pause"
                                 >
-                                    <Ionicons name={playback.playing ? 'pause' : 'play'} size={24} color="#fff" />
+                                    <MaterialCommunityIcons
+                                        name={playback.playing ? 'pause' : 'play'}
+                                        size={38}
+                                        color="#fff"
+                                    />
                                 </Pressable>
                                 <Pressable
-                                    style={styles.skipButton}
+                                    style={styles.iconButton}
                                     onPress={() => {
                                         actionsRef.current.seekBy(-STEP_SECONDS);
                                         bump();
@@ -811,11 +957,10 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel={`Back ${STEP_SECONDS} seconds`}
                                     testID="direct-back-10"
                                 >
-                                    <Ionicons name="play-back" size={20} color="#fff" />
-                                    <Text style={styles.skipText}>{STEP_SECONDS}</Text>
+                                    <MaterialCommunityIcons name="rewind-10" size={36} color="#fff" />
                                 </Pressable>
                                 <Pressable
-                                    style={styles.skipButton}
+                                    style={styles.iconButton}
                                     onPress={() => {
                                         actionsRef.current.seekBy(STEP_SECONDS);
                                         bump();
@@ -824,8 +969,7 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel={`Forward ${STEP_SECONDS} seconds`}
                                     testID="direct-forward-10"
                                 >
-                                    <Ionicons name="play-forward" size={20} color="#fff" />
-                                    <Text style={styles.skipText}>{STEP_SECONDS}</Text>
+                                    <MaterialCommunityIcons name="fast-forward-10" size={36} color="#fff" />
                                 </Pressable>
                                 <Pressable
                                     style={styles.iconButton}
@@ -837,9 +981,9 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel={playback.muted ? 'Unmute' : 'Mute'}
                                     testID="direct-mute"
                                 >
-                                    <Ionicons
-                                        name={playback.muted || playback.volume === 0 ? 'volume-mute' : 'volume-high'}
-                                        size={22}
+                                    <MaterialCommunityIcons
+                                        name={playback.muted || playback.volume === 0 ? 'volume-off' : 'volume-high'}
+                                        size={32}
                                         color="#fff"
                                     />
                                 </Pressable>
@@ -856,7 +1000,7 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel="Subtitles"
                                     testID="direct-subtitles"
                                 >
-                                    <Ionicons name="chatbox-ellipses" size={21} color="#fff" />
+                                    <MaterialCommunityIcons name="subtitles-outline" size={30} color="#fff" />
                                 </Pressable>
                                 <Pressable
                                     style={styles.iconButton}
@@ -868,7 +1012,7 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel="Settings"
                                     testID="direct-settings"
                                 >
-                                    <Ionicons name="settings-sharp" size={21} color="#fff" />
+                                    <MaterialCommunityIcons name="cog" size={30} color="#fff" />
                                 </Pressable>
                                 <Pressable
                                     style={styles.iconButton}
@@ -880,7 +1024,11 @@ export function MovieboxDirectPlayer({
                                     accessibilityLabel="Full screen"
                                     testID="direct-fullscreen"
                                 >
-                                    <Ionicons name={isFullscreen ? 'contract' : 'scan'} size={21} color="#fff" />
+                                    <MaterialCommunityIcons
+                                        name={isFullscreen ? 'fullscreen-exit' : 'fullscreen'}
+                                        size={30}
+                                        color="#fff"
+                                    />
                                 </Pressable>
                             </View>
                         </View>
@@ -903,7 +1051,7 @@ export function MovieboxDirectPlayer({
     );
 }
 
-/** Menu ki ek line (subtitle language / quality / speed). */
+/** Menu ki ek line (audio language / subtitle / quality / speed). */
 function MenuRow({
     label,
     hint,
@@ -930,11 +1078,15 @@ function MenuRow({
                 {label}
             </Text>
             {hint ? <Text style={styles.menuRowHint}>{hint}</Text> : null}
-            {active ? <Ionicons name="checkmark" size={18} color="#fff" /> : null}
+            {active ? <MaterialCommunityIcons name="check" size={20} color="#fff" /> : null}
         </Pressable>
     );
 }
 
+/**
+ * Screenshot ke naap (1673×940 par measure kiye gaye) — isliye padding 28,
+ * title 24, seek bar 5px, knob 16, icons 30–38.
+ */
 const styles = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#000', position: 'relative' },
     videoHost: { flex: 1, backgroundColor: '#000' },
@@ -942,151 +1094,175 @@ const styles = StyleSheet.create({
     /** Controls layer — khaali jagah se tap video tak jaata hai (box-none). */
     chrome: { ...StyleSheet.absoluteFillObject, justifyContent: 'space-between' },
 
+    topScrim: { position: 'absolute', top: 0, left: 0, right: 0, height: 170 },
+    bottomScrim: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 220 },
+
     topBar: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 14,
-        paddingVertical: 12,
-        gap: 12,
-        backgroundColor: 'rgba(0,0,0,0.55)',
+        paddingHorizontal: 28,
+        paddingTop: 22,
+        gap: 16,
     },
-    topLeft: { flexDirection: 'row', alignItems: 'center', gap: 12, flexShrink: 1 },
-    backButton: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center' },
+    topLeft: { flexDirection: 'row', alignItems: 'center', gap: 20, flexShrink: 1 },
+    backButton: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
     titleBlock: { flexShrink: 1 },
-    eyebrow: { color: '#c9c9c9', fontSize: 12, fontWeight: '500' },
-    titleText: { color: '#fff', fontSize: 17, fontWeight: '800' },
-    topRight: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+    eyebrow: { color: '#e2e2e2', fontSize: 14, fontWeight: '500', letterSpacing: 0.2 },
+    titleText: { color: '#fff', fontSize: 24, fontWeight: '700', letterSpacing: 0.2, marginTop: 2 },
+    topRight: { flexDirection: 'row', alignItems: 'center', gap: 14 },
+    topIcon: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
     serverPill: {
         height: 30,
         paddingHorizontal: 12,
         borderRadius: 15,
         justifyContent: 'center',
         backgroundColor: 'rgba(229,9,20,0.8)',
-        marginRight: 6,
+        marginRight: 4,
     },
     serverPillText: { color: '#fff', fontSize: 12, fontWeight: '700' },
-    divider: { width: 1, height: 22, backgroundColor: 'rgba(255,255,255,0.35)', marginHorizontal: 4 },
+    divider: { width: 1, height: 26, backgroundColor: 'rgba(255,255,255,0.45)', marginHorizontal: 2 },
 
     bigPlay: {
         position: 'absolute',
         alignSelf: 'center',
         top: '50%',
-        marginTop: -34,
-        width: 68,
-        height: 68,
-        borderRadius: 34,
+        marginTop: -40,
+        width: 80,
+        height: 80,
+        borderRadius: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.35)',
+        backgroundColor: 'rgba(0,0,0,0.45)',
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.5)',
     },
 
     bottomBar: {
-        gap: 4,
-        paddingHorizontal: 14,
-        paddingTop: 10,
-        paddingBottom: 12,
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        gap: 2,
+        paddingHorizontal: 28,
+        paddingBottom: 22,
     },
-    seekRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-    controlsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    controlsLeft: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-    controlsRight: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+    seekRow: { flexDirection: 'row', alignItems: 'center', gap: 18 },
+    controlsRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 14,
+    },
+    controlsLeft: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+    controlsRight: { flexDirection: 'row', alignItems: 'center', gap: 16 },
 
     iconButton: {
-        width: 38,
-        height: 38,
-        borderRadius: 19,
+        width: 46,
+        height: 46,
+        borderRadius: 23,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    iconActive: { backgroundColor: 'rgba(229,9,20,0.35)' },
-    skipButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 1,
-        height: 38,
-        paddingHorizontal: 6,
-        borderRadius: 19,
-    },
-    skipText: { color: '#fff', fontSize: 11, fontWeight: '700', fontVariant: ['tabular-nums'] },
+    iconActive: { backgroundColor: 'rgba(229,9,20,0.45)' },
     timeText: {
-        color: '#e6e6e6',
-        fontSize: 12,
+        color: '#e8e8e8',
+        fontSize: 15,
         fontWeight: '600',
         fontVariant: ['tabular-nums'],
-        minWidth: 96,
+        minWidth: 116,
         textAlign: 'right',
     },
-    track: { flex: 1, height: 22, justifyContent: 'center', cursor: 'pointer' },
+    track: { flex: 1, height: 26, justifyContent: 'center', cursor: 'pointer' },
+    trackRail: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        height: 5,
+        borderRadius: 3,
+        backgroundColor: 'rgba(255,255,255,0.32)',
+    },
     trackBufferFill: {
         position: 'absolute',
         left: 0,
-        height: 4,
-        borderRadius: 2,
-        backgroundColor: 'rgba(255,255,255,0.35)',
+        height: 5,
+        borderRadius: 3,
+        backgroundColor: 'rgba(255,255,255,0.5)',
     },
-    trackFill: { position: 'absolute', left: 0, height: 4, borderRadius: 2, backgroundColor: '#E50914' },
+    trackFill: { position: 'absolute', left: 0, height: 5, borderRadius: 3, backgroundColor: '#E50914' },
     knob: {
         position: 'absolute',
-        width: 13,
-        height: 13,
-        marginLeft: -6,
-        borderRadius: 7,
+        width: 16,
+        height: 16,
+        marginLeft: -8,
+        borderRadius: 8,
         backgroundColor: '#E50914',
-        borderWidth: 2,
-        borderColor: '#fff',
+    },
+
+    subtitleLayer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 96,
+        alignItems: 'center',
+        paddingHorizontal: 40,
+    },
+    subtitleLayerRaised: { bottom: 150 },
+    subtitleText: {
+        color: '#fff',
+        fontSize: 22,
+        lineHeight: 30,
+        fontWeight: '600',
+        textAlign: 'center',
+        textShadowColor: 'rgba(0,0,0,0.95)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 6,
     },
 
     menuLayer: { ...StyleSheet.absoluteFillObject, alignItems: 'flex-end', justifyContent: 'center' },
     menu: {
-        width: 230,
-        maxHeight: '80%',
-        marginRight: 16,
+        width: 290,
+        maxHeight: '78%',
+        marginRight: 28,
         paddingVertical: 10,
-        borderRadius: 10,
-        backgroundColor: 'rgba(20,20,20,0.96)',
+        borderRadius: 8,
+        backgroundColor: 'rgba(20,20,20,0.97)',
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: 'rgba(255,255,255,0.2)',
+        borderColor: 'rgba(255,255,255,0.18)',
     },
-    menuScroll: { maxHeight: 300 },
-    menuTitle: { color: '#c9c9c9', fontSize: 12, fontWeight: '700', paddingHorizontal: 14, paddingBottom: 6 },
+    menuScroll: { maxHeight: 340 },
+    menuTitle: { color: '#c9c9c9', fontSize: 13, fontWeight: '700', paddingHorizontal: 16, paddingBottom: 6 },
     menuSection: {
         color: '#8f8f8f',
         fontSize: 11,
         fontWeight: '700',
-        paddingHorizontal: 14,
-        paddingTop: 10,
+        paddingHorizontal: 16,
+        paddingTop: 12,
         paddingBottom: 4,
         textTransform: 'uppercase',
+        letterSpacing: 0.6,
     },
     menuRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
-        paddingHorizontal: 14,
-        paddingVertical: 9,
+        gap: 10,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
     },
-    menuRowText: { flex: 1, color: '#e8e8e8', fontSize: 14 },
+    menuRowText: { flex: 1, color: '#e8e8e8', fontSize: 15 },
     menuRowTextActive: { color: '#fff', fontWeight: '700' },
-    menuRowHint: { color: '#8f8f8f', fontSize: 11 },
-    menuEmpty: { color: '#9a9a9a', fontSize: 12, paddingHorizontal: 14, paddingVertical: 8 },
+    menuRowHint: { color: '#8f8f8f', fontSize: 12 },
+    menuEmpty: { color: '#9a9a9a', fontSize: 13, paddingHorizontal: 16, paddingVertical: 8 },
 
     toast: {
         position: 'absolute',
         top: '50%',
         marginTop: -20,
-        paddingHorizontal: 14,
+        paddingHorizontal: 16,
         paddingVertical: 8,
-        borderRadius: 10,
-        backgroundColor: 'rgba(0,0,0,0.62)',
+        borderRadius: 8,
+        backgroundColor: 'rgba(0,0,0,0.65)',
     },
     toastLeft: { left: '8%' },
     toastRight: { right: '8%' },
     toastCenter: { alignSelf: 'center', left: 0, right: 0, alignItems: 'center', backgroundColor: 'transparent' },
-    toastText: { color: '#fff', fontSize: 13, fontWeight: '700', fontVariant: ['tabular-nums'] },
+    toastText: { color: '#fff', fontSize: 14, fontWeight: '700', fontVariant: ['tabular-nums'] },
 
     fallback: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', gap: 6 },
     fallbackText: { color: '#fff', fontWeight: '700' },

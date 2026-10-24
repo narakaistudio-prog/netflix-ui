@@ -7,10 +7,13 @@
  *   1. Top bar — back arrow, "You're Watching", Title (Year), server pill.
  *   2. Bottom bar — seek + time, play/pause, ±10s, volume | CC, settings,
  *      fullscreen.
- *   3. CC menu me saari bhashayein (multi-language) + Off; chunne par iframe ke
- *      `<video>` par `<track>` lag jata hai.
- *   4. Settings me quality + speed; quality badalne par naya stream src.
- *   5. SRT → VTT bridge (api/netmirror-subtitle.mjs) — timestamp sahi.
+ *   3. CC menu me saari bhashayein (multi-language) + Off; chunne par bridge se
+ *      VTT aata hai aur **apne overlay** me cue dikhta hai (native `<track>` ka
+ *      style control me nahi tha — isliye hata diya).
+ *   4. Audio (dub) section provider ki list se; `onAudioSelect` bulaya jata hai,
+ *      na mile to saaf message.
+ *   5. Settings me quality + speed; quality badalne par naya stream src.
+ *   6. SRT → VTT bridge (api/netmirror-subtitle.mjs) — proxy ke andar se CDN.
  */
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
@@ -24,7 +27,13 @@ jest.mock('@expo/vector-icons', () => {
 
 import { MovieboxDirectPlayer } from '../components/MovieboxDirectPlayer';
 import { buildSubtitleUrl, toSubtitleTracks } from '../lib/netmirror';
-import { srtToVtt, srtTimestamp } from '../api/netmirror-subtitle.mjs';
+import { parseVtt, cueAt } from '../lib/subtitles';
+import {
+    isAllowedSubtitleHost,
+    resolveSubtitleTarget,
+    srtToVtt,
+    srtTimestamp,
+} from '../api/netmirror-subtitle.mjs';
 
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -108,6 +117,37 @@ describe('Netflix-jaisa chrome', () => {
     });
 });
 
+const VTT = [
+    'WEBVTT',
+    '',
+    '00:00:01.000 --> 00:00:05.000 align:start',
+    '<c>Hello duniya</c>',
+    '',
+    '00:02:00.000 --> 00:02:05.000',
+    'Doosri line',
+    '',
+].join('\n');
+
+function mockSubtitleFetch(impl?: () => Promise<any>) {
+    const fetchMock = jest.fn(
+        impl ?? (async () => ({ ok: true, text: async () => VTT })),
+    );
+    (globalThis as any).fetch = fetchMock;
+    return fetchMock;
+}
+
+/** Video ka waqt badal kar `timeupdate` chalao (overlay isi se banta hai). */
+function seekVideoTo(video: HTMLVideoElement, seconds: number) {
+    Object.defineProperty(video, 'currentTime', {
+        configurable: true,
+        get: () => seconds,
+        set: () => {},
+    });
+    act(() => {
+        video.dispatchEvent(new Event('timeupdate'));
+    });
+}
+
 describe('Multi-language subtitles (CC)', () => {
     it('CC menu me saari bhashayein + Off dikhti hain', () => {
         mount({ captions: toSubtitleTracks(CAPTIONS) });
@@ -119,26 +159,49 @@ describe('Multi-language subtitles (CC)', () => {
         expect(q('subtitle-ta')).toBeTruthy();
     });
 
-    it('bhasha chunne par video par <track> lag jata hai (VTT bridge URL)', () => {
-        mount({ captions: toSubtitleTracks(CAPTIONS) });
+    it('bhasha chunne par bridge se VTT laata hai aur cue overlay me dikhta hai', async () => {
+        const fetchMock = mockSubtitleFetch();
+        const video = mount({ captions: toSubtitleTracks(CAPTIONS) });
         act(() => (q('direct-subtitles') as HTMLElement).click());
-        act(() => (q('subtitle-hi') as HTMLElement).click());
-        const track = document.querySelector('video track') as HTMLTrackElement;
-        expect(track).toBeTruthy();
-        expect(track.getAttribute('srclang')).toBe('hi');
-        const src = track.getAttribute('src') || '';
-        expect(src).toContain('/api/netmirror-subtitle?url=');
-        expect(decodeURIComponent(src)).toContain('cacdn.hakunaymatata.com');
+        await act(async () => {
+            (q('subtitle-hi') as HTMLElement).click();
+        });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        const url = String(fetchMock.mock.calls[0][0]);
+        expect(url).toContain('/api/netmirror-subtitle?url=');
+        expect(decodeURIComponent(url)).toContain('cacdn.hakunaymatata.com');
+
+        // Video 100s par hai — pehla cue (1–5s) abhi nahi.
+        expect(q('direct-subtitle-overlay')).toBeNull();
+        // 2s par le jao → cue dikhna chahiye (apne overlay me).
+        seekVideoTo(video, 2);
+        expect((q('direct-subtitle-overlay') as HTMLElement).textContent).toContain('Hello duniya');
     });
 
-    it('Off chunne par koi track nahi rehta', () => {
-        mount({ captions: toSubtitleTracks(CAPTIONS) });
+    it('Off chunne par overlay hat jata hai', async () => {
+        mockSubtitleFetch();
+        const video = mount({ captions: toSubtitleTracks(CAPTIONS) });
         act(() => (q('direct-subtitles') as HTMLElement).click());
-        act(() => (q('subtitle-en') as HTMLElement).click());
-        expect(document.querySelector('video track')).toBeTruthy();
+        await act(async () => {
+            (q('subtitle-en') as HTMLElement).click();
+        });
+        seekVideoTo(video, 2);
+        expect(q('direct-subtitle-overlay')).toBeTruthy();
         act(() => (q('direct-subtitles') as HTMLElement).click());
         act(() => (q('subtitle-off') as HTMLElement).click());
-        expect(document.querySelector('video track')).toBeNull();
+        expect(q('direct-subtitle-overlay')).toBeNull();
+    });
+
+    it('subtitle load na ho to saaf batata hai (chup-chaap fail nahi)', async () => {
+        mockSubtitleFetch(async () => {
+            throw new Error('boom');
+        });
+        mount({ captions: toSubtitleTracks(CAPTIONS) });
+        act(() => (q('direct-subtitles') as HTMLElement).click());
+        await act(async () => {
+            (q('subtitle-en') as HTMLElement).click();
+        });
+        expect(container.textContent).toContain('Subtitles load nahi hue');
     });
 
     it('subtitles na ho to menu saaf-saaf batata hai (jhoothe options nahi)', () => {
@@ -146,6 +209,47 @@ describe('Multi-language subtitles (CC)', () => {
         act(() => (q('direct-subtitles') as HTMLElement).click());
         expect(container.textContent).toContain('subtitles nahi mile');
         expect(q('subtitle-en')).toBeNull();
+    });
+});
+
+const AUDIO = [
+    { lang: 'ta', name: 'Original', subjectId: '2237794012843369344', detailPath: 'mandaadi-gWLfEvs7jF2', original: true },
+    { lang: 'hi', name: 'Hindi', subjectId: '4151920426815471968', detailPath: 'mandaadi-hindi-qxUx1r3QHW4', original: false },
+    { lang: 'te', name: 'Telugu', subjectId: '5228019281622882336', detailPath: 'mandaadi-hindi-mNLYleNnce6', original: false },
+];
+
+describe('Multi-language audio (dub)', () => {
+    it('audio section provider ki list se banti hai aur chunne par callback', async () => {
+        const onAudioSelect = jest.fn(async () => true);
+        mockSubtitleFetch();
+        mount({ audioTracks: AUDIO, activeAudio: AUDIO[0].subjectId, onAudioSelect });
+        act(() => (q('direct-audio-subs') as HTMLElement).click());
+        expect(q('audio-ta')).toBeTruthy();
+        expect(q('audio-hi')).toBeTruthy();
+        expect(q('audio-te')).toBeTruthy();
+        await act(async () => {
+            (q('audio-hi') as HTMLElement).click();
+        });
+        expect(onAudioSelect).toHaveBeenCalledWith(AUDIO[1]);
+        expect(container.textContent).toContain('Audio: Hindi');
+    });
+
+    it('us bhasha ka stream na mile to saaf message (jhoothi success nahi)', async () => {
+        const onAudioSelect = jest.fn(async () => false);
+        mockSubtitleFetch();
+        mount({ audioTracks: AUDIO, activeAudio: AUDIO[0].subjectId, onAudioSelect });
+        act(() => (q('direct-audio-subs') as HTMLElement).click());
+        await act(async () => {
+            (q('audio-te') as HTMLElement).click();
+        });
+        expect(container.textContent).toContain('Telugu audio nahi mila');
+    });
+
+    it('audio list na ho to Audio section hi nahi', () => {
+        mount();
+        act(() => (q('direct-audio-subs') as HTMLElement).click());
+        expect(container.textContent).not.toContain('Audio\n');
+        expect(q('audio-hi')).toBeNull();
     });
 });
 
@@ -184,6 +288,30 @@ describe('Subtitle helpers', () => {
         const url = buildSubtitleUrl('/api/proxy/video?url=x');
         expect(url).toContain(encodeURIComponent('https://net27.cc/api/proxy/video?url=x'));
         expect(buildSubtitleUrl('')).toBeNull();
+    });
+
+    it('proxy URL ke andar se asli CDN nikaalta hai (429 ka ilaaj)', () => {
+        const target = resolveSubtitleTarget(
+            'https://net27.cc/api/proxy/video?url=' +
+                encodeURIComponent('https://cacdn.hakunaymatata.com/subtitle/a.srt?Policy=x&Signature=y'),
+        );
+        expect(target?.hostname).toBe('cacdn.hakunaymatata.com');
+        expect(target?.searchParams.get('Policy')).toBe('x');
+        expect(isAllowedSubtitleHost(target)).toBe(true);
+        expect(isAllowedSubtitleHost(new URL('https://evil.example/a.srt'))).toBe(false);
+        expect(resolveSubtitleTarget('')).toBeNull();
+    });
+
+    it('VTT parse: cue id/align ignore, tags saaf, cueAt sahi waqt par', () => {
+        const cues = parseVtt(VTT);
+        expect(cues).toHaveLength(2);
+        expect(cues[0].text).toBe('Hello duniya');
+        expect(cues[0].start).toBe(1);
+        expect(cues[0].end).toBe(5);
+        expect(cueAt(cues, 2)).toBe('Hello duniya');
+        expect(cueAt(cues, 100)).toBeNull();
+        expect(cueAt(cues, 121)).toBe('Doosri line');
+        expect(cueAt([], 2)).toBeNull();
     });
 
     it('SRT timestamps → VTT (comma → dot, hours 2-digit)', () => {
