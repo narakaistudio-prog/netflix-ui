@@ -71,9 +71,19 @@ const SECRETS = [SECRET_30, SECRET_31];
  * aage hosts try karna bekaar hai, isliye loop turant agle variant par jata hai).
  */
 const LOGIN_VARIANTS = [
-  { secretIndex: 0, spoof: true, label: 'key30+spoof' },
-  { secretIndex: 1, spoof: true, label: 'key31+spoof' },
-  { secretIndex: 0, spoof: false, label: 'key30' },
+  { secretIndex: 0, spoof: true, label: 'key30' },
+  { secretIndex: 1, spoof: true, label: 'key31' },
+  { secretIndex: 0, spoof: false, label: 'key30 noip' },
+  // App-store build ke extra headers (python scraper jaisa) — kuch edges
+  // `appid`/`X-Sign-Version` ke bina 440 dete hain.
+  { secretIndex: 0, spoof: true, appHeaders: true, label: 'key30+appheaders' },
+  {
+    secretIndex: 0,
+    spoof: true,
+    appHeaders: true,
+    contentType: 'application/json;charset=UTF-8',
+    label: 'key30+appheaders+charset',
+  },
 ];
 const SIGNATURE_BODY_MAX = 102_400;
 
@@ -119,13 +129,19 @@ export function canonicalUrl(url) {
 }
 
 /** `METHOD \n accept \n content-type \n length \n ts \n md5(body) \n path?query`. */
-export function canonicalString({ method, url, body, timestampMs }) {
+export function canonicalString({
+  method,
+  url,
+  body,
+  timestampMs,
+  contentType = 'application/json',
+}) {
   const hasBody = body !== undefined && body !== null;
   const raw = hasBody ? Buffer.from(String(body)) : null;
   return [
     String(method).toUpperCase(),
     'application/json',
-    'application/json',
+    contentType,
     raw ? String(raw.length) : '',
     String(timestampMs),
     raw ? md5(raw.subarray(0, SIGNATURE_BODY_MAX)) : '',
@@ -134,9 +150,16 @@ export function canonicalString({ method, url, body, timestampMs }) {
 }
 
 /** `<ts>|2|<base64 hmac-md5>` — app ka `x-tr-signature`. */
-export function trSignature({ method, url, body, timestampMs = Date.now(), secret = SECRETS[0] }) {
+export function trSignature({
+  method,
+  url,
+  body,
+  timestampMs = Date.now(),
+  secret = SECRETS[0],
+  contentType = 'application/json',
+}) {
   const mac = createHmac('md5', secret)
-    .update(canonicalString({ method, url, body, timestampMs }))
+    .update(canonicalString({ method, url, body, timestampMs, contentType }))
     .digest('base64');
   return `${timestampMs}|2|${mac}`;
 }
@@ -186,19 +209,39 @@ function currentIdentity() {
   return identity;
 }
 
-function signedHeaders({ method, url, body, token, secret = SECRETS[0], spoof = true }) {
+function signedHeaders({
+  method,
+  url,
+  body,
+  token,
+  secret = SECRETS[0],
+  spoof = true,
+  appHeaders = false,
+  contentType = 'application/json',
+}) {
   const id = currentIdentity();
   const timestampMs = Date.now();
   return {
     'User-Agent': id.userAgent,
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': contentType,
     Connection: 'keep-alive',
     'x-client-token': clientToken(timestampMs),
-    'x-tr-signature': trSignature({ method, url, body, timestampMs, secret }),
+    'x-tr-signature': trSignature({ method, url, body, timestampMs, secret, contentType }),
     'x-client-info': id.clientInfo,
     'x-client-status': '0',
     ...(spoof ? { 'x-forwarded-for': id.spoofedIp } : {}),
+    ...(appHeaders
+      ? {
+          appid: '4U01pxRu278GqCZKY9',
+          'X-M-Version': '4.0.02',
+          'X-Sign-Version': '2.0',
+          'X-Timestamp': String(timestampMs),
+          region: 'IN',
+          lang: 'en',
+          os: 'android',
+        }
+      : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }
@@ -222,14 +265,20 @@ async function visitorToken(trace) {
       try {
         const res = await fetch(url, {
           method: 'POST',
-          headers: signedHeaders({ method: 'POST', url, body, secret, spoof: variant.spoof }),
+          headers: signedHeaders({ method: 'POST', url, body, ...variant }),
           body,
           signal: timeoutSignal(REQUEST_TIMEOUT_MS),
         });
         const payload = await res.json().catch(() => null);
         const token = payload?.data?.token || payload?.data?.data?.token;
         if (token) {
-          session = { token: String(token), at: Date.now(), host, ...variant };
+          session = {
+            token: String(token),
+            at: Date.now(),
+            host,
+            secretIndex: variant.secretIndex,
+            variant,
+          };
           trace.push(`visitor-login ok (${host.replace(/^https:\/\//, '')}, ${variant.label})`);
           return session.token;
         }
@@ -259,8 +308,8 @@ async function apiGet(pathAndQuery, token, trace) {
           method: 'GET',
           url,
           token,
+          ...(session?.variant || {}),
           secret: SECRETS[session?.secretIndex ?? 0],
-          spoof: session?.spoof !== false,
         }),
         signal: timeoutSignal(REQUEST_TIMEOUT_MS),
       });
@@ -609,6 +658,7 @@ export default async function handler(req, res) {
         ok: answer.ok,
         count: answer.streams.length,
         via: answer.via,
+        login: session?.variant?.label || null,
         region: process.env.VERCEL_REGION || 'local',
         trace: answer.trace,
       }
