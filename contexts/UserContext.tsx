@@ -94,3 +94,30 @@ export function useUser() {
     }
     return context;
 }
+
+/**
+ * Guest fallback — jab component provider ke bahar render ho.
+ *
+ * Kaam kya: `MovieDetailModal` aur `TitleComments` app ke root layout ke andar
+ * hamesha `UserProvider` ke neeche hote hain, par tests (aur koi bhi standalone
+ * preview) unhe seedha render karte hain. Pehle wahan `useUser()` throw karta
+ * tha aur poora screen/test crash ho jata tha. Ye hook wahi context deta hai
+ * jo guest ka hota hai — sign-in ka rasta bas kuch nahi karta (asli app me
+ * provider hota hi hai, isliye wahan farak nahi padta).
+ */
+const GUEST_CONTEXT: UserContextType = {
+    account: null,
+    signedIn: false,
+    selectedProfile: null,
+    signInOpen: false,
+    openSignIn: () => {},
+    closeSignIn: () => {},
+    signIn: async () => {},
+    signUp: async () => {},
+    signOut: async () => {},
+};
+
+export function useOptionalUser(): UserContextType {
+    const context = useContext(UserContext);
+    return context ?? GUEST_CONTEXT;
+}

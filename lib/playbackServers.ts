@@ -1,14 +1,17 @@
 /**
- * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box)
+ * Playback server cycle (Server 1 = Nxsha/NHD/custom, Server 2 = M2Box,
+ * Server 3 = VidSync)
  * ======================================================================
- * Rule (owner): jis title ka MovieBox link nahi hai, us par **sirf Server 1**
- * chalega aur koi server badalne ka option nahi dikhega — warna user ek aisa
- * "M2Box" button dabata hai jiske peeche kuch nahi hota.
- *
- * Isliye cycle do tarah ka banta hai:
- *   - MovieBox available → default provider → baaki providers → custom →
- *     M2Box (pill se switch).
- *   - MovieBox nahi     → bas default provider (cycle length 1 = koi pill nahi).
+ * Rules:
+ *   - Jis title ka MovieBox link nahi hai, us par **M2Box ka button nahi**
+ *     dikhta (owner ka rule) — warna user ek aisa button dabata hai jiske peeche
+ *     kuch nahi hota.
+ *   - VidSync (Server 3) **sirf TMDB numeric id** par chalta hai, MovieBox par
+ *     depend nahi karta. Isliye wo apne dum par cycle me aata hai — M2Box na ho
+ *     to bhi [Server 1 → VidSync] ban sakta hai.
+ *   - VidSync kabhi default nahi banta: Server 1 (Nxsha) hi pehla server rehta
+ *     hai, VidSync pill se switch hota hai (agar unka player kisi title par
+ *     kuch na dikhaye to ek tap me wapas).
  *
  * `defaultProvider` khud 'moviebox' ho (settings me) par link na ho to Nxsha par
  * gir jate hain.
@@ -16,7 +19,7 @@
 
 import type { ProviderId } from './embeds';
 
-export type PlaybackServerId = ProviderId | 'moviebox';
+export type PlaybackServerId = ProviderId | 'moviebox' | 'vidsync';
 
 export const BUILTIN_SERVERS: readonly ProviderId[] = ['nxsha', 'nhd'];
 
@@ -29,6 +32,8 @@ export interface ServerCycleInput {
     rowIsMoviebox?: boolean;
     /** Row ka apna (m2box ke alawa) embed URL. */
     customAvailable?: boolean;
+    /** Title ka TMDB numeric id mila — VidSync (Server 3) chalta hai. */
+    vidsyncAvailable?: boolean;
     /** Override (tests ke liye). */
     providers?: readonly ProviderId[];
 }
@@ -39,6 +44,7 @@ export function buildServerCycle({
     movieboxAvailable,
     rowIsMoviebox = false,
     customAvailable = false,
+    vidsyncAvailable = false,
     providers = BUILTIN_SERVERS,
 }: ServerCycleInput): PlaybackServerId[] {
     const wanted: PlaybackServerId =
@@ -48,14 +54,20 @@ export function buildServerCycle({
     if (rowIsMoviebox && movieboxAvailable) list.push('moviebox');
     list.push(wanted);
 
-    // MovieBox na ho to bas Server 1 — koi switch option nahi.
-    if (!movieboxAvailable) return Array.from(new Set(list));
+    // M2Box na ho to bas Server 1 (+ Server 3, agar chalta hai) — koi aur switch
+    // option nahi. Ye purana rule hi hai, sirf VidSync ka rasta khula hai.
+    if (!movieboxAvailable) {
+        if (vidsyncAvailable) list.push('vidsync');
+        return Array.from(new Set(list));
+    }
 
     for (const provider of providers) {
         if (provider !== wanted) list.push(provider);
     }
     if (customAvailable) list.push('custom');
     list.push('moviebox');
+    // Server 3 sabse aakhir me — Server 1/2 ke baad hi try hota hai.
+    if (vidsyncAvailable) list.push('vidsync');
     return Array.from(new Set(list));
 }
 
