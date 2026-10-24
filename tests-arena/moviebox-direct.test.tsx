@@ -430,24 +430,23 @@ describe('−10s / +10s buttons (owner ke screenshot wali jagah)', () => {
     });
 });
 
-describe('phone screen ke buttons (source)', () => {
+describe('phone screen (source)', () => {
     const read = (path: string) => require('node:fs').readFileSync(require('node:path').join(process.cwd(), path), 'utf8');
 
-    it('title ke bagal me −10s / +10s buttons hain, aur seek bridge se jude hain', () => {
+    it('dead ±10s buttons hata diye — wo kabhi chal hi nahi sakte the', () => {
+        // Owner: "agar button chalta hi nhi hai usme to konsa kaam ka hta de
+        // usse". MovieBox ki API guest ko stream deti hi nahi (probe se
+        // verify), aur cross-origin iframe ka `currentTime` chhua nahi ja
+        // sakta — isliye do dhundhle bekaar button rakhne ka koi matlab nahi.
         const modal = read('components/MovieList/MovieDetailModal.tsx');
-        expect(modal).toContain("test: 'phone-skip-back'");
-        expect(modal).toContain("test: 'phone-skip-forward'");
-        expect(modal).toContain('testID={test}');
-        expect(modal).toContain('seekMovieboxBy(delta)');
-        expect(modal).toContain('delta: -MOVIEBOX_SKIP_SECONDS');
-        expect(modal).toContain('delta: MOVIEBOX_SKIP_SECONDS');
-        // Buttons hamesha dikhte hain (owner: "button kaha hai hi nahi laga") —
-        // pehle `seekReady` par gate the, isliye iframe wale player me gayab
-        // ho jate the. Ab sirf opacity badalti hai.
-        expect(modal).toContain('phoneSkipIdle');
-        expect(modal).not.toContain('{seekReady ? (');
-        expect(modal).toContain('useMovieboxSeekReady()');
-        // Title ke saath ek hi row me.
-        expect(modal).toContain('phoneTitleRow');
+        expect(modal).not.toContain('phone-skip-back');
+        expect(modal).not.toContain('phone-skip-forward');
+        expect(modal).not.toContain('seekMovieboxBy');
+        expect(modal).not.toContain('phoneSkip');
+        // Player ke andar wala invisible double-tap bana hua hai (jab stream
+        // asli me mile to wahi ±10s karta hai).
+        const player = read('components/MovieboxDirectPlayer.tsx');
+        expect(player).toContain('registerMovieboxSeek');
+        expect(player).toContain('seekBy(');
     });
 });
