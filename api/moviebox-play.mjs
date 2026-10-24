@@ -481,21 +481,36 @@ export async function resolvePlayStreams({ subjectId, detailPath, se, ep }) {
   const token = await visitorToken(trace);
 
   if (token) {
-    const playQuery =
-      `/subject-api/play-info/v2?subjectId=${encodeURIComponent(subjectId)}` +
-      (se > 0 && ep > 0 ? `&se=${se}&ep=${ep}` : '');
-    const play = await apiGet(playQuery, token, trace);
-    if (play.payload) {
-      const data = play.payload?.data ?? play.payload;
-      const streams = [
-        ...collectMediaUrls(data),
-        ...streamsFromSignCookie(String(data?.signCookie || '')),
-      ];
-      if (streams.length) {
-        trace.push(`play-info/v2: ${streams.length} streams`);
-        return { ok: true, streams: dedupe(streams), via: 'play-info-v2', host: play.host, trace };
+    /**
+     * Movie par `se`/`ep` bhejna hi galat hota hai (app sirf TV par bhejta
+     * hai) — isliye pehle diye gaye coords, phir bina coords, phir 1/1.
+     */
+    const coords = [];
+    const addCoord = (a, b) => {
+      if (coords.some(([x, y]) => x === a && y === b)) return;
+      coords.push([a, b]);
+    };
+    if (se > 0 && ep > 0) addCoord(se, ep);
+    addCoord(0, 0);
+    if (se > 0 && ep > 0) addCoord(1, 1);
+
+    for (const [coordSe, coordEp] of coords) {
+      const playQuery =
+        `/subject-api/play-info/v2?subjectId=${encodeURIComponent(subjectId)}` +
+        (coordSe > 0 && coordEp > 0 ? `&se=${coordSe}&ep=${coordEp}` : '');
+      const play = await apiGet(playQuery, token, trace);
+      if (play.payload) {
+        const data = play.payload?.data ?? play.payload;
+        const streams = [
+          ...collectMediaUrls(data),
+          ...streamsFromSignCookie(String(data?.signCookie || '')),
+        ];
+        if (streams.length) {
+          trace.push(`play-info/v2: ${streams.length} streams (se=${coordSe} ep=${coordEp})`);
+          return { ok: true, streams: dedupe(streams), via: 'play-info-v2', host: play.host, trace };
+        }
+        trace.push(`play-info/v2: streams 0 (se=${coordSe} ep=${coordEp})`);
       }
-      trace.push('play-info/v2: streams 0');
     }
 
     // `resource` — kabhi kabhi sirf yahan direct mirrors hote hain.
