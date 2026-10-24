@@ -5,6 +5,9 @@ const UA =
 const headers = (extra = {}) => ({
   'User-Agent': UA,
   Accept: 'application/json',
+  'Accept-Language': 'en-US,en;q=0.9',
+  'X-Client-Info': '{"timezone":"Asia/Kolkata"}',
+  'X-Request-Lang': 'en',
   Referer: 'https://moviebox.ph/',
   Origin: 'https://moviebox.ph',
   ...extra,
