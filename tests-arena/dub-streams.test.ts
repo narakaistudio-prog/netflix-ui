@@ -159,6 +159,27 @@ describe('api/moviebox-play — app signature aur signCookie', () => {
         expect(trSignature({ ...args, body: '{}' })).not.toBe(one);
     });
 
+    it('HMAC key 30-byte base64 secret se banti hai (extra byte se nahi)', () => {
+        // Asli app key: base64 `76iRl07…` decode = 30 byte. Ek extra byte
+        // (`0x12`) jodne par gateway 440 deta tha — isliye ye guard.
+        const secret = Buffer.from('76iRl07s0xSN9jqmEWAt79EBJZulIQIsV64FZr2O', 'base64');
+        expect(secret).toHaveLength(30);
+        const args = {
+            method: 'POST',
+            url: 'https://api6.aoneroom.com/wefeed-mobile-bff/user-api/visitor-login',
+            body: '{}',
+            timestampMs: 1700000000000,
+        };
+        const expected =
+            '1700000000000|2|' +
+            require('node:crypto')
+                .createHmac('md5', secret)
+                .update(canonicalString(args))
+                .digest('base64');
+        expect(trSignature(args)).toBe(expected);
+        expect(trSignature({ ...args, secret: Buffer.concat([secret, Buffer.from([0x12])]) })).not.toBe(expected);
+    });
+
     it('clientToken `<ms>,md5(reverse(ms))`', () => {
         const token = clientToken(1700000000000);
         const [stamp, hash] = token.split(',');

@@ -49,14 +49,32 @@ const HOST_POOL = [
   'https://api4.aoneroom.com',
   'https://api4sg.aoneroom.com',
   'https://api3.aoneroom.com',
+  'https://api6sg.aoneroom.com',
   'https://api.inmoviebox.com',
 ];
-/** 32-byte key baked into the app (MovieBox-TUI `crypto.rs`). */
-const SECRET = Buffer.from([
-  0xef, 0xa8, 0x91, 0x97, 0x4e, 0xec, 0xd3, 0x14, 0x8d, 0xf6, 0x3a, 0xa6,
-  0x11, 0x60, 0x2d, 0xef, 0xd1, 0x01, 0x25, 0x9b, 0xa5, 0x21, 0x02, 0x2c,
-  0x57, 0xae, 0x05, 0x66, 0xbd, 0x8e, 0x12,
-]);
+/**
+ * App ke andar ka HMAC key — **30 byte** (`ef a8 … bd 8e`), jo base64
+ * `76iRl07s0xSN9jqmEWAt79EBJZulIQIsV64FZr2O` decode karne par bhi wahi aata
+ * hai (MovieBox-TUI `crypto.rs` me bhi yahi list hai).
+ *
+ * Pichla attempt 31 byte bhej raha tha (aakhir me ek extra `0x12`) — HMAC key ek
+ * byte bhi alag ho to gateway **440** (signature invalid) deta hai, aur wahi
+ * probe me har host par dikha. Ab 30 byte pehla; 31 purane builds ke liye
+ * fallback (jo chale wahi session bhar rehta hai).
+ */
+const SECRET_30 = Buffer.from('76iRl07s0xSN9jqmEWAt79EBJZulIQIsV64FZr2O', 'base64');
+const SECRET_31 = Buffer.concat([SECRET_30, Buffer.from([0x12])]);
+const SECRETS = [SECRET_30, SECRET_31];
+/**
+ * Login variants — secret × spoofed-IP. Pehla hi asli app jaisa hai; baaki
+ * tab bachate hain jab edge fingerprint par 440 de (440 milte hi us variant ke
+ * aage hosts try karna bekaar hai, isliye loop turant agle variant par jata hai).
+ */
+const LOGIN_VARIANTS = [
+  { secretIndex: 0, spoof: true, label: 'key30+spoof' },
+  { secretIndex: 1, spoof: true, label: 'key31+spoof' },
+  { secretIndex: 0, spoof: false, label: 'key30' },
+];
 const SIGNATURE_BODY_MAX = 102_400;
 
 /** H5 (web) fallback — sirf tab jab app ka rasta bilkul khaali ho. */
@@ -116,8 +134,8 @@ export function canonicalString({ method, url, body, timestampMs }) {
 }
 
 /** `<ts>|2|<base64 hmac-md5>` — app ka `x-tr-signature`. */
-export function trSignature({ method, url, body, timestampMs = Date.now() }) {
-  const mac = createHmac('md5', SECRET)
+export function trSignature({ method, url, body, timestampMs = Date.now(), secret = SECRETS[0] }) {
+  const mac = createHmac('md5', secret)
     .update(canonicalString({ method, url, body, timestampMs }))
     .digest('base64');
   return `${timestampMs}|2|${mac}`;
@@ -149,13 +167,16 @@ function makeIdentity() {
     model: device,
     system_language: 'en',
     net: 'NETWORK_WIFI',
-    region: 'IN',
+    // App hi `US` bhejta hai (reference client bhi) — fingerprint jaisa hi.
+    region: 'US',
     timezone: 'Asia/Kolkata',
     sp_code: '40401',
     'X-Play-Mode': '2',
   });
-  /** App apna IP spoof karta hai (APAC prefix) — reference client bhi karta hai. */
-  const spoofedIp = `49.${36 + Math.floor(Math.random() * 40)}.${1 + Math.floor(Math.random() * 250)}.${1 + Math.floor(Math.random() * 250)}`;
+  /** Spoofed IP — reference client ke apne prefix pool se. */
+  const prefixes = ['103.241', '49.36', '117.195', '106.198', '122.162', '157.32', '182.70', '103.58', '27.60', '59.90'];
+  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+  const spoofedIp = `${prefix}.${1 + Math.floor(Math.random() * 250)}.${1 + Math.floor(Math.random() * 250)}`;
   return { userAgent, clientInfo, spoofedIp };
 }
 
@@ -165,7 +186,7 @@ function currentIdentity() {
   return identity;
 }
 
-function signedHeaders({ method, url, body, token }) {
+function signedHeaders({ method, url, body, token, secret = SECRETS[0], spoof = true }) {
   const id = currentIdentity();
   const timestampMs = Date.now();
   return {
@@ -174,10 +195,10 @@ function signedHeaders({ method, url, body, token }) {
     'Content-Type': 'application/json',
     Connection: 'keep-alive',
     'x-client-token': clientToken(timestampMs),
-    'x-tr-signature': trSignature({ method, url, body, timestampMs }),
+    'x-tr-signature': trSignature({ method, url, body, timestampMs, secret }),
     'x-client-info': id.clientInfo,
     'x-client-status': '0',
-    'x-forwarded-for': id.spoofedIp,
+    ...(spoof ? { 'x-forwarded-for': id.spoofedIp } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }
@@ -188,27 +209,40 @@ let session = null;
 async function visitorToken(trace) {
   if (session && Date.now() - session.at < SESSION_TTL_MS) return session.token;
   const body = '{}';
-  for (const host of HOST_POOL) {
-    const url = `${host}${API_PREFIX}/user-api/visitor-login`;
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: signedHeaders({ method: 'POST', url, body }),
-        body,
-        signal: timeoutSignal(REQUEST_TIMEOUT_MS),
-      });
-      const payload = await res.json().catch(() => null);
-      const token = payload?.data?.token || payload?.data?.data?.token;
-      if (token) {
-        session = { token: String(token), at: Date.now(), host };
-        trace.push(`visitor-login ok (${host.replace(/^https:\/\//, '')})`);
-        return session.token;
+  const started = Date.now();
+  for (let variantIndex = 0; variantIndex < LOGIN_VARIANTS.length; variantIndex += 1) {
+    const variant = LOGIN_VARIANTS[variantIndex];
+    const secret = SECRETS[variant.secretIndex];
+    for (const host of HOST_POOL) {
+      if (Date.now() - started > 18_000) {
+        trace.push('visitor-login: budget khatam');
+        return '';
       }
-      trace.push(`visitor-login ${host.replace(/^https:\/\//, '')}: status ${res.status} code ${payload?.code ?? '?'}`);
-    } catch (error) {
-      trace.push(`visitor-login ${host.replace(/^https:\/\//, '')}: ${String(error?.message || error)}`);
+      const url = `${host}${API_PREFIX}/user-api/visitor-login`;
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: signedHeaders({ method: 'POST', url, body, secret, spoof: variant.spoof }),
+          body,
+          signal: timeoutSignal(REQUEST_TIMEOUT_MS),
+        });
+        const payload = await res.json().catch(() => null);
+        const token = payload?.data?.token || payload?.data?.data?.token;
+        if (token) {
+          session = { token: String(token), at: Date.now(), host, ...variant };
+          trace.push(`visitor-login ok (${host.replace(/^https:\/\//, '')}, ${variant.label})`);
+          return session.token;
+        }
+        trace.push(
+          `visitor-login ${host.replace(/^https:\/\//, '')} ${variant.label}: ${res.status}/${payload?.code ?? '?'}`,
+        );
+        // 440 = signature reject — usi key se aage hosts try karna bekaar.
+        if (Number(payload?.code) === 440 || res.status === 440) break;
+      } catch (error) {
+        trace.push(`visitor-login ${host.replace(/^https:\/\//, '')}: ${String(error?.message || error)}`);
+      }
+      await sleep(40);
     }
-    await sleep(60);
   }
   return '';
 }
@@ -221,7 +255,13 @@ async function apiGet(pathAndQuery, token, trace) {
     try {
       const res = await fetch(url, {
         method: 'GET',
-        headers: signedHeaders({ method: 'GET', url, token }),
+        headers: signedHeaders({
+          method: 'GET',
+          url,
+          token,
+          secret: SECRETS[session?.secretIndex ?? 0],
+          spoof: session?.spoof !== false,
+        }),
         signal: timeoutSignal(REQUEST_TIMEOUT_MS),
       });
       const payload = await res.json().catch(() => null);
