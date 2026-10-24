@@ -146,6 +146,47 @@ Provider apni **subtitle** bhashayein bhi `dubs[]` me bhejta hai (`Arabic sub`)
 — wo hata di jaati hain (audio nahi hain), aur ek hi bhasha ek hi baar
 (`Original` jeetta hai).
 
+### NetMirror par audio switch (chautha round)
+
+Owner: *"netmirror par bas option aata hai par koi audio milta hi nahi … sab me
+likhta hai audio nahi mila"*.
+
+Wajah: list `api/moviebox-audio` se aa jaati thi (har bhasha ka apna subject),
+par bhasha chunne par streams **browser se seedha** maangi jaati thi
+(`h5-api.aoneroom.com` / player-domain). Us raste par browser CORS/preflight par
+atak jata hai. MovieBox par audio badalta dikhta tha kyunki wahan desktop par
+iframe (watch page) chalta hai; NetMirror par sirf apna `<video>` hai.
+
+Ab:
+
+```
+bhasha chuni
+  → GET /api/moviebox-play?subjectId=…&detailPath=…&se=…&ep=…   (server, same-origin)
+      1. POST {apig}/wefeed-mobile-bff/user-api/visitor-login  → guest token
+      2. GET  {apig}/wefeed-mobile-bff/subject-api/play-info/v2?subjectId&se&ep
+         (Android app headers + x-tr-signature: hmac-md5(timestamp|2|base64))
+         → streams/streamList/hls/dash, ya signCookie ke andar chhupa
+           `urlprefix=<base64>` CDN path + index.mpd / index.m3u8
+      3. fail ho to purana h5 rasta: /home token → get-domain → {player}/subject/play
+      → { ok:true, streams:[{url, quality, kind}], via:'play-info-v2'|'h5' }
+  → fail ho to purana browser rasta (lib/movieboxDirect)
+  → dono fail → "‹language› audio nahi mila" (jhootha switch nahi)
+```
+
+Kyun h5 `subject/play` kaafi nahi tha: guest ko wo `streams: []`,
+`hasResource:false` deta hai (India ke browser me bhi). Asli rasta app ka
+visitor-login + `play-info/v2` hai.
+
+- Video ke **bytes proxy nahi** hote — sirf chhota JSON (URLs), `api/netmirror`
+  ki tarah. Playback CDN se seedha.
+- Function `bom1` (Mumbai) me chalta hai: MovieBox play guest ko **US** se khaali
+  deta hai (`hasResource:false`), India se stream deta hai.
+- Debug: `/api/moviebox-play?…&probe=1` → `{ ok, count, via, region, trace }`
+  (URLs ke bina; `region` batata hai function Mumbai me chala ya nahi).
+- Test: `tests-arena/dub-streams.test.ts` (14) — server-first, client fallback,
+  dono fail, `x-tr-signature`, `signCookie` decode, nested URL scan, handler
+  `no-token`.
+
 ## Rules jo nahi badle
 
 - NetMirror **kabhi default nahi** — MovieBox (Hindi) hi pehla server.

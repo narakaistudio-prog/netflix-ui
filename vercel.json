@@ -5,7 +5,21 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/movie/:id", "destination": "/movie/[id]" },
-    { "source": "/browse/:rowTitle", "destination": "/browse/[rowTitle]" }
-  ]
+    {
+      "source": "/movie/:id",
+      "destination": "/movie/[id]"
+    },
+    {
+      "source": "/browse/:rowTitle",
+      "destination": "/browse/[rowTitle]"
+    }
+  ],
+  "functions": {
+    "api/moviebox-play.mjs": {
+      "regions": [
+        "bom1"
+      ],
+      "maxDuration": 30
+    }
+  }
 }
