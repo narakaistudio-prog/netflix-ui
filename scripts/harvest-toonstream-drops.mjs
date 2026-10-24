@@ -625,11 +625,22 @@ async function harvest() {
     };
 }
 
+/**
+ * Fresh Drop row ka order. Pehle `onSite` wale (catalog me pehle se maujood
+ * anime) hamesha row ke **aakhir** me jaate the — matlab din ka naya episode
+ * 18-card row ki 16-18vi jagah par baithta tha aur owner ko row kholne par
+ * wahi purana lagta tha ("naya episode fetch nahi hua"). Ab pehla naap
+ * `firstSeen` hai: sabse naya drop sabse aage. `onSite` sirf usi din ke
+ * tie par faisla karta hai — us din ke naye *tiles* (jo catalog me nahi hain)
+ * catalog cards se pehle, taaki row ke shuru me hi kuch naya dikhe.
+ */
 function orderedItems(state) {
     return Object.values(state.items || {})
         .sort((a, b) => {
+            const byDay = String(b.firstSeen || '').localeCompare(String(a.firstSeen || ''));
+            if (byDay) return byDay;
             if (!!a.onSite !== !!b.onSite) return a.onSite ? 1 : -1;
-            return String(b.firstSeen || '').localeCompare(String(a.firstSeen || '')) || a.title.localeCompare(b.title);
+            return a.title.localeCompare(b.title);
         })
         .slice(0, MAX_ITEMS);
 }

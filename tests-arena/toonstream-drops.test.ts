@@ -97,6 +97,42 @@ test('bake writes every card once, with its Nxsha guide', () => {
     expect(run(['--from-state', '--check'], { TS_DROPS_STATE_FILE: file, TS_DROPS_HTML_FILE: html })).toContain('in sync');
 });
 
+test('aaj ka naya episode Fresh Drop row ke shuru me aata hai', () => {
+    // Owner: row kholne par naya episode sabse aage dikhna chahiye. Pehle
+    // `onSite` (catalog me pehle se maujood anime) hamesha row ke aakhir me
+    // jaate the — isliye Apothecary/Slime ka aaj ka episode 16-18vi jagah par
+    // baithta tha. Ab din pehle, phir naye tile, phir catalog cards.
+    const { file, html } = stateFile({
+        'purana-catalog': {
+            title: 'Purana Catalog',
+            slug: 'purana-catalog',
+            season: 1,
+            episode: 2,
+            onSite: true,
+            firstSeen: '2026-10-19',
+        },
+        'purana-naya': {
+            title: 'Purana Naya',
+            slug: 'purana-naya',
+            season: 1,
+            episode: 3,
+            firstSeen: '2026-10-19',
+        },
+        'aaj-ka-episode': {
+            title: 'Aaj Ka Episode',
+            slug: 'aaj-ka-episode',
+            season: 4,
+            episode: 22,
+            onSite: true,
+            firstSeen: '2026-10-24',
+        },
+    });
+
+    run(['--from-state'], { TS_DROPS_STATE_FILE: file, TS_DROPS_HTML_FILE: html });
+    const items = bakedItems(readFileSync(html, 'utf8'));
+    expect(items.map((item: any) => item.title)).toEqual(['Aaj Ka Episode', 'Purana Naya', 'Purana Catalog']);
+});
+
 test('--check fails when the page block is stale', () => {
     const { file, html } = stateFile({
         overgeared: { title: 'Overgeared', slug: 'overgeared', season: 1, episode: 4, nxId: '324502' },
