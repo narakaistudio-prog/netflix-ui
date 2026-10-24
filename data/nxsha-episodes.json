@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-24T04:36:13.825Z",
+    "generatedAt": "2026-10-24T09:54:10.040Z",
     "source": "https://nxsha.space/api/tv/{tmdbId}/season/{season}",
     "excludedKeys": []
   },
@@ -32790,7 +32790,7 @@
           "episode": 82,
           "title": "Natsuki Subaru",
           "overview": "With his mental state already in tatters, Subaru finds a book in the archive with his name on it.",
-          "image": "https://image.tmdb.org/t/p/w780/h8ifWfX5xrjZtb0uC1LzrK1m0AD.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/wurgMlhqOlCbOWnff4vxRk4L2gF.jpg",
           "airDate": "2026-09-09",
           "runtime": 27
         },
@@ -41384,7 +41384,7 @@
           "episode": 52,
           "title": "The Last Volume",
           "overview": "Trying to track down the missing final book, Maomao visits Suirei, who is now living with Ah-Duo.",
-          "image": "https://image.tmdb.org/t/p/w780/fOifoFNfJ36aN2nk4Kr5UBwF7GI.jpg",
+          "image": "https://image.tmdb.org/t/p/w780/n0nwtYSLA4ylr7XaqUBrKT4MtHH.jpg",
           "airDate": "2026-10-23",
           "runtime": 24
         },
