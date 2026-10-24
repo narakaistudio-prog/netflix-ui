@@ -1,0 +1,37 @@
+name: vidsync-probe
+
+# Temporary probe (Task 24): kya vidsync.pro ka embed hamare origin se iframe me
+# chalne deta hai (X-Frame-Options / CSP frame-ancestors) aur kaunsa status deta
+# hai. CI runner ke paas internet hai — sandbox ke paas nahi.
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/eb80d9dc-netflix-ui]
+    paths:
+      - '.github/workflows/vidsync-probe.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Embed headers (mobile UA, India-ish)
+        run: |
+          UA="Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"
+          for u in \
+            "https://vidsync.pro/" \
+            "https://vidsync.pro/docs" \
+            "https://vidsync.pro/embed/movie/155" \
+            "https://vidsync.pro/embed/movie/1184918?dubLang=hindi&primarycolor=E50914" \
+            "https://vidsync.pro/embed/movie/1465943?dubLang=hindi&primarycolor=E50914" \
+            "https://vidsync.pro/embed/tv/66732/1/1?dubLang=hindi&primarycolor=E50914" ; do
+            echo "================ $u"
+            curl -sS -m 30 -A "$UA" -H 'Accept-Language: en-IN,en;q=0.9' -D /tmp/h -o /tmp/b "$u" || echo "curl exit $?"
+            echo "--- status:"
+            head -1 /tmp/h
+            echo "--- frame/csp headers:"
+            grep -iE 'x-frame-options|content-security-policy|frame-ancestors|referrer-policy|permissions-policy|server:|cf-|x-vercel|x-powered' /tmp/h || echo "(none)"
+            echo "--- body bytes: $(wc -c < /tmp/b)"
+            echo "--- body head:"
+            head -c 400 /tmp/b | tr -d '\n'
+            echo
+          done
