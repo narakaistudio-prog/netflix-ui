@@ -99623,14 +99623,15 @@
       "season": 2,
       "episode": 4,
       "name": "Child of Kishin: Hayate Todoroki",
-      "overview": "",
+      "overview": "The Oni Brigade operates independently, fighting the Momotaro without answering to any organization. Its general, Hayate Todoroki, arrives at Rasetsu Academy to recruit Shiki, a Child of Kishin. Shiki rejects Todoroki's invitation to join his campaign to wipe…",
+      "runtime": 24,
       "still": "https://image.tmdb.org/t/p/w500/xoy8dMojQh1NfDi95IhNSvtLWQ9.jpg",
       "air_date": "2026-10-23"
      },
      {
       "season": 2,
       "episode": 5,
-      "name": "Episode 5",
+      "name": "New Blood",
       "overview": "",
       "air_date": "2026-10-30"
      },
@@ -100723,6 +100724,7 @@
       "episode": 28,
       "name": "Episode 28",
       "overview": "",
+      "runtime": 23,
       "still": "https://image.tmdb.org/t/p/w500/7pzc6NKXJPr1UuSbc8mdzYMRJbk.jpg",
       "air_date": "2026-10-25"
      },
@@ -107169,6 +107171,8 @@
       "episode": 4,
       "name": "Sing",
       "overview": "Nick's insecurities resurface during a crucial arbitration session. Morgan begins to question Cathcarts' tactics.",
+      "runtime": 49,
+      "still": "https://image.tmdb.org/t/p/w500/lIKMYlxjVVj5qlfSaPzAMfeJGNv.jpg",
       "air_date": "2026-10-23"
      },
      {
