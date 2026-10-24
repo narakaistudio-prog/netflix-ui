@@ -1,0 +1,38 @@
+name: MovieBox browser probe (push)
+
+# Temporary diagnostic. `pull_request` event is not firing reliably on this
+# branch, isliye probe branch ke push par chalta hai. Kuch deploy nahi karta;
+# result job summary me (aur log me) aata hai.
+on:
+  push:
+    branches:
+      - 'arena/**'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Browser-view probe (preflight + streams + CDN)
+        env:
+          PROBE_ORIGIN: 'https://net-ki15.vercel.app'
+        run: |
+          set -o pipefail
+          node scripts/probe-moviebox-browser.mjs \
+            --subject-id 4151920426815471968 \
+            --detail-path mandaadi-hindi-qxUx1r3QHW4 \
+            --se 0 --ep 0 2>&1 | tee browser-probe.log
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo '## MovieBox probe — browser nazariya'
+            echo '```'
+            tail -c 6000 browser-probe.log || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
