@@ -11,7 +11,15 @@
  *      probe me URLs nahi).
  */
 import { normalizeDubPayload, resolveDubStreams } from '../lib/dubStreams';
-import handler, { pickPlayStreams, playAttempts } from '../api/moviebox-play.mjs';
+import handler, {
+    canonicalQuery,
+    clientToken,
+    collectMediaUrls,
+    pickPlayStreams,
+    playAttempts,
+    streamsFromSignCookie,
+    trSignature,
+} from '../api/moviebox-play.mjs';
 
 const SERVER_STREAMS = [{ url: 'https://macdn.hakunaymatata.com/bt/1080.mp4', quality: '1080', kind: 'mp4' }];
 
@@ -108,6 +116,56 @@ describe('resolveDubStreams (server pehle)', () => {
         expect(answer.ok).toBe(false);
         expect(answer.reason).toBe('no-ref');
         expect(called).toBe(0);
+    });
+});
+
+describe('api/moviebox-play — app signature aur signCookie', () => {
+    it('canonicalQuery keys sorted, value bina encode', () => {
+        expect(canonicalQuery({ subjectId: '42', host: 'apig.inmoviebox.com', se: 1 })).toBe(
+            'host=apig.inmoviebox.com&se=1&subjectId=42',
+        );
+    });
+
+    it('trSignature format `ts|2|base64` aur deterministic', () => {
+        const args = { method: 'GET', path: '/x/y', query: 'a=1&b=2', timestamp: 1700000000000 };
+        const one = trSignature(args);
+        const two = trSignature(args);
+        expect(one).toBe(two);
+        expect(one.startsWith('1700000000000|2|')).toBe(true);
+        expect(one.split('|')).toHaveLength(3);
+        // body badle to signature badle
+        expect(trSignature({ ...args, body: '{}' })).not.toBe(one);
+    });
+
+    it('clientToken `<ms>,md5(reverse(ms))`', () => {
+        const token = clientToken(1700000000000);
+        const [stamp, hash] = token.split(',');
+        expect(stamp).toBe('1700000000000');
+        expect(hash).toMatch(/^[a-f0-9]{32}$/);
+    });
+
+    it('signCookie ka `urlprefix` base64 → asli CDN manifest', () => {
+        const base = 'https://sbcdn2.hakunaymatata.com/dash/abc/';
+        const cookie = `x=y;urlprefix=${Buffer.from(base).toString('base64')};z=1`;
+        const streams = streamsFromSignCookie(cookie);
+        expect(streams.map((item) => item.url)).toContain('https://sbcdn2.hakunaymatata.com/dash/abc/index.mpd');
+        expect(streamsFromSignCookie('').length).toBe(0);
+        expect(streamsFromSignCookie('urlprefix=%%%').length).toBe(0);
+    });
+
+    it('collectMediaUrls — nested JSON se sirf asli media URL', () => {
+        const streams = collectMediaUrls({
+            data: {
+                streams: [{ url: 'https://cdn.test/a.mp4' }],
+                deeper: { list: ['https://cdn.test/b.m3u8', 'not-a-url', { x: 'https://cdn.test/c.mp4' }] },
+                fake: 'https://cdn.test/page.html',
+            },
+        });
+        expect(streams.map((item) => item.url).sort()).toEqual([
+            'https://cdn.test/a.mp4',
+            'https://cdn.test/b.m3u8',
+            'https://cdn.test/c.mp4',
+        ]);
     });
 });
 
