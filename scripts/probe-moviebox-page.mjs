@@ -62,6 +62,10 @@ async function main() {
                 const at = html.indexOf(key);
                 log(`    "${key}":`, at > -1 ? html.slice(at, at + 160).replace(/\s+/g, ' ') : '(nahi mila)');
             }
+            for (const tag of ['<video', '<iframe', 'iframe src', 'playerUrl', 'player_url', 'mzfi', 'aoneroom', 'openPlayer', 'videoUrl']) {
+                const at = html.toLowerCase().indexOf(tag.toLowerCase());
+                log(`    "${tag}":`, at > -1 ? html.slice(at, at + 180).replace(/\s+/g, ' ') : '(nahi mila)');
+            }
             const scripts = uniq(html.match(/src="[^"]+\.js[^"]*"/g) || []);
             log('    scripts:', scripts.length, scripts.slice(0, 3).join(' ').slice(0, 220));
         } catch (error) {
