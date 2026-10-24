@@ -234,12 +234,54 @@ describe('MovieboxDirectPlayer (jsdom)', () => {
         container.remove();
     });
 
-    it('koi button nahi — sirf video', () => {
+    it('control bar hai — play/pause, ±10s, seek, mute, fullscreen', () => {
         act(() => {
             root.render(<MovieboxDirectPlayer streams={VIDEO_STREAM} onUnavailable={() => {}} />);
         });
-        expect(document.querySelectorAll('button').length).toBe(0);
         expect(document.querySelector('video[data-m2box="direct-video"]')).toBeTruthy();
+        // Owner: "player ke controls to bnado bhaii" — bar shuru me dikhti hai.
+        ['direct-play', 'direct-play-pause', 'direct-back-10', 'direct-forward-10',
+         'direct-time', 'direct-seek', 'direct-mute', 'direct-fullscreen'].forEach((id) => {
+            expect(document.querySelector(`[data-testid="${id}"]`)).toBeTruthy();
+        });
+        // Koi iframe nahi — apna <video>.
+        expect(document.querySelector('iframe')).toBeNull();
+    });
+
+    it('control bar se play/pause, ±10s, mute aur seek chalta hai', () => {
+        act(() => {
+            root.render(<MovieboxDirectPlayer streams={VIDEO_STREAM} onUnavailable={() => {}} />);
+        });
+        const { video, time } = bootVideo();
+        let paused = false;
+        Object.defineProperty(video, 'paused', { configurable: true, get: () => paused });
+        video.pause = () => {
+            paused = true;
+        };
+
+        // +10s / −10s buttons
+        act(() => (document.querySelector('[data-testid="direct-forward-10"]') as HTMLElement).click());
+        expect(time()).toBe(110);
+        act(() => (document.querySelector('[data-testid="direct-back-10"]') as HTMLElement).click());
+        expect(time()).toBe(100);
+
+        // play/pause button
+        act(() => (document.querySelector('[data-testid="direct-play-pause"]') as HTMLElement).click());
+        expect(paused).toBe(true);
+
+        // mute button
+        expect(video.muted).toBe(false);
+        act(() => (document.querySelector('[data-testid="direct-mute"]') as HTMLElement).click());
+        expect(video.muted).toBe(true);
+
+        // seek bar: aadha track dabao → aadha duration
+        const track = document.querySelector('[data-testid="direct-seek"]') as HTMLElement;
+        track.getBoundingClientRect = () =>
+            ({ left: 0, top: 0, width: 200, height: 22, right: 200, bottom: 22, x: 0, y: 0, toJSON: () => ({}) }) as DOMRect;
+        act(() => {
+            track.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, clientX: 100, clientY: 5 }));
+        });
+        expect(Math.round(time())).toBe(1800);
     });
 
     it('double-tap left = −10s, right = +10s', () => {

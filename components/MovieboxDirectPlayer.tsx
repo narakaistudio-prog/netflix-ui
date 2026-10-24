@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import type { DirectStream } from '@/lib/movieboxDirect';
 import { MOVIEBOX_SKIP_SECONDS, registerMovieboxSeek } from '@/lib/movieboxSeekBridge';
+import { enterPlayerFullscreen } from '@/lib/playerFullscreen';
 
 /**
  * MovieBox ka apna player — hamare paas ka `<video>`, isliye phone par
@@ -17,8 +19,19 @@ import { MOVIEBOX_SKIP_SECONDS, registerMovieboxSeek } from '@/lib/movieboxSeekB
  * UX (jaisa YouTube/Crunchyroll phone par):
  *   - video ke **baayein 34%** par **double-tap = −10s**, **daayein 34% = +10s**
  *   - **beech** me double-tap = play/pause
- *   - ek tap = play/pause (koi permanent control bar nahi — sirf 0.8s ka toast)
+ *   - ek tap = play/pause (0.8s ka toast)
  *   - 0 se pehle / duration ke bahar kuch nahi
+ *
+ * CONTROL BAR (owner: *"player ke controls to bnado bhaii"*):
+ *   - neeche patti — play/pause, −10s, +10s, time (chalu / total), seek bar
+ *     (drag ya tap), mute, fullscreen.
+ *   - beech me bada play button **jab paused** ho.
+ *   - 3.5s me apne aap gayab (jab chal raha ho); mouse hilao / tap karo to
+ *     wapas. Keyboard: space = play/pause, ←/→ = ±10s, f = fullscreen,
+ *     m = mute.
+ *   - Bar gayab ho to video ke gestures (double-tap) jaise the waise chalte
+ *     hain (`pointerEvents="none"`), dikhte waqt bhi khaali jagah se tap
+ *     neeche chala jata hai (`box-none`).
  *
  * Kuch bhi galat ho (stream shuru na ho / HLS support na ho) to `onUnavailable`
  * — parent turant purane cropped iframe par chala jata hai (koi regression nahi).
@@ -78,6 +91,71 @@ export function playableStreams(
 export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress }: MovieboxDirectPlayerProps) {
     const hostRef = useRef<View | null>(null);
     const [toast, setToast] = useState<{ text: string; side: 'left' | 'right' | 'center' } | null>(null);
+    const rootRef = useRef<View | null>(null);
+    const trackRef = useRef<View | null>(null);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+    /** Video se aane wali live values — control bar isi se banti hai. */
+    const [playback, setPlayback] = useState({
+        playing: false,
+        current: 0,
+        duration: 0,
+        buffered: 0,
+        muted: false,
+    });
+    const [chromeVisible, setChromeVisible] = useState(true);
+    const [activity, setActivity] = useState(0);
+    const lastBump = useRef(0);
+    /** Effect ke andar bane actions — buttons yahan se bulate hain. */
+    const actionsRef = useRef<{
+        toggle: () => void;
+        seekBy: (seconds: number) => void;
+        seekTo: (seconds: number) => void;
+        setMuted: (muted: boolean) => void;
+    }>({ toggle: () => {}, seekBy: () => {}, seekTo: () => {}, setMuted: () => {} });
+
+    /** Control bar dikhao aur auto-hide ka timer reset karo. */
+    const bump = useCallback(() => {
+        const now = Date.now();
+        setChromeVisible(true);
+        if (now - lastBump.current < 600) return;
+        lastBump.current = now;
+        setActivity((n) => n + 1);
+    }, []);
+
+    const [isFullscreen, setIsFullscreen] = useState(false);
+
+    useEffect(() => {
+        if (!IS_WEB || typeof document === 'undefined') return;
+        const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+        document.addEventListener('fullscreenchange', onChange);
+        return () => document.removeEventListener('fullscreenchange', onChange);
+    }, []);
+
+    /** Poora player fullscreen (desktop + Android) — fail soft. */
+    const toggleFullscreen = useCallback(() => {
+        if (!IS_WEB || typeof document === 'undefined') return;
+        // Parent shell fullscreen karo taaki player ke apne buttons (close /
+        // server pill) bhi fullscreen me dikhein — sirf video nahi.
+        const own = rootRef.current as unknown as HTMLElement | null;
+        const el = (own?.parentElement as HTMLElement | null) ?? own;
+        try {
+            if (document.fullscreenElement) {
+                void document.exitFullscreen?.();
+                return;
+            }
+            const target: any = el ?? document.documentElement;
+            if (typeof target.requestFullscreen === 'function') {
+                const request = target.requestFullscreen({ navigationUI: 'hide' });
+                if (request && typeof request.catch === 'function') {
+                    request.catch(() => enterPlayerFullscreen(target));
+                }
+                return;
+            }
+            void enterPlayerFullscreen(target);
+        } catch {
+            void enterPlayerFullscreen(el as any);
+        }
+    }, []);
     /**
      * Kaunsa stream try ho raha hai. Ek CDN variant kharab ho (403/error) to
      * agla quality try hota hai — pehle hi iframe par nahi girte.
@@ -129,6 +207,29 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
             else onUnavailableRef.current(reason);
         };
         video.addEventListener('error', () => fail('media-error'));
+
+        /* ------------------- Control bar ke liye sync ------------------- */
+        videoRef.current = video;
+        const sync = () => {
+            let buffered = 0;
+            try {
+                if (video.buffered && video.buffered.length) {
+                    buffered = video.buffered.end(video.buffered.length - 1);
+                }
+            } catch {
+                // some CDNs throw on buffered ranges
+            }
+            setPlayback({
+                playing: !video.paused && !video.ended,
+                current: Number(video.currentTime) || 0,
+                duration: Number.isFinite(video.duration) ? video.duration : 0,
+                buffered,
+                muted: video.muted,
+            });
+        };
+        sync();
+        const syncEvents = ['play', 'pause', 'timeupdate', 'loadedmetadata', 'durationchange', 'volumechange', 'progress', 'ended', 'seeked'];
+        syncEvents.forEach((name) => video.addEventListener(name, sync));
 
         // Autoplay block ho jaye (phone par data-saver / muted requirement) to
         // muted karke dobara — user ke pehle tap par awaaz wapas.
@@ -205,6 +306,7 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
         };
 
         const onPointerDown = (event: PointerEvent) => {
+            bump();
             const rect = video.getBoundingClientRect();
             const x = event.clientX;
             const y = event.clientY;
@@ -241,6 +343,37 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
             }, TAP_MS);
         };
 
+        actionsRef.current = {
+            toggle,
+            seekBy: (seconds: number) => {
+                const duration = Number(video.duration);
+                let next = (Number(video.currentTime) || 0) + seconds;
+                if (Number.isFinite(duration) && duration > 0) next = Math.min(next, duration - 0.3);
+                next = Math.max(0, next);
+                try {
+                    video.currentTime = next;
+                } catch {
+                    // property rok di gayi ho to chhod do
+                }
+                sync();
+            },
+            seekTo: (seconds: number) => {
+                const duration = Number(video.duration);
+                const clamped = Math.max(0, Number.isFinite(duration) && duration > 0 ? Math.min(seconds, duration - 0.3) : seconds);
+                try {
+                    video.currentTime = clamped;
+                } catch {
+                    // ignore
+                }
+                sync();
+            },
+            setMuted: (muted: boolean) => {
+                video.muted = muted;
+                if (!muted && video.paused) void video.play();
+                sync();
+            },
+        };
+
         host.addEventListener('pointerdown', onPointerDown, true);
 
         /**
@@ -256,6 +389,8 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
         return () => {
             unregisterSeek();
             unmounted = true;
+            syncEvents.forEach((name) => video.removeEventListener(name, sync));
+            if (videoRef.current === video) videoRef.current = null;
             clearTimeout(watchdog);
             if (toastTimer) clearTimeout(toastTimer);
             host.removeEventListener('pointerdown', onPointerDown, true);
@@ -270,6 +405,94 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
         };
     }, [streams, attempt]);
 
+    /* ------------------------------------------------------------------ */
+    /* Control bar: auto-hide, mouse/keyboard, seek bar drag               */
+    /* ------------------------------------------------------------------ */
+
+    /** 3.5s me gayab — sirf jab video chal raha ho. */
+    useEffect(() => {
+        if (!chromeVisible || !playback.playing) return;
+        const timer = setTimeout(() => setChromeVisible(false), 3500);
+        return () => clearTimeout(timer);
+    }, [chromeVisible, playback.playing, activity]);
+
+    /** Mouse hilane par bar wapas. */
+    useEffect(() => {
+        if (!IS_WEB) return;
+        const el = rootRef.current as unknown as HTMLElement | null;
+        if (!el) return;
+        const onMove = () => bump();
+        el.addEventListener('pointermove', onMove);
+        return () => el.removeEventListener('pointermove', onMove);
+    }, [bump]);
+
+    /** Keyboard: space/k = play-pause, ←/→ = ±10s, m = mute, f = fullscreen. */
+    useEffect(() => {
+        if (!IS_WEB || typeof window === 'undefined') return;
+        const onKey = (event: KeyboardEvent) => {
+            const tag = (event.target as HTMLElement | null)?.tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+            if (event.key === ' ' || event.key === 'k') {
+                event.preventDefault();
+                actionsRef.current.toggle();
+                bump();
+            } else if (event.key === 'ArrowLeft') {
+                actionsRef.current.seekBy(-STEP_SECONDS);
+                bump();
+            } else if (event.key === 'ArrowRight') {
+                actionsRef.current.seekBy(STEP_SECONDS);
+                bump();
+            } else if (event.key === 'm') {
+                actionsRef.current.setMuted(!(videoRef.current?.muted ?? false));
+                bump();
+            } else if (event.key === 'f') {
+                toggleFullscreen();
+                bump();
+            }
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [bump, toggleFullscreen]);
+
+    /** Seek bar: click ya drag — dono se position badalti hai. */
+    useEffect(() => {
+        if (!IS_WEB || typeof window === 'undefined') return;
+        const el = trackRef.current as unknown as HTMLElement | null;
+        if (!el) return;
+        const seekFrom = (clientX: number) => {
+            const rect = el.getBoundingClientRect();
+            const width = rect.width || 1;
+            const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / width));
+            const duration = videoRef.current?.duration ?? 0;
+            if (Number.isFinite(duration) && duration > 0) {
+                actionsRef.current.seekTo(ratio * duration);
+            }
+        };
+        let dragging = false;
+        const onDown = (event: PointerEvent) => {
+            dragging = true;
+            event.stopPropagation();
+            if (typeof event.preventDefault === 'function') event.preventDefault();
+            seekFrom(event.clientX);
+            bump();
+        };
+        const onMove = (event: PointerEvent) => {
+            if (!dragging) return;
+            seekFrom(event.clientX);
+        };
+        const onUp = () => {
+            dragging = false;
+        };
+        el.addEventListener('pointerdown', onDown);
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('pointerup', onUp);
+        return () => {
+            el.removeEventListener('pointerdown', onDown);
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+        };
+    }, [bump, chromeVisible]);
+
     if (!IS_WEB) {
         return (
             <View style={styles.fallback}>
@@ -279,9 +502,119 @@ export function MovieboxDirectPlayer({ streams, title, onUnavailable, onProgress
         );
     }
 
+    const duration = playback.duration;
+    const pct = duration > 0 ? Math.min(100, (playback.current / duration) * 100) : 0;
+    const bufferedPct = duration > 0 ? Math.min(100, (playback.buffered / duration) * 100) : 0;
+
     return (
-        <View style={styles.root}>
+        <View ref={rootRef as any} style={styles.root}>
             <View ref={hostRef as any} style={styles.videoHost} testID="moviebox-direct-video" collapsable={false} />
+            {chromeVisible || !playback.playing ? (
+                <View style={styles.chrome} pointerEvents="box-none">
+                    {!playback.playing ? (
+                        <Pressable
+                            style={styles.bigPlay}
+                            onPress={() => {
+                                actionsRef.current.toggle();
+                                bump();
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel="Play"
+                            testID="direct-play"
+                        >
+                            <Ionicons name="play" size={30} color="#fff" />
+                        </Pressable>
+                    ) : null}
+
+                    <View style={styles.bottomBar} pointerEvents="auto">
+                        {/* Seek bar poori chaudai — phone par bhi ungli se aasan. */}
+                        <View
+                            ref={trackRef as any}
+                            style={styles.track}
+                            testID="direct-seek"
+                            collapsable={false}
+                            {...({ 'data-testid': 'direct-seek-track' } as any)}
+                        >
+                            <View style={[styles.trackBufferFill, { width: `${bufferedPct}%` } as any]} />
+                            <View style={[styles.trackFill, { width: `${pct}%` } as any]} />
+                            <View style={[styles.knob, { left: `${pct}%` } as any]} />
+                        </View>
+                        <View style={styles.controlsRow}>
+                        <Pressable
+                            style={styles.iconButton}
+                            onPress={() => {
+                                actionsRef.current.toggle();
+                                bump();
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel={playback.playing ? 'Pause' : 'Play'}
+                            testID="direct-play-pause"
+                        >
+                            <Ionicons name={playback.playing ? 'pause' : 'play'} size={20} color="#fff" />
+                        </Pressable>
+                        <Pressable
+                            style={styles.skipButton}
+                            onPress={() => {
+                                actionsRef.current.seekBy(-STEP_SECONDS);
+                                bump();
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Back ${STEP_SECONDS} seconds`}
+                            testID="direct-back-10"
+                        >
+                            <Ionicons name="play-back" size={16} color="#fff" />
+                            <Text style={styles.skipText}>{STEP_SECONDS}</Text>
+                        </Pressable>
+                        <Pressable
+                            style={styles.skipButton}
+                            onPress={() => {
+                                actionsRef.current.seekBy(STEP_SECONDS);
+                                bump();
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Forward ${STEP_SECONDS} seconds`}
+                            testID="direct-forward-10"
+                        >
+                            <Ionicons name="play-forward" size={16} color="#fff" />
+                            <Text style={styles.skipText}>{STEP_SECONDS}</Text>
+                        </Pressable>
+
+                        <Text style={styles.timeText} testID="direct-time">
+                            {formatClock(playback.current)} / {duration > 0 ? formatClock(duration) : '--:--'}
+                        </Text>
+
+                        <Pressable
+                            style={styles.iconButton}
+                            onPress={() => {
+                                actionsRef.current.setMuted(!playback.muted);
+                                bump();
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel={playback.muted ? 'Unmute' : 'Mute'}
+                            testID="direct-mute"
+                        >
+                            <Ionicons
+                                name={playback.muted ? 'volume-mute' : 'volume-high'}
+                                size={19}
+                                color="#fff"
+                            />
+                        </Pressable>
+                        <Pressable
+                            style={styles.iconButton}
+                            onPress={() => {
+                                toggleFullscreen();
+                                bump();
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel="Full screen"
+                            testID="direct-fullscreen"
+                        >
+                            <Ionicons name={isFullscreen ? 'contract' : 'scan'} size={19} color="#fff" />
+                        </Pressable>
+                        </View>
+                    </View>
+                </View>
+            ) : null}
             {toast ? (
                 <View
                     pointerEvents="none"
@@ -318,6 +651,87 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '700',
         fontVariant: ['tabular-nums'],
+    },
+    /** Controls layer — khaali jagah se tap video tak jaata hai (box-none). */
+    chrome: { ...StyleSheet.absoluteFillObject, justifyContent: 'flex-end' },
+    bigPlay: {
+        position: 'absolute',
+        alignSelf: 'center',
+        top: '50%',
+        marginTop: -32,
+        width: 64,
+        height: 64,
+        borderRadius: 32,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'rgba(255,255,255,0.35)',
+    },
+    bottomBar: {
+        gap: 2,
+        paddingHorizontal: 12,
+        paddingTop: 6,
+        paddingBottom: 8,
+        backgroundColor: 'rgba(0,0,0,0.72)',
+    },
+    controlsRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    iconButton: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    skipButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 2,
+        height: 32,
+        paddingHorizontal: 6,
+        borderRadius: 16,
+    },
+    skipText: { color: '#fff', fontSize: 10, fontWeight: '700', fontVariant: ['tabular-nums'] },
+    timeText: {
+        color: '#e6e6e6',
+        fontSize: 11,
+        fontWeight: '600',
+        fontVariant: ['tabular-nums'],
+        minWidth: 82,
+    },
+    track: {
+        width: '100%',
+        height: 22,
+        justifyContent: 'center',
+        cursor: 'pointer',
+    },
+    trackBufferFill: {
+        position: 'absolute',
+        left: 0,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: 'rgba(255,255,255,0.35)',
+    },
+    trackFill: {
+        position: 'absolute',
+        left: 0,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: '#E50914',
+    },
+    knob: {
+        position: 'absolute',
+        width: 12,
+        height: 12,
+        marginLeft: -6,
+        borderRadius: 6,
+        backgroundColor: '#E50914',
+        borderWidth: 2,
+        borderColor: '#fff',
     },
     fallback: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', gap: 6 },
     fallbackText: { color: '#fff', fontWeight: '700' },
