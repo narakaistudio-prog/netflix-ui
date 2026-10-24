@@ -1,43 +1,29 @@
-/** PROBE (temporary) — `api/moviebox-audio` asli provider par, dono ids ke liye. */
-import handler from '../api/moviebox-audio.mjs';
-
-function call(query) {
-  return new Promise((resolve) => {
-    const req = { query, headers: {} };
-    const res = {
-      statusCode: 200,
-      headers: {},
-      setHeader(name, value) {
-        this.headers[name] = value;
-      },
-      status(code) {
-        this.statusCode = code;
-        return this;
-      },
-      json(payload) {
-        resolve({ status: this.statusCode, payload });
-      },
-    };
-    handler(req, res).catch((error) => resolve({ status: 500, payload: String(error) }));
-  });
+/** PROBE (temporary) — raw `dubs[]` (type field) Breaking Bad par. */
+const H5 = 'https://h5-api.aoneroom.com/wefeed-h5api-bff';
+const UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
+const headers = (extra = {}) => ({
+  'User-Agent': UA,
+  Accept: 'application/json',
+  Referer: 'https://moviebox.ph/',
+  Origin: 'https://moviebox.ph',
+  ...extra,
+});
+const home = await fetch(`${H5}/home?host=moviebox.ph`, { headers: headers() });
+let token = '';
+try {
+  token = String(JSON.parse(home.headers.get('x-user') || '{}').token || '');
+} catch {
+  /* ignore */
 }
-
-const cases = [
-  ['baked Hindi dub (MovieBox page)', '4151920426815471968', 'mandaadi-hindi-qxUx1r3QHW4'],
-  ['NetMirror ka subject (original Tamil)', '2237794012843369344', 'mandaadi-gWLfEvs7jF2'],
-  ['TV: Breaking Bad S1E1 (MovieBox)', '6207982430134357800', ''],
-];
-
-for (const [label, subjectId, detailPath] of cases) {
-  const { status, payload } = await call({ subjectId, detailPath });
-  console.log(
-    `\n### ${label}\n` +
-      JSON.stringify({
-        status,
-        ok: payload.ok,
-        reason: payload.reason,
-        error: payload.error,
-        languages: (payload.languages || []).map((item) => `${item.name}/${item.lang}/${item.subjectId}`),
-      }),
-  );
+const auth = token ? { Authorization: `Bearer ${token}` } : {};
+for (const [label, subjectId, detailPath] of [
+  ['Breaking Bad (tv)', '6207982430134357800', ''],
+  ['Mandaadi (movie)', '4151920426815471968', 'mandaadi-hindi-qxUx1r3QHW4'],
+]) {
+  const url = `${H5}/detail?subjectId=${subjectId}${detailPath ? `&detailPath=${detailPath}` : ''}`;
+  const res = await fetch(url, { headers: headers(auth), signal: AbortSignal.timeout(20000) });
+  const subject = (await res.json())?.data?.data?.subject || {};
+  console.log(`\n### ${label} ${res.status}`);
+  console.log(JSON.stringify(subject.dubs || [], null, 0));
 }
