@@ -98,8 +98,23 @@ export function NetmirrorPlayer({
             setState('loading');
         }
         setError('');
-        fetchNetmirrorStreams({ tmdbId, mediaType, season, episode }).then((result: NetmirrorResult) => {
+        fetchNetmirrorStreams({ tmdbId, mediaType, season, episode }).then(async (first: NetmirrorResult) => {
             if (cancelled) return;
+            let result = first;
+            /**
+             * `subjectId` hi **audio (dub) list** ki kunji hai. Purane client
+             * cache me wo nahi tha (player pasand aa gaya to data purana reh
+             * jata hai) — isliye ek baar fresh maang lete hain, warna NetMirror
+             * par audio chup-chaap gayab reh jata hai.
+             */
+            if (!result.subjectId) {
+                const retry = await fetchNetmirrorStreams(
+                    { tmdbId, mediaType, season, episode },
+                    { fresh: true },
+                );
+                if (cancelled) return;
+                if (retry.ok && retry.streams.length) result = retry;
+            }
             setSubtitles(toSubtitleTracks(result.captions));
             if (result.ok && result.streams.length) {
                 setStreams(result.streams);
@@ -107,10 +122,18 @@ export function NetmirrorPlayer({
                 // Dub list (agar provider deta hai) — background me, fail ho to
                 // sirf subtitles rehte hain (koi jhootha option nahi).
                 if (result.subjectId) {
-                    fetchAudioLanguages({
-                        subjectId: result.subjectId,
-                        detailPath: result.detailPath,
-                    }).then((answer) => {
+                    // Ek baar network hichkichaye to dobara — warna audio list
+                    // chup-chaap khaali reh jati hai (owner ka complaint).
+                    const load = (attempt = 0): Promise<Awaited<ReturnType<typeof fetchAudioLanguages>>> =>
+                        fetchAudioLanguages({
+                            subjectId: result.subjectId as string,
+                            detailPath: result.detailPath,
+                        }).then((answer) =>
+                            !answer.languages.length && attempt < 1
+                                ? new Promise((done) => setTimeout(done, 700)).then(() => load(attempt + 1))
+                                : answer,
+                        );
+                    load().then((answer) => {
                         if (cancelled) return;
                         setAudio(answer.languages);
                         const current =

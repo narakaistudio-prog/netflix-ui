@@ -11,7 +11,11 @@
  *   2. `normalizeAudioPayload` / `fetchAudioLanguages` — client shape + fail.
  *   3. Handler — subjectId na ho to `not-found`, aur detail se list.
  */
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { act } from 'react-dom/test-utils';
 import handler, { normalizeDubs, audioLabel } from '../api/moviebox-audio.mjs';
+import { NetmirrorPlayer } from '../components/NetmirrorPlayer';
 import { buildDubWatchLink, fetchAudioLanguages, normalizeAudioPayload } from '../lib/movieboxAudio';
 
 const DUBS = [
@@ -162,5 +166,89 @@ describe('dub ka watch page (iframe wala rasta)', () => {
         expect(link).toContain('type=/movie/detail');
         expect(buildDubWatchLink(null)).toBeNull();
         expect(buildDubWatchLink({ lang: 'x', name: 'X', subjectId: '', detailPath: 'a', original: false })).toBeNull();
+    });
+});
+
+/* ------------------------------------------------------------------------- */
+/* NetMirror par bhi audio — owner: "netmirror me nahi aa raha"               */
+/* ------------------------------------------------------------------------- */
+
+jest.mock('@expo/vector-icons', () => {
+    const ReactLocal = require('react');
+    const icon = (props: any) => ReactLocal.createElement('i', props);
+    return { Ionicons: icon, MaterialCommunityIcons: icon };
+});
+
+jest.mock('../components/MovieboxDirectPlayer', () => {
+    const ReactLocal = require('react');
+    return {
+        MovieboxDirectPlayer: ({ audioTracks }: any) =>
+            ReactLocal.createElement('div', {
+                'data-testid': 'direct-video',
+                'data-audio-count': String((audioTracks || []).length),
+                'data-audio': (audioTracks || []).map((track: any) => track.name).join(','),
+            }),
+    };
+});
+
+const NM_STREAMS = [
+    { url: 'https://bcdnxw.hakunaymatata.com/bt/1080.mp4', quality: '1080', kind: 'mp4' },
+];
+
+/** `subjectId` ke bina jawab (purana cache / purana server) — phir wale me. */
+function nmPayload(withSubject: boolean) {
+    return {
+        ok: true,
+        title: 'Mandaadi',
+        streams: NM_STREAMS,
+        captions: [],
+        ...(withSubject
+            ? { subjectId: '2237794012843369344', detailPath: 'mandaadi-gWLfEvs7jF2' }
+            : {}),
+    };
+}
+
+(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
+
+describe('NetMirror par audio list', () => {
+    it('subjectId na ho to fresh maang kar audio list phir bhi laata hai', async () => {
+        window.localStorage.clear();
+        const calls: string[] = [];
+        let netmirrorHits = 0;
+        (globalThis as any).fetch = async (url: string) => {
+            const target = String(url);
+            calls.push(target);
+            if (target.startsWith('/api/netmirror')) {
+                netmirrorHits += 1;
+                return { json: async () => nmPayload(netmirrorHits > 1) } as any;
+            }
+            if (target.startsWith('/api/moviebox-audio')) {
+                return {
+                    json: async () => ({
+                        ok: true,
+                        languages: [
+                            { lang: 'ta', name: 'Original', subjectId: '2237794012843369344', detailPath: 'a', original: true },
+                            { lang: 'hi', name: 'Hindi', subjectId: '4151920426815471968', detailPath: 'b', original: false },
+                        ],
+                    }),
+                } as any;
+            }
+            return { json: async () => ({}) } as any;
+        };
+
+        const container = document.createElement('div');
+        document.body.appendChild(container);
+        const root = createRoot(container);
+        await act(async () => {
+            root.render(<NetmirrorPlayer tmdbId={1465943} mediaType="movie" title="Mandaadi" year={2026} />);
+        });
+
+        expect(netmirrorHits).toBe(2); // pehla cache, doosra fresh
+        const audioCall = calls.find((url) => url.startsWith('/api/moviebox-audio'));
+        expect(audioCall).toContain('subjectId=2237794012843369344');
+        expect(document.querySelector('[data-testid="direct-video"]')?.getAttribute('data-audio-count')).toBe('2');
+
+        act(() => root.unmount());
+        container.remove();
     });
 });
