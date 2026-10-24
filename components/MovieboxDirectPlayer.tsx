@@ -554,6 +554,20 @@ export function MovieboxDirectPlayer({
 
     const subtitleText = activeSubtitle ? cueAt(cues, playback.current) : null;
 
+    /**
+     * Pehli baar ek chhota hint: owner *"subtitle nahi chal raha"* keh rahe the
+     * — bhasha chunna zaroori hai, wo baat chhupni nahi chahiye. Sirf ek baar,
+     * 4s ke liye (baaki UI text English me hai).
+     */
+    const hintShown = useRef(false);
+    useEffect(() => {
+        if (hintShown.current || !(captions || []).length) return;
+        hintShown.current = true;
+        setToast({ text: 'Subtitles & audio — tap CC', side: 'center' });
+        const timer = setTimeout(() => setToast(null), 4000);
+        return () => clearTimeout(timer);
+    }, [captions]);
+
     /* ---------------------- Chrome: hide / keyboard / drag ---------------------- */
 
     useEffect(() => {
