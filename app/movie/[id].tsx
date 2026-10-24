@@ -29,13 +29,13 @@ import {
 import { loadSettings, templateOverridesFor } from '@/lib/settings';
 import { isMovieboxUrl, MOVIEBOX_SERVER_LABEL } from '@/lib/moviebox';
 import {
-    buildVidSyncUrl,
-    loadVidSyncServer,
-    saveVidSyncServer,
-    vidsyncTmdbNumber,
-    VIDSYNC_SERVER_LABEL,
-    VIDSYNC_SERVERS,
-} from '@/lib/vidsync';
+    buildServer3Url,
+    loadServer3Provider,
+    nextServer3Provider,
+    saveServer3Provider,
+    server3Label,
+    server3TmdbNumber,
+} from '@/lib/server3';
 import { getTvSeasons } from '@/lib/tvEpisodes';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
@@ -55,13 +55,13 @@ const SCALE_FACTOR = 0.83;
  * Playback "servers": the regular embed providers (Nxsha / NHD / custom) plus
  * M2Box — MovieBox ka koi embed nahi hota, isliye uska poora watch page frame
  * me khol kar sirf player wala hissa dikhaya jata hai (MovieboxPagePlayer).
- * Server 3 = VidSync (vidsync.pro) — TMDB id wala seedha embed iframe.
+ * Server 3 = third-party embed (lib/server3.ts) — TMDB id wala seedha iframe.
  */
-type PlaybackServerId = ProviderId | 'moviebox' | 'vidsync';
+type PlaybackServerId = ProviderId | 'moviebox' | 'server3';
 
 function serverLabel(id: PlaybackServerId): string {
     if (id === 'moviebox') return MOVIEBOX_SERVER_LABEL;
-    if (id === 'vidsync') return VIDSYNC_SERVER_LABEL;
+    if (id === 'server3') return server3Label();
     if (id === 'nxsha') return 'Nxsha';
     if (id === 'nhd') return 'NHD';
     return 'Custom';
@@ -138,13 +138,10 @@ export default function MovieScreen() {
     const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
     const [resumeAt, setResumeAt] = useState(0);
     /**
-     * Server 3 (VidSync) ki upstream line. Ek line ruk ruk kar chalti ho to
-     * doosri turant (owner, laptop: "bahut ruk ruk kar chalta hai"). Chuni hui
-     * line browser me yaad rehti hai — agli baar wahi khulti hai.
+     * Server 3 ka source (Videasy / VidFast …). Ek provider ruk ruk kar chale
+     * to player ke pill se agla — chuni hui choice browser me yaad rehti hai.
      */
-    const [vidsyncServer, setVidsyncServer] = useState<number>(() => loadVidSyncServer());
-    /** Abhi chal raha playhead — line badalne par isi jagah se continue. */
-    const livePlayheadRef = useRef(0);
+    const [server3Provider, setServer3Provider] = useState(() => loadServer3Provider());
 
     useEffect(() => () => setPlayerChromeHidden(false), []);
 
@@ -435,14 +432,14 @@ export default function MovieScreen() {
     const movieboxAvailable = Boolean(movieboxEntry) || movieboxAvailability.available;
 
     /**
-     * Server 3 (VidSync) sirf tab chalta hai jab title ka **TMDB numeric id** ho
-     * — unka embed route `{tmdbId}` hi leta hai (imdb id se kaam nahi chalta).
+     * Server 3 sirf tab chalta hai jab title ka **TMDB numeric id** ho — in
+     * players ke embed route `{tmdbId}` hi lete hain (imdb id se kaam nahi).
      */
-    const vidsyncAvailable = Boolean(vidsyncTmdbNumber(parsedTmdb));
+    const server3Available = Boolean(server3TmdbNumber(parsedTmdb));
 
     // Cycle: MovieBox mile to (row-m2box) → default → baaki providers → custom
-    // → M2Box → VidSync (pill se switch). MovieBox na mile to Server 1 (+
-    // VidSync, kyunki wo M2Box par depend nahi karta) — koi aur switch nahi.
+    // → M2Box → Server 3 (pill se switch). MovieBox na mile to Server 1 (+
+    // Server 3, kyunki wo M2Box par depend nahi karta) — koi aur switch nahi.
     const settings = loadSettings();
     const cycle: PlaybackServerId[] = useMemo(
         () =>
@@ -451,10 +448,10 @@ export default function MovieScreen() {
                 movieboxAvailable,
                 rowIsMoviebox,
                 customAvailable: Boolean(primaryEmbedUrl),
-                vidsyncAvailable,
+                server3Available,
                 providers: PROVIDERS.map(p => p.id),
             }),
-        [movie.embed_provider, movieboxAvailable, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider, vidsyncAvailable],
+        [movie.embed_provider, movieboxAvailable, primaryEmbedUrl, rowIsMoviebox, settings.defaultProvider, server3Available],
     );
 
     // Cycle chhota ho jaye (MovieBox nahi mila) to index phir bhi valid rehna chahiye.
@@ -479,15 +476,15 @@ export default function MovieScreen() {
         // M2Box ka apna player hai (MovieboxPagePlayer) — yahan URL nahi banta.
         if (currentProvider === 'moviebox') return '';
         if (directFallback) return directPreviewUrl || '';
-        // Server 3 — VidSync ka designed embed (TMDB id + chalu episode).
-        if (currentProvider === 'vidsync') {
+        // Server 3 — third-party embed (TMDB id + chalu episode).
+        if (currentProvider === 'server3') {
             return (
-                buildVidSyncUrl({
+                buildServer3Url({
                     tmdbId: parsedTmdb,
                     mediaType,
                     season: mediaType === 'tv' ? season : undefined,
                     episode: mediaType === 'tv' ? episode : undefined,
-                    server: vidsyncServer,
+                    provider: server3Provider,
                 }) || ''
             );
         }
@@ -508,7 +505,7 @@ export default function MovieScreen() {
         } catch {
             return '';
         }
-    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings, vidsyncServer]);
+    }, [currentProvider, directFallback, directPreviewUrl, mediaType, parsedTmdb, movie.imdb_id, primaryEmbedUrl, season, episode, settings, server3Provider]);
 
     const officialNetflixUrl = movie.netflixUrl
         || (movie.netflixId ? `https://www.netflix.com/in/title/${movie.netflixId}` : undefined)
@@ -746,26 +743,19 @@ export default function MovieScreen() {
                 onSwitchProvider={!directFallback && hasServerSwitcher(cycle) ? handleSwitchProvider : undefined}
                 serverName={currentServerLabel}
                 nextServerName={nextServer ? serverLabel(nextServer) : undefined}
-                fallbackUrl={officialNetflixUrl}
-                resumeAt={resumeAt}
-                /**
-                 * Server 3 ke upstream lines — sirf tab jab VidSync chal raha
-                 * ho. Line badalne par iframe reload hota hai, isliye playhead
-                 * yaad rakh kar wahi se resume karate hain.
-                 */
-                lineOptions={currentProvider === 'vidsync' ? VIDSYNC_SERVERS : undefined}
-                lineValue={vidsyncServer}
-                onPickLine={
-                    currentProvider === 'vidsync'
-                        ? (line: number) => {
-                              setResumeAt(Math.max(0, Math.floor(livePlayheadRef.current)));
-                              setVidsyncServer(line);
-                              saveVidSyncServer(line);
+                sourceName={currentProvider === 'server3' ? server3Label(server3Provider) : undefined}
+                onCycleSource={
+                    currentProvider === 'server3'
+                        ? () => {
+                              const nextProvider = nextServer3Provider(server3Provider);
+                              setServer3Provider(nextProvider);
+                              saveServer3Provider(nextProvider);
                           }
                         : undefined
                 }
+                fallbackUrl={officialNetflixUrl}
+                resumeAt={resumeAt}
                 onProgress={(info) => {
-                    livePlayheadRef.current = info.seconds;
                     if (!activeEntryId) return;
                     updateWatchPosition(activeEntryId, info.seconds, info.duration);
                 }}

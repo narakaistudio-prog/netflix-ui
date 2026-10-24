@@ -57,16 +57,11 @@ export interface EmbedPlayerProps {
     /** Agla server (switcher pill ka label), jab switch available ho. */
     nextServerName?: string;
     /**
-     * VidSync (Server 3) ke **upstream lines** (1/2/3). Ek line ruk ruk kar
-     * chalti ho to doosri ek tap me — provider ke gear menu me jaane ki zarurat
-     * nahi. Baaki servers par ye props nahi diye jate, isliye koi extra button
-     * nahi dikhta.
+     * Sirf Server 3 ke liye: abhi ka third-party source (Videasy / VidFast …)
+     * aur ek tap me agla source. Ek hi pill — teen button nahi.
      */
-    lineOptions?: readonly number[];
-    /** Abhi chuni hui line. */
-    lineValue?: number;
-    /** Line badalna — naya URL banake iframe reload hota hai. */
-    onPickLine?: (line: number) => void;
+    sourceName?: string;
+    onCycleSource?: () => void;
 }
 
 const IS_WEB = Platform.OS === 'web';
@@ -89,9 +84,8 @@ export function EmbedPlayer({
     onEnded,
     serverName,
     nextServerName,
-    lineOptions,
-    lineValue,
-    onPickLine,
+    sourceName,
+    onCycleSource,
 }: EmbedPlayerProps) {
     const [loading, setLoading] = useState(true);
     const [timedOut, setTimedOut] = useState(false);
@@ -710,34 +704,22 @@ export function EmbedPlayer({
                 ) : null}
 
                 {/**
-                 * 1 / 2 / 3 — VidSync ke apne upstream provider. Owner (laptop):
-                 * "bahut ruk ruk kar chalta hai" — ek line slow ho to doosri
-                 * turant. Sirf tab dikhta hai jab caller `lineOptions` de
-                 * (matlab Server 3 chal raha hai).
+                 * Server 3 ka source switch — ek pill, tap par agla provider.
+                 * Owner ka pattern: naya source pehle optional, aur agar wo
+                 * ruk ruk kar chale to user ko atkna na pade.
                  */}
-                {onPickLine && lineOptions && lineOptions.length > 1 ? (
-                    <View style={styles.linePills} testID="embed-line-pills">
-                        <Text style={styles.linePillsLabel}>Line</Text>
-                        {lineOptions.map((option) => {
-                            const active = option === lineValue;
-                            return (
-                                <Pressable
-                                    key={option}
-                                    style={[styles.linePill, active && styles.linePillActive]}
-                                    onPress={() => onPickLine(option)}
-                                    accessibilityRole="button"
-                                    accessibilityLabel={`Use upstream line ${option}`}
-                                    accessibilityState={{ selected: active }}
-                                    testID={`embed-line-${option}`}
-                                >
-                                    <Text style={[styles.linePillText, active && styles.linePillTextActive]}>
-                                        {option}
-                                    </Text>
-                                </Pressable>
-                            );
-                        })}
-                    </View>
+                {sourceName && onCycleSource ? (
+                    <Pressable
+                        style={styles.sourcePill}
+                        onPress={onCycleSource}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Change source, now ${sourceName}`}
+                        testID="embed-source-cycle"
+                    >
+                        <Text style={styles.sourcePillText}>{sourceName} ⟳</Text>
+                    </Pressable>
                 ) : null}
+
 
                 {canAutoFullscreen ? (
                     <Pressable
@@ -782,30 +764,19 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     serverPillText: { color: '#fff', fontSize: 11, fontWeight: '600' },
-    /** VidSync upstream line pills (1/2/3) — server pill ke bagal. */
-    linePills: {
+    /** Server 3 ka source switch (ek pill). */
+    sourcePill: {
         height: 32,
         marginLeft: 8,
-        paddingHorizontal: 8,
+        paddingHorizontal: 10,
         borderRadius: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-        backgroundColor: 'rgba(0,0,0,0.55)',
-    },
-    linePillsLabel: { color: '#bdbdbd', fontSize: 10, fontWeight: '700', marginRight: 2 },
-    linePill: {
-        minWidth: 22,
-        height: 22,
-        paddingHorizontal: 5,
-        borderRadius: 11,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(255,255,255,0.12)',
+        backgroundColor: 'rgba(229,9,20,0.75)',
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'rgba(255,255,255,0.3)',
     },
-    linePillActive: { backgroundColor: '#E50914' },
-    linePillText: { color: '#e6e6e6', fontSize: 11, fontWeight: '700' },
-    linePillTextActive: { color: '#fff' },
+    sourcePillText: { color: '#fff', fontSize: 11, fontWeight: '700' },
     loadingOverlay: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'center', justifyContent: 'center',

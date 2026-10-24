@@ -25,12 +25,13 @@ import {
 } from '@/lib/moviebox';
 import { movieboxKeyForTitle, resolveMovieboxLink } from '@/lib/movieboxLinks';
 import {
-    buildVidSyncUrl,
-    loadVidSyncServer,
-    saveVidSyncServer,
-    VIDSYNC_SERVER_LABEL,
-    VIDSYNC_SERVERS,
-} from '@/lib/vidsync';
+    buildServer3Url,
+    loadServer3Provider,
+    nextServer3Provider,
+    saveServer3Provider,
+    server3Label,
+    server3TmdbNumber,
+} from '@/lib/server3';
 import { useMovieboxAvailable } from '@/hooks/useMovieboxAvailable';
 import { isPhoneUserAgent } from '@/lib/phonePlayer';
 import type { Movie } from '@/types/movie';
@@ -133,24 +134,19 @@ export function MovieDetailModal({
     /** Position the media continues from — 0 means "from the beginning". */
     const [resumeSec, setResumeSec] = useState(resumeAt);
     /**
-     * Server 3 (VidSync) ki upstream line (1/2/3). Ek line ruk ruk kar chalti
-     * ho to doosri turant — chuni hui line yaad rehti hai.
-     */
-    const [vidsyncServer, setVidsyncServer] = useState<number>(() => loadVidSyncServer());
-    /** Abhi ka playhead — line badalne par isi jagah se continue. */
-    const livePlayheadRef = useRef(0);
-    /**
      * Which playback server is on: the regular embed providers, or M2Box
      * (MovieBox ka poora watch page, sirf-player crop me).
      */
     /**
      * Default **MovieBox** (owner: "ab se default me moviebox hi rahega first
      * server"). Link na mile to `activeServer` khud Nxsha par gir jata hai.
-     * Server 3 (VidSync) sirf pill se chuna jata hai — kabhi default nahi.
+     * Server 3 sirf pill se chuna jata hai — kabhi default nahi.
      */
-    const [server, setServer] = useState<'primary' | 'moviebox' | 'vidsync'>('moviebox');
+    const [server, setServer] = useState<'primary' | 'moviebox' | 'server3'>('moviebox');
     /** Badalta hai jab is browser me is title ka M2Box link save ho jaye. */
     const [movieboxRevision, setMovieboxRevision] = useState(0);
+    /** Server 3 ka source — ek tap me agla provider. */
+    const [server3Provider, setServer3Provider] = useState(() => loadServer3Provider());
 
     /** movie ke liye M2Box link (row ka apna, ya browser me saved). */
     const movieboxEntry = useMemo(
@@ -300,21 +296,21 @@ export function MovieDetailModal({
     }, [movie, episodeRef, primaryEmbedUrl, rowIsMoviebox]);
 
     /**
-     * Server 3 — VidSync ka embed. Route sirf **TMDB numeric id** leta hai
-     * (`/embed/movie/<id>`, `/embed/tv/<id>/<s>/<e>`), isliye id na mile to
-     * `null` aur pill dikhta hi nahi. Series par chalu episode hi khulta hai
-     * (Crunchyroll jaisa per-episode behaviour).
+     * Server 3 — third-party embed (lib/server3.ts). Route sirf **TMDB numeric
+     * id** leta hai, isliye id na mile to `null` aur pill dikhta hi nahi.
+     * Series par chalu episode hi khulta hai (Crunchyroll jaisa behaviour).
      */
-    const vidsyncSrc = useMemo(() => {
+    const server3Src = useMemo(() => {
         if (!movie) return null;
-        return buildVidSyncUrl({
+        if (!server3TmdbNumber(movie.tmdb_id)) return null;
+        return buildServer3Url({
             tmdbId: movie.tmdb_id,
             mediaType: movie.mediaType === 'tv' ? 'tv' : 'movie',
             season: episodeRef?.season ?? season,
             episode: episodeRef?.episode ?? 1,
-            server: vidsyncServer,
+            provider: server3Provider,
         });
-    }, [movie, episodeRef, season, vidsyncServer]);
+    }, [movie, episodeRef, season, server3Provider]);
 
     const panelWidth = Math.min(1000, width * 0.94);
     const wide = panelWidth > 640;
@@ -335,14 +331,14 @@ export function MovieDetailModal({
      * Kaunsa server sach me chalega. Chunna hua server available na ho to
      * Server 1 (Nxsha) — dead player kabhi nahi khulta.
      */
-    const activeServer: 'primary' | 'moviebox' | 'vidsync' =
-        server === 'vidsync' && vidsyncSrc
-            ? 'vidsync'
+    const activeServer: 'primary' | 'moviebox' | 'server3' =
+        server === 'server3' && server3Src
+            ? 'server3'
             : server === 'moviebox' && movieboxAvailable
               ? 'moviebox'
               : 'primary';
-    /** Player ka asli src — Server 3 (VidSync) ka apna embed. */
-    const playerSrc = activeServer === 'vidsync' ? vidsyncSrc ?? '' : src;
+    /** Player ka asli src — Server 3 ka apna embed. */
+    const playerSrc = activeServer === 'server3' ? server3Src ?? '' : src;
 
     /** Phone player screen (Crunchyroll jaisa) ka episode data. */
     const isTv = movie.mediaType === 'tv';
@@ -370,7 +366,7 @@ export function MovieDetailModal({
         .join('  •  ');
 
     const handlePlay = (episode?: { season: number; episode: number }) => {
-        // Server 3 chuna hua ho to bhi play chale (VidSync ka apna src hai).
+        // Server 3 chuna hua ho to bhi play chale (uska apna src hai).
         if (playerSrc) {
             const isSeries = movie.mediaType === 'tv';
             const ep = episode ?? episodeRef ?? { season: 1, episode: 1 };
@@ -472,21 +468,18 @@ export function MovieDetailModal({
                 onClose={() => setPlaying(false)}
                 fallbackUrl={officialUrlFor(movie)}
                 resumeAt={resumeSec}
-                serverName={activeServer === 'vidsync' ? `Server 3 · ${VIDSYNC_SERVER_LABEL}` : 'Nxsha'}
-                /** VidSync ki upstream lines — sirf Server 3 chalne par. */
-                lineOptions={activeServer === 'vidsync' ? VIDSYNC_SERVERS : undefined}
-                lineValue={vidsyncServer}
-                onPickLine={
-                    activeServer === 'vidsync'
-                        ? (line: number) => {
-                              setResumeSec(Math.max(0, Math.floor(livePlayheadRef.current)));
-                              setVidsyncServer(line);
-                              saveVidSyncServer(line);
+                serverName={activeServer === 'server3' ? `Server 3 · ${server3Label(server3Provider)}` : 'Nxsha'}
+                sourceName={activeServer === 'server3' ? server3Label(server3Provider) : undefined}
+                onCycleSource={
+                    activeServer === 'server3'
+                        ? () => {
+                              const nextProvider = nextServer3Provider(server3Provider);
+                              setServer3Provider(nextProvider);
+                              saveServer3Provider(nextProvider);
                           }
                         : undefined
                 }
                 onProgress={(info) => {
-                    livePlayheadRef.current = info.seconds;
                     if (!activeEntry) return;
                     updateWatchPosition(activeEntry.id, info.seconds, info.duration);
                 }}
@@ -585,9 +578,9 @@ export function MovieDetailModal({
                         {/* Server chunna — owner ke naap par description ke
                             neeche, "Episodes" ke upar. **Hindi = MovieBox**
                             (Server 2), **Multi = Nxsha** (Server 1),
-                            **VidSync = Server 3**. Koi bhi available na ho to
+                            **Server 3 = third-party** (label `server3Label()`). Koi bhi available na ho to
                             row dikhta hi nahi (Nxsha hi chalta hai). */}
-                        {movieboxAvailable || vidsyncSrc ? (
+                        {movieboxAvailable || server3Src ? (
                             <View style={[styles.serverRow, wide && styles.serverRowWide]}>
                                 <Text style={styles.serverRowLabel}>Server</Text>
                                 {movieboxAvailable ? (
@@ -634,26 +627,26 @@ export function MovieDetailModal({
                                         Multi
                                     </Text>
                                 </Pressable>
-                                {vidsyncSrc ? (
+                                {server3Src ? (
                                     <Pressable
-                                        onPress={() => setServer('vidsync')}
+                                        onPress={() => setServer('server3')}
                                         style={[
                                             styles.serverChip,
-                                            activeServer === 'vidsync' && styles.serverChipActive,
+                                            activeServer === 'server3' && styles.serverChipActive,
                                         ]}
-                                        accessibilityLabel="Server 3 (VidSync)"
+                                        accessibilityLabel={`Server 3 (${server3Label(server3Provider)})`}
                                         accessibilityRole="button"
-                                        accessibilityState={{ selected: activeServer === 'vidsync' }}
-                                        {...({ dataSet: { selected: activeServer === 'vidsync' ? '1' : '0' } } as any)}
-                                        testID="server-vidsync"
+                                        accessibilityState={{ selected: activeServer === 'server3' }}
+                                        {...({ dataSet: { selected: activeServer === 'server3' ? '1' : '0' } } as any)}
+                                        testID="server-3"
                                     >
                                         <Text
                                             style={[
                                                 styles.serverChipText,
-                                                activeServer === 'vidsync' && styles.serverChipTextActive,
+                                                activeServer === 'server3' && styles.serverChipTextActive,
                                             ]}
                                         >
-                                            VidSync
+                                            {server3Label(server3Provider)}
                                         </Text>
                                     </Pressable>
                                 ) : null}
