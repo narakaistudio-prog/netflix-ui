@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '20'
       - name: Probe
-        run: node scripts/probe-av3.mjs 2>&1 | tee av-probe.log
+        run: node scripts/probe-av4.mjs 2>&1 | tee av-probe.log
       - name: Post result as PR comment
         if: always() && github.event_name == 'pull_request'
         env:
